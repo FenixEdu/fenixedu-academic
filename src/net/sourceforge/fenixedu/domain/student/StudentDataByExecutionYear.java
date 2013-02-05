@@ -13,63 +13,63 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base {
 
-	static final public Comparator<StudentDataByExecutionYear> COMPARATOR_BY_EXECUTION_YEAR =
-			new Comparator<StudentDataByExecutionYear>() {
-				@Override
-				public int compare(StudentDataByExecutionYear o1, StudentDataByExecutionYear o2) {
-					return o1.getExecutionYear().compareTo(o2.getExecutionYear());
-				}
-			};
+    static final public Comparator<StudentDataByExecutionYear> COMPARATOR_BY_EXECUTION_YEAR =
+            new Comparator<StudentDataByExecutionYear>() {
+                @Override
+                public int compare(StudentDataByExecutionYear o1, StudentDataByExecutionYear o2) {
+                    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
+                }
+            };
 
-	private StudentDataByExecutionYear() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setWorkingStudent(false);
-	}
+    private StudentDataByExecutionYear() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setWorkingStudent(false);
+    }
 
-	public StudentDataByExecutionYear(final Student student) {
-		this();
-		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+    public StudentDataByExecutionYear(final Student student) {
+        this();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-		checkParameters(student, executionYear);
-		checkConditions(student, executionYear);
+        checkParameters(student, executionYear);
+        checkConditions(student, executionYear);
 
-		setStudent(student);
-		setExecutionYear(executionYear);
-	}
+        setStudent(student);
+        setExecutionYear(executionYear);
+    }
 
-	public StudentDataByExecutionYear(final Student student, final ExecutionYear executionYear) {
-		this();
+    public StudentDataByExecutionYear(final Student student, final ExecutionYear executionYear) {
+        this();
 
-		checkParameters(student, executionYear);
-		checkConditions(student, executionYear);
+        checkParameters(student, executionYear);
+        checkConditions(student, executionYear);
 
-		setStudent(student);
-		setExecutionYear(executionYear);
-	}
+        setStudent(student);
+        setExecutionYear(executionYear);
+    }
 
-	private void checkParameters(final Student student, final ExecutionYear executionYear) {
-		if (student == null) {
-			throw new RuntimeException("error.StudentDataByExecutionYear.student.cannot.be.null");
-		}
-		if (executionYear == null) {
-			throw new RuntimeException("error.StudentDataByExecutionYear.executionYear.cannot.be.null");
-		}
-	}
+    private void checkParameters(final Student student, final ExecutionYear executionYear) {
+        if (student == null) {
+            throw new RuntimeException("error.StudentDataByExecutionYear.student.cannot.be.null");
+        }
+        if (executionYear == null) {
+            throw new RuntimeException("error.StudentDataByExecutionYear.executionYear.cannot.be.null");
+        }
+    }
 
-	private void checkConditions(final Student student, final ExecutionYear executionYear) {
-		if (student.getStudentDataByExecutionYear(executionYear) != null) {
-			throw new DomainException("error.StudentDataByExecutionYear.student.already.has.data.for.given.executionYear");
-		}
+    private void checkConditions(final Student student, final ExecutionYear executionYear) {
+        if (student.getStudentDataByExecutionYear(executionYear) != null) {
+            throw new DomainException("error.StudentDataByExecutionYear.student.already.has.data.for.given.executionYear");
+        }
 
-	}
+    }
 
-	public void delete() {
-		removeExecutionYear();
-		removeResidenceCandidacy();
-		removeStudent();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeExecutionYear();
+        removeResidenceCandidacy();
+        removeStudent();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
 }

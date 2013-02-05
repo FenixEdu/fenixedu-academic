@@ -16,25 +16,25 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	protected static IUserView getUserView(HttpServletRequest request) {
-		return UserView.getUser();
-	}
+    protected static IUserView getUserView(HttpServletRequest request) {
+        return UserView.getUser();
+    }
 
-	/**
-	 * This method returns a Map (x,y)
-	 * 
-	 * x - is a message resource identifier y - is the name of the method which
-	 * will be implemented within the subclasses
-	 * 
-	 */
-	@Override
-	protected abstract Map getKeyMethodMap();
+    /**
+     * This method returns a Map (x,y)
+     * 
+     * x - is a message resource identifier y - is the name of the method which
+     * will be implemented within the subclasses
+     * 
+     */
+    @Override
+    protected abstract Map getKeyMethodMap();
 
 }

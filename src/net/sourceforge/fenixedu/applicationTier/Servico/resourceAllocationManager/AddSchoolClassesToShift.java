@@ -13,23 +13,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddSchoolClassesToShift extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
 
-		final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-		if (shift == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+        if (shift == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		for (final Integer schoolClassOID : schoolClassOIDs) {
-			final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(schoolClassOID);
-			if (schoolClass == null) {
-				throw new InvalidArgumentsServiceException();
-			}
+        for (final Integer schoolClassOID : schoolClassOIDs) {
+            final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(schoolClassOID);
+            if (schoolClass == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
-			shift.associateSchoolClass(schoolClass);
-		}
-	}
+            shift.associateSchoolClass(schoolClass);
+        }
+    }
 
 }

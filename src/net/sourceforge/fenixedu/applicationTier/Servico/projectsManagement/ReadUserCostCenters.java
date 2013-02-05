@@ -21,28 +21,28 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUs
  */
 public class ReadUserCostCenters extends FenixService {
 
-	public List run(Person person, String costCenter, BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
-		List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
+    public List run(Person person, String costCenter, BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
+        List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
-		PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
-		List<IRubric> costCenterList = persistentProjectUser.getInstitucionalProjectCoordId(new Integer(userNumber), instance);
+        PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
+        List<IRubric> costCenterList = persistentProjectUser.getInstitucionalProjectCoordId(new Integer(userNumber), instance);
 
-		List<Integer> projectCodes = new ArrayList<Integer>();
-		List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person, instance);
-		for (ProjectAccess access : accesses) {
-			Integer keyCostCenter = access.getKeyProjectCoordinator();
+        List<Integer> projectCodes = new ArrayList<Integer>();
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person, instance);
+        for (ProjectAccess access : accesses) {
+            Integer keyCostCenter = access.getKeyProjectCoordinator();
 
-			if (!projectCodes.contains(keyCostCenter)) {
-				projectCodes.add(keyCostCenter);
-			}
-		}
+            if (!projectCodes.contains(keyCostCenter)) {
+                projectCodes.add(keyCostCenter);
+            }
+        }
 
-		costCenterList.addAll(persistentProjectUser.getInstitucionalProjectByCCIDs(projectCodes, instance));
+        costCenterList.addAll(persistentProjectUser.getInstitucionalProjectByCCIDs(projectCodes, instance));
 
-		for (IRubric cc : costCenterList) {
-			infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));
-		}
+        for (IRubric cc : costCenterList) {
+            infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));
+        }
 
-		return infoCostCenterList;
-	}
+        return infoCostCenterList;
+    }
 }

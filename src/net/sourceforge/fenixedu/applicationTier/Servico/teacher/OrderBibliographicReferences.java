@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class OrderBibliographicReferences extends FenixService {
 
-	@Checked("RolePredicates.TEACHER_PREDICATE")
-	@Service
-	public static void run(ExecutionCourse executionCourse, List<BibliographicReference> references) {
-		executionCourse.setBibliographicReferencesOrder(references);
-	}
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static void run(ExecutionCourse executionCourse, List<BibliographicReference> references) {
+        executionCourse.setBibliographicReferencesOrder(references);
+    }
 }

@@ -12,63 +12,63 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 abstract public class PhdEvent extends PhdEvent_Base {
 
-	protected PhdEvent() {
-		super();
-	}
+    protected PhdEvent() {
+        super();
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getPerson().getAccountBy(AccountType.EXTERNAL);
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getPerson().getAccountBy(AccountType.EXTERNAL);
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getUnit().getAccountBy(AccountType.INTERNAL);
-	}
+    @Override
+    public Account getToAccount() {
+        return getUnit().getAccountBy(AccountType.INTERNAL);
+    }
 
-	protected PhdProgramUnit getUnit() {
-		return getPhdProgram().getPhdProgramUnit();
-	}
+    protected PhdProgramUnit getUnit() {
+        return getPhdProgram().getPhdProgramUnit();
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-		return new LabelFormatter().appendLabel(entryType.name(), "enum").appendLabel(" (")
-				.appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
-	}
+    @Override
+    public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+        return new LabelFormatter().appendLabel(entryType.name(), "enum").appendLabel(" (")
+                .appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
+    }
 
-	abstract protected PhdProgram getPhdProgram();
+    abstract protected PhdProgram getPhdProgram();
 
-	@Override
-	public PostingRule getPostingRule() {
-		return getPhdProgram().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return getPhdProgram().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
-	public boolean hasPhdEventExemption() {
-		return getPhdEventExemption() != null;
-	}
+    public boolean hasPhdEventExemption() {
+        return getPhdEventExemption() != null;
+    }
 
-	public PhdEventExemption getPhdEventExemption() {
-		for (final Exemption exemption : getExemptionsSet()) {
-			if (exemption instanceof PhdEventExemption) {
-				return (PhdEventExemption) exemption;
-			}
-		}
-		return null;
-	}
+    public PhdEventExemption getPhdEventExemption() {
+        for (final Exemption exemption : getExemptionsSet()) {
+            if (exemption instanceof PhdEventExemption) {
+                return (PhdEventExemption) exemption;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public boolean isPhdEvent() {
-		return true;
-	}
+    @Override
+    public boolean isPhdEvent() {
+        return true;
+    }
 
-	public abstract PhdIndividualProgramProcess getPhdIndividualProgramProcess();
+    public abstract PhdIndividualProgramProcess getPhdIndividualProgramProcess();
 
-	public boolean isPhdThesisRequestFee() {
-		return false;
-	}
+    public boolean isPhdThesisRequestFee() {
+        return false;
+    }
 }

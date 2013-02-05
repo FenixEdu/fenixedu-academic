@@ -12,73 +12,73 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGroup {
 
-	/**
-	 * Serial version id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	private final GroupUnion union;
+    private final GroupUnion union;
 
-	public ExecutionCourseTeachersAndStudentsGroup(ExecutionCourse executionCourse) {
-		super(executionCourse);
+    public ExecutionCourseTeachersAndStudentsGroup(ExecutionCourse executionCourse) {
+        super(executionCourse);
 
-		ExecutionCourseTeachersGroup teachers = new ExecutionCourseTeachersGroup(executionCourse);
-		ExecutionCourseStudentsGroup students = new ExecutionCourseStudentsGroup(executionCourse);
+        ExecutionCourseTeachersGroup teachers = new ExecutionCourseTeachersGroup(executionCourse);
+        ExecutionCourseStudentsGroup students = new ExecutionCourseStudentsGroup(executionCourse);
 
-		this.union = new GroupUnion(teachers, students);
-	}
+        this.union = new GroupUnion(teachers, students);
+    }
 
-	@Override
-	public String getPresentationNameKey() {
-		return "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroupWithName";
-	}
+    @Override
+    public String getPresentationNameKey() {
+        return "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroupWithName";
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		return this.union.getElements();
-	}
+    @Override
+    public Set<Person> getElements() {
+        return this.union.getElements();
+    }
 
-	@Override
-	public int getElementsCount() {
-		return this.union.getElementsCount();
-	}
+    @Override
+    public int getElementsCount() {
+        return this.union.getElementsCount();
+    }
 
-	@Override
-	public boolean allows(IUserView userView) {
-		return this.union.allows(userView);
-	}
+    @Override
+    public boolean allows(IUserView userView) {
+        return this.union.allows(userView);
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		return this.union.isMember(person);
-	}
+    @Override
+    public boolean isMember(Person person) {
+        return this.union.isMember(person);
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new ExecutionCourseTeachersAndStudentsGroup((ExecutionCourse) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new ExecutionCourseTeachersAndStudentsGroup((ExecutionCourse) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

@@ -8,28 +8,28 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
 
-	private OptionalEnrolmentLog() {
-		super();
-	}
+    private OptionalEnrolmentLog() {
+        super();
+    }
 
-	public OptionalEnrolmentLog(final EnrolmentAction action, final Registration registration,
-			final CurricularCourse curricularCourse, final OptionalCurricularCourse optionalCurricularCourse,
-			final ExecutionSemester executionSemester, final String who) {
+    public OptionalEnrolmentLog(final EnrolmentAction action, final Registration registration,
+            final CurricularCourse curricularCourse, final OptionalCurricularCourse optionalCurricularCourse,
+            final ExecutionSemester executionSemester, final String who) {
 
-		this();
-		check(optionalCurricularCourse, "error.OptionalEnrolmentLog.invalid.optionalCurricularCourse");
-		init(action, registration, curricularCourse, executionSemester, who);
-		setOptionalCurricularCourse(optionalCurricularCourse);
-	}
+        this();
+        check(optionalCurricularCourse, "error.OptionalEnrolmentLog.invalid.optionalCurricularCourse");
+        init(action, registration, curricularCourse, executionSemester, who);
+        setOptionalCurricularCourse(optionalCurricularCourse);
+    }
 
-	@Override
-	protected void disconnect() {
-		removeOptionalCurricularCourse();
-		super.disconnect();
-	}
+    @Override
+    protected void disconnect() {
+        removeOptionalCurricularCourse();
+        super.disconnect();
+    }
 
-	@Override
-	public String getDescription() {
-		return getOptionalCurricularCourse().getName(getExecutionPeriod()) + " (" + super.getDescription() + ")";
-	}
+    @Override
+    public String getDescription() {
+        return getOptionalCurricularCourse().getName(getExecutionPeriod()) + " (" + super.getDescription() + ")";
+    }
 }

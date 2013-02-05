@@ -18,62 +18,62 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  */
 public class IfTrueGroup extends LeafGroup {
 
-	/**
-	 * Default serialization id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Default serialization id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	private final boolean flag;
+    private final boolean flag;
 
-	public IfTrueGroup(boolean flag) {
-		super();
+    public IfTrueGroup(boolean flag) {
+        super();
 
-		this.flag = flag;
-	}
+        this.flag = flag;
+    }
 
-	protected boolean isFlag() {
-		return flag;
-	}
+    protected boolean isFlag() {
+        return flag;
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		return this.flag;
-	}
+    @Override
+    public boolean isMember(Person person) {
+        return this.flag;
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		if (this.flag) {
-			return new HashSet<Person>(Person.readAllPersons());
-		} else {
-			return Collections.emptySet();
-		}
-	}
+    @Override
+    public Set<Person> getElements() {
+        if (this.flag) {
+            return new HashSet<Person>(Person.readAllPersons());
+        } else {
+            return Collections.emptySet();
+        }
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new StaticArgument(flag) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new StaticArgument(flag) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			if (arguments.length != 1) {
-				throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(), getMaxArguments());
-			}
+        @Override
+        public Group build(Object[] arguments) {
+            if (arguments.length != 1) {
+                throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(), getMaxArguments());
+            }
 
-			return new IfTrueGroup(new Boolean(String.valueOf(arguments[0])));
-		}
+            return new IfTrueGroup(new Boolean(String.valueOf(arguments[0])));
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

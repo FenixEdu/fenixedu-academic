@@ -22,204 +22,204 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
  */
 public class OriginInformationBean implements Serializable {
 
-	/*
-	 * if foreign dislocated
-	 * 
-	 * if dislocated schoolTimeDistrictSubdivisionOfResidence != null
-	 */
+    /*
+     * if foreign dislocated
+     * 
+     * if dislocated schoolTimeDistrictSubdivisionOfResidence != null
+     */
 
-	private Boolean dislocatedFromPermanentResidence;
+    private Boolean dislocatedFromPermanentResidence;
 
-	private District schoolTimeDistrictOfResidence;// nonpersistent
+    private District schoolTimeDistrictOfResidence;// nonpersistent
 
-	private DistrictSubdivision schoolTimeDistrictSubdivisionOfResidence;
+    private DistrictSubdivision schoolTimeDistrictSubdivisionOfResidence;
 
-	private GrantOwnerType grantOwnerType;
+    private GrantOwnerType grantOwnerType;
 
-	private Unit grantOwnerProvider;
+    private Unit grantOwnerProvider;
 
-	private String grantOwnerProviderName;
+    private String grantOwnerProviderName;
 
-	private Integer numberOfCandidaciesToHigherSchool;
+    private Integer numberOfCandidaciesToHigherSchool;
 
-	private Integer numberOfFlunksOnHighSchool;
+    private Integer numberOfFlunksOnHighSchool;
 
-	private AcademicalInstitutionType highSchoolType;
+    private AcademicalInstitutionType highSchoolType;
 
-	private SchoolLevelType motherSchoolLevel;
+    private SchoolLevelType motherSchoolLevel;
 
-	private ProfessionType motherProfessionType;
+    private ProfessionType motherProfessionType;
 
-	private ProfessionalSituationConditionType motherProfessionalCondition;
+    private ProfessionalSituationConditionType motherProfessionalCondition;
 
-	private SchoolLevelType fatherSchoolLevel;
+    private SchoolLevelType fatherSchoolLevel;
 
-	private ProfessionType fatherProfessionType;
+    private ProfessionType fatherProfessionType;
 
-	private ProfessionalSituationConditionType fatherProfessionalCondition;
+    private ProfessionalSituationConditionType fatherProfessionalCondition;
 
-	private SchoolLevelType spouseSchoolLevel;
+    private SchoolLevelType spouseSchoolLevel;
 
-	private ProfessionType spouseProfessionType;
+    private ProfessionType spouseProfessionType;
 
-	private ProfessionalSituationConditionType spouseProfessionalCondition;
+    private ProfessionalSituationConditionType spouseProfessionalCondition;
 
-	public OriginInformationBean(PersonBean personBean) {
-		if (personBean.hasCountryOfResidence() && !personBean.getCountryOfResidence().isDefaultCountry()) {
-			setDislocatedFromPermanentResidence(true);
-		}
-	}
+    public OriginInformationBean(PersonBean personBean) {
+        if (personBean.hasCountryOfResidence() && !personBean.getCountryOfResidence().isDefaultCountry()) {
+            setDislocatedFromPermanentResidence(true);
+        }
+    }
 
-	public Boolean getDislocatedFromPermanentResidence() {
-		return dislocatedFromPermanentResidence;
-	}
+    public Boolean getDislocatedFromPermanentResidence() {
+        return dislocatedFromPermanentResidence;
+    }
 
-	public void setDislocatedFromPermanentResidence(Boolean dislocatedFromPermanentResidence) {
-		this.dislocatedFromPermanentResidence = dislocatedFromPermanentResidence;
-	}
+    public void setDislocatedFromPermanentResidence(Boolean dislocatedFromPermanentResidence) {
+        this.dislocatedFromPermanentResidence = dislocatedFromPermanentResidence;
+    }
 
-	public District getSchoolTimeDistrictOfResidence() {
-		return this.schoolTimeDistrictOfResidence;
-	}
+    public District getSchoolTimeDistrictOfResidence() {
+        return this.schoolTimeDistrictOfResidence;
+    }
 
-	public void setSchoolTimeDistrictOfResidence(District district) {
-		this.schoolTimeDistrictOfResidence = district;
-	}
+    public void setSchoolTimeDistrictOfResidence(District district) {
+        this.schoolTimeDistrictOfResidence = district;
+    }
 
-	public DistrictSubdivision getSchoolTimeDistrictSubdivisionOfResidence() {
-		return this.schoolTimeDistrictSubdivisionOfResidence;
-	}
+    public DistrictSubdivision getSchoolTimeDistrictSubdivisionOfResidence() {
+        return this.schoolTimeDistrictSubdivisionOfResidence;
+    }
 
-	public void setSchoolTimeDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
-		this.schoolTimeDistrictSubdivisionOfResidence = districtSubdivision;
-	}
+    public void setSchoolTimeDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
+        this.schoolTimeDistrictSubdivisionOfResidence = districtSubdivision;
+    }
 
-	public GrantOwnerType getGrantOwnerType() {
-		return grantOwnerType;
-	}
+    public GrantOwnerType getGrantOwnerType() {
+        return grantOwnerType;
+    }
 
-	public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
-		this.grantOwnerType = grantOwnerType;
-	}
+    public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
+        this.grantOwnerType = grantOwnerType;
+    }
 
-	public Unit getGrantOwnerProvider() {
-		return this.grantOwnerProvider;
-	}
+    public Unit getGrantOwnerProvider() {
+        return this.grantOwnerProvider;
+    }
 
-	public void setGrantOwnerProvider(Unit grantOwnerProvider) {
-		this.grantOwnerProvider = grantOwnerProvider;
-	}
+    public void setGrantOwnerProvider(Unit grantOwnerProvider) {
+        this.grantOwnerProvider = grantOwnerProvider;
+    }
 
-	public String getGrantOwnerProviderName() {
-		return grantOwnerProviderName;
-	}
+    public String getGrantOwnerProviderName() {
+        return grantOwnerProviderName;
+    }
 
-	public void setGrantOwnerProviderName(String grantOwnerProviderName) {
-		this.grantOwnerProviderName = grantOwnerProviderName;
-	}
+    public void setGrantOwnerProviderName(String grantOwnerProviderName) {
+        this.grantOwnerProviderName = grantOwnerProviderName;
+    }
 
-	public UnitName getGrantOwnerProviderUnitName() {
-		return (grantOwnerProvider == null) ? null : grantOwnerProvider.getUnitName();
-	}
+    public UnitName getGrantOwnerProviderUnitName() {
+        return (grantOwnerProvider == null) ? null : grantOwnerProvider.getUnitName();
+    }
 
-	public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
-		this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
-	}
+    public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
+        this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
+    }
 
-	public Integer getNumberOfCandidaciesToHigherSchool() {
-		return numberOfCandidaciesToHigherSchool;
-	}
+    public Integer getNumberOfCandidaciesToHigherSchool() {
+        return numberOfCandidaciesToHigherSchool;
+    }
 
-	public void setNumberOfCandidaciesToHigherSchool(Integer numberOfCandidaciesToHigherSchool) {
-		this.numberOfCandidaciesToHigherSchool = numberOfCandidaciesToHigherSchool;
-	}
+    public void setNumberOfCandidaciesToHigherSchool(Integer numberOfCandidaciesToHigherSchool) {
+        this.numberOfCandidaciesToHigherSchool = numberOfCandidaciesToHigherSchool;
+    }
 
-	public Integer getNumberOfFlunksOnHighSchool() {
-		return numberOfFlunksOnHighSchool;
-	}
+    public Integer getNumberOfFlunksOnHighSchool() {
+        return numberOfFlunksOnHighSchool;
+    }
 
-	public void setNumberOfFlunksOnHighSchool(Integer numberOfFlunksOnHighSchool) {
-		this.numberOfFlunksOnHighSchool = numberOfFlunksOnHighSchool;
-	}
+    public void setNumberOfFlunksOnHighSchool(Integer numberOfFlunksOnHighSchool) {
+        this.numberOfFlunksOnHighSchool = numberOfFlunksOnHighSchool;
+    }
 
-	public AcademicalInstitutionType getHighSchoolType() {
-		return highSchoolType;
-	}
+    public AcademicalInstitutionType getHighSchoolType() {
+        return highSchoolType;
+    }
 
-	public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
-		this.highSchoolType = highSchoolType;
-	}
+    public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
+        this.highSchoolType = highSchoolType;
+    }
 
-	public SchoolLevelType getMotherSchoolLevel() {
-		return motherSchoolLevel;
-	}
+    public SchoolLevelType getMotherSchoolLevel() {
+        return motherSchoolLevel;
+    }
 
-	public void setMotherSchoolLevel(SchoolLevelType motherSchoolLevel) {
-		this.motherSchoolLevel = motherSchoolLevel;
-	}
+    public void setMotherSchoolLevel(SchoolLevelType motherSchoolLevel) {
+        this.motherSchoolLevel = motherSchoolLevel;
+    }
 
-	public ProfessionType getMotherProfessionType() {
-		return motherProfessionType;
-	}
+    public ProfessionType getMotherProfessionType() {
+        return motherProfessionType;
+    }
 
-	public void setMotherProfessionType(ProfessionType motherProfessionType) {
-		this.motherProfessionType = motherProfessionType;
-	}
+    public void setMotherProfessionType(ProfessionType motherProfessionType) {
+        this.motherProfessionType = motherProfessionType;
+    }
 
-	public ProfessionalSituationConditionType getMotherProfessionalCondition() {
-		return motherProfessionalCondition;
-	}
+    public ProfessionalSituationConditionType getMotherProfessionalCondition() {
+        return motherProfessionalCondition;
+    }
 
-	public void setMotherProfessionalCondition(ProfessionalSituationConditionType motherProfessionalCondition) {
-		this.motherProfessionalCondition = motherProfessionalCondition;
-	}
+    public void setMotherProfessionalCondition(ProfessionalSituationConditionType motherProfessionalCondition) {
+        this.motherProfessionalCondition = motherProfessionalCondition;
+    }
 
-	public SchoolLevelType getFatherSchoolLevel() {
-		return fatherSchoolLevel;
-	}
+    public SchoolLevelType getFatherSchoolLevel() {
+        return fatherSchoolLevel;
+    }
 
-	public void setFatherSchoolLevel(SchoolLevelType fatherSchoolLevel) {
-		this.fatherSchoolLevel = fatherSchoolLevel;
-	}
+    public void setFatherSchoolLevel(SchoolLevelType fatherSchoolLevel) {
+        this.fatherSchoolLevel = fatherSchoolLevel;
+    }
 
-	public ProfessionType getFatherProfessionType() {
-		return fatherProfessionType;
-	}
+    public ProfessionType getFatherProfessionType() {
+        return fatherProfessionType;
+    }
 
-	public void setFatherProfessionType(ProfessionType fatherProfessionType) {
-		this.fatherProfessionType = fatherProfessionType;
-	}
+    public void setFatherProfessionType(ProfessionType fatherProfessionType) {
+        this.fatherProfessionType = fatherProfessionType;
+    }
 
-	public ProfessionalSituationConditionType getFatherProfessionalCondition() {
-		return fatherProfessionalCondition;
-	}
+    public ProfessionalSituationConditionType getFatherProfessionalCondition() {
+        return fatherProfessionalCondition;
+    }
 
-	public void setFatherProfessionalCondition(ProfessionalSituationConditionType fatherProfessionalCondition) {
-		this.fatherProfessionalCondition = fatherProfessionalCondition;
-	}
+    public void setFatherProfessionalCondition(ProfessionalSituationConditionType fatherProfessionalCondition) {
+        this.fatherProfessionalCondition = fatherProfessionalCondition;
+    }
 
-	public SchoolLevelType getSpouseSchoolLevel() {
-		return spouseSchoolLevel;
-	}
+    public SchoolLevelType getSpouseSchoolLevel() {
+        return spouseSchoolLevel;
+    }
 
-	public void setSpouseSchoolLevel(SchoolLevelType spouseSchoolLevel) {
-		this.spouseSchoolLevel = spouseSchoolLevel;
-	}
+    public void setSpouseSchoolLevel(SchoolLevelType spouseSchoolLevel) {
+        this.spouseSchoolLevel = spouseSchoolLevel;
+    }
 
-	public ProfessionType getSpouseProfessionType() {
-		return spouseProfessionType;
-	}
+    public ProfessionType getSpouseProfessionType() {
+        return spouseProfessionType;
+    }
 
-	public void setSpouseProfessionType(ProfessionType spouseProfessionType) {
-		this.spouseProfessionType = spouseProfessionType;
-	}
+    public void setSpouseProfessionType(ProfessionType spouseProfessionType) {
+        this.spouseProfessionType = spouseProfessionType;
+    }
 
-	public ProfessionalSituationConditionType getSpouseProfessionalCondition() {
-		return spouseProfessionalCondition;
-	}
+    public ProfessionalSituationConditionType getSpouseProfessionalCondition() {
+        return spouseProfessionalCondition;
+    }
 
-	public void setSpouseProfessionalCondition(ProfessionalSituationConditionType spouseProfessionalCondition) {
-		this.spouseProfessionalCondition = spouseProfessionalCondition;
-	}
+    public void setSpouseProfessionalCondition(ProfessionalSituationConditionType spouseProfessionalCondition) {
+        this.spouseProfessionalCondition = spouseProfessionalCondition;
+    }
 
 }

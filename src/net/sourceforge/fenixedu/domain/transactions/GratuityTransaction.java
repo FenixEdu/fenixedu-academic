@@ -18,45 +18,45 @@ import org.joda.time.YearMonthDay;
  */
 public class GratuityTransaction extends GratuityTransaction_Base {
 
-	public GratuityTransaction() {
-		super();
-	}
+    public GratuityTransaction() {
+        super();
+    }
 
-	public GratuityTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
-			TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
-			GuideEntry guideEntry, GratuitySituation gratuitySituation) {
-		this();
-		setValue(value);
-		setTransactionDate(transactionDate);
-		setRemarks(remarks);
-		setPaymentType(paymentType);
-		setTransactionType(transactionType);
-		setWasInternalBalance(wasInternalBalance);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
-		setGuideEntry(guideEntry);
-		setGratuitySituation(gratuitySituation);
-	}
+    public GratuityTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+            TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+            GuideEntry guideEntry, GratuitySituation gratuitySituation) {
+        this();
+        setValue(value);
+        setTransactionDate(transactionDate);
+        setRemarks(remarks);
+        setPaymentType(paymentType);
+        setTransactionType(transactionType);
+        setWasInternalBalance(wasInternalBalance);
+        setResponsiblePerson(responsiblePerson);
+        setPersonAccount(personAccount);
+        setGuideEntry(guideEntry);
+        setGratuitySituation(gratuitySituation);
+    }
 
-	public GratuityTransaction(final BigDecimal value, final DateTime transactionDateTime, final PaymentType paymentType,
-			final TransactionType transactionType, final Person responsiblePerson, final PersonAccount personAccount,
-			final GratuitySituation gratuitySituation) {
-		this();
-		setValueBigDecimal(value);
-		setTransactionDateDateTime(transactionDateTime);
-		setRemarks(null);
-		setPaymentType(paymentType);
-		setTransactionType(transactionType);
-		setWasInternalBalance(false);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
-		setGuideEntry(null);
-		setGratuitySituation(gratuitySituation);
-	}
+    public GratuityTransaction(final BigDecimal value, final DateTime transactionDateTime, final PaymentType paymentType,
+            final TransactionType transactionType, final Person responsiblePerson, final PersonAccount personAccount,
+            final GratuitySituation gratuitySituation) {
+        this();
+        setValueBigDecimal(value);
+        setTransactionDateDateTime(transactionDateTime);
+        setRemarks(null);
+        setPaymentType(paymentType);
+        setTransactionType(transactionType);
+        setWasInternalBalance(false);
+        setResponsiblePerson(responsiblePerson);
+        setPersonAccount(personAccount);
+        setGuideEntry(null);
+        setGratuitySituation(gratuitySituation);
+    }
 
-	public boolean isInsidePeriod(final YearMonthDay start, final YearMonthDay end) {
-		final YearMonthDay date = getTransactionDateDateTime().toYearMonthDay();
-		return !date.isBefore(start) && !date.isAfter(end);
-	}
+    public boolean isInsidePeriod(final YearMonthDay start, final YearMonthDay end) {
+        final YearMonthDay date = getTransactionDateDateTime().toYearMonthDay();
+        return !date.isBefore(start) && !date.isAfter(end);
+    }
 
 }

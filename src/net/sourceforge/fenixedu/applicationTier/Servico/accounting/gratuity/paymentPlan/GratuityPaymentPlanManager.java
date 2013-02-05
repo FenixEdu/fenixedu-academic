@@ -22,96 +22,96 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class GratuityPaymentPlanManager {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void create(final PaymentPlanBean paymentPlanBean) {
-		for (final DegreeCurricularPlan degreeCurricularPlan : paymentPlanBean.getDegreeCurricularPlans()) {
-			createInstallments(makePaymentPlan(paymentPlanBean, degreeCurricularPlan), paymentPlanBean.getInstallments());
-		}
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void create(final PaymentPlanBean paymentPlanBean) {
+        for (final DegreeCurricularPlan degreeCurricularPlan : paymentPlanBean.getDegreeCurricularPlans()) {
+            createInstallments(makePaymentPlan(paymentPlanBean, degreeCurricularPlan), paymentPlanBean.getInstallments());
+        }
+    }
 
-	private static PaymentPlan makePaymentPlan(final PaymentPlanBean paymentPlanBean,
-			final DegreeCurricularPlan degreeCurricularPlan) {
+    private static PaymentPlan makePaymentPlan(final PaymentPlanBean paymentPlanBean,
+            final DegreeCurricularPlan degreeCurricularPlan) {
 
-		if (paymentPlanBean.isForPartialRegime()) {
+        if (paymentPlanBean.isForPartialRegime()) {
 
-			if (paymentPlanBean.isForSecondCurricularYear()) {
+            if (paymentPlanBean.isForSecondCurricularYear()) {
 
-				return new GratuityForStudentsInSecondCurricularYearForPartialRegime(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+                return new GratuityForStudentsInSecondCurricularYearForPartialRegime(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
 
-			} else if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
+            } else if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
 
-				return new GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
-			} else {
+                return new GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+            } else {
 
-				return new FullGratuityPaymentPlanForPartialRegime(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
-			}
-		} else {
-			if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
+                return new FullGratuityPaymentPlanForPartialRegime(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+            }
+        } else {
+            if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
 
-				return new GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+                return new GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
 
-			} else if (paymentPlanBean.isForFirstTimeInstitutionStudents()) {
+            } else if (paymentPlanBean.isForFirstTimeInstitutionStudents()) {
 
-				return new FullGratuityPaymentPlanForFirstTimeInstitutionStudents(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
-			} else if (paymentPlanBean.isForSecondCurricularYear()) {
+                return new FullGratuityPaymentPlanForFirstTimeInstitutionStudents(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+            } else if (paymentPlanBean.isForSecondCurricularYear()) {
 
-				return new GratuityForStudentsInSecondCurricularYear(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
-			} else {
-				return new FullGratuityPaymentPlan(paymentPlanBean.getExecutionYear(),
-						degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
-			}
-		}
-	}
+                return new GratuityForStudentsInSecondCurricularYear(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+            } else {
+                return new FullGratuityPaymentPlan(paymentPlanBean.getExecutionYear(),
+                        degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+            }
+        }
+    }
 
-	private static void createInstallments(final PaymentPlan paymentPlan, final List<InstallmentBean> installmentsToCreate) {
+    private static void createInstallments(final PaymentPlan paymentPlan, final List<InstallmentBean> installmentsToCreate) {
 
-		for (final InstallmentBean each : installmentsToCreate) {
+        for (final InstallmentBean each : installmentsToCreate) {
 
-			if (paymentPlan.isForPartialRegime()) {
+            if (paymentPlan.isForPartialRegime()) {
 
-				if (each.isPenaltyAppliable()) {
-					new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(),
-							each.getStartDate(), each.getEndDate(), each.getMontlyPenaltyPercentage(),
-							each.getWhenToStartApplyPenalty(), each.getMaxMonthsToApplyPenalty(), each.getEctsForAmount(),
-							each.getExecutionSemesters());
+                if (each.isPenaltyAppliable()) {
+                    new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(),
+                            each.getStartDate(), each.getEndDate(), each.getMontlyPenaltyPercentage(),
+                            each.getWhenToStartApplyPenalty(), each.getMaxMonthsToApplyPenalty(), each.getEctsForAmount(),
+                            each.getExecutionSemesters());
 
-				} else {
-					new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(),
-							each.getStartDate(), each.getEndDate(), each.getEctsForAmount(), each.getExecutionSemesters());
-				}
+                } else {
+                    new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(),
+                            each.getStartDate(), each.getEndDate(), each.getEctsForAmount(), each.getExecutionSemesters());
+                }
 
-			} else if (paymentPlan.isForFirstTimeInstitutionStudents() && each.isForFirstTimeInstitutionStudents()) {
+            } else if (paymentPlan.isForFirstTimeInstitutionStudents() && each.isForFirstTimeInstitutionStudents()) {
 
-				new InstallmentForFirstTimeStudents(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate(),
-						each.getMontlyPenaltyPercentage(), each.getMaxMonthsToApplyPenalty(),
-						each.getNumberOfDaysToStartApplyingPenalty());
+                new InstallmentForFirstTimeStudents(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate(),
+                        each.getMontlyPenaltyPercentage(), each.getMaxMonthsToApplyPenalty(),
+                        each.getNumberOfDaysToStartApplyingPenalty());
 
-			} else {
+            } else {
 
-				if (each.isPenaltyAppliable()) {
-					new InstallmentWithMonthlyPenalty(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate(),
-							each.getMontlyPenaltyPercentage(), each.getWhenToStartApplyPenalty(),
-							each.getMaxMonthsToApplyPenalty());
+                if (each.isPenaltyAppliable()) {
+                    new InstallmentWithMonthlyPenalty(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate(),
+                            each.getMontlyPenaltyPercentage(), each.getWhenToStartApplyPenalty(),
+                            each.getMaxMonthsToApplyPenalty());
 
-				} else {
-					new Installment(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate());
-				}
-			}
+                } else {
+                    new Installment(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate());
+                }
+            }
 
-		}
-	}
+        }
+    }
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void delete(final PaymentPlan paymentPlan) {
-		paymentPlan.delete();
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void delete(final PaymentPlan paymentPlan) {
+        paymentPlan.delete();
+    }
 
 }

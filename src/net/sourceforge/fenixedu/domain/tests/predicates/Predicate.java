@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 
 public interface Predicate extends Serializable {
-	public abstract boolean evaluate(NewQuestion question, Person person);
+    public abstract boolean evaluate(NewQuestion question, Person person);
 
-	public abstract boolean uses(Object object);
+    public abstract boolean uses(Object object);
 
-	public abstract boolean isComposite();
+    public abstract boolean isComposite();
 
-	public abstract Predicate transform(HashMap<Object, Object> transformMap);
+    public abstract Predicate transform(HashMap<Object, Object> transformMap);
 }

@@ -24,137 +24,137 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 
-	private boolean showMandatoryQuestions = true;
-	private boolean extraColumn = false;
+    private boolean showMandatoryQuestions = true;
+    private boolean extraColumn = false;
 
-	public void setShowMandatoryQuestions(boolean showMandatoryQuestions) {
-		this.showMandatoryQuestions = showMandatoryQuestions;
-	}
+    public void setShowMandatoryQuestions(boolean showMandatoryQuestions) {
+        this.showMandatoryQuestions = showMandatoryQuestions;
+    }
 
-	public boolean isShowMandatoryQuestions() {
-		return showMandatoryQuestions;
-	}
+    public boolean isShowMandatoryQuestions() {
+        return showMandatoryQuestions;
+    }
 
-	public void setExtraColumn(boolean extraColumn) {
-		this.extraColumn = extraColumn;
-	}
+    public void setExtraColumn(boolean extraColumn) {
+        this.extraColumn = extraColumn;
+    }
 
-	public boolean isExtraColumn() {
-		return extraColumn;
-	}
+    public boolean isExtraColumn() {
+        return extraColumn;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new InquiryQuestionLayout(object);
-	}
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        return new InquiryQuestionLayout(object);
+    }
 
-	protected abstract void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult);
+    protected abstract void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult);
 
-	protected class InquiryQuestionLayout extends Layout {
+    protected class InquiryQuestionLayout extends Layout {
 
-		public InquiryQuestionLayout(Object object) {
-		}
+        public InquiryQuestionLayout(Object object) {
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			HtmlBlockContainer blockContainer = new HtmlBlockContainer();
-			final HtmlTable mainTable = new HtmlTable();
-			mainTable.setClasses("tstyle1 thlight tdcenter");
-			mainTable.setStyle("margin-bottom: 0;");
-			blockContainer.addChild(mainTable);
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            HtmlBlockContainer blockContainer = new HtmlBlockContainer();
+            final HtmlTable mainTable = new HtmlTable();
+            mainTable.setClasses("tstyle1 thlight tdcenter");
+            mainTable.setStyle("margin-bottom: 0;");
+            blockContainer.addChild(mainTable);
 
-			HtmlTableRow headerRow = mainTable.createRow();
-			createHeader(object, headerRow);
+            HtmlTableRow headerRow = mainTable.createRow();
+            createHeader(object, headerRow);
 
-			buildTableBody(mainTable, object, 0);
-			return blockContainer;
-		}
-	}
+            buildTableBody(mainTable, object, 0);
+            return blockContainer;
+        }
+    }
 
-	protected void buildTableBody(final HtmlTable mainTable, Object object, int rowSpan) {
-		List<BlockResumeResult> blocksResume = (List<BlockResumeResult>) object;
-		boolean createFirstCellBeforeCommonBody = isExtraColumn();
-		for (BlockResumeResult blockResumeResult : blocksResume) {
-			Set<InquiryResult> blocksResults = blockResumeResult.getResultBlocks();
+    protected void buildTableBody(final HtmlTable mainTable, Object object, int rowSpan) {
+        List<BlockResumeResult> blocksResume = (List<BlockResumeResult>) object;
+        boolean createFirstCellBeforeCommonBody = isExtraColumn();
+        for (BlockResumeResult blockResumeResult : blocksResume) {
+            Set<InquiryResult> blocksResults = blockResumeResult.getResultBlocks();
 
-			HtmlTableRow tableRow = mainTable.createRow();
-			if (createFirstCellBeforeCommonBody) {
-				createFirstCellBeforeCommonBody(rowSpan, blockResumeResult, tableRow);
-				createFirstCellBeforeCommonBody = false;
-			}
-			createRegularLine(blockResumeResult, blocksResults, tableRow);
-		}
-	}
+            HtmlTableRow tableRow = mainTable.createRow();
+            if (createFirstCellBeforeCommonBody) {
+                createFirstCellBeforeCommonBody(rowSpan, blockResumeResult, tableRow);
+                createFirstCellBeforeCommonBody = false;
+            }
+            createRegularLine(blockResumeResult, blocksResults, tableRow);
+        }
+    }
 
-	protected void createRegularLine(BlockResumeResult blockResumeResult, Set<InquiryResult> blocksResults, HtmlTableRow tableRow) {
-		createFirstPartRegularLine(blockResumeResult, tableRow);
+    protected void createRegularLine(BlockResumeResult blockResumeResult, Set<InquiryResult> blocksResults, HtmlTableRow tableRow) {
+        createFirstPartRegularLine(blockResumeResult, tableRow);
 
-		int iter = 0;
-		List<Integer> mandatoryIssues = blockResumeResult.getMandatoryIssues();
-		for (InquiryResult inquiryResult : blocksResults) {
-			HtmlTableCell curricularCell = tableRow.createCell();
-			String presentNumberOfIssues = "";
-			if (isShowMandatoryQuestions()) {
-				String numberOfIssues = mandatoryIssues.get(iter) != 0 ? String.valueOf(mandatoryIssues.get(iter)) : "-";
-				presentNumberOfIssues = " (" + numberOfIssues + ")";
-			}
-			HtmlText bodyText = new HtmlText(getColoredBar(inquiryResult) + presentNumberOfIssues + "</div>");
-			bodyText.setEscaped(false);
-			curricularCell.setBody(bodyText);
-			curricularCell.setClasses("col-bar");
-			iter++;
-		}
+        int iter = 0;
+        List<Integer> mandatoryIssues = blockResumeResult.getMandatoryIssues();
+        for (InquiryResult inquiryResult : blocksResults) {
+            HtmlTableCell curricularCell = tableRow.createCell();
+            String presentNumberOfIssues = "";
+            if (isShowMandatoryQuestions()) {
+                String numberOfIssues = mandatoryIssues.get(iter) != 0 ? String.valueOf(mandatoryIssues.get(iter)) : "-";
+                presentNumberOfIssues = " (" + numberOfIssues + ")";
+            }
+            HtmlText bodyText = new HtmlText(getColoredBar(inquiryResult) + presentNumberOfIssues + "</div>");
+            bodyText.setEscaped(false);
+            curricularCell.setBody(bodyText);
+            curricularCell.setClasses("col-bar");
+            iter++;
+        }
 
-		createFinalCells(tableRow, blockResumeResult);
-	}
+        createFinalCells(tableRow, blockResumeResult);
+    }
 
-	protected void createFirstPartRegularLine(BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
-		HtmlTableCell firstCell = tableRow.createCell();
-		firstCell.setBody(new HtmlText(blockResumeResult.getFirstPresentationName()));
-		firstCell.setClasses(getFirstColClass());
-	}
+    protected void createFirstPartRegularLine(BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
+        HtmlTableCell firstCell = tableRow.createCell();
+        firstCell.setBody(new HtmlText(blockResumeResult.getFirstPresentationName()));
+        firstCell.setClasses(getFirstColClass());
+    }
 
-	protected String getColoredBar(InquiryResult inquiryResult) {
-		StringBuilder sb = new StringBuilder("<div class='");
-		sb.append("bar-").append(inquiryResult.getResultClassification().name().toLowerCase());
-		sb.append("'><div>&nbsp;</div>");
-		return sb.toString();
-	}
+    protected String getColoredBar(InquiryResult inquiryResult) {
+        StringBuilder sb = new StringBuilder("<div class='");
+        sb.append("bar-").append(inquiryResult.getResultClassification().name().toLowerCase());
+        sb.append("'><div>&nbsp;</div>");
+        return sb.toString();
+    }
 
-	protected void createHeader(Object object, final HtmlTableRow headerRow) {
-		List<BlockResumeResult> blockResumeResults = (List<BlockResumeResult>) object;
-		if (!blockResumeResults.isEmpty()) {
-			BlockResumeResult blocksResume = blockResumeResults.get(0);
+    protected void createHeader(Object object, final HtmlTableRow headerRow) {
+        List<BlockResumeResult> blockResumeResults = (List<BlockResumeResult>) object;
+        if (!blockResumeResults.isEmpty()) {
+            BlockResumeResult blocksResume = blockResumeResults.get(0);
 
-			final Set<InquiryResult> blocksResults = blocksResume.getResultBlocks();
+            final Set<InquiryResult> blocksResults = blocksResume.getResultBlocks();
 
-			createFirstPartRegularHeader(headerRow, blocksResume);
+            createFirstPartRegularHeader(headerRow, blocksResume);
 
-			for (InquiryResult inquiryResult : blocksResults) {
-				final HtmlTableCell firstGrouptInnerCell = headerRow.createCell(CellType.HEADER);
-				firstGrouptInnerCell.setBody(new HtmlText(inquiryResult.getInquiryQuestion().getLabel().toString()));
-				firstGrouptInnerCell.setClasses("col-bar");
-			}
+            for (InquiryResult inquiryResult : blocksResults) {
+                final HtmlTableCell firstGrouptInnerCell = headerRow.createCell(CellType.HEADER);
+                firstGrouptInnerCell.setBody(new HtmlText(inquiryResult.getInquiryQuestion().getLabel().toString()));
+                firstGrouptInnerCell.setClasses("col-bar");
+            }
 
-			createHeaderFinalCells(headerRow);
-		}
-	}
+            createHeaderFinalCells(headerRow);
+        }
+    }
 
-	protected void createFirstPartRegularHeader(final HtmlTableRow headerRow, BlockResumeResult blocksResume) {
-		final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
-		firstHeaderCell.setBody(new HtmlText(blocksResume.getFirstHeaderName()));
-		firstHeaderCell.setClasses(getFirstColClass());
-	}
+    protected void createFirstPartRegularHeader(final HtmlTableRow headerRow, BlockResumeResult blocksResume) {
+        final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
+        firstHeaderCell.setBody(new HtmlText(blocksResume.getFirstHeaderName()));
+        firstHeaderCell.setClasses(getFirstColClass());
+    }
 
-	protected void createHeaderFinalCells(final HtmlTableRow headerRow) {
-		final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
-		finalCell.setClasses("col-actions");
-	}
+    protected void createHeaderFinalCells(final HtmlTableRow headerRow) {
+        final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
+        finalCell.setClasses("col-actions");
+    }
 
-	protected void createFirstCellBeforeCommonBody(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
-	}
+    protected void createFirstCellBeforeCommonBody(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
+    }
 
-	protected String getFirstColClass() {
-		return "col-first";
-	}
+    protected String getFirstColClass() {
+        return "col-first";
+    }
 }

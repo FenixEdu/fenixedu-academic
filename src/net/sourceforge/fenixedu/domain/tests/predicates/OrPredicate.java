@@ -7,26 +7,26 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 
 public class OrPredicate extends CompositePredicate implements Predicate {
 
-	public OrPredicate() {
-		super();
-	}
+    public OrPredicate() {
+        super();
+    }
 
-	@Override
-	public boolean evaluate(NewQuestion question, Person person) {
-		for (Predicate predicate : this.getPredicates()) {
-			if (predicate.evaluate(question, person)) {
-				return true;
-			}
-		}
+    @Override
+    public boolean evaluate(NewQuestion question, Person person) {
+        for (Predicate predicate : this.getPredicates()) {
+            if (predicate.evaluate(question, person)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public Predicate transform(HashMap<Object, Object> transformMap) {
-		OrPredicate orPredicate = new OrPredicate();
+    @Override
+    public Predicate transform(HashMap<Object, Object> transformMap) {
+        OrPredicate orPredicate = new OrPredicate();
 
-		return initCopy(transformMap, this, orPredicate);
-	}
+        return initCopy(transformMap, this, orPredicate);
+    }
 
 }

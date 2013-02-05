@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class ValidateAlumniIdentity extends AlumniNotificationService {
 
-	public void run(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
-		identityRequest.validate(approval, operator);
-		sendIdentityCheckEmail(identityRequest, approval);
-	}
+    public void run(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
+        identityRequest.validate(approval, operator);
+        sendIdentityCheckEmail(identityRequest, approval);
+    }
 
-	public void run(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
-		alumniPerson.setSocialSecurityNumber(identityRequest.getSocialSecurityNumber());
-	}
+    public void run(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
+        alumniPerson.setSocialSecurityNumber(identityRequest.getSocialSecurityNumber());
+    }
 
 }

@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 
 public class DeleteTest extends FenixService {
 
-	public void run(final Integer executionCourseId, final Integer testId) throws InvalidArgumentsServiceException {
-		Test test = rootDomainObject.readTestByOID(testId);
-		test.delete();
-	}
+    public void run(final Integer executionCourseId, final Integer testId) throws InvalidArgumentsServiceException {
+        Test test = rootDomainObject.readTestByOID(testId);
+        test.delete();
+    }
 
 }

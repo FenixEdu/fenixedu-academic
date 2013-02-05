@@ -29,123 +29,120 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/editMarkSheet",
-		module = "academicAdministration",
-		formBean = "markSheetManagementForm",
-		input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
+@Mapping(path = "/editMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
+        input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
 @Forwards({ @Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"),
-		@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
+        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
 // @Forward(name = "editArchiveInformation", path =
 // "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
 // })
 public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
-	public ActionForward prepareEditMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		MarkSheetManagementEditBean editBean = new MarkSheetManagementEditBean();
-		fillMarkSheetBean(actionForm, request, editBean);
+        MarkSheetManagementEditBean editBean = new MarkSheetManagementEditBean();
+        fillMarkSheetBean(actionForm, request, editBean);
 
-		DynaActionForm form = (DynaActionForm) actionForm;
-		Integer markSheetID = (Integer) form.get("msID");
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer markSheetID = (Integer) form.get("msID");
 
-		MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
 
-		editBean.setTeacherId(markSheet.getResponsibleTeacher().getPerson().getIstUsername());
-		editBean.setEvaluationDate(markSheet.getEvaluationDateDateTime().toDate());
-		editBean.setMarkSheet(markSheet);
-		editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(markSheet));
-		if (markSheet.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
-			editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(markSheet));
-		}
-		return mapping.findForward("editMarkSheet");
-	}
+        editBean.setTeacherId(markSheet.getResponsibleTeacher().getPerson().getIstUsername());
+        editBean.setEvaluationDate(markSheet.getEvaluationDateDateTime().toDate());
+        editBean.setMarkSheet(markSheet);
+        editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(markSheet));
+        if (markSheet.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
+            editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(markSheet));
+        }
+        return mapping.findForward("editMarkSheet");
+    }
 
-	public ActionForward updateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward updateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
-		request.setAttribute("edit", editBean);
+        MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
+        request.setAttribute("edit", editBean);
 
-		ActionMessages actionMessages = createActionMessages();
+        ActionMessages actionMessages = createActionMessages();
 
-		checkIfTeacherIsResponsibleOrCoordinator(editBean.getCurricularCourse(), editBean.getExecutionPeriod(),
-				editBean.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(),
-				actionMessages);
+        checkIfTeacherIsResponsibleOrCoordinator(editBean.getCurricularCourse(), editBean.getExecutionPeriod(),
+                editBean.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(),
+                actionMessages);
 
-		checkIfEvaluationDateIsInExamsPeriod(editBean.getDegreeCurricularPlan(), editBean.getExecutionPeriod(),
-				editBean.getEvaluationDate(), editBean.getMarkSheet().getMarkSheetType(), request, actionMessages);
+        checkIfEvaluationDateIsInExamsPeriod(editBean.getDegreeCurricularPlan(), editBean.getExecutionPeriod(),
+                editBean.getEvaluationDate(), editBean.getMarkSheet().getMarkSheetType(), request, actionMessages);
 
-		if (actionMessages.isEmpty()) {
-			try {
-				EditMarkSheet.run(editBean.getMarkSheet(), editBean.getTeacher(), editBean.getEvaluationDate());
+        if (actionMessages.isEmpty()) {
+            try {
+                EditMarkSheet.run(editBean.getMarkSheet(), editBean.getTeacher(), editBean.getEvaluationDate());
 
-				editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(editBean.getMarkSheet()));
-				RenderUtils.invalidateViewState("edit-marksheet-enrolments");
+                editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(editBean.getMarkSheet()));
+                RenderUtils.invalidateViewState("edit-marksheet-enrolments");
 
-				editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(editBean.getMarkSheet()));
-				RenderUtils.invalidateViewState("append-enrolments");
+                editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(editBean.getMarkSheet()));
+                RenderUtils.invalidateViewState("append-enrolments");
 
-			} catch (InvalidArgumentsServiceException e) {
-				addMessage(request, actionMessages, e.getMessage());
-			} catch (DomainException e) {
-				addMessage(request, actionMessages, e.getMessage(), e.getArgs());
-			}
-		}
-		return mapping.findForward("editMarkSheet");
-	}
+            } catch (InvalidArgumentsServiceException e) {
+                addMessage(request, actionMessages, e.getMessage());
+            } catch (DomainException e) {
+                addMessage(request, actionMessages, e.getMessage(), e.getArgs());
+            }
+        }
+        return mapping.findForward("editMarkSheet");
+    }
 
-	public ActionForward editMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward editMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
+        MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
 
-		ActionMessages actionMessages = createActionMessages();
-		try {
-			EditMarkSheet.run(editBean);
-			return mapping.findForward("searchMarkSheetFilled");
+        ActionMessages actionMessages = createActionMessages();
+        try {
+            EditMarkSheet.run(editBean);
+            return mapping.findForward("searchMarkSheetFilled");
 
-		} catch (InvalidArgumentsServiceException e) {
-			addMessage(request, actionMessages, e.getMessage());
-		} catch (DomainException e) {
-			addMessage(request, actionMessages, e.getMessage(), e.getArgs());
-		}
+        } catch (InvalidArgumentsServiceException e) {
+            addMessage(request, actionMessages, e.getMessage());
+        } catch (DomainException e) {
+            addMessage(request, actionMessages, e.getMessage(), e.getArgs());
+        }
 
-		request.setAttribute("edit", editBean);
-		return mapping.findForward("editMarkSheet");
-	}
+        request.setAttribute("edit", editBean);
+        return mapping.findForward("editMarkSheet");
+    }
 
-	private MarkSheetManagementEditBean getMarkSheetManagementEditBean() {
-		return (MarkSheetManagementEditBean) RenderUtils.getViewState("edit-markSheet").getMetaObject().getObject();
-	}
+    private MarkSheetManagementEditBean getMarkSheetManagementEditBean() {
+        return (MarkSheetManagementEditBean) RenderUtils.getViewState("edit-markSheet").getMetaObject().getObject();
+    }
 
-	private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToEdit(MarkSheet markSheet) {
-		Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToEdit =
-				new HashSet<MarkSheetEnrolmentEvaluationBean>();
-		for (EnrolmentEvaluation enrolmentEvaluation : markSheet.getEnrolmentEvaluationsSet()) {
-			MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
-			enrolmentEvaluationBean.setGradeValue(enrolmentEvaluation.getGradeValue());
-			enrolmentEvaluationBean.setEvaluationDate(enrolmentEvaluation.getExamDate());
-			enrolmentEvaluationBean.setEnrolment(enrolmentEvaluation.getEnrolment());
-			enrolmentEvaluationBean.setEnrolmentEvaluation(enrolmentEvaluation);
-			enrolmentEvaluationBeansToEdit.add(enrolmentEvaluationBean);
-		}
-		return enrolmentEvaluationBeansToEdit;
-	}
+    private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToEdit(MarkSheet markSheet) {
+        Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToEdit =
+                new HashSet<MarkSheetEnrolmentEvaluationBean>();
+        for (EnrolmentEvaluation enrolmentEvaluation : markSheet.getEnrolmentEvaluationsSet()) {
+            MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
+            enrolmentEvaluationBean.setGradeValue(enrolmentEvaluation.getGradeValue());
+            enrolmentEvaluationBean.setEvaluationDate(enrolmentEvaluation.getExamDate());
+            enrolmentEvaluationBean.setEnrolment(enrolmentEvaluation.getEnrolment());
+            enrolmentEvaluationBean.setEnrolmentEvaluation(enrolmentEvaluation);
+            enrolmentEvaluationBeansToEdit.add(enrolmentEvaluationBean);
+        }
+        return enrolmentEvaluationBeansToEdit;
+    }
 
-	private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToAppend(MarkSheet markSheet) {
-		Collection<Enrolment> enrolments =
-				markSheet.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(markSheet.getMarkSheetType(),
-						markSheet.getExecutionPeriod());
-		Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppend =
-				new HashSet<MarkSheetEnrolmentEvaluationBean>();
-		for (Enrolment enrolment : enrolments) {
-			MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
-			markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
-			markSheetEnrolmentEvaluationBean.setEvaluationDate(markSheet.getEvaluationDate());
-			enrolmentEvaluationBeansToAppend.add(markSheetEnrolmentEvaluationBean);
-		}
-		return enrolmentEvaluationBeansToAppend;
-	}
+    private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToAppend(MarkSheet markSheet) {
+        Collection<Enrolment> enrolments =
+                markSheet.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(markSheet.getMarkSheetType(),
+                        markSheet.getExecutionPeriod());
+        Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppend =
+                new HashSet<MarkSheetEnrolmentEvaluationBean>();
+        for (Enrolment enrolment : enrolments) {
+            MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
+            markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
+            markSheetEnrolmentEvaluationBean.setEvaluationDate(markSheet.getEvaluationDate());
+            enrolmentEvaluationBeansToAppend.add(markSheetEnrolmentEvaluationBean);
+        }
+        return enrolmentEvaluationBeansToAppend;
+    }
 }

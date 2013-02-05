@@ -16,97 +16,97 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 
-	@Override
-	protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
-			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-		return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-	}
+    @Override
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+    }
 
-	@Override
-	protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-	}
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
 
-	/**
-	 * -> if getDegree() == null ? getBolonhaDegreeType() == null ? any degree
-	 * from IST ? getBolonhaDegreeType() != null ? any degree with same
-	 * DegreeType -> else ? check selected degree -> if departmentUnit != null ?
-	 * CurricularCourse from CompetenceCourse that belong to that Department
-	 */
-	@Override
-	protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
-			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+    /**
+     * -> if getDegree() == null ? getBolonhaDegreeType() == null ? any degree
+     * from IST ? getBolonhaDegreeType() != null ? any degree with same
+     * DegreeType -> else ? check selected degree -> if departmentUnit != null ?
+     * CurricularCourse from CompetenceCourse that belong to that Department
+     */
+    @Override
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
-		final AnyCurricularCourse rule = (AnyCurricularCourse) curricularRule;
+        final AnyCurricularCourse rule = (AnyCurricularCourse) curricularRule;
 
-		if (!rule.appliesToContext(sourceDegreeModuleToEvaluate.getContext())) {
-			return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-		}
+        if (!rule.appliesToContext(sourceDegreeModuleToEvaluate.getContext())) {
+            return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+        }
 
-		final CurricularCourse curricularCourseToEnrol;
-		if (sourceDegreeModuleToEvaluate.isEnroling()) {
-			final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol =
-					(OptionalDegreeModuleToEnrol) sourceDegreeModuleToEvaluate;
-			curricularCourseToEnrol = optionalDegreeModuleToEnrol.getCurricularCourse();
+        final CurricularCourse curricularCourseToEnrol;
+        if (sourceDegreeModuleToEvaluate.isEnroling()) {
+            final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol =
+                    (OptionalDegreeModuleToEnrol) sourceDegreeModuleToEvaluate;
+            curricularCourseToEnrol = optionalDegreeModuleToEnrol.getCurricularCourse();
 
-			if (isApproved(enrolmentContext, curricularCourseToEnrol) || isEnroled(enrolmentContext, curricularCourseToEnrol)
-					|| isApproved(enrolmentContext, optionalDegreeModuleToEnrol.getCurricularCourse())
-					|| isEnroled(enrolmentContext, optionalDegreeModuleToEnrol.getCurricularCourse())) {
+            if (isApproved(enrolmentContext, curricularCourseToEnrol) || isEnroled(enrolmentContext, curricularCourseToEnrol)
+                    || isApproved(enrolmentContext, optionalDegreeModuleToEnrol.getCurricularCourse())
+                    || isEnroled(enrolmentContext, optionalDegreeModuleToEnrol.getCurricularCourse())) {
 
-				return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-						"curricularRules.ruleExecutors.AnyCurricularCourseExecutor.already.approved.or.enroled",
-						curricularCourseToEnrol.getName(), rule.getDegreeModuleToApplyRule().getName());
-			}
+                return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                        "curricularRules.ruleExecutors.AnyCurricularCourseExecutor.already.approved.or.enroled",
+                        curricularCourseToEnrol.getName(), rule.getDegreeModuleToApplyRule().getName());
+            }
 
-		} else if (sourceDegreeModuleToEvaluate.isEnroled()) {
-			curricularCourseToEnrol =
-					(CurricularCourse) ((EnroledOptionalEnrolment) sourceDegreeModuleToEvaluate).getCurriculumModule()
-							.getDegreeModule();
-		} else {
-			throw new DomainException(
-					"error.curricularRules.executors.ruleExecutors.AnyCurricularCourseExecutor.unexpected.degree.module.to.evaluate");
-		}
+        } else if (sourceDegreeModuleToEvaluate.isEnroled()) {
+            curricularCourseToEnrol =
+                    (CurricularCourse) ((EnroledOptionalEnrolment) sourceDegreeModuleToEvaluate).getCurriculumModule()
+                            .getDegreeModule();
+        } else {
+            throw new DomainException(
+                    "error.curricularRules.executors.ruleExecutors.AnyCurricularCourseExecutor.unexpected.degree.module.to.evaluate");
+        }
 
-		final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
-		final Degree degree = curricularCourseToEnrol.getDegree();
+        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+        final Degree degree = curricularCourseToEnrol.getDegree();
 
-		boolean result = true;
+        boolean result = true;
 
-		result &=
-				rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
+        result &=
+                rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
 
-		result &=
-				rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
+        result &=
+                rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
 
-		result &=
-				rule.hasDegree() ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
-						.getBolonhaDegreeType() : true;
+        result &=
+                rule.hasDegree() ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
+                        .getBolonhaDegreeType() : true;
 
-		if (rule.hasDepartmentUnit()) {
-			final DepartmentUnit departmentUnit =
-					curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionSemester);
-			result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());
-		}
+        if (rule.hasDepartmentUnit()) {
+            final DepartmentUnit departmentUnit =
+                    curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionSemester);
+            result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());
+        }
 
-		if (result) {
-			return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-		} else {
-			if (sourceDegreeModuleToEvaluate.isEnroled()) {
-				return RuleResult.createImpossibleWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
-						CurricularRuleLabelFormatter.getLabel(rule));
-			} else {
-				return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
-						CurricularRuleLabelFormatter.getLabel(rule));
-			}
-		}
+        if (result) {
+            return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+        } else {
+            if (sourceDegreeModuleToEvaluate.isEnroled()) {
+                return RuleResult.createImpossibleWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                        CurricularRuleLabelFormatter.getLabel(rule));
+            } else {
+                return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                        CurricularRuleLabelFormatter.getLabel(rule));
+            }
+        }
 
-	}
+    }
 
-	@Override
-	protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-			EnrolmentContext enrolmentContext) {
-		return true;
-	}
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            EnrolmentContext enrolmentContext) {
+        return true;
+    }
 
 }

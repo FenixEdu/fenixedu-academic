@@ -10,20 +10,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditInsuranceValueByExecutionYearID extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static void run(Integer executionYearID, Double annualValue, Date endDate) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Integer executionYearID, Double annualValue, Date endDate) {
 
-		final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-		InsuranceValue insuranceValue = executionYear.getInsuranceValue();
+        InsuranceValue insuranceValue = executionYear.getInsuranceValue();
 
-		if (insuranceValue != null) {
-			insuranceValue.setEndDate(endDate);
-			insuranceValue.setAnnualValue(annualValue);
-		} else {
-			insuranceValue = new InsuranceValue(executionYear, annualValue, endDate);
-		}
-	}
+        if (insuranceValue != null) {
+            insuranceValue.setEndDate(endDate);
+            insuranceValue.setAnnualValue(annualValue);
+        } else {
+            insuranceValue = new InsuranceValue(executionYear, annualValue, endDate);
+        }
+    }
 
 }

@@ -21,15 +21,15 @@ import net.sourceforge.fenixedu.domain.Summary;
  */
 public class DeleteSummary extends FenixService {
 
-	public Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
-			throws FenixServiceException {
+    public Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
+            throws FenixServiceException {
 
-		if (summary == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        if (summary == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		summary.delete();
-		return true;
-	}
+        summary.delete();
+        return true;
+    }
 
 }

@@ -9,9 +9,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateExpectationEvaluationGroup extends FenixService {
 
-	@Checked("RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static void run(Teacher appraiser, Teacher evaluated, ExecutionYear executionYear) {
-		new ExpectationEvaluationGroup(appraiser, evaluated, executionYear);
-	}
+    @Checked("RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Teacher appraiser, Teacher evaluated, ExecutionYear executionYear) {
+        new ExpectationEvaluationGroup(appraiser, evaluated, executionYear);
+    }
 }

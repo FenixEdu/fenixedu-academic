@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class WrittenTestPredicates {
 
-	public static final AccessControlPredicate<WrittenTest> changeDatePredicate = new AccessControlPredicate<WrittenTest>() {
-		@Override
-		public boolean evaluate(WrittenTest writtenTest) {
-			final IUserView requestor = AccessControl.getUserView();
-			return requestor != null;
-		}
-	};
+    public static final AccessControlPredicate<WrittenTest> changeDatePredicate = new AccessControlPredicate<WrittenTest>() {
+        @Override
+        public boolean evaluate(WrittenTest writtenTest) {
+            final IUserView requestor = AccessControl.getUserView();
+            return requestor != null;
+        }
+    };
 
 }

@@ -16,26 +16,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TutorshipMonitoringExecutionYearProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
-		return getExecutionYears(bean);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
+        return getExecutionYears(bean);
+    }
 
-	public static List<ExecutionYear> getExecutionYears(StudentsPerformanceInfoBean bean) {
-		List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-		for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
-			if (year.isAfterOrEquals(bean.getStudentsEntryYear())) {
-				executionYears.add(year);
-			}
-		}
-		Collections.sort(executionYears, new ReverseComparator());
-		return executionYears;
-	}
+    public static List<ExecutionYear> getExecutionYears(StudentsPerformanceInfoBean bean) {
+        List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
+        for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
+            if (year.isAfterOrEquals(bean.getStudentsEntryYear())) {
+                executionYears.add(year);
+            }
+        }
+        Collections.sort(executionYears, new ReverseComparator());
+        return executionYears;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

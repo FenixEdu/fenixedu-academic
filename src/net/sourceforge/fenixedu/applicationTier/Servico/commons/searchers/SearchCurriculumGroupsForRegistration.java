@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class SearchCurriculumGroupsForRegistration extends FenixService implements AutoCompleteSearchService {
 
-	@Override
-	public Collection<CurriculumGroup> run(Class type, String value, int limit, Map<String, String> arguments) {
-		return getRegistration(arguments).getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups();
-	}
+    @Override
+    public Collection<CurriculumGroup> run(Class type, String value, int limit, Map<String, String> arguments) {
+        return getRegistration(arguments).getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups();
+    }
 
-	private Registration getRegistration(Map<String, String> arguments) {
-		return Registration.fromExternalId(arguments.get("registrationID"));
-	}
+    private Registration getRegistration(Map<String, String> arguments) {
+        return Registration.fromExternalId(arguments.get("registrationID"));
+    }
 
 }

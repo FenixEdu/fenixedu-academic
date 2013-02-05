@@ -17,44 +17,44 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
  */
 public class InvalidReimbursementValueSumServiceException extends InvalidArgumentsServiceException {
 
-	/**
+    /**
      *  
      */
-	public InvalidReimbursementValueSumServiceException() {
+    public InvalidReimbursementValueSumServiceException() {
 
-	}
+    }
 
-	/**
-	 * @param s
-	 */
-	public InvalidReimbursementValueSumServiceException(String s) {
-		super(s);
+    /**
+     * @param s
+     */
+    public InvalidReimbursementValueSumServiceException(String s) {
+        super(s);
 
-	}
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidReimbursementValueSumServiceException(Throwable cause) {
-		super(cause);
+    /**
+     * @param cause
+     */
+    public InvalidReimbursementValueSumServiceException(Throwable cause) {
+        super(cause);
 
-	}
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidReimbursementValueSumServiceException(String message, Throwable cause) {
-		super(message, cause);
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidReimbursementValueSumServiceException(String message, Throwable cause) {
+        super(message, cause);
 
-	}
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InvalidReimbursementValueSumServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InvalidReimbursementValueSumServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

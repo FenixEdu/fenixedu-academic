@@ -13,27 +13,27 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 public class GrantContractEndDateBeforeBeginDateException extends FenixServiceException {
 
-	public GrantContractEndDateBeforeBeginDateException() {
-	}
+    public GrantContractEndDateBeforeBeginDateException() {
+    }
 
-	public GrantContractEndDateBeforeBeginDateException(String message) {
-		super(message);
-	}
+    public GrantContractEndDateBeforeBeginDateException(String message) {
+        super(message);
+    }
 
-	public GrantContractEndDateBeforeBeginDateException(Throwable cause) {
-		super(cause);
-	}
+    public GrantContractEndDateBeforeBeginDateException(Throwable cause) {
+        super(cause);
+    }
 
-	public GrantContractEndDateBeforeBeginDateException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public GrantContractEndDateBeforeBeginDateException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[GrantContractEndDateBeforeBeginDateException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[GrantContractEndDateBeforeBeginDateException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

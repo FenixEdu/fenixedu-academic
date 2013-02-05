@@ -16,15 +16,15 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/retrievePersonalPhoto", module = "publico")
 public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAction {
-	public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		Person person = AbstractDomainObject.fromExternalId(request.getParameter("personId"));
-		return retrievePhotograph(request, response, person);
-	}
+    public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        Person person = AbstractDomainObject.fromExternalId(request.getParameter("personId"));
+        return retrievePhotograph(request, response, person);
+    }
 
-	public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		User user = User.readUserByUserUId(request.getParameter("istId"));
-		return retrievePhotograph(request, response, user.getPerson());
-	}
+    public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        User user = User.readUserByUserUId(request.getParameter("istId"));
+        return retrievePhotograph(request, response, user.getPerson());
+    }
 }

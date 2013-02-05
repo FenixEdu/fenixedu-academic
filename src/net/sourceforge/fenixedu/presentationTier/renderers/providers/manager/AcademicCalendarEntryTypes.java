@@ -19,35 +19,35 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AcademicCalendarEntryTypes implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		List<Class<? extends AcademicCalendarEntry>> result = new ArrayList<Class<? extends AcademicCalendarEntry>>();
-		CalendarEntryBean bean = (CalendarEntryBean) source;
+        List<Class<? extends AcademicCalendarEntry>> result = new ArrayList<Class<? extends AcademicCalendarEntry>>();
+        CalendarEntryBean bean = (CalendarEntryBean) source;
 
-		if (bean.getEntry() != null && bean.getEntry().isRoot()) {
+        if (bean.getEntry() != null && bean.getEntry().isRoot()) {
 
-			result.add(AcademicYearCE.class);
-			result.add(AcademicSemesterCE.class);
-			result.add(AcademicTrimesterCE.class);
+            result.add(AcademicYearCE.class);
+            result.add(AcademicSemesterCE.class);
+            result.add(AcademicTrimesterCE.class);
 
-		} else if (bean.getEntry() != null) {
+        } else if (bean.getEntry() != null) {
 
-			result.add(AcademicSemesterCE.class);
-			result.add(AcademicTrimesterCE.class);
-			result.add(LessonsPeriodCE.class);
-			result.add(EnrolmentsPeriodCE.class);
-			result.add(ExamsPeriodInNormalSeasonCE.class);
-			result.add(ExamsPeriodInSpecialSeasonCE.class);
-			result.add(GradeSubmissionInNormalSeasonCE.class);
-			result.add(GradeSubmissionInSpecialSeasonCE.class);
-		}
+            result.add(AcademicSemesterCE.class);
+            result.add(AcademicTrimesterCE.class);
+            result.add(LessonsPeriodCE.class);
+            result.add(EnrolmentsPeriodCE.class);
+            result.add(ExamsPeriodInNormalSeasonCE.class);
+            result.add(ExamsPeriodInSpecialSeasonCE.class);
+            result.add(GradeSubmissionInNormalSeasonCE.class);
+            result.add(GradeSubmissionInSpecialSeasonCE.class);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 }

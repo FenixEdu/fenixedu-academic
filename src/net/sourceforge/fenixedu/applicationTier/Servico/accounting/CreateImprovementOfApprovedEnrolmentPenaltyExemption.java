@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateImprovementOfApprovedEnrolmentPenaltyExemption {
 
-	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-	@Service
-	public static void run(final Person responsible,
-			final CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean penaltyExemptionBean) {
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+    @Service
+    public static void run(final Person responsible,
+            final CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean penaltyExemptionBean) {
 
-		new ImprovementOfApprovedEnrolmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
-				(ImprovementOfApprovedEnrolmentEvent) penaltyExemptionBean.getEvent(), responsible,
-				penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
-	}
+        new ImprovementOfApprovedEnrolmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
+                (ImprovementOfApprovedEnrolmentEvent) penaltyExemptionBean.getEvent(), responsible,
+                penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
+    }
 
 }

@@ -10,26 +10,26 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentPropaeudeuticEnrolments", module = "academicAdministration")
 @Forwards({ @Forward(name = "showExtraEnrolments", path = "/academicAdminOffice/showNoCourseGroupCurriculumGroupEnrolments.jsp"),
-		@Forward(name = "chooseExtraEnrolment", path = "/academicAdminOffice/chooseNoCourseGroupCurriculumGroupEnrolment.jsp"),
-		@Forward(name = "showDegreeModulesToEnrol", path = "/studentEnrolments.do?method=prepareFromExtraEnrolment")
+        @Forward(name = "chooseExtraEnrolment", path = "/academicAdminOffice/chooseNoCourseGroupCurriculumGroupEnrolment.jsp"),
+        @Forward(name = "showDegreeModulesToEnrol", path = "/studentEnrolments.do?method=prepareFromExtraEnrolment")
 
 })
 public class StudentPropaeudeuticEnrolmensDA extends NoCourseGroupCurriculumGroupEnrolmentsDA {
 
-	@Override
-	protected StudentPropaeudeuticEnrolmentsBean createNoCourseGroupEnrolmentBean(StudentCurricularPlan studentCurricularPlan,
-			ExecutionSemester executionSemester) {
-		return new StudentPropaeudeuticEnrolmentsBean(studentCurricularPlan, executionSemester);
-	}
+    @Override
+    protected StudentPropaeudeuticEnrolmentsBean createNoCourseGroupEnrolmentBean(StudentCurricularPlan studentCurricularPlan,
+            ExecutionSemester executionSemester) {
+        return new StudentPropaeudeuticEnrolmentsBean(studentCurricularPlan, executionSemester);
+    }
 
-	@Override
-	protected String getActionName() {
-		return "studentPropaeudeuticEnrolments";
-	}
+    @Override
+    protected String getActionName() {
+        return "studentPropaeudeuticEnrolments";
+    }
 
-	@Override
-	protected NoCourseGroupCurriculumGroupType getGroupType() {
-		return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
-	}
+    @Override
+    protected NoCourseGroupCurriculumGroupType getGroupType() {
+        return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
+    }
 
 }

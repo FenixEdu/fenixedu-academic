@@ -8,52 +8,52 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
-	protected SpaceOccupation() {
-		super();
-	}
+    protected SpaceOccupation() {
+        super();
+    }
 
-	public abstract Group getAccessGroup();
+    public abstract Group getAccessGroup();
 
-	public void checkPermissionsToManageSpaceOccupations() {
+    public void checkPermissionsToManageSpaceOccupations() {
 
-		Person loggedPerson = AccessControl.getPerson();
-		if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
-			return;
-		}
+        Person loggedPerson = AccessControl.getPerson();
+        if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
+            return;
+        }
 
-		final Group group = getAccessGroup();
-		if (group != null && group.isMember(loggedPerson)) {
-			return;
-		}
+        final Group group = getAccessGroup();
+        if (group != null && group.isMember(loggedPerson)) {
+            return;
+        }
 
-		throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-	}
+        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+    }
 
-	public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
+    public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
 
-		Person loggedPerson = AccessControl.getPerson();
-		final Group group = getAccessGroup();
-		if (group != null && group.isMember(loggedPerson)) {
-			return;
-		}
+        Person loggedPerson = AccessControl.getPerson();
+        final Group group = getAccessGroup();
+        if (group != null && group.isMember(loggedPerson)) {
+            return;
+        }
 
-		throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-	}
+        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+    }
 
-	public Space getSpace() {
-		return (Space) getResource();
-	}
+    public Space getSpace() {
+        return (Space) getResource();
+    }
 
-	@Override
-	public void setResource(Resource resource) {
-		super.setResource(resource);
-		if (!resource.isSpace()) {
-			throw new DomainException("error.allocation.invalid.resource.type");
-		}
-	}
+    @Override
+    public void setResource(Resource resource) {
+        super.setResource(resource);
+        if (!resource.isSpace()) {
+            throw new DomainException("error.allocation.invalid.resource.type");
+        }
+    }
 
-	@Override
-	public boolean isSpaceOccupation() {
-		return true;
-	}
+    @Override
+    public boolean isSpaceOccupation() {
+        return true;
+    }
 }

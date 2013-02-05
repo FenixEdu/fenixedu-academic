@@ -10,17 +10,17 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class LessonTypesToComplexSummariesManagementProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		NextPossibleSummaryLessonsAndDatesBean bean = (NextPossibleSummaryLessonsAndDatesBean) source;
-		if (bean.getLesson() != null) {
-			return bean.getLesson().getShift().getTypes();
-		}
-		return new ArrayList<ShiftType>();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        NextPossibleSummaryLessonsAndDatesBean bean = (NextPossibleSummaryLessonsAndDatesBean) source;
+        if (bean.getLesson() != null) {
+            return bean.getLesson().getShift().getTypes();
+        }
+        return new ArrayList<ShiftType>();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 }

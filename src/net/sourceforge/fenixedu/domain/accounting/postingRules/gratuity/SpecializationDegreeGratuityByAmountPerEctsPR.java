@@ -16,104 +16,104 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class SpecializationDegreeGratuityByAmountPerEctsPR extends SpecializationDegreeGratuityByAmountPerEctsPR_Base {
 
-	public static class SpecializationDegreeGratuityByAmountPerEctsPREditor extends SpecializationDegreeGratuityPREditor {
+    public static class SpecializationDegreeGratuityByAmountPerEctsPREditor extends SpecializationDegreeGratuityPREditor {
 
-		private Money specializationDegreeAmountPerEctsCredit;
+        private Money specializationDegreeAmountPerEctsCredit;
 
-		private SpecializationDegreeGratuityByAmountPerEctsPREditor() {
-			super();
-		}
+        private SpecializationDegreeGratuityByAmountPerEctsPREditor() {
+            super();
+        }
 
-		public Money getSpecializationDegreeAmountPerEctsCredit() {
-			return specializationDegreeAmountPerEctsCredit;
-		}
+        public Money getSpecializationDegreeAmountPerEctsCredit() {
+            return specializationDegreeAmountPerEctsCredit;
+        }
 
-		public void setSpecializationDegreeAmountPerEctsCredit(final Money specializationDegreeAmountPerEctsCredit) {
-			this.specializationDegreeAmountPerEctsCredit = specializationDegreeAmountPerEctsCredit;
-		}
+        public void setSpecializationDegreeAmountPerEctsCredit(final Money specializationDegreeAmountPerEctsCredit) {
+            this.specializationDegreeAmountPerEctsCredit = specializationDegreeAmountPerEctsCredit;
+        }
 
-		@Override
-		public Object execute() {
-			return ((SpecializationDegreeGratuityByAmountPerEctsPR) getSpecializationDegreeGratuityPR()).edit(getBeginDate(),
-					getSpecializationDegreeTotalAmount(), getSpecializationDegreeAmountPerEctsCredit(),
-					getSpecializationDegreePartialAcceptedPercentage());
-		}
+        @Override
+        public Object execute() {
+            return ((SpecializationDegreeGratuityByAmountPerEctsPR) getSpecializationDegreeGratuityPR()).edit(getBeginDate(),
+                    getSpecializationDegreeTotalAmount(), getSpecializationDegreeAmountPerEctsCredit(),
+                    getSpecializationDegreePartialAcceptedPercentage());
+        }
 
-		public static SpecializationDegreeGratuityByAmountPerEctsPREditor buildFrom(
-				final SpecializationDegreeGratuityByAmountPerEctsPR rule) {
-			final SpecializationDegreeGratuityByAmountPerEctsPREditor result =
-					new SpecializationDegreeGratuityByAmountPerEctsPREditor();
-			init(rule, result);
-			result.setSpecializationDegreeAmountPerEctsCredit(rule.getSpecializationDegreeAmountPerEctsCredit());
+        public static SpecializationDegreeGratuityByAmountPerEctsPREditor buildFrom(
+                final SpecializationDegreeGratuityByAmountPerEctsPR rule) {
+            final SpecializationDegreeGratuityByAmountPerEctsPREditor result =
+                    new SpecializationDegreeGratuityByAmountPerEctsPREditor();
+            init(rule, result);
+            result.setSpecializationDegreeAmountPerEctsCredit(rule.getSpecializationDegreeAmountPerEctsCredit());
 
-			return result;
-		}
+            return result;
+        }
 
-		static private void init(final SpecializationDegreeGratuityPR o1, final SpecializationDegreeGratuityPREditor o2) {
-			o2.setSpecializationDegreeGratuityPR(o1);
-			o2.setSpecializationDegreePartialAcceptedPercentage(o1.getSpecializationDegreePartialAcceptedPercentage());
-			o2.setSpecializationDegreeTotalAmount(o1.getSpecializationDegreeTotalAmount());
-		}
-	}
+        static private void init(final SpecializationDegreeGratuityPR o1, final SpecializationDegreeGratuityPREditor o2) {
+            o2.setSpecializationDegreeGratuityPR(o1);
+            o2.setSpecializationDegreePartialAcceptedPercentage(o1.getSpecializationDegreePartialAcceptedPercentage());
+            o2.setSpecializationDegreeTotalAmount(o1.getSpecializationDegreeTotalAmount());
+        }
+    }
 
-	protected SpecializationDegreeGratuityByAmountPerEctsPR() {
-		super();
-	}
+    protected SpecializationDegreeGratuityByAmountPerEctsPR() {
+        super();
+    }
 
-	public SpecializationDegreeGratuityByAmountPerEctsPR(DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money specializationDegreeTotalAmount,
-			BigDecimal partialAcceptedPercentage, Money specializationDegreeAmountPerEctsCredit) {
-		super();
-		init(EntryType.GRATUITY_FEE, EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate,
-				specializationDegreeTotalAmount, partialAcceptedPercentage, specializationDegreeAmountPerEctsCredit);
-	}
+    public SpecializationDegreeGratuityByAmountPerEctsPR(DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money specializationDegreeTotalAmount,
+            BigDecimal partialAcceptedPercentage, Money specializationDegreeAmountPerEctsCredit) {
+        super();
+        init(EntryType.GRATUITY_FEE, EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate,
+                specializationDegreeTotalAmount, partialAcceptedPercentage, specializationDegreeAmountPerEctsCredit);
+    }
 
-	protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money specializationDegreeTotalAmount,
-			BigDecimal specializationDegreePartialAcceptedPercentage, Money specializationDegreeAmountPerEctsCredit) {
+    protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money specializationDegreeTotalAmount,
+            BigDecimal specializationDegreePartialAcceptedPercentage, Money specializationDegreeAmountPerEctsCredit) {
 
-		super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, specializationDegreeTotalAmount,
-				specializationDegreePartialAcceptedPercentage);
+        super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, specializationDegreeTotalAmount,
+                specializationDegreePartialAcceptedPercentage);
 
-		checkParameters(specializationDegreeAmountPerEctsCredit);
-		super.setSpecializationDegreeAmountPerEctsCredit(specializationDegreeAmountPerEctsCredit);
-	}
+        checkParameters(specializationDegreeAmountPerEctsCredit);
+        super.setSpecializationDegreeAmountPerEctsCredit(specializationDegreeAmountPerEctsCredit);
+    }
 
-	private void checkParameters(Money specializationDegreeAmountPerEctsCredit) {
-		if (specializationDegreeAmountPerEctsCredit == null) {
-			throw new DomainException(
-					"error.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR.specializationDegreeAmountPerEctsCredit.cannot.be.null");
-		}
-	}
+    private void checkParameters(Money specializationDegreeAmountPerEctsCredit) {
+        if (specializationDegreeAmountPerEctsCredit == null) {
+            throw new DomainException(
+                    "error.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR.specializationDegreeAmountPerEctsCredit.cannot.be.null");
+        }
+    }
 
-	@Override
-	public void setSpecializationDegreeAmountPerEctsCredit(Money specializationDegreeAmountPerEctsCredit) {
-		throw new DomainException(
-				"error.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR.cannot.modify.specializationDegreeAmountPerEctsCredit");
-	}
+    @Override
+    public void setSpecializationDegreeAmountPerEctsCredit(Money specializationDegreeAmountPerEctsCredit) {
+        throw new DomainException(
+                "error.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR.cannot.modify.specializationDegreeAmountPerEctsCredit");
+    }
 
-	@Override
-	protected Money calculateSpecializationDegreeGratuityTotalAmountToPay(final Event event) {
-		final Money result;
-		final double enrolmentsEctsForRegistration = ((GratuityEvent) event).getEnrolmentsEctsForRegistration();
-		result = getSpecializationDegreeAmountPerEctsCredit().multiply(new BigDecimal(enrolmentsEctsForRegistration));
+    @Override
+    protected Money calculateSpecializationDegreeGratuityTotalAmountToPay(final Event event) {
+        final Money result;
+        final double enrolmentsEctsForRegistration = ((GratuityEvent) event).getEnrolmentsEctsForRegistration();
+        result = getSpecializationDegreeAmountPerEctsCredit().multiply(new BigDecimal(enrolmentsEctsForRegistration));
 
-		return result;
-	}
+        return result;
+    }
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	public SpecializationDegreeGratuityByAmountPerEctsPR edit(Money specializationDegreeTotalAmount,
-			Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
-		return edit(new DateTime(), specializationDegreeTotalAmount, specializationDegreeAmountPerEctsCredit,
-				partialAcceptedPercentage);
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public SpecializationDegreeGratuityByAmountPerEctsPR edit(Money specializationDegreeTotalAmount,
+            Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
+        return edit(new DateTime(), specializationDegreeTotalAmount, specializationDegreeAmountPerEctsCredit,
+                partialAcceptedPercentage);
+    }
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	public SpecializationDegreeGratuityByAmountPerEctsPR edit(DateTime startDate, Money specializationDegreeTotalAmount,
-			Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
-		deactivate(startDate);
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public SpecializationDegreeGratuityByAmountPerEctsPR edit(DateTime startDate, Money specializationDegreeTotalAmount,
+            Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
+        deactivate(startDate);
 
-		return new SpecializationDegreeGratuityByAmountPerEctsPR(startDate, null, getServiceAgreementTemplate(),
-				specializationDegreeTotalAmount, partialAcceptedPercentage, specializationDegreeAmountPerEctsCredit);
-	}
+        return new SpecializationDegreeGratuityByAmountPerEctsPR(startDate, null, getServiceAgreementTemplate(),
+                specializationDegreeTotalAmount, partialAcceptedPercentage, specializationDegreeAmountPerEctsCredit);
+    }
 }

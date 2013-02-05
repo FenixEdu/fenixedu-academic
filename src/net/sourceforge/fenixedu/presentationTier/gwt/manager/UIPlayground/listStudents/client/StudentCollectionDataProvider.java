@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.gwt.manager.UIPlayground.listS
 
 public interface StudentCollectionDataProvider {
 
-	interface RowDataAcceptor {
-		void accept(String[][] rows);
+    interface RowDataAcceptor {
+        void accept(String[][] rows);
 
-		void failed(Throwable caught);
-	}
+        void failed(Throwable caught);
+    }
 
-	void updateRowData(RowDataAcceptor acceptor);
+    void updateRowData(RowDataAcceptor acceptor);
 
 }

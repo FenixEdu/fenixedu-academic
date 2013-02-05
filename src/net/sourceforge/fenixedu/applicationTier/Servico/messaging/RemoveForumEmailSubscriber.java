@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveForumEmailSubscriber extends FenixService {
 
-	@Service
-	public static void run(Forum forum, Person person) {
-		forum.removeEmailSubscriber(person);
-	}
+    @Service
+    public static void run(Forum forum, Person person) {
+        forum.removeEmailSubscriber(person);
+    }
 
 }

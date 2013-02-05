@@ -8,8 +8,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ExecuteStateOperation extends FenixService {
 
-	@Service
-	public static void run(final Operation operation, final Person person) throws FenixServiceException {
-		operation.execute(person);
-	}
+    @Service
+    public static void run(final Operation operation, final Person person) throws FenixServiceException {
+        operation.execute(person);
+    }
 }

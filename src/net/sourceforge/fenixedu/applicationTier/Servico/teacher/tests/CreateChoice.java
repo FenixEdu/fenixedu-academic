@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateChoice extends FenixService {
-	@Service
-	public static NewChoice run(NewMultipleChoiceQuestion multipleChoiceQuestion) throws FenixServiceException {
-		return new NewChoice(multipleChoiceQuestion);
-	}
+    @Service
+    public static NewChoice run(NewMultipleChoiceQuestion multipleChoiceQuestion) throws FenixServiceException {
+        return new NewChoice(multipleChoiceQuestion);
+    }
 }

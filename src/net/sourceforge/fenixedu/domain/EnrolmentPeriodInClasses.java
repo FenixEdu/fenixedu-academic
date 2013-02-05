@@ -11,10 +11,10 @@ import java.util.Date;
  */
 public class EnrolmentPeriodInClasses extends EnrolmentPeriodInClasses_Base {
 
-	public EnrolmentPeriodInClasses(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
-			final Date startDate, final Date endDate) {
-		super();
-		init(degreeCurricularPlan, executionSemester, startDate, endDate);
-	}
+    public EnrolmentPeriodInClasses(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
+            final Date startDate, final Date endDate) {
+        super();
+        init(degreeCurricularPlan, executionSemester, startDate, endDate);
+    }
 
 }

@@ -14,21 +14,21 @@ import org.apache.commons.collections.Predicate;
  * 
  */
 public class ExamsNotEnrolledPredicate implements Predicate {
-	private List examsEnrolled;
+    private List examsEnrolled;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-	 */
-	public ExamsNotEnrolledPredicate(List exams) {
-		this.examsEnrolled = exams;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+     */
+    public ExamsNotEnrolledPredicate(List exams) {
+        this.examsEnrolled = exams;
+    }
 
-	@Override
-	public boolean evaluate(Object arg0) {
+    @Override
+    public boolean evaluate(Object arg0) {
 
-		return !examsEnrolled.contains(arg0);
-	}
+        return !examsEnrolled.contains(arg0);
+    }
 
 }

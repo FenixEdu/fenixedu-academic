@@ -22,263 +22,263 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SummariesManagementBean implements Serializable {
 
-	private ExecutionCourse executionCourseReference;
+    private ExecutionCourse executionCourseReference;
 
-	private SummaryType summaryType;
+    private SummaryType summaryType;
 
-	private ShiftType lessonType;
+    private ShiftType lessonType;
 
-	private Lesson lessonReference;
+    private Lesson lessonReference;
 
-	private Shift shiftReference;
+    private Shift shiftReference;
 
-	private YearMonthDay summaryDate;
+    private YearMonthDay summaryDate;
 
-	private Partial summaryTime;
+    private Partial summaryTime;
 
-	private Professorship professorshipReference;
+    private Professorship professorshipReference;
 
-	private Teacher teacherReference;
+    private Teacher teacherReference;
 
-	private String teacherName;
+    private String teacherName;
 
-	private AllocatableSpace roomReference;
+    private AllocatableSpace roomReference;
 
-	private Integer studentsNumber;
+    private Integer studentsNumber;
 
-	private MultiLanguageString title;
+    private MultiLanguageString title;
 
-	private MultiLanguageString summaryText;
+    private MultiLanguageString summaryText;
 
-	private LessonPlanning lessonPlannigReference;
+    private LessonPlanning lessonPlannigReference;
 
-	private Summary lastSummaryReference;
+    private Summary lastSummaryReference;
 
-	private Summary summaryReference;
+    private Summary summaryReference;
 
-	private Professorship professorshipLoggedReference;
+    private Professorship professorshipLoggedReference;
 
-	private Boolean taught;
+    private Boolean taught;
 
-	private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
+    private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
 
-	protected SummariesManagementBean() {
-	}
+    protected SummariesManagementBean() {
+    }
 
-	public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship,
-			List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
-		setSummaryType(summaryType);
-		setExecutionCourse(executionCourse);
-		setProfessorship(professorship);
-		setProfessorshipLogged(professorship);
-		setNextPossibleSummaryLessonsAndDatesBean(nextPossibleSummaryLessonsAndDatesBean);
-		setTaught(true);
-	}
+    public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship,
+            List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
+        setSummaryType(summaryType);
+        setExecutionCourse(executionCourse);
+        setProfessorship(professorship);
+        setProfessorshipLogged(professorship);
+        setNextPossibleSummaryLessonsAndDatesBean(nextPossibleSummaryLessonsAndDatesBean);
+        setTaught(true);
+    }
 
-	public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
-			SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
-			Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
-			Professorship professorshipLogged, ShiftType lessonType, Boolean taught) {
+    public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
+            SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
+            Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
+            Professorship professorshipLogged, ShiftType lessonType, Boolean taught) {
 
-		setTitle(title);
-		setSummaryText(summaryText);
-		setSummaryType(summaryType);
-		setShift(shift);
-		setLesson(lesson);
-		setProfessorship(professorship);
-		setTeacher(teacher);
-		setTeacherName(teacherName);
-		setSummary(summary);
-		setSummaryDate(summaryDate);
-		setSummaryRoom(summaryRoom);
-		setSummaryTime(summaryTime);
-		setStudentsNumber(studentsNumber);
-		setExecutionCourse(shift.getExecutionCourse());
-		setProfessorshipLogged(professorshipLogged);
-		setLessonType(lessonType);
-		setTaught(taught);
-	}
+        setTitle(title);
+        setSummaryText(summaryText);
+        setSummaryType(summaryType);
+        setShift(shift);
+        setLesson(lesson);
+        setProfessorship(professorship);
+        setTeacher(teacher);
+        setTeacherName(teacherName);
+        setSummary(summary);
+        setSummaryDate(summaryDate);
+        setSummaryRoom(summaryRoom);
+        setSummaryTime(summaryTime);
+        setStudentsNumber(studentsNumber);
+        setExecutionCourse(shift.getExecutionCourse());
+        setProfessorshipLogged(professorshipLogged);
+        setLessonType(lessonType);
+        setTaught(taught);
+    }
 
-	public String getTeacherName() {
-		return teacherName;
-	}
+    public String getTeacherName() {
+        return teacherName;
+    }
 
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
-	}
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
 
-	public Integer getStudentsNumber() {
-		return studentsNumber;
-	}
+    public Integer getStudentsNumber() {
+        return studentsNumber;
+    }
 
-	public void setStudentsNumber(Integer studentsNumber) {
-		this.studentsNumber = studentsNumber;
-	}
+    public void setStudentsNumber(Integer studentsNumber) {
+        this.studentsNumber = studentsNumber;
+    }
 
-	public Summary getSummary() {
-		return this.summaryReference;
-	}
+    public Summary getSummary() {
+        return this.summaryReference;
+    }
 
-	public void setSummary(Summary summary) {
-		this.summaryReference = summary;
-	}
+    public void setSummary(Summary summary) {
+        this.summaryReference = summary;
+    }
 
-	public ExecutionCourse getExecutionCourse() {
-		return this.executionCourseReference;
-	}
+    public ExecutionCourse getExecutionCourse() {
+        return this.executionCourseReference;
+    }
 
-	public void setExecutionCourse(ExecutionCourse executionCourse) {
-		this.executionCourseReference = executionCourse;
-	}
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+        this.executionCourseReference = executionCourse;
+    }
 
-	public Teacher getTeacher() {
-		return this.teacherReference;
-	}
+    public Teacher getTeacher() {
+        return this.teacherReference;
+    }
 
-	public void setTeacher(Teacher teacher) {
-		this.teacherReference = teacher;
-	}
+    public void setTeacher(Teacher teacher) {
+        this.teacherReference = teacher;
+    }
 
-	public Professorship getProfessorshipLogged() {
-		return this.professorshipLoggedReference;
-	}
-
-	public void setProfessorshipLogged(Professorship professorship) {
-		this.professorshipLoggedReference = professorship;
-	}
-
-	public Summary getLastSummary() {
-		return this.lastSummaryReference;
-	}
-
-	public void setLastSummary(Summary summary) {
-		this.lastSummaryReference = summary;
-	}
-
-	public LessonPlanning getLessonPlanning() {
-		return this.lessonPlannigReference;
-	}
-
-	public void setLessonPlanning(LessonPlanning lessonPlanning) {
-		this.lessonPlannigReference = lessonPlanning;
-	}
-
-	public Professorship getProfessorship() {
-		return this.professorshipReference;
-	}
-
-	public void setProfessorship(Professorship professorship) {
-		this.professorshipReference = professorship;
-	}
-
-	public Lesson getLesson() {
-		return this.lessonReference;
-	}
-
-	public void setLesson(Lesson lesson) {
-		this.lessonReference = lesson;
-	}
-
-	public Shift getShift() {
-		return this.shiftReference;
-	}
-
-	public void setShift(Shift shift) {
-		this.shiftReference = shift;
-	}
-
-	public AllocatableSpace getSummaryRoom() {
-		return this.roomReference;
-	}
-
-	public void setSummaryRoom(AllocatableSpace room) {
-		this.roomReference = room;
-	}
-
-	public SummaryType getSummaryType() {
-		return summaryType;
-	}
-
-	public void setSummaryType(SummaryType summaryType) {
-		this.summaryType = summaryType;
-	}
-
-	public YearMonthDay getSummaryDate() {
-		return summaryDate;
-	}
-
-	public void setSummaryDate(YearMonthDay date) {
-		this.summaryDate = date;
-	}
-
-	public MultiLanguageString getSummaryText() {
-		return summaryText;
-	}
-
-	public void setSummaryText(MultiLanguageString summary) {
-		this.summaryText = summary;
-	}
-
-	public MultiLanguageString getTitle() {
-		return title;
-	}
-
-	public void setTitle(MultiLanguageString title) {
-		this.title = title;
-	}
-
-	public Partial getSummaryTime() {
-		return summaryTime;
-	}
-
-	public void setSummaryTime(Partial hour) {
-		this.summaryTime = hour;
-	}
-
-	public String getTeacherChoose() {
-		if (getProfessorship() != null) {
-			return getProfessorship().getIdInternal().toString();
-		} else if (!StringUtils.isEmpty(getTeacherName())) {
-			return "-1";
-		} else if (getTeacher() != null) {
-			return "0";
-		}
-		return "";
-	}
-
-	public static enum SummaryType {
-		NORMAL_SUMMARY, EXTRA_SUMMARY;
-		public String getName() {
-			return name();
-		}
-	}
-
-	public boolean isNewSummary() {
-		return getSummary() == null;
-	}
-
-	public List<NextPossibleSummaryLessonsAndDatesBean> getNextPossibleSummaryLessonsAndDatesBean() {
-		return nextPossibleSummaryLessonsAndDatesBean;
-	}
-
-	public void setNextPossibleSummaryLessonsAndDatesBean(
-			List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
-		this.nextPossibleSummaryLessonsAndDatesBean = nextPossibleSummaryLessonsAndDatesBean;
-	}
-
-	public ShiftType getLessonType() {
-		return lessonType;
-	}
-
-	public void setLessonType(ShiftType lessonType) {
-		this.lessonType = lessonType;
-	}
-
-	public void setTaught(Boolean taught) {
-		this.taught = taught;
-	}
-
-	public Boolean getTaught() {
-		return taught;
-	}
+    public Professorship getProfessorshipLogged() {
+        return this.professorshipLoggedReference;
+    }
+
+    public void setProfessorshipLogged(Professorship professorship) {
+        this.professorshipLoggedReference = professorship;
+    }
+
+    public Summary getLastSummary() {
+        return this.lastSummaryReference;
+    }
+
+    public void setLastSummary(Summary summary) {
+        this.lastSummaryReference = summary;
+    }
+
+    public LessonPlanning getLessonPlanning() {
+        return this.lessonPlannigReference;
+    }
+
+    public void setLessonPlanning(LessonPlanning lessonPlanning) {
+        this.lessonPlannigReference = lessonPlanning;
+    }
+
+    public Professorship getProfessorship() {
+        return this.professorshipReference;
+    }
+
+    public void setProfessorship(Professorship professorship) {
+        this.professorshipReference = professorship;
+    }
+
+    public Lesson getLesson() {
+        return this.lessonReference;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lessonReference = lesson;
+    }
+
+    public Shift getShift() {
+        return this.shiftReference;
+    }
+
+    public void setShift(Shift shift) {
+        this.shiftReference = shift;
+    }
+
+    public AllocatableSpace getSummaryRoom() {
+        return this.roomReference;
+    }
+
+    public void setSummaryRoom(AllocatableSpace room) {
+        this.roomReference = room;
+    }
+
+    public SummaryType getSummaryType() {
+        return summaryType;
+    }
+
+    public void setSummaryType(SummaryType summaryType) {
+        this.summaryType = summaryType;
+    }
+
+    public YearMonthDay getSummaryDate() {
+        return summaryDate;
+    }
+
+    public void setSummaryDate(YearMonthDay date) {
+        this.summaryDate = date;
+    }
+
+    public MultiLanguageString getSummaryText() {
+        return summaryText;
+    }
+
+    public void setSummaryText(MultiLanguageString summary) {
+        this.summaryText = summary;
+    }
+
+    public MultiLanguageString getTitle() {
+        return title;
+    }
+
+    public void setTitle(MultiLanguageString title) {
+        this.title = title;
+    }
+
+    public Partial getSummaryTime() {
+        return summaryTime;
+    }
+
+    public void setSummaryTime(Partial hour) {
+        this.summaryTime = hour;
+    }
+
+    public String getTeacherChoose() {
+        if (getProfessorship() != null) {
+            return getProfessorship().getIdInternal().toString();
+        } else if (!StringUtils.isEmpty(getTeacherName())) {
+            return "-1";
+        } else if (getTeacher() != null) {
+            return "0";
+        }
+        return "";
+    }
+
+    public static enum SummaryType {
+        NORMAL_SUMMARY, EXTRA_SUMMARY;
+        public String getName() {
+            return name();
+        }
+    }
+
+    public boolean isNewSummary() {
+        return getSummary() == null;
+    }
+
+    public List<NextPossibleSummaryLessonsAndDatesBean> getNextPossibleSummaryLessonsAndDatesBean() {
+        return nextPossibleSummaryLessonsAndDatesBean;
+    }
+
+    public void setNextPossibleSummaryLessonsAndDatesBean(
+            List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
+        this.nextPossibleSummaryLessonsAndDatesBean = nextPossibleSummaryLessonsAndDatesBean;
+    }
+
+    public ShiftType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(ShiftType lessonType) {
+        this.lessonType = lessonType;
+    }
+
+    public void setTaught(Boolean taught) {
+        this.taught = taught;
+    }
+
+    public Boolean getTaught() {
+        return taught;
+    }
 }

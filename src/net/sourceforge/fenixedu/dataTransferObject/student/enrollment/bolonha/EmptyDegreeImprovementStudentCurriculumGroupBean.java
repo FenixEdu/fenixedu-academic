@@ -13,44 +13,44 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 
 public class EmptyDegreeImprovementStudentCurriculumGroupBean extends ImprovementStudentCurriculumGroupBean {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	public EmptyDegreeImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
-			final ExecutionSemester executionSemester) {
-		super(curriculumGroup, executionSemester);
-	}
+    public EmptyDegreeImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
+            final ExecutionSemester executionSemester) {
+        super(curriculumGroup, executionSemester);
+    }
 
-	@Override
-	protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-			ExecutionSemester executionSemester, int[] curricularYears) {
+    @Override
+    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
+            ExecutionSemester executionSemester, int[] curricularYears) {
 
-		final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
+        final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 
-		for (final CurriculumGroup curriculumGroup : filterGroups(parentGroup)) {
-			result.add(new EmptyDegreeImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
-		}
+        for (final CurriculumGroup curriculumGroup : filterGroups(parentGroup)) {
+            result.add(new EmptyDegreeImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private Set<CurriculumGroup> filterGroups(CurriculumGroup parentGroup) {
-		final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+    private Set<CurriculumGroup> filterGroups(CurriculumGroup parentGroup) {
+        final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
-		for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModules()) {
+        for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModules()) {
 
-			if (!curriculumModule.isLeaf()) {
+            if (!curriculumModule.isLeaf()) {
 
-				if (curriculumModule.isNoCourseGroupCurriculumGroup()) {
-					final NoCourseGroupCurriculumGroup noCourseGroup = (NoCourseGroupCurriculumGroup) curriculumModule;
-					if (noCourseGroup.getNoCourseGroupCurriculumGroupType() != NoCourseGroupCurriculumGroupType.STANDALONE) {
-						continue;
-					}
-				}
+                if (curriculumModule.isNoCourseGroupCurriculumGroup()) {
+                    final NoCourseGroupCurriculumGroup noCourseGroup = (NoCourseGroupCurriculumGroup) curriculumModule;
+                    if (noCourseGroup.getNoCourseGroupCurriculumGroupType() != NoCourseGroupCurriculumGroupType.STANDALONE) {
+                        continue;
+                    }
+                }
 
-				groups.add((CurriculumGroup) curriculumModule);
-			}
-		}
-		return groups;
-	}
+                groups.add((CurriculumGroup) curriculumModule);
+            }
+        }
+        return groups;
+    }
 
 }

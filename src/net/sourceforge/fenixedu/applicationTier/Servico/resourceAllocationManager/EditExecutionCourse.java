@@ -9,12 +9,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExecutionCourse extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(CourseLoadBean bean) throws FenixServiceException {
-		if (bean != null) {
-			ExecutionCourse executionCourse = bean.getExecutionCourse();
-			executionCourse.editCourseLoad(bean.getType(), bean.getUnitQuantity(), bean.getTotalQuantity());
-		}
-	}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(CourseLoadBean bean) throws FenixServiceException {
+        if (bean != null) {
+            ExecutionCourse executionCourse = bean.getExecutionCourse();
+            executionCourse.editCourseLoad(bean.getType(), bean.getUnitQuantity(), bean.getTotalQuantity());
+        }
+    }
 }

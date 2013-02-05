@@ -14,16 +14,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNumberCachedItems extends FenixService {
 
-	@Service
-	public static Integer run() throws FenixServiceException {
-		Integer numberCachedObjects = null;
+    @Service
+    public static Integer run() throws FenixServiceException {
+        Integer numberCachedObjects = null;
 
-		// this is no longer available
-		// numberCachedObjects =
-		// Transaction.getCache().getNumberOfCachedItems();
-		numberCachedObjects = 0;
+        // this is no longer available
+        // numberCachedObjects =
+        // Transaction.getCache().getNumberOfCachedItems();
+        numberCachedObjects = 0;
 
-		return numberCachedObjects;
-	}
+        return numberCachedObjects;
+    }
 
 }

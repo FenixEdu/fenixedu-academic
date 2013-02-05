@@ -10,56 +10,56 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  * @author jpvl
  */
 public abstract class InfoObject extends DataTranferObject {
-	private Integer idInternal;
+    private Integer idInternal;
 
-	public InfoObject() {
-	}
+    public InfoObject() {
+    }
 
-	public InfoObject(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    public InfoObject(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
+    /**
+     * @return
+     */
+    public Integer getIdInternal() {
+        return idInternal;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer) {
-		idInternal = integer;
-	}
+    /**
+     * @param integer
+     */
+    public void setIdInternal(Integer integer) {
+        idInternal = integer;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoObject) {
-			InfoObject infoObject = (InfoObject) obj;
-			return this.getIdInternal().equals(infoObject.getIdInternal());
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoObject) {
+            InfoObject infoObject = (InfoObject) obj;
+            return this.getIdInternal().equals(infoObject.getIdInternal());
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		if (this.idInternal != null) {
-			return this.idInternal.intValue();
-		}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        if (this.idInternal != null) {
+            return this.idInternal.intValue();
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	public void copyFromDomain(DomainObject domainObject) {
-		if (domainObject != null) {
-			setIdInternal(domainObject.getIdInternal());
-		}
-	}
+    public void copyFromDomain(DomainObject domainObject) {
+        if (domainObject != null) {
+            setIdInternal(domainObject.getIdInternal());
+        }
+    }
 }

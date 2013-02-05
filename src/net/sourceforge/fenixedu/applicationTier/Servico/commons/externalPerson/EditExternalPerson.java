@@ -10,17 +10,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExternalPerson extends FenixService {
 
-	@Service
-	public static void run(Integer externalPersonID, String name, String address, Integer institutionID, String phone,
-			String mobile, String homepage, String email) throws FenixServiceException, DomainException {
+    @Service
+    public static void run(Integer externalPersonID, String name, String address, Integer institutionID, String phone,
+            String mobile, String homepage, String email) throws FenixServiceException, DomainException {
 
-		ExternalContract storedExternalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
-		if (storedExternalPerson == null) {
-			throw new NonExistingServiceException("error.exception.externalPerson.nonExistingExternalPsrson");
-		}
+        ExternalContract storedExternalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
+        if (storedExternalPerson == null) {
+            throw new NonExistingServiceException("error.exception.externalPerson.nonExistingExternalPsrson");
+        }
 
-		Unit storedInstitution = (Unit) rootDomainObject.readPartyByOID(institutionID);
-		storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution);
-	}
+        Unit storedInstitution = (Unit) rootDomainObject.readPartyByOID(institutionID);
+        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution);
+    }
 
 }

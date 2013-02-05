@@ -22,20 +22,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId) {
-		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		List<Enrolment> enrollments = studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester);
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId) {
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        List<Enrolment> enrollments = studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester);
 
-		List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();
+        List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
-		for (Enrolment enrollment : enrollments) {
-			enrolledCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
-		}
+        for (Enrolment enrollment : enrollments) {
+            enrolledCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
+        }
 
-		return enrolledCurricularCourses;
+        return enrolledCurricularCourses;
 
-	}
+    }
 }

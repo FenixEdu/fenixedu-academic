@@ -22,38 +22,36 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "candidate", path = "/index", scope = "session")
 @Forwards(value = {
-		@Forward(
-				name = "showCandidacyDetails",
-				path = "/degreeCandidacyManagement.do?method=showCandidacyDetails",
-				tileProperties = @Tile(title = "private.candidate.applications")),
-		@Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation", tileProperties = @Tile(
-				title = "private.candidate.applications")),
-		@Forward(name = "showWelcome", path = "/candidate/index.jsp", tileProperties = @Tile(
-				title = "private.candidate.applications")) })
+        @Forward(name = "showCandidacyDetails", path = "/degreeCandidacyManagement.do?method=showCandidacyDetails",
+                tileProperties = @Tile(title = "private.candidate.applications")),
+        @Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation", tileProperties = @Tile(
+                title = "private.candidate.applications")),
+        @Forward(name = "showWelcome", path = "/candidate/index.jsp", tileProperties = @Tile(
+                title = "private.candidate.applications")) })
 public class IndexAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		if (getUserView(request).getPerson().getCandidaciesCount() == 1) {
-			final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesIterator().next();
+        if (getUserView(request).getPerson().getCandidaciesCount() == 1) {
+            final Candidacy candidacy = getUserView(request).getPerson().getCandidaciesIterator().next();
 
-			if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
-				request.setAttribute("candidacyID", candidacy.getIdInternal());
-				final CandidacySituation activeCandidacySituation = candidacy.getActiveCandidacySituation();
-				if (activeCandidacySituation != null
-						&& CandidacySituationType.STAND_BY == activeCandidacySituation.getCandidacySituationType()) {
-					request.setAttribute("operationType", CandidacyOperationType.FILL_PERSONAL_DATA.toString());
-					return mapping.findForward("fillData");
-				} else {
-					return mapping.findForward("showCandidacyDetails");
-				}
-			}
+            if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
+                request.setAttribute("candidacyID", candidacy.getIdInternal());
+                final CandidacySituation activeCandidacySituation = candidacy.getActiveCandidacySituation();
+                if (activeCandidacySituation != null
+                        && CandidacySituationType.STAND_BY == activeCandidacySituation.getCandidacySituationType()) {
+                    request.setAttribute("operationType", CandidacyOperationType.FILL_PERSONAL_DATA.toString());
+                    return mapping.findForward("fillData");
+                } else {
+                    return mapping.findForward("showCandidacyDetails");
+                }
+            }
 
-		}
+        }
 
-		return mapping.findForward("showWelcome");
-	}
+        return mapping.findForward("showWelcome");
+    }
 
 }

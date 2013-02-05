@@ -16,51 +16,51 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class DepartmentForum extends DepartmentForum_Base {
 
-	public DepartmentForum() {
-		super();
-	}
+    public DepartmentForum() {
+        super();
+    }
 
-	@Override
-	public Group getReadersGroup() {
-		return getDepartmentForumGroup();
-	}
+    @Override
+    public Group getReadersGroup() {
+        return getDepartmentForumGroup();
+    }
 
-	@Override
-	public Group getWritersGroup() {
-		return getDepartmentForumGroup();
-	}
+    @Override
+    public Group getWritersGroup() {
+        return getDepartmentForumGroup();
+    }
 
-	@Override
-	public Group getAdminGroup() {
-		return new FixedSetGroup(getDepartmentManagers());
-	}
+    @Override
+    public Group getAdminGroup() {
+        return new FixedSetGroup(getDepartmentManagers());
+    }
 
-	public Department getDepartment() {
-		for (Department department : RootDomainObject.getInstance().getDepartments()) {
-			if (this.equals(department.getDepartmentForum())) {
-				return department;
-			}
-		}
-		return null;
-	}
+    public Department getDepartment() {
+        for (Department department : RootDomainObject.getInstance().getDepartments()) {
+            if (this.equals(department.getDepartmentForum())) {
+                return department;
+            }
+        }
+        return null;
+    }
 
-	public Group getDepartmentForumGroup() {
-		Collection<IGroup> groups = new ArrayList<IGroup>();
-		Department department = getDepartment();
-		groups.add(new DepartmentEmployeesGroup(department));
-		groups.add(new FixedSetGroup(getPersonsFromTeachers(department)));
-		return new GroupUnion(groups);
-	}
+    public Group getDepartmentForumGroup() {
+        Collection<IGroup> groups = new ArrayList<IGroup>();
+        Department department = getDepartment();
+        groups.add(new DepartmentEmployeesGroup(department));
+        groups.add(new FixedSetGroup(getPersonsFromTeachers(department)));
+        return new GroupUnion(groups);
+    }
 
-	private List<Person> getDepartmentManagers() {
-		return getDepartment().getDepartmentUnit().getSite().getManagers();
-	}
+    private List<Person> getDepartmentManagers() {
+        return getDepartment().getDepartmentUnit().getSite().getManagers();
+    }
 
-	private List<Person> getPersonsFromTeachers(Department department) {
-		List<Person> persons = new ArrayList<Person>();
-		for (Teacher teacher : department.getAllCurrentTeachers()) {
-			persons.add(teacher.getPerson());
-		}
-		return persons;
-	}
+    private List<Person> getPersonsFromTeachers(Department department) {
+        List<Person> persons = new ArrayList<Person>();
+        for (Teacher teacher : department.getAllCurrentTeachers()) {
+            persons.add(teacher.getPerson());
+        }
+        return persons;
+    }
 }

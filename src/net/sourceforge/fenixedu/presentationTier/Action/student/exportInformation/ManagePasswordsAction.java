@@ -22,34 +22,34 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/managePasswords", module = "student")
 @Forwards({ @Forward(name = "manage.passwords", path = "/student/managePasswords.jsp", tileProperties = @Tile(
-		title = "private.student.informationexport.passwordmanagement")) })
+        title = "private.student.informationexport.passwordmanagement")) })
 public class ManagePasswordsAction extends FenixDispatchAction {
 
-	public ActionForward managePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
-		return mapping.findForward("manage.passwords");
-	}
+    public ActionForward managePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        return mapping.findForward("manage.passwords");
+    }
 
-	protected Student getStudent(final HttpServletRequest httpServletRequest) {
-		final IUserView userView = getUserView(httpServletRequest);
-		final Person person = userView.getPerson();
-		return person.getStudent();
-	}
+    protected Student getStudent(final HttpServletRequest httpServletRequest) {
+        final IUserView userView = getUserView(httpServletRequest);
+        final Person person = userView.getPerson();
+        return person.getStudent();
+    }
 
-	@Service
-	public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
-		final Student student = getStudent(request);
-		student.generateExportInformationPassword();
-		return managePasswords(mapping, form, request, response);
-	}
+    @Service
+    public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        final Student student = getStudent(request);
+        student.generateExportInformationPassword();
+        return managePasswords(mapping, form, request, response);
+    }
 
-	@Service
-	public ActionForward deletePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
-		final Student student = getStudent(request);
-		student.deleteExportInformationPassword();
-		return managePasswords(mapping, form, request, response);
-	}
+    @Service
+    public ActionForward deletePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        final Student student = getStudent(request);
+        student.deleteExportInformationPassword();
+        return managePasswords(mapping, form, request, response);
+    }
 
 }

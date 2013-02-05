@@ -13,35 +13,35 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionSemestersForSpecialSeasonProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-		final ExecutionYear previousYear = currentYear.getPreviousExecutionYear();
-		final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
+        final ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear previousYear = currentYear.getPreviousExecutionYear();
+        final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
-		SpecialSeasonStudentEnrollmentBean bean = (SpecialSeasonStudentEnrollmentBean) source;
-		if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(currentYear.getLastExecutionPeriod())) {
-			executionSemesters.add(currentYear.getLastExecutionPeriod());
-		}
-		if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(currentYear.getFirstExecutionPeriod())) {
-			executionSemesters.add(currentYear.getFirstExecutionPeriod());
-		}
-		if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(previousYear.getLastExecutionPeriod())) {
-			executionSemesters.add(previousYear.getLastExecutionPeriod());
-		}
-		if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(previousYear.getFirstExecutionPeriod())) {
-			executionSemesters.add(previousYear.getFirstExecutionPeriod());
-		}
+        SpecialSeasonStudentEnrollmentBean bean = (SpecialSeasonStudentEnrollmentBean) source;
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(currentYear.getLastExecutionPeriod())) {
+            executionSemesters.add(currentYear.getLastExecutionPeriod());
+        }
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(currentYear.getFirstExecutionPeriod())) {
+            executionSemesters.add(currentYear.getFirstExecutionPeriod());
+        }
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(previousYear.getLastExecutionPeriod())) {
+            executionSemesters.add(previousYear.getLastExecutionPeriod());
+        }
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(previousYear.getFirstExecutionPeriod())) {
+            executionSemesters.add(previousYear.getFirstExecutionPeriod());
+        }
 
-		Collections.sort(executionSemesters, ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
-		Collections.reverse(executionSemesters);
-		return executionSemesters;
-	}
+        Collections.sort(executionSemesters, ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        Collections.reverse(executionSemesters);
+        return executionSemesters;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

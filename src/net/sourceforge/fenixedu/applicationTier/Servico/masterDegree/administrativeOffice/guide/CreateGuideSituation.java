@@ -17,20 +17,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGuideSituation extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer guideID, String remarks, GuideState situation, Date date) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer guideID, String remarks, GuideState situation, Date date) {
 
-		Guide guide = rootDomainObject.readGuideByOID(guideID);
+        Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-		for (GuideSituation guideSituation : guide.getGuideSituations()) {
-			guideSituation.setState(new State(State.INACTIVE));
-		}
+        for (GuideSituation guideSituation : guide.getGuideSituations()) {
+            guideSituation.setState(new State(State.INACTIVE));
+        }
 
-		GuideSituation guideSituation = new GuideSituation(situation, remarks, date, guide, new State(State.ACTIVE));
+        GuideSituation guideSituation = new GuideSituation(situation, remarks, date, guide, new State(State.ACTIVE));
 
-		guide.getGuideSituations().add(guideSituation);
+        guide.getGuideSituations().add(guideSituation);
 
-	}
+    }
 
 }

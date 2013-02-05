@@ -27,13 +27,13 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ShowAllTeachersAction extends FenixDispatchAction {
 
-	public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		IUserView userView = UserView.getUser();
+    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        IUserView userView = UserView.getUser();
 
-		List teachersList = ReadAllTeachersNumberAndName.run();
-		request.setAttribute("teachersList", teachersList);
+        List teachersList = ReadAllTeachersNumberAndName.run();
+        request.setAttribute("teachersList", teachersList);
 
-		return mapping.findForward("show-teachers");
-	}
+        return mapping.findForward("show-teachers");
+    }
 }

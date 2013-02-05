@@ -16,30 +16,30 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditRoomsPunctualScheduling extends FenixService {
 
-	public static final MessageResources messages = MessageResources
-			.getMessageResources("resources/ResourceAllocationManagerResources");
+    public static final MessageResources messages = MessageResources
+            .getMessageResources("resources/ResourceAllocationManagerResources");
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(RoomsPunctualSchedulingBean bean) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(RoomsPunctualSchedulingBean bean) {
 
-		List<AllocatableSpace> roomsToInsert = bean.getRooms();
-		GenericEvent genericEvent = bean.getGenericEvent();
+        List<AllocatableSpace> roomsToInsert = bean.getRooms();
+        GenericEvent genericEvent = bean.getGenericEvent();
 
-		if (genericEvent != null && !roomsToInsert.isEmpty()) {
+        if (genericEvent != null && !roomsToInsert.isEmpty()) {
 
-			List<GenericEventSpaceOccupation> eventRoomOccupations = genericEvent.getGenericEventSpaceOccupations();
-			List<GenericEventSpaceOccupation> roomOccupationsToDelete = new ArrayList<GenericEventSpaceOccupation>();
+            List<GenericEventSpaceOccupation> eventRoomOccupations = genericEvent.getGenericEventSpaceOccupations();
+            List<GenericEventSpaceOccupation> roomOccupationsToDelete = new ArrayList<GenericEventSpaceOccupation>();
 
-			for (GenericEventSpaceOccupation occupation : eventRoomOccupations) {
-				if (!roomsToInsert.contains(occupation.getRoom())) {
-					roomOccupationsToDelete.add(occupation);
-				} else {
-					roomsToInsert.remove(occupation.getRoom());
-				}
-			}
+            for (GenericEventSpaceOccupation occupation : eventRoomOccupations) {
+                if (!roomsToInsert.contains(occupation.getRoom())) {
+                    roomOccupationsToDelete.add(occupation);
+                } else {
+                    roomsToInsert.remove(occupation.getRoom());
+                }
+            }
 
-			genericEvent.edit(bean.getSmallDescription(), bean.getCompleteDescription(), roomsToInsert, roomOccupationsToDelete);
-		}
-	}
+            genericEvent.edit(bean.getSmallDescription(), bean.getCompleteDescription(), roomsToInsert, roomOccupationsToDelete);
+        }
+    }
 }

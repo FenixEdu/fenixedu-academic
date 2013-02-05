@@ -16,24 +16,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/managePersonFunctions", module = "scientificCouncil")
 public class ManagePersonFunctions extends FenixDispatchAction {
 
-	public ActionForward deletePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Integer personFunctionId = new Integer(request.getParameter("personFunctionID"));
+    public ActionForward deletePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Integer personFunctionId = new Integer(request.getParameter("personFunctionID"));
 
-		final PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionId);
-		final Person person = personFunction.getPerson();
+        final PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionId);
+        final Person person = personFunction.getPerson();
 
-		personFunction.delete();
+        personFunction.delete();
 
-		final ActionForward actionForward =
-				new ActionForward(
-						"/functionsManagement/listPersonFunctions.faces?personID="
-								+ person.getIdInternal()
-								+ "&"
-								+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-								+ "=/conselho-cientifico/conselho-cientifico");
-		actionForward.setRedirect(false);
-		return actionForward;
-	}
+        final ActionForward actionForward =
+                new ActionForward(
+                        "/functionsManagement/listPersonFunctions.faces?personID="
+                                + person.getIdInternal()
+                                + "&"
+                                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+                                + "=/conselho-cientifico/conselho-cientifico");
+        actionForward.setRedirect(false);
+        return actionForward;
+    }
 
 }

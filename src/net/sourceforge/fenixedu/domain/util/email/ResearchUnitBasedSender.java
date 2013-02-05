@@ -9,22 +9,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ResearchUnitBasedSender extends ResearchUnitBasedSender_Base {
 
-	public ResearchUnitBasedSender() {
-		super();
-	}
+    public ResearchUnitBasedSender() {
+        super();
+    }
 
-	public ResearchUnitBasedSender(Unit unit, String fromAddress, Group members) {
-		super();
-		init(unit, fromAddress, members);
-	}
+    public ResearchUnitBasedSender(Unit unit, String fromAddress, Group members) {
+        super();
+        init(unit, fromAddress, members);
+    }
 
-	@Override
-	public String getFromName(Person person) {
-		return String.format("%s - %s", getUnit().getAcronym(), person.getName());
-	}
+    @Override
+    public String getFromName(Person person) {
+        return String.format("%s - %s", getUnit().getAcronym(), person.getName());
+    }
 
-	@Service
-	public static ResearchUnitBasedSender newInstance(Unit unit) {
-		return new ResearchUnitBasedSender(unit, Sender.getNoreplyMail(), new ResearchUnitElementGroup((ResearchUnit) unit));
-	}
+    @Service
+    public static ResearchUnitBasedSender newInstance(Unit unit) {
+        return new ResearchUnitBasedSender(unit, Sender.getNoreplyMail(), new ResearchUnitElementGroup((ResearchUnit) unit));
+    }
 }

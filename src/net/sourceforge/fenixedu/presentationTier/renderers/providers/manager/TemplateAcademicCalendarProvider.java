@@ -13,23 +13,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TemplateAcademicCalendarProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		CalendarEntryBean rootEntry = (CalendarEntryBean) source;
-		Set<AcademicCalendarRootEntry> academicCalendars = RootDomainObject.getInstance().getAcademicCalendarsSet();
-		List<AcademicCalendarRootEntry> result = new ArrayList<AcademicCalendarRootEntry>();
-		result.addAll(academicCalendars);
+        CalendarEntryBean rootEntry = (CalendarEntryBean) source;
+        Set<AcademicCalendarRootEntry> academicCalendars = RootDomainObject.getInstance().getAcademicCalendarsSet();
+        List<AcademicCalendarRootEntry> result = new ArrayList<AcademicCalendarRootEntry>();
+        result.addAll(academicCalendars);
 
-		if (rootEntry.getEntry() != null) {
-			result.remove(rootEntry.getEntry());
-		}
+        if (rootEntry.getEntry() != null) {
+            result.remove(rootEntry.getEntry());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

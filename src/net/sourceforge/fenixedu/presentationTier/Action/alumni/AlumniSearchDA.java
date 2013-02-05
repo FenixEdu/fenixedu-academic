@@ -25,66 +25,66 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "alumni", path = "/searchAlumni", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp", tileProperties = @Tile(
-				title = "private.alumni.academicpath.searchalumni")),
-		@Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp", tileProperties = @Tile(
-				title = "private.alumni.academicpath.searchalumni")) })
+        @Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp", tileProperties = @Tile(
+                title = "private.alumni.academicpath.searchalumni")),
+        @Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp", tileProperties = @Tile(
+                title = "private.alumni.academicpath.searchalumni")) })
 public class AlumniSearchDA extends FenixDispatchAction {
 
-	public ActionForward showAlumniList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showAlumniList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		AlumniSearchBean searchBean = reconstructBeanFromRequest(request);
+        AlumniSearchBean searchBean = reconstructBeanFromRequest(request);
 
-		if (!StringUtils.isEmpty(searchBean.getName()) || searchBean.getDegreeType() != null) {
+        if (!StringUtils.isEmpty(searchBean.getName()) || searchBean.getDegreeType() != null) {
 
-			List<Registration> resultRegistrations = readAlumniRegistrations(searchBean);
+            List<Registration> resultRegistrations = readAlumniRegistrations(searchBean);
 
-			if (request.getParameter("sort") != null && request.getParameter("sort").length() > 0) {
-				resultRegistrations = RenderUtils.sortCollectionWithCriteria(resultRegistrations, request.getParameter("sort"));
-			} else {
-				resultRegistrations = RenderUtils.sortCollectionWithCriteria(resultRegistrations, "student.person.name");
-			}
+            if (request.getParameter("sort") != null && request.getParameter("sort").length() > 0) {
+                resultRegistrations = RenderUtils.sortCollectionWithCriteria(resultRegistrations, request.getParameter("sort"));
+            } else {
+                resultRegistrations = RenderUtils.sortCollectionWithCriteria(resultRegistrations, "student.person.name");
+            }
 
-			searchBean.setAlumni(new ArrayList<Registration>(resultRegistrations));
-			searchBean.setTotalItems(resultRegistrations.size());
-		}
+            searchBean.setAlumni(new ArrayList<Registration>(resultRegistrations));
+            searchBean.setTotalItems(resultRegistrations.size());
+        }
 
-		request.setAttribute("searchAlumniBean", searchBean);
-		return mapping.findForward("showAlumniList");
-	}
+        request.setAttribute("searchAlumniBean", searchBean);
+        return mapping.findForward("showAlumniList");
+    }
 
-	public ActionForward degreeTypePostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward degreeTypePostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		AlumniSearchBean searchBean = reconstructBeanFromRequest(request);
-		RenderUtils.invalidateViewState();
-		request.setAttribute("searchAlumniBean", searchBean);
-		return mapping.findForward("showAlumniList");
-	}
+        AlumniSearchBean searchBean = reconstructBeanFromRequest(request);
+        RenderUtils.invalidateViewState();
+        request.setAttribute("searchAlumniBean", searchBean);
+        return mapping.findForward("showAlumniList");
+    }
 
-	protected AlumniSearchBean reconstructBeanFromRequest(HttpServletRequest request) {
+    protected AlumniSearchBean reconstructBeanFromRequest(HttpServletRequest request) {
 
-		final IViewState viewState = RenderUtils.getViewState("searchAlumniBean");
-		if (viewState != null) {
+        final IViewState viewState = RenderUtils.getViewState("searchAlumniBean");
+        if (viewState != null) {
 
-			return (AlumniSearchBean) viewState.getMetaObject().getObject();
+            return (AlumniSearchBean) viewState.getMetaObject().getObject();
 
-		} else if (request.getParameter("beansearch") != null && request.getParameter("beansearch").length() > 0) {
-			return AlumniSearchBean.getBeanFromParameters(request.getParameter("beansearch"));
-		}
+        } else if (request.getParameter("beansearch") != null && request.getParameter("beansearch").length() > 0) {
+            return AlumniSearchBean.getBeanFromParameters(request.getParameter("beansearch"));
+        }
 
-		return new AlumniSearchBean();
-	}
+        return new AlumniSearchBean();
+    }
 
-	public ActionForward visualizeAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward visualizeAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		request.setAttribute("alumniData", rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId")));
-		return mapping.findForward("viewAlumniDetails");
-	}
+        request.setAttribute("alumniData", rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId")));
+        return mapping.findForward("viewAlumniDetails");
+    }
 
-	protected List<Registration> readAlumniRegistrations(AlumniSearchBean searchBean) {
-		return Alumni.readAlumniRegistrations(searchBean);
-	}
+    protected List<Registration> readAlumniRegistrations(AlumniSearchBean searchBean) {
+        return Alumni.readAlumniRegistrations(searchBean);
+    }
 }

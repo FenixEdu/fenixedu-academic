@@ -21,16 +21,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class RegisterCandidate extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static void run(RegisterCandidacyBean candidacyBean) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(RegisterCandidacyBean candidacyBean) {
 
-		StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), new StateBean(
-				CandidacySituationType.REGISTERED.name()));
+        StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), new StateBean(
+                CandidacySituationType.REGISTERED.name()));
 
-		final Registration registration = candidacyBean.getCandidacy().getRegistration();
-		registration.setStartDate(candidacyBean.getStartDate() != null ? candidacyBean.getStartDate() : new YearMonthDay());
-		registration.setEnrolmentModelForCurrentExecutionYear(candidacyBean.getEnrolmentModel());
-	}
+        final Registration registration = candidacyBean.getCandidacy().getRegistration();
+        registration.setStartDate(candidacyBean.getStartDate() != null ? candidacyBean.getStartDate() : new YearMonthDay());
+        registration.setEnrolmentModelForCurrentExecutionYear(candidacyBean.getEnrolmentModel());
+    }
 
 }

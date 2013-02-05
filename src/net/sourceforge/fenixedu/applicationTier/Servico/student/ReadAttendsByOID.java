@@ -17,12 +17,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAttendsByOID extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) {
-		Attends attends = rootDomainObject.readAttendsByOID(idInternal);
-		return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) {
+        Attends attends = rootDomainObject.readAttendsByOID(idInternal);
+        return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
 
-	}
+    }
 
 }

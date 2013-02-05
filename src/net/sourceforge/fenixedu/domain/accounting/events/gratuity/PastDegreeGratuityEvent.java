@@ -15,53 +15,53 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 
-	protected PastDegreeGratuityEvent() {
-		super();
-	}
+    protected PastDegreeGratuityEvent() {
+        super();
+    }
 
-	public PastDegreeGratuityEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear,
-			final Money pastDegreeGratuityAmount) {
-		this();
+    public PastDegreeGratuityEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear,
+            final Money pastDegreeGratuityAmount) {
+        this();
 
-		init(administrativeOffice, person, studentCurricularPlan, executionYear, pastDegreeGratuityAmount);
+        init(administrativeOffice, person, studentCurricularPlan, executionYear, pastDegreeGratuityAmount);
 
-	}
+    }
 
-	private void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
-			ExecutionYear executionYear, Money pastDegreeGratuityAmount) {
-		super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
-		checkParameters(studentCurricularPlan, pastDegreeGratuityAmount);
-		super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
-	}
+    private void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
+            ExecutionYear executionYear, Money pastDegreeGratuityAmount) {
+        super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
+        checkParameters(studentCurricularPlan, pastDegreeGratuityAmount);
+        super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
+    }
 
-	private void checkParameters(StudentCurricularPlan studentCurricularPlan, Money pastDegreeGratuityAmount) {
-		if (studentCurricularPlan.getDegreeType() != DegreeType.DEGREE) {
-			throw new DomainException(
-					"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.invalid.degree.type.for.student.curricular.plan");
-		}
+    private void checkParameters(StudentCurricularPlan studentCurricularPlan, Money pastDegreeGratuityAmount) {
+        if (studentCurricularPlan.getDegreeType() != DegreeType.DEGREE) {
+            throw new DomainException(
+                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.invalid.degree.type.for.student.curricular.plan");
+        }
 
-		if (pastDegreeGratuityAmount == null || pastDegreeGratuityAmount.isZero()) {
-			throw new DomainException(
-					"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
-		}
+        if (pastDegreeGratuityAmount == null || pastDegreeGratuityAmount.isZero()) {
+            throw new DomainException(
+                    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
+        }
 
-	}
+    }
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Override
-	public void setPastDegreeGratuityAmount(Money pastDegreeGratuityAmount) {
-		super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void setPastDegreeGratuityAmount(Money pastDegreeGratuityAmount) {
+        super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
-	@Override
-	public Set<EntryType> getPossibleEntryTypesForDeposit() {
-		return Collections.singleton(EntryType.GRATUITY_FEE);
-	}
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.GRATUITY_FEE);
+    }
 
 }

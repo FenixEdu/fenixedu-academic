@@ -15,23 +15,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlansForDegree implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
-		final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-		if (dfaCandidacyBean.getDegree() != null) {
-			result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansSet());
-			Collections.sort(result, new BeanComparator("name"));
-		} else {
-			dfaCandidacyBean.setDegreeCurricularPlan(null);
-		}
-		return result;
-	}
+        final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
+        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        if (dfaCandidacyBean.getDegree() != null) {
+            result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansSet());
+            Collections.sort(result, new BeanComparator("name"));
+        } else {
+            dfaCandidacyBean.setDegreeCurricularPlan(null);
+        }
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

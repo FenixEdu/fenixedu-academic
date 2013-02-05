@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EventEditionsForEventProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ResearchEvent event;
-		try {
-			event = (ResearchEvent) MethodUtils.invokeMethod(source, "getEvent", null);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ResearchEvent event;
+        try {
+            event = (ResearchEvent) MethodUtils.invokeMethod(source, "getEvent", null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		return event == null ? Collections.EMPTY_LIST : event.getEventEditions();
-	}
+        return event == null ? Collections.EMPTY_LIST : event.getEventEditions();
+    }
 
 }

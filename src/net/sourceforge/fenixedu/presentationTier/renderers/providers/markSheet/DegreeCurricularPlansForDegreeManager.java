@@ -15,20 +15,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlansForDegreeManager implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-		final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-		if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getExecutionPeriod() != null) {
-			result.addAll(markSheetManagementBean.getDegree().getDegreeCurricularPlansSet());
-		}
-		Collections.sort(result, new BeanComparator("name"));
-		return result;
-	}
+        final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
+        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getExecutionPeriod() != null) {
+            result.addAll(markSheetManagementBean.getDegree().getDegreeCurricularPlansSet());
+        }
+        Collections.sort(result, new BeanComparator("name"));
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

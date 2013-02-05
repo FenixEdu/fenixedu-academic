@@ -9,40 +9,40 @@ import java.util.List;
  */
 public class InfoCandidateApprovalGroup extends InfoObject {
 
-	protected String situationName;
+    protected String situationName;
 
-	protected List candidates;
+    protected List candidates;
 
-	public InfoCandidateApprovalGroup() {
-		this.candidates = new ArrayList();
-	}
+    public InfoCandidateApprovalGroup() {
+        this.candidates = new ArrayList();
+    }
 
-	/**
-	 * @return
-	 */
-	public List getCandidates() {
-		return candidates;
-	}
+    /**
+     * @return
+     */
+    public List getCandidates() {
+        return candidates;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSituationName() {
-		return situationName;
-	}
+    /**
+     * @return
+     */
+    public String getSituationName() {
+        return situationName;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setCandidates(List list) {
-		candidates = list;
-	}
+    /**
+     * @param list
+     */
+    public void setCandidates(List list) {
+        candidates = list;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setSituationName(String string) {
-		situationName = string;
-	}
+    /**
+     * @param string
+     */
+    public void setSituationName(String string) {
+        situationName = string;
+    }
 
 }

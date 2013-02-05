@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class DeleteLessonPlanning extends FenixService {
 
-	public void run(Integer executionCourseID, LessonPlanning lessonPlanning, ExecutionCourse executionCourse, ShiftType shiftType) {
-		if (lessonPlanning != null) {
-			lessonPlanning.delete();
-		} else if (executionCourse != null && shiftType != null) {
-			executionCourse.deleteLessonPlanningsByLessonType(shiftType);
-		}
-	}
+    public void run(Integer executionCourseID, LessonPlanning lessonPlanning, ExecutionCourse executionCourse, ShiftType shiftType) {
+        if (lessonPlanning != null) {
+            lessonPlanning.delete();
+        } else if (executionCourse != null && shiftType != null) {
+            executionCourse.deleteLessonPlanningsByLessonType(shiftType);
+        }
+    }
 }

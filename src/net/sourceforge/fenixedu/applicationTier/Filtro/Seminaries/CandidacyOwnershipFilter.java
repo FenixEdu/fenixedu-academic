@@ -20,26 +20,26 @@ import pt.utl.ist.berserk.ServiceResponse;
  * 
  */
 public class CandidacyOwnershipFilter extends Filtro {
-	public CandidacyOwnershipFilter() {
-	}
+    public CandidacyOwnershipFilter() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-	 * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-	 */
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
 
-		Registration registration = Registration.readByUsername(getRemoteUser(request).getUtilizador());
-		SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
-		//
-		if ((candidacy != null) && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal().intValue())) {
-			throw new NotAuthorizedException();
-		}
+        Registration registration = Registration.readByUsername(getRemoteUser(request).getUtilizador());
+        SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
+        //
+        if ((candidacy != null) && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal().intValue())) {
+            throw new NotAuthorizedException();
+        }
 
-	}
+    }
 }

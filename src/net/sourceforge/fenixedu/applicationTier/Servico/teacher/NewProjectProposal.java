@@ -29,122 +29,122 @@ import net.sourceforge.fenixedu.util.ProposalState;
  */
 public class NewProjectProposal extends FenixService {
 
-	public Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId, String senderPersonUsername)
-			throws FenixServiceException {
+    public Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId, String senderPersonUsername)
+            throws FenixServiceException {
 
-		Boolean result = Boolean.FALSE;
+        Boolean result = Boolean.FALSE;
 
-		if (groupPropertiesId == null) {
-			return result;
-		}
+        if (groupPropertiesId == null) {
+            return result;
+        }
 
-		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
-		ExecutionCourse goalExecutionCourse = rootDomainObject.readExecutionCourseByOID(goalExecutionCourseId);
-		ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
-		Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
+        ExecutionCourse goalExecutionCourse = rootDomainObject.readExecutionCourseByOID(goalExecutionCourseId);
+        ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+        Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
-		if (groupProperties == null) {
-			throw new InvalidArgumentsServiceException("error.noGroupProperties");
-		}
-		if (goalExecutionCourse == null) {
-			throw new InvalidArgumentsServiceException("error.noGoalExecutionCourse");
-		}
-		if (startExecutionCourse == null) {
-			throw new InvalidArgumentsServiceException("error.noSenderExecutionCourse");
-		}
-		if (senderPerson == null) {
-			throw new InvalidArgumentsServiceException("error.noPerson");
-		}
+        if (groupProperties == null) {
+            throw new InvalidArgumentsServiceException("error.noGroupProperties");
+        }
+        if (goalExecutionCourse == null) {
+            throw new InvalidArgumentsServiceException("error.noGoalExecutionCourse");
+        }
+        if (startExecutionCourse == null) {
+            throw new InvalidArgumentsServiceException("error.noSenderExecutionCourse");
+        }
+        if (senderPerson == null) {
+            throw new InvalidArgumentsServiceException("error.noPerson");
+        }
 
-		List listaRelation = groupProperties.getExportGroupings();
-		Iterator iterRelation = listaRelation.iterator();
-		while (iterRelation.hasNext()) {
-			ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterRelation.next();
-			if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
-					&& groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1) {
-				throw new InvalidSituationServiceException("error.GroupPropertiesCreator");
-			}
-			if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
-					&& groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-				throw new InvalidSituationServiceException("error.AlreadyAcceptedProposal");
-			}
-			if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
-					&& groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
-				throw new InvalidSituationServiceException("error.WaitingProposal");
-			}
-		}
+        List listaRelation = groupProperties.getExportGroupings();
+        Iterator iterRelation = listaRelation.iterator();
+        while (iterRelation.hasNext()) {
+            ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterRelation.next();
+            if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
+                    && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1) {
+                throw new InvalidSituationServiceException("error.GroupPropertiesCreator");
+            }
+            if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
+                    && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
+                throw new InvalidSituationServiceException("error.AlreadyAcceptedProposal");
+            }
+            if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
+                    && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
+                throw new InvalidSituationServiceException("error.WaitingProposal");
+            }
+        }
 
-		boolean acceptProposal = false;
+        boolean acceptProposal = false;
 
-		ExportGrouping groupPropertiesExecutionCourse = new ExportGrouping(groupProperties, goalExecutionCourse);
-		groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(3)));
-		groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
-		groupPropertiesExecutionCourse.setSenderExecutionCourse(startExecutionCourse);
-		groupProperties.addExportGroupings(groupPropertiesExecutionCourse);
-		goalExecutionCourse.addExportGroupings(groupPropertiesExecutionCourse);
+        ExportGrouping groupPropertiesExecutionCourse = new ExportGrouping(groupProperties, goalExecutionCourse);
+        groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(3)));
+        groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
+        groupPropertiesExecutionCourse.setSenderExecutionCourse(startExecutionCourse);
+        groupProperties.addExportGroupings(groupPropertiesExecutionCourse);
+        goalExecutionCourse.addExportGroupings(groupPropertiesExecutionCourse);
 
-		List group = new ArrayList();
-		List allOtherProfessors = new ArrayList();
+        List group = new ArrayList();
+        List allOtherProfessors = new ArrayList();
 
-		List professorships = goalExecutionCourse.getProfessorships();
-		Iterator iterProfessorship = professorships.iterator();
-		while (iterProfessorship.hasNext()) {
-			Professorship professorship = (Professorship) iterProfessorship.next();
-			if (!professorship.getPerson().equals(senderPerson)) {
-				group.add(professorship.getPerson());
-			} else {
-				acceptProposal = true;
-			}
-		}
+        List professorships = goalExecutionCourse.getProfessorships();
+        Iterator iterProfessorship = professorships.iterator();
+        while (iterProfessorship.hasNext()) {
+            Professorship professorship = (Professorship) iterProfessorship.next();
+            if (!professorship.getPerson().equals(senderPerson)) {
+                group.add(professorship.getPerson());
+            } else {
+                acceptProposal = true;
+            }
+        }
 
-		allOtherProfessors.addAll(group);
+        allOtherProfessors.addAll(group);
 
-		List groupAux = new ArrayList();
+        List groupAux = new ArrayList();
 
-		List professorshipsAux = startExecutionCourse.getProfessorships();
-		Iterator iterProfessorshipAux = professorshipsAux.iterator();
-		while (iterProfessorshipAux.hasNext()) {
-			Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();
-			Person pessoa = professorshipAux.getPerson();
-			if (!(pessoa.equals(senderPerson))) {
-				groupAux.add(pessoa);
-				if (!allOtherProfessors.contains(pessoa)) {
+        List professorshipsAux = startExecutionCourse.getProfessorships();
+        Iterator iterProfessorshipAux = professorshipsAux.iterator();
+        while (iterProfessorshipAux.hasNext()) {
+            Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();
+            Person pessoa = professorshipAux.getPerson();
+            if (!(pessoa.equals(senderPerson))) {
+                groupAux.add(pessoa);
+                if (!allOtherProfessors.contains(pessoa)) {
 
-					allOtherProfessors.add(pessoa);
-				}
-			}
-		}
+                    allOtherProfessors.add(pessoa);
+                }
+            }
+        }
 
-		// Create Advisory
-		if (acceptProposal == true) {
-			result = Boolean.TRUE;
-			groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(2)));
-			List groupingStudentNumbers = new ArrayList();
+        // Create Advisory
+        if (acceptProposal == true) {
+            result = Boolean.TRUE;
+            groupPropertiesExecutionCourse.setProposalState(new ProposalState(Integer.valueOf(2)));
+            List groupingStudentNumbers = new ArrayList();
 
-			Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttends().iterator();
+            Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttends().iterator();
 
-			while (iterAttends.hasNext()) {
-				Attends attend = (Attends) iterAttends.next();
-				groupingStudentNumbers.add(attend.getRegistration().getNumber());
-			}
+            while (iterAttends.hasNext()) {
+                Attends attend = (Attends) iterAttends.next();
+                groupingStudentNumbers.add(attend.getRegistration().getNumber());
+            }
 
-			Iterator iterAttends2 = goalExecutionCourse.getAttendsIterator();
-			while (iterAttends2.hasNext()) {
-				Attends attend = (Attends) iterAttends2.next();
-				if (!groupingStudentNumbers.contains(attend.getRegistration().getNumber())) {
-					groupPropertiesExecutionCourse.getGrouping().addAttends(attend);
-				}
-			}
-		}
+            Iterator iterAttends2 = goalExecutionCourse.getAttendsIterator();
+            while (iterAttends2.hasNext()) {
+                Attends attend = (Attends) iterAttends2.next();
+                if (!groupingStudentNumbers.contains(attend.getRegistration().getNumber())) {
+                    groupPropertiesExecutionCourse.getGrouping().addAttends(attend);
+                }
+            }
+        }
 
-		List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
-		for (ExecutionCourse ec : ecs) {
-			GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-					"log.executionCourse.groupAndShifts.grouping.exportGroup.added", groupProperties.getName(),
-					startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
-					goalExecutionCourse.getName(), goalExecutionCourse.getDegreePresentationString());
-		}
-		return result;
-	}
+        List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
+        for (ExecutionCourse ec : ecs) {
+            GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+                    "log.executionCourse.groupAndShifts.grouping.exportGroup.added", groupProperties.getName(),
+                    startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
+                    goalExecutionCourse.getName(), goalExecutionCourse.getDegreePresentationString());
+        }
+        return result;
+    }
 
 }

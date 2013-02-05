@@ -15,67 +15,67 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 
 public abstract class ResearchActivityStageRenderer extends OutputRenderer {
 
-	private String subLayout;
-	private String subSchema;
+    private String subLayout;
+    private String subSchema;
 
-	private Map<String, String> typeClasses;
+    private Map<String, String> typeClasses;
 
-	public ResearchActivityStageRenderer() {
-		super();
+    public ResearchActivityStageRenderer() {
+        super();
 
-		this.typeClasses = new Hashtable<String, String>();
-	}
+        this.typeClasses = new Hashtable<String, String>();
+    }
 
-	public String getEnumClasses(String name) {
-		return this.typeClasses.get(name);
-	}
+    public String getEnumClasses(String name) {
+        return this.typeClasses.get(name);
+    }
 
-	public void setEnumClasses(String name, String value) {
-		this.typeClasses.put(name, value);
-	}
+    public void setEnumClasses(String name, String value) {
+        this.typeClasses.put(name, value);
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
-				MetaObject metaObject = MetaObjectFactory.createObject(object, schema);
-				PresentationContext context = getContext().createSubContext(metaObject);
-				context.setLayout(getSubLayout());
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
+                Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
+                MetaObject metaObject = MetaObjectFactory.createObject(object, schema);
+                PresentationContext context = getContext().createSubContext(metaObject);
+                context.setLayout(getSubLayout());
 
-				HtmlComponent component = RenderKit.getInstance().render(context, object, type);
+                HtmlComponent component = RenderKit.getInstance().render(context, object, type);
 
-				return component;
-			}
+                return component;
+            }
 
-			@Override
-			public void applyStyle(HtmlComponent component) {
-				component.setClasses(getEnumClasses(getResearchActivityStage().toString()));
-				component.setTitle(getTitle());
-			}
+            @Override
+            public void applyStyle(HtmlComponent component) {
+                component.setClasses(getEnumClasses(getResearchActivityStage().toString()));
+                component.setTitle(getTitle());
+            }
 
-		};
+        };
 
-	}
+    }
 
-	public String getSubLayout() {
-		return subLayout;
-	}
+    public String getSubLayout() {
+        return subLayout;
+    }
 
-	public void setSubLayout(String subLayout) {
-		this.subLayout = subLayout;
-	}
+    public void setSubLayout(String subLayout) {
+        this.subLayout = subLayout;
+    }
 
-	public String getSubSchema() {
-		return subSchema;
-	}
+    public String getSubSchema() {
+        return subSchema;
+    }
 
-	public void setSubSchema(String subSchema) {
-		this.subSchema = subSchema;
-	}
+    public void setSubSchema(String subSchema) {
+        this.subSchema = subSchema;
+    }
 
-	public abstract ResearchActivityStage getResearchActivityStage();
+    public abstract ResearchActivityStage getResearchActivityStage();
 
 }

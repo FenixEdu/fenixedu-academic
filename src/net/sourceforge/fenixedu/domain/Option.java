@@ -1,15 +1,15 @@
 package net.sourceforge.fenixedu.domain;
 
 public enum Option {
-	ONE,
+    ONE,
 
-	TWO,
+    TWO,
 
-	THREE,
+    THREE,
 
-	FOUR,
+    FOUR,
 
-	FIVE,
+    FIVE,
 
-	SIX
+    SIX
 }

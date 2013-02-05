@@ -33,83 +33,83 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GroupEnrolment {
 
-	@Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
-	@Service
-	public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
-			String studentUsername) throws FenixServiceException {
-		return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
-	}
+    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
+    @Service
+    public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
+            String studentUsername) throws FenixServiceException {
+        return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
+    }
 
-	public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
-			String studentUsername) throws FenixServiceException {
-		final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-		final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
-		if (grouping == null) {
-			throw new NonExistingServiceException();
-		}
+    public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
+            String studentUsername) throws FenixServiceException {
+        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+        if (grouping == null) {
+            throw new NonExistingServiceException();
+        }
 
-		final Registration userStudent = Registration.readByUsername(studentUsername);
+        final Registration userStudent = Registration.readByUsername(studentUsername);
 
-		final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
-		if (grouping.getStudentAttend(studentUsername) == null) {
-			throw new NoChangeMadeServiceException();
-		}
-		Shift shift = null;
-		if (shiftID != null) {
-			shift = rootDomainObject.readShiftByOID(shiftID);
-		}
-		Set<String> allStudentsUsernames = new HashSet<String>(studentUsernames);
-		allStudentsUsernames.add(studentUsername);
-		Integer result = strategy.enrolmentPolicyNewGroup(grouping, allStudentsUsernames.size(), shift);
+        if (grouping.getStudentAttend(studentUsername) == null) {
+            throw new NoChangeMadeServiceException();
+        }
+        Shift shift = null;
+        if (shiftID != null) {
+            shift = rootDomainObject.readShiftByOID(shiftID);
+        }
+        Set<String> allStudentsUsernames = new HashSet<String>(studentUsernames);
+        allStudentsUsernames.add(studentUsername);
+        Integer result = strategy.enrolmentPolicyNewGroup(grouping, allStudentsUsernames.size(), shift);
 
-		if (result.equals(Integer.valueOf(-1))) {
-			throw new InvalidArgumentsServiceException();
-		}
-		if (result.equals(Integer.valueOf(-2))) {
-			throw new NonValidChangeServiceException();
-		}
-		if (result.equals(Integer.valueOf(-3))) {
-			throw new NotAuthorizedException();
-		}
+        if (result.equals(Integer.valueOf(-1))) {
+            throw new InvalidArgumentsServiceException();
+        }
+        if (result.equals(Integer.valueOf(-2))) {
+            throw new NonValidChangeServiceException();
+        }
+        if (result.equals(Integer.valueOf(-3))) {
+            throw new NotAuthorizedException();
+        }
 
-		final Attends userAttend = grouping.getStudentAttend(userStudent);
-		if (userAttend == null) {
-			throw new InvalidStudentNumberServiceException();
-		}
-		if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
-			throw new InvalidSituationServiceException();
-		}
+        final Attends userAttend = grouping.getStudentAttend(userStudent);
+        if (userAttend == null) {
+            throw new InvalidStudentNumberServiceException();
+        }
+        if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
+            throw new InvalidSituationServiceException();
+        }
 
-		StudentGroup newStudentGroup = grouping.readStudentGroupBy(groupNumber);
-		if (newStudentGroup != null) {
-			throw new FenixServiceException();
-		}
+        StudentGroup newStudentGroup = grouping.readStudentGroupBy(groupNumber);
+        if (newStudentGroup != null) {
+            throw new FenixServiceException();
+        }
 
-		if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
-			throw new InvalidStudentNumberServiceException();
-		}
-		checkStudentUsernamesAlreadyEnroledInStudentGroup(strategy, studentUsernames, grouping);
+        if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
+            throw new InvalidStudentNumberServiceException();
+        }
+        checkStudentUsernamesAlreadyEnroledInStudentGroup(strategy, studentUsernames, grouping);
 
-		newStudentGroup = new StudentGroup(groupNumber, grouping, shift);
-		for (final String studentUsernameIter : studentUsernames) {
-			Attends attend = grouping.getStudentAttend(studentUsernameIter);
-			attend.addStudentGroups(newStudentGroup);
-		}
-		userAttend.addStudentGroups(newStudentGroup);
-		grouping.addStudentGroups(newStudentGroup);
+        newStudentGroup = new StudentGroup(groupNumber, grouping, shift);
+        for (final String studentUsernameIter : studentUsernames) {
+            Attends attend = grouping.getStudentAttend(studentUsernameIter);
+            attend.addStudentGroups(newStudentGroup);
+        }
+        userAttend.addStudentGroups(newStudentGroup);
+        grouping.addStudentGroups(newStudentGroup);
 
-		return true;
-	}
+        return true;
+    }
 
-	private static void checkStudentUsernamesAlreadyEnroledInStudentGroup(final IGroupEnrolmentStrategy strategy,
-			final List<String> studentUsernames, final Grouping grouping) throws FenixServiceException {
+    private static void checkStudentUsernamesAlreadyEnroledInStudentGroup(final IGroupEnrolmentStrategy strategy,
+            final List<String> studentUsernames, final Grouping grouping) throws FenixServiceException {
 
-		for (final String studentUsername : studentUsernames) {
-			if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
-				throw new InvalidSituationServiceException();
-			}
-		}
-	}
+        for (final String studentUsername : studentUsernames) {
+            if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
+                throw new InvalidSituationServiceException();
+            }
+        }
+    }
 }

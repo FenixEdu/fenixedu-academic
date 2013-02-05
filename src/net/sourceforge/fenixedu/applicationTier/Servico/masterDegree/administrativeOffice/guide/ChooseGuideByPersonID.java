@@ -26,58 +26,58 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ChooseGuideByPersonID extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List run(Integer personID) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer personID) throws Exception {
 
-		// Check if person exists
-		Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        // Check if person exists
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
-		if (person == null) {
-			throw new NonExistingServiceException();
-		}
+        if (person == null) {
+            throw new NonExistingServiceException();
+        }
 
-		List<Guide> guides = new ArrayList<Guide>(person.getGuides());
-		if (guides.size() == 0) {
-			return null;
-		}
+        List<Guide> guides = new ArrayList<Guide>(person.getGuides());
+        if (guides.size() == 0) {
+            return null;
+        }
 
-		BeanComparator numberComparator = new BeanComparator("number");
-		BeanComparator versionComparator = new BeanComparator("version");
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(numberComparator);
-		chainComparator.addComparator(versionComparator);
-		Collections.sort(guides, chainComparator);
+        BeanComparator numberComparator = new BeanComparator("number");
+        BeanComparator versionComparator = new BeanComparator("version");
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(numberComparator);
+        chainComparator.addComparator(versionComparator);
+        Collections.sort(guides, chainComparator);
 
-		return getLatestVersions(guides);
-	}
+        return getLatestVersions(guides);
+    }
 
-	/**
-	 * 
-	 * This function expects to receive a list ordered by number (Ascending) and
-	 * version (Descending)
-	 * 
-	 * @param guides
-	 * @return The latest version for the guides
-	 */
-	private static List getLatestVersions(List guides) {
-		List result = new ArrayList();
+    /**
+     * 
+     * This function expects to receive a list ordered by number (Ascending) and
+     * version (Descending)
+     * 
+     * @param guides
+     * @return The latest version for the guides
+     */
+    private static List getLatestVersions(List guides) {
+        List result = new ArrayList();
 
-		Collections.reverse(guides);
+        Collections.reverse(guides);
 
-		Integer numberAux = null;
+        Integer numberAux = null;
 
-		Iterator iterator = guides.iterator();
-		while (iterator.hasNext()) {
-			Guide guide = (Guide) iterator.next();
+        Iterator iterator = guides.iterator();
+        while (iterator.hasNext()) {
+            Guide guide = (Guide) iterator.next();
 
-			if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
-				numberAux = guide.getNumber();
-				result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
-			}
-		}
-		Collections.reverse(result);
-		return result;
-	}
+            if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
+                numberAux = guide.getNumber();
+                result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
+            }
+        }
+        Collections.reverse(result);
+        return result;
+    }
 
 }

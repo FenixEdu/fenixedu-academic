@@ -16,8 +16,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteAnnouncementBoard extends FenixService {
 
-	@Service
-	public static void run(AnnouncementBoard board) {
-		board.delete();
-	}
+    @Service
+    public static void run(AnnouncementBoard board) {
+        board.delete();
+    }
 }

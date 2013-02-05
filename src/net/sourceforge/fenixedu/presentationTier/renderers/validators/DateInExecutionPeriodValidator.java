@@ -19,34 +19,34 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
  */
 public class DateInExecutionPeriodValidator extends DateValidator {
 
-	public DateInExecutionPeriodValidator() {
-		super();
-	}
+    public DateInExecutionPeriodValidator() {
+        super();
+    }
 
-	public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator) {
-		super(htmlChainValidator);
-	}
+    public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator) {
+        super(htmlChainValidator);
+    }
 
-	public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator, String dateFormat) {
-		super(htmlChainValidator, dateFormat);
-	}
+    public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator, String dateFormat) {
+        super(htmlChainValidator, dateFormat);
+    }
 
-	@Override
-	public void performValidation() {
-		super.performValidation();
+    @Override
+    public void performValidation() {
+        super.performValidation();
 
-		if (isValid()) {
-			try {
-				DateTime dateTime = new DateTime(DateFormatUtil.parse(getDateFormat(), getComponent().getValue()).getTime());
-				setValid(ExecutionSemester.readByDateTime(dateTime) != null);
-				if (!isValid()) {
-					setMessage("renderers.validator.dateInExecutionPeriod.notInExecutionPeriod");
-				}
-			} catch (ParseException e) {
-				setValid(false);
-				e.printStackTrace();
-			}
-		}
-	}
+        if (isValid()) {
+            try {
+                DateTime dateTime = new DateTime(DateFormatUtil.parse(getDateFormat(), getComponent().getValue()).getTime());
+                setValid(ExecutionSemester.readByDateTime(dateTime) != null);
+                if (!isValid()) {
+                    setMessage("renderers.validator.dateInExecutionPeriod.notInExecutionPeriod");
+                }
+            } catch (ParseException e) {
+                setValid(false);
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

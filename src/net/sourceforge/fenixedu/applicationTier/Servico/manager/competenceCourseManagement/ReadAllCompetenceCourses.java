@@ -11,14 +11,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllCompetenceCourses extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static List<InfoCompetenceCourse> run() {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static List<InfoCompetenceCourse> run() {
 
-		final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
-		for (final CompetenceCourse competenceCourse : CompetenceCourse.readOldCompetenceCourses()) {
-			result.add(InfoCompetenceCourse.newInfoFromDomain(competenceCourse));
-		}
-		return result;
-	}
+        final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
+        for (final CompetenceCourse competenceCourse : CompetenceCourse.readOldCompetenceCourses()) {
+            result.add(InfoCompetenceCourse.newInfoFromDomain(competenceCourse));
+        }
+        return result;
+    }
 }

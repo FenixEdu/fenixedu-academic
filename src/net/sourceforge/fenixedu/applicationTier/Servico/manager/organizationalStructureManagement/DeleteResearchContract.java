@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResearchContract extends FenixService {
 
-	@Service
-	public static void run(ResearchContract contract) {
-		contract.delete();
-	}
+    @Service
+    public static void run(ResearchContract contract) {
+        contract.delete();
+    }
 }

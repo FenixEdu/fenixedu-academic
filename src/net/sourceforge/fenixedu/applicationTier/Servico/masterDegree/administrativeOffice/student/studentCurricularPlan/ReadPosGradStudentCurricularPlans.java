@@ -17,31 +17,31 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPosGradStudentCurricularPlans extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException {
-		List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException {
+        List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-		Registration registration = rootDomainObject.readRegistrationByOID(studentId);
-		if (registration == null) {
-			throw new InvalidArgumentsServiceException("invalidStudentId");
-		}
+        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        if (registration == null) {
+            throw new InvalidArgumentsServiceException("invalidStudentId");
+        }
 
-		if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)
-				|| registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
-			List<StudentCurricularPlan> resultTemp = new ArrayList<StudentCurricularPlan>();
-			resultTemp.addAll(registration.getStudentCurricularPlans());
+        if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)
+                || registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+            List<StudentCurricularPlan> resultTemp = new ArrayList<StudentCurricularPlan>();
+            resultTemp.addAll(registration.getStudentCurricularPlans());
 
-			Iterator iterator = resultTemp.iterator();
-			while (iterator.hasNext()) {
-				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
-				result.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
-			}
-		} else {
-			throw new NotAuthorizedException();
-		}
+            Iterator iterator = resultTemp.iterator();
+            while (iterator.hasNext()) {
+                StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
+                result.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+            }
+        } else {
+            throw new NotAuthorizedException();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

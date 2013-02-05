@@ -11,49 +11,49 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCourseTeachersGroup {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ExecutionCourseResponsibleTeachersGroup(ExecutionCourse executionCourse) {
-		super(executionCourse);
-	}
+    public ExecutionCourseResponsibleTeachersGroup(ExecutionCourse executionCourse) {
+        super(executionCourse);
+    }
 
-	@Override
-	public String getPresentationNameKey() {
-		return "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName";
-	}
+    @Override
+    public String getPresentationNameKey() {
+        return "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName";
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new ExecutionCourseResponsibleTeachersGroup((ExecutionCourse) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new ExecutionCourseResponsibleTeachersGroup((ExecutionCourse) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 
-	@Override
-	public Collection<Professorship> getProfessorships() {
-		return getExecutionCourse().responsibleFors();
-	}
+    @Override
+    public Collection<Professorship> getProfessorships() {
+        return getExecutionCourse().responsibleFors();
+    }
 
 }

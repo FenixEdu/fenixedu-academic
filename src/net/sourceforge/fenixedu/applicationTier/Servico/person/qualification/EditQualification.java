@@ -18,18 +18,18 @@ import net.sourceforge.fenixedu.domain.Qualification;
  */
 public class EditQualification extends FenixService {
 
-	public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
-		Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
-		// If it doesn't exist in the database, a new one has to be created
-		Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
-		if (qualification == null) {
-			Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
-			qualification = new Qualification(person, country, infoQualification);
+    public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
+        Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
+        // If it doesn't exist in the database, a new one has to be created
+        Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
+        if (qualification == null) {
+            Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
+            qualification = new Qualification(person, country, infoQualification);
 
-		} else {
-			qualification.edit(infoQualification, country);
-		}
+        } else {
+            qualification.edit(infoQualification, country);
+        }
 
-	}
+    }
 
 }

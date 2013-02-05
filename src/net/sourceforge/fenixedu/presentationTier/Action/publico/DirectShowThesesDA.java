@@ -18,14 +18,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "publico", path = "/theses/thesis", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showThesisDetails", path = "showThesisDetails") })
 public class DirectShowThesesDA extends PublicShowThesesDA {
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		FunctionalityContext context = FilterFunctionalityContext.getCurrentContext(request);
-		if (context.getSelectedContainer() instanceof ThesisSite) {
-			ThesisSite site = (ThesisSite) context.getSelectedContainer();
-			request.setAttribute("thesis", site.getThesis());
-		}
-		return mapping.findForward("showThesisDetails");
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        FunctionalityContext context = FilterFunctionalityContext.getCurrentContext(request);
+        if (context.getSelectedContainer() instanceof ThesisSite) {
+            ThesisSite site = (ThesisSite) context.getSelectedContainer();
+            request.setAttribute("thesis", site.getThesis());
+        }
+        return mapping.findForward("showThesisDetails");
+    }
 }

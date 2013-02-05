@@ -29,47 +29,40 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/manageGrantContract",
-		input = "/manageGrantContract.do?page=0&method=prepareManageGrantContractForm",
-		attribute = "voidForm",
-		formBean = "voidForm",
-		scope = "request",
-		parameter = "method")
-@Forwards(value = { @Forward(
-		name = "manage-grant-contract",
-		path = "/facultyAdmOffice/grant/contract/manageGrantContract.jsp",
-		tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantContract",
+        input = "/manageGrantContract.do?page=0&method=prepareManageGrantContractForm", attribute = "voidForm",
+        formBean = "voidForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-contract", path = "/facultyAdmOffice/grant/contract/manageGrantContract.jsp",
+        tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class ManageGrantContractAction extends FenixDispatchAction {
 
-	public ActionForward prepareManageGrantContractForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantContractForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Integer idInternal = null;
-		if (request.getParameter("idInternal") != null) {
-			idInternal = new Integer(request.getParameter("idInternal"));
-		} else if ((Integer) request.getAttribute("idInternal") != null) {
-			idInternal = (Integer) request.getAttribute("idInternal");
-		}
+        Integer idInternal = null;
+        if (request.getParameter("idInternal") != null) {
+            idInternal = new Integer(request.getParameter("idInternal"));
+        } else if ((Integer) request.getAttribute("idInternal") != null) {
+            idInternal = (Integer) request.getAttribute("idInternal");
+        }
 
-		// Run the service
+        // Run the service
 
-		IUserView userView = UserView.getUser();
-		List infoGrantContractList = ReadAllContractsByGrantOwner.run(idInternal);
+        IUserView userView = UserView.getUser();
+        List infoGrantContractList = ReadAllContractsByGrantOwner.run(idInternal);
 
-		if (infoGrantContractList != null && !infoGrantContractList.isEmpty()) {
-			request.setAttribute("infoGrantContractList", infoGrantContractList);
-		}
+        if (infoGrantContractList != null && !infoGrantContractList.isEmpty()) {
+            request.setAttribute("infoGrantContractList", infoGrantContractList);
+        }
 
-		// Needed for return to manage contracts
-		request.setAttribute("idInternal", idInternal);
+        // Needed for return to manage contracts
+        request.setAttribute("idInternal", idInternal);
 
-		InfoGrantOwner infoGrantOwner =
-				(InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", new Object[] { idInternal });
-		request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
-		request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());
+        InfoGrantOwner infoGrantOwner =
+                (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", new Object[] { idInternal });
+        request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
+        request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());
 
-		return mapping.findForward("manage-grant-contract");
-	}
+        return mapping.findForward("manage-grant-contract");
+    }
 }

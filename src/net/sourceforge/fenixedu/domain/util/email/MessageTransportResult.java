@@ -5,18 +5,18 @@ import net.sourceforge.fenixedu.domain.util.Email;
 
 public class MessageTransportResult extends MessageTransportResult_Base {
 
-	public MessageTransportResult(final Email email, final Integer code, final String description) {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setEmail(email);
-		setCode(code);
-		setDescription(description);
-	}
+    public MessageTransportResult(final Email email, final Integer code, final String description) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setEmail(email);
+        setCode(code);
+        setDescription(description);
+    }
 
-	public void delete() {
-		removeEmail();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeEmail();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
 }

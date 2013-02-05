@@ -8,54 +8,54 @@ import org.apache.struts.util.ModuleUtils;
 
 public class FenixActionForward extends ActionForward {
 
-	private static final long serialVersionUID = 1L;
-	private HttpServletRequest request;
+    private static final long serialVersionUID = 1L;
+    private HttpServletRequest request;
 
-	public FenixActionForward(HttpServletRequest request, ActionForward forward) {
-		super(forward);
+    public FenixActionForward(HttpServletRequest request, ActionForward forward) {
+        super(forward);
 
-		this.request = request;
-	}
+        this.request = request;
+    }
 
-	@Override
-	public String getPath() {
-		String current = super.getPath();
+    @Override
+    public String getPath() {
+        String current = super.getPath();
 
-		String mark = "";
-		if (current.indexOf("?") == -1) {
-			mark = "?";
-		}
+        String mark = "";
+        if (current.indexOf("?") == -1) {
+            mark = "?";
+        }
 
-		String amp = "";
-		if (mark.length() == 0) {
-			amp = "&";
-		}
+        String amp = "";
+        if (mark.length() == 0) {
+            amp = "&";
+        }
 
-		String module = getPathModule();
+        String module = getPathModule();
 
-		String context = request.getContextPath();
-		String checksum =
-				pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(context
-						+ module + current);
+        String context = request.getContextPath();
+        String checksum =
+                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(context
+                        + module + current);
 
-		return String.format("%s%s%s%s=%s", current, mark, amp,
-				pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME,
-				checksum);
-	}
+        return String.format("%s%s%s%s=%s", current, mark, amp,
+                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME,
+                checksum);
+    }
 
-	private String getPathModule() {
-		String currentModule = getModule();
+    private String getPathModule() {
+        String currentModule = getModule();
 
-		if (currentModule != null) {
-			return currentModule;
-		}
+        if (currentModule != null) {
+            return currentModule;
+        }
 
-		ModuleConfig module = ModuleUtils.getInstance().getModuleConfig(this.request);
-		if (module == null) {
-			return "";
-		}
+        ModuleConfig module = ModuleUtils.getInstance().getModuleConfig(this.request);
+        if (module == null) {
+            return "";
+        }
 
-		return module.getPrefix();
-	}
+        return module.getPrefix();
+    }
 
 }

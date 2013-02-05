@@ -17,13 +17,13 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCertificateList extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException {
-		final List<InfoPrice> result = new ArrayList<InfoPrice>();
-		for (final Price price : Price.readByGraduationTypeAndDocumentTypes(graduationType, documentTypes)) {
-			result.add(InfoPrice.newInfoFromDoaim(price));
-		}
-		return result;
-	}
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException {
+        final List<InfoPrice> result = new ArrayList<InfoPrice>();
+        for (final Price price : Price.readByGraduationTypeAndDocumentTypes(graduationType, documentTypes)) {
+            result.add(InfoPrice.newInfoFromDoaim(price));
+        }
+        return result;
+    }
 }

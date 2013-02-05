@@ -31,27 +31,27 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class IndexStudentAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		final IUserView userView = UserView.getUser();
-		if (userView != null) {
-			final Person person = userView.getPerson();
-			if (person != null) {
-				final Student student = person.getStudent();
-				if (student != null) {
-					if (student.hasAnyRegistrations()) {
-						final Registration registration = student.getRegistrationsSet().iterator().next();
-						final InfoStudent infoStudent = new InfoStudent(registration);
-						request.setAttribute("infoStudent", infoStudent);
-						return mapping.findForward("Success");
-					}
-				}
-			}
-		}
+        final IUserView userView = UserView.getUser();
+        if (userView != null) {
+            final Person person = userView.getPerson();
+            if (person != null) {
+                final Student student = person.getStudent();
+                if (student != null) {
+                    if (student.hasAnyRegistrations()) {
+                        final Registration registration = student.getRegistrationsSet().iterator().next();
+                        final InfoStudent infoStudent = new InfoStudent(registration);
+                        request.setAttribute("infoStudent", infoStudent);
+                        return mapping.findForward("Success");
+                    }
+                }
+            }
+        }
 
-		throw new InvalidSessionActionException();
-	}
+        throw new InvalidSessionActionException();
+    }
 
 }

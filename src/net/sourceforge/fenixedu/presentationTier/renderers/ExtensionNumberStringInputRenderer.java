@@ -11,23 +11,23 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
 
 public class ExtensionNumberStringInputRenderer extends StringInputRenderer {
 
-	@Override
-	protected HtmlComponent createTextField(Object object, Class type) {
+    @Override
+    protected HtmlComponent createTextField(Object object, Class type) {
 
-		Extension extension = (Extension) object;
-		String number = (extension != null) ? extension.getIdentification().toString() : null;
+        Extension extension = (Extension) object;
+        String number = (extension != null) ? extension.getIdentification().toString() : null;
 
-		final HtmlComponent htmlComponent = super.createTextField(number, type);
-		final HtmlFormComponent formComponent = (HtmlFormComponent) htmlComponent.getChild(new Predicate() {
+        final HtmlComponent htmlComponent = super.createTextField(number, type);
+        final HtmlFormComponent formComponent = (HtmlFormComponent) htmlComponent.getChild(new Predicate() {
 
-			@Override
-			public boolean evaluate(final Object arg0) {
-				return arg0 instanceof HtmlFormComponent;
-			}
-		});
+            @Override
+            public boolean evaluate(final Object arg0) {
+                return arg0 instanceof HtmlFormComponent;
+            }
+        });
 
-		formComponent.setConverter(new ExtensionNumberConverter());
+        formComponent.setConverter(new ExtensionNumberConverter());
 
-		return formComponent;
-	}
+        return formComponent;
+    }
 }

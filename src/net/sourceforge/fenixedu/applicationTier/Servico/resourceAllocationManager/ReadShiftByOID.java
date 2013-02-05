@@ -17,10 +17,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadShiftByOID extends FenixService {
 
-	@Service
-	public static InfoShift run(final Integer oid) {
-		final Shift shift = rootDomainObject.readShiftByOID(oid);
-		return shift == null ? null : InfoShift.newInfoFromDomain(shift);
-	}
+    @Service
+    public static InfoShift run(final Integer oid) {
+        final Shift shift = rootDomainObject.readShiftByOID(oid);
+        return shift == null ? null : InfoShift.newInfoFromDomain(shift);
+    }
 
 }

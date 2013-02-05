@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class JournalIssuesForScienficalJournalProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ScientificJournal scientificJournal;
-		try {
-			scientificJournal = (ScientificJournal) MethodUtils.invokeMethod(source, "getScientificJournal", null);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ScientificJournal scientificJournal;
+        try {
+            scientificJournal = (ScientificJournal) MethodUtils.invokeMethod(source, "getScientificJournal", null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		return scientificJournal == null ? Collections.EMPTY_LIST : scientificJournal.getJournalIssues();
-	}
+        return scientificJournal == null ? Collections.EMPTY_LIST : scientificJournal.getJournalIssues();
+    }
 
 }

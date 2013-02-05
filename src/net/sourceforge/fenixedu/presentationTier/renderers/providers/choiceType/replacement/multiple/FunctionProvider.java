@@ -12,25 +12,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FunctionProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return CollectionUtils.select(RootDomainObject.getInstance().getAccountabilityTypes(), new Predicate() {
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return CollectionUtils.select(RootDomainObject.getInstance().getAccountabilityTypes(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return isFunction((AccountabilityType) arg0);
-			}
+            @Override
+            public boolean evaluate(Object arg0) {
+                return isFunction((AccountabilityType) arg0);
+            }
 
-		});
-	}
+        });
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
-	private boolean isFunction(final AccountabilityType type) {
-		return type instanceof net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-	}
+    private boolean isFunction(final AccountabilityType type) {
+        return type instanceof net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+    }
 
 }

@@ -12,62 +12,62 @@ import java.io.Serializable;
  */
 public class ServiceExecutionLog implements Serializable {
 
-	private String serviceFootPrint;
+    private String serviceFootPrint;
 
-	private long totalExecutionTime;
+    private long totalExecutionTime;
 
-	private long lastExecutionTime;
+    private long lastExecutionTime;
 
-	private int numberCalls;
+    private int numberCalls;
 
-	/**
+    /**
      *  
      */
-	public ServiceExecutionLog(String serviceFootPrint) {
-		super();
-		this.serviceFootPrint = serviceFootPrint;
-		this.numberCalls = 0;
-	}
+    public ServiceExecutionLog(String serviceFootPrint) {
+        super();
+        this.serviceFootPrint = serviceFootPrint;
+        this.numberCalls = 0;
+    }
 
-	/**
-	 * @return Returns the serviceFootPrint.
-	 */
-	public String getServiceFootPrint() {
-		return serviceFootPrint;
-	}
+    /**
+     * @return Returns the serviceFootPrint.
+     */
+    public String getServiceFootPrint() {
+        return serviceFootPrint;
+    }
 
-	/**
-	 * @return Returns the lastExecutionTime.
-	 */
-	public long getLastExecutionTime() {
-		return lastExecutionTime;
-	}
+    /**
+     * @return Returns the lastExecutionTime.
+     */
+    public long getLastExecutionTime() {
+        return lastExecutionTime;
+    }
 
-	/**
-	 * @return Returns the totalExecutionTime.
-	 */
-	public long getTotalExecutionTime() {
-		return totalExecutionTime;
-	}
+    /**
+     * @return Returns the totalExecutionTime.
+     */
+    public long getTotalExecutionTime() {
+        return totalExecutionTime;
+    }
 
-	/**
-	 * @return Returns the numberCalls.
-	 */
-	public int getNumberCalls() {
-		return numberCalls;
-	}
+    /**
+     * @return Returns the numberCalls.
+     */
+    public int getNumberCalls() {
+        return numberCalls;
+    }
 
-	public void addExecutionTime(long lastExecutionTime) {
-		this.lastExecutionTime = lastExecutionTime;
-		this.totalExecutionTime += lastExecutionTime;
-		this.numberCalls++;
-	}
+    public void addExecutionTime(long lastExecutionTime) {
+        this.lastExecutionTime = lastExecutionTime;
+        this.totalExecutionTime += lastExecutionTime;
+        this.numberCalls++;
+    }
 
-	/**
-	 * @return Calculates the average execution time of the service.
-	 */
-	public long getAverageExecutionTime() {
-		return this.totalExecutionTime / this.numberCalls;
-	}
+    /**
+     * @return Calculates the average execution time of the service.
+     */
+    public long getAverageExecutionTime() {
+        return this.totalExecutionTime / this.numberCalls;
+    }
 
 }

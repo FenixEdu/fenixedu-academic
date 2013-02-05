@@ -12,18 +12,18 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class ReadStudentCurriculum extends FenixService {
 
-	public List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
+    public List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
 
-		final StudentCurricularPlan studentCurricularPlan =
-				rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
-		if (studentCurricularPlan == null) {
-			throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
-		}
+        final StudentCurricularPlan studentCurricularPlan =
+                rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        if (studentCurricularPlan == null) {
+            throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
+        }
 
-		final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>(studentCurricularPlan.getEnrolmentsCount());
-		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-			result.add(InfoEnrolment.newInfoFromDomain(enrolment));
-		}
-		return result;
-	}
+        final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>(studentCurricularPlan.getEnrolmentsCount());
+        for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+            result.add(InfoEnrolment.newInfoFromDomain(enrolment));
+        }
+        return result;
+    }
 }

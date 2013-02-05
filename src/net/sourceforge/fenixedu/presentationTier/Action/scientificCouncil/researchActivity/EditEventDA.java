@@ -21,22 +21,22 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class EditEventDA extends EditResearchActivityDA {
 
-	@Override
-	protected List getObjects() {
-		List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEvents());
-		Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
-		return events;
-	}
+    @Override
+    protected List getObjects() {
+        List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEvents());
+        Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
+        return events;
+    }
 
-	public ActionForward prepareChooseEventEditionToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
-		RenderUtils.invalidateViewState();
+    public ActionForward prepareChooseEventEditionToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
+        RenderUtils.invalidateViewState();
 
-		MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean =
-				new MergeEventEditionPageContainerBean((ResearchEvent) pageContainerBean.getSelected());
-		request.setAttribute("mergeBean", mergeEventEditionPageContainerBean);
+        MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean =
+                new MergeEventEditionPageContainerBean((ResearchEvent) pageContainerBean.getSelected());
+        request.setAttribute("mergeBean", mergeEventEditionPageContainerBean);
 
-		return mapping.findForward("prepareChooseEventEditionToMerge");
-	}
+        return mapping.findForward("prepareChooseEventEditionToMerge");
+    }
 }

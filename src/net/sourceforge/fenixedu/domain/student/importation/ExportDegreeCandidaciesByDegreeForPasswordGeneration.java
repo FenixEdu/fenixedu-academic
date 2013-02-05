@@ -31,150 +31,150 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
-		ExportDegreeCandidaciesByDegreeForPasswordGeneration_Base {
+        ExportDegreeCandidaciesByDegreeForPasswordGeneration_Base {
 
-	private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
-			DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
+            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-	public ExportDegreeCandidaciesByDegreeForPasswordGeneration() {
-		super();
-	}
+    public ExportDegreeCandidaciesByDegreeForPasswordGeneration() {
+        super();
+    }
 
-	public ExportDegreeCandidaciesByDegreeForPasswordGeneration(final ExecutionYear executionYear, final EntryPhase entryPhase) {
-		super.init(executionYear, entryPhase);
-	}
+    public ExportDegreeCandidaciesByDegreeForPasswordGeneration(final ExecutionYear executionYear, final EntryPhase entryPhase) {
+        super.init(executionYear, entryPhase);
+    }
 
-	@Override
-	public QueueJobResult execute() throws Exception {
-		final Map<Degree, Set<Person>> result = new HashMap<Degree, Set<Person>>();
+    @Override
+    public QueueJobResult execute() throws Exception {
+        final Map<Degree, Set<Person>> result = new HashMap<Degree, Set<Person>>();
 
-		for (final ExecutionDegree executionDegree : getExecutionYear().getExecutionDegrees()) {
-			if (!isAcceptedDegreeType(executionDegree)) {
-				continue;
-			}
+        for (final ExecutionDegree executionDegree : getExecutionYear().getExecutionDegrees()) {
+            if (!isAcceptedDegreeType(executionDegree)) {
+                continue;
+            }
 
-			for (final StudentCandidacy studentCandidacy : executionDegree.getStudentCandidacies()) {
-				if (!(studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy)) {
-					continue;
-				}
+            for (final StudentCandidacy studentCandidacy : executionDegree.getStudentCandidacies()) {
+                if (!(studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy)) {
+                    continue;
+                }
 
-				if (studentCandidacy.hasAnyCandidacySituations()) {
-					if (studentCandidacy.getActiveCandidacySituationType() == CandidacySituationType.STAND_BY
-							&& studentCandidacy.getEntryPhase().equals(getEntryPhase())
-							&& !studentCandidacy.getPerson().hasRole(RoleType.STUDENT)
-							&& !studentCandidacy.getPerson().getStudent().hasAnyRegistrations()
-							&& !studentCandidacy.getPerson().hasRole(RoleType.EMPLOYEE)) {
-						addPerson(result, executionDegree.getDegree(), studentCandidacy.getPerson());
-					}
-				}
-			}
-		}
+                if (studentCandidacy.hasAnyCandidacySituations()) {
+                    if (studentCandidacy.getActiveCandidacySituationType() == CandidacySituationType.STAND_BY
+                            && studentCandidacy.getEntryPhase().equals(getEntryPhase())
+                            && !studentCandidacy.getPerson().hasRole(RoleType.STUDENT)
+                            && !studentCandidacy.getPerson().getStudent().hasAnyRegistrations()
+                            && !studentCandidacy.getPerson().hasRole(RoleType.EMPLOYEE)) {
+                        addPerson(result, executionDegree.getDegree(), studentCandidacy.getPerson());
+                    }
+                }
+            }
+        }
 
-		ByteArrayOutputStream stream = null;
-		PrintWriter writer = null;
-		try {
-			stream = new ByteArrayOutputStream();
-			writer = new PrintWriter(new BufferedOutputStream(stream));
+        ByteArrayOutputStream stream = null;
+        PrintWriter writer = null;
+        try {
+            stream = new ByteArrayOutputStream();
+            writer = new PrintWriter(new BufferedOutputStream(stream));
 
-			for (final Map.Entry<Degree, Set<Person>> entry : result.entrySet()) {
-				writer.println(String.format("\nCurso %s - %s ", entry.getKey().getNameI18N().getContent(),
-						getCampus(entry.getKey()).getName()));
-				for (final Person person : entry.getValue()) {
-					writer.println(person.getIstUsername());
-				}
-			}
-		} finally {
-			writer.close();
-			stream.close();
-		}
+            for (final Map.Entry<Degree, Set<Person>> entry : result.entrySet()) {
+                writer.println(String.format("\nCurso %s - %s ", entry.getKey().getNameI18N().getContent(),
+                        getCampus(entry.getKey()).getName()));
+                for (final Person person : entry.getValue()) {
+                    writer.println(person.getIstUsername());
+                }
+            }
+        } finally {
+            writer.close();
+            stream.close();
+        }
 
-		final QueueJobResult queueJobResult = new QueueJobResult();
-		queueJobResult.setContentType("text/plain");
-		queueJobResult.setContent(stream.toByteArray());
+        final QueueJobResult queueJobResult = new QueueJobResult();
+        queueJobResult.setContentType("text/plain");
+        queueJobResult.setContent(stream.toByteArray());
 
-		return queueJobResult;
-	}
+        return queueJobResult;
+    }
 
-	private Campus getCampus(final Degree degree) {
-		final Collection<Campus> result = degree.getCampus(getExecutionYear());
+    private Campus getCampus(final Degree degree) {
+        final Collection<Campus> result = degree.getCampus(getExecutionYear());
 
-		if (result.size() != 1) {
-			throw new RuntimeException("Unexpected campus count");
-		}
+        if (result.size() != 1) {
+            throw new RuntimeException("Unexpected campus count");
+        }
 
-		return result.iterator().next();
-	}
+        return result.iterator().next();
+    }
 
-	private void addPerson(final Map<Degree, Set<Person>> result, final Degree degree, final Person person) {
-		final Set<Person> persons;
+    private void addPerson(final Map<Degree, Set<Person>> result, final Degree degree, final Person person) {
+        final Set<Person> persons;
 
-		if (result.containsKey(degree)) {
-			persons = result.get(degree);
-		} else {
-			persons = new HashSet<Person>();
-			result.put(degree, persons);
-		}
+        if (result.containsKey(degree)) {
+            persons = result.get(degree);
+        } else {
+            persons = new HashSet<Person>();
+            result.put(degree, persons);
+        }
 
-		persons.add(person);
+        persons.add(person);
 
-	}
+    }
 
-	private boolean isAcceptedDegreeType(final ExecutionDegree executionDegree) {
-		return ACCEPTED_DEGREE_TYPES.contains(executionDegree.getDegree().getDegreeType());
-	}
+    private boolean isAcceptedDegreeType(final ExecutionDegree executionDegree) {
+        return ACCEPTED_DEGREE_TYPES.contains(executionDegree.getDegree().getDegreeType());
+    }
 
-	public static boolean canRequestJob() {
-		return QueueJob.getUndoneJobsForClass(ExportDegreeCandidaciesByDegreeForPasswordGeneration.class).isEmpty();
-	}
+    public static boolean canRequestJob() {
+        return QueueJob.getUndoneJobsForClass(ExportDegreeCandidaciesByDegreeForPasswordGeneration.class).isEmpty();
+    }
 
-	public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readAllJobs(final ExecutionYear executionYear) {
-		List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
-				new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
+    public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readAllJobs(final ExecutionYear executionYear) {
+        List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
+                new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
 
-		CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return arg0 instanceof ExportDegreeCandidaciesByDegreeForPasswordGeneration;
-			}
-		}, jobList);
+            @Override
+            public boolean evaluate(Object arg0) {
+                return arg0 instanceof ExportDegreeCandidaciesByDegreeForPasswordGeneration;
+            }
+        }, jobList);
 
-		return jobList;
-	}
+        return jobList;
+    }
 
-	public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readDoneJobs(final ExecutionYear executionYear) {
-		List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
-				new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
+    public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readDoneJobs(final ExecutionYear executionYear) {
+        List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
+                new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
 
-		CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return (arg0 instanceof ExportDegreeCandidaciesByDegreeForPasswordGeneration) && ((QueueJob) arg0).getDone();
-			}
-		}, jobList);
+            @Override
+            public boolean evaluate(Object arg0) {
+                return (arg0 instanceof ExportDegreeCandidaciesByDegreeForPasswordGeneration) && ((QueueJob) arg0).getDone();
+            }
+        }, jobList);
 
-		return jobList;
-	}
+        return jobList;
+    }
 
-	public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readUndoneJobs(final ExecutionYear executionYear) {
-		return new ArrayList(CollectionUtils.subtract(readAllJobs(executionYear), readDoneJobs(executionYear)));
-	}
+    public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readUndoneJobs(final ExecutionYear executionYear) {
+        return new ArrayList(CollectionUtils.subtract(readAllJobs(executionYear), readDoneJobs(executionYear)));
+    }
 
-	public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readPendingJobs(final ExecutionYear executionYear) {
-		List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
-				new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
+    public static List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> readPendingJobs(final ExecutionYear executionYear) {
+        List<ExportDegreeCandidaciesByDegreeForPasswordGeneration> jobList =
+                new ArrayList<ExportDegreeCandidaciesByDegreeForPasswordGeneration>();
 
-		CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+        CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return (arg0 instanceof ExportDegreeCandidaciesByDegreeForPasswordGeneration)
-						&& ((QueueJob) arg0).getIsNotDoneAndNotCancelled();
-			}
-		}, jobList);
+            @Override
+            public boolean evaluate(Object arg0) {
+                return (arg0 instanceof ExportDegreeCandidaciesByDegreeForPasswordGeneration)
+                        && ((QueueJob) arg0).getIsNotDoneAndNotCancelled();
+            }
+        }, jobList);
 
-		return jobList;
-	}
+        return jobList;
+    }
 
 }

@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
  */
 public class ReadDistributedTests extends FenixService {
 
-	public List<InfoDistributedTest> run(Integer executionCourseId) {
-		final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
-		List<InfoDistributedTest> infoDistributedTestList = new ArrayList<InfoDistributedTest>();
-		if (testScope != null) {
-			for (DistributedTest distributedTest : testScope.getDistributedTests()) {
-				infoDistributedTestList.add(InfoDistributedTest.newInfoFromDomain(distributedTest));
-			}
-		}
-		return infoDistributedTestList;
-	}
+    public List<InfoDistributedTest> run(Integer executionCourseId) {
+        final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+        List<InfoDistributedTest> infoDistributedTestList = new ArrayList<InfoDistributedTest>();
+        if (testScope != null) {
+            for (DistributedTest distributedTest : testScope.getDistributedTests()) {
+                infoDistributedTestList.add(InfoDistributedTest.newInfoFromDomain(distributedTest));
+            }
+        }
+        return infoDistributedTestList;
+    }
 }

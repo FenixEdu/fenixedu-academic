@@ -13,59 +13,59 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
  */
 public class InfoClass extends InfoObject {
 
-	private final SchoolClass schoolClass;
+    private final SchoolClass schoolClass;
 
-	public SchoolClass getSchoolClass() {
-		return schoolClass;
-	}
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
 
-	public InfoClass(final SchoolClass schoolClass) {
-		this.schoolClass = schoolClass;
-	}
+    public InfoClass(final SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
 
-	public String getNome() {
-		return getSchoolClass().getNome();
-	}
+    public String getNome() {
+        return getSchoolClass().getNome();
+    }
 
-	public Integer getAnoCurricular() {
-		return getSchoolClass().getAnoCurricular();
-	}
+    public Integer getAnoCurricular() {
+        return getSchoolClass().getAnoCurricular();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj != null && getSchoolClass() == ((InfoClass) obj).getSchoolClass();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && getSchoolClass() == ((InfoClass) obj).getSchoolClass();
+    }
 
-	@Override
-	public String toString() {
-		return getSchoolClass().toString();
-	}
+    @Override
+    public String toString() {
+        return getSchoolClass().toString();
+    }
 
-	public InfoExecutionDegree getInfoExecutionDegree() {
-		return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
-	}
+    public InfoExecutionDegree getInfoExecutionDegree() {
+        return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
+    }
 
-	public AcademicInterval getAcademicInterval() {
-		return getSchoolClass().getAcademicInterval();
-	}
+    public AcademicInterval getAcademicInterval() {
+        return getSchoolClass().getAcademicInterval();
+    }
 
-	@Deprecated
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
-	}
+    @Deprecated
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
+    }
 
-	public static InfoClass newInfoFromDomain(final SchoolClass schoolClass) {
-		return schoolClass == null ? null : new InfoClass(schoolClass);
-	}
+    public static InfoClass newInfoFromDomain(final SchoolClass schoolClass) {
+        return schoolClass == null ? null : new InfoClass(schoolClass);
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getSchoolClass().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getSchoolClass().getIdInternal();
+    }
 
-	@Override
-	public void setIdInternal(Integer integer) {
-		throw new Error("Method should not be called!");
-	}
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
 
 }

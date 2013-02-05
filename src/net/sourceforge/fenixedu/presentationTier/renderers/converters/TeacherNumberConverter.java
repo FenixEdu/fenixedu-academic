@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TeacherNumberConverter extends Converter {
 
-	@Override
-	public Object convert(Class type, Object value) {
+    @Override
+    public Object convert(Class type, Object value) {
 
-		String numberText = ((String) value).trim();
+        String numberText = ((String) value).trim();
 
-		if (numberText.length() == 0 || !StringUtils.isNumeric(numberText)) {
-			return null;
-		}
+        if (numberText.length() == 0 || !StringUtils.isNumeric(numberText)) {
+            return null;
+        }
 
-		return Employee.readByNumber(Integer.valueOf(numberText)).getPerson().getTeacher();
-	}
+        return Employee.readByNumber(Integer.valueOf(numberText)).getPerson().getTeacher();
+    }
 
 }

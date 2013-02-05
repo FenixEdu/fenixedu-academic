@@ -6,53 +6,53 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class ExternalPersonBean extends PersonBean {
 
-	private Unit unitDomainReference;
+    private Unit unitDomainReference;
 
-	private UnitName unitNameDomainReference;
+    private UnitName unitNameDomainReference;
 
-	private PersonName personName;
+    private PersonName personName;
 
-	private String unitName;
+    private String unitName;
 
-	public ExternalPersonBean() {
-		super();
-	}
+    public ExternalPersonBean() {
+        super();
+    }
 
-	public String getUnitName() {
-		return unitName;
-	}
+    public String getUnitName() {
+        return unitName;
+    }
 
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
-	public Unit getUnit() {
-		return unitDomainReference;
-	}
+    public Unit getUnit() {
+        return unitDomainReference;
+    }
 
-	public void setUnit(Unit unit) {
-		this.unitDomainReference = unit;
-	}
+    public void setUnit(Unit unit) {
+        this.unitDomainReference = unit;
+    }
 
-	public UnitName getUnitNameDomainReference() {
-		return unitNameDomainReference;
-	}
+    public UnitName getUnitNameDomainReference() {
+        return unitNameDomainReference;
+    }
 
-	public void setUnitNameDomainReference(UnitName unitName) {
-		if (unitName != null) {
-			this.unitNameDomainReference = unitName;
-			setUnit(unitName.getUnit());
-		}
-	}
+    public void setUnitNameDomainReference(UnitName unitName) {
+        if (unitName != null) {
+            this.unitNameDomainReference = unitName;
+            setUnit(unitName.getUnit());
+        }
+    }
 
-	public PersonName getPersonName() {
-		return personName;
-	}
+    public PersonName getPersonName() {
+        return personName;
+    }
 
-	public void setPersonName(PersonName personName) {
-		if (personName != null) {
-			this.personName = personName;
-			setPerson(personName.getPerson());
-		}
-	}
+    public void setPersonName(PersonName personName) {
+        if (personName != null) {
+            this.personName = personName;
+            setPerson(personName.getPerson());
+        }
+    }
 }

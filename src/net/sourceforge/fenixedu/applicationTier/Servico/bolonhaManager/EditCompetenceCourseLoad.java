@@ -17,37 +17,37 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCompetenceCourseLoad extends FenixService {
 
-	@Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
-			List<CourseLoad> courseLoads) throws FenixServiceException {
-		final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
-		if (competenceCourse == null) {
-			throw new FenixServiceException("error.noCompetenceCourse");
-		}
-		competenceCourse.setRegime(regimeType);
-		final AcademicPeriod academicPeriod = AcademicPeriod.SEMESTER;
-		for (final CourseLoad courseLoad : courseLoads) {
-			if (courseLoad.getAction().equals("create") && competenceCourse.getCompetenceCourseLoads().size() < numberOfPeriods) {
-				competenceCourse.addCompetenceCourseLoad(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),
-						courseLoad.getLaboratorialHours(), courseLoad.getSeminaryHours(), courseLoad.getFieldWorkHours(),
-						courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
-						courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(), academicPeriod);
-			} else {
-				final CompetenceCourseLoad competenceCourseLoad =
-						rootDomainObject.readCompetenceCourseLoadByOID(courseLoad.getIdentification());
+    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
+            List<CourseLoad> courseLoads) throws FenixServiceException {
+        final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
+        if (competenceCourse == null) {
+            throw new FenixServiceException("error.noCompetenceCourse");
+        }
+        competenceCourse.setRegime(regimeType);
+        final AcademicPeriod academicPeriod = AcademicPeriod.SEMESTER;
+        for (final CourseLoad courseLoad : courseLoads) {
+            if (courseLoad.getAction().equals("create") && competenceCourse.getCompetenceCourseLoads().size() < numberOfPeriods) {
+                competenceCourse.addCompetenceCourseLoad(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),
+                        courseLoad.getLaboratorialHours(), courseLoad.getSeminaryHours(), courseLoad.getFieldWorkHours(),
+                        courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
+                        courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(), academicPeriod);
+            } else {
+                final CompetenceCourseLoad competenceCourseLoad =
+                        rootDomainObject.readCompetenceCourseLoadByOID(courseLoad.getIdentification());
 
-				if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
-					competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),
-							courseLoad.getLaboratorialHours(), courseLoad.getSeminaryHours(), courseLoad.getFieldWorkHours(),
-							courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
-							courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(),
-							Integer.valueOf(courseLoad.getOrder()), academicPeriod);
+                if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
+                    competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),
+                            courseLoad.getLaboratorialHours(), courseLoad.getSeminaryHours(), courseLoad.getFieldWorkHours(),
+                            courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
+                            courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(),
+                            Integer.valueOf(courseLoad.getOrder()), academicPeriod);
 
-				} else if (competenceCourseLoad != null && courseLoad.getAction().equals("delete")) {
-					competenceCourseLoad.delete();
-				}
-			}
-		}
-	}
+                } else if (competenceCourseLoad != null && courseLoad.getAction().equals("delete")) {
+                    competenceCourseLoad.delete();
+                }
+            }
+        }
+    }
 }

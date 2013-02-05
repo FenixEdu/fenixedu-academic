@@ -31,92 +31,92 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "publico", path = "/scientificArea/viewSite", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "announcementsAction", path = "/scientificArea/announcements.do"),
-		@Forward(name = "view-teachers", path = "scientific-area-site-teachers"),
-		@Forward(name = "view-courses", path = "scientific-area-site-courses"),
-		@Forward(name = "frontPage-INTRO_BANNER", path = "basicUnit-site-front-page-intro-banner"),
-		@Forward(name = "eventsAction", path = "/scientificArea/events.do"),
-		@Forward(name = "showPublications", path = "scientific-area-publications"),
-		@Forward(name = "frontPage-BANNER_INTRO", path = "basicUnit-site-front-page-banner-intro"),
-		@Forward(name = "unit-subunits", path = "basicUnit-subunits"),
-		@Forward(name = "view-employees", path = "scientific-area-site-employees"),
-		@Forward(name = "site-section-adviseLogin", path = "basicUnit-section-adviseLogin"),
-		@Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "basicUnit-site-front-page-intro-float"),
-		@Forward(name = "site-section", path = "basicUnit-section"), @Forward(name = "site-item", path = "basicUnit-item"),
-		@Forward(name = "eventsRSSAction", path = "/scientificArea/eventsRSS.do"),
-		@Forward(name = "site-item-deny", path = "basicUnit-item-deny"),
-		@Forward(name = "site-item-adviseLogin", path = "basicUnit-item-adviseLogin"),
-		@Forward(name = "announcementsRSSAction", path = "/scientificArea/announcementsRSS.do"),
-		@Forward(name = "unit-organization", path = "scientific-area-organization"),
-		@Forward(name = "site-section-deny", path = "basicUnit-section-deny") })
+        @Forward(name = "view-teachers", path = "scientific-area-site-teachers"),
+        @Forward(name = "view-courses", path = "scientific-area-site-courses"),
+        @Forward(name = "frontPage-INTRO_BANNER", path = "basicUnit-site-front-page-intro-banner"),
+        @Forward(name = "eventsAction", path = "/scientificArea/events.do"),
+        @Forward(name = "showPublications", path = "scientific-area-publications"),
+        @Forward(name = "frontPage-BANNER_INTRO", path = "basicUnit-site-front-page-banner-intro"),
+        @Forward(name = "unit-subunits", path = "basicUnit-subunits"),
+        @Forward(name = "view-employees", path = "scientific-area-site-employees"),
+        @Forward(name = "site-section-adviseLogin", path = "basicUnit-section-adviseLogin"),
+        @Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "basicUnit-site-front-page-intro-float"),
+        @Forward(name = "site-section", path = "basicUnit-section"), @Forward(name = "site-item", path = "basicUnit-item"),
+        @Forward(name = "eventsRSSAction", path = "/scientificArea/eventsRSS.do"),
+        @Forward(name = "site-item-deny", path = "basicUnit-item-deny"),
+        @Forward(name = "site-item-adviseLogin", path = "basicUnit-item-adviseLogin"),
+        @Forward(name = "announcementsRSSAction", path = "/scientificArea/announcementsRSS.do"),
+        @Forward(name = "unit-organization", path = "scientific-area-organization"),
+        @Forward(name = "site-section-deny", path = "basicUnit-section-deny") })
 public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 
-	@Override
-	protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return presentation(mapping, form, request, response);
-	}
+    @Override
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return presentation(mapping, form, request, response);
+    }
 
-	public ActionForward viewTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
+    public ActionForward viewTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
 
-		YearMonthDay today = new YearMonthDay();
-		YearMonthDay tomorrow = today.plusDays(1);
+        YearMonthDay today = new YearMonthDay();
+        YearMonthDay tomorrow = today.plusDays(1);
 
-		SortedSet<ProfessionalCategory> categories = new TreeSet<ProfessionalCategory>();
-		Map<String, SortedSet<Person>> teachers = new Hashtable<String, SortedSet<Person>>();
+        SortedSet<ProfessionalCategory> categories = new TreeSet<ProfessionalCategory>();
+        Map<String, SortedSet<Person>> teachers = new Hashtable<String, SortedSet<Person>>();
 
-		for (Teacher teacher : scientificArea.getDepartmentUnit().getDepartment().getAllTeachers(today, tomorrow)) {
-			if (teacher.getCurrentSectionOrScientificArea() == scientificArea) {
-				ProfessionalCategory professionalCategory = teacher.getCategory();
-				if (professionalCategory != null) {
-					String category = professionalCategory.getExternalId();
-					categories.add(professionalCategory);
-					addListTeacher(teachers, category, teacher);
-				}
-			}
-		}
+        for (Teacher teacher : scientificArea.getDepartmentUnit().getDepartment().getAllTeachers(today, tomorrow)) {
+            if (teacher.getCurrentSectionOrScientificArea() == scientificArea) {
+                ProfessionalCategory professionalCategory = teacher.getCategory();
+                if (professionalCategory != null) {
+                    String category = professionalCategory.getExternalId();
+                    categories.add(professionalCategory);
+                    addListTeacher(teachers, category, teacher);
+                }
+            }
+        }
 
-		request.setAttribute("categories", categories);
-		request.setAttribute("teachers", teachers);
+        request.setAttribute("categories", categories);
+        request.setAttribute("teachers", teachers);
 
-		return mapping.findForward("view-teachers");
-	}
+        return mapping.findForward("view-teachers");
+    }
 
-	public ActionForward viewEmployees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
+    public ActionForward viewEmployees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
 
-		List<Person> employees = new ArrayList<Person>();
-		for (Employee employee : scientificArea.getAllCurrentNonTeacherEmployees()) {
-			employees.add(employee.getPerson());
-		}
+        List<Person> employees = new ArrayList<Person>();
+        for (Employee employee : scientificArea.getAllCurrentNonTeacherEmployees()) {
+            employees.add(employee.getPerson());
+        }
 
-		Collections.sort(employees, Party.COMPARATOR_BY_NAME_AND_ID);
-		request.setAttribute("employees", employees);
-		return mapping.findForward("view-employees");
+        Collections.sort(employees, Party.COMPARATOR_BY_NAME_AND_ID);
+        request.setAttribute("employees", employees);
+        return mapping.findForward("view-employees");
 
-	}
+    }
 
-	public ActionForward viewCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
+        ScientificAreaUnit scientificArea = (ScientificAreaUnit) getUnit(request);
 
-		request.setAttribute("courseGroupUnits", scientificArea.getCompetenceCourseGroupUnits());
+        request.setAttribute("courseGroupUnits", scientificArea.getCompetenceCourseGroupUnits());
 
-		return mapping.findForward("view-courses");
-	}
+        return mapping.findForward("view-courses");
+    }
 
-	private void addListTeacher(Map<String, SortedSet<Person>> teachersMap, String key, Teacher teacher) {
-		SortedSet<Person> teachers = teachersMap.get(key);
+    private void addListTeacher(Map<String, SortedSet<Person>> teachersMap, String key, Teacher teacher) {
+        SortedSet<Person> teachers = teachersMap.get(key);
 
-		if (teachers == null) {
-			teachers = new TreeSet<Person>(new BeanComparator("teacher", Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER));
-			teachersMap.put(key, teachers);
-		}
+        if (teachers == null) {
+            teachers = new TreeSet<Person>(new BeanComparator("teacher", Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER));
+            teachersMap.put(key, teachers);
+        }
 
-		teachers.add(teacher.getPerson());
-	}
+        teachers.add(teacher.getPerson());
+    }
 
 }

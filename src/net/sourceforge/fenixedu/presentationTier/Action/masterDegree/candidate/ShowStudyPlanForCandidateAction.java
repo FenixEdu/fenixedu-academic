@@ -19,50 +19,50 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowStudyPlanForCandidateAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		// transport candidate ID
-		request.setAttribute("candidateID", request.getParameter("candidateID"));
+        // transport candidate ID
+        request.setAttribute("candidateID", request.getParameter("candidateID"));
 
-		IUserView userView = getUserView(request);
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request);
-		if (infoMasterDegreeCandidate != null) {
-			request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
-			request.setAttribute("candidateStudyPlan",
-					getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getIdInternal(), userView));
-		}
+        IUserView userView = getUserView(request);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request);
+        if (infoMasterDegreeCandidate != null) {
+            request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
+            request.setAttribute("candidateStudyPlan",
+                    getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getIdInternal(), userView));
+        }
 
-		return mapping.findForward("Sucess");
-	}
+        return mapping.findForward("Sucess");
+    }
 
-	private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpServletRequest request) {
-		List candidates = null;
-		try {
-			candidates = ReadPersonCandidates.run(userView.getUtilizador());
-		} catch (Exception e) {
-			return null;
-		}
+    private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpServletRequest request) {
+        List candidates = null;
+        try {
+            candidates = ReadPersonCandidates.run(userView.getUtilizador());
+        } catch (Exception e) {
+            return null;
+        }
 
-		if (candidates.size() == 1) {
-			request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
-		} else {
-			request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
-		}
+        if (candidates.size() == 1) {
+            request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
+        } else {
+            request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+        }
 
-		return (InfoMasterDegreeCandidate) candidates.get(0);
-	}
+        return (InfoMasterDegreeCandidate) candidates.get(0);
+    }
 
-	private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
-		Object[] args = { candidateID };
+    private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+        Object[] args = { candidateID };
 
-		try {
-			return (ArrayList) ServiceManagerServiceFactory
-					.executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
-		} catch (Exception e) {
-			return null;
-		}
-	}
+        try {
+            return (ArrayList) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 }

@@ -19,69 +19,69 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class EmployeeBelongsToTeacherDepartment extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-		final IUserView userView = getRemoteUser(request);
-		final Object[] argumentos = getServiceCallArguments(request);
+        final IUserView userView = getRemoteUser(request);
+        final Object[] argumentos = getServiceCallArguments(request);
 
-		final Department teacherDepartment = getTeacherDepartment(argumentos);
-		final Department employeeDepartment = getEmployeeDepartment(userView);
+        final Department teacherDepartment = getTeacherDepartment(argumentos);
+        final Department employeeDepartment = getEmployeeDepartment(userView);
 
-		if (!employeeDepartment.getName().equals(teacherDepartment.getName())) {
-			throw new NotAuthorizedFilterException();
-		}
-	}
+        if (!employeeDepartment.getName().equals(teacherDepartment.getName())) {
+            throw new NotAuthorizedFilterException();
+        }
+    }
 
-	protected Department getEmployeeDepartment(IUserView userView) throws NotAuthorizedFilterException {
-		final Person person = userView.getPerson();
-		if (person == null) {
-			throw new NotAuthorizedFilterException("error.noPerson");
-		}
-		final Employee employee = person.getEmployee();
-		if (employee == null) {
-			throw new NotAuthorizedFilterException("Não existe funcionario");
-		}
-		return getDepartment(employee);
-	}
+    protected Department getEmployeeDepartment(IUserView userView) throws NotAuthorizedFilterException {
+        final Person person = userView.getPerson();
+        if (person == null) {
+            throw new NotAuthorizedFilterException("error.noPerson");
+        }
+        final Employee employee = person.getEmployee();
+        if (employee == null) {
+            throw new NotAuthorizedFilterException("Não existe funcionario");
+        }
+        return getDepartment(employee);
+    }
 
-	protected Department getTeacherDepartment(Object[] argumentos) throws NotAuthorizedFilterException {
-		return getDepartment(getTeacher(argumentos));
-	}
+    protected Department getTeacherDepartment(Object[] argumentos) throws NotAuthorizedFilterException {
+        return getDepartment(getTeacher(argumentos));
+    }
 
-	protected Department getDepartment(Teacher teacher) throws NotAuthorizedFilterException {
-		final Department department = teacher.getCurrentWorkingDepartment();
-		if (department == null) {
-			throw new NotAuthorizedFilterException("error.noDepartment");
-		}
-		return department;
-	}
+    protected Department getDepartment(Teacher teacher) throws NotAuthorizedFilterException {
+        final Department department = teacher.getCurrentWorkingDepartment();
+        if (department == null) {
+            throw new NotAuthorizedFilterException("error.noDepartment");
+        }
+        return department;
+    }
 
-	protected Department getDepartment(Employee employee) throws NotAuthorizedFilterException {
-		final Department department = employee.getCurrentDepartmentWorkingPlace();
-		if (department == null) {
-			throw new NotAuthorizedFilterException("error.noDepartment");
-		}
-		return department;
-	}
+    protected Department getDepartment(Employee employee) throws NotAuthorizedFilterException {
+        final Department department = employee.getCurrentDepartmentWorkingPlace();
+        if (department == null) {
+            throw new NotAuthorizedFilterException("error.noDepartment");
+        }
+        return department;
+    }
 
-	protected Teacher getTeacher(Object[] argumentos) throws NotAuthorizedFilterException {
-		final Teacher teacher = Teacher.readByIstId(getTeacherNumber(argumentos));
-		if (teacher == null) {
-			throw new NotAuthorizedFilterException("error.teacher.not.found");
-		}
-		return teacher;
-	}
+    protected Teacher getTeacher(Object[] argumentos) throws NotAuthorizedFilterException {
+        final Teacher teacher = Teacher.readByIstId(getTeacherNumber(argumentos));
+        if (teacher == null) {
+            throw new NotAuthorizedFilterException("error.teacher.not.found");
+        }
+        return teacher;
+    }
 
-	protected String getTeacherNumber(Object[] argumentos) {
-		final String teacherId;
-		if (argumentos.length == 1 && argumentos[0] instanceof HashMap) {
-			HashMap hashMap = (HashMap) argumentos[0];
-			teacherId = ((String) hashMap.get("teacherId")).trim();
-		} else {
-			teacherId = argumentos[0].toString();
-		}
-		return teacherId;
-	}
+    protected String getTeacherNumber(Object[] argumentos) {
+        final String teacherId;
+        if (argumentos.length == 1 && argumentos[0] instanceof HashMap) {
+            HashMap hashMap = (HashMap) argumentos[0];
+            teacherId = ((String) hashMap.get("teacherId")).trim();
+        } else {
+            teacherId = argumentos[0].toString();
+        }
+        return teacherId;
+    }
 
 }

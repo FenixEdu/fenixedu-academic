@@ -31,20 +31,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "viewGaugingTestsResults", path = "definition.gaugingTestResults") })
 public class ViewGaugingTestsResults extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		try {
-			InfoGaugingTestResult result = readGaugingTestsResults.run(userView);
-			request.setAttribute("gaugingTestResult", result);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            InfoGaugingTestResult result = readGaugingTestsResults.run(userView);
+            request.setAttribute("gaugingTestResult", result);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("viewGaugingTestsResults");
-	}
+        return mapping.findForward("viewGaugingTestsResults");
+    }
 
 }

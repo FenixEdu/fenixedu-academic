@@ -14,27 +14,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsForExecutionYear implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		ExecutionYear executionYear;
-		try {
-			executionYear = (ExecutionYear) MethodUtils.invokeMethod(source, "getExecutionYear", null);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+        ExecutionYear executionYear;
+        try {
+            executionYear = (ExecutionYear) MethodUtils.invokeMethod(source, "getExecutionYear", null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
-		if (executionYear != null) {
-			periods.addAll(executionYear.getExecutionPeriods());
-		}
+        List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
+        if (executionYear != null) {
+            periods.addAll(executionYear.getExecutionPeriods());
+        }
 
-		return periods;
-	}
+        return periods;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

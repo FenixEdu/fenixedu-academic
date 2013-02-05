@@ -16,27 +16,27 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Base {
 
-	public LibraryMissingCardsDocument(List<LibraryCard> source, Person operator, String filename, byte[] content) {
-		super();
-		for (LibraryCard card : source) {
-			addSource(card);
-		}
-		setLibraryDocument(new LibraryDocument());
-		init(GeneratedDocumentType.LIBRARY_MISSING_CARDS, operator, operator, filename, content);
-	}
+    public LibraryMissingCardsDocument(List<LibraryCard> source, Person operator, String filename, byte[] content) {
+        super();
+        for (LibraryCard card : source) {
+            addSource(card);
+        }
+        setLibraryDocument(new LibraryDocument());
+        init(GeneratedDocumentType.LIBRARY_MISSING_CARDS, operator, operator, filename, content);
+    }
 
-	@Override
-	protected Group computePermittedGroup() {
-		return new RoleGroup(RoleType.LIBRARY);
-	}
+    @Override
+    protected Group computePermittedGroup() {
+        return new RoleGroup(RoleType.LIBRARY);
+    }
 
-	@Service
-	public static void store(List<LibraryCard> source, Person operator, byte[] content) {
-		if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
-			DateTime time = new DateTime();
-			new LibraryMissingCardsDocument(source, operator, "missing_cards_" + time.toString("yMd_kms") + ".pdf", content);
-		}
+    @Service
+    public static void store(List<LibraryCard> source, Person operator, byte[] content) {
+        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+            DateTime time = new DateTime();
+            new LibraryMissingCardsDocument(source, operator, "missing_cards_" + time.toString("yMd_kms") + ".pdf", content);
+        }
 
-	}
+    }
 
 }

@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DeleteScientificCommission extends FenixService {
 
-	public void run(Integer executionDegreeId, ScientificCommission commission) {
-		ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+    public void run(Integer executionDegreeId, ScientificCommission commission) {
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
 
-		if (!executionDegree.getScientificCommissionMembers().contains(commission)) {
-			throw new DomainException("scientificCommission.delete.incorrectExecutionDegree");
-		}
+        if (!executionDegree.getScientificCommissionMembers().contains(commission)) {
+            throw new DomainException("scientificCommission.delete.incorrectExecutionDegree");
+        }
 
-		commission.delete();
-	}
+        commission.delete();
+    }
 
 }

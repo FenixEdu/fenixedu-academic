@@ -12,55 +12,55 @@ import org.joda.time.LocalDate;
 
 public class SetFinalGrade extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-		if (!process.isJuryValidated()) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.isJuryValidated()) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_FINAL_GRADE) {
-			throw new PreConditionNotValidException();
-		}
+        if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_FINAL_GRADE) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+        final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
-		for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
-			if (each.hasAnyInformation()) {
-				process.addDocument(each, userView.getPerson());
-			}
-		}
+        for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
+            if (each.hasAnyInformation()) {
+                process.addDocument(each, userView.getPerson());
+            }
+        }
 
-		checkParameters(bean);
+        checkParameters(bean);
 
-		LocalDate conclusionDate = bean.getConclusionDate();
-		process.setConclusionDate(conclusionDate);
-		process.setFinalGrade(bean.getFinalGrade());
+        LocalDate conclusionDate = bean.getConclusionDate();
+        process.setConclusionDate(conclusionDate);
+        process.setFinalGrade(bean.getFinalGrade());
 
-		if (!process.hasState(PhdThesisProcessStateType.CONCLUDED)) {
-			process.createState(PhdThesisProcessStateType.CONCLUDED, userView.getPerson(), bean.getRemarks());
-		}
+        if (!process.hasState(PhdThesisProcessStateType.CONCLUDED)) {
+            process.createState(PhdThesisProcessStateType.CONCLUDED, userView.getPerson(), bean.getRemarks());
+        }
 
-		return process;
+        return process;
 
-	}
+    }
 
-	private void checkParameters(final PhdThesisProcessBean bean) {
+    private void checkParameters(final PhdThesisProcessBean bean) {
 
-		if (bean.getFinalGrade() == null) {
-			throw new DomainException("error.SetFinalGrade.invalid.grade");
-		}
+        if (bean.getFinalGrade() == null) {
+            throw new DomainException("error.SetFinalGrade.invalid.grade");
+        }
 
-		if (bean.getConclusionDate() == null) {
-			throw new DomainException("error.SetFinalGrade.invalid.conclusion.date");
-		}
-	}
+        if (bean.getConclusionDate() == null) {
+            throw new DomainException("error.SetFinalGrade.invalid.conclusion.date");
+        }
+    }
 
 }

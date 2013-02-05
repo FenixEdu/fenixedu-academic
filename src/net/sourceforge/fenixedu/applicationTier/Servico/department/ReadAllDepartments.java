@@ -15,12 +15,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllDepartments extends FenixService {
 
-	@Service
-	public static List<InfoDepartment> run() throws FenixServiceException {
-		final List<InfoDepartment> result = new ArrayList<InfoDepartment>();
-		for (final Department department : rootDomainObject.getDepartments()) {
-			result.add(InfoDepartment.newInfoFromDomain(department));
-		}
-		return result;
-	}
+    @Service
+    public static List<InfoDepartment> run() throws FenixServiceException {
+        final List<InfoDepartment> result = new ArrayList<InfoDepartment>();
+        for (final Department department : rootDomainObject.getDepartments()) {
+            result.add(InfoDepartment.newInfoFromDomain(department));
+        }
+        return result;
+    }
 }

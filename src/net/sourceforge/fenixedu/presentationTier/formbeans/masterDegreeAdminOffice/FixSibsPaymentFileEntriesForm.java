@@ -11,25 +11,25 @@ import org.apache.struts.action.ActionForm;
  */
 public class FixSibsPaymentFileEntriesForm extends ActionForm {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Integer page = 0;
+    private Integer page = 0;
 
-	private Integer sibsPaymentFileEntryId;
+    private Integer sibsPaymentFileEntryId;
 
-	public Integer getPage() {
-		return page;
-	}
+    public Integer getPage() {
+        return page;
+    }
 
-	public void setPage(Integer page) {
-		this.page = page;
-	}
+    public void setPage(Integer page) {
+        this.page = page;
+    }
 
-	public Integer getSibsPaymentFileEntryId() {
-		return sibsPaymentFileEntryId;
-	}
+    public Integer getSibsPaymentFileEntryId() {
+        return sibsPaymentFileEntryId;
+    }
 
-	public void setSibsPaymentFileEntryId(Integer sibsPaymentFileEntryId) {
-		this.sibsPaymentFileEntryId = sibsPaymentFileEntryId;
-	}
+    public void setSibsPaymentFileEntryId(Integer sibsPaymentFileEntryId) {
+        this.sibsPaymentFileEntryId = sibsPaymentFileEntryId;
+    }
 }

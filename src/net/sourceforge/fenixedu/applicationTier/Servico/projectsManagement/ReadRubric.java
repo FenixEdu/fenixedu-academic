@@ -20,18 +20,18 @@ import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
  */
 public class ReadRubric extends FenixService {
 
-	public ReadRubric() {
-	}
+    public ReadRubric() {
+    }
 
-	public List run(String username, String costCenter, RubricType rubricType, BackendInstance instance, String userNumber)
-			throws ExcepcaoPersistencia {
-		List<IRubric> rubricList = new PersistentRubric().getRubricList(rubricType.getRubricTableName(), instance);
-		List<InfoRubric> infoRubricList = new ArrayList<InfoRubric>();
-		for (IRubric rubric : rubricList) {
-			infoRubricList.add(InfoRubric.newInfoFromDomain(rubric));
-		}
+    public List run(String username, String costCenter, RubricType rubricType, BackendInstance instance, String userNumber)
+            throws ExcepcaoPersistencia {
+        List<IRubric> rubricList = new PersistentRubric().getRubricList(rubricType.getRubricTableName(), instance);
+        List<InfoRubric> infoRubricList = new ArrayList<InfoRubric>();
+        for (IRubric rubric : rubricList) {
+            infoRubricList.add(InfoRubric.newInfoFromDomain(rubric));
+        }
 
-		return infoRubricList;
-	}
+        return infoRubricList;
+    }
 
 }

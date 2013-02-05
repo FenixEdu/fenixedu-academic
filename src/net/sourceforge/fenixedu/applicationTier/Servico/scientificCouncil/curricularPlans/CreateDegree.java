@@ -15,31 +15,31 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateDegree extends FenixService {
 
-	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-	@Service
-	public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-			GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
+            GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException {
 
-		if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		final List<Degree> degrees = Degree.readNotEmptyDegrees();
+        final List<Degree> degrees = Degree.readNotEmptyDegrees();
 
-		for (Degree degree : degrees) {
-			if (degree.getSigla().equalsIgnoreCase(acronym)) {
-				throw new FenixServiceException("error.existing.degree.acronym");
-			}
-			ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        for (Degree degree : degrees) {
+            if (degree.getSigla().equalsIgnoreCase(acronym)) {
+                throw new FenixServiceException("error.existing.degree.acronym");
+            }
+            ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-			if ((degree.getNameFor(currentExecutionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree
-					.getNameFor(currentExecutionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
-					&& degree.getDegreeType().equals(degreeType)) {
-				throw new FenixServiceException("error.existing.degree.name.and.type");
-			}
-		}
+            if ((degree.getNameFor(currentExecutionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree
+                    .getNameFor(currentExecutionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
+                    && degree.getDegreeType().equals(degreeType)) {
+                throw new FenixServiceException("error.existing.degree.name.and.type");
+            }
+        }
 
-		new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea);
-	}
+        new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea);
+    }
 
 }

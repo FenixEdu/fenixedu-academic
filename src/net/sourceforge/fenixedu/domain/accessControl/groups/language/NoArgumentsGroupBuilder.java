@@ -11,31 +11,31 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class NoArgumentsGroupBuilder implements GroupBuilder {
 
-	private Class<? extends Group> groupType;
+    private Class<? extends Group> groupType;
 
-	public NoArgumentsGroupBuilder(Class<? extends Group> groupType) {
-		super();
+    public NoArgumentsGroupBuilder(Class<? extends Group> groupType) {
+        super();
 
-		this.groupType = groupType;
-	}
+        this.groupType = groupType;
+    }
 
-	@Override
-	public Group build(Object[] arguments) {
-		try {
-			return groupType.newInstance();
-		} catch (Exception e) {
-			throw new DomainException("accessControl.group.builder.noArguments.failed", e);
-		}
-	}
+    @Override
+    public Group build(Object[] arguments) {
+        try {
+            return groupType.newInstance();
+        } catch (Exception e) {
+            throw new DomainException("accessControl.group.builder.noArguments.failed", e);
+        }
+    }
 
-	@Override
-	public int getMinArguments() {
-		return 0;
-	}
+    @Override
+    public int getMinArguments() {
+        return 0;
+    }
 
-	@Override
-	public int getMaxArguments() {
-		return 0;
-	}
+    @Override
+    public int getMaxArguments() {
+        return 0;
+    }
 
 }

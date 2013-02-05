@@ -6,25 +6,25 @@ import org.joda.time.YearMonthDay;
 
 public class GivenCreditsEntry extends CreditsCurriculumEntry {
 
-	private Double givenCredits;
+    private Double givenCredits;
 
-	public GivenCreditsEntry(final Double givenCredits) {
-		this.givenCredits = givenCredits;
-	}
+    public GivenCreditsEntry(final Double givenCredits) {
+        this.givenCredits = givenCredits;
+    }
 
-	@Override
-	public BigDecimal getEctsCreditsForCurriculum() {
-		return BigDecimal.valueOf(givenCredits);
-	}
+    @Override
+    public BigDecimal getEctsCreditsForCurriculum() {
+        return BigDecimal.valueOf(givenCredits);
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return givenCredits.intValue();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return givenCredits.intValue();
+    }
 
-	@Override
-	public YearMonthDay getApprovementDate() {
-		throw new Error("not.implemented");
-	}
+    @Override
+    public YearMonthDay getApprovementDate() {
+        throw new Error("not.implemented");
+    }
 
 }

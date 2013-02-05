@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class NotExecutedException extends Exception {
 
-	public NotExecutedException() {
-	}
+    public NotExecutedException() {
+    }
 
-	public NotExecutedException(String s) {
-		super(s);
-	}
+    public NotExecutedException(String s) {
+        super(s);
+    }
 
 }
 

@@ -6,16 +6,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PersonsFoundForBibtexPerson implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final BibtexParticipatorBean bibtexParticipatorBean = (BibtexParticipatorBean) source;
-		return bibtexParticipatorBean.getPersonsFound();
-	}
+        final BibtexParticipatorBean bibtexParticipatorBean = (BibtexParticipatorBean) source;
+        return bibtexParticipatorBean.getPersonsFound();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

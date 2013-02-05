@@ -4,26 +4,26 @@ import org.joda.time.DateTime;
 
 public class RoleOperationLog extends RoleOperationLog_Base {
 
-	public RoleOperationLog() {
-		super();
-	}
+    public RoleOperationLog() {
+        super();
+    }
 
-	public RoleOperationLog(Role role, Person person, Person whoGranted, RoleOperationType operationType) {
-		setOperationType(operationType);
-		setLogDate(new DateTime());
-		setRole(role);
-		setIstUsername(person.getIstUsername());
-		setPerson(person);
-		if (whoGranted != null) {
-			setWhoGrantedIstUsername(whoGranted.getIstUsername());
-			setPersonWhoGranted(whoGranted);
-		} else {
-			setWhoGrantedIstUsername("No user");
-		}
-	}
+    public RoleOperationLog(Role role, Person person, Person whoGranted, RoleOperationType operationType) {
+        setOperationType(operationType);
+        setLogDate(new DateTime());
+        setRole(role);
+        setIstUsername(person.getIstUsername());
+        setPerson(person);
+        if (whoGranted != null) {
+            setWhoGrantedIstUsername(whoGranted.getIstUsername());
+            setPersonWhoGranted(whoGranted);
+        } else {
+            setWhoGrantedIstUsername("No user");
+        }
+    }
 
-	@Override
-	protected RootDomainObject getRootDomainObject() {
-		return hasRole() ? getRole().getRootDomainObject() : null;
-	}
+    @Override
+    protected RootDomainObject getRootDomainObject() {
+        return hasRole() ? getRole().getRootDomainObject() : null;
+    }
 }

@@ -7,43 +7,43 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class PersonNameBean implements Serializable {
 
-	private boolean external;
+    private boolean external;
 
-	private PersonName personName;
-	private String name;
+    private PersonName personName;
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public PersonNameBean() {
-		super();
-		setPersonName(null);
-		external = false;
-	}
+    public PersonNameBean() {
+        super();
+        setPersonName(null);
+        external = false;
+    }
 
-	public PersonName getPersonName() {
-		return personName;
-	}
+    public PersonName getPersonName() {
+        return personName;
+    }
 
-	public void setPersonName(PersonName personName) {
-		this.personName = personName;
-	}
+    public void setPersonName(PersonName personName) {
+        this.personName = personName;
+    }
 
-	public Person getPerson() {
-		PersonName personName = getPersonName();
-		return (personName != null) ? personName.getPerson() : null;
-	}
+    public Person getPerson() {
+        PersonName personName = getPersonName();
+        return (personName != null) ? personName.getPerson() : null;
+    }
 
-	public boolean isExternal() {
-		return external;
-	}
+    public boolean isExternal() {
+        return external;
+    }
 
-	public void setExternal(boolean external) {
-		this.external = external;
-	}
+    public void setExternal(boolean external) {
+        this.external = external;
+    }
 }

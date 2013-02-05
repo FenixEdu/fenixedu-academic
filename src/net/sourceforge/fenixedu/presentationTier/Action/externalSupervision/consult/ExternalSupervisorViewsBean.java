@@ -18,192 +18,192 @@ import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 
 public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYear, HasDegreeType {
 
-	private Person student;
+    private Person student;
 
-	private ExecutionDegree executionDegree;
-	private DegreeType degreeType;
-	private ExecutionYear executionYear;
+    private ExecutionDegree executionDegree;
+    private DegreeType degreeType;
+    private ExecutionYear executionYear;
 
-	private List<Person> students;
+    private List<Person> students;
 
-	private RegistrationProtocol protocol;
-	private Boolean megavisor;
+    private RegistrationProtocol protocol;
+    private Boolean megavisor;
 
-	public ExternalSupervisorViewsBean() {
-		super();
-		this.megavisor = false;
-	}
+    public ExternalSupervisorViewsBean() {
+        super();
+        this.megavisor = false;
+    }
 
-	public ExternalSupervisorViewsBean(RegistrationProtocol protocol) {
-		this();
-		this.protocol = protocol;
-	}
+    public ExternalSupervisorViewsBean(RegistrationProtocol protocol) {
+        this();
+        this.protocol = protocol;
+    }
 
-	public ExternalSupervisorViewsBean(ExecutionYear executionYear) {
-		this();
-		this.executionYear = executionYear;
-	}
+    public ExternalSupervisorViewsBean(ExecutionYear executionYear) {
+        this();
+        this.executionYear = executionYear;
+    }
 
-	public ExternalSupervisorViewsBean(Person student) {
-		this();
-		this.student = student;
-	}
+    public ExternalSupervisorViewsBean(Person student) {
+        this();
+        this.student = student;
+    }
 
-	public ExternalSupervisorViewsBean(Person student, RegistrationProtocol protocol) {
-		this();
-		this.student = student;
-		this.protocol = protocol;
-	}
+    public ExternalSupervisorViewsBean(Person student, RegistrationProtocol protocol) {
+        this();
+        this.student = student;
+        this.protocol = protocol;
+    }
 
-	public ExternalSupervisorViewsBean(ExecutionYear executionYear, RegistrationProtocol protocol) {
-		this();
-		this.executionYear = executionYear;
-		this.protocol = protocol;
-	}
+    public ExternalSupervisorViewsBean(ExecutionYear executionYear, RegistrationProtocol protocol) {
+        this();
+        this.executionYear = executionYear;
+        this.protocol = protocol;
+    }
 
-	public Person getStudent() {
-		return student;
-	}
+    public Person getStudent() {
+        return student;
+    }
 
-	public void setStudent(Person student) {
-		this.student = student;
-	}
+    public void setStudent(Person student) {
+        this.student = student;
+    }
 
-	public ExecutionDegree getExecutionDegree() {
-		return executionDegree;
-	}
+    public ExecutionDegree getExecutionDegree() {
+        return executionDegree;
+    }
 
-	public void setExecutionDegree(ExecutionDegree executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+    public void setExecutionDegree(ExecutionDegree executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
-	@Override
-	public DegreeType getDegreeType() {
-		return degreeType;
-	}
+    @Override
+    public DegreeType getDegreeType() {
+        return degreeType;
+    }
 
-	public void setDegreeType(DegreeType degreeType) {
-		this.degreeType = degreeType;
-	}
+    public void setDegreeType(DegreeType degreeType) {
+        this.degreeType = degreeType;
+    }
 
-	@Override
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    @Override
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	public List<Person> getStudents() {
-		return students;
-	}
+    public List<Person> getStudents() {
+        return students;
+    }
 
-	public void setStudents(List<Person> students) {
-		this.students = students;
-	}
+    public void setStudents(List<Person> students) {
+        this.students = students;
+    }
 
-	public RegistrationProtocol getProtocol() {
-		return protocol;
-	}
+    public RegistrationProtocol getProtocol() {
+        return protocol;
+    }
 
-	public void setProtocol(RegistrationProtocol protocol) {
-		this.protocol = protocol;
-	}
+    public void setProtocol(RegistrationProtocol protocol) {
+        this.protocol = protocol;
+    }
 
-	public Boolean getMegavisor() {
-		return megavisor;
-	}
+    public Boolean getMegavisor() {
+        return megavisor;
+    }
 
-	public void setMegavisor(Boolean megavisor) {
-		this.megavisor = megavisor;
-	}
+    public void setMegavisor(Boolean megavisor) {
+        this.megavisor = megavisor;
+    }
 
-	public void generateStudentsFromYear() {
-		Set<Registration> theWholeSet = protocol.getRegistrationsSet();
-		students = new ArrayList<Person>();
+    public void generateStudentsFromYear() {
+        Set<Registration> theWholeSet = protocol.getRegistrationsSet();
+        students = new ArrayList<Person>();
 
-		for (Registration iterator : theWholeSet) {
-			if (iterator.hasAnyActiveState(executionYear)) {
-				students.add(iterator.getPerson());
-			}
-		}
-		Collections.sort(students, Person.COMPARATOR_BY_ID);
-	}
+        for (Registration iterator : theWholeSet) {
+            if (iterator.hasAnyActiveState(executionYear)) {
+                students.add(iterator.getPerson());
+            }
+        }
+        Collections.sort(students, Person.COMPARATOR_BY_ID);
+    }
 
-	public void generateStudentsFromDegree() {
-		Set<Registration> theWholeSet = protocol.getRegistrationsSet();
-		students = new ArrayList<Person>();
+    public void generateStudentsFromDegree() {
+        Set<Registration> theWholeSet = protocol.getRegistrationsSet();
+        students = new ArrayList<Person>();
 
-		for (Registration iterator : theWholeSet) {
-			if (iterator.hasAnyActiveState(executionYear)
-					&& iterator.getLastDegreeCurricularPlan() == executionDegree.getDegreeCurricularPlan()) {
-				students.add(iterator.getPerson());
-			}
-		}
-		Collections.sort(students, Person.COMPARATOR_BY_ID);
-	}
+        for (Registration iterator : theWholeSet) {
+            if (iterator.hasAnyActiveState(executionYear)
+                    && iterator.getLastDegreeCurricularPlan() == executionDegree.getDegreeCurricularPlan()) {
+                students.add(iterator.getPerson());
+            }
+        }
+        Collections.sort(students, Person.COMPARATOR_BY_ID);
+    }
 
-	public boolean supervisorHasPermission() {
-		List<Registration> allRegistrations = student.getStudent().getRegistrations();
-		for (Registration iterator : allRegistrations) {
-			if (iterator.getRegistrationProtocol() == protocol) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean supervisorHasPermission() {
+        List<Registration> allRegistrations = student.getStudent().getRegistrations();
+        for (Registration iterator : allRegistrations) {
+            if (iterator.getRegistrationProtocol() == protocol) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean supervisorHasPermission(boolean isOmnipotent, Set<RegistrationProtocol> jurisdictions) {
-		if (isOmnipotent) {
-			List<Registration> allRegistrations = student.getStudent().getRegistrations();
-			for (Registration regIter : allRegistrations) {
-				for (RegistrationProtocol protIter : jurisdictions) {
-					if (regIter.getRegistrationProtocol() == protIter) {
-						return true;
-					}
-				}
-			}
-			return false;
+    public boolean supervisorHasPermission(boolean isOmnipotent, Set<RegistrationProtocol> jurisdictions) {
+        if (isOmnipotent) {
+            List<Registration> allRegistrations = student.getStudent().getRegistrations();
+            for (Registration regIter : allRegistrations) {
+                for (RegistrationProtocol protIter : jurisdictions) {
+                    if (regIter.getRegistrationProtocol() == protIter) {
+                        return true;
+                    }
+                }
+            }
+            return false;
 
-		} else {
-			return supervisorHasPermission();
-		}
-	}
+        } else {
+            return supervisorHasPermission();
+        }
+    }
 
-	public boolean noCurriculum() {
-		if (student.getStudent().getLastActiveRegistration() != null) {
-			return false;
-		}
-		List<Registration> registrations = student.getStudent().getRegistrations();
-		for (Registration iterator : registrations) {
-			if (iterator.getNumberOfCurriculumEntries() > 0) {
-				return false;
-			}
-		}
-		return true;
+    public boolean noCurriculum() {
+        if (student.getStudent().getLastActiveRegistration() != null) {
+            return false;
+        }
+        List<Registration> registrations = student.getStudent().getRegistrations();
+        for (Registration iterator : registrations) {
+            if (iterator.getNumberOfCurriculumEntries() > 0) {
+                return false;
+            }
+        }
+        return true;
 
-	}
+    }
 
-	public List<StudentCurricularPlan> generateAllStudentCurricularPlans() {
-		List<StudentCurricularPlan> curricularPlans = new ArrayList<StudentCurricularPlan>();
-		for (Person person : students) {
-			for (Registration registration : person.getStudent().getRegistrations()) {
-				if (registration.getRegistrationAgreement() == protocol.getRegistrationAgreement()
-						&& registration.hasAnyActiveState(executionYear)) {
-					if (executionDegree != null) {
-						if (registration.getDegree() != executionDegree.getDegree()) {
-							continue;
-						}
-					}
-					for (StudentCurricularPlan curricularPlan : registration.getStudentCurricularPlans()) {
-						curricularPlans.add(curricularPlan);
-					}
-				}
-			}
-		}
-		Collections.sort(curricularPlans, StudentCurricularPlan.DATE_COMPARATOR);
-		return curricularPlans;
-	}
+    public List<StudentCurricularPlan> generateAllStudentCurricularPlans() {
+        List<StudentCurricularPlan> curricularPlans = new ArrayList<StudentCurricularPlan>();
+        for (Person person : students) {
+            for (Registration registration : person.getStudent().getRegistrations()) {
+                if (registration.getRegistrationAgreement() == protocol.getRegistrationAgreement()
+                        && registration.hasAnyActiveState(executionYear)) {
+                    if (executionDegree != null) {
+                        if (registration.getDegree() != executionDegree.getDegree()) {
+                            continue;
+                        }
+                    }
+                    for (StudentCurricularPlan curricularPlan : registration.getStudentCurricularPlans()) {
+                        curricularPlans.add(curricularPlan);
+                    }
+                }
+            }
+        }
+        Collections.sort(curricularPlans, StudentCurricularPlan.DATE_COMPARATOR);
+        return curricularPlans;
+    }
 
 }

@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYe
 
 public class CourseInarTotals extends TotalsLabel {
 
-	public CourseInarTotals(int width, int height, int totals) {
-		super(width, height, totals);
-	}
+    public CourseInarTotals(int width, int height, int totals) {
+        super(width, height, totals);
+    }
 
-	@Override
-	protected int getFontSize() {
-		return (int) (Math.sqrt((width * width) + (height * height)) * 4.0 / 100.0);
-	}
+    @Override
+    protected int getFontSize() {
+        return (int) (Math.sqrt((width * width) + (height * height)) * 4.0 / 100.0);
+    }
 
 }

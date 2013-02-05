@@ -5,36 +5,36 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class InquiryBlock extends InquiryBlock_Base {
 
-	public InquiryBlock() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public InquiryBlock() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public boolean isResultBlock(ExecutionSemester executionSemester) {
-		return getInquiry(executionSemester) instanceof ResultsInquiryTemplate;
-	}
+    public boolean isResultBlock(ExecutionSemester executionSemester) {
+        return getInquiry(executionSemester) instanceof ResultsInquiryTemplate;
+    }
 
-	public InquiryTemplate getInquiry(ExecutionSemester executionSemester) {
-		for (InquiryTemplate inquiryTemplate : getInquiries()) {
-			if (inquiryTemplate.getExecutionPeriod() == executionSemester) {
-				return inquiryTemplate;
-			}
-		}
-		return null;
-	}
+    public InquiryTemplate getInquiry(ExecutionSemester executionSemester) {
+        for (InquiryTemplate inquiryTemplate : getInquiries()) {
+            if (inquiryTemplate.getExecutionPeriod() == executionSemester) {
+                return inquiryTemplate;
+            }
+        }
+        return null;
+    }
 
-	public void delete() {
-		for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().get(0).delete()) {
-			removeRootDomainObject();
-		}
-		if (hasInquiryQuestionHeader()) {
-			getInquiryQuestionHeader().delete();
-		}
-		removeResultQuestion();
-		removeGroupResultQuestion();
-		for (InquiryTemplate inquiryTemplate : getInquiries()) {
-			removeInquiries(inquiryTemplate);
-		}
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().get(0).delete()) {
+            removeRootDomainObject();
+        }
+        if (hasInquiryQuestionHeader()) {
+            getInquiryQuestionHeader().delete();
+        }
+        removeResultQuestion();
+        removeGroupResultQuestion();
+        for (InquiryTemplate inquiryTemplate : getInquiries()) {
+            removeInquiries(inquiryTemplate);
+        }
+        super.deleteDomainObject();
+    }
 }

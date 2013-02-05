@@ -10,17 +10,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionYearsService extends FenixService {
 
-	@Service
-	public static List run() {
-		final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
-		for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-			infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
-		}
-		return infoExecutionYears;
-	}
+    @Service
+    public static List run() {
+        final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
+        for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+            infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+        }
+        return infoExecutionYears;
+    }
 
-	@Service
-	public static ExecutionYear run(Integer executionYearID) {
-		return rootDomainObject.readExecutionYearByOID(executionYearID);
-	}
+    @Service
+    public static ExecutionYear run(Integer executionYearID) {
+        return rootDomainObject.readExecutionYearByOID(executionYearID);
+    }
 }

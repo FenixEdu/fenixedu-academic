@@ -14,31 +14,31 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
-	public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionPeriodId)
-			throws FenixServiceException {
-		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
+    public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionPeriodId)
+            throws FenixServiceException {
+        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
 
-		List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
+        List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
 
-		for (Degree degree : groupedCourses.keySet()) {
-			List<Enrolment> enrollments = new ArrayList<Enrolment>();
-			List<CurricularCourse> curricularCourses = groupedCourses.get(degree);
+        for (Degree degree : groupedCourses.keySet()) {
+            List<Enrolment> enrollments = new ArrayList<Enrolment>();
+            List<CurricularCourse> curricularCourses = groupedCourses.get(degree);
 
-			for (CurricularCourse curricularCourse : curricularCourses) {
-				enrollments.addAll(curricularCourse.getActiveEnrollments(executionSemester));
-			}
+            for (CurricularCourse curricularCourse : curricularCourses) {
+                enrollments.addAll(curricularCourse.getActiveEnrollments(executionSemester));
+            }
 
-			DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
-			degreeCourseStatistics.setIdInternal(degree.getIdInternal());
-			degreeCourseStatistics.setName(degree.getSigla());
-			createCourseStatistics(degreeCourseStatistics, enrollments);
+            DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
+            degreeCourseStatistics.setIdInternal(degree.getIdInternal());
+            degreeCourseStatistics.setName(degree.getSigla());
+            createCourseStatistics(degreeCourseStatistics, enrollments);
 
-			results.add(degreeCourseStatistics);
-		}
+            results.add(degreeCourseStatistics);
+        }
 
-		return results;
-	}
+        return results;
+    }
 
 }

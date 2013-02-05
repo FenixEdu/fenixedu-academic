@@ -30,71 +30,71 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "prepareAccessGroupsManagement", path = "prepare-access-groups-management") })
 public class AccessGroupsManagementDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws InvalidArgumentException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws InvalidArgumentException {
 
-		Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
-		request.setAttribute("resourceAllocationRole", role);
-		return mapping.findForward("prepareAccessGroupsManagement");
-	}
+        Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
+        request.setAttribute("resourceAllocationRole", role);
+        return mapping.findForward("prepareAccessGroupsManagement");
+    }
 
-	public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+    public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-		AccessGroupBean bean = getRenderedObject("PersonToAccessGroupBeanID");
-		ResourceAllocationAccessGroupType accessGroupType = bean != null ? bean.getAccessGroupType() : null;
-		Person person = bean != null ? bean.getPerson() : null;
-		Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
+        AccessGroupBean bean = getRenderedObject("PersonToAccessGroupBeanID");
+        ResourceAllocationAccessGroupType accessGroupType = bean != null ? bean.getAccessGroupType() : null;
+        Person person = bean != null ? bean.getPerson() : null;
+        Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
 
-		if (person == null) {
-			addActionMessage(request, "error.ResourceAllocation.access.groups.empty.person");
-			request.setAttribute("resourceAllocationRole", role);
-			return mapping.findForward("prepareAccessGroupsManagement");
-		}
+        if (person == null) {
+            addActionMessage(request, "error.ResourceAllocation.access.groups.empty.person");
+            request.setAttribute("resourceAllocationRole", role);
+            return mapping.findForward("prepareAccessGroupsManagement");
+        }
 
-		try {
-			PersonGroup personGroup = new PersonGroup(person);
-			AddPersonToAccessGroup.run(accessGroupType, personGroup.getExpression(), true, (ResourceAllocationRole) role);
+        try {
+            PersonGroup personGroup = new PersonGroup(person);
+            AddPersonToAccessGroup.run(accessGroupType, personGroup.getExpression(), true, (ResourceAllocationRole) role);
 
-		} catch (DomainException domainException) {
-			addActionMessage(request, domainException.getMessage());
-			request.setAttribute("resourceAllocationRole", role);
-			return mapping.findForward("prepareAccessGroupsManagement");
-		}
+        } catch (DomainException domainException) {
+            addActionMessage(request, domainException.getMessage());
+            request.setAttribute("resourceAllocationRole", role);
+            return mapping.findForward("prepareAccessGroupsManagement");
+        }
 
-		RenderUtils.invalidateViewState("PersonToAccessGroupBeanID");
-		request.setAttribute("resourceAllocationRole", role);
-		return mapping.findForward("prepareAccessGroupsManagement");
-	}
+        RenderUtils.invalidateViewState("PersonToAccessGroupBeanID");
+        request.setAttribute("resourceAllocationRole", role);
+        return mapping.findForward("prepareAccessGroupsManagement");
+    }
 
-	public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+    public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-		Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
-		String groupExpression = getGroupExpressionFromRequest(request);
-		ResourceAllocationAccessGroupType groupType = getAccessGroupTypeFromRequest(request);
+        Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
+        String groupExpression = getGroupExpressionFromRequest(request);
+        ResourceAllocationAccessGroupType groupType = getAccessGroupTypeFromRequest(request);
 
-		try {
-			AddPersonToAccessGroup.run(groupType, groupExpression, false, (ResourceAllocationRole) role);
+        try {
+            AddPersonToAccessGroup.run(groupType, groupExpression, false, (ResourceAllocationRole) role);
 
-		} catch (DomainException domainException) {
-			addActionMessage(request, domainException.getMessage());
-			request.setAttribute("resourceAllocationRole", role);
-			return mapping.findForward("prepareAccessGroupsManagement");
-		}
+        } catch (DomainException domainException) {
+            addActionMessage(request, domainException.getMessage());
+            request.setAttribute("resourceAllocationRole", role);
+            return mapping.findForward("prepareAccessGroupsManagement");
+        }
 
-		request.setAttribute("resourceAllocationRole", role);
-		return mapping.findForward("prepareAccessGroupsManagement");
-	}
+        request.setAttribute("resourceAllocationRole", role);
+        return mapping.findForward("prepareAccessGroupsManagement");
+    }
 
-	// Private Methods
+    // Private Methods
 
-	private String getGroupExpressionFromRequest(final HttpServletRequest request) {
-		return request.getParameter("expression");
-	}
+    private String getGroupExpressionFromRequest(final HttpServletRequest request) {
+        return request.getParameter("expression");
+    }
 
-	private ResourceAllocationAccessGroupType getAccessGroupTypeFromRequest(final HttpServletRequest request) {
-		String parameter = request.getParameter("accessGroupType");
-		return parameter != null ? ResourceAllocationAccessGroupType.valueOf(parameter) : null;
-	}
+    private ResourceAllocationAccessGroupType getAccessGroupTypeFromRequest(final HttpServletRequest request) {
+        String parameter = request.getParameter("accessGroupType");
+        return parameter != null ? ResourceAllocationAccessGroupType.valueOf(parameter) : null;
+    }
 }

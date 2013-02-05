@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteCourseLoad extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(CourseLoad courseLoad) {
-		if (courseLoad != null) {
-			courseLoad.delete();
-		}
-	}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(CourseLoad courseLoad) {
+        if (courseLoad != null) {
+            courseLoad.delete();
+        }
+    }
 }

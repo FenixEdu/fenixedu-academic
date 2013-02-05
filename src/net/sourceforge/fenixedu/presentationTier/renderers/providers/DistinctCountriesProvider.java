@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DistinctCountriesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Country.readDistinctCountries();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Country.readDistinctCountries();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

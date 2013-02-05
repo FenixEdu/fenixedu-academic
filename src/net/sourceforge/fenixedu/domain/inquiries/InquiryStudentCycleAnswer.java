@@ -6,18 +6,18 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InquiryStudentCycleAnswer extends InquiryStudentCycleAnswer_Base {
 
-	public InquiryStudentCycleAnswer(Registration registration) {
-		super();
-		setRegistration(registration);
-	}
+    public InquiryStudentCycleAnswer(Registration registration) {
+        super();
+        setRegistration(registration);
+    }
 
-	public InquiryStudentCycleAnswer(PhdIndividualProgramProcess phdProcess) {
-		super();
-		setPhdProcess(phdProcess);
-	}
+    public InquiryStudentCycleAnswer(PhdIndividualProgramProcess phdProcess) {
+        super();
+        setPhdProcess(phdProcess);
+    }
 
-	@ConsistencyPredicate
-	public boolean checkHasRegistrationOrHasPhd() {
-		return hasRegistration() || hasPhdProcess();
-	}
+    @ConsistencyPredicate
+    public boolean checkHasRegistrationOrHasPhd() {
+        return hasRegistration() || hasPhdProcess();
+    }
 }

@@ -18,37 +18,37 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public class InquiriesTextBoxQuestionRenderer extends InputRenderer {
 
-	private Integer maxLength;
+    private Integer maxLength;
 
-	public Integer getMaxLength() {
-		return maxLength;
-	}
+    public Integer getMaxLength() {
+        return maxLength;
+    }
 
-	public void setMaxLength(Integer maxLength) {
-		this.maxLength = maxLength;
-	}
+    public void setMaxLength(Integer maxLength) {
+        this.maxLength = maxLength;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
 
-		return new Layout() {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
 
-				Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
+                Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
 
-				final HtmlSimpleValueComponent htmlTextInput;
-				if (textArea != null && textArea) {
-					htmlTextInput = new HtmlTextArea();
-				} else {
-					htmlTextInput = new HtmlTextInput();
-					((HtmlTextInput) htmlTextInput).setMaxLength(getMaxLength());
-				}
+                final HtmlSimpleValueComponent htmlTextInput;
+                if (textArea != null && textArea) {
+                    htmlTextInput = new HtmlTextArea();
+                } else {
+                    htmlTextInput = new HtmlTextInput();
+                    ((HtmlTextInput) htmlTextInput).setMaxLength(getMaxLength());
+                }
 
-				htmlTextInput.setValue(object != null ? object.toString() : StringUtils.EMPTY);
-				return htmlTextInput;
-			}
-		};
-	}
+                htmlTextInput.setValue(object != null ? object.toString() : StringUtils.EMPTY);
+                return htmlTextInput;
+            }
+        };
+    }
 }

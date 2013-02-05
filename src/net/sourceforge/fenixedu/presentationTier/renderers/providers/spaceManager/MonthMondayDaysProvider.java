@@ -15,39 +15,39 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class MonthMondayDaysProvider implements DataProvider {
 
-	private static int MONDAY_IN_JODA_TIME = 1;
+    private static int MONDAY_IN_JODA_TIME = 1;
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		List<YearMonthDay> result = new ArrayList<YearMonthDay>();
-		ViewEventSpaceOccupationsBean bean = (ViewEventSpaceOccupationsBean) source;
-		Partial year = bean.getYear();
-		Partial month = bean.getMonth();
+        List<YearMonthDay> result = new ArrayList<YearMonthDay>();
+        ViewEventSpaceOccupationsBean bean = (ViewEventSpaceOccupationsBean) source;
+        Partial year = bean.getYear();
+        Partial month = bean.getMonth();
 
-		if (month != null && year != null) {
+        if (month != null && year != null) {
 
-			int monthNumber = month.get(DateTimeFieldType.monthOfYear());
-			int yearNumber = year.get(DateTimeFieldType.year());
+            int monthNumber = month.get(DateTimeFieldType.monthOfYear());
+            int yearNumber = year.get(DateTimeFieldType.year());
 
-			YearMonthDay firstDayOfMonth = new YearMonthDay(yearNumber, monthNumber, 1);
-			YearMonthDay monday = firstDayOfMonth.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
+            YearMonthDay firstDayOfMonth = new YearMonthDay(yearNumber, monthNumber, 1);
+            YearMonthDay monday = firstDayOfMonth.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
 
-			if ((monday.getMonthOfYear() < monthNumber) || (monday.getYear() < yearNumber)) {
-				monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
-			}
+            if ((monday.getMonthOfYear() < monthNumber) || (monday.getYear() < yearNumber)) {
+                monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
+            }
 
-			while (monday.getMonthOfYear() == monthNumber) {
-				result.add(monday);
-				monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
-			}
-		}
+            while (monday.getMonthOfYear() == monthNumber) {
+                result.add(monday);
+                monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 }

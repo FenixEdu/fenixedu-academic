@@ -8,24 +8,24 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class ManageVirtualFunction extends FenixService {
 
-	protected void checkFunction(UnitSite site, Function function) {
-		checkUnit(site, function.getUnit());
+    protected void checkFunction(UnitSite site, Function function) {
+        checkUnit(site, function.getUnit());
 
-		if (!function.isVirtual()) {
-			throw new DomainException("site.functions.notVirtual");
-		}
-	}
+        if (!function.isVirtual()) {
+            throw new DomainException("site.functions.notVirtual");
+        }
+    }
 
-	protected void checkUnit(UnitSite site, Unit unit) {
-		if (unit == site.getUnit()) {
-			return;
-		}
+    protected void checkUnit(UnitSite site, Unit unit) {
+        if (unit == site.getUnit()) {
+            return;
+        }
 
-		if (site.getUnit().getAllSubUnits().contains(unit)) {
-			return;
-		}
+        if (site.getUnit().getAllSubUnits().contains(unit)) {
+            return;
+        }
 
-		throw new DomainException("site.functions.unrelatedUnit");
-	}
+        throw new DomainException("site.functions.unrelatedUnit");
+    }
 
 }

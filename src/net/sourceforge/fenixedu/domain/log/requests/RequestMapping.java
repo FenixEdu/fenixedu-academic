@@ -12,28 +12,28 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RequestMapping extends RequestMapping_Base {
 
-	public RequestMapping() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public RequestMapping() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	private RequestMapping(String path, String... parameters) {
-		this();
-		setPath(path);
-		setParameters(StringUtils.join(parameters, '&'));
-	}
+    private RequestMapping(String path, String... parameters) {
+        this();
+        setPath(path);
+        setParameters(StringUtils.join(parameters, '&'));
+    }
 
-	public static RequestMapping createOrRetrieveRequestMapping(String path, String... parameters) {
+    public static RequestMapping createOrRetrieveRequestMapping(String path, String... parameters) {
 
-		for (RequestMapping requestMapping : RootDomainObject.getInstance().getRequestMappings()) {
-			if (requestMapping.getPath().equals(path)) {
-				if (ArrayUtils.haveArraysSameElements(requestMapping.getParameters().split("&"), parameters)) {
-					return requestMapping;
-				}
-			}
-		}
+        for (RequestMapping requestMapping : RootDomainObject.getInstance().getRequestMappings()) {
+            if (requestMapping.getPath().equals(path)) {
+                if (ArrayUtils.haveArraysSameElements(requestMapping.getParameters().split("&"), parameters)) {
+                    return requestMapping;
+                }
+            }
+        }
 
-		return new RequestMapping(path, parameters);
-	}
+        return new RequestMapping(path, parameters);
+    }
 
 }

@@ -16,106 +16,106 @@ import org.joda.time.base.BasePartial;
 @Deprecated
 public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentDegreeInformation_Base {
 
-	private InstitutionPrecedentDegreeInformation() {
-		super();
-	}
+    private InstitutionPrecedentDegreeInformation() {
+        super();
+    }
 
-	private InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
-			final StudentCurricularPlan studentCurricularPlan) {
-		this(candidacy, studentCurricularPlan, null);
-	}
+    private InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
+            final StudentCurricularPlan studentCurricularPlan) {
+        this(candidacy, studentCurricularPlan, null);
+    }
 
-	private InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
-			final StudentCurricularPlan studentCurricularPlan, final CycleType cycleType) {
-		this();
-		checkParameters(candidacy, studentCurricularPlan, cycleType);
-		setStudentCurricularPlan(studentCurricularPlan);
-		setCycleType(cycleType);
-	}
+    private InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
+            final StudentCurricularPlan studentCurricularPlan, final CycleType cycleType) {
+        this();
+        checkParameters(candidacy, studentCurricularPlan, cycleType);
+        setStudentCurricularPlan(studentCurricularPlan);
+        setCycleType(cycleType);
+    }
 
-	private void checkParameters(final IndividualCandidacy candidacy, final StudentCurricularPlan studentCurricularPlan,
-			final CycleType cycleType) {
-		if (candidacy == null) {
-			throw new DomainException("error.InstitutionPrecedentDegreeInformation.invalid.candidacy");
-		}
-		if (studentCurricularPlan == null) {
-			throw new DomainException("error.InstitutionPrecedentDegreeInformation.invalid.studentCurricularPlan");
-		}
-		if (studentCurricularPlan.isBolonhaDegree() && cycleType == null) {
-			throw new DomainException("error.InstitutionPrecedentDegreeInformation.invalid.cycleType");
-		}
-	}
+    private void checkParameters(final IndividualCandidacy candidacy, final StudentCurricularPlan studentCurricularPlan,
+            final CycleType cycleType) {
+        if (candidacy == null) {
+            throw new DomainException("error.InstitutionPrecedentDegreeInformation.invalid.candidacy");
+        }
+        if (studentCurricularPlan == null) {
+            throw new DomainException("error.InstitutionPrecedentDegreeInformation.invalid.studentCurricularPlan");
+        }
+        if (studentCurricularPlan.isBolonhaDegree() && cycleType == null) {
+            throw new DomainException("error.InstitutionPrecedentDegreeInformation.invalid.cycleType");
+        }
+    }
 
-	private boolean isBolonha() {
-		return getStudentCurricularPlan().isBolonhaDegree();
-	}
+    private boolean isBolonha() {
+        return getStudentCurricularPlan().isBolonhaDegree();
+    }
 
-	@Override
-	public LocalDate getConclusionDate() {
-		final BasePartial date =
-				isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan()
-						.getConclusionDate(getCycleType()) : null) : getRegistration().getConclusionDate();
-		return date != null ? new LocalDate(date) : null;
-	}
+    @Override
+    public LocalDate getConclusionDate() {
+        final BasePartial date =
+                isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan()
+                        .getConclusionDate(getCycleType()) : null) : getRegistration().getConclusionDate();
+        return date != null ? new LocalDate(date) : null;
+    }
 
-	@Override
-	protected Integer getConclusionYear() {
-		final LocalDate localDate = getConclusionDate();
-		return localDate != null ? localDate.getYear() : null;
-	}
+    @Override
+    protected Integer getConclusionYear() {
+        final LocalDate localDate = getConclusionDate();
+        return localDate != null ? localDate.getYear() : null;
+    }
 
-	@Override
-	public String getConclusionGrade() {
-		final Integer result =
-				isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan().getCycle(
-						getCycleType()).getFinalAverage() : null) : getRegistration().getFinalAverage();
-		return (result == null) ? null : String.valueOf(result);
-	}
+    @Override
+    public String getConclusionGrade() {
+        final Integer result =
+                isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan().getCycle(
+                        getCycleType()).getFinalAverage() : null) : getRegistration().getFinalAverage();
+        return (result == null) ? null : String.valueOf(result);
+    }
 
-	@Override
-	public String getDegreeDesignation() {
-		return getStudentCurricularPlan().getName();
-	}
+    @Override
+    public String getDegreeDesignation() {
+        return getStudentCurricularPlan().getName();
+    }
 
-	@Override
-	public Unit getInstitution() {
-		return getRootDomainObject().getInstitutionUnit();
-	}
+    @Override
+    public Unit getInstitution() {
+        return getRootDomainObject().getInstitutionUnit();
+    }
 
-	public Registration getRegistration() {
-		return getStudentCurricularPlan().getRegistration();
-	}
+    public Registration getRegistration() {
+        return getStudentCurricularPlan().getRegistration();
+    }
 
-	@Override
-	public Integer getNumberOfEnroledCurricularCourses() {
-		return getStudentCurricularPlan().getRoot().getNumberOfAllEnroledCurriculumLines();
-	}
+    @Override
+    public Integer getNumberOfEnroledCurricularCourses() {
+        return getStudentCurricularPlan().getRoot().getNumberOfAllEnroledCurriculumLines();
+    }
 
-	@Override
-	public Integer getNumberOfApprovedCurricularCourses() {
-		return getStudentCurricularPlan().getRoot().getNumberOfAllApprovedCurriculumLines();
-	}
+    @Override
+    public Integer getNumberOfApprovedCurricularCourses() {
+        return getStudentCurricularPlan().getRoot().getNumberOfAllApprovedCurriculumLines();
+    }
 
-	@Override
-	public BigDecimal getGradeSum() {
-		final Curriculum curriculum = getStudentCurricularPlan().getRoot().getCurriculum();
-		curriculum.setAverageType(AverageType.SIMPLE);
-		return curriculum.getSumPiCi();
-	}
+    @Override
+    public BigDecimal getGradeSum() {
+        final Curriculum curriculum = getStudentCurricularPlan().getRoot().getCurriculum();
+        curriculum.setAverageType(AverageType.SIMPLE);
+        return curriculum.getSumPiCi();
+    }
 
-	@Override
-	public BigDecimal getApprovedEcts() {
-		return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getAprovedEctsCredits());
-	}
+    @Override
+    public BigDecimal getApprovedEcts() {
+        return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getAprovedEctsCredits());
+    }
 
-	@Override
-	public BigDecimal getEnroledEcts() {
-		return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getEctsCredits());
-	}
+    @Override
+    public BigDecimal getEnroledEcts() {
+        return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getEctsCredits());
+    }
 
-	@Override
-	public boolean isInternal() {
-		return true;
-	}
+    @Override
+    public boolean isInternal() {
+        return true;
+    }
 
 }

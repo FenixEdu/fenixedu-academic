@@ -20,27 +20,27 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "coordinator", path = "/delegatesManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "createEditDelegates", path = "/coordinator/viewDelegates.jsp", tileProperties = @Tile(
-		title = "private.coordinator.management.courses.students.delegates")) })
+        title = "private.coordinator.management.courses.students.delegates")) })
 public class DelegatesManagementDispatchActionForCoordinator extends DelegatesManagementDispatchAction {
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	@Override
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ExecutionDegree executionDegree =
-				(ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class,
-						(Integer.valueOf((String) getFromRequest(request, "executionDegreeId"))));
-		DelegateBean bean = new DelegateBean();
-		bean.setDegreeType(executionDegree.getDegreeType());
-		bean.setDegree(executionDegree.getDegree());
-		request.setAttribute("delegateBean", bean);
+        ExecutionDegree executionDegree =
+                (ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class,
+                        (Integer.valueOf((String) getFromRequest(request, "executionDegreeId"))));
+        DelegateBean bean = new DelegateBean();
+        bean.setDegreeType(executionDegree.getDegreeType());
+        bean.setDegree(executionDegree.getDegree());
+        request.setAttribute("delegateBean", bean);
 
-		return prepareViewDelegates(mapping, actionForm, request, response);
-	}
+        return prepareViewDelegates(mapping, actionForm, request, response);
+    }
 }

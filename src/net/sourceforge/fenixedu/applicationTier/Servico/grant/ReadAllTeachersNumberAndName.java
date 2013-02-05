@@ -13,18 +13,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllTeachersNumberAndName extends FenixService {
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public static List run() throws FenixServiceException {
-		final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run() throws FenixServiceException {
+        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-		final Collection<Teacher> teachers = rootDomainObject.getTeachers();
-		for (final Teacher teacher : teachers) {
-			InfoTeacher infoTeacher = new InfoTeacher(teacher);
-			result.add(infoTeacher);
-		}
+        final Collection<Teacher> teachers = rootDomainObject.getTeachers();
+        for (final Teacher teacher : teachers) {
+            InfoTeacher infoTeacher = new InfoTeacher(teacher);
+            result.add(infoTeacher);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

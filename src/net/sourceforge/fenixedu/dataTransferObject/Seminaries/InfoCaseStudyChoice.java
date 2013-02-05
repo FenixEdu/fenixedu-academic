@@ -16,71 +16,71 @@ import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
  * 
  */
 public class InfoCaseStudyChoice extends InfoObject {
-	private Integer order;
+    private Integer order;
 
-	private InfoCaseStudy caseStudy;
+    private InfoCaseStudy caseStudy;
 
-	private InfoCandidacy candidacy;
+    private InfoCandidacy candidacy;
 
-	/**
-	 * @return
-	 */
-	public Integer getOrder() {
-		return order;
-	}
+    /**
+     * @return
+     */
+    public Integer getOrder() {
+        return order;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setOrder(Integer integer) {
-		order = integer;
-	}
+    /**
+     * @param integer
+     */
+    public void setOrder(Integer integer) {
+        order = integer;
+    }
 
-	public void copyFromDomain(CaseStudyChoice caseStudyChoice) {
-		super.copyFromDomain(caseStudyChoice);
-		if (caseStudyChoice != null) {
-			// setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
-			setCaseStudy(InfoCaseStudy.newInfoFromDomain(caseStudyChoice.getCaseStudy()));
-			setOrder(caseStudyChoice.getOrder());
-		}
-	}
+    public void copyFromDomain(CaseStudyChoice caseStudyChoice) {
+        super.copyFromDomain(caseStudyChoice);
+        if (caseStudyChoice != null) {
+            // setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
+            setCaseStudy(InfoCaseStudy.newInfoFromDomain(caseStudyChoice.getCaseStudy()));
+            setOrder(caseStudyChoice.getOrder());
+        }
+    }
 
-	public static InfoCaseStudyChoice newInfoFromDomain(CaseStudyChoice caseStudyChoice) {
-		InfoCaseStudyChoice infoCaseStudyChoice = null;
-		if (caseStudyChoice != null) {
-			infoCaseStudyChoice = new InfoCaseStudyChoice();
-			infoCaseStudyChoice.copyFromDomain(caseStudyChoice);
-		}
-		return infoCaseStudyChoice;
-	}
+    public static InfoCaseStudyChoice newInfoFromDomain(CaseStudyChoice caseStudyChoice) {
+        InfoCaseStudyChoice infoCaseStudyChoice = null;
+        if (caseStudyChoice != null) {
+            infoCaseStudyChoice = new InfoCaseStudyChoice();
+            infoCaseStudyChoice.copyFromDomain(caseStudyChoice);
+        }
+        return infoCaseStudyChoice;
+    }
 
-	/**
-	 * @return Returns the candidacy.
-	 */
-	public InfoCandidacy getCandidacy() {
-		return candidacy;
-	}
+    /**
+     * @return Returns the candidacy.
+     */
+    public InfoCandidacy getCandidacy() {
+        return candidacy;
+    }
 
-	/**
-	 * @param candidacy
-	 *            The candidacy to set.
-	 */
-	public void setCandidacy(InfoCandidacy candidacy) {
-		this.candidacy = candidacy;
-	}
+    /**
+     * @param candidacy
+     *            The candidacy to set.
+     */
+    public void setCandidacy(InfoCandidacy candidacy) {
+        this.candidacy = candidacy;
+    }
 
-	/**
-	 * @return Returns the caseStudy.
-	 */
-	public InfoCaseStudy getCaseStudy() {
-		return caseStudy;
-	}
+    /**
+     * @return Returns the caseStudy.
+     */
+    public InfoCaseStudy getCaseStudy() {
+        return caseStudy;
+    }
 
-	/**
-	 * @param caseStudy
-	 *            The caseStudy to set.
-	 */
-	public void setCaseStudy(InfoCaseStudy caseStudy) {
-		this.caseStudy = caseStudy;
-	}
+    /**
+     * @param caseStudy
+     *            The caseStudy to set.
+     */
+    public void setCaseStudy(InfoCaseStudy caseStudy) {
+        this.caseStudy = caseStudy;
+    }
 }

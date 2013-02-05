@@ -13,53 +13,53 @@ import org.apache.struts.action.ActionForward;
  * 
  */
 public class RequiredJuriesActionException extends FenixActionException {
-	public static String key = "error.exception.masterDegree.noJuriesSelected";
+    public static String key = "error.exception.masterDegree.noJuriesSelected";
 
-	public RequiredJuriesActionException(Throwable cause) {
-		super(key, cause);
-	}
+    public RequiredJuriesActionException(Throwable cause) {
+        super(key, cause);
+    }
 
-	public RequiredJuriesActionException(Object value, Throwable cause) {
-		super(key, value, cause);
-	}
+    public RequiredJuriesActionException(Object value, Throwable cause) {
+        super(key, value, cause);
+    }
 
-	public RequiredJuriesActionException(Object[] values, Throwable cause) {
-		super(key, values, cause);
-	}
+    public RequiredJuriesActionException(Object[] values, Throwable cause) {
+        super(key, values, cause);
+    }
 
-	public RequiredJuriesActionException(String text) {
-		super(text);
-	}
+    public RequiredJuriesActionException(String text) {
+        super(text);
+    }
 
-	public RequiredJuriesActionException(String text, ActionForward actionForward) {
-		super(actionForward);
-		error = new ActionError(text);
-	}
+    public RequiredJuriesActionException(String text, ActionForward actionForward) {
+        super(actionForward);
+        error = new ActionError(text);
+    }
 
-	/**
-	 * @return String
-	 */
-	public static String getKey() {
-		return key;
-	}
+    /**
+     * @return String
+     */
+    public static String getKey() {
+        return key;
+    }
 
-	/**
-	 * Sets the key.
-	 * 
-	 * @param key
-	 *            The key to set
-	 */
-	public static void setKey(String key) {
-		RequiredJuriesActionException.key = key;
-	}
+    /**
+     * Sets the key.
+     * 
+     * @param key
+     *            The key to set
+     */
+    public static void setKey(String key) {
+        RequiredJuriesActionException.key = key;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[" + getClass().getName() + "n";
-		result += "property" + this.getProperty() + "\n";
-		result += "error" + this.getError() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[" + getClass().getName() + "n";
+        result += "property" + this.getProperty() + "\n";
+        result += "error" + this.getError() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

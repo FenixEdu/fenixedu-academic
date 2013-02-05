@@ -22,40 +22,40 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "undoneQueueJobs", path = "/manager/undoneQueueJobs.jsp") })
 public class UndoneQueueJobsDA extends FenixDispatchAction {
 
-	public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		List<QueueJob> allJobs = rootDomainObject.getQueueJob();
-		List<QueueJob> queueJobs = new ArrayList<QueueJob>();
+        List<QueueJob> allJobs = rootDomainObject.getQueueJob();
+        List<QueueJob> queueJobs = new ArrayList<QueueJob>();
 
-		for (QueueJob job : allJobs) {
-			if (job.getIsNotDoneAndCancelled() || job.getIsNotDoneAndNotCancelled()) {
-				if (job instanceof TutorshipStudentLowPerformanceQueueJob) {
+        for (QueueJob job : allJobs) {
+            if (job.getIsNotDoneAndCancelled() || job.getIsNotDoneAndNotCancelled()) {
+                if (job instanceof TutorshipStudentLowPerformanceQueueJob) {
 
-				}
-				queueJobs.add(job);
-			}
-		}
+                }
+                queueJobs.add(job);
+            }
+        }
 
-		request.setAttribute("queueJobList", queueJobs);
+        request.setAttribute("queueJobList", queueJobs);
 
-		return mapping.findForward("undoneQueueJobs");
-	}
+        return mapping.findForward("undoneQueueJobs");
+    }
 
-	public ActionForward resendQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		QueueJob job = getDomainObject(request, "id");
-		job.resend();
+    public ActionForward resendQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        QueueJob job = getDomainObject(request, "id");
+        job.resend();
 
-		return prepareUndoneQueueJobList(mapping, actionForm, request, response);
-	}
+        return prepareUndoneQueueJobList(mapping, actionForm, request, response);
+    }
 
-	public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		QueueJob job = getDomainObject(request, "id");
-		job.cancel();
+    public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        QueueJob job = getDomainObject(request, "id");
+        job.cancel();
 
-		return prepareUndoneQueueJobList(mapping, actionForm, request, response);
-	}
+        return prepareUndoneQueueJobList(mapping, actionForm, request, response);
+    }
 
 }

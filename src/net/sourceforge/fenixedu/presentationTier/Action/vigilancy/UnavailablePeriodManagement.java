@@ -31,264 +31,264 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class UnavailablePeriodManagement extends FenixDispatchAction {
 
-	public ActionForward addUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward addUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String vid = request.getParameter("vid");
-		VigilantWrapper vigilantWrapper = DomainObject.fromExternalId(vid);
-		String gid = request.getParameter("gid");
-		VigilantGroup group = DomainObject.fromExternalId(gid);
+        String vid = request.getParameter("vid");
+        VigilantWrapper vigilantWrapper = DomainObject.fromExternalId(vid);
+        String gid = request.getParameter("gid");
+        VigilantGroup group = DomainObject.fromExternalId(gid);
 
-		UnavailablePeriodBean bean = new UnavailablePeriodBean();
-		bean.setVigilantWrapper(group.getVigilantWrapperFor(vigilantWrapper.getPerson()));
-		bean.setSelectedVigilantGroup(group);
+        UnavailablePeriodBean bean = new UnavailablePeriodBean();
+        bean.setVigilantWrapper(group.getVigilantWrapperFor(vigilantWrapper.getPerson()));
+        bean.setSelectedVigilantGroup(group);
 
-		request.setAttribute("bean", bean);
-		return mapping.findForward("addUnavailablePeriod");
+        request.setAttribute("bean", bean);
+        return mapping.findForward("addUnavailablePeriod");
 
-	}
+    }
 
-	public ActionForward createUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward createUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		UnavailablePeriodBean periodBean =
-				(UnavailablePeriodBean) RenderUtils.getViewState("createUnavailablePeriod").getMetaObject().getObject();
-		VigilantWrapper vigilantWrapper = periodBean.getVigilantWrapper();
+        UnavailablePeriodBean periodBean =
+                (UnavailablePeriodBean) RenderUtils.getViewState("createUnavailablePeriod").getMetaObject().getObject();
+        VigilantWrapper vigilantWrapper = periodBean.getVigilantWrapper();
 
-		try {
+        try {
 
-			CreateUnavailablePeriod.run(vigilantWrapper.getPerson(), periodBean.getBeginDate(), periodBean.getEndDate(),
-					periodBean.getJustification());
-		} catch (DomainException e) {
-			request.setAttribute("bean", periodBean);
-			addActionMessage(request, e.getMessage());
-			return mapping.findForward("addUnavailablePeriod");
-		}
+            CreateUnavailablePeriod.run(vigilantWrapper.getPerson(), periodBean.getBeginDate(), periodBean.getEndDate(),
+                    periodBean.getJustification());
+        } catch (DomainException e) {
+            request.setAttribute("bean", periodBean);
+            addActionMessage(request, e.getMessage());
+            return mapping.findForward("addUnavailablePeriod");
+        }
 
-		putRequestVigilantManagementCompliant(request, vigilantWrapper);
+        putRequestVigilantManagementCompliant(request, vigilantWrapper);
 
-		return mapping.findForward("addedUnavailablePeriod");
+        return mapping.findForward("addedUnavailablePeriod");
 
-	}
+    }
 
-	public ActionForward editUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		prepareForEdit(request);
-		return mapping.findForward("editUnavailablePeriod");
-	}
+    public ActionForward editUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        prepareForEdit(request);
+        return mapping.findForward("editUnavailablePeriod");
+    }
 
-	public ActionForward deleteUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String id = request.getParameter("oid");
-		Integer idInternal = Integer.valueOf(id);
-		UnavailablePeriod unavailablePeriod =
-				(UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+    public ActionForward deleteUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String id = request.getParameter("oid");
+        Integer idInternal = Integer.valueOf(id);
+        UnavailablePeriod unavailablePeriod =
+                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
 
-		VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
-		deletePeriod(request);
-		putRequestVigilantManagementCompliant(request, vigilant);
-		return mapping.findForward("deleteUnavailablePeriod");
-	}
+        VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
+        deletePeriod(request);
+        putRequestVigilantManagementCompliant(request, vigilant);
+        return mapping.findForward("deleteUnavailablePeriod");
+    }
 
-	public ActionForward changeUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward changeUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState().getMetaObject().getObject();
-		VigilantWrapper vigilant = periodBean.getVigilantWrapper();
-		try {
-			applyChangesToUnavailablePeriod(request, periodBean.getUnavailablePeriod(), periodBean.getBeginDate(),
-					periodBean.getEndDate(), periodBean.getJustification());
-		} catch (DomainException e) {
-			request.setAttribute("bean", periodBean);
-			addActionMessage(request, e.getMessage());
-			return mapping.findForward("editUnavailablePeriod");
-		}
-		putRequestVigilantManagementCompliant(request, vigilant);
-		return mapping.findForward("addedUnavailablePeriod");
-	}
+        UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState().getMetaObject().getObject();
+        VigilantWrapper vigilant = periodBean.getVigilantWrapper();
+        try {
+            applyChangesToUnavailablePeriod(request, periodBean.getUnavailablePeriod(), periodBean.getBeginDate(),
+                    periodBean.getEndDate(), periodBean.getJustification());
+        } catch (DomainException e) {
+            request.setAttribute("bean", periodBean);
+            addActionMessage(request, e.getMessage());
+            return mapping.findForward("editUnavailablePeriod");
+        }
+        putRequestVigilantManagementCompliant(request, vigilant);
+        return mapping.findForward("addedUnavailablePeriod");
+    }
 
-	public ActionForward changeUnavailablePeriodForVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward changeUnavailablePeriodForVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState().getMetaObject().getObject();
-		try {
-			applyChangesToUnavailablePeriod(request, periodBean.getUnavailablePeriod(), periodBean.getBeginDate(),
-					periodBean.getEndDate(), periodBean.getJustification());
-		} catch (DomainException e) {
-			String gid = request.getParameter("gid");
-			request.setAttribute("gid", gid);
-			request.setAttribute("bean", periodBean);
-			addActionMessage(request, e.getMessage());
-			return mapping.findForward("editPeriodOfVigilant");
-		}
-		String gid = request.getParameter("gid");
-		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
-		VigilantGroupBean bean = new VigilantGroupBean();
-		ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
-		bean.setExamCoordinator(coordinator);
-		bean.setSelectedVigilantGroup(group);
-		putUnavailablePeriodsOnRequest(request, group);
-		request.setAttribute("bean", bean);
-		return mapping.findForward("manageUnavailablePeriodsOfVigilants");
-	}
+        UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState().getMetaObject().getObject();
+        try {
+            applyChangesToUnavailablePeriod(request, periodBean.getUnavailablePeriod(), periodBean.getBeginDate(),
+                    periodBean.getEndDate(), periodBean.getJustification());
+        } catch (DomainException e) {
+            String gid = request.getParameter("gid");
+            request.setAttribute("gid", gid);
+            request.setAttribute("bean", periodBean);
+            addActionMessage(request, e.getMessage());
+            return mapping.findForward("editPeriodOfVigilant");
+        }
+        String gid = request.getParameter("gid");
+        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroupBean bean = new VigilantGroupBean();
+        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        bean.setExamCoordinator(coordinator);
+        bean.setSelectedVigilantGroup(group);
+        putUnavailablePeriodsOnRequest(request, group);
+        request.setAttribute("bean", bean);
+        return mapping.findForward("manageUnavailablePeriodsOfVigilants");
+    }
 
-	public ActionForward prepareManageUnavailablePeriodsOfVigilants(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageUnavailablePeriodsOfVigilants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean bean = new VigilantGroupBean();
-		ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
-		bean.setExamCoordinator(coordinator);
-		request.setAttribute("bean", bean);
-		return mapping.findForward("manageUnavailablePeriodsOfVigilants");
+        VigilantGroupBean bean = new VigilantGroupBean();
+        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        bean.setExamCoordinator(coordinator);
+        request.setAttribute("bean", bean);
+        return mapping.findForward("manageUnavailablePeriodsOfVigilants");
 
-	}
+    }
 
-	public ActionForward manageUnavailablePeriodsOfVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward manageUnavailablePeriodsOfVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectVigilantGroup").getMetaObject().getObject();
-		VigilantGroup group = bean.getSelectedVigilantGroup();
-		if (group != null) {
-			putUnavailablePeriodsOnRequest(request, group);
-		}
-		request.setAttribute("bean", bean);
-		return mapping.findForward("manageUnavailablePeriodsOfVigilants");
+        VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("selectVigilantGroup").getMetaObject().getObject();
+        VigilantGroup group = bean.getSelectedVigilantGroup();
+        if (group != null) {
+            putUnavailablePeriodsOnRequest(request, group);
+        }
+        request.setAttribute("bean", bean);
+        return mapping.findForward("manageUnavailablePeriodsOfVigilants");
 
-	}
+    }
 
-	public ActionForward editUnavailablePeriodOfVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		prepareForEdit(request);
-		String gid = request.getParameter("gid");
-		request.setAttribute("gid", gid);
-		return mapping.findForward("editPeriodOfVigilant");
-	}
+    public ActionForward editUnavailablePeriodOfVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        prepareForEdit(request);
+        String gid = request.getParameter("gid");
+        request.setAttribute("gid", gid);
+        return mapping.findForward("editPeriodOfVigilant");
+    }
 
-	public ActionForward deleteUnavailablePeriodOfVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward deleteUnavailablePeriodOfVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		deletePeriod(request);
-		VigilantGroupBean bean = new VigilantGroupBean();
-		ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
-		bean.setExamCoordinator(coordinator);
-		String gid = request.getParameter("gid");
-		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
-		bean.setSelectedVigilantGroup(group);
-		putUnavailablePeriodsOnRequest(request, group);
-		request.setAttribute("bean", bean);
-		return mapping.findForward("manageUnavailablePeriodsOfVigilants");
+        deletePeriod(request);
+        VigilantGroupBean bean = new VigilantGroupBean();
+        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        bean.setExamCoordinator(coordinator);
+        String gid = request.getParameter("gid");
+        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        bean.setSelectedVigilantGroup(group);
+        putUnavailablePeriodsOnRequest(request, group);
+        request.setAttribute("bean", bean);
+        return mapping.findForward("manageUnavailablePeriodsOfVigilants");
 
-	}
+    }
 
-	public ActionForward prepareAddPeriodToVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareAddPeriodToVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String gid = request.getParameter("gid");
-		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        String gid = request.getParameter("gid");
+        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
 
-		UnavailablePeriodBean bean = new UnavailablePeriodBean();
-		Person person = getLoggedPerson(request);
-		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
-		bean.setCoordinator(coordinator);
-		bean.setSelectedVigilantGroup(group);
+        UnavailablePeriodBean bean = new UnavailablePeriodBean();
+        Person person = getLoggedPerson(request);
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
+        bean.setCoordinator(coordinator);
+        bean.setSelectedVigilantGroup(group);
 
-		request.setAttribute("gid", gid);
-		request.setAttribute("bean", bean);
-		return mapping.findForward("prepareAddPeriodToVigilant");
+        request.setAttribute("gid", gid);
+        request.setAttribute("bean", bean);
+        return mapping.findForward("prepareAddPeriodToVigilant");
 
-	}
+    }
 
-	public ActionForward addUnavailablePeriodToVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward addUnavailablePeriodToVigilant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		UnavailablePeriodBean bean =
-				(UnavailablePeriodBean) RenderUtils.getViewState("periodCreation").getMetaObject().getObject();
+        UnavailablePeriodBean bean =
+                (UnavailablePeriodBean) RenderUtils.getViewState("periodCreation").getMetaObject().getObject();
 
-		try {
+        try {
 
-			CreateUnavailablePeriod.run(bean.getVigilantWrapper().getPerson(), bean.getBeginDate(), bean.getEndDate(),
-					bean.getJustification());
-		} catch (DomainException e) {
-			String gid = request.getParameter("gid");
-			request.setAttribute("gid", gid);
-			request.setAttribute("bean", bean);
-			addActionMessage(request, e.getMessage());
-			return mapping.findForward("prepareAddPeriodToVigilant");
-		}
+            CreateUnavailablePeriod.run(bean.getVigilantWrapper().getPerson(), bean.getBeginDate(), bean.getEndDate(),
+                    bean.getJustification());
+        } catch (DomainException e) {
+            String gid = request.getParameter("gid");
+            request.setAttribute("gid", gid);
+            request.setAttribute("bean", bean);
+            addActionMessage(request, e.getMessage());
+            return mapping.findForward("prepareAddPeriodToVigilant");
+        }
 
-		VigilantGroupBean beanToPutOnRequest = new VigilantGroupBean();
-		String gid = request.getParameter("gid");
+        VigilantGroupBean beanToPutOnRequest = new VigilantGroupBean();
+        String gid = request.getParameter("gid");
 
-		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
-		ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
-		beanToPutOnRequest.setExamCoordinator(coordinator);
-		beanToPutOnRequest.setSelectedVigilantGroup(group);
-		putUnavailablePeriodsOnRequest(request, group);
-		request.setAttribute("bean", beanToPutOnRequest);
+        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
+        beanToPutOnRequest.setExamCoordinator(coordinator);
+        beanToPutOnRequest.setSelectedVigilantGroup(group);
+        putUnavailablePeriodsOnRequest(request, group);
+        request.setAttribute("bean", beanToPutOnRequest);
 
-		return mapping.findForward("manageUnavailablePeriodsOfVigilants");
-	}
+        return mapping.findForward("manageUnavailablePeriodsOfVigilants");
+    }
 
-	private void prepareForEdit(HttpServletRequest request) {
-		String id = request.getParameter("oid");
-		int idInternal = Integer.valueOf(id);
+    private void prepareForEdit(HttpServletRequest request) {
+        String id = request.getParameter("oid");
+        int idInternal = Integer.valueOf(id);
 
-		UnavailablePeriod unavailablePeriod =
-				(UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
-		UnavailablePeriodBean bean = new UnavailablePeriodBean();
-		bean.setUnavailablePeriod(unavailablePeriod);
-		bean.setBeginDate(unavailablePeriod.getBeginDate());
-		bean.setEndDate(unavailablePeriod.getEndDate());
-		bean.setJustification(unavailablePeriod.getJustification());
-		bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappers().get(0));
+        UnavailablePeriod unavailablePeriod =
+                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+        UnavailablePeriodBean bean = new UnavailablePeriodBean();
+        bean.setUnavailablePeriod(unavailablePeriod);
+        bean.setBeginDate(unavailablePeriod.getBeginDate());
+        bean.setEndDate(unavailablePeriod.getEndDate());
+        bean.setJustification(unavailablePeriod.getJustification());
+        bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappers().get(0));
 
-		request.setAttribute("bean", bean);
-	}
+        request.setAttribute("bean", bean);
+    }
 
-	private void deletePeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-		String id = request.getParameter("oid");
-		Integer idInternal = Integer.valueOf(id);
+    private void deletePeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+        String id = request.getParameter("oid");
+        Integer idInternal = Integer.valueOf(id);
 
-		try {
-			DeleteUnavailablePeriodByOID.run(idInternal);
-		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage());
-		}
-	}
+        try {
+            DeleteUnavailablePeriodByOID.run(idInternal);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage());
+        }
+    }
 
-	private void putUnavailablePeriodsOnRequest(HttpServletRequest request, VigilantGroup group) throws Exception {
-		request.setAttribute("unavailablePeriods", group.getUnavailablePeriodsOfVigilantsInGroup());
-	}
+    private void putUnavailablePeriodsOnRequest(HttpServletRequest request, VigilantGroup group) throws Exception {
+        request.setAttribute("unavailablePeriods", group.getUnavailablePeriodsOfVigilantsInGroup());
+    }
 
-	private void applyChangesToUnavailablePeriod(HttpServletRequest request, UnavailablePeriod unavailablePeriod, DateTime begin,
-			DateTime end, String justification) throws Exception {
+    private void applyChangesToUnavailablePeriod(HttpServletRequest request, UnavailablePeriod unavailablePeriod, DateTime begin,
+            DateTime end, String justification) throws Exception {
 
-		EditUnavailablePeriod.run(unavailablePeriod, begin, end, justification);
-	}
+        EditUnavailablePeriod.run(unavailablePeriod, begin, end, justification);
+    }
 
-	private void putRequestVigilantManagementCompliant(HttpServletRequest request, VigilantWrapper vigilantWrapper) {
-		VigilantBean bean = new VigilantBean();
-		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		bean.setExecutionYear(executionYear);
+    private void putRequestVigilantManagementCompliant(HttpServletRequest request, VigilantWrapper vigilantWrapper) {
+        VigilantBean bean = new VigilantBean();
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        bean.setExecutionYear(executionYear);
 
-		VigilantGroup group = getGroupInRequestOrFirstGroupFromVigilant(request, vigilantWrapper);
-		bean.setSelectedVigilantGroup(group);
-		List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
-		List<VigilantWrapper> vigilantWrappersFromPerson = vigilantWrapper.getPerson().getVigilantWrappers();
-		for (VigilantWrapper vigilantWrapperFromPerson : vigilantWrappersFromPerson) {
-			groups.add(vigilantWrapperFromPerson.getVigilantGroup());
-		}
-		bean.setVigilantGroups(groups);
-		bean.setShowUnavailables(true);
-		request.setAttribute("bean", bean);
-		request.setAttribute("vigilant", vigilantWrapper);
-	}
+        VigilantGroup group = getGroupInRequestOrFirstGroupFromVigilant(request, vigilantWrapper);
+        bean.setSelectedVigilantGroup(group);
+        List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+        List<VigilantWrapper> vigilantWrappersFromPerson = vigilantWrapper.getPerson().getVigilantWrappers();
+        for (VigilantWrapper vigilantWrapperFromPerson : vigilantWrappersFromPerson) {
+            groups.add(vigilantWrapperFromPerson.getVigilantGroup());
+        }
+        bean.setVigilantGroups(groups);
+        bean.setShowUnavailables(true);
+        request.setAttribute("bean", bean);
+        request.setAttribute("vigilant", vigilantWrapper);
+    }
 
-	private VigilantGroup getGroupInRequestOrFirstGroupFromVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
-		String groupId = request.getParameter("gid");
-		return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
-				VigilantGroup.class, Integer.valueOf(groupId));
-	}
+    private VigilantGroup getGroupInRequestOrFirstGroupFromVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
+        String groupId = request.getParameter("gid");
+        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
+                VigilantGroup.class, Integer.valueOf(groupId));
+    }
 
 }

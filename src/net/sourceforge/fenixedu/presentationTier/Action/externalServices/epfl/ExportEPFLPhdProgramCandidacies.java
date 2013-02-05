@@ -17,150 +17,150 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportEPFLPhdProgramCandidacies {
 
-	public static byte[] run() throws Exception {
-		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, PropertiesManager.DEFAULT_CHARSET);
-		PrintWriter writer = new PrintWriter(outputStreamWriter);
+    public static byte[] run() throws Exception {
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, PropertiesManager.DEFAULT_CHARSET);
+        PrintWriter writer = new PrintWriter(outputStreamWriter);
 
-		try {
-			writer.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\" ?>");
-			writer.println("<data>");
+        try {
+            writer.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\" ?>");
+            writer.println("<data>");
 
-			List<PhdIndividualProgramProcess> list =
-					PhdIndividualProgramProcess.search(ExecutionYear.readCurrentExecutionYear(),
-							new Predicate<PhdIndividualProgramProcess>() {
+            List<PhdIndividualProgramProcess> list =
+                    PhdIndividualProgramProcess.search(ExecutionYear.readCurrentExecutionYear(),
+                            new Predicate<PhdIndividualProgramProcess>() {
 
-								@Override
-								public boolean eval(PhdIndividualProgramProcess t) {
+                                @Override
+                                public boolean eval(PhdIndividualProgramProcess t) {
 
-									if (t.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
-										return false;
-									}
+                                    if (t.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
+                                        return false;
+                                    }
 
-									if (!PhdIndividualProgramCollaborationType.EPFL.equals(t.getCollaborationType())) {
-										return false;
-									}
+                                    if (!PhdIndividualProgramCollaborationType.EPFL.equals(t.getCollaborationType())) {
+                                        return false;
+                                    }
 
-									if (!PhdIndividualProgramProcessState.CANDIDACY.equals(t.getActiveState())) {
-										return false;
-									}
+                                    if (!PhdIndividualProgramProcessState.CANDIDACY.equals(t.getActiveState())) {
+                                        return false;
+                                    }
 
-									if (!t.getCandidacyProcess().getValidatedByCandidate()) {
-										return false;
-									}
+                                    if (!t.getCandidacyProcess().getValidatedByCandidate()) {
+                                        return false;
+                                    }
 
-									return true;
-								}
+                                    return true;
+                                }
 
-							});
-			for (PhdIndividualProgramProcess process : list) {
-				writePersonInfo(process, writer);
-			}
+                            });
+            for (PhdIndividualProgramProcess process : list) {
+                writePersonInfo(process, writer);
+            }
 
-			writer.println("</data>");
-		} finally {
-			writer.close();
-		}
+            writer.println("</data>");
+        } finally {
+            writer.close();
+        }
 
-		return outputStream.toByteArray();
-	}
+        return outputStream.toByteArray();
+    }
 
-	/**
-	 * Write each person's personal and process information
-	 * 
-	 * @param process
-	 * @param writer
-	 */
-	private static void writePersonInfo(PhdIndividualProgramProcess process, PrintWriter writer) {
-		writer.println(addTabs(1) + "<personne action=\"AUTO\">");
-		Person person = process.getPerson();
-		writer.println(addTabs(2) + String.format("<nom>%s</nom>", person.getGivenNames()));
-		writer.println(addTabs(2) + String.format("<prenom>%s</prenom>", person.getFamilyNames()));
-		writer.println(addTabs(2) + String.format("<sexe>%s</sexe>", Gender.MALE.equals(person.getGender()) ? "SEXH" : "SEXF"));
-		writer.println(addTabs(2)
-				+ String.format("<naissance>%s</naissance>", person.getDateOfBirthYearMonthDay().toString("dd.MM.yyyy")));
+    /**
+     * Write each person's personal and process information
+     * 
+     * @param process
+     * @param writer
+     */
+    private static void writePersonInfo(PhdIndividualProgramProcess process, PrintWriter writer) {
+        writer.println(addTabs(1) + "<personne action=\"AUTO\">");
+        Person person = process.getPerson();
+        writer.println(addTabs(2) + String.format("<nom>%s</nom>", person.getGivenNames()));
+        writer.println(addTabs(2) + String.format("<prenom>%s</prenom>", person.getFamilyNames()));
+        writer.println(addTabs(2) + String.format("<sexe>%s</sexe>", Gender.MALE.equals(person.getGender()) ? "SEXH" : "SEXF"));
+        writer.println(addTabs(2)
+                + String.format("<naissance>%s</naissance>", person.getDateOfBirthYearMonthDay().toString("dd.MM.yyyy")));
 
-		writer.println(addTabs(2) + "<detailPersonne action=\"AUTO\">");
+        writer.println(addTabs(2) + "<detailPersonne action=\"AUTO\">");
 
-		writer.println(addTabs(3) + "<domaine>DOMAINEACADEMIQUE</domaine>");
-		writer.println(addTabs(3)
-				+ String.format("<datePersonne action=\"AUTO\" type=\"TYPE_DATE_ENTREE\">%s</datePersonne>", process
-						.getCandidacyProcess().getCandidacyDate().toString("dd.MM.yyyy")));
+        writer.println(addTabs(3) + "<domaine>DOMAINEACADEMIQUE</domaine>");
+        writer.println(addTabs(3)
+                + String.format("<datePersonne action=\"AUTO\" type=\"TYPE_DATE_ENTREE\">%s</datePersonne>", process
+                        .getCandidacyProcess().getCandidacyDate().toString("dd.MM.yyyy")));
 
-		writer.println(addTabs(3)
-				+ String.format(
-						"<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
-						person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(Language.en)));
+        writer.println(addTabs(3)
+                + String.format(
+                        "<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
+                        person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(Language.en)));
 
-		writer.println(addTabs(3)
-				+ String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUNAIETRA\" "
-						+ "typeLieu=\"LOCETRNONCON\" forceTo=\"LOCETRNONCON\">%s</lieuPersonne>",
-						person.getDistrictSubdivisionOfBirth()));
+        writer.println(addTabs(3)
+                + String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUNAIETRA\" "
+                        + "typeLieu=\"LOCETRNONCON\" forceTo=\"LOCETRNONCON\">%s</lieuPersonne>",
+                        person.getDistrictSubdivisionOfBirth()));
 
-		writer.println(addTabs(3)
-				+ String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUORI\" identificationLieu=\"iso\" iso=\"%s\" "
-						+ "typeLieu=\"PAYS\">%s</lieuPersonne>", person.getCountry().getCode(), person.getCountry()
-						.getLocalizedName().getContent(Language.en)));
+        writer.println(addTabs(3)
+                + String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUORI\" identificationLieu=\"iso\" iso=\"%s\" "
+                        + "typeLieu=\"PAYS\">%s</lieuPersonne>", person.getCountry().getCode(), person.getCountry()
+                        .getLocalizedName().getContent(Language.en)));
 
-		writer.println(addTabs(3) + "<adresse type=\"ADR_ECH\" action=\"AUTO\">");
+        writer.println(addTabs(3) + "<adresse type=\"ADR_ECH\" action=\"AUTO\">");
 
-		writer.println(addTabs(4) + String.format("<ligne n=\"1\">%s</ligne>", person.getAddress()));
-		writer.println(addTabs(4)
-				+ String.format(
-						"<localite typeLieu=\"LOCALITE;LOCETRNONCON\" identificationLieu=\"zip\" zip=\"%s\" b_returnfirst=\"1\">%s</localite>",
-						person.getAreaCode(), person.getArea()));
+        writer.println(addTabs(4) + String.format("<ligne n=\"1\">%s</ligne>", person.getAddress()));
+        writer.println(addTabs(4)
+                + String.format(
+                        "<localite typeLieu=\"LOCALITE;LOCETRNONCON\" identificationLieu=\"zip\" zip=\"%s\" b_returnfirst=\"1\">%s</localite>",
+                        person.getAreaCode(), person.getArea()));
 
-		if (person.getCountryOfResidence() != null) {
-			writer.println(addTabs(4)
-					+ String.format("<pays identificationLieu=\"iso\" iso=\"%s\" b_returnfirst=\"1\">%s</pays>", person
-							.getCountryOfResidence().getCode(),
-							person.getCountryOfResidence().getLocalizedName().getContent(Language.en)));
-		} else {
-			writer.println(addTabs(4) + "<pays identificationLieu=\"iso\" iso=\"\" b_returnfirst=\"1\"></pays>");
-		}
-		writer.println(addTabs(4) + String.format("<moyen action=\"AUTO\" type=\"EMAIL\">%s</moyen>", person.getEmail()));
-		writer.println(addTabs(4) + String.format("<moyen action=\"AUTO\" type=\"PORTABLE\">%s</moyen>", person.getMobile()));
+        if (person.getCountryOfResidence() != null) {
+            writer.println(addTabs(4)
+                    + String.format("<pays identificationLieu=\"iso\" iso=\"%s\" b_returnfirst=\"1\">%s</pays>", person
+                            .getCountryOfResidence().getCode(),
+                            person.getCountryOfResidence().getLocalizedName().getContent(Language.en)));
+        } else {
+            writer.println(addTabs(4) + "<pays identificationLieu=\"iso\" iso=\"\" b_returnfirst=\"1\"></pays>");
+        }
+        writer.println(addTabs(4) + String.format("<moyen action=\"AUTO\" type=\"EMAIL\">%s</moyen>", person.getEmail()));
+        writer.println(addTabs(4) + String.format("<moyen action=\"AUTO\" type=\"PORTABLE\">%s</moyen>", person.getMobile()));
 
-		writer.println(addTabs(3) + "</adresse>");
+        writer.println(addTabs(3) + "</adresse>");
 
-		writer.println(addTabs(2) + "</detailPersonne>");
-		writer.println(addTabs(2) + "<inscription action=\"AUTO\">");
+        writer.println(addTabs(2) + "</detailPersonne>");
+        writer.println(addTabs(2) + "<inscription action=\"AUTO\">");
 
-		writer.println(addTabs(3) + "<gps domaine=\"DOMAINEACADEMIQUE\">");
+        writer.println(addTabs(3) + "<gps domaine=\"DOMAINEACADEMIQUE\">");
 
-		writer.println(addTabs(4) + "<modelegps>CDOC</modelegps>");
-		writer.println(addTabs(4) + "<unite type=\"ACAD\" format=\"LIBELLE\">IST-EPFL</unite>");
-		writer.println(addTabs(4) + "<periode type=\"PEDAGO\" format=\"LIBCOU\">Eval sep</periode>");
-		writer.println(addTabs(4) + "<periode type=\"ACAD\">2010</periode>");
+        writer.println(addTabs(4) + "<modelegps>CDOC</modelegps>");
+        writer.println(addTabs(4) + "<unite type=\"ACAD\" format=\"LIBELLE\">IST-EPFL</unite>");
+        writer.println(addTabs(4) + "<periode type=\"PEDAGO\" format=\"LIBCOU\">Eval sep</periode>");
+        writer.println(addTabs(4) + "<periode type=\"ACAD\">2010</periode>");
 
-		writer.println(addTabs(3) + "</gps>");
+        writer.println(addTabs(3) + "</gps>");
 
-		writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
+        writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
 
-		writer.println(addTabs(3)
-				+ String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
-						.getAcronym()));
+        writer.println(addTabs(3)
+                + String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
+                        .getAcronym()));
 
-		writer.println(addTabs(3)
-				+ String.format(" <detail type=\"GPSDOMFOCUS\" conversion=\"IMPORT_IST:GPSDOMFOCUS\">%s</detail> ", process
-						.getPhdProgramFocusArea().getName()));
+        writer.println(addTabs(3)
+                + String.format(" <detail type=\"GPSDOMFOCUS\" conversion=\"IMPORT_IST:GPSDOMFOCUS\">%s</detail> ", process
+                        .getPhdProgramFocusArea().getName()));
 
-		writer.println(addTabs(2) + "</inscription>");
+        writer.println(addTabs(2) + "</inscription>");
 
-		writer.println(addTabs(1) + "</personne>");
-	}
+        writer.println(addTabs(1) + "</personne>");
+    }
 
-	private static String getUrlForProcess(PhdIndividualProgramProcess process) {
-		return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/show?process=%s", process
-				.getPhdIndividualProcessNumber().getNumber());
-	}
+    private static String getUrlForProcess(PhdIndividualProgramProcess process) {
+        return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/show?process=%s", process
+                .getPhdIndividualProcessNumber().getNumber());
+    }
 
-	private static String addTabs(int level) {
-		String returnString = "";
-		for (int i = 1; i <= level; i++) {
-			returnString += '\t';
-		}
-		return returnString;
-	}
+    private static String addTabs(int level) {
+        String returnString = "";
+        for (int i = 1; i <= level; i++) {
+            returnString += '\t';
+        }
+        return returnString;
+    }
 
 }

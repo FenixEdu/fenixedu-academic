@@ -24,38 +24,38 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "ViewProject", path = "/researcher/projects/viewProject.jsp") })
 public class ViewProjectDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-		for (Project project : rootDomainObject.getProjects()) {
-			if (project.getIdInternal().equals(oid)) {
-				request.setAttribute("selectedProject", project);
-				List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
-				for (ProjectParticipation participation : project.getProjectParticipations()) {
-					if (participation.getParty() instanceof Person) {
-						participations.add(participation);
-					}
-				}
-				request.setAttribute("participations", participations);
-			}
-		}
+        for (Project project : rootDomainObject.getProjects()) {
+            if (project.getIdInternal().equals(oid)) {
+                request.setAttribute("selectedProject", project);
+                List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
+                for (ProjectParticipation participation : project.getProjectParticipations()) {
+                    if (participation.getParty() instanceof Person) {
+                        participations.add(participation);
+                    }
+                }
+                request.setAttribute("participations", participations);
+            }
+        }
 
-		for (Project project : rootDomainObject.getProjects()) {
-			if (project.getIdInternal().equals(oid)) {
-				request.setAttribute("selectedProject", project);
-				List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
-				for (ProjectParticipation participation : project.getProjectParticipations()) {
-					if (participation.getParty() instanceof Unit) {
-						unitParticipations.add(participation);
-					}
-				}
-				request.setAttribute("unitParticipations", unitParticipations);
-			}
-		}
+        for (Project project : rootDomainObject.getProjects()) {
+            if (project.getIdInternal().equals(oid)) {
+                request.setAttribute("selectedProject", project);
+                List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
+                for (ProjectParticipation participation : project.getProjectParticipations()) {
+                    if (participation.getParty() instanceof Unit) {
+                        unitParticipations.add(participation);
+                    }
+                }
+                request.setAttribute("unitParticipations", unitParticipations);
+            }
+        }
 
-		request.setAttribute("party", getUserView(request).getPerson());
-		return mapping.findForward("ViewProject");
-	}
+        request.setAttribute("party", getUserView(request).getPerson());
+        return mapping.findForward("ViewProject");
+    }
 }

@@ -8,12 +8,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPersonByUsername extends FenixService {
 
-	@Service
-	public static InfoPerson run(String username) throws ExcepcaoInexistente {
-		final Person person = Person.readPersonByUsername(username);
-		if (person == null) {
-			throw new ExcepcaoInexistente("error.readPersonByUsername.noPerson");
-		}
-		return InfoPerson.newInfoFromDomain(person);
-	}
+    @Service
+    public static InfoPerson run(String username) throws ExcepcaoInexistente {
+        final Person person = Person.readPersonByUsername(username);
+        if (person == null) {
+            throw new ExcepcaoInexistente("error.readPersonByUsername.noPerson");
+        }
+        return InfoPerson.newInfoFromDomain(person);
+    }
 }

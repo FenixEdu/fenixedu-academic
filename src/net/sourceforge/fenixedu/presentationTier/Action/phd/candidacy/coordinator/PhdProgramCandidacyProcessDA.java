@@ -9,12 +9,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdProgramCandidacyProcess", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-		@Forward(
-				name = "manageCandidacyDocuments",
-				path = "/phd/candidacy/coordinator/manageCandidacyDocuments.jsp",
-				tileProperties = @Tile(title = "private.coordinator.phdprocess")),
+        @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/coordinator/manageCandidacyDocuments.jsp",
+                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-		@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/coordinator/manageCandidacyReview.jsp")
+        @Forward(name = "manageCandidacyReview", path = "/phd/candidacy/coordinator/manageCandidacyReview.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {

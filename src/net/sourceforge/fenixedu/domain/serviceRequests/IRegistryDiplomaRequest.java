@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import org.joda.time.LocalDate;
 
 public interface IRegistryDiplomaRequest extends IDocumentRequest {
-	public LocalDate getConclusionDate();
+    public LocalDate getConclusionDate();
 
-	public ExecutionYear getConclusionYear();
+    public ExecutionYear getConclusionYear();
 
-	public String getGraduateTitle(Locale locale);
+    public String getGraduateTitle(Locale locale);
 
-	public CycleType getRequestedCycle();
+    public CycleType getRequestedCycle();
 
-	public String getFinalAverage(final Locale locale);
+    public String getFinalAverage(final Locale locale);
 
-	public String getQualifiedAverageGrade(final Locale locale);
+    public String getQualifiedAverageGrade(final Locale locale);
 
-	public IDiplomaSupplementRequest getDiplomaSupplement();
+    public IDiplomaSupplementRequest getDiplomaSupplement();
 }

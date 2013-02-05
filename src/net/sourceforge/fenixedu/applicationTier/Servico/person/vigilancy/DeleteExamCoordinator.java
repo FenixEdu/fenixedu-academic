@@ -9,16 +9,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteExamCoordinator extends FenixService {
 
-	@Service
-	public static void run(ExamCoordinator coordinator) {
+    @Service
+    public static void run(ExamCoordinator coordinator) {
 
-		Person person = coordinator.getPerson();
-		coordinator.delete();
+        Person person = coordinator.getPerson();
+        coordinator.delete();
 
-		if (person.hasRole(RoleType.EXAM_COORDINATOR)
-				&& person.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear()) != null) {
-			person.removeRoleByType(RoleType.EXAM_COORDINATOR);
-		}
-	}
+        if (person.hasRole(RoleType.EXAM_COORDINATOR)
+                && person.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear()) != null) {
+            person.removeRoleByType(RoleType.EXAM_COORDINATOR);
+        }
+    }
 
 }

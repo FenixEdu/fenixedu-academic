@@ -14,54 +14,54 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class NotExistingServiceException extends FenixServiceException {
 
-	/**
+    /**
      *  
      */
-	public NotExistingServiceException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public NotExistingServiceException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public NotExistingServiceException(int errorType) {
-		super(errorType);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param errorType
+     */
+    public NotExistingServiceException(int errorType) {
+        super(errorType);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param s
-	 */
-	public NotExistingServiceException(String s) {
-		super(s);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param s
+     */
+    public NotExistingServiceException(String s) {
+        super(s);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param cause
-	 */
-	public NotExistingServiceException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public NotExistingServiceException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public NotExistingServiceException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public NotExistingServiceException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public String toString() {
-		String result = "[NotExistingServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[NotExistingServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

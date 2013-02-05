@@ -39,63 +39,62 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "manager", path = "/readDegreeCurricularPlan", input = "/readDegree.do", scope = "session")
 @Forwards(value = {
-		@Forward(name = "viewDegreeCurricularPlan", path = "/manager/readDegreeCurricularPlan_bd.jsp", tileProperties = @Tile(
-				navLocal = "/manager/degreeNavLocalManager.jsp")), @Forward(name = "readDegree", path = "/readDegree.do") })
+        @Forward(name = "viewDegreeCurricularPlan", path = "/manager/readDegreeCurricularPlan_bd.jsp", tileProperties = @Tile(
+                navLocal = "/manager/degreeNavLocalManager.jsp")), @Forward(name = "readDegree", path = "/readDegree.do") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
-		key = "resources.Action.exceptions.NonExistingActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+        key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ReadDegreeCurricularPlanAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		Integer degreeCurricularPlanId = null;
-		if (request.getParameter("degreeCurricularPlanId") != null) {
-			degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-		}
+        Integer degreeCurricularPlanId = null;
+        if (request.getParameter("degreeCurricularPlanId") != null) {
+            degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        }
 
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-		try {
-			infoDegreeCurricularPlan =
-					(InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan",
-							new Object[] { degreeCurricularPlanId });
+        try {
+            infoDegreeCurricularPlan =
+                    (InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan",
+                            new Object[] { degreeCurricularPlanId });
 
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		// in case the degreeCurricularPlan really exists
-		List curricularCourses = null;
-		try {
-			curricularCourses = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanId);
+        // in case the degreeCurricularPlan really exists
+        List curricularCourses = null;
+        try {
+            curricularCourses = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanId);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		Collections.sort(curricularCourses, new BeanComparator("name"));
-		Object[] args = { degreeCurricularPlanId };
-		List executionDegrees = null;
-		try {
-			// executionDegrees =
-			// ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlanId);
-			executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        Collections.sort(curricularCourses, new BeanComparator("name"));
+        Object[] args = { degreeCurricularPlanId };
+        List executionDegrees = null;
+        try {
+            // executionDegrees =
+            // ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlanId);
+            executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		Collections.sort(executionDegrees, new BeanComparator("infoExecutionYear.year"));
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        Collections.sort(executionDegrees, new BeanComparator("infoExecutionYear.year"));
 
-		request.setAttribute("curricularCoursesList", curricularCourses);
-		request.setAttribute("executionDegreesList", executionDegrees);
-		request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-		return mapping.findForward("viewDegreeCurricularPlan");
-	}
+        request.setAttribute("curricularCoursesList", curricularCourses);
+        request.setAttribute("executionDegreesList", executionDegrees);
+        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        return mapping.findForward("viewDegreeCurricularPlan");
+    }
 }

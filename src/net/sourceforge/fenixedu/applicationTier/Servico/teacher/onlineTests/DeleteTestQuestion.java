@@ -10,24 +10,24 @@ import org.apache.commons.collections.Predicate;
 
 public class DeleteTestQuestion extends FenixService {
 
-	public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws InvalidArgumentsServiceException {
-		Test test = rootDomainObject.readTestByOID(testId);
-		if (test == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+    public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws InvalidArgumentsServiceException {
+        Test test = rootDomainObject.readTestByOID(testId);
+        if (test == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		TestQuestion testQuestion = (TestQuestion) CollectionUtils.find(test.getTestQuestions(), new Predicate() {
-			@Override
-			public boolean evaluate(Object arg0) {
-				final TestQuestion testQuestion = (TestQuestion) arg0;
-				return testQuestion.getQuestion().getIdInternal().equals(questionId);
-			}
-		});
-		if (testQuestion == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        TestQuestion testQuestion = (TestQuestion) CollectionUtils.find(test.getTestQuestions(), new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                final TestQuestion testQuestion = (TestQuestion) arg0;
+                return testQuestion.getQuestion().getIdInternal().equals(questionId);
+            }
+        });
+        if (testQuestion == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		test.deleteTestQuestion(testQuestion);
-	}
+        test.deleteTestQuestion(testQuestion);
+    }
 
 }

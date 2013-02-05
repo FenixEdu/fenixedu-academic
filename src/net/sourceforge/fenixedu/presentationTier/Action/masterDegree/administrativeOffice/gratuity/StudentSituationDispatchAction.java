@@ -50,100 +50,100 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentSituation", formBean = "studentSituationForm", module = "masterDegreeAdministrativeOffice")
 @Forwards({
-		@Forward(name = "chooseStudent", path = "chooseStudentForStudentSituation", tileProperties = @Tile(title = "teste61")),
-		@Forward(name = "success", path = "studentSituation", tileProperties = @Tile(title = "teste62")) })
+        @Forward(name = "chooseStudent", path = "chooseStudentForStudentSituation", tileProperties = @Tile(title = "teste61")),
+        @Forward(name = "success", path = "studentSituation", tileProperties = @Tile(title = "teste62")) })
 @Exceptions({ @ExceptionHandling(type = NonExistingActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class StudentSituationDispatchAction extends FenixDispatchAction {
 
-	@Input
-	public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Input
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		return mapping.findForward("chooseStudent");
+        return mapping.findForward("chooseStudent");
 
-	}
+    }
 
-	public ActionForward readStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward readStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ActionErrors errors = new ActionErrors();
-		DynaActionForm studentSituationForm = (DynaActionForm) form;
-		IUserView userView = UserView.getUser();
+        ActionErrors errors = new ActionErrors();
+        DynaActionForm studentSituationForm = (DynaActionForm) form;
+        IUserView userView = UserView.getUser();
 
-		Integer studentNumber = getIntegerFromRequestOrForm(request, studentSituationForm, "studentNumber");
-		String degreeType = (String) getFromRequestOrForm(request, studentSituationForm, "degreeType");
+        Integer studentNumber = getIntegerFromRequestOrForm(request, studentSituationForm, "studentNumber");
+        String degreeType = (String) getFromRequestOrForm(request, studentSituationForm, "degreeType");
 
-		InfoStudent infoStudent =
-				(InfoStudent) ReadStudentByNumberAndDegreeType.run(studentNumber, DegreeType.valueOf(degreeType));
+        InfoStudent infoStudent =
+                (InfoStudent) ReadStudentByNumberAndDegreeType.run(studentNumber, DegreeType.valueOf(degreeType));
 
-		if (infoStudent == null) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("choose"));
-		}
+        if (infoStudent == null) {
+            throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("choose"));
+        }
 
-		request.setAttribute(PresentationConstants.STUDENT, infoStudent);
+        request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
-		List gratuitySituations = UpdateAndReadGratuitySituationsByStudentNumber.run(studentNumber);
+        List gratuitySituations = UpdateAndReadGratuitySituationsByStudentNumber.run(studentNumber);
 
-		InfoGratuitySituation infoGratuitySituation = null;
-		InfoInsuranceTransaction infoInsuranceTransaction = null;
-		InfoInsuranceValue infoInsuranceValue = null;
-		InsuranceSituationDTO insuranceSituationDTO = null;
-		List insuranceSituationsDTOList = new ArrayList();
-		InfoExecutionYear infoExecutionYear = null;
-		Iterator iterator = gratuitySituations.iterator();
+        InfoGratuitySituation infoGratuitySituation = null;
+        InfoInsuranceTransaction infoInsuranceTransaction = null;
+        InfoInsuranceValue infoInsuranceValue = null;
+        InsuranceSituationDTO insuranceSituationDTO = null;
+        List insuranceSituationsDTOList = new ArrayList();
+        InfoExecutionYear infoExecutionYear = null;
+        Iterator iterator = gratuitySituations.iterator();
 
-		while (iterator.hasNext()) {
+        while (iterator.hasNext()) {
 
-			infoGratuitySituation = (InfoGratuitySituation) iterator.next();
+            infoGratuitySituation = (InfoGratuitySituation) iterator.next();
 
-			try {
-				infoInsuranceTransaction =
-						ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(),
-								infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear()
-										.getIdInternal());
-			} catch (FenixServiceException e) {
-				errors.add("insurance", new ActionError("error.duplicate.insurance", studentNumber));
-				saveErrors(request, errors);
-				return mapping.getInputForward();
-			}
+            try {
+                infoInsuranceTransaction =
+                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(),
+                                infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear()
+                                        .getIdInternal());
+            } catch (FenixServiceException e) {
+                errors.add("insurance", new ActionError("error.duplicate.insurance", studentNumber));
+                saveErrors(request, errors);
+                return mapping.getInputForward();
+            }
 
-			insuranceSituationDTO = new InsuranceSituationDTO();
+            insuranceSituationDTO = new InsuranceSituationDTO();
 
-			infoExecutionYear = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear();
+            infoExecutionYear = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear();
 
-			try {
-				infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(infoExecutionYear.getIdInternal());
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			if (infoInsuranceValue != null) {
-				insuranceSituationDTO.setAnualValue(infoInsuranceValue.getAnnualValue());
-			}
+            try {
+                infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(infoExecutionYear.getIdInternal());
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
+            if (infoInsuranceValue != null) {
+                insuranceSituationDTO.setAnualValue(infoInsuranceValue.getAnnualValue());
+            }
 
-			if (infoInsuranceTransaction != null) {
+            if (infoInsuranceTransaction != null) {
 
-				insuranceSituationDTO.setInfoExecutionYear(infoInsuranceTransaction.getInfoExecutionYear());
-				insuranceSituationDTO.setExecutionYearID(infoInsuranceTransaction.getInfoExecutionYear().getIdInternal());
-				insuranceSituationDTO.setPayedValue(infoInsuranceTransaction.getValue());
-				insuranceSituationDTO.setInsuranceTransactionID(infoInsuranceTransaction.getIdInternal());
-			} else {
+                insuranceSituationDTO.setInfoExecutionYear(infoInsuranceTransaction.getInfoExecutionYear());
+                insuranceSituationDTO.setExecutionYearID(infoInsuranceTransaction.getInfoExecutionYear().getIdInternal());
+                insuranceSituationDTO.setPayedValue(infoInsuranceTransaction.getValue());
+                insuranceSituationDTO.setInsuranceTransactionID(infoInsuranceTransaction.getIdInternal());
+            } else {
 
-				insuranceSituationDTO.setInfoExecutionYear(infoExecutionYear);
-				insuranceSituationDTO.setExecutionYearID(infoExecutionYear.getIdInternal());
-				insuranceSituationDTO.setPayedValue(new Double(0));
+                insuranceSituationDTO.setInfoExecutionYear(infoExecutionYear);
+                insuranceSituationDTO.setExecutionYearID(infoExecutionYear.getIdInternal());
+                insuranceSituationDTO.setPayedValue(new Double(0));
 
-			}
+            }
 
-			if (!insuranceSituationsDTOList.contains(insuranceSituationDTO)) {
-				insuranceSituationsDTOList.add(insuranceSituationDTO);
-			}
+            if (!insuranceSituationsDTOList.contains(insuranceSituationDTO)) {
+                insuranceSituationsDTOList.add(insuranceSituationDTO);
+            }
 
-		}
+        }
 
-		request.setAttribute(PresentationConstants.GRATUITY_SITUATIONS_LIST, gratuitySituations);
-		request.setAttribute(PresentationConstants.INSURANCE_SITUATIONS_LIST, insuranceSituationsDTOList);
+        request.setAttribute(PresentationConstants.GRATUITY_SITUATIONS_LIST, gratuitySituations);
+        request.setAttribute(PresentationConstants.INSURANCE_SITUATIONS_LIST, insuranceSituationsDTOList);
 
-		return mapping.findForward("success");
+        return mapping.findForward("success");
 
-	}
+    }
 }

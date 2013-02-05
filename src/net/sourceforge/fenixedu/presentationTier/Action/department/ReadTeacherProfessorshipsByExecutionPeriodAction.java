@@ -24,46 +24,35 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author jpvl
  */
-@Mapping(
-		module = "departmentAdmOffice",
-		path = "/showTeacherProfessorships",
-		input = "show-teacher-professorships",
-		attribute = "executionPeriodForm",
-		formBean = "executionPeriodForm",
-		scope = "request")
+@Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorships", input = "show-teacher-professorships",
+        attribute = "executionPeriodForm", formBean = "executionPeriodForm", scope = "request")
 @Forwards(value = { @Forward(name = "list-professorships", path = "show-teacher-professorships") })
 @Exceptions(value = {
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizeException.class,
-				key = "message.teacher-not-belong-to-department",
-				handler = org.apache.struts.action.ExceptionHandler.class,
-				path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0",
-				scope = "request"),
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException.class,
-				key = "message.teacher-not-belong-to-department",
-				handler = org.apache.struts.action.ExceptionHandler.class,
-				path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0",
-				scope = "request") })
+        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizeException.class,
+                key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
+                path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0", scope = "request"),
+        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException.class,
+                key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
+                path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0", scope = "request") })
 public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractReadProfessorshipsAction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seepresentationTier.Action.department.AbstractReadProfessorshipsAction#
-	 * getDetailedProfessorships(ServidorAplicacao.IUserView, java.lang.Integer,
-	 * org.apache.struts.action.DynaActionForm,
-	 * javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
-			throws FenixServiceException, FenixFilterException {
-		Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
-		executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
-		List detailedInfoProfessorshipList =
-				(List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] {
-						teacherId, executionPeriodId });
-		return detailedInfoProfessorshipList;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @seepresentationTier.Action.department.AbstractReadProfessorshipsAction#
+     * getDetailedProfessorships(ServidorAplicacao.IUserView, java.lang.Integer,
+     * org.apache.struts.action.DynaActionForm,
+     * javax.servlet.http.HttpServletRequest)
+     */
+    @Override
+    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
+        Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
+        executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
+        List detailedInfoProfessorshipList =
+                (List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] {
+                        teacherId, executionPeriodId });
+        return detailedInfoProfessorshipList;
+    }
 
 }

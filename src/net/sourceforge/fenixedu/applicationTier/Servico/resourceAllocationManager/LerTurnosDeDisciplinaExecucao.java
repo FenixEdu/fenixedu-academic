@@ -19,20 +19,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerTurnosDeDisciplinaExecucao extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
 
-		List<InfoShift> infoShifts = new ArrayList<InfoShift>();
+        List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-		Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
 
-		while (itShiftList.hasNext()) {
-			Shift shift = itShiftList.next();
-			infoShifts.add(InfoShift.newInfoFromDomain(shift));
-		}
+        while (itShiftList.hasNext()) {
+            Shift shift = itShiftList.next();
+            infoShifts.add(InfoShift.newInfoFromDomain(shift));
+        }
 
-		return infoShifts;
-	}
+        return infoShifts;
+    }
 }

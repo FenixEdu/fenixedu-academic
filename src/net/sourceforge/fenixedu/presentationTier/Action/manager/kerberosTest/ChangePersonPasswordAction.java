@@ -31,42 +31,36 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-@Mapping(
-		module = "manager",
-		path = "/changePasswordForm",
-		input = "pass-test-kerberos",
-		attribute = "changePasswordForm",
-		formBean = "changePasswordForm",
-		scope = "request")
+@Mapping(module = "manager", path = "/changePasswordForm", input = "pass-test-kerberos", attribute = "changePasswordForm",
+        formBean = "changePasswordForm", scope = "request")
 @Forwards(value = { @Forward(name = "Success", path = "/manager/changePasswordSucess_bd.jsp") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException.class,
-		key = "resources.Action.exceptions.InvalidPasswordActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException.class,
+        key = "resources.Action.exceptions.InvalidPasswordActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ChangePersonPasswordAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaActionForm changePasswordForm = (DynaActionForm) form;
+        DynaActionForm changePasswordForm = (DynaActionForm) form;
 
-		IUserView userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
-		String oldPassword = (String) changePasswordForm.get("oldPassword");
-		String newPassword = (String) changePasswordForm.get("newPassword");
+        IUserView userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
+        String oldPassword = (String) changePasswordForm.get("oldPassword");
+        String newPassword = (String) changePasswordForm.get("newPassword");
 
-		SetUserUID.run(userView.getPerson());
+        SetUserUID.run(userView.getPerson());
 
-		// Check the old Password
+        // Check the old Password
 
-		try {
-			ChangePasswordKerberos.run(userView, oldPassword, newPassword);
-		} catch (InvalidPasswordServiceException e) {
-			throw new InvalidPasswordActionException(e);
-		}
-		return mapping.findForward("Success");
+        try {
+            ChangePasswordKerberos.run(userView, oldPassword, newPassword);
+        } catch (InvalidPasswordServiceException e) {
+            throw new InvalidPasswordActionException(e);
+        }
+        return mapping.findForward("Success");
 
-	}
+    }
 
 }

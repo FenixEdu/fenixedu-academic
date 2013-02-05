@@ -7,48 +7,48 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class ExemptionJustification extends ExemptionJustification_Base {
 
-	protected ExemptionJustification() {
-		super();
-		super.setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected ExemptionJustification() {
+        super();
+        super.setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected void init(final Exemption exemption, final String reason) {
+    protected void init(final Exemption exemption, final String reason) {
 
-		checkParameters(exemption);
+        checkParameters(exemption);
 
-		super.setExemption(exemption);
-		super.setReason(reason);
-	}
+        super.setExemption(exemption);
+        super.setReason(reason);
+    }
 
-	private void checkParameters(Exemption exemption) {
-		if (exemption == null) {
-			throw new DomainException("error.accounting.events.ExemptionJustification.exemption.cannot.be.null");
-		}
-	}
+    private void checkParameters(Exemption exemption) {
+        if (exemption == null) {
+            throw new DomainException("error.accounting.events.ExemptionJustification.exemption.cannot.be.null");
+        }
+    }
 
-	@Override
-	public void setExemption(Exemption exemption) {
-		throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification.cannot.modify.exemption");
-	}
+    @Override
+    public void setExemption(Exemption exemption) {
+        throw new DomainException(
+                "error.net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification.cannot.modify.exemption");
+    }
 
-	@Override
-	public void setReason(String reason) {
-		throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification.cannot.modify.reason");
-	}
+    @Override
+    public void setReason(String reason) {
+        throw new DomainException(
+                "error.net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification.cannot.modify.reason");
+    }
 
-	public void delete() {
-		removeRootDomainObject();
-		removeExemption();
+    public void delete() {
+        removeRootDomainObject();
+        removeExemption();
 
-		super.deleteDomainObject();
-	}
+        super.deleteDomainObject();
+    }
 
-	@Override
-	public void removeExemption() {
-		super.setExemption(null);
-	}
+    @Override
+    public void removeExemption() {
+        super.setExemption(null);
+    }
 
-	abstract public LabelFormatter getDescription();
+    abstract public LabelFormatter getDescription();
 }

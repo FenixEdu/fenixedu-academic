@@ -18,62 +18,62 @@ import net.sourceforge.fenixedu.util.OldPublicationType;
  */
 public class InfoSiteOldPublications extends DataTranferObject implements ISiteComponent {
 
-	private List infoOldPublications;
+    private List infoOldPublications;
 
-	private OldPublicationType oldPublicationType;
+    private OldPublicationType oldPublicationType;
 
-	private InfoTeacher infoTeacher;
+    private InfoTeacher infoTeacher;
 
-	public InfoSiteOldPublications() {
-	}
+    public InfoSiteOldPublications() {
+    }
 
-	public Integer getNumberOldPublications() {
-		return Integer.valueOf(infoOldPublications.size());
-	}
+    public Integer getNumberOldPublications() {
+        return Integer.valueOf(infoOldPublications.size());
+    }
 
-	/**
-	 * @return Returns the infoOldPublications.
-	 */
-	public List getInfoOldPublications() {
-		return infoOldPublications;
-	}
+    /**
+     * @return Returns the infoOldPublications.
+     */
+    public List getInfoOldPublications() {
+        return infoOldPublications;
+    }
 
-	/**
-	 * @param infoOldPublications
-	 *            The infoOldPublications to set.
-	 */
-	public void setInfoOldPublications(List infoOldPublications) {
-		this.infoOldPublications = infoOldPublications;
-	}
+    /**
+     * @param infoOldPublications
+     *            The infoOldPublications to set.
+     */
+    public void setInfoOldPublications(List infoOldPublications) {
+        this.infoOldPublications = infoOldPublications;
+    }
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	/**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
-	/**
-	 * @return Returns the oldPublicationType.
-	 */
-	public OldPublicationType getOldPublicationType() {
-		return oldPublicationType;
-	}
+    /**
+     * @return Returns the oldPublicationType.
+     */
+    public OldPublicationType getOldPublicationType() {
+        return oldPublicationType;
+    }
 
-	/**
-	 * @param oldPublicationType
-	 *            The oldPublicationType to set.
-	 */
-	public void setOldPublicationType(OldPublicationType oldPublicationType) {
-		this.oldPublicationType = oldPublicationType;
-	}
+    /**
+     * @param oldPublicationType
+     *            The oldPublicationType to set.
+     */
+    public void setOldPublicationType(OldPublicationType oldPublicationType) {
+        this.oldPublicationType = oldPublicationType;
+    }
 
 }

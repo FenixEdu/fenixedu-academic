@@ -13,67 +13,67 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
  * 
  */
 public class InfoTeachingCareer extends InfoCareer {
-	private InfoCategory infoCategory;
+    private InfoCategory infoCategory;
 
-	private String courseOrPosition;
+    private String courseOrPosition;
 
-	/**
+    /**
      *  
      */
-	public InfoTeachingCareer() {
-		setCareerType(CareerType.TEACHING);
-	}
+    public InfoTeachingCareer() {
+        setCareerType(CareerType.TEACHING);
+    }
 
-	/**
-	 * @return Returns the courseOrPosition.
-	 */
-	public String getCourseOrPosition() {
-		return courseOrPosition;
-	}
+    /**
+     * @return Returns the courseOrPosition.
+     */
+    public String getCourseOrPosition() {
+        return courseOrPosition;
+    }
 
-	/**
-	 * @param courseOrPosition
-	 *            The courseOrPosition to set.
-	 */
-	public void setCourseOrPosition(String courseOrPosition) {
-		this.courseOrPosition = courseOrPosition;
-	}
+    /**
+     * @param courseOrPosition
+     *            The courseOrPosition to set.
+     */
+    public void setCourseOrPosition(String courseOrPosition) {
+        this.courseOrPosition = courseOrPosition;
+    }
 
-	/**
-	 * @return Returns the infoCategory.
-	 */
-	public InfoCategory getInfoCategory() {
-		return infoCategory;
-	}
+    /**
+     * @return Returns the infoCategory.
+     */
+    public InfoCategory getInfoCategory() {
+        return infoCategory;
+    }
 
-	/**
-	 * @param infoCategory
-	 *            The infoCategory to set.
-	 */
-	public void setInfoCategory(InfoCategory infoCategory) {
-		this.infoCategory = infoCategory;
-	}
+    /**
+     * @param infoCategory
+     *            The infoCategory to set.
+     */
+    public void setInfoCategory(InfoCategory infoCategory) {
+        this.infoCategory = infoCategory;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain
-	 * (Dominio.teacher.Career)
-	 */
-	public void copyFromDomain(TeachingCareer teachingCareer) {
-		super.copyFromDomain(teachingCareer);
-		if (teachingCareer != null) {
-			setCourseOrPosition(teachingCareer.getCourseOrPosition());
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain
+     * (Dominio.teacher.Career)
+     */
+    public void copyFromDomain(TeachingCareer teachingCareer) {
+        super.copyFromDomain(teachingCareer);
+        if (teachingCareer != null) {
+            setCourseOrPosition(teachingCareer.getCourseOrPosition());
+        }
+    }
 
-	public static InfoTeachingCareer newInfoFromDomain(TeachingCareer teachingCareer) {
-		InfoTeachingCareer infoTeachingCareer = null;
-		if (teachingCareer != null) {
-			infoTeachingCareer = new InfoTeachingCareer();
-			infoTeachingCareer.copyFromDomain(teachingCareer);
-		}
-		return infoTeachingCareer;
-	}
+    public static InfoTeachingCareer newInfoFromDomain(TeachingCareer teachingCareer) {
+        InfoTeachingCareer infoTeachingCareer = null;
+        if (teachingCareer != null) {
+            infoTeachingCareer = new InfoTeachingCareer();
+            infoTeachingCareer.copyFromDomain(teachingCareer);
+        }
+        return infoTeachingCareer;
+    }
 }

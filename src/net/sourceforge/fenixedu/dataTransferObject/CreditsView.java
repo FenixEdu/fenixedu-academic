@@ -13,36 +13,36 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
  */
 public class CreditsView extends InfoObject {
 
-	private InfoCredits infoCredits;
+    private InfoCredits infoCredits;
 
-	private List infoProfessorshipList;
+    private List infoProfessorshipList;
 
-	/**
-	 * @return
-	 */
-	public InfoCredits getInfoCredits() {
-		return this.infoCredits;
-	}
+    /**
+     * @return
+     */
+    public InfoCredits getInfoCredits() {
+        return this.infoCredits;
+    }
 
-	/**
-	 * @param infoCredits
-	 */
-	public void setInfoCredits(InfoCredits infoCredits) {
-		this.infoCredits = infoCredits;
-	}
+    /**
+     * @param infoCredits
+     */
+    public void setInfoCredits(InfoCredits infoCredits) {
+        this.infoCredits = infoCredits;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoProfessorshipList() {
-		return this.infoProfessorshipList;
-	}
+    /**
+     * @return
+     */
+    public List getInfoProfessorshipList() {
+        return this.infoProfessorshipList;
+    }
 
-	/**
-	 * @param infoProfessorshipList
-	 */
-	public void setInfoProfessorshipList(List infoProfessorshipList) {
-		this.infoProfessorshipList = infoProfessorshipList;
-	}
+    /**
+     * @param infoProfessorshipList
+     */
+    public void setInfoProfessorshipList(List infoProfessorshipList) {
+        this.infoProfessorshipList = infoProfessorshipList;
+    }
 
 }

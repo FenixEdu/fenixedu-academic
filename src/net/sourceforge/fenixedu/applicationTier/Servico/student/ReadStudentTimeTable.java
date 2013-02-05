@@ -13,20 +13,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentTimeTable extends FenixService {
 
-	@Service
-	public static List<InfoLesson> run(Registration registration) throws FenixServiceException {
+    @Service
+    public static List<InfoLesson> run(Registration registration) throws FenixServiceException {
 
-		if (registration == null) {
-			throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
-		}
+        if (registration == null) {
+            throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
+        }
 
-		final List<InfoLesson> result = new ArrayList<InfoLesson>();
-		for (final Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
-			for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
-				result.add(InfoLesson.newInfoFromDomain(lesson));
-			}
-		}
+        final List<InfoLesson> result = new ArrayList<InfoLesson>();
+        for (final Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
+            for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+                result.add(InfoLesson.newInfoFromDomain(lesson));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

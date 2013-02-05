@@ -14,34 +14,34 @@ import net.sourceforge.fenixedu.domain.ScientificCommission;
  */
 public class CurrentDegreeScientificCommissionMembersGroup extends DegreeGroup {
 
-	/**
-	 * Default serialization id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Default serialization id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public CurrentDegreeScientificCommissionMembersGroup(Degree degree) {
-		super(degree);
-	}
+    public CurrentDegreeScientificCommissionMembersGroup(Degree degree) {
+        super(degree);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Degree degree = getDegree();
+    @Override
+    public Set<Person> getElements() {
+        Degree degree = getDegree();
 
-		Set<Person> persons = buildSet();
+        Set<Person> persons = buildSet();
 
-		for (ScientificCommission member : degree.getCurrentScientificCommissionMembers()) {
-			persons.add(member.getPerson());
-		}
+        for (ScientificCommission member : degree.getCurrentScientificCommissionMembers()) {
+            persons.add(member.getPerson());
+        }
 
-		return persons;
-	}
+        return persons;
+    }
 
-	public static class Builder extends DegreeGroup.DegreeGroupBuilder {
+    public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			return new CurrentDegreeScientificCommissionMembersGroup(getDegree(arguments));
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            return new CurrentDegreeScientificCommissionMembersGroup(getDegree(arguments));
+        }
 
-	}
+    }
 }

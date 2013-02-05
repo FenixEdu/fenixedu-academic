@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 public enum GuideState {
 
-	NON_PAYED,
+    NON_PAYED,
 
-	PAYED,
+    PAYED,
 
-	ANNULLED;
+    ANNULLED;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
 }

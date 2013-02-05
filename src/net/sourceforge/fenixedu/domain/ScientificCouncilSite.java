@@ -10,33 +10,33 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificCouncilSite extends ScientificCouncilSite_Base {
 
-	public ScientificCouncilSite(ScientificCouncilUnit scientificCouncil) {
-		super();
+    public ScientificCouncilSite(ScientificCouncilUnit scientificCouncil) {
+        super();
 
-		setUnit(scientificCouncil);
-	}
+        setUnit(scientificCouncil);
+    }
 
-	@Override
-	public IGroup getOwner() {
-		return new GroupUnion(new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL), new FixedSetGroup(getManagers()));
-	}
+    @Override
+    public IGroup getOwner() {
+        return new GroupUnion(new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL), new FixedSetGroup(getManagers()));
+    }
 
-	/**
-	 * This method searchs for the first instance of a ScientificCouncilSite.
-	 * 
-	 * @return the site associated with the Scientific Council or <code>null</code> if there is no such site
-	 */
-	public static ScientificCouncilSite getSite() {
-		final ScientificCouncilUnit scientificCouncilUnit = ScientificCouncilUnit.getScientificCouncilUnit();
-		return scientificCouncilUnit == null ? null : (ScientificCouncilSite) scientificCouncilUnit.getSite();
-	}
+    /**
+     * This method searchs for the first instance of a ScientificCouncilSite.
+     * 
+     * @return the site associated with the Scientific Council or <code>null</code> if there is no such site
+     */
+    public static ScientificCouncilSite getSite() {
+        final ScientificCouncilUnit scientificCouncilUnit = ScientificCouncilUnit.getScientificCouncilUnit();
+        return scientificCouncilUnit == null ? null : (ScientificCouncilSite) scientificCouncilUnit.getSite();
+    }
 
-	@Override
-	public void appendReversePathPart(final StringBuilder stringBuilder) {
-	}
+    @Override
+    public void appendReversePathPart(final StringBuilder stringBuilder) {
+    }
 
-	@Override
-	public MultiLanguageString getName() {
-		return new MultiLanguageString("");
-	}
+    @Override
+    public MultiLanguageString getName() {
+        return new MultiLanguageString("");
+    }
 }

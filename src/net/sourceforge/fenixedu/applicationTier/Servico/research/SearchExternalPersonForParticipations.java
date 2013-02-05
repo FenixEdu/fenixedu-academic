@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class SearchExternalPersonForParticipations extends FenixService implements AutoCompleteSearchService {
 
-	@Override
-	public Collection<PersonName> run(Class type, String value, int limit, Map<String, String> arguments) {
-		if (type != PersonName.class) {
-			return null;
-		}
+    @Override
+    public Collection<PersonName> run(Class type, String value, int limit, Map<String, String> arguments) {
+        if (type != PersonName.class) {
+            return null;
+        }
 
-		String size = arguments.get("size");
-		return PersonName.findExternalPerson(value, (size == null) ? 20 : Integer.parseInt(size));
-	}
+        String size = arguments.get("size");
+        return PersonName.findExternalPerson(value, (size == null) ? 20 : Integer.parseInt(size));
+    }
 
 }

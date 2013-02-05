@@ -9,12 +9,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddPersonRole extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(final Person person, final RoleType roleType) {
-		if (person != null && roleType != null) {
-			person.addPersonRoles(Role.getRoleByRoleType(roleType));
-		}
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Person person, final RoleType roleType) {
+        if (person != null && roleType != null) {
+            person.addPersonRoles(Role.getRoleByRoleType(roleType));
+        }
+    }
 
 }

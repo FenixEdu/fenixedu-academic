@@ -6,90 +6,90 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class NewChoice extends NewChoice_Base implements Positionable {
 
-	public NewChoice() {
-		super();
-	}
+    public NewChoice() {
+        super();
+    }
 
-	public NewChoice(NewMultipleChoiceQuestion multipleChoiceQuestion) {
-		this();
+    public NewChoice(NewMultipleChoiceQuestion multipleChoiceQuestion) {
+        this();
 
-		this.setMultipleChoiceQuestion(multipleChoiceQuestion);
-		this.setPosition(this.getNewPosition());
-	}
+        this.setMultipleChoiceQuestion(multipleChoiceQuestion);
+        this.setPosition(this.getNewPosition());
+    }
 
-	protected Integer getNewPosition() {
-		return this.getMultipleChoiceQuestion().getChoicesCount();
-	}
+    protected Integer getNewPosition() {
+        return this.getMultipleChoiceQuestion().getChoicesCount();
+    }
 
-	@Override
-	public void delete() {
-		NewMultipleChoiceQuestion multipleChoiceQuestion = this.getMultipleChoiceQuestion();
+    @Override
+    public void delete() {
+        NewMultipleChoiceQuestion multipleChoiceQuestion = this.getMultipleChoiceQuestion();
 
-		for (NewCorrector corrector : multipleChoiceQuestion.getCorrectors()) {
-			if (corrector.getPredicate().uses(this)) {
-				corrector.delete();
-			}
-		}
+        for (NewCorrector corrector : multipleChoiceQuestion.getCorrectors()) {
+            if (corrector.getPredicate().uses(this)) {
+                corrector.delete();
+            }
+        }
 
-		if (multipleChoiceQuestion.getValidator() != null && multipleChoiceQuestion.getValidator().uses(this)) {
-			multipleChoiceQuestion.setValidator(null);
-		}
+        if (multipleChoiceQuestion.getValidator() != null && multipleChoiceQuestion.getValidator().uses(this)) {
+            multipleChoiceQuestion.setValidator(null);
+        }
 
-		this.removeMultipleChoiceQuestion();
+        this.removeMultipleChoiceQuestion();
 
-		multipleChoiceQuestion.resortChoices();
+        multipleChoiceQuestion.resortChoices();
 
-		super.delete();
-	}
+        super.delete();
+    }
 
-	@Override
-	public boolean isFirst() {
-		return this.getPosition() == 1;
-	}
+    @Override
+    public boolean isFirst() {
+        return this.getPosition() == 1;
+    }
 
-	@Override
-	public boolean isLast() {
-		return this.getPosition() == this.getMultipleChoiceQuestion().getChoicesCount();
-	}
+    @Override
+    public boolean isLast() {
+        return this.getPosition() == this.getMultipleChoiceQuestion().getChoicesCount();
+    }
 
-	@Override
-	public void switchPosition(Integer relativePosition) {
-		int currentPosition = this.getPosition();
-		int newPosition = currentPosition + relativePosition;
-		NewMultipleChoiceQuestion multipleChoiceQuestion = this.getMultipleChoiceQuestion();
+    @Override
+    public void switchPosition(Integer relativePosition) {
+        int currentPosition = this.getPosition();
+        int newPosition = currentPosition + relativePosition;
+        NewMultipleChoiceQuestion multipleChoiceQuestion = this.getMultipleChoiceQuestion();
 
-		if (relativePosition < 0 && this.isFirst()) {
-			throw new DomainException("could.not.sort.up");
-		}
+        if (relativePosition < 0 && this.isFirst()) {
+            throw new DomainException("could.not.sort.up");
+        }
 
-		if (relativePosition > 0 && this.isLast()) {
-			throw new DomainException("could.not.sort.down");
-		}
+        if (relativePosition > 0 && this.isLast()) {
+            throw new DomainException("could.not.sort.down");
+        }
 
-		for (NewChoice choice : multipleChoiceQuestion.getChoices()) {
-			if (choice.getPosition() == newPosition) {
-				choice.setPosition(currentPosition);
-				break;
-			}
-		}
+        for (NewChoice choice : multipleChoiceQuestion.getChoices()) {
+            if (choice.getPosition() == newPosition) {
+                choice.setPosition(currentPosition);
+                break;
+            }
+        }
 
-		this.setPosition(newPosition);
-	}
+        this.setPosition(newPosition);
+    }
 
-	@Override
-	public NewTestElement copy(HashMap<Object, Object> transformationMap) {
-		NewChoice choiceCopy = new NewChoice(this.getMultipleChoiceQuestion());
+    @Override
+    public NewTestElement copy(HashMap<Object, Object> transformationMap) {
+        NewChoice choiceCopy = new NewChoice(this.getMultipleChoiceQuestion());
 
-		this.initCopy(choiceCopy, transformationMap);
+        this.initCopy(choiceCopy, transformationMap);
 
-		transformationMap.put(this, choiceCopy);
+        transformationMap.put(this, choiceCopy);
 
-		return choiceCopy;
-	}
+        return choiceCopy;
+    }
 
-	@Override
-	public void cleanTransformation(HashMap<Object, Object> trasformationMap) {
-		// Left blank on purpose
-	}
+    @Override
+    public void cleanTransformation(HashMap<Object, Object> trasformationMap) {
+        // Left blank on purpose
+    }
 
 }

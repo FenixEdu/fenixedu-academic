@@ -21,20 +21,20 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadCoordinatedDegreesAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		IUserView userView = UserView.getUser();
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        IUserView userView = UserView.getUser();
 
-		try {
+        try {
 
-			List<InfoDegreeCurricularPlan> degrees = ReadCoordinatedDegrees.run(userView);
-			request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, degrees);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+            List<InfoDegreeCurricularPlan> degrees = ReadCoordinatedDegrees.run(userView);
+            request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, degrees);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("ChooseDegree");
-	}
+        return mapping.findForward("ChooseDegree");
+    }
 
 }

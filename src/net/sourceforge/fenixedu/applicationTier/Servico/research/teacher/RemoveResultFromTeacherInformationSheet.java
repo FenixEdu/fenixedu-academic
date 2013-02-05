@@ -9,11 +9,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveResultFromTeacherInformationSheet extends FenixService {
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(Teacher teacher, Integer resultId) throws DomainException {
-		ResearchResult result = rootDomainObject.readResearchResultByOID(resultId);
-		teacher.removeFromTeacherInformationSheet(result);
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(Teacher teacher, Integer resultId) throws DomainException {
+        ResearchResult result = rootDomainObject.readResearchResultByOID(resultId);
+        teacher.removeFromTeacherInformationSheet(result);
+    }
 
 }

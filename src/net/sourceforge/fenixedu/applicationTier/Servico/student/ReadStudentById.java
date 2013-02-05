@@ -20,15 +20,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadStudentById extends FenixService {
 
-	@Service
-	public static Object run(Integer id) throws FenixServiceException {
-		InfoStudent infoStudent = null;
+    @Service
+    public static Object run(Integer id) throws FenixServiceException {
+        InfoStudent infoStudent = null;
 
-		Registration registration = rootDomainObject.readRegistrationByOID(id);
-		if (registration != null) {
-			infoStudent = InfoStudent.newInfoFromDomain(registration);
-		}
+        Registration registration = rootDomainObject.readRegistrationByOID(id);
+        if (registration != null) {
+            infoStudent = InfoStudent.newInfoFromDomain(registration);
+        }
 
-		return infoStudent;
-	}
+        return infoStudent;
+    }
 }

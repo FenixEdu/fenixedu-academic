@@ -10,22 +10,22 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 public class EnrolmentToBeApprovedByCoordinatorVerifier extends VerifyRuleExecutor {
 
-	@Override
-	protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+    @Override
+    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+            DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
-		if (AcademicAuthorizationGroup.getProgramsForOperation(enrolmentContext.getResponsiblePerson(),
-				AcademicOperationType.STUDENT_ENROLMENTS).contains(enrolmentContext.getStudentCurricularPlan().getDegree())) {
-			return RuleResult.createTrue(degreeModuleToVerify);
-		}
+        if (AcademicAuthorizationGroup.getProgramsForOperation(enrolmentContext.getResponsiblePerson(),
+                AcademicOperationType.STUDENT_ENROLMENTS).contains(enrolmentContext.getStudentCurricularPlan().getDegree())) {
+            return RuleResult.createTrue(degreeModuleToVerify);
+        }
 
-		return RuleResult.createFalse(degreeModuleToVerify);
-	}
+        return RuleResult.createFalse(degreeModuleToVerify);
+    }
 
-	@Override
-	protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-		return verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
-	}
+    @Override
+    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+            DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+        return verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
+    }
 
 }

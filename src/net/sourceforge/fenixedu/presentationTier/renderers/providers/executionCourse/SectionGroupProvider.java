@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SectionGroupProvider extends SectionProvider {
 
-	@Override
-	public Object provideForContext(Site site, Section superiorSection, Section self) {
-		return UnmodifiableList.decorate(site.getContextualPermissionGroups());
-	}
+    @Override
+    public Object provideForContext(Site site, Section superiorSection, Section self) {
+        return UnmodifiableList.decorate(site.getContextualPermissionGroups());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

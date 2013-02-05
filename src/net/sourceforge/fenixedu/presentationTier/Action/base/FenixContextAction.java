@@ -23,50 +23,50 @@ import org.apache.struts.util.LabelValueBean;
 
 public abstract class FenixContextAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
 
-		ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+        ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId)
-			throws FenixActionException {
-		List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-		try {
+    protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId)
+            throws FenixActionException {
+        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
+        try {
 
-			infoExecutionDegreeList = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
-		} catch (Exception e) {
-			throw new FenixActionException(e);
-		}
+            infoExecutionDegreeList = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
+        } catch (Exception e) {
+            throw new FenixActionException(e);
+        }
 
-		List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-		for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
+        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
 
-			try {
-				List<InfoExecutionPeriod> infoExecutionPeriodsList =
-						ReadNotClosedPublicExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear());
+            try {
+                List<InfoExecutionPeriod> infoExecutionPeriodsList =
+                        ReadNotClosedPublicExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear());
 
-				for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
-					result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
-							+ infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
-							.toString()));
-				}
-			} catch (Exception e) {
-				throw new FenixActionException(e);
-			}
-		}
+                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
+                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
+                            + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
+                            .toString()));
+                }
+            } catch (Exception e) {
+                throw new FenixActionException(e);
+            }
+        }
 
-		ComparatorChain comparatorChain = new ComparatorChain();
-		comparatorChain.addComparator(new BeanComparator("value"));
-		Collections.sort(result, comparatorChain);
-		Collections.reverse(result);
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("value"));
+        Collections.sort(result, comparatorChain);
+        Collections.reverse(result);
 
-		return result;
-	}
+        return result;
+    }
 
 }

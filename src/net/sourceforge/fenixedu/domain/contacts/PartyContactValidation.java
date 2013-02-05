@@ -9,170 +9,170 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public abstract class PartyContactValidation extends PartyContactValidation_Base {
-	private final int MAX_TRIES = 3;
+    private final int MAX_TRIES = 3;
 
-	public static class PartyContactValidationPredicate extends Predicate<PartyContactValidation> {
+    public static class PartyContactValidationPredicate extends Predicate<PartyContactValidation> {
 
-		private final PartyContactValidationState state;
+        private final PartyContactValidationState state;
 
-		public PartyContactValidationPredicate(PartyContactValidationState state) {
-			this.state = state;
-		}
+        public PartyContactValidationPredicate(PartyContactValidationState state) {
+            this.state = state;
+        }
 
-		@Override
-		public boolean eval(PartyContactValidation t) {
-			return t.getState().equals(state);
-		}
+        @Override
+        public boolean eval(PartyContactValidation t) {
+            return t.getState().equals(state);
+        }
 
-	}
+    }
 
-	public static final PartyContactValidationPredicate PREDICATE_INVALID = new PartyContactValidationPredicate(
-			PartyContactValidationState.INVALID);
-	public static final PartyContactValidationPredicate PREDICATE_VALID = new PartyContactValidationPredicate(
-			PartyContactValidationState.VALID);
-	public static final PartyContactValidationPredicate PREDICATE_REFUSED = new PartyContactValidationPredicate(
-			PartyContactValidationState.REFUSED);
+    public static final PartyContactValidationPredicate PREDICATE_INVALID = new PartyContactValidationPredicate(
+            PartyContactValidationState.INVALID);
+    public static final PartyContactValidationPredicate PREDICATE_VALID = new PartyContactValidationPredicate(
+            PartyContactValidationState.VALID);
+    public static final PartyContactValidationPredicate PREDICATE_REFUSED = new PartyContactValidationPredicate(
+            PartyContactValidationState.REFUSED);
 
-	public PartyContactValidation() {
-		super();
-		reset();
-	}
+    public PartyContactValidation() {
+        super();
+        reset();
+    }
 
-	public void reset() {
-		setInvalid();
-		setRequestDate(new DateTime());
-		setTries(MAX_TRIES);
-		setToken(null);
-	}
+    public void reset() {
+        setInvalid();
+        setRequestDate(new DateTime());
+        setTries(MAX_TRIES);
+        setToken(null);
+    }
 
-	public void init(PartyContact contact) {
-		setPartyContact(contact);
-		if (contact.isDefault()) {
-			setToBeDefault(Boolean.TRUE);
-		}
-	}
+    public void init(PartyContact contact) {
+        setPartyContact(contact);
+        if (contact.isDefault()) {
+            setToBeDefault(Boolean.TRUE);
+        }
+    }
 
-	public PartyContactValidation(PartyContact contact) {
-		this();
-		init(contact);
-	}
+    public PartyContactValidation(PartyContact contact) {
+        this();
+        init(contact);
+    }
 
-	private boolean validate(boolean result) {
-		if (isInvalid()) {
-			if (result) {
-				setValid();
-			} else {
-				setInvalid();
-			}
-		}
-		return isValid();
-	}
+    private boolean validate(boolean result) {
+        if (isInvalid()) {
+            if (result) {
+                setValid();
+            } else {
+                setInvalid();
+            }
+        }
+        return isValid();
+    }
 
-	@Service
-	public Boolean processValidation(String token) {
+    @Service
+    public Boolean processValidation(String token) {
 
-		if (isRefused()) {
-			return false;
-		}
+        if (isRefused()) {
+            return false;
+        }
 
-		if (!StringUtils.isEmpty(getToken()) && !StringUtils.isEmpty(token)) {
-			validate(getToken().equals(token));
-			if (isInvalid()) {
-				setTries(getTries() - 1);
-				if (getTries() <= 0) {
-					setRefused();
-				}
-			}
-		}
+        if (!StringUtils.isEmpty(getToken()) && !StringUtils.isEmpty(token)) {
+            validate(getToken().equals(token));
+            if (isInvalid()) {
+                setTries(getTries() - 1);
+                if (getTries() <= 0) {
+                    setRefused();
+                }
+            }
+        }
 
-		return isValid();
-	}
+        return isValid();
+    }
 
-	protected void setValid() {
-		if (!isInvalid()) {
-			return;
-		}
-		if (hasRootDomainObject()) {
-			setRootDomainObject(null);
-		}
+    protected void setValid() {
+        if (!isInvalid()) {
+            return;
+        }
+        if (hasRootDomainObject()) {
+            setRootDomainObject(null);
+        }
 
-		super.setState(PartyContactValidationState.VALID);
-		setLastChangeDate(new DateTime());
-		final PartyContact partyContact = getPartyContact();
-		partyContact.getParty().logValidContact(partyContact);
-		if (partyContact.hasPrevPartyContact()) {
-			partyContact.getPrevPartyContact().deleteWithoutCheckRules();
-		}
+        super.setState(PartyContactValidationState.VALID);
+        setLastChangeDate(new DateTime());
+        final PartyContact partyContact = getPartyContact();
+        partyContact.getParty().logValidContact(partyContact);
+        if (partyContact.hasPrevPartyContact()) {
+            partyContact.getPrevPartyContact().deleteWithoutCheckRules();
+        }
 
-		final Boolean toBeDefault = getToBeDefault();
-		if (toBeDefault != null) {
-			partyContact.setDefaultContactInformation(toBeDefault);
-		}
-	}
+        final Boolean toBeDefault = getToBeDefault();
+        if (toBeDefault != null) {
+            partyContact.setDefaultContactInformation(toBeDefault);
+        }
+    }
 
-	private void setNotValidState(PartyContactValidationState state) {
-		if (!hasRootDomainObject()) {
-			setRootDomainObject(RootDomainObject.getInstance());
-		}
-		super.setState(state);
-		setLastChangeDate(new DateTime());
-	}
+    private void setNotValidState(PartyContactValidationState state) {
+        if (!hasRootDomainObject()) {
+            setRootDomainObject(RootDomainObject.getInstance());
+        }
+        super.setState(state);
+        setLastChangeDate(new DateTime());
+    }
 
-	public Integer getAvailableTries() {
-		return getTries() > 0 ? getTries() : 0;
-	}
+    public Integer getAvailableTries() {
+        return getTries() > 0 ? getTries() : 0;
+    }
 
-	protected void setInvalid() {
-		setNotValidState(PartyContactValidationState.INVALID);
-	}
+    protected void setInvalid() {
+        setNotValidState(PartyContactValidationState.INVALID);
+    }
 
-	protected void setRefused() {
-		if (!isRefused()) {
-			getPartyContact().getParty().logRefuseContact(getPartyContact());
-			setNotValidState(PartyContactValidationState.REFUSED);
-			getPartyContact().deleteWithoutCheckRules();
-		}
-	}
+    protected void setRefused() {
+        if (!isRefused()) {
+            getPartyContact().getParty().logRefuseContact(getPartyContact());
+            setNotValidState(PartyContactValidationState.REFUSED);
+            getPartyContact().deleteWithoutCheckRules();
+        }
+    }
 
-	private boolean isState(PartyContactValidationState state) {
-		return state.equals(getState());
-	}
+    private boolean isState(PartyContactValidationState state) {
+        return state.equals(getState());
+    }
 
-	public boolean isValid() {
-		return isState(PartyContactValidationState.VALID);
-	}
+    public boolean isValid() {
+        return isState(PartyContactValidationState.VALID);
+    }
 
-	public boolean isInvalid() {
-		return isState(PartyContactValidationState.INVALID);
-	}
+    public boolean isInvalid() {
+        return isState(PartyContactValidationState.INVALID);
+    }
 
-	public boolean isRefused() {
-		return isState(PartyContactValidationState.REFUSED);
-	}
+    public boolean isRefused() {
+        return isState(PartyContactValidationState.REFUSED);
+    }
 
-	@Override
-	@Service
-	public void setState(PartyContactValidationState state) {
-		switch (state) {
-		case INVALID:
-			setInvalid();
-			break;
-		case REFUSED:
-			setRefused();
-			break;
-		case VALID:
-			setValid();
-			break;
-		}
-	}
+    @Override
+    @Service
+    public void setState(PartyContactValidationState state) {
+        switch (state) {
+        case INVALID:
+            setInvalid();
+            break;
+        case REFUSED:
+            setRefused();
+            break;
+        case VALID:
+            setValid();
+            break;
+        }
+    }
 
-	public void triggerValidationProcess() {
-		// TODO Auto-generated method stub
-	}
+    public void triggerValidationProcess() {
+        // TODO Auto-generated method stub
+    }
 
-	public void triggerValidationProcessIfNeeded() {
-		if (getToken() == null) {
-			triggerValidationProcess();
-		}
-	}
+    public void triggerValidationProcessIfNeeded() {
+        if (getToken() == null) {
+            triggerValidationProcess();
+        }
+    }
 }

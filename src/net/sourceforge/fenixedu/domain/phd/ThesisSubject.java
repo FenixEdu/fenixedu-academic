@@ -9,83 +9,83 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisSubject extends ThesisSubject_Base {
 
-	protected ThesisSubject() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected ThesisSubject() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected ThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
-			Teacher teacher, String externalAdvisor) {
-		this();
+    protected ThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
+            Teacher teacher, String externalAdvisor) {
+        this();
 
-		checkParameters(focusArea, name, description, teacher);
+        checkParameters(focusArea, name, description, teacher);
 
-		setPhdProgramFocusArea(focusArea);
-		setName(name);
-		setDescription(description);
-		setTeacher(teacher);
-		setExternalAdvisorName(externalAdvisor);
+        setPhdProgramFocusArea(focusArea);
+        setName(name);
+        setDescription(description);
+        setTeacher(teacher);
+        setExternalAdvisorName(externalAdvisor);
 
-		for (PhdIndividualProgramProcess process : focusArea.getIndividualProgramProcesses()) {
-			if (isCandidacyPeriodOpen(process)) {
-				new ThesisSubjectOrder(this, process, process.getHighestThesisSubjectOrder() + 1);
-			}
-		}
-	}
+        for (PhdIndividualProgramProcess process : focusArea.getIndividualProgramProcesses()) {
+            if (isCandidacyPeriodOpen(process)) {
+                new ThesisSubjectOrder(this, process, process.getHighestThesisSubjectOrder() + 1);
+            }
+        }
+    }
 
-	private void checkParameters(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
-			Teacher teacher) {
-		check(focusArea, "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.focusArea.required");
+    private void checkParameters(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
+            Teacher teacher) {
+        check(focusArea, "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.focusArea.required");
 
-		if (name == null) {
-			check(name, "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.required");
-		}
+        if (name == null) {
+            check(name, "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.required");
+        }
 
-		if (!name.hasContent(Language.en)) {
-			throw new PhdDomainOperationException(
-					"error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.in.english.required");
-		}
+        if (!name.hasContent(Language.en)) {
+            throw new PhdDomainOperationException(
+                    "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.in.english.required");
+        }
 
-		if (teacher == null) {
-			throw new PhdDomainOperationException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.teacher.required");
-		}
-	}
+        if (teacher == null) {
+            throw new PhdDomainOperationException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.teacher.required");
+        }
+    }
 
-	@Service
-	public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher, String externalAdvisor) {
-		checkParameters(getPhdProgramFocusArea(), name, description, teacher);
+    @Service
+    public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher, String externalAdvisor) {
+        checkParameters(getPhdProgramFocusArea(), name, description, teacher);
 
-		setName(name);
-		setDescription(description);
-		setTeacher(teacher);
-		setExternalAdvisorName(externalAdvisor);
-	}
+        setName(name);
+        setDescription(description);
+        setTeacher(teacher);
+        setExternalAdvisorName(externalAdvisor);
+    }
 
-	@Service
-	public void delete() {
-		for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
-			if (isCandidacyPeriodOpen(order.getPhdIndividualProgramProcess())) {
-				order.delete();
-			}
-		}
-		removePhdProgramFocusArea();
+    @Service
+    public void delete() {
+        for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
+            if (isCandidacyPeriodOpen(order.getPhdIndividualProgramProcess())) {
+                order.delete();
+            }
+        }
+        removePhdProgramFocusArea();
 
-		if (!hasAnyThesisSubjectOrders()) {
-			removeTeacher();
+        if (!hasAnyThesisSubjectOrders()) {
+            removeTeacher();
 
-			removeRootDomainObject();
-			deleteDomainObject();
-		}
-	}
+            removeRootDomainObject();
+            deleteDomainObject();
+        }
+    }
 
-	@Service
-	public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
-			MultiLanguageString description, Teacher teacher, String externalAdvisor) {
-		return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);
-	}
+    @Service
+    public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
+            MultiLanguageString description, Teacher teacher, String externalAdvisor) {
+        return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);
+    }
 
-	private boolean isCandidacyPeriodOpen(PhdIndividualProgramProcess process) {
-		return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null
-				&& process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen();
-	}
+    private boolean isCandidacyPeriodOpen(PhdIndividualProgramProcess process) {
+        return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null
+                && process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen();
+    }
 }

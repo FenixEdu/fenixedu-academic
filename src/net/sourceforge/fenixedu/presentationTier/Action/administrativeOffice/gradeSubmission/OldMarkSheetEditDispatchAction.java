@@ -16,29 +16,26 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/editOldMarkSheet",
-		module = "academicAdministration",
-		formBean = "markSheetManagementForm",
-		input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
+@Mapping(path = "/editOldMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
+        input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
 @Forwards({ @Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/editMarkSheet.jsp"),
-		@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled") })
+        @Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled") })
 // @Forward(name = "editArchiveInformation", path =
 // "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
 // })
 public class OldMarkSheetEditDispatchAction extends MarkSheetEditDispatchAction {
 
-	@Override
-	protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
-			ExecutionSemester executionSemester, String teacherId, Teacher teacher, HttpServletRequest request,
-			MarkSheetType markSheetType, ActionMessages actionMessages) {
+    @Override
+    protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
+            ExecutionSemester executionSemester, String teacherId, Teacher teacher, HttpServletRequest request,
+            MarkSheetType markSheetType, ActionMessages actionMessages) {
 
-	}
+    }
 
-	@Override
-	protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
-			ExecutionSemester executionSemester, Date evaluationDate, MarkSheetType markSheetType, HttpServletRequest request,
-			ActionMessages actionMessages) {
-	}
+    @Override
+    protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
+            ExecutionSemester executionSemester, Date evaluationDate, MarkSheetType markSheetType, HttpServletRequest request,
+            ActionMessages actionMessages) {
+    }
 
 }

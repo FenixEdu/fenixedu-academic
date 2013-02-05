@@ -60,323 +60,323 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
 
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
-	private static final String CGD_PDF_PATH = "/CGD_FORM.pdf";
-	private static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
-	private ServletContext servletContext;
+    private static final String CGD_PDF_PATH = "/CGD_FORM.pdf";
+    private static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
+    private ServletContext servletContext;
 
-	private class CGDPdfFiller {
-		AcroFields form;
+    private class CGDPdfFiller {
+        AcroFields form;
 
-		public ByteArrayOutputStream getFilledPdf(Person person) throws IOException, DocumentException {
-			InputStream istream = getClass().getResourceAsStream(CGD_PDF_PATH);
-			PdfReader reader = new PdfReader(istream);
-			reader.getAcroForm().remove(PdfName.SIGFLAGS);
-			reader.selectPages("1,3,4"); // updated to new cgd form since page 2
-			// is blank
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			PdfStamper stamper = new PdfStamper(reader, output);
-			form = stamper.getAcroFields();
+        public ByteArrayOutputStream getFilledPdf(Person person) throws IOException, DocumentException {
+            InputStream istream = getClass().getResourceAsStream(CGD_PDF_PATH);
+            PdfReader reader = new PdfReader(istream);
+            reader.getAcroForm().remove(PdfName.SIGFLAGS);
+            reader.selectPages("1,3,4"); // updated to new cgd form since page 2
+            // is blank
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            PdfStamper stamper = new PdfStamper(reader, output);
+            form = stamper.getAcroFields();
 
-			final Student student = person.getStudent();
-			final Registration registration = findRegistration(student);
+            final Student student = person.getStudent();
+            final Registration registration = findRegistration(student);
 
-			setField("T_NomeComp", person.getName());
-			setField("T_Email", person.getEmailForSendingEmails());
+            setField("T_NomeComp", person.getName());
+            setField("T_Email", person.getEmailForSendingEmails());
 
-			if (person.isFemale()) {
-				setField("RB8", "Yes"); // female checkbox
-			} else if (person.isMale()) {
-				setField("RB2", "Yes"); // male checkbox
-			}
+            if (person.isFemale()) {
+                setField("RB8", "Yes"); // female checkbox
+            } else if (person.isMale()) {
+                setField("RB2", "Yes"); // male checkbox
+            }
 
-			setField("Cod_data_1", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
-			setField("NIF1", person.getSocialSecurityNumber());
-			setField("CB_EstCivil01", person.getMaritalStatus().getPresentationName());
-			setField("T_DocIdent", person.getDocumentIdNumber());
+            setField("Cod_data_1", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
+            setField("NIF1", person.getSocialSecurityNumber());
+            setField("CB_EstCivil01", person.getMaritalStatus().getPresentationName());
+            setField("T_DocIdent", person.getDocumentIdNumber());
 
-			YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
-			if (emissionDate != null) {
-				setField("Cod_data_2", emissionDate.toString(DateTimeFormat.forPattern("ddMMyyyy")));
-			}
-			setField("Cod_data_3",
-					person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
+            YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
+            if (emissionDate != null) {
+                setField("Cod_data_2", emissionDate.toString(DateTimeFormat.forPattern("ddMMyyyy")));
+            }
+            setField("Cod_data_3",
+                    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
 
-			setField("T_NomeMae", person.getNameOfMother());
-			setField("T_NomePai", person.getNameOfFather());
-			setField("T_NatFreg", person.getParishOfBirth());
-			setField("T_NatConc", person.getDistrictSubdivisionOfBirth());
+            setField("T_NomeMae", person.getNameOfMother());
+            setField("T_NomePai", person.getNameOfFather());
+            setField("T_NatFreg", person.getParishOfBirth());
+            setField("T_NatConc", person.getDistrictSubdivisionOfBirth());
 
-			setField("T_PaisRes", person.getCountryOfResidence().getName());
-			setField("T_Nacion", person.getCountryOfBirth().getCountryNationality().toString());
-			setField("T_Morada01", person.getAddress());
-			setField("T_Telef", person.getDefaultPhoneNumber());
+            setField("T_PaisRes", person.getCountryOfResidence().getName());
+            setField("T_Nacion", person.getCountryOfBirth().getCountryNationality().toString());
+            setField("T_Morada01", person.getAddress());
+            setField("T_Telef", person.getDefaultPhoneNumber());
 
-			String postalCode = person.getPostalCode();
-			int dashIndex = postalCode.indexOf('-');
-			setField("T_CodPos01", postalCode.substring(0, 4));
-			String last3Numbers = person.getPostalCode().substring(dashIndex + 1, dashIndex + 4);
-			setField("T_CodPos02", last3Numbers);
+            String postalCode = person.getPostalCode();
+            int dashIndex = postalCode.indexOf('-');
+            setField("T_CodPos01", postalCode.substring(0, 4));
+            String last3Numbers = person.getPostalCode().substring(dashIndex + 1, dashIndex + 4);
+            setField("T_CodPos02", last3Numbers);
 
-			setField("T_Localid02", person.getAreaOfAreaCode());
-			setField("T_Telem", person.getDefaultMobilePhoneNumber());
-			setField("T_Freguesia", person.getParishOfResidence());
-			setField("T_Concelho", person.getDistrictSubdivisionOfResidence());
+            setField("T_Localid02", person.getAreaOfAreaCode());
+            setField("T_Telem", person.getDefaultMobilePhoneNumber());
+            setField("T_Freguesia", person.getParishOfResidence());
+            setField("T_Concelho", person.getDistrictSubdivisionOfResidence());
 
-			setField("T_CodCur", registration.getDegree().getMinistryCode());
-			setField("T_Curso", CardGenerationEntry.normalizeDegreeName(registration.getDegree()));
-			setField("T_CodEstEns", Campus.getUniversityCode(registration.getLastDegreeCurricularPlan().getCurrentCampus()));
-			setField("T_EstEns", "Instituto Superior Técnico");
-			setField("T_NumAL", student.getStudentNumber().getNumber().toString());
-			setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
-			setField("CB2", "");
+            setField("T_CodCur", registration.getDegree().getMinistryCode());
+            setField("T_Curso", CardGenerationEntry.normalizeDegreeName(registration.getDegree()));
+            setField("T_CodEstEns", Campus.getUniversityCode(registration.getLastDegreeCurricularPlan().getCurrentCampus()));
+            setField("T_EstEns", "Instituto Superior Técnico");
+            setField("T_NumAL", student.getStudentNumber().getNumber().toString());
+            setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
+            setField("CB2", "");
 
-			stamper.setFormFlattening(true);
-			stamper.close();
-			return output;
-		}
+            stamper.setFormFlattening(true);
+            stamper.close();
+            return output;
+        }
 
-		private void setField(String fieldName, String fieldContent) throws IOException, DocumentException {
-			if (fieldContent != null) {
-				form.setField(fieldName, fieldContent);
-			}
-		}
-	}
+        private void setField(String fieldName, String fieldContent) throws IOException, DocumentException {
+            if (fieldContent != null) {
+                form.setField(fieldName, fieldContent);
+            }
+        }
+    }
 
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		servletContext = arg0.getServletContext();
-	}
+    @Override
+    public void init(FilterConfig arg0) throws ServletException {
+        servletContext = arg0.getServletContext();
+    }
 
-	@Override
-	public void destroy() {
-		// empty
-	}
+    @Override
+    public void destroy() {
+        // empty
+    }
 
-	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
-		arg2.doFilter(arg0, arg1);
+    @Override
+    public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
+        arg2.doFilter(arg0, arg1);
 
-		HttpServletRequest request = (HttpServletRequest) arg0;
-		ResponseWrapper response = (ResponseWrapper) arg1;
+        HttpServletRequest request = (HttpServletRequest) arg0;
+        ResponseWrapper response = (ResponseWrapper) arg1;
 
-		if ("doOperation".equals(request.getParameter("method"))
-				&& "PRINT_ALL_DOCUMENTS".equals(request.getParameter("operationType"))) {
+        if ("doOperation".equals(request.getParameter("method"))
+                && "PRINT_ALL_DOCUMENTS".equals(request.getParameter("operationType"))) {
 
-			try {
-				// clean the response html and make a DOM document out of it
-				String responseHtml = clean(response.getContent());
-				DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-				Document doc = builder.parse(new ByteArrayInputStream(responseHtml.getBytes()));
+            try {
+                // clean the response html and make a DOM document out of it
+                String responseHtml = clean(response.getContent());
+                DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                Document doc = builder.parse(new ByteArrayInputStream(responseHtml.getBytes()));
 
-				// alter paths of link/img tags so itext can use them properly
-				patchLinks(doc, request);
+                // alter paths of link/img tags so itext can use them properly
+                patchLinks(doc, request);
 
-				// structure pdf document
-				ITextRenderer renderer = new ITextRenderer();
-				renderer.setDocument(doc, "");
-				renderer.layout();
+                // structure pdf document
+                ITextRenderer renderer = new ITextRenderer();
+                renderer.setDocument(doc, "");
+                renderer.layout();
 
-				// create the pdf
-				ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
-				renderer.createPDF(pdfStream);
+                // create the pdf
+                ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
+                renderer.createPDF(pdfStream);
 
-				// concatenate with other docs
-				final Person person = (Person) request.getAttribute("person");
-				ByteArrayOutputStream finalPdfStream = concatenateDocs(pdfStream.toByteArray(), person);
-				byte[] pdfByteArray = finalPdfStream.toByteArray();
+                // concatenate with other docs
+                final Person person = (Person) request.getAttribute("person");
+                ByteArrayOutputStream finalPdfStream = concatenateDocs(pdfStream.toByteArray(), person);
+                byte[] pdfByteArray = finalPdfStream.toByteArray();
 
-				// associate the summary file to the candidacy
-				final StudentCandidacy candidacy = getCandidacy(request);
+                // associate the summary file to the candidacy
+                final StudentCandidacy candidacy = getCandidacy(request);
 
-				associateSummaryFile(pdfByteArray, person.getStudent().getNumber().toString(), candidacy);
+                associateSummaryFile(pdfByteArray, person.getStudent().getNumber().toString(), candidacy);
 
-				// redirect user to the candidacy summary page
-				response.reset();
-				response.sendRedirect(buildRedirectURL(request, candidacy));
+                // redirect user to the candidacy summary page
+                response.reset();
+                response.sendRedirect(buildRedirectURL(request, candidacy));
 
-				response.flushBuffer();
-			} catch (ParserConfigurationException e) {
-				e.printStackTrace();
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (DocumentException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+                response.flushBuffer();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	@Service
-	private void associateSummaryFile(byte[] pdfByteArray, String studentNumber, StudentCandidacy studentCandidacy) {
-		studentCandidacy.setSummaryFile(new CandidacySummaryFile(studentNumber + ".pdf", pdfByteArray, studentCandidacy));
-	}
+    @Service
+    private void associateSummaryFile(byte[] pdfByteArray, String studentNumber, StudentCandidacy studentCandidacy) {
+        studentCandidacy.setSummaryFile(new CandidacySummaryFile(studentNumber + ".pdf", pdfByteArray, studentCandidacy));
+    }
 
-	private String clean(String dirtyHtml) {
-		try {
-			HtmlCleaner cleaner = new HtmlCleaner();
+    private String clean(String dirtyHtml) {
+        try {
+            HtmlCleaner cleaner = new HtmlCleaner();
 
-			TagNode root = cleaner.clean(dirtyHtml);
+            TagNode root = cleaner.clean(dirtyHtml);
 
-			return new SimpleHtmlSerializer(cleaner.getProperties()).getAsString(root);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return StringUtils.EMPTY;
-	}
+            return new SimpleHtmlSerializer(cleaner.getProperties()).getAsString(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return StringUtils.EMPTY;
+    }
 
-	private void patchLinks(Document doc, HttpServletRequest request) {
-		// build basePath
-		String appContext = FenixWebFramework.getConfig().getAppContext();
+    private void patchLinks(Document doc, HttpServletRequest request) {
+        // build basePath
+        String appContext = FenixWebFramework.getConfig().getAppContext();
 
-		// patch css link nodes
-		NodeList linkNodes = doc.getElementsByTagName("link");
-		for (int i = 0; i < linkNodes.getLength(); i++) {
-			Element link = (Element) linkNodes.item(i);
-			String href = link.getAttribute("href");
+        // patch css link nodes
+        NodeList linkNodes = doc.getElementsByTagName("link");
+        for (int i = 0; i < linkNodes.getLength(); i++) {
+            Element link = (Element) linkNodes.item(i);
+            String href = link.getAttribute("href");
 
-			if (appContext != null && appContext.length() > 0 && href.contains(appContext)) {
-				href = href.substring(appContext.length() + 1);
-			}
+            if (appContext != null && appContext.length() > 0 && href.contains(appContext)) {
+                href = href.substring(appContext.length() + 1);
+            }
 
-			try {
-				String realPath = servletContext.getResource(href).toString();
-				link.setAttribute("href", realPath);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
+            try {
+                String realPath = servletContext.getResource(href).toString();
+                link.setAttribute("href", realPath);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
-		}
+        }
 
-		// patch image nodes
-		NodeList imageNodes = doc.getElementsByTagName("img");
-		for (int i = 0; i < imageNodes.getLength(); i++) {
-			Element img = (Element) imageNodes.item(i);
-			String src = img.getAttribute("src");
+        // patch image nodes
+        NodeList imageNodes = doc.getElementsByTagName("img");
+        for (int i = 0; i < imageNodes.getLength(); i++) {
+            Element img = (Element) imageNodes.item(i);
+            String src = img.getAttribute("src");
 
-			if (appContext != null && appContext.length() > 0 && src.contains(appContext)) {
-				src = src.substring(appContext.length() + 1);
-			}
+            if (appContext != null && appContext.length() > 0 && src.contains(appContext)) {
+                src = src.substring(appContext.length() + 1);
+            }
 
-			try {
-				String realPath = servletContext.getResource(src).toString();
-				img.setAttribute("src", realPath);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+            try {
+                String realPath = servletContext.getResource(src).toString();
+                img.setAttribute("src", realPath);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	private ByteArrayOutputStream concatenateDocs(byte[] originalDoc, Person person) throws IOException, DocumentException {
-		ByteArrayOutputStream concatenatedPdf = new ByteArrayOutputStream();
-		PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
+    private ByteArrayOutputStream concatenateDocs(byte[] originalDoc, Person person) throws IOException, DocumentException {
+        ByteArrayOutputStream concatenatedPdf = new ByteArrayOutputStream();
+        PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
-		try {
-			copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person).toByteArray()));
-		} catch (JRException e) {
-			e.printStackTrace();
-		}
-		copy.addDocument(new PdfReader(originalDoc));
-		copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf(person).toByteArray()));
-		copy.close();
+        try {
+            copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person).toByteArray()));
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+        copy.addDocument(new PdfReader(originalDoc));
+        copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf(person).toByteArray()));
+        copy.close();
 
-		return concatenatedPdf;
-	}
+        return concatenatedPdf;
+    }
 
-	@SuppressWarnings("unchecked")
-	private ByteArrayOutputStream createAcademicAdminProcessSheet(Person person) throws JRException {
-		InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
-		JasperReport report = (JasperReport) JRLoader.loadObject(istream);
+    @SuppressWarnings("unchecked")
+    private ByteArrayOutputStream createAcademicAdminProcessSheet(Person person) throws JRException {
+        InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
+        JasperReport report = (JasperReport) JRLoader.loadObject(istream);
 
-		@SuppressWarnings("rawtypes")
-		HashMap map = new HashMap();
+        @SuppressWarnings("rawtypes")
+        HashMap map = new HashMap();
 
-		try {
-			final Student student = person.getStudent();
-			final Registration registration = findRegistration(student);
+        try {
+            final Student student = person.getStudent();
+            final Registration registration = findRegistration(student);
 
-			map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
-			if (registration != null) {
-				map.put("course", registration.getDegree().getNameI18N().toString());
-			}
-			map.put("studentNumber", student.getNumber().toString());
-			map.put("fullName", person.getName());
+            map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
+            if (registration != null) {
+                map.put("course", registration.getDegree().getNameI18N().toString());
+            }
+            map.put("studentNumber", student.getNumber().toString());
+            map.put("fullName", person.getName());
 
-			try {
-				map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getContents()));
-			} catch (Exception e) {
-				// nothing; print everything else
-			}
+            try {
+                map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getContents()));
+            } catch (Exception e) {
+                // nothing; print everything else
+            }
 
-			map.put("sex", BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", person.getGender().name()));
-			map.put("maritalStatus", person.getMaritalStatus().getPresentationName());
-			map.put("profession", person.getProfession());
-			map.put("idDocType", person.getIdDocumentType().getLocalizedName());
-			map.put("idDocNumber", person.getDocumentIdNumber());
+            map.put("sex", BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", person.getGender().name()));
+            map.put("maritalStatus", person.getMaritalStatus().getPresentationName());
+            map.put("profession", person.getProfession());
+            map.put("idDocType", person.getIdDocumentType().getLocalizedName());
+            map.put("idDocNumber", person.getDocumentIdNumber());
 
-			YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
-			if (emissionDate != null) {
-				map.put("idDocEmissionDate", emissionDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
-			}
+            YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
+            if (emissionDate != null) {
+                map.put("idDocEmissionDate", emissionDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+            }
 
-			map.put("idDocExpirationDate",
-					person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
-			map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
+            map.put("idDocExpirationDate",
+                    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+            map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
 
-			String nif = person.getSocialSecurityNumber();
-			if (nif != null) {
-				map.put("NIF", nif);
-			}
+            String nif = person.getSocialSecurityNumber();
+            if (nif != null) {
+                map.put("NIF", nif);
+            }
 
-			map.put("birthDate", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
-			map.put("nationality", person.getCountryOfBirth().getNationality());
-			map.put("parishOfBirth", person.getParishOfBirth());
-			map.put("districtSubdivisionOfBirth", person.getDistrictSubdivisionOfBirth());
-			map.put("districtOfBirth", person.getDistrictOfBirth());
-			map.put("countryOfBirth", person.getCountryOfBirth().getName());
-			map.put("fathersName", person.getNameOfFather());
-			map.put("mothersName", person.getNameOfMother());
-			map.put("address", person.getAddress());
-			map.put("postalCode", person.getPostalCode());
-			map.put("locality", person.getAreaOfAreaCode());
-			map.put("cellphoneNumber", person.getDefaultMobilePhoneNumber());
-			map.put("telephoneNumber", person.getDefaultPhoneNumber());
-			map.put("emailAddress", person.getDefaultEmailAddressValue());
-			map.put("currentDate", new java.text.SimpleDateFormat("'Lisboa, 'dd' de 'MMMM' de 'yyyy", new java.util.Locale("PT",
-					"pt")).format(new java.util.Date()));
-		} catch (NullPointerException e) {
-			// nothing; will cause printing of incomplete form
-			// better than no form at all
-		}
+            map.put("birthDate", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+            map.put("nationality", person.getCountryOfBirth().getNationality());
+            map.put("parishOfBirth", person.getParishOfBirth());
+            map.put("districtSubdivisionOfBirth", person.getDistrictSubdivisionOfBirth());
+            map.put("districtOfBirth", person.getDistrictOfBirth());
+            map.put("countryOfBirth", person.getCountryOfBirth().getName());
+            map.put("fathersName", person.getNameOfFather());
+            map.put("mothersName", person.getNameOfMother());
+            map.put("address", person.getAddress());
+            map.put("postalCode", person.getPostalCode());
+            map.put("locality", person.getAreaOfAreaCode());
+            map.put("cellphoneNumber", person.getDefaultMobilePhoneNumber());
+            map.put("telephoneNumber", person.getDefaultPhoneNumber());
+            map.put("emailAddress", person.getDefaultEmailAddressValue());
+            map.put("currentDate", new java.text.SimpleDateFormat("'Lisboa, 'dd' de 'MMMM' de 'yyyy", new java.util.Locale("PT",
+                    "pt")).format(new java.util.Date()));
+        } catch (NullPointerException e) {
+            // nothing; will cause printing of incomplete form
+            // better than no form at all
+        }
 
-		JasperPrint print = JasperFillManager.fillReport(report, map);
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		JasperExportManager.exportReportToPdfStream(print, output);
-		return output;
-	}
+        JasperPrint print = JasperFillManager.fillReport(report, map);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        JasperExportManager.exportReportToPdfStream(print, output);
+        return output;
+    }
 
-	private Registration findRegistration(final Student student) {
-		for (final Registration registration : student.getRegistrationsSet()) {
-			return registration;
-		}
-		return null;
-	}
+    private Registration findRegistration(final Student student) {
+        for (final Registration registration : student.getRegistrationsSet()) {
+            return registration;
+        }
+        return null;
+    }
 
-	private StudentCandidacy getCandidacy(HttpServletRequest request) {
-		final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
-		return (StudentCandidacy) RootDomainObject.getInstance().readCandidacyByOID(candidacyID);
-	}
+    private StudentCandidacy getCandidacy(HttpServletRequest request) {
+        final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
+        return (StudentCandidacy) RootDomainObject.getInstance().readCandidacyByOID(candidacyID);
+    }
 
-	private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {
-		String url =
-				"/candidate/degreeCandidacyManagement.do?method=showCandidacyDetails&candidacyID="
-						+ candidacy.getIdInternal()
-						+ "&"
-						+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-						+ "=/portal-do-candidato/portal-do-candidato";
+    private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {
+        String url =
+                "/candidate/degreeCandidacyManagement.do?method=showCandidacyDetails&candidacyID="
+                        + candidacy.getIdInternal()
+                        + "&"
+                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+                        + "=/portal-do-candidato/portal-do-candidato";
 
-		String urlWithChecksum =
-				pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.injectChecksumInUrl(
-						request.getContextPath(), url);
+        String urlWithChecksum =
+                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.injectChecksumInUrl(
+                        request.getContextPath(), url);
 
-		return request.getContextPath() + urlWithChecksum;
-	}
+        return request.getContextPath() + urlWithChecksum;
+    }
 }

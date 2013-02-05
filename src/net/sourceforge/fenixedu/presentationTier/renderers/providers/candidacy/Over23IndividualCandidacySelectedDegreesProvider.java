@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class Over23IndividualCandidacySelectedDegreesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final Over23IndividualCandidacyResultBean bean = (Over23IndividualCandidacyResultBean) source;
-		return bean.getCandidacyProcess().getSelectedDegreesSortedByOrder();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final Over23IndividualCandidacyResultBean bean = (Over23IndividualCandidacyResultBean) source;
+        return bean.getCandidacyProcess().getSelectedDegreesSortedByOrder();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

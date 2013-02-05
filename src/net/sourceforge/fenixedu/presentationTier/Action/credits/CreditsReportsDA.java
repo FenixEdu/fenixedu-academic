@@ -28,64 +28,62 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @Mapping(module = "scientificCouncil", path = "/exportCredits", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "exportDepartmentCourses",
-		path = "/credits/export/exportDepartmentCourses.jsp",
-		tileProperties = @Tile(title = "private.department.coursestypes")) })
+@Forwards(value = { @Forward(name = "exportDepartmentCourses", path = "/credits/export/exportDepartmentCourses.jsp",
+        tileProperties = @Tile(title = "private.department.coursestypes")) })
 public class CreditsReportsDA extends FenixDispatchAction {
 
-	public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-		DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-		departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
-		request.setAttribute("departmentCreditsBean", departmentCreditsBean);
-		return mapping.findForward("exportDepartmentCourses");
-	}
+    public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+        DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
+        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+        request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+        return mapping.findForward("exportDepartmentCourses");
+    }
 
-	public ActionForward exportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
-		DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
-		List<Department> departments = new ArrayList<Department>();
-		if (departmentCreditsBean.getDepartment() != null) {
-			departments.add(departmentCreditsBean.getDepartment());
-		} else {
-			departments.addAll(departmentCreditsBean.getAvailableDepartments());
-		}
-		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
-		for (Department department : departments) {
-			String sheetName = "Disciplinas_" + department.getAcronym();
-			spreadsheet.getSheet(sheetName);
-			spreadsheet.newHeaderRow();
-			spreadsheet.addHeader(
-					BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.course"), 10000);
-			spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-					"label.degrees"));
-			spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-					"label.shift.type"));
-			spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-					"label.hasSchedule"));
-			spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-					"label.enrolmentsNumber"));
-			for (CompetenceCourse competenceCourse : department.getDepartmentUnit().getCompetenceCourses()) {
-				for (ExecutionCourse executionCourse : competenceCourse
-						.getExecutionCoursesByExecutionPeriod(departmentCreditsBean.getExecutionSemester())) {
-					spreadsheet.newRow();
-					spreadsheet.addCell(executionCourse.getName());
-					spreadsheet.addCell(executionCourse.getDegreePresentationString());
-					spreadsheet
-							.addCell(executionCourse.isDissertation() ? "DISS" : executionCourse.getProjectTutorialCourse() ? "A" : "B");
-					spreadsheet.addCell(executionCourse.hasAnyLesson() ? "S" : "N");
-					spreadsheet.addCell(executionCourse.getEnrolmentCount());
-				}
-			}
-		}
+    public ActionForward exportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
+        DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
+        List<Department> departments = new ArrayList<Department>();
+        if (departmentCreditsBean.getDepartment() != null) {
+            departments.add(departmentCreditsBean.getDepartment());
+        } else {
+            departments.addAll(departmentCreditsBean.getAvailableDepartments());
+        }
+        StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
+        for (Department department : departments) {
+            String sheetName = "Disciplinas_" + department.getAcronym();
+            spreadsheet.getSheet(sheetName);
+            spreadsheet.newHeaderRow();
+            spreadsheet.addHeader(
+                    BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.course"), 10000);
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.degrees"));
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.shift.type"));
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.hasSchedule"));
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.enrolmentsNumber"));
+            for (CompetenceCourse competenceCourse : department.getDepartmentUnit().getCompetenceCourses()) {
+                for (ExecutionCourse executionCourse : competenceCourse
+                        .getExecutionCoursesByExecutionPeriod(departmentCreditsBean.getExecutionSemester())) {
+                    spreadsheet.newRow();
+                    spreadsheet.addCell(executionCourse.getName());
+                    spreadsheet.addCell(executionCourse.getDegreePresentationString());
+                    spreadsheet
+                            .addCell(executionCourse.isDissertation() ? "DISS" : executionCourse.getProjectTutorialCourse() ? "A" : "B");
+                    spreadsheet.addCell(executionCourse.hasAnyLesson() ? "S" : "N");
+                    spreadsheet.addCell(executionCourse.getEnrolmentCount());
+                }
+            }
+        }
 
-		response.setContentType("text/plain");
-		response.setHeader("Content-disposition", "attachment; filename=Disciplinas.xls");
-		final ServletOutputStream writer = response.getOutputStream();
-		spreadsheet.getWorkbook().write(writer);
-		writer.flush();
-		response.flushBuffer();
-		return null;
-	}
+        response.setContentType("text/plain");
+        response.setHeader("Content-disposition", "attachment; filename=Disciplinas.xls");
+        final ServletOutputStream writer = response.getOutputStream();
+        spreadsheet.getWorkbook().write(writer);
+        writer.flush();
+        response.flushBuffer();
+        return null;
+    }
 }

@@ -12,34 +12,34 @@ import org.apache.commons.lang.StringUtils;
 
 public class EditTeacherServiceNotes extends FenixService {
 
-	public Boolean run(Teacher teacher, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
-			String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
-			throws FenixServiceException {
+    public Boolean run(Teacher teacher, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
+            String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
+            throws FenixServiceException {
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
-		if (teacherService == null) {
-			teacherService = new TeacherService(teacher, executionSemester);
-		}
+        if (teacherService == null) {
+            teacherService = new TeacherService(teacher, executionSemester);
+        }
 
-		TeacherServiceNotes teacherServiceNotes = teacherService.getTeacherServiceNotes();
-		if (teacherServiceNotes == null) {
-			teacherServiceNotes = new TeacherServiceNotes(teacherService);
-		}
+        TeacherServiceNotes teacherServiceNotes = teacherService.getTeacherServiceNotes();
+        if (teacherServiceNotes == null) {
+            teacherServiceNotes = new TeacherServiceNotes(teacherService);
+        }
 
-		teacherServiceNotes.editNotes(managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
-				functionsAccumulation, thesisNote, roleType);
+        teacherServiceNotes.editNotes(managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
+                functionsAccumulation, thesisNote, roleType);
 
-		if (StringUtils.isEmpty(teacherServiceNotes.getManagementFunctionNotes())
-				&& StringUtils.isEmpty(teacherServiceNotes.getServiceExemptionNotes())
-				&& StringUtils.isEmpty(teacherServiceNotes.getOthersNotes())
-				&& StringUtils.isEmpty(teacherServiceNotes.getFunctionsAccumulation())
-				&& StringUtils.isEmpty(teacherServiceNotes.getMasterDegreeTeachingNotes())
-				&& StringUtils.isEmpty(teacherServiceNotes.getThesisNote())) {
-			teacherServiceNotes.delete();
-		}
+        if (StringUtils.isEmpty(teacherServiceNotes.getManagementFunctionNotes())
+                && StringUtils.isEmpty(teacherServiceNotes.getServiceExemptionNotes())
+                && StringUtils.isEmpty(teacherServiceNotes.getOthersNotes())
+                && StringUtils.isEmpty(teacherServiceNotes.getFunctionsAccumulation())
+                && StringUtils.isEmpty(teacherServiceNotes.getMasterDegreeTeachingNotes())
+                && StringUtils.isEmpty(teacherServiceNotes.getThesisNote())) {
+            teacherServiceNotes.delete();
+        }
 
-		return Boolean.TRUE;
-	}
+        return Boolean.TRUE;
+    }
 }

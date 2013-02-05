@@ -18,36 +18,36 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCoursesByDegreeAndExecutionPeriod extends FenixService {
 
-	@Service
-	public static Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod)
-			throws FenixServiceException {
+    @Service
+    public static Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod)
+            throws FenixServiceException {
 
-		List infoExecutionCourseList = new ArrayList();
+        List infoExecutionCourseList = new ArrayList();
 
-		List executionCourseList = new ArrayList();
-		DegreeCurricularPlan degreeCurricularPlan =
-				DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-						infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-		if (degreeCurricularPlan != null) {
-			ExecutionSemester executionSemester =
-					rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-			List temp = null;
-			for (int i = 1; i < 6; i++) {
-				temp =
-						degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester, i,
-								infoExecutionPeriod.getSemester());
-				executionCourseList.addAll(temp);
-			}
-		}
+        List executionCourseList = new ArrayList();
+        DegreeCurricularPlan degreeCurricularPlan =
+                DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+        if (degreeCurricularPlan != null) {
+            ExecutionSemester executionSemester =
+                    rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+            List temp = null;
+            for (int i = 1; i < 6; i++) {
+                temp =
+                        degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester, i,
+                                infoExecutionPeriod.getSemester());
+                executionCourseList.addAll(temp);
+            }
+        }
 
-		for (int i = 0; i < executionCourseList.size(); i++) {
-			ExecutionCourse aux = (ExecutionCourse) executionCourseList.get(i);
-			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
-			infoExecutionCourseList.add(infoExecutionCourse);
-		}
+        for (int i = 0; i < executionCourseList.size(); i++) {
+            ExecutionCourse aux = (ExecutionCourse) executionCourseList.get(i);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
+            infoExecutionCourseList.add(infoExecutionCourse);
+        }
 
-		return infoExecutionCourseList;
+        return infoExecutionCourseList;
 
-	}
+    }
 
 }

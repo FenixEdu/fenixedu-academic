@@ -21,174 +21,174 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
  */
 public class InfoWrittenEvaluation extends InfoEvaluation {
 
-	protected WrittenEvaluation writtenEvaluation;
+    protected WrittenEvaluation writtenEvaluation;
 
-	protected Calendar day;
+    protected Calendar day;
 
-	protected Calendar beginning;
+    protected Calendar beginning;
 
-	protected Calendar end;
+    protected Calendar end;
 
-	protected Calendar enrollmentBeginDay;
+    protected Calendar enrollmentBeginDay;
 
-	protected Calendar enrollmentEndDay;
+    protected Calendar enrollmentEndDay;
 
-	protected Calendar enrollmentBeginTime;
+    protected Calendar enrollmentBeginTime;
 
-	protected Calendar enrollmentEndTime;
+    protected Calendar enrollmentEndTime;
 
-	protected List<InfoCurricularCourseScope> associatedCurricularCourseScope;
+    protected List<InfoCurricularCourseScope> associatedCurricularCourseScope;
 
-	protected List<InfoRoomOccupation> associatedRoomOccupation;
+    protected List<InfoRoomOccupation> associatedRoomOccupation;
 
-	protected List<InfoExecutionCourse> associatedExecutionCourse;
+    protected List<InfoExecutionCourse> associatedExecutionCourse;
 
-	protected Integer enrolledStudents;
+    protected Integer enrolledStudents;
 
-	public List<InfoCurricularCourseScope> getAssociatedCurricularCourseScope() {
-		return associatedCurricularCourseScope;
-	}
+    public List<InfoCurricularCourseScope> getAssociatedCurricularCourseScope() {
+        return associatedCurricularCourseScope;
+    }
 
-	public List<InfoRoomOccupation> getWrittenEvaluationSpaceOccupations() {
-		return associatedRoomOccupation;
-	}
+    public List<InfoRoomOccupation> getWrittenEvaluationSpaceOccupations() {
+        return associatedRoomOccupation;
+    }
 
-	public Calendar getBeginning() {
-		return beginning;
-	}
+    public Calendar getBeginning() {
+        return beginning;
+    }
 
-	public Calendar getDay() {
-		return day;
-	}
+    public Calendar getDay() {
+        return day;
+    }
 
-	public Calendar getEnd() {
-		return end;
-	}
+    public Calendar getEnd() {
+        return end;
+    }
 
-	public Calendar getEnrollmentBeginDay() {
-		return enrollmentBeginDay;
-	}
+    public Calendar getEnrollmentBeginDay() {
+        return enrollmentBeginDay;
+    }
 
-	public Calendar getEnrollmentBeginTime() {
-		return enrollmentBeginTime;
-	}
+    public Calendar getEnrollmentBeginTime() {
+        return enrollmentBeginTime;
+    }
 
-	public Calendar getEnrollmentEndDay() {
-		return enrollmentEndDay;
-	}
+    public Calendar getEnrollmentEndDay() {
+        return enrollmentEndDay;
+    }
 
-	public Calendar getEnrollmentEndTime() {
-		return enrollmentEndTime;
-	}
+    public Calendar getEnrollmentEndTime() {
+        return enrollmentEndTime;
+    }
 
-	public void setAssociatedCurricularCourseScope(List<InfoCurricularCourseScope> list) {
-		associatedCurricularCourseScope = list;
-	}
+    public void setAssociatedCurricularCourseScope(List<InfoCurricularCourseScope> list) {
+        associatedCurricularCourseScope = list;
+    }
 
-	public void setWrittenEvaluationSpaceOccupations(List<InfoRoomOccupation> list) {
-		associatedRoomOccupation = list;
-	}
+    public void setWrittenEvaluationSpaceOccupations(List<InfoRoomOccupation> list) {
+        associatedRoomOccupation = list;
+    }
 
-	public void setBeginning(Calendar calendar) {
-		beginning = calendar;
-	}
+    public void setBeginning(Calendar calendar) {
+        beginning = calendar;
+    }
 
-	public void setDay(Calendar calendar) {
-		day = calendar;
-	}
+    public void setDay(Calendar calendar) {
+        day = calendar;
+    }
 
-	public void setEnd(Calendar calendar) {
-		end = calendar;
-	}
+    public void setEnd(Calendar calendar) {
+        end = calendar;
+    }
 
-	public void setEnrollmentBeginDay(Calendar calendar) {
-		enrollmentBeginDay = calendar;
-	}
+    public void setEnrollmentBeginDay(Calendar calendar) {
+        enrollmentBeginDay = calendar;
+    }
 
-	public void setEnrollmentBeginTime(Calendar calendar) {
-		enrollmentBeginTime = calendar;
-	}
+    public void setEnrollmentBeginTime(Calendar calendar) {
+        enrollmentBeginTime = calendar;
+    }
 
-	public void setEnrollmentEndDay(Calendar calendar) {
-		enrollmentEndDay = calendar;
-	}
+    public void setEnrollmentEndDay(Calendar calendar) {
+        enrollmentEndDay = calendar;
+    }
 
-	public void setEnrollmentEndTime(Calendar calendar) {
-		enrollmentEndTime = calendar;
-	}
+    public void setEnrollmentEndTime(Calendar calendar) {
+        enrollmentEndTime = calendar;
+    }
 
-	public List<InfoExecutionCourse> getAssociatedExecutionCourse() {
-		return associatedExecutionCourse;
-	}
+    public List<InfoExecutionCourse> getAssociatedExecutionCourse() {
+        return associatedExecutionCourse;
+    }
 
-	public void setAssociatedExecutionCourse(List<InfoExecutionCourse> list) {
-		associatedExecutionCourse = list;
-	}
+    public void setAssociatedExecutionCourse(List<InfoExecutionCourse> list) {
+        associatedExecutionCourse = list;
+    }
 
-	public Integer getEnrolledStudents() {
-		return enrolledStudents;
-	}
+    public Integer getEnrolledStudents() {
+        return enrolledStudents;
+    }
 
-	public void setEnrolledStudents(Integer enrolledStudents) {
-		this.enrolledStudents = enrolledStudents;
-	}
+    public void setEnrolledStudents(Integer enrolledStudents) {
+        this.enrolledStudents = enrolledStudents;
+    }
 
-	@Override
-	public Calendar getInicio() {
-		return getBeginning();
-	}
+    @Override
+    public Calendar getInicio() {
+        return getBeginning();
+    }
 
-	@Override
-	public Calendar getFim() {
-		return getEnd();
-	}
+    @Override
+    public Calendar getFim() {
+        return getEnd();
+    }
 
-	public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
-		super.copyFromDomain(writtenEvaluation);
-		if (writtenEvaluation != null) {
-			setWrittenEvaluation(writtenEvaluation);
-			associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
-			associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
-			associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
-			for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
-				associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-			}
-			for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupations()) {
-				associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
-			}
-			for (CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()) {
-				associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-			}
-			setBeginning(writtenEvaluation.getBeginning());
-			setDay(writtenEvaluation.getDay());
-			setEnd(writtenEvaluation.getEnd());
-			setEnrollmentBeginDay(writtenEvaluation.getEnrollmentBeginDay());
-			setEnrollmentBeginTime(writtenEvaluation.getEnrollmentBeginTime());
-			setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
-			setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());
-		}
-	}
+    public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
+        super.copyFromDomain(writtenEvaluation);
+        if (writtenEvaluation != null) {
+            setWrittenEvaluation(writtenEvaluation);
+            associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
+            associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
+            associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
+            for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
+                associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            }
+            for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupations()) {
+                associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
+            }
+            for (CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()) {
+                associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+            }
+            setBeginning(writtenEvaluation.getBeginning());
+            setDay(writtenEvaluation.getDay());
+            setEnd(writtenEvaluation.getEnd());
+            setEnrollmentBeginDay(writtenEvaluation.getEnrollmentBeginDay());
+            setEnrollmentBeginTime(writtenEvaluation.getEnrollmentBeginTime());
+            setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
+            setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());
+        }
+    }
 
-	public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
-		InfoWrittenEvaluation infoWrittenEvaluation = null;
-		if (writtenEvaluation != null) {
-			if (writtenEvaluation instanceof Exam) {
-				infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
-			} else if (writtenEvaluation instanceof WrittenTest) {
-				infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((WrittenTest) writtenEvaluation);
-			} else {
-				infoWrittenEvaluation = new InfoWrittenEvaluation();
-				infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
-			}
-		}
-		return infoWrittenEvaluation;
-	}
+    public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
+        InfoWrittenEvaluation infoWrittenEvaluation = null;
+        if (writtenEvaluation != null) {
+            if (writtenEvaluation instanceof Exam) {
+                infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
+            } else if (writtenEvaluation instanceof WrittenTest) {
+                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((WrittenTest) writtenEvaluation);
+            } else {
+                infoWrittenEvaluation = new InfoWrittenEvaluation();
+                infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
+            }
+        }
+        return infoWrittenEvaluation;
+    }
 
-	public WrittenEvaluation getWrittenEvaluation() {
-		return writtenEvaluation;
-	}
+    public WrittenEvaluation getWrittenEvaluation() {
+        return writtenEvaluation;
+    }
 
-	public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-		this.writtenEvaluation = writtenEvaluation;
-	}
+    public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
+        this.writtenEvaluation = writtenEvaluation;
+    }
 }

@@ -33,252 +33,252 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
 
-	private StudentsPerformanceReport() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
-	}
+    private StudentsPerformanceReport() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+    }
 
-	private StudentsPerformanceReport(final ExecutionSemester executionSemester, List<Student> studentList) {
-		this();
+    private StudentsPerformanceReport(final ExecutionSemester executionSemester, List<Student> studentList) {
+        this();
 
-		if (executionSemester == null) {
-			throw new DomainException("error.students.performance.report.execution.semester.is.null");
-		}
+        if (executionSemester == null) {
+            throw new DomainException("error.students.performance.report.execution.semester.is.null");
+        }
 
-		if (studentList == null || studentList.isEmpty()) {
-			throw new DomainException("error.students.performance.report.is.null.or.empty");
-		}
+        if (studentList == null || studentList.isEmpty()) {
+            throw new DomainException("error.students.performance.report.is.null.or.empty");
+        }
 
-		setExecutionSemester(executionSemester);
-		getStudents().addAll(studentList);
-	}
+        setExecutionSemester(executionSemester);
+        getStudents().addAll(studentList);
+    }
 
-	@Override
-	public QueueJobResult execute() throws Exception {
-		ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+    @Override
+    public QueueJobResult execute() throws Exception {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 
-		Spreadsheet spreadsheet = createSpreadsheet();
+        Spreadsheet spreadsheet = createSpreadsheet();
 
-		for (Student student : getStudents()) {
-			addInformation(spreadsheet, student);
-		}
+        for (Student student : getStudents()) {
+            addInformation(spreadsheet, student);
+        }
 
-		spreadsheet.exportToXLSSheet(byteArrayOS);
+        spreadsheet.exportToXLSSheet(byteArrayOS);
 
-		final QueueJobResult queueJobResult = new QueueJobResult();
-		queueJobResult.setContentType("application/txt");
-		queueJobResult.setContent(byteArrayOS.toByteArray());
+        final QueueJobResult queueJobResult = new QueueJobResult();
+        queueJobResult.setContentType("application/txt");
+        queueJobResult.setContent(byteArrayOS.toByteArray());
 
-		System.out.println("Job " + getFilename() + " completed");
+        System.out.println("Job " + getFilename() + " completed");
 
-		return queueJobResult;
+        return queueJobResult;
 
-	}
+    }
 
-	@Override
-	public String getFilename() {
-		return "Candidatos_Residencia_" + getExecutionSemester().getName() + new DateTime().toString("dd_MM_yyyy") + ".txt";
-	}
+    @Override
+    public String getFilename() {
+        return "Candidatos_Residencia_" + getExecutionSemester().getName() + new DateTime().toString("dd_MM_yyyy") + ".txt";
+    }
 
-	public static List<StudentsPerformanceReport> readGeneratedReports(final ExecutionSemester executionSemester) {
-		List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
+    public static List<StudentsPerformanceReport> readGeneratedReports(final ExecutionSemester executionSemester) {
+        List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
 
-		CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
+        CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return ((StudentsPerformanceReport) arg0).getDone();
-			}
+            @Override
+            public boolean evaluate(Object arg0) {
+                return ((StudentsPerformanceReport) arg0).getDone();
+            }
 
-		}, generatedReports);
+        }, generatedReports);
 
-		return generatedReports;
-	}
+        return generatedReports;
+    }
 
-	public static List<StudentsPerformanceReport> readNotGeneratedReports(final ExecutionSemester executionSemester) {
-		List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
+    public static List<StudentsPerformanceReport> readNotGeneratedReports(final ExecutionSemester executionSemester) {
+        List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
 
-		CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
+        CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return !((StudentsPerformanceReport) arg0).getDone();
-			}
+            @Override
+            public boolean evaluate(Object arg0) {
+                return !((StudentsPerformanceReport) arg0).getDone();
+            }
 
-		}, generatedReports);
+        }, generatedReports);
 
-		return generatedReports;
-	}
+        return generatedReports;
+    }
 
-	public static final Comparator<StudentsPerformanceReport> COMPARE_BY_REQUEST_DATE =
-			new Comparator<StudentsPerformanceReport>() {
+    public static final Comparator<StudentsPerformanceReport> COMPARE_BY_REQUEST_DATE =
+            new Comparator<StudentsPerformanceReport>() {
 
-				@Override
-				public int compare(StudentsPerformanceReport o1, StudentsPerformanceReport o2) {
-					return o1.getRequestDate().compareTo(o2.getRequestDate());
-				}
+                @Override
+                public int compare(StudentsPerformanceReport o1, StudentsPerformanceReport o2) {
+                    return o1.getRequestDate().compareTo(o2.getRequestDate());
+                }
 
-			};
+            };
 
-	public static StudentsPerformanceReport readPendingReport(final ExecutionSemester executionSemester) {
-		List<StudentsPerformanceReport> pendingReports = new ArrayList<StudentsPerformanceReport>();
+    public static StudentsPerformanceReport readPendingReport(final ExecutionSemester executionSemester) {
+        List<StudentsPerformanceReport> pendingReports = new ArrayList<StudentsPerformanceReport>();
 
-		CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
+        CollectionUtils.select(executionSemester.getStudentsPerformanceReports(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return ((StudentsPerformanceReport) arg0).getIsNotDoneAndNotCancelled();
-			}
+            @Override
+            public boolean evaluate(Object arg0) {
+                return ((StudentsPerformanceReport) arg0).getIsNotDoneAndNotCancelled();
+            }
 
-		}, pendingReports);
+        }, pendingReports);
 
-		if (pendingReports.isEmpty()) {
-			return null;
-		}
-
-		Collections.sort(pendingReports, Collections.reverseOrder(COMPARE_BY_REQUEST_DATE));
-
-		return pendingReports.get(0);
-	}
-
-	public static boolean hasPendingReports(final ExecutionSemester executionSemester) {
-		return readPendingReport(executionSemester) != null;
-	}
-
-	@Service
-	public static StudentsPerformanceReport launchJob(final ExecutionSemester executionSemester, List<Student> students) {
-		return new StudentsPerformanceReport(executionSemester, students);
-	}
-
-	/* STUDY */
-
-	private BigDecimal getApprovedECTS(final Student student) {
-		return student
-				.getLastActiveRegistration()
-				.getCurriculum(getExecutionSemester().getEndDateYearMonthDay().toDateTimeAtCurrentTime(),
-						getExecutionSemester().getExecutionYear(), null).getSumEctsCredits();
-	}
-
-	private BigDecimal getEnrolledECTS(final Student student) {
-		StudentCurricularPlan scp = getStudentCurricularPlan(student, getExecutionSemester());
-
-		BigDecimal totalECTS = new BigDecimal(0d);
-
-		for (final CurriculumLine curriculumLine : scp.getAllCurriculumLines()) {
-
-			if (curriculumLine.isExtraCurricular()) {
-				continue;
-			}
-
-			// until given ExecutionSemester
-			if (curriculumLine.getExecutionPeriod().isAfter(getExecutionSemester())) {
-				continue;
-			}
-
-			if (curriculumLine.isEnrolment()) {
-				final Enrolment enrolment = (Enrolment) curriculumLine;
-
-				totalECTS = totalECTS.add(enrolment.getEctsCreditsForCurriculum());
-
-			} else if (curriculumLine.isDismissal()) {
-				final Dismissal dismissal = (Dismissal) curriculumLine;
-
-				if (dismissal.getCredits().isSubstitution()) {
-					for (final IEnrolment enrolment : dismissal.getSourceIEnrolments()) {
-						totalECTS = totalECTS.add(enrolment.getEctsCreditsForCurriculum());
-					}
-				} else if (dismissal.getCredits().isEquivalence()) {
-					totalECTS = totalECTS.add(dismissal.getEctsCreditsForCurriculum());
-				}
-			} else {
-				throw new RuntimeException("error.unknown.curriculumLine");
-			}
-		}
-
-		return totalECTS;
-	}
-
-	private int getApprovedGradeValuesSum(final Student student) {
-		Collection<ICurriculumEntry> entries =
-				student.getLastActiveRegistration()
-						.getCurriculum(getExecutionSemester().getEndDateYearMonthDay().toDateTimeAtCurrentTime(),
-								getExecutionSemester().getExecutionYear(), null).getCurriculumEntries();
-		BigDecimal sum = new BigDecimal(0d);
-
-		for (final ICurriculumEntry entry : entries) {
-			if (entry.getGrade().isNumeric()) {
-				final BigDecimal weigth = entry.getWeigthForCurriculum();
-				if (GradeScale.TYPE20.equals(entry.getGrade().getGradeScale())) {
-					sum = sum.add(entry.getGrade().getNumericValue());
-				}
-			}
-		}
-
-		return sum.intValue();
-	}
-
-	private int getNumberOfApprovedCourses(final Student student) {
-		Collection<ICurriculumEntry> entries =
-				student.getLastActiveRegistration()
-						.getCurriculum(getExecutionSemester().getEndDateYearMonthDay().toDateTimeAtCurrentTime(),
-								getExecutionSemester().getExecutionYear(), null).getCurriculumEntries();
-
-		return entries.size() * 20;
-	}
-
-	private BigDecimal getA(final Student student) {
-		return BigDecimal.ZERO.equals(getEnrolledECTS(student)) ? BigDecimal.ZERO : getApprovedECTS(student).divide(
-				getEnrolledECTS(student), 2, RoundingMode.HALF_EVEN);
-	}
-
-	private BigDecimal getB(final Student student) {
-		return getNumberOfApprovedCourses(student) == 0 ? BigDecimal.ZERO : new BigDecimal(getApprovedGradeValuesSum(student))
-				.divide(new BigDecimal(getNumberOfApprovedCourses(student)), 2, RoundingMode.HALF_EVEN);
-	}
-
-	private static StudentCurricularPlan getStudentCurricularPlan(final Student student, final ExecutionSemester semester) {
-		List<Registration> registrations = student.getActiveRegistrationsIn(semester);
-		if (registrations.size() != 1) {
-			throw new DomainException("student.has.more.than.one.active.registration");
-		}
-
-		Registration registration = registrations.get(0);
-		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-		if (!studentCurricularPlan.isBolonhaDegree()) {
-
-			throw new DomainException("student.curricular.plan.is.not.bolonha");
-		}
-
-		return studentCurricularPlan;
-	}
-
-	private Spreadsheet createSpreadsheet() {
-		final Spreadsheet spreadsheet = new Spreadsheet("students");
-
-		spreadsheet.setHeaders(new String[] { "Num Aluno", "Nome", "Tipo Curso", "Curso", "Ciclo", "Ects Aprovados",
-				"Ects Total", "Soma classificacoes", "Num Aprovadas * 20", "A", "B", "100 * (A + B)" });
-
-		return spreadsheet;
-	}
-
-	private void addInformation(final Spreadsheet spreadsheet, final Student student) {
-		StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student, getExecutionSemester());
-
-		final Row row = spreadsheet.addRow();
-		row.setCell(student.getNumber());
-		row.setCell(student.getPerson().getName());
-		row.setCell(studentCurricularPlan.getDegreeType().getFilteredName());
-		row.setCell(studentCurricularPlan.getName());
-		row.setCell(studentCurricularPlan.getRegistration().getCycleType(getExecutionSemester().getExecutionYear())
-				.getDescription());
-		row.setCell(getApprovedECTS(student).toPlainString());
-		row.setCell(getEnrolledECTS(student).toPlainString());
-		row.setCell(getApprovedGradeValuesSum(student));
-		row.setCell(getNumberOfApprovedCourses(student));
-		row.setCell(getA(student).toPlainString());
-		row.setCell(getB(student).toPlainString());
-		row.setCell(getA(student).add(getB(student)).multiply(BigDecimal.valueOf(100)).intValue());
-
-	}
+        if (pendingReports.isEmpty()) {
+            return null;
+        }
+
+        Collections.sort(pendingReports, Collections.reverseOrder(COMPARE_BY_REQUEST_DATE));
+
+        return pendingReports.get(0);
+    }
+
+    public static boolean hasPendingReports(final ExecutionSemester executionSemester) {
+        return readPendingReport(executionSemester) != null;
+    }
+
+    @Service
+    public static StudentsPerformanceReport launchJob(final ExecutionSemester executionSemester, List<Student> students) {
+        return new StudentsPerformanceReport(executionSemester, students);
+    }
+
+    /* STUDY */
+
+    private BigDecimal getApprovedECTS(final Student student) {
+        return student
+                .getLastActiveRegistration()
+                .getCurriculum(getExecutionSemester().getEndDateYearMonthDay().toDateTimeAtCurrentTime(),
+                        getExecutionSemester().getExecutionYear(), null).getSumEctsCredits();
+    }
+
+    private BigDecimal getEnrolledECTS(final Student student) {
+        StudentCurricularPlan scp = getStudentCurricularPlan(student, getExecutionSemester());
+
+        BigDecimal totalECTS = new BigDecimal(0d);
+
+        for (final CurriculumLine curriculumLine : scp.getAllCurriculumLines()) {
+
+            if (curriculumLine.isExtraCurricular()) {
+                continue;
+            }
+
+            // until given ExecutionSemester
+            if (curriculumLine.getExecutionPeriod().isAfter(getExecutionSemester())) {
+                continue;
+            }
+
+            if (curriculumLine.isEnrolment()) {
+                final Enrolment enrolment = (Enrolment) curriculumLine;
+
+                totalECTS = totalECTS.add(enrolment.getEctsCreditsForCurriculum());
+
+            } else if (curriculumLine.isDismissal()) {
+                final Dismissal dismissal = (Dismissal) curriculumLine;
+
+                if (dismissal.getCredits().isSubstitution()) {
+                    for (final IEnrolment enrolment : dismissal.getSourceIEnrolments()) {
+                        totalECTS = totalECTS.add(enrolment.getEctsCreditsForCurriculum());
+                    }
+                } else if (dismissal.getCredits().isEquivalence()) {
+                    totalECTS = totalECTS.add(dismissal.getEctsCreditsForCurriculum());
+                }
+            } else {
+                throw new RuntimeException("error.unknown.curriculumLine");
+            }
+        }
+
+        return totalECTS;
+    }
+
+    private int getApprovedGradeValuesSum(final Student student) {
+        Collection<ICurriculumEntry> entries =
+                student.getLastActiveRegistration()
+                        .getCurriculum(getExecutionSemester().getEndDateYearMonthDay().toDateTimeAtCurrentTime(),
+                                getExecutionSemester().getExecutionYear(), null).getCurriculumEntries();
+        BigDecimal sum = new BigDecimal(0d);
+
+        for (final ICurriculumEntry entry : entries) {
+            if (entry.getGrade().isNumeric()) {
+                final BigDecimal weigth = entry.getWeigthForCurriculum();
+                if (GradeScale.TYPE20.equals(entry.getGrade().getGradeScale())) {
+                    sum = sum.add(entry.getGrade().getNumericValue());
+                }
+            }
+        }
+
+        return sum.intValue();
+    }
+
+    private int getNumberOfApprovedCourses(final Student student) {
+        Collection<ICurriculumEntry> entries =
+                student.getLastActiveRegistration()
+                        .getCurriculum(getExecutionSemester().getEndDateYearMonthDay().toDateTimeAtCurrentTime(),
+                                getExecutionSemester().getExecutionYear(), null).getCurriculumEntries();
+
+        return entries.size() * 20;
+    }
+
+    private BigDecimal getA(final Student student) {
+        return BigDecimal.ZERO.equals(getEnrolledECTS(student)) ? BigDecimal.ZERO : getApprovedECTS(student).divide(
+                getEnrolledECTS(student), 2, RoundingMode.HALF_EVEN);
+    }
+
+    private BigDecimal getB(final Student student) {
+        return getNumberOfApprovedCourses(student) == 0 ? BigDecimal.ZERO : new BigDecimal(getApprovedGradeValuesSum(student))
+                .divide(new BigDecimal(getNumberOfApprovedCourses(student)), 2, RoundingMode.HALF_EVEN);
+    }
+
+    private static StudentCurricularPlan getStudentCurricularPlan(final Student student, final ExecutionSemester semester) {
+        List<Registration> registrations = student.getActiveRegistrationsIn(semester);
+        if (registrations.size() != 1) {
+            throw new DomainException("student.has.more.than.one.active.registration");
+        }
+
+        Registration registration = registrations.get(0);
+        final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+        if (!studentCurricularPlan.isBolonhaDegree()) {
+
+            throw new DomainException("student.curricular.plan.is.not.bolonha");
+        }
+
+        return studentCurricularPlan;
+    }
+
+    private Spreadsheet createSpreadsheet() {
+        final Spreadsheet spreadsheet = new Spreadsheet("students");
+
+        spreadsheet.setHeaders(new String[] { "Num Aluno", "Nome", "Tipo Curso", "Curso", "Ciclo", "Ects Aprovados",
+                "Ects Total", "Soma classificacoes", "Num Aprovadas * 20", "A", "B", "100 * (A + B)" });
+
+        return spreadsheet;
+    }
+
+    private void addInformation(final Spreadsheet spreadsheet, final Student student) {
+        StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student, getExecutionSemester());
+
+        final Row row = spreadsheet.addRow();
+        row.setCell(student.getNumber());
+        row.setCell(student.getPerson().getName());
+        row.setCell(studentCurricularPlan.getDegreeType().getFilteredName());
+        row.setCell(studentCurricularPlan.getName());
+        row.setCell(studentCurricularPlan.getRegistration().getCycleType(getExecutionSemester().getExecutionYear())
+                .getDescription());
+        row.setCell(getApprovedECTS(student).toPlainString());
+        row.setCell(getEnrolledECTS(student).toPlainString());
+        row.setCell(getApprovedGradeValuesSum(student));
+        row.setCell(getNumberOfApprovedCourses(student));
+        row.setCell(getA(student).toPlainString());
+        row.setCell(getB(student).toPlainString());
+        row.setCell(getA(student).add(getB(student)).multiply(BigDecimal.valueOf(100)).intValue());
+
+    }
 }

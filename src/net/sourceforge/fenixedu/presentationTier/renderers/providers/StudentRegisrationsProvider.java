@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class StudentRegisrationsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		return ((ManageStudentStatuteBean) source).getStudent().getRegistrations();
-	}
+        return ((ManageStudentStatuteBean) source).getStudent().getRegistrations();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

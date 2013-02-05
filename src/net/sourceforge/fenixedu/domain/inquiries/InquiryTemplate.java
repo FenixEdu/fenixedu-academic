@@ -8,68 +8,68 @@ import org.joda.time.DateTime;
 
 public abstract class InquiryTemplate extends InquiryTemplate_Base {
 
-	protected void init(DateTime begin, DateTime end) {
-		validateInquiryPeriod(begin, end);
-		setResponsePeriodBegin(begin);
-		setResponsePeriodEnd(end);
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected void init(DateTime begin, DateTime end) {
+        validateInquiryPeriod(begin, end);
+        setResponsePeriodBegin(begin);
+        setResponsePeriodEnd(end);
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected void validateInquiryPeriod(DateTime begin, DateTime end) {
-		if (begin == null || begin.isAfter(end)) {
-			throw new DomainException("error.invalid.period.defined");
-		}
-	}
+    protected void validateInquiryPeriod(DateTime begin, DateTime end) {
+        if (begin == null || begin.isAfter(end)) {
+            throw new DomainException("error.invalid.period.defined");
+        }
+    }
 
-	public boolean isOpen() {
-		return !getResponsePeriodBegin().isAfterNow()
-				&& (getResponsePeriodEnd() == null || !getResponsePeriodEnd().isBeforeNow());
-	}
+    public boolean isOpen() {
+        return !getResponsePeriodBegin().isAfterNow()
+                && (getResponsePeriodEnd() == null || !getResponsePeriodEnd().isBeforeNow());
+    }
 
-	public int getNumberOfQuestions() {
-		int count = 0;
-		for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
-			for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-				if (groupQuestion.isCheckbox()) {
-					count++;
-				} else {
-					count += groupQuestion.getInquiryQuestionsCount();
-				}
-			}
-		}
-		return count;
-	}
+    public int getNumberOfQuestions() {
+        int count = 0;
+        for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+                if (groupQuestion.isCheckbox()) {
+                    count++;
+                } else {
+                    count += groupQuestion.getInquiryQuestionsCount();
+                }
+            }
+        }
+        return count;
+    }
 
-	public int getNumberOfRequiredQuestions() {
-		int count = 0;
-		for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
-			for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-				if (groupQuestion.isCheckbox() && groupQuestion.getRequired()) {
-					count++;
-				} else {
-					count += groupQuestion.getNumberOfMandatoryQuestions();
-				}
-			}
-		}
-		return count;
-	}
+    public int getNumberOfRequiredQuestions() {
+        int count = 0;
+        for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+            for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+                if (groupQuestion.isCheckbox() && groupQuestion.getRequired()) {
+                    count++;
+                } else {
+                    count += groupQuestion.getNumberOfMandatoryQuestions();
+                }
+            }
+        }
+        return count;
+    }
 
-	public static InquiryTemplate getInquiryTemplateByTypeAndExecutionSemester(ExecutionSemester executionSemester,
-			InquiryResponsePeriodType type) {
+    public static InquiryTemplate getInquiryTemplateByTypeAndExecutionSemester(ExecutionSemester executionSemester,
+            InquiryResponsePeriodType type) {
 
-		switch (type) {
-		case STUDENT:
-			return CurricularCourseInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-		case DELEGATE:
-			return DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-		case TEACHING:
-			return TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-		case REGENT:
-			return RegentInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-		case COORDINATOR:
-			return CoordinatorInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-		default:
-			return null;
-		}
-	}
+        switch (type) {
+        case STUDENT:
+            return CurricularCourseInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
+        case DELEGATE:
+            return DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
+        case TEACHING:
+            return TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
+        case REGENT:
+            return RegentInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
+        case COORDINATOR:
+            return CoordinatorInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
+        default:
+            return null;
+        }
+    }
 }

@@ -29,20 +29,20 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class InstitucionalProjectManagerIndexAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixFilterException, FenixServiceException {
 
-		final IUserView userView = UserView.getUser();
-		final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
-		request.setAttribute("backendInstance", backendInstance);
-		ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(),
-				mapping.getModuleConfig().getPrefix(), backendInstance });
-		List<InfoRubric> infoCostCenterList =
-				(List) ServiceManagerServiceFactory.executeService("ReadUserCostCenters", new Object[] { userView.getPerson(),
-						mapping.getModuleConfig().getPrefix(), backendInstance });
-		request.setAttribute("infoCostCenterList", infoCostCenterList);
-		request.setAttribute("infoCostCenter", new InfoRubric());
-		return mapping.findForward("success");
-	}
+        final IUserView userView = UserView.getUser();
+        final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+        request.setAttribute("backendInstance", backendInstance);
+        ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(),
+                mapping.getModuleConfig().getPrefix(), backendInstance });
+        List<InfoRubric> infoCostCenterList =
+                (List) ServiceManagerServiceFactory.executeService("ReadUserCostCenters", new Object[] { userView.getPerson(),
+                        mapping.getModuleConfig().getPrefix(), backendInstance });
+        request.setAttribute("infoCostCenterList", infoCostCenterList);
+        request.setAttribute("infoCostCenter", new InfoRubric());
+        return mapping.findForward("success");
+    }
 }

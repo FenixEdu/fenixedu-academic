@@ -10,50 +10,50 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
-	public ExecutionCourseForum() {
-		super();
-	}
+    public ExecutionCourseForum() {
+        super();
+    }
 
-	public ExecutionCourseForum(MultiLanguageString name, MultiLanguageString description) {
-		this();
-		init(name, description);
-	}
+    public ExecutionCourseForum(MultiLanguageString name, MultiLanguageString description) {
+        this();
+        init(name, description);
+    }
 
-	@Override
-	public void setName(MultiLanguageString name) {
-		if (this.getForumExecutionCourse() != null) {
-			getForumExecutionCourse().checkIfCanAddForum(name);
-		}
+    @Override
+    public void setName(MultiLanguageString name) {
+        if (this.getForumExecutionCourse() != null) {
+            getForumExecutionCourse().checkIfCanAddForum(name);
+        }
 
-		super.setName(name);
-	}
+        super.setName(name);
+    }
 
-	@Override
-	public Group getReadersGroup() {
-		return getExecutionCourseMembersGroup();
-	}
+    @Override
+    public Group getReadersGroup() {
+        return getExecutionCourseMembersGroup();
+    }
 
-	@Override
-	public Group getWritersGroup() {
-		return getExecutionCourseMembersGroup();
-	}
+    @Override
+    public Group getWritersGroup() {
+        return getExecutionCourseMembersGroup();
+    }
 
-	@Override
-	public Group getAdminGroup() {
-		return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
-	}
+    @Override
+    public Group getAdminGroup() {
+        return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
+    }
 
-	private Group getExecutionCourseMembersGroup() {
-		return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()), new ExecutionCourseStudentsGroup(
-				getForumExecutionCourse()));
-	}
+    private Group getExecutionCourseMembersGroup() {
+        return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()), new ExecutionCourseStudentsGroup(
+                getForumExecutionCourse()));
+    }
 
-	@Deprecated
-	public ExecutionCourse getExecutionCourse() {
-		return getForumExecutionCourse();
-	}
+    @Deprecated
+    public ExecutionCourse getExecutionCourse() {
+        return getForumExecutionCourse();
+    }
 
-	public ExecutionCourse getForumExecutionCourse() {
-		return hasAnyParents() ? ((ExecutionCourseSite) getUniqueParentContainer()).getSiteExecutionCourse() : null;
-	}
+    public ExecutionCourse getForumExecutionCourse() {
+        return hasAnyParents() ? ((ExecutionCourseSite) getUniqueParentContainer()).getSiteExecutionCourse() : null;
+    }
 }

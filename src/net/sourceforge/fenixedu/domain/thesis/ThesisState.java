@@ -8,12 +8,12 @@ package net.sourceforge.fenixedu.domain.thesis;
  * @author cfgi
  */
 public enum ThesisState {
-	DRAFT, SUBMITTED, APPROVED, CONFIRMED, REVISION, // The discussion occured
-	// but the student can
-	// submit information
-	EVALUATED;
+    DRAFT, SUBMITTED, APPROVED, CONFIRMED, REVISION, // The discussion occured
+    // but the student can
+    // submit information
+    EVALUATED;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 }

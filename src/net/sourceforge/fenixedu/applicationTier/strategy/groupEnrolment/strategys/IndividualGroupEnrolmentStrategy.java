@@ -15,22 +15,22 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
-	public IndividualGroupEnrolmentStrategy() {
+    public IndividualGroupEnrolmentStrategy() {
 
-	}
+    }
 
-	@Override
-	public Integer enrolmentPolicyNewGroup(Grouping groupProperties, int numberOfStudentsToEnrole, Shift shift) {
+    @Override
+    public Integer enrolmentPolicyNewGroup(Grouping groupProperties, int numberOfStudentsToEnrole, Shift shift) {
 
-		if (checkNumberOfGroups(groupProperties, shift)) {
-			return Integer.valueOf(1);
-		}
+        if (checkNumberOfGroups(groupProperties, shift)) {
+            return Integer.valueOf(1);
+        }
 
-		return Integer.valueOf(-1);
-	}
+        return Integer.valueOf(-1);
+    }
 
-	@Override
-	public boolean checkNumberOfGroupElements(Grouping groupProperties, StudentGroup studentGroup) {
-		return true;
-	}
+    @Override
+    public boolean checkNumberOfGroupElements(Grouping groupProperties, StudentGroup studentGroup) {
+        return true;
+    }
 }

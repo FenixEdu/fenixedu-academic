@@ -15,17 +15,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/academicAdministration", module = "academicAdministration")
 @Forwards({ @Forward(name = "indexAdmin", path = "/academicAdministration/indexAdmin.jsp"),
-		@Forward(name = "indexOffice", path = "/academicAdministration/indexOffice.jsp") })
+        @Forward(name = "indexOffice", path = "/academicAdministration/indexOffice.jsp") })
 public class AcademicAdministrationDispatchAction extends FenixDispatchAction {
 
-	public ActionForward indexAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("indexAdmin");
-	}
+    public ActionForward indexAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("indexAdmin");
+    }
 
-	public ActionForward indexOffice(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("indexOffice");
-	}
+    public ActionForward indexOffice(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("indexOffice");
+    }
 
 }

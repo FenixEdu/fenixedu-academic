@@ -19,67 +19,67 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FileItemGroupProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		Site site = null;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        Site site = null;
 
-		if (source instanceof FileContent) {
-			FileContent fileContent = (FileContent) source;
-			site = fileContent.getSite();
+        if (source instanceof FileContent) {
+            FileContent fileContent = (FileContent) source;
+            site = fileContent.getSite();
 
-			if (site == null) {
-				UnitAnnouncementBoard board = fileContent.getAttachment().getUniqueParentContainer(UnitAnnouncementBoard.class);
-				if (board != null) {
-					site = board.getUnit().getSite();
-				} else {
-					ExecutionCourseAnnouncementBoard executionBoard =
-							fileContent.getAttachment().getUniqueParentContainer(ExecutionCourseAnnouncementBoard.class);
-					if (executionBoard != null) {
-						site = executionBoard.getExecutionCourse().getSite();
-					}
-				}
-			}
-		} else if (source instanceof FileContentCreationBean) {
-			FileContentCreationBean bean = (FileContentCreationBean) source;
-			site = bean.getSite();
+            if (site == null) {
+                UnitAnnouncementBoard board = fileContent.getAttachment().getUniqueParentContainer(UnitAnnouncementBoard.class);
+                if (board != null) {
+                    site = board.getUnit().getSite();
+                } else {
+                    ExecutionCourseAnnouncementBoard executionBoard =
+                            fileContent.getAttachment().getUniqueParentContainer(ExecutionCourseAnnouncementBoard.class);
+                    if (executionBoard != null) {
+                        site = executionBoard.getExecutionCourse().getSite();
+                    }
+                }
+            }
+        } else if (source instanceof FileContentCreationBean) {
+            FileContentCreationBean bean = (FileContentCreationBean) source;
+            site = bean.getSite();
 
-			if (site == null) {
-				if (bean.getFileHolder() instanceof UnitAnnouncementBoard) {
-					UnitAnnouncementBoard board = (UnitAnnouncementBoard) bean.getFileHolder();
-					site = board != null ? board.getUnit().getSite() : null;
-				} else if (bean.getFileHolder() instanceof ExecutionCourseAnnouncementBoard) {
-					ExecutionCourseAnnouncementBoard board = (ExecutionCourseAnnouncementBoard) bean.getFileHolder();
-					site = board != null ? board.getExecutionCourse().getSite() : null;
-				}
-			}
-		} else if (source instanceof FileItemPermissionBean) {
-			FileItemPermissionBean bean = (FileItemPermissionBean) source;
-			site = bean.getFileItem().getSite();
-		}
+            if (site == null) {
+                if (bean.getFileHolder() instanceof UnitAnnouncementBoard) {
+                    UnitAnnouncementBoard board = (UnitAnnouncementBoard) bean.getFileHolder();
+                    site = board != null ? board.getUnit().getSite() : null;
+                } else if (bean.getFileHolder() instanceof ExecutionCourseAnnouncementBoard) {
+                    ExecutionCourseAnnouncementBoard board = (ExecutionCourseAnnouncementBoard) bean.getFileHolder();
+                    site = board != null ? board.getExecutionCourse().getSite() : null;
+                }
+            }
+        } else if (source instanceof FileItemPermissionBean) {
+            FileItemPermissionBean bean = (FileItemPermissionBean) source;
+            site = bean.getFileItem().getSite();
+        }
 
-		return site != null ? site.getContextualPermissionGroups() : getDefaultPermissions();
-	}
+        return site != null ? site.getContextualPermissionGroups() : getDefaultPermissions();
+    }
 
-	private List<IGroup> getDefaultPermissions() {
-		List<IGroup> groups = new ArrayList<IGroup>();
-		groups.add(new EveryoneGroup());
-		groups.add(new InternalPersonGroup());
-		return groups;
-	}
+    private List<IGroup> getDefaultPermissions() {
+        List<IGroup> groups = new ArrayList<IGroup>();
+        groups.add(new EveryoneGroup());
+        groups.add(new InternalPersonGroup());
+        return groups;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new BiDirectionalConverter() {
-			@Override
-			public Object convert(Class type, Object value) {
-				return value == null ? null : Group.fromString((String) value);
-			}
+    @Override
+    public Converter getConverter() {
+        return new BiDirectionalConverter() {
+            @Override
+            public Object convert(Class type, Object value) {
+                return value == null ? null : Group.fromString((String) value);
+            }
 
-			@Override
-			public String deserialize(Object object) {
-				return object == null ? null : ((Group) object).getExpression();
-			}
-		};
-	}
+            @Override
+            public String deserialize(Object object) {
+                return object == null ? null : ((Group) object).getExpression();
+            }
+        };
+    }
 
 }

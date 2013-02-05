@@ -21,89 +21,89 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCourseInformationBean implements java.io.Serializable, DataProvider {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	Degree chosenDegree;
-	CurricularCourse chosenCourse;
-	ExecutionYear executionYear;
-	MobilityApplicationProcess mobilityApplicationProcess;
+    Degree chosenDegree;
+    CurricularCourse chosenCourse;
+    ExecutionYear executionYear;
+    MobilityApplicationProcess mobilityApplicationProcess;
 
-	public DegreeCourseInformationBean(final ExecutionYear executionYear,
-			final MobilityApplicationProcess mobilityApplicationProcess) {
-		setExecutionYear(executionYear);
-		setMobilityApplicationProcess(mobilityApplicationProcess);
-	}
+    public DegreeCourseInformationBean(final ExecutionYear executionYear,
+            final MobilityApplicationProcess mobilityApplicationProcess) {
+        setExecutionYear(executionYear);
+        setMobilityApplicationProcess(mobilityApplicationProcess);
+    }
 
-	public DegreeCourseInformationBean() {
-	}
+    public DegreeCourseInformationBean() {
+    }
 
-	public Degree getChosenDegree() {
-		return chosenDegree;
-	}
+    public Degree getChosenDegree() {
+        return chosenDegree;
+    }
 
-	public void setChosenDegree(Degree chosenDegree) {
-		this.chosenDegree = chosenDegree;
-	}
+    public void setChosenDegree(Degree chosenDegree) {
+        this.chosenDegree = chosenDegree;
+    }
 
-	public CurricularCourse getChosenCourse() {
-		return chosenCourse;
-	}
+    public CurricularCourse getChosenCourse() {
+        return chosenCourse;
+    }
 
-	public void setChosenCourse(CurricularCourse chosenCourse) {
-		this.chosenCourse = chosenCourse;
-	}
+    public void setChosenCourse(CurricularCourse chosenCourse) {
+        this.chosenCourse = chosenCourse;
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	private List<DegreeCurricularPlan> getChosenDegreeCurricularPlans() {
-		if (getChosenDegree() != null) {
-			return getChosenDegree().getDegreeCurricularPlansForYear(getExecutionYear());
-		}
+    private List<DegreeCurricularPlan> getChosenDegreeCurricularPlans() {
+        if (getChosenDegree() != null) {
+            return getChosenDegree().getDegreeCurricularPlansForYear(getExecutionYear());
+        }
 
-		return new ArrayList<DegreeCurricularPlan>();
-	}
+        return new ArrayList<DegreeCurricularPlan>();
+    }
 
-	private SortedSet<CurricularCourse> getCurricularCoursesForChosenDegree() {
-		final SortedSet<CurricularCourse> result = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
+    private SortedSet<CurricularCourse> getCurricularCoursesForChosenDegree() {
+        final SortedSet<CurricularCourse> result = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
 
-		for (DegreeCurricularPlan degreeCurricularPlan : getChosenDegreeCurricularPlans()) {
-			ExecutionSemester firstSemester = getExecutionYear().getExecutionSemesterFor(1);
-			ExecutionSemester secondSemester = getExecutionYear().getExecutionSemesterFor(2);
-			if (getMobilityApplicationProcess().getForSemester().equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
-				result.addAll(degreeCurricularPlan.getActiveCurricularCourses(firstSemester));
-			}
-			result.addAll(degreeCurricularPlan.getActiveCurricularCourses(secondSemester));
-		}
+        for (DegreeCurricularPlan degreeCurricularPlan : getChosenDegreeCurricularPlans()) {
+            ExecutionSemester firstSemester = getExecutionYear().getExecutionSemesterFor(1);
+            ExecutionSemester secondSemester = getExecutionYear().getExecutionSemesterFor(2);
+            if (getMobilityApplicationProcess().getForSemester().equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
+                result.addAll(degreeCurricularPlan.getActiveCurricularCourses(firstSemester));
+            }
+            result.addAll(degreeCurricularPlan.getActiveCurricularCourses(secondSemester));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
 
-		return chooseDegreeBean.getCurricularCoursesForChosenDegree();
-	}
+        return chooseDegreeBean.getCurricularCoursesForChosenDegree();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	public MobilityApplicationProcess getMobilityApplicationProcess() {
-		return mobilityApplicationProcess;
-	}
+    public MobilityApplicationProcess getMobilityApplicationProcess() {
+        return mobilityApplicationProcess;
+    }
 
-	public void setMobilityApplicationProcess(MobilityApplicationProcess mobilityApplicationProcess) {
-		this.mobilityApplicationProcess = mobilityApplicationProcess;
-	}
+    public void setMobilityApplicationProcess(MobilityApplicationProcess mobilityApplicationProcess) {
+        this.mobilityApplicationProcess = mobilityApplicationProcess;
+    }
 }

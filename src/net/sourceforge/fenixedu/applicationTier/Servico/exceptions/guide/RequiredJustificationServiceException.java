@@ -13,48 +13,48 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class RequiredJustificationServiceException extends FenixServiceException {
 
-	/**
+    /**
      *  
      */
-	public RequiredJustificationServiceException() {
-		super();
-	}
+    public RequiredJustificationServiceException() {
+        super();
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public RequiredJustificationServiceException(int errorType) {
-		super(errorType);
-	}
+    /**
+     * @param errorType
+     */
+    public RequiredJustificationServiceException(int errorType) {
+        super(errorType);
+    }
 
-	/**
-	 * @param s
-	 */
-	public RequiredJustificationServiceException(String s) {
-		super(s);
-	}
+    /**
+     * @param s
+     */
+    public RequiredJustificationServiceException(String s) {
+        super(s);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public RequiredJustificationServiceException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public RequiredJustificationServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public RequiredJustificationServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public RequiredJustificationServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[RequiredJustificationServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[RequiredJustificationServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

@@ -11,42 +11,42 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationType;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class TeacherEvaluationTypeSelection implements Serializable {
-	private final TeacherEvaluationProcess process;
+    private final TeacherEvaluationProcess process;
 
-	private TeacherEvaluationType type;
+    private TeacherEvaluationType type;
 
-	public TeacherEvaluationTypeSelection(TeacherEvaluationProcess process) {
-		this.process = process;
-		TeacherEvaluation current = process.getCurrentTeacherEvaluation();
-		if (current != null) {
-			this.type = current.getType();
-		}
-	}
+    public TeacherEvaluationTypeSelection(TeacherEvaluationProcess process) {
+        this.process = process;
+        TeacherEvaluation current = process.getCurrentTeacherEvaluation();
+        if (current != null) {
+            this.type = current.getType();
+        }
+    }
 
-	public TeacherEvaluationProcess getProcess() {
-		return process;
-	}
+    public TeacherEvaluationProcess getProcess() {
+        return process;
+    }
 
-	public void setType(TeacherEvaluationType type) {
-		this.type = type;
-	}
+    public void setType(TeacherEvaluationType type) {
+        this.type = type;
+    }
 
-	public TeacherEvaluationType getType() {
-		return type;
-	}
+    public TeacherEvaluationType getType() {
+        return type;
+    }
 
-	@Service
-	public void createEvaluation() {
-		switch (type) {
-		case NO_EVALUATION:
-			new NoEvaluation(process);
-			break;
-		case RADIST:
-			new RadistEvaluation(process);
-			break;
-		case CURRICULAR:
-			new CurricularEvaluation(process);
-			break;
-		}
-	}
+    @Service
+    public void createEvaluation() {
+        switch (type) {
+        case NO_EVALUATION:
+            new NoEvaluation(process);
+            break;
+        case RADIST:
+            new RadistEvaluation(process);
+            break;
+        case CURRICULAR:
+            new CurricularEvaluation(process);
+            break;
+        }
+    }
 }

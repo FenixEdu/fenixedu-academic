@@ -23,61 +23,61 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AuthorsRelatedUnits implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) source;
-		ResearchResult result = bean.getResult();
-		return extractRelatedUnits(result, result.getOrderedAuthorsResultParticipations());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) source;
+        ResearchResult result = bean.getResult();
+        return extractRelatedUnits(result, result.getOrderedAuthorsResultParticipations());
+    }
 
-	private Collection<Unit> extractRelatedUnits(ResearchResult result,
-			List<ResultParticipation> orderedAuthorsResultParticipations) {
-		Set<Unit> units = new HashSet<Unit>();
-		for (ResultParticipation participation : orderedAuthorsResultParticipations) {
-			Person person = participation.getPerson();
-			for (ResearchUnit unit : person.getWorkingResearchUnits()) {
-				if (!result.isAssociatedWithUnit(unit)) {
-					units.add(unit);
-				}
-			}
-			if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null
-					&& !result.isAssociatedWithUnit(person.getEmployee().getCurrentWorkingPlace())) {
-				units.add(person.getEmployee().getCurrentWorkingPlace());
-			}
+    private Collection<Unit> extractRelatedUnits(ResearchResult result,
+            List<ResultParticipation> orderedAuthorsResultParticipations) {
+        Set<Unit> units = new HashSet<Unit>();
+        for (ResultParticipation participation : orderedAuthorsResultParticipations) {
+            Person person = participation.getPerson();
+            for (ResearchUnit unit : person.getWorkingResearchUnits()) {
+                if (!result.isAssociatedWithUnit(unit)) {
+                    units.add(unit);
+                }
+            }
+            if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null
+                    && !result.isAssociatedWithUnit(person.getEmployee().getCurrentWorkingPlace())) {
+                units.add(person.getEmployee().getCurrentWorkingPlace());
+            }
 
-			if (person.hasTeacher()) {
-				for (ExecutionCourse course : person.getTeacher().getCurrentExecutionCourses()) {
-					for (Degree degree : course.getDegreesSortedByDegreeName()) {
-						if (degree.getUnit() != null && !result.isAssociatedWithUnit(degree.getUnit())) {
-							units.add(degree.getUnit());
-						}
-					}
-					for (CurricularCourse curricularCourse : course.getAssociatedCurricularCourses()) {
+            if (person.hasTeacher()) {
+                for (ExecutionCourse course : person.getTeacher().getCurrentExecutionCourses()) {
+                    for (Degree degree : course.getDegreesSortedByDegreeName()) {
+                        if (degree.getUnit() != null && !result.isAssociatedWithUnit(degree.getUnit())) {
+                            units.add(degree.getUnit());
+                        }
+                    }
+                    for (CurricularCourse curricularCourse : course.getAssociatedCurricularCourses()) {
 
-						CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-						CompetenceCourseGroupUnit groupUnit =
-								(competenceCourse != null) ? competenceCourse.getCompetenceCourseGroupUnit() : null;
+                        CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+                        CompetenceCourseGroupUnit groupUnit =
+                                (competenceCourse != null) ? competenceCourse.getCompetenceCourseGroupUnit() : null;
 
-						if (groupUnit != null) {
-							Collection<? extends Party> scientificAreaUnits =
-									groupUnit.getParentParties(ScientificAreaUnit.class);
-							for (Party scientificAreaUnit : scientificAreaUnits) {
-								if (!result.isAssociatedWithUnit((ScientificAreaUnit) scientificAreaUnit)) {
-									units.add((ScientificAreaUnit) scientificAreaUnit);
-								}
-							}
-						}
-					}
+                        if (groupUnit != null) {
+                            Collection<? extends Party> scientificAreaUnits =
+                                    groupUnit.getParentParties(ScientificAreaUnit.class);
+                            for (Party scientificAreaUnit : scientificAreaUnits) {
+                                if (!result.isAssociatedWithUnit((ScientificAreaUnit) scientificAreaUnit)) {
+                                    units.add((ScientificAreaUnit) scientificAreaUnit);
+                                }
+                            }
+                        }
+                    }
 
-				}
-			}
-		}
-		return units;
-	}
+                }
+            }
+        }
+        return units;
+    }
 
 }

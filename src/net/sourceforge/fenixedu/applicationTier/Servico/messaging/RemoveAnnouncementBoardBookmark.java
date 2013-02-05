@@ -15,8 +15,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class RemoveAnnouncementBoardBookmark extends FenixService {
 
-	@Service
-	public static void run(AnnouncementBoard board, Person person) {
-		board.removeBookmarkOwner(person);
-	}
+    @Service
+    public static void run(AnnouncementBoard board, Person person) {
+        board.removeBookmarkOwner(person);
+    }
 }

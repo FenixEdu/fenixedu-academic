@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 
 public class DeleteCurricularRule extends FenixService {
 
-	public void run(Integer curricularRuleID) throws FenixServiceException {
-		final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
-		if (curricularRule == null) {
-			throw new FenixServiceException("error.noCurricularRule");
-		}
-		curricularRule.delete();
-	}
+    public void run(Integer curricularRuleID) throws FenixServiceException {
+        final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
+        if (curricularRule == null) {
+            throw new FenixServiceException("error.noCurricularRule");
+        }
+        curricularRule.delete();
+    }
 }

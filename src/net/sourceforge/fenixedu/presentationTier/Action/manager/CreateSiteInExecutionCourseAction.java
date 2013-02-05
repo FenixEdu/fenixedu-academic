@@ -30,27 +30,26 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "manager", path = "/createSite", input = "/readCurricularCourse.do", scope = "request")
 @Forwards(value = { @Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
-		key = "resources.Action.exceptions.NonExistingActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+        key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateSiteInExecutionCourseAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-		try {
+        try {
 
-			CreateSiteInExecutionCourse.run(executionCourseId);
-		} catch (NonExistingServiceException exception) {
-			throw new NonExistingActionException(exception.getMessage());
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		// TODO:ver qd nao exeiste curricularcourse
-		return mapping.findForward("readCurricularCourse");
-	}
+            CreateSiteInExecutionCourse.run(executionCourseId);
+        } catch (NonExistingServiceException exception) {
+            throw new NonExistingActionException(exception.getMessage());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        // TODO:ver qd nao exeiste curricularcourse
+        return mapping.findForward("readCurricularCourse");
+    }
 
 }

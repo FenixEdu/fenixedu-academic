@@ -44,300 +44,298 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(module = "facultyAdmOffice", path = "/exportGrants", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "search-grants",
-		path = "/facultyAdmOffice/grant/export/searchGrants.jsp",
-		tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.bygrant")) })
+@Forwards(value = { @Forward(name = "search-grants", path = "/facultyAdmOffice/grant/export/searchGrants.jsp",
+        tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.bygrant")) })
 public class ExportGrantsAction extends FenixDispatchAction {
 
-	private static final String EMPTY_STRING = "";
-	private static final String separtor = " - ";
-	final static DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+    private static final String EMPTY_STRING = "";
+    private static final String separtor = " - ";
+    final static DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
 
-	public ActionForward searchGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		GrantSearch grantSearch = getRenderedObject();
-		if (grantSearch == null) {
-			grantSearch = new GrantSearch();
-		} else {
-			grantSearch.setSearch();
-		}
-		if (request.getParameter("export") != null) {
-			return exportGrants(mapping, form, request, response, grantSearch);
-		}
-		RenderUtils.invalidateViewState();
-		request.setAttribute("grantSearch", grantSearch);
-		return mapping.findForward("search-grants");
-	}
+    public ActionForward searchGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        GrantSearch grantSearch = getRenderedObject();
+        if (grantSearch == null) {
+            grantSearch = new GrantSearch();
+        } else {
+            grantSearch.setSearch();
+        }
+        if (request.getParameter("export") != null) {
+            return exportGrants(mapping, form, request, response, grantSearch);
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("grantSearch", grantSearch);
+        return mapping.findForward("search-grants");
+    }
 
-	public ActionForward choicesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		GrantSearch grantSearch = getRenderedObject();
-		RenderUtils.invalidateViewState();
-		request.setAttribute("grantSearch", grantSearch);
-		return mapping.findForward("search-grants");
-	}
+    public ActionForward choicesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        GrantSearch grantSearch = getRenderedObject();
+        RenderUtils.invalidateViewState();
+        request.setAttribute("grantSearch", grantSearch);
+        return mapping.findForward("search-grants");
+    }
 
-	private ActionForward exportGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response, GrantSearch grantSearch) throws Exception {
-		response.setContentType("text/plain");
-		response.setHeader("Content-disposition", "attachment; filename=bolsas.xls");
-		final ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources", Language.getLocale());
-		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("bolsas", false);
-		boolean betweenDates =
-				grantSearch.getDatesTypeChoice() == GrantSearch.DatesTypeChoice.DATE_INTERVAL && grantSearch.getEndDate() != null;
+    private ActionForward exportGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response, GrantSearch grantSearch) throws Exception {
+        response.setContentType("text/plain");
+        response.setHeader("Content-disposition", "attachment; filename=bolsas.xls");
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources", Language.getLocale());
+        StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("bolsas", false);
+        boolean betweenDates =
+                grantSearch.getDatesTypeChoice() == GrantSearch.DatesTypeChoice.DATE_INTERVAL && grantSearch.getEndDate() != null;
 
-		getExcelHeader(spreadsheet, bundle, betweenDates, grantSearch);
-		List<GrantContractRegime> grantContractRegimeList = grantSearch.getSearch();
-		for (GrantContractRegime grantContractRegime : grantContractRegimeList) {
-			getExcelRow(grantContractRegime, spreadsheet, betweenDates, grantSearch, bundle);
-		}
-		spreadsheet.getSheet().setGridsPrinted(true);
-		final ServletOutputStream writer = response.getOutputStream();
-		spreadsheet.getWorkbook().write(writer);
-		writer.flush();
-		response.flushBuffer();
-		return null;
-	}
+        getExcelHeader(spreadsheet, bundle, betweenDates, grantSearch);
+        List<GrantContractRegime> grantContractRegimeList = grantSearch.getSearch();
+        for (GrantContractRegime grantContractRegime : grantContractRegimeList) {
+            getExcelRow(grantContractRegime, spreadsheet, betweenDates, grantSearch, bundle);
+        }
+        spreadsheet.getSheet().setGridsPrinted(true);
+        final ServletOutputStream writer = response.getOutputStream();
+        spreadsheet.getWorkbook().write(writer);
+        writer.flush();
+        response.flushBuffer();
+        return null;
+    }
 
-	private void getExcelRow(GrantContractRegime grantContractRegime, StyledExcelSpreadsheet spreadsheet, boolean betweenDates,
-			GrantSearch grantSearch, ResourceBundle bundle) {
-		spreadsheet.newRow();
-		// - Área cientifica principal das actividades de I&D;
+    private void getExcelRow(GrantContractRegime grantContractRegime, StyledExcelSpreadsheet spreadsheet, boolean betweenDates,
+            GrantSearch grantSearch, ResourceBundle bundle) {
+        spreadsheet.newRow();
+        // - Área cientifica principal das actividades de I&D;
 
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getNumber());
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getName());
-		EmailAddress email = grantContractRegime.getGrantContract().getGrantOwner().getPerson().getEmailAddressForSendingEmails();
-		spreadsheet.addCell(email != null ? email.getValue() : null);
-		String phoneContacts = getPhoneContacts(grantContractRegime.getGrantContract().getGrantOwner().getPerson(), bundle);
-		spreadsheet.addCell(phoneContacts);
-		spreadsheet.addCell(bundle.getString("label."
-				+ grantContractRegime.getGrantContract().getGrantOwner().getPerson().getGender().name()));
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDateOfBirthYearMonthDay());
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDocumentIdNumber());
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getIdDocumentType()
-				.getLocalizedName());
-		Country country = grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry();
-		spreadsheet.addCell(country != null ? country.getName() : null);
-		PhysicalAddress defaultPhysicalAddress =
-				grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDefaultPhysicalAddress();
-		spreadsheet.addCell(defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getPresentationValue());
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getSocialSecurityNumber());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getNumber());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getName());
+        EmailAddress email = grantContractRegime.getGrantContract().getGrantOwner().getPerson().getEmailAddressForSendingEmails();
+        spreadsheet.addCell(email != null ? email.getValue() : null);
+        String phoneContacts = getPhoneContacts(grantContractRegime.getGrantContract().getGrantOwner().getPerson(), bundle);
+        spreadsheet.addCell(phoneContacts);
+        spreadsheet.addCell(bundle.getString("label."
+                + grantContractRegime.getGrantContract().getGrantOwner().getPerson().getGender().name()));
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDateOfBirthYearMonthDay());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDocumentIdNumber());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getIdDocumentType()
+                .getLocalizedName());
+        Country country = grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry();
+        spreadsheet.addCell(country != null ? country.getName() : null);
+        PhysicalAddress defaultPhysicalAddress =
+                grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDefaultPhysicalAddress();
+        spreadsheet.addCell(defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getPresentationValue());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getSocialSecurityNumber());
 
-		Qualification qualification = getQualification(grantContractRegime.getGrantContract().getGrantOwner().getPerson());
+        Qualification qualification = getQualification(grantContractRegime.getGrantContract().getGrantOwner().getPerson());
 
-		spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getType() != null ? qualification.getType()
-				.getLocalizedName() : qualification.getTitle());
-		spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getDegree());
-		spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getYear());
-		spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getSpecializationArea());
-		spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getCountry() != null ? qualification
-				.getCountry().getName() : EMPTY_STRING);
+        spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getType() != null ? qualification.getType()
+                .getLocalizedName() : qualification.getTitle());
+        spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getDegree());
+        spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getYear());
+        spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getSpecializationArea());
+        spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getCountry() != null ? qualification
+                .getCountry().getName() : EMPTY_STRING);
 
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber());
-		spreadsheet.addCell(grantContractRegime.getDateBeginContractYearMonthDay().toString());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber());
+        spreadsheet.addCell(grantContractRegime.getDateBeginContractYearMonthDay().toString());
 
-		LocalDate endDate = new LocalDate(grantContractRegime.getDateEndContractYearMonthDay());
-		if (!StringUtils.isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())) {
-			try {
-				LocalDate rescissionDate =
-						dateFormat.parseDateTime(grantContractRegime.getGrantContract().getEndContractMotive()).toLocalDate();
-				endDate = endDate.isBefore(rescissionDate) ? endDate : rescissionDate;
-			} catch (IllegalArgumentException e) {
-			}
-		}
-		spreadsheet.addCell(endDate.toString());
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getEndContractMotive());
-		if (grantContractRegime.getTeacher() != null) {
-			spreadsheet.addCell(grantContractRegime.getTeacher().getPerson().getIstUsername() + separtor
-					+ grantContractRegime.getTeacher().getPerson().getName());
-		} else {
-			spreadsheet.addCell(separtor);
-		}
-		spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantType().getSigla());
-		GrantCostCenter grantCostCenter = grantContractRegime.getGrantContract().getGrantCostCenter();
-		spreadsheet
-				.addCell(grantCostCenter != null ? grantCostCenter.getNumber() + separtor + grantCostCenter.getDesignation() : null);
+        LocalDate endDate = new LocalDate(grantContractRegime.getDateEndContractYearMonthDay());
+        if (!StringUtils.isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())) {
+            try {
+                LocalDate rescissionDate =
+                        dateFormat.parseDateTime(grantContractRegime.getGrantContract().getEndContractMotive()).toLocalDate();
+                endDate = endDate.isBefore(rescissionDate) ? endDate : rescissionDate;
+            } catch (IllegalArgumentException e) {
+            }
+        }
+        spreadsheet.addCell(endDate.toString());
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getEndContractMotive());
+        if (grantContractRegime.getTeacher() != null) {
+            spreadsheet.addCell(grantContractRegime.getTeacher().getPerson().getIstUsername() + separtor
+                    + grantContractRegime.getTeacher().getPerson().getName());
+        } else {
+            spreadsheet.addCell(separtor);
+        }
+        spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantType().getSigla());
+        GrantCostCenter grantCostCenter = grantContractRegime.getGrantContract().getGrantCostCenter();
+        spreadsheet
+                .addCell(grantCostCenter != null ? grantCostCenter.getNumber() + separtor + grantCostCenter.getDesignation() : null);
 
-		GrantSubsidy grantSubsidy = grantContractRegime.getGrantSubsidy();
-		if (grantSubsidy != null) {
-			spreadsheet.addCell(grantSubsidy.getDateBeginSubsidyYearMonthDay() != null ? grantSubsidy
-					.getDateBeginSubsidyYearMonthDay().toString() : EMPTY_STRING);
-			spreadsheet.addCell(grantSubsidy.getDateEndSubsidyYearMonthDay() != null ? grantSubsidy
-					.getDateEndSubsidyYearMonthDay().toString() : EMPTY_STRING);
-			StringBuilder stringBuilder = new StringBuilder();
-			for (GrantPart grantPart : grantSubsidy.getAssociatedGrantParts()) {
-				if (grantPart.getGrantPaymentEntity() != null) {
-					if (stringBuilder.length() != 0) {
-						stringBuilder.append("; ");
-					}
-					stringBuilder.append(grantPart.getGrantPaymentEntity().getNumber()).append(separtor)
-							.append(grantPart.getGrantPaymentEntity().getDesignation());
-				}
-			}
-			spreadsheet.addCell(stringBuilder.toString());
-			spreadsheet.addCell(grantSubsidy.getValue());
-			spreadsheet.addCell(grantSubsidy.getTotalCost());
-		} else {
-			spreadsheet.addCell(null);
-			spreadsheet.addCell(null);
-			spreadsheet.addCell(null);
-			spreadsheet.addCell(null);
-			spreadsheet.addCell(null);
-		}
+        GrantSubsidy grantSubsidy = grantContractRegime.getGrantSubsidy();
+        if (grantSubsidy != null) {
+            spreadsheet.addCell(grantSubsidy.getDateBeginSubsidyYearMonthDay() != null ? grantSubsidy
+                    .getDateBeginSubsidyYearMonthDay().toString() : EMPTY_STRING);
+            spreadsheet.addCell(grantSubsidy.getDateEndSubsidyYearMonthDay() != null ? grantSubsidy
+                    .getDateEndSubsidyYearMonthDay().toString() : EMPTY_STRING);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (GrantPart grantPart : grantSubsidy.getAssociatedGrantParts()) {
+                if (grantPart.getGrantPaymentEntity() != null) {
+                    if (stringBuilder.length() != 0) {
+                        stringBuilder.append("; ");
+                    }
+                    stringBuilder.append(grantPart.getGrantPaymentEntity().getNumber()).append(separtor)
+                            .append(grantPart.getGrantPaymentEntity().getDesignation());
+                }
+            }
+            spreadsheet.addCell(stringBuilder.toString());
+            spreadsheet.addCell(grantSubsidy.getValue());
+            spreadsheet.addCell(grantSubsidy.getTotalCost());
+        } else {
+            spreadsheet.addCell(null);
+            spreadsheet.addCell(null);
+            spreadsheet.addCell(null);
+            spreadsheet.addCell(null);
+            spreadsheet.addCell(null);
+        }
 
-		GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
-		if (grantInsurance != null) {
-			spreadsheet.addCell(grantInsurance.getDateBeginInsuranceYearMonthDay() != null ? grantInsurance
-					.getDateBeginInsuranceYearMonthDay().toString() : EMPTY_STRING);
-			spreadsheet.addCell(grantInsurance.getDateEndInsuranceYearMonthDay() != null ? grantInsurance
-					.getDateEndInsuranceYearMonthDay().toString() : EMPTY_STRING);
+        GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
+        if (grantInsurance != null) {
+            spreadsheet.addCell(grantInsurance.getDateBeginInsuranceYearMonthDay() != null ? grantInsurance
+                    .getDateBeginInsuranceYearMonthDay().toString() : EMPTY_STRING);
+            spreadsheet.addCell(grantInsurance.getDateEndInsuranceYearMonthDay() != null ? grantInsurance
+                    .getDateEndInsuranceYearMonthDay().toString() : EMPTY_STRING);
 
-			if (grantInsurance.getDateBeginInsuranceYearMonthDay() == null
-					|| grantInsurance.getDateEndInsuranceYearMonthDay() == null) {
-				spreadsheet.addCell("ERRO");
-			} else {
-				int totalDays =
-						Days.daysBetween(grantInsurance.getDateBeginInsuranceYearMonthDay(),
-								grantInsurance.getDateEndInsuranceYearMonthDay()).getDays();
-				spreadsheet.addCell(totalDays);
-			}
-			spreadsheet.addCell(grantInsurance.getTotalValue());
-			spreadsheet.addCell(grantInsurance.getGrantPaymentEntity().getNumber() + separtor
-					+ grantInsurance.getGrantPaymentEntity().getDesignation(), true);
-			if (betweenDates) {
-				if (grantInsurance.getDateBeginInsuranceYearMonthDay() == null
-						|| grantInsurance.getDateEndInsuranceYearMonthDay() == null) {
-					spreadsheet.addCell("ERRO");
-					spreadsheet.addCell("ERRO");
-				} else {
-					LocalDate beginLocalDate = grantInsurance.getDateBeginInsuranceYearMonthDay().toLocalDate();
-					LocalDate endLocalDate = grantInsurance.getDateEndInsuranceYearMonthDay().toLocalDate();
-					if (beginLocalDate.isBefore(grantSearch.getBeginDate())) {
-						beginLocalDate = grantSearch.getBeginDate();
-					}
-					if (endLocalDate.isAfter(grantSearch.getEndDate())) {
-						endLocalDate = grantSearch.getEndDate();
-					}
-					int totalDaysBetween = Math.max(Days.daysBetween(beginLocalDate, endLocalDate).getDays(), 0);
-					spreadsheet.addCell(totalDaysBetween);
-					spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween));
-				}
-			}
-		}
-	}
+            if (grantInsurance.getDateBeginInsuranceYearMonthDay() == null
+                    || grantInsurance.getDateEndInsuranceYearMonthDay() == null) {
+                spreadsheet.addCell("ERRO");
+            } else {
+                int totalDays =
+                        Days.daysBetween(grantInsurance.getDateBeginInsuranceYearMonthDay(),
+                                grantInsurance.getDateEndInsuranceYearMonthDay()).getDays();
+                spreadsheet.addCell(totalDays);
+            }
+            spreadsheet.addCell(grantInsurance.getTotalValue());
+            spreadsheet.addCell(grantInsurance.getGrantPaymentEntity().getNumber() + separtor
+                    + grantInsurance.getGrantPaymentEntity().getDesignation(), true);
+            if (betweenDates) {
+                if (grantInsurance.getDateBeginInsuranceYearMonthDay() == null
+                        || grantInsurance.getDateEndInsuranceYearMonthDay() == null) {
+                    spreadsheet.addCell("ERRO");
+                    spreadsheet.addCell("ERRO");
+                } else {
+                    LocalDate beginLocalDate = grantInsurance.getDateBeginInsuranceYearMonthDay().toLocalDate();
+                    LocalDate endLocalDate = grantInsurance.getDateEndInsuranceYearMonthDay().toLocalDate();
+                    if (beginLocalDate.isBefore(grantSearch.getBeginDate())) {
+                        beginLocalDate = grantSearch.getBeginDate();
+                    }
+                    if (endLocalDate.isAfter(grantSearch.getEndDate())) {
+                        endLocalDate = grantSearch.getEndDate();
+                    }
+                    int totalDaysBetween = Math.max(Days.daysBetween(beginLocalDate, endLocalDate).getDays(), 0);
+                    spreadsheet.addCell(totalDaysBetween);
+                    spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween));
+                }
+            }
+        }
+    }
 
-	private String getPhoneContacts(Person person, ResourceBundle bundle) {
-		List<String> contacts = new ArrayList<String>();
-		final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-		for (MobilePhone mobilePhone : person.getMobilePhones()) {
-			contacts.add((bundle.getString("label.grant.owner.infoperson.cellPhone")) + ": " + mobilePhone.getPresentationValue()
-					+ "(" + enumBundle.getString(mobilePhone.getType().getQualifiedName()) + ")");
-		}
-		for (Phone phone : person.getPhones()) {
-			contacts.add((bundle.getString("label.grant.owner.infoperson.phone")) + ": " + phone.getPresentationValue() + "("
-					+ enumBundle.getString(phone.getType().getQualifiedName()) + ")");
-		}
-		return StringUtils.join(contacts, "\n");
-	}
+    private String getPhoneContacts(Person person, ResourceBundle bundle) {
+        List<String> contacts = new ArrayList<String>();
+        final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        for (MobilePhone mobilePhone : person.getMobilePhones()) {
+            contacts.add((bundle.getString("label.grant.owner.infoperson.cellPhone")) + ": " + mobilePhone.getPresentationValue()
+                    + "(" + enumBundle.getString(mobilePhone.getType().getQualifiedName()) + ")");
+        }
+        for (Phone phone : person.getPhones()) {
+            contacts.add((bundle.getString("label.grant.owner.infoperson.phone")) + ": " + phone.getPresentationValue() + "("
+                    + enumBundle.getString(phone.getType().getQualifiedName()) + ")");
+        }
+        return StringUtils.join(contacts, "\n");
+    }
 
-	private Qualification getQualification(Person person) {
-		Qualification mostImportantQualification = null;
-		for (Qualification qualification : person.getAssociatedQualifications()) {
-			if (mostImportantQualification == null || compareQualifications(mostImportantQualification, qualification) > 0) {
-				mostImportantQualification = qualification;
-			}
-		}
-		return mostImportantQualification;
-	}
+    private Qualification getQualification(Person person) {
+        Qualification mostImportantQualification = null;
+        for (Qualification qualification : person.getAssociatedQualifications()) {
+            if (mostImportantQualification == null || compareQualifications(mostImportantQualification, qualification) > 0) {
+                mostImportantQualification = qualification;
+            }
+        }
+        return mostImportantQualification;
+    }
 
-	private int compareQualifications(Qualification qualification1, Qualification qualification2) {
-		if (qualification1.getType() == null && qualification2.getType() == null) {
-			return Qualification.COMPARATOR_BY_MOST_RECENT_ATTENDED_END.compare(qualification1, qualification1);
-		}
-		if (qualification1.getType() != null && qualification2.getType() == null) {
-			return 1;
-		}
-		if (qualification1.getType() == null && qualification2.getType() != null) {
-			return -1;
-		}
-		return qualification1.getType().compareTo(qualification2.getType());
-	}
+    private int compareQualifications(Qualification qualification1, Qualification qualification2) {
+        if (qualification1.getType() == null && qualification2.getType() == null) {
+            return Qualification.COMPARATOR_BY_MOST_RECENT_ATTENDED_END.compare(qualification1, qualification1);
+        }
+        if (qualification1.getType() != null && qualification2.getType() == null) {
+            return 1;
+        }
+        if (qualification1.getType() == null && qualification2.getType() != null) {
+            return -1;
+        }
+        return qualification1.getType().compareTo(qualification2.getType());
+    }
 
-	public void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle, boolean betweenDates,
-			GrantSearch grantSearch) {
-		spreadsheet.newHeaderRow();
-		spreadsheet.addHeader(0, bundle.getString("label.grant.owner.information"));
-		spreadsheet.addHeader(11, bundle.getString("label.grant.qualification.information"));
-		spreadsheet.addHeader(16, bundle.getString("label.grant.contract.information"));
-		spreadsheet.addHeader(23, bundle.getString("label.list.grant.contract.subsidies"));
-		spreadsheet.addHeader(28, bundle.getString("label.grant.insurance.information"));
-		if (betweenDates) {
-			spreadsheet.addHeader(
-					32,
-					MessageFormat.format(bundle.getString("label.grant.insurance.information.betweenDates"), new Object[] {
-							dateFormat.print(grantSearch.getBeginDate()), dateFormat.print(grantSearch.getEndDate()) }));
-		}
+    public void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle, boolean betweenDates,
+            GrantSearch grantSearch) {
+        spreadsheet.newHeaderRow();
+        spreadsheet.addHeader(0, bundle.getString("label.grant.owner.information"));
+        spreadsheet.addHeader(11, bundle.getString("label.grant.qualification.information"));
+        spreadsheet.addHeader(16, bundle.getString("label.grant.contract.information"));
+        spreadsheet.addHeader(23, bundle.getString("label.list.grant.contract.subsidies"));
+        spreadsheet.addHeader(28, bundle.getString("label.grant.insurance.information"));
+        if (betweenDates) {
+            spreadsheet.addHeader(
+                    32,
+                    MessageFormat.format(bundle.getString("label.grant.insurance.information.betweenDates"), new Object[] {
+                            dateFormat.print(grantSearch.getBeginDate()), dateFormat.print(grantSearch.getEndDate()) }));
+        }
 
-		spreadsheet.newHeaderRow();
-		spreadsheet.mergeCells(0, 1, 0, 10);
-		spreadsheet.mergeCells(0, 1, 11, 15);
-		spreadsheet.mergeCells(0, 1, 16, 22);
-		spreadsheet.mergeCells(0, 1, 23, 27);
-		spreadsheet.mergeCells(0, 1, 28, 32);
-		if (betweenDates) {
-			spreadsheet.mergeCells(0, 1, 33, 34);
-		}
+        spreadsheet.newHeaderRow();
+        spreadsheet.mergeCells(0, 1, 0, 10);
+        spreadsheet.mergeCells(0, 1, 11, 15);
+        spreadsheet.mergeCells(0, 1, 16, 22);
+        spreadsheet.mergeCells(0, 1, 23, 27);
+        spreadsheet.mergeCells(0, 1, 28, 32);
+        if (betweenDates) {
+            spreadsheet.mergeCells(0, 1, 33, 34);
+        }
 
-		spreadsheet.newHeaderRow();
-		spreadsheet.getRow().setHeight((short) 750);
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.number"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.name"), 10000);
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.email"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.phone"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.sex"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.birthdate"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.idNumber"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.idType"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.nationality"), 5000);
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.address"));
-		spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.socialSecurityNumber"));
+        spreadsheet.newHeaderRow();
+        spreadsheet.getRow().setHeight((short) 750);
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.number"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.name"), 10000);
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.email"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.phone"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.sex"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.birthdate"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.idNumber"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.idType"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.nationality"), 5000);
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.address"));
+        spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.socialSecurityNumber"));
 
-		spreadsheet.addHeader(bundle.getString("label.grant.qualification.title"));
-		spreadsheet.addHeader(bundle.getString("label.grant.qualification.degree"));
-		spreadsheet.addHeader(bundle.getString("label.grant.qualification.qualificationDate"));
-		spreadsheet.addHeader(bundle.getString("label.grant.qualification.specializationArea"));
-		spreadsheet.addHeader(bundle.getString("label.grant.qualification.country"));
+        spreadsheet.addHeader(bundle.getString("label.grant.qualification.title"));
+        spreadsheet.addHeader(bundle.getString("label.grant.qualification.degree"));
+        spreadsheet.addHeader(bundle.getString("label.grant.qualification.qualificationDate"));
+        spreadsheet.addHeader(bundle.getString("label.grant.qualification.specializationArea"));
+        spreadsheet.addHeader(bundle.getString("label.grant.qualification.country"));
 
-		spreadsheet.addHeader(bundle.getString("label.grant.contract.contractnumber"));
-		spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
-		spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
-		spreadsheet.addHeader(bundle.getString("label.grant.contract.endMotive"));
-		spreadsheet.addHeader(bundle.getString("label.grant.contract.orientationTeacher"), 10000);
-		spreadsheet.addHeader(bundle.getString("label.grant.contract.type"));
-		spreadsheet.addHeader(bundle.getString("label.grant.contract.work.place"));
+        spreadsheet.addHeader(bundle.getString("label.grant.contract.contractnumber"));
+        spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
+        spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
+        spreadsheet.addHeader(bundle.getString("label.grant.contract.endMotive"));
+        spreadsheet.addHeader(bundle.getString("label.grant.contract.orientationTeacher"), 10000);
+        spreadsheet.addHeader(bundle.getString("label.grant.contract.type"));
+        spreadsheet.addHeader(bundle.getString("label.grant.contract.work.place"));
 
-		spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
-		spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
-		spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.numberCostCenter"), 10000);
-		spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.valueOfGrantPayment"));
-		spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.totalOfGrantPayment"));
+        spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
+        spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
+        spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.numberCostCenter"), 10000);
+        spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.valueOfGrantPayment"));
+        spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.totalOfGrantPayment"));
 
-		spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
-		spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
-		spreadsheet.addHeader(bundle.getString("label.list.grant.owner.totalOfDays"));
-		spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.totalInsurance"));
-		spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.numberCostCenter"), 10000);
+        spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
+        spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
+        spreadsheet.addHeader(bundle.getString("label.list.grant.owner.totalOfDays"));
+        spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.totalInsurance"));
+        spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.numberCostCenter"), 10000);
 
-		if (betweenDates) {
-			spreadsheet.addHeader(bundle.getString("label.list.grant.owner.totalOfDays.betweenDates"));
-			spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.totalInsurance.betweenDates"));
-		}
-	}
+        if (betweenDates) {
+            spreadsheet.addHeader(bundle.getString("label.list.grant.owner.totalOfDays.betweenDates"));
+            spreadsheet.addHeader(bundle.getString("label.list.byCriteria.grant.owner.totalInsurance.betweenDates"));
+        }
+    }
 
-	public ActionForward exportGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("list-grant-owner");
-	}
+    public ActionForward exportGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("list-grant-owner");
+    }
 
 }

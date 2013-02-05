@@ -7,41 +7,41 @@ import net.sourceforge.fenixedu.util.State;
 
 public class CandidateSituation extends CandidateSituation_Base {
 
-	public CandidateSituation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public CandidateSituation() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public CandidateSituation(Date date, String remarks, State validation, MasterDegreeCandidate masterDegreeCandidate,
-			SituationName situation) {
+    public CandidateSituation(Date date, String remarks, State validation, MasterDegreeCandidate masterDegreeCandidate,
+            SituationName situation) {
 
-		this();
-		setMasterDegreeCandidate(masterDegreeCandidate);
-		setSituation(situation);
-		setDate(date);
-		setRemarks(remarks);
-		setValidation(validation);
-	}
+        this();
+        setMasterDegreeCandidate(masterDegreeCandidate);
+        setSituation(situation);
+        setDate(date);
+        setRemarks(remarks);
+        setValidation(validation);
+    }
 
-	public void delete() {
-		removeMasterDegreeCandidate();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removeMasterDegreeCandidate();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
-	@Deprecated
-	public java.util.Date getDate() {
-		org.joda.time.YearMonthDay ymd = getDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getDate() {
+        org.joda.time.YearMonthDay ymd = getDateYearMonthDay();
+        return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setDate(java.util.Date date) {
-		if (date == null) {
-			setDateYearMonthDay(null);
-		} else {
-			setDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-		}
-	}
+    @Deprecated
+    public void setDate(java.util.Date date) {
+        if (date == null) {
+            setDateYearMonthDay(null);
+        } else {
+            setDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+        }
+    }
 
 }

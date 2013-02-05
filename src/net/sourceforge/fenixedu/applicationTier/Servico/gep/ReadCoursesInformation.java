@@ -23,67 +23,67 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 public class ReadCoursesInformation extends FenixService {
 
-	public List<InfoSiteCourseInformation> run(final ExecutionDegree executionDegree, final Boolean basic,
-			final String executionYearString) {
-		final ExecutionYear executionYear;
-		if (executionYearString == null) {
-			executionYear = ExecutionYear.readCurrentExecutionYear();
-		} else {
-			executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-		}
+    public List<InfoSiteCourseInformation> run(final ExecutionDegree executionDegree, final Boolean basic,
+            final String executionYearString) {
+        final ExecutionYear executionYear;
+        if (executionYearString == null) {
+            executionYear = ExecutionYear.readCurrentExecutionYear();
+        } else {
+            executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
+        }
 
-		final List<Professorship> professorships;
-		if (executionDegree == null) {
-			final List<ExecutionDegree> executionDegrees =
-					ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.DEGREE,
-							DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
-							DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-			final List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
-			final ExecutionYear executionDegreesExecutionYear =
-					degreeCurricularPlans.isEmpty() ? null : executionDegrees.get(0).getExecutionYear();
+        final List<Professorship> professorships;
+        if (executionDegree == null) {
+            final List<ExecutionDegree> executionDegrees =
+                    ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.DEGREE,
+                            DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
+                            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+            final List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
+            final ExecutionYear executionDegreesExecutionYear =
+                    degreeCurricularPlans.isEmpty() ? null : executionDegrees.get(0).getExecutionYear();
 
-			if (basic == null) {
-				professorships =
-						Professorship.readByDegreeCurricularPlansAndExecutionYear(degreeCurricularPlans,
-								executionDegreesExecutionYear);
-			} else {
-				professorships =
-						Professorship.readByDegreeCurricularPlansAndExecutionYearAndBasic(degreeCurricularPlans,
-								executionDegreesExecutionYear, basic);
-			}
-		} else {
-			if (basic == null) {
-				professorships =
-						Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree.getDegreeCurricularPlan(),
-								executionDegree.getExecutionYear());
-			} else {
-				professorships =
-						Professorship.readByDegreeCurricularPlanAndExecutionYearAndBasic(
-								executionDegree.getDegreeCurricularPlan(), executionDegree.getExecutionYear(), basic);
-			}
-		}
+            if (basic == null) {
+                professorships =
+                        Professorship.readByDegreeCurricularPlansAndExecutionYear(degreeCurricularPlans,
+                                executionDegreesExecutionYear);
+            } else {
+                professorships =
+                        Professorship.readByDegreeCurricularPlansAndExecutionYearAndBasic(degreeCurricularPlans,
+                                executionDegreesExecutionYear, basic);
+            }
+        } else {
+            if (basic == null) {
+                professorships =
+                        Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree.getDegreeCurricularPlan(),
+                                executionDegree.getExecutionYear());
+            } else {
+                professorships =
+                        Professorship.readByDegreeCurricularPlanAndExecutionYearAndBasic(
+                                executionDegree.getDegreeCurricularPlan(), executionDegree.getExecutionYear(), basic);
+            }
+        }
 
-		final Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
-		for (final Professorship professorship : professorships) {
-			executionCourses.add(professorship.getExecutionCourse());
-		}
+        final Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
+        for (final Professorship professorship : professorships) {
+            executionCourses.add(professorship.getExecutionCourse());
+        }
 
-		final List<InfoSiteCourseInformation> result = new ArrayList<InfoSiteCourseInformation>();
-		for (final ExecutionCourse executionCourse : executionCourses) {
-			result.add(new InfoSiteCourseInformation(executionCourse, executionYear));
-		}
+        final List<InfoSiteCourseInformation> result = new ArrayList<InfoSiteCourseInformation>();
+        for (final ExecutionCourse executionCourse : executionCourses) {
+            result.add(new InfoSiteCourseInformation(executionCourse, executionYear));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
-		final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+    private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
+        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 
-		for (final ExecutionDegree executionDegree : executionDegrees) {
-			result.add(executionDegree.getDegreeCurricularPlan());
-		}
+        for (final ExecutionDegree executionDegree : executionDegrees) {
+            result.add(executionDegree.getDegreeCurricularPlan());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

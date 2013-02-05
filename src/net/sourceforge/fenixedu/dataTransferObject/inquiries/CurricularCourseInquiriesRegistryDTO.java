@@ -23,131 +23,131 @@ import pt.ist.fenixWebFramework.renderers.converters.IntegerNumberConverter;
  */
 public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
-	private StudentInquiryRegistry inquiryRegistry;
+    private StudentInquiryRegistry inquiryRegistry;
 
-	private Integer weeklyHoursSpentPercentage;
+    private Integer weeklyHoursSpentPercentage;
 
-	private Double studyDaysSpentInExamsSeason;
+    private Double studyDaysSpentInExamsSeason;
 
-	private Integer autonomousWorkHoursForSimulation;
+    private Integer autonomousWorkHoursForSimulation;
 
-	private Integer attendenceClassesPercentage;
+    private Integer attendenceClassesPercentage;
 
-	public CurricularCourseInquiriesRegistryDTO(final StudentInquiryRegistry inquiryRegistry) {
-		super();
-		setInquiryRegistry(inquiryRegistry);
-		setWeeklyHoursSpentPercentage(inquiryRegistry.getWeeklyHoursSpentPercentage());
-		setStudyDaysSpentInExamsSeason(inquiryRegistry.getStudyDaysSpentInExamsSeason());
-		setAttendenceClassesPercentage(inquiryRegistry.getAttendenceClassesPercentage());
-	}
+    public CurricularCourseInquiriesRegistryDTO(final StudentInquiryRegistry inquiryRegistry) {
+        super();
+        setInquiryRegistry(inquiryRegistry);
+        setWeeklyHoursSpentPercentage(inquiryRegistry.getWeeklyHoursSpentPercentage());
+        setStudyDaysSpentInExamsSeason(inquiryRegistry.getStudyDaysSpentInExamsSeason());
+        setAttendenceClassesPercentage(inquiryRegistry.getAttendenceClassesPercentage());
+    }
 
-	public CurricularCourse getCurricularCourse() {
-		return getInquiryRegistry().getCurricularCourse();
-	}
+    public CurricularCourse getCurricularCourse() {
+        return getInquiryRegistry().getCurricularCourse();
+    }
 
-	public Integer getWeeklyHoursSpentPercentage() {
-		return weeklyHoursSpentPercentage;
-	}
+    public Integer getWeeklyHoursSpentPercentage() {
+        return weeklyHoursSpentPercentage;
+    }
 
-	public void setWeeklyHoursSpentPercentage(Integer weeklyHoursSpentPercentage) {
-		this.weeklyHoursSpentPercentage = weeklyHoursSpentPercentage;
-	}
+    public void setWeeklyHoursSpentPercentage(Integer weeklyHoursSpentPercentage) {
+        this.weeklyHoursSpentPercentage = weeklyHoursSpentPercentage;
+    }
 
-	public Double getStudyDaysSpentInExamsSeason() {
-		return studyDaysSpentInExamsSeason;
-	}
+    public Double getStudyDaysSpentInExamsSeason() {
+        return studyDaysSpentInExamsSeason;
+    }
 
-	public double getWeeklyContactLoad() {
-		BigDecimal result = new BigDecimal(getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester()));
-		return result.divide(new BigDecimal(14), 1, RoundingMode.UP).doubleValue();
-	}
+    public double getWeeklyContactLoad() {
+        BigDecimal result = new BigDecimal(getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester()));
+        return result.divide(new BigDecimal(14), 1, RoundingMode.UP).doubleValue();
+    }
 
-	public void setStudyDaysSpentInExamsSeason(Double studyDaysSpentInExamsSeason) {
-		this.studyDaysSpentInExamsSeason = studyDaysSpentInExamsSeason;
-	}
+    public void setStudyDaysSpentInExamsSeason(Double studyDaysSpentInExamsSeason) {
+        this.studyDaysSpentInExamsSeason = studyDaysSpentInExamsSeason;
+    }
 
-	public Double getCalculatedECTSCredits() {
-		return calculateECTSCredits(getInquiryRegistry().getStudentInquiryExecutionPeriod().getWeeklyHoursSpentInClassesSeason());
-	}
+    public Double getCalculatedECTSCredits() {
+        return calculateECTSCredits(getInquiryRegistry().getStudentInquiryExecutionPeriod().getWeeklyHoursSpentInClassesSeason());
+    }
 
-	public Double getSimulatedECTSCredits() {
-		return calculateECTSCredits(getAutonomousWorkHoursForSimulation());
-	}
+    public Double getSimulatedECTSCredits() {
+        return calculateECTSCredits(getAutonomousWorkHoursForSimulation());
+    }
 
-	public Double calculateECTSCredits(final Integer weeklyHoursSpentInClassesSeason) {
+    public Double calculateECTSCredits(final Integer weeklyHoursSpentInClassesSeason) {
 
-		if (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null
-				|| weeklyHoursSpentInClassesSeason == null) {
-			return 0d;
-		}
+        if (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null
+                || weeklyHoursSpentInClassesSeason == null) {
+            return 0d;
+        }
 
-		// a - weeklyHoursSpentInClassesSeason; b1 - attendenceClassesPercentage
-		// c - weeklyHoursSpentPercentage; d - studyHoursSpentInExamsSeason
-		final double result =
-				((weeklyHoursSpentInClassesSeason /* a */* (getWeeklyHoursSpentPercentage() / 100d) /* c */+ getWeeklyContactLoad() /* b */
-						* (getAttendenceClassesPercentage() / 100d) /* b1 */) * 14 + getStudyDaysSpentInExamsSeason() /* d */* 8) / 28;
+        // a - weeklyHoursSpentInClassesSeason; b1 - attendenceClassesPercentage
+        // c - weeklyHoursSpentPercentage; d - studyHoursSpentInExamsSeason
+        final double result =
+                ((weeklyHoursSpentInClassesSeason /* a */* (getWeeklyHoursSpentPercentage() / 100d) /* c */+ getWeeklyContactLoad() /* b */
+                        * (getAttendenceClassesPercentage() / 100d) /* b1 */) * 14 + getStudyDaysSpentInExamsSeason() /* d */* 8) / 28;
 
-		return new BigDecimal(result).setScale(1, BigDecimal.ROUND_UP).doubleValue();
-	}
+        return new BigDecimal(result).setScale(1, BigDecimal.ROUND_UP).doubleValue();
+    }
 
-	public double getCourseEctsCredits() {
-		return getCurricularCourse().getCompetenceCourse().getEctsCredits(getExecutionSemester().getSemester(),
-				getExecutionSemester());
-	}
+    public double getCourseEctsCredits() {
+        return getCurricularCourse().getCompetenceCourse().getEctsCredits(getExecutionSemester().getSemester(),
+                getExecutionSemester());
+    }
 
-	private ExecutionSemester getExecutionSemester() {
-		return getInquiryRegistry().getExecutionPeriod();
-	}
+    private ExecutionSemester getExecutionSemester() {
+        return getInquiryRegistry().getExecutionPeriod();
+    }
 
-	public Double getSimulatedSpentHours() {
-		if (getWeeklyHoursSpentPercentage() == null || getAutonomousWorkHoursForSimulation() == null) {
-			return 0d;
-		}
+    public Double getSimulatedSpentHours() {
+        if (getWeeklyHoursSpentPercentage() == null || getAutonomousWorkHoursForSimulation() == null) {
+            return 0d;
+        }
 
-		final double result = (getWeeklyHoursSpentPercentage() / 100d) * getAutonomousWorkHoursForSimulation();
-		return new BigDecimal(result).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
-	}
+        final double result = (getWeeklyHoursSpentPercentage() / 100d) * getAutonomousWorkHoursForSimulation();
+        return new BigDecimal(result).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
 
-	public Integer getAutonomousWorkHoursForSimulation() {
-		return autonomousWorkHoursForSimulation;
-	}
+    public Integer getAutonomousWorkHoursForSimulation() {
+        return autonomousWorkHoursForSimulation;
+    }
 
-	public void setAutonomousWorkHoursForSimulation(Integer autonomousWorkHoursForSimulation) {
-		this.autonomousWorkHoursForSimulation = autonomousWorkHoursForSimulation;
-	}
+    public void setAutonomousWorkHoursForSimulation(Integer autonomousWorkHoursForSimulation) {
+        this.autonomousWorkHoursForSimulation = autonomousWorkHoursForSimulation;
+    }
 
-	public StudentInquiryRegistry getInquiryRegistry() {
-		return inquiryRegistry;
-	}
+    public StudentInquiryRegistry getInquiryRegistry() {
+        return inquiryRegistry;
+    }
 
-	public void setInquiryRegistry(StudentInquiryRegistry inquiryRegistry) {
-		this.inquiryRegistry = inquiryRegistry;
-	}
+    public void setInquiryRegistry(StudentInquiryRegistry inquiryRegistry) {
+        this.inquiryRegistry = inquiryRegistry;
+    }
 
-	public Integer getAttendenceClassesPercentage() {
-		return attendenceClassesPercentage;
-	}
+    public Integer getAttendenceClassesPercentage() {
+        return attendenceClassesPercentage;
+    }
 
-	public void setAttendenceClassesPercentage(Integer attendenceClassesPercentage) {
-		this.attendenceClassesPercentage = attendenceClassesPercentage;
-	}
+    public void setAttendenceClassesPercentage(Integer attendenceClassesPercentage) {
+        this.attendenceClassesPercentage = attendenceClassesPercentage;
+    }
 
-	public static class NumbersToHundred5To5 implements DataProvider {
+    public static class NumbersToHundred5To5 implements DataProvider {
 
-		@Override
-		public Object provide(Object source, Object currentValue) {
-			List<Integer> numbers = new ArrayList<Integer>();
-			for (int iter = 0; iter <= 100; iter += 5) {
-				numbers.add(iter);
-			}
-			Collections.sort(numbers);
-			Collections.reverse(numbers);
-			return numbers;
-		}
+        @Override
+        public Object provide(Object source, Object currentValue) {
+            List<Integer> numbers = new ArrayList<Integer>();
+            for (int iter = 0; iter <= 100; iter += 5) {
+                numbers.add(iter);
+            }
+            Collections.sort(numbers);
+            Collections.reverse(numbers);
+            return numbers;
+        }
 
-		@Override
-		public Converter getConverter() {
-			return new IntegerNumberConverter();
-		}
-	}
+        @Override
+        public Converter getConverter() {
+            return new IntegerNumberConverter();
+        }
+    }
 }

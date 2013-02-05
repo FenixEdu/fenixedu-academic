@@ -14,76 +14,76 @@ import java.util.ListIterator;
 
 public class InfoSiteProjects extends DataTranferObject implements ISiteComponent {
 
-	private InfoExecutionCourse infoExecutionCourse;
+    private InfoExecutionCourse infoExecutionCourse;
 
-	private List infoGroupPropertiesList;
+    private List infoGroupPropertiesList;
 
-	public List getInfoGroupPropertiesList() {
-		return infoGroupPropertiesList;
-	}
+    public List getInfoGroupPropertiesList() {
+        return infoGroupPropertiesList;
+    }
 
-	public void setInfoGroupPropertiesList(List infoGroupPropertiesList) {
-		this.infoGroupPropertiesList = infoGroupPropertiesList;
-	}
+    public void setInfoGroupPropertiesList(List infoGroupPropertiesList) {
+        this.infoGroupPropertiesList = infoGroupPropertiesList;
+    }
 
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
+    public InfoExecutionCourse getInfoExecutionCourse() {
+        return infoExecutionCourse;
+    }
 
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-		this.infoExecutionCourse = infoExecutionCourse;
-	}
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+        this.infoExecutionCourse = infoExecutionCourse;
+    }
 
-	@Override
-	public boolean equals(Object objectToCompare) {
-		boolean result = false;
-		if (objectToCompare instanceof InfoSiteProjects) {
-			result = true;
-		}
+    @Override
+    public boolean equals(Object objectToCompare) {
+        boolean result = false;
+        if (objectToCompare instanceof InfoSiteProjects) {
+            result = true;
+        }
 
-		if (((InfoSiteProjects) objectToCompare).getInfoExecutionCourse() == null && (this.infoExecutionCourse != null)
-				|| ((InfoSiteProjects) objectToCompare).getInfoExecutionCourse() != null && (this.infoExecutionCourse == null)) {
-			return false;
-		}
+        if (((InfoSiteProjects) objectToCompare).getInfoExecutionCourse() == null && (this.infoExecutionCourse != null)
+                || ((InfoSiteProjects) objectToCompare).getInfoExecutionCourse() != null && (this.infoExecutionCourse == null)) {
+            return false;
+        }
 
-		if (!(((InfoSiteProjects) objectToCompare).getInfoExecutionCourse() == null && (this.infoExecutionCourse == null))) {
-			if (!(((InfoSiteProjects) objectToCompare).getInfoExecutionCourse()).equals(this.infoExecutionCourse)) {
-				return false;
-			}
-		}
+        if (!(((InfoSiteProjects) objectToCompare).getInfoExecutionCourse() == null && (this.infoExecutionCourse == null))) {
+            if (!(((InfoSiteProjects) objectToCompare).getInfoExecutionCourse()).equals(this.infoExecutionCourse)) {
+                return false;
+            }
+        }
 
-		if (((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList() == null
-				&& this.getInfoGroupPropertiesList() == null) {
-			return true;
-		}
+        if (((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList() == null
+                && this.getInfoGroupPropertiesList() == null) {
+            return true;
+        }
 
-		if (((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList() == null
-				|| this.getInfoGroupPropertiesList() == null
-				|| ((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList().size() != this.getInfoGroupPropertiesList()
-						.size()) {
-			return false;
-		}
+        if (((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList() == null
+                || this.getInfoGroupPropertiesList() == null
+                || ((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList().size() != this.getInfoGroupPropertiesList()
+                        .size()) {
+            return false;
+        }
 
-		ListIterator iter1 = ((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList().listIterator();
-		ListIterator iter2 = this.getInfoGroupPropertiesList().listIterator();
-		while (result && iter1.hasNext()) {
+        ListIterator iter1 = ((InfoSiteProjects) objectToCompare).getInfoGroupPropertiesList().listIterator();
+        ListIterator iter2 = this.getInfoGroupPropertiesList().listIterator();
+        while (result && iter1.hasNext()) {
 
-			InfoGrouping groupProperties1 = (InfoGrouping) iter1.next();
-			InfoGrouping groupProperties2 = (InfoGrouping) iter2.next();
-			if (!groupProperties1.equals(groupProperties2)) {
+            InfoGrouping groupProperties1 = (InfoGrouping) iter1.next();
+            InfoGrouping groupProperties2 = (InfoGrouping) iter2.next();
+            if (!groupProperties1.equals(groupProperties2)) {
 
-				result = false;
-			}
-		}
+                result = false;
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InfoSiteProjects: ";
-		result += "infoGroupPropertiesList - " + this.getInfoGroupPropertiesList() + "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InfoSiteProjects: ";
+        result += "infoGroupPropertiesList - " + this.getInfoGroupPropertiesList() + "]";
+        return result;
+    }
 
 }

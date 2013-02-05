@@ -10,16 +10,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ChangeGratuityEventPaymentPlanProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final GratuityEventWithPaymentPlan event = (GratuityEventWithPaymentPlan) source;
-		return new ArrayList<PaymentPlan>(event.getDegreeCurricularPlanServiceAgreement().getServiceAgreementTemplate()
-				.getGratuityPaymentPlansFor(event.getExecutionYear()));
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final GratuityEventWithPaymentPlan event = (GratuityEventWithPaymentPlan) source;
+        return new ArrayList<PaymentPlan>(event.getDegreeCurricularPlanServiceAgreement().getServiceAgreementTemplate()
+                .getGratuityPaymentPlansFor(event.getExecutionYear()));
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

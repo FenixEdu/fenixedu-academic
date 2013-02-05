@@ -8,54 +8,54 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean implements IPhdAcademicServiceRequest {
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private AcademicServiceRequestType requestType;
+    private AcademicServiceRequestType requestType;
 
-	private PhdIndividualProgramProcess phdIndividualProgramProcess;
+    private PhdIndividualProgramProcess phdIndividualProgramProcess;
 
-	public PhdAcademicServiceRequestCreateBean(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-		super(null);
-		this.phdIndividualProgramProcess = phdIndividualProgramProcess;
-	}
+    public PhdAcademicServiceRequestCreateBean(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
+        super(null);
+        this.phdIndividualProgramProcess = phdIndividualProgramProcess;
+    }
 
-	@Override
-	public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-		return this.phdIndividualProgramProcess;
-	}
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+        return this.phdIndividualProgramProcess;
+    }
 
-	public void setPhdIndividualProgramProcess(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-		this.phdIndividualProgramProcess = phdIndividualProgramProcess;
-	}
+    public void setPhdIndividualProgramProcess(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
+        this.phdIndividualProgramProcess = phdIndividualProgramProcess;
+    }
 
-	public AcademicServiceRequestType getRequestType() {
-		return requestType;
-	}
+    public AcademicServiceRequestType getRequestType() {
+        return requestType;
+    }
 
-	public void setRequestType(final AcademicServiceRequestType requestType) {
-		this.requestType = requestType;
-	}
+    public void setRequestType(final AcademicServiceRequestType requestType) {
+        this.requestType = requestType;
+    }
 
-	@Override
-	protected void setRegistration(final Registration registration) {
-		// DO NOTHING
-	}
+    @Override
+    protected void setRegistration(final Registration registration) {
+        // DO NOTHING
+    }
 
-	@Override
-	public Registration getRegistration() {
-		throw new DomainException("error.PhdAcademicServiceRequestCreateBean.get.registration.invalid");
-	}
+    @Override
+    public Registration getRegistration() {
+        throw new DomainException("error.PhdAcademicServiceRequestCreateBean.get.registration.invalid");
+    }
 
-	@Service
-	public PhdAcademicServiceRequest createNewRequest() {
-		switch (getRequestType()) {
-		case PHD_STUDENT_REINGRESSION:
-			return PhdStudentReingressionRequest.createRequest(this);
-		default:
-			throw new DomainException("error.PhdAcademicServiceRequest.create.request.type.unknown");
-		}
-	}
+    @Service
+    public PhdAcademicServiceRequest createNewRequest() {
+        switch (getRequestType()) {
+        case PHD_STUDENT_REINGRESSION:
+            return PhdStudentReingressionRequest.createRequest(this);
+        default:
+            throw new DomainException("error.PhdAcademicServiceRequest.create.request.type.unknown");
+        }
+    }
 }

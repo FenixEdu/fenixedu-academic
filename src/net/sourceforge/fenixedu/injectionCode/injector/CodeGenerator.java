@@ -14,5 +14,5 @@ import java.util.Map;
  *          Exp $
  */
 public interface CodeGenerator {
-	public abstract String getCode(Map<String, Object> annotationParameters);
+    public abstract String getCode(Map<String, Object> annotationParameters);
 }

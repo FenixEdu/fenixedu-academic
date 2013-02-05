@@ -8,28 +8,28 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class ExternalPhdProgramsProviderForPublicCandidacies extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		if (source instanceof PhdProgramCandidacyProcessBean) {
-			PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
-			if (bean.getFocusArea() == null) {
-				return Collections.EMPTY_LIST;
-			}
+        if (source instanceof PhdProgramCandidacyProcessBean) {
+            PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
+            if (bean.getFocusArea() == null) {
+                return Collections.EMPTY_LIST;
+            }
 
-			return bean.getFocusArea().getAssociatedExternalPhdProgramsForCollaborationType(bean.getCollaborationType());
-		}
+            return bean.getFocusArea().getAssociatedExternalPhdProgramsForCollaborationType(bean.getCollaborationType());
+        }
 
-		if (source instanceof PhdIndividualProgramProcessBean) {
-			PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
+        if (source instanceof PhdIndividualProgramProcessBean) {
+            PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
 
-			if (bean.getFocusArea() == null) {
-				return Collections.EMPTY_LIST;
-			}
+            if (bean.getFocusArea() == null) {
+                return Collections.EMPTY_LIST;
+            }
 
-			return bean.getFocusArea().getAssociatedExternalPhdProgramsForCollaborationType(bean.getCollaborationType());
-		}
+            return bean.getFocusArea().getAssociatedExternalPhdProgramsForCollaborationType(bean.getCollaborationType());
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

@@ -29,65 +29,65 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 public class IndexAction extends Action {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaValidatorForm executionPeriodForm = (DynaValidatorForm) form;
+        DynaValidatorForm executionPeriodForm = (DynaValidatorForm) form;
 
-		List executionPeriodsNotClosed = ReadNotClosedExecutionPeriods.run();
+        List executionPeriodsNotClosed = ReadNotClosedExecutionPeriods.run();
 
-		removeCreditsPointZeroExecutionPeriod(executionPeriodsNotClosed);
-		setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);
+        removeCreditsPointZeroExecutionPeriod(executionPeriodsNotClosed);
+        setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);
 
-		BeanComparator initialDateComparator = new BeanComparator("beginDate");
-		Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
+        BeanComparator initialDateComparator = new BeanComparator("beginDate");
+        Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
 
-		request.setAttribute("executionPeriods", executionPeriodsNotClosed);
+        request.setAttribute("executionPeriods", executionPeriodsNotClosed);
 
-		return mapping.findForward("successfull-read");
-	}
+        return mapping.findForward("successfull-read");
+    }
 
-	private void removeCreditsPointZeroExecutionPeriod(List<InfoExecutionPeriod> executionPeriodsNotClosed) {
-		for (InfoExecutionPeriod infoExecutionPeriod : executionPeriodsNotClosed) {
-			if (infoExecutionPeriod.getIdInternal().equals(1)) {
-				executionPeriodsNotClosed.remove(infoExecutionPeriod);
-				break;
-			}
-		}
-	}
+    private void removeCreditsPointZeroExecutionPeriod(List<InfoExecutionPeriod> executionPeriodsNotClosed) {
+        for (InfoExecutionPeriod infoExecutionPeriod : executionPeriodsNotClosed) {
+            if (infoExecutionPeriod.getIdInternal().equals(1)) {
+                executionPeriodsNotClosed.remove(infoExecutionPeriod);
+                break;
+            }
+        }
+    }
 
-	/**
-	 * If the executionPeriod is not already selected it chooses the current
-	 * executionPeriod.
-	 * 
-	 */
-	private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
-			DynaValidatorForm executionPeriodForm) {
-		final Integer executionPeriodId = (Integer) executionPeriodForm.get("executionPeriodId");
-		InfoExecutionPeriod infoExecutionPeriod = null;
-		if (executionPeriodId == null) {
-			infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
+    /**
+     * If the executionPeriod is not already selected it chooses the current
+     * executionPeriod.
+     * 
+     */
+    private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
+            DynaValidatorForm executionPeriodForm) {
+        final Integer executionPeriodId = (Integer) executionPeriodForm.get("executionPeriodId");
+        InfoExecutionPeriod infoExecutionPeriod = null;
+        if (executionPeriodId == null) {
+            infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
 
-				@Override
-				public boolean evaluate(Object input) {
-					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+                @Override
+                public boolean evaluate(Object input) {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-					return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
-				}
-			});
-		} else {
-			infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
+                    return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
+                }
+            });
+        } else {
+            infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
 
-				@Override
-				public boolean evaluate(Object input) {
-					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+                @Override
+                public boolean evaluate(Object input) {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-					return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
-				}
-			});
+                    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                }
+            });
 
-		}
-		request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
-	}
+        }
+        request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
+    }
 }

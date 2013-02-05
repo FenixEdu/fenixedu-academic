@@ -8,26 +8,26 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class SpecificUnitSite extends SpecificUnitSite_Base {
 
-	protected SpecificUnitSite() {
-		super();
-	}
+    protected SpecificUnitSite() {
+        super();
+    }
 
-	public SpecificUnitSite(Unit unit) {
-		super();
-		setUnit(unit);
-	}
+    public SpecificUnitSite(Unit unit) {
+        super();
+        setUnit(unit);
+    }
 
-	@Override
-	public IGroup getOwner() {
-		return new GroupUnion(new FixedSetGroup(getManagers()));
-	}
+    @Override
+    public IGroup getOwner() {
+        return new GroupUnion(new FixedSetGroup(getManagers()));
+    }
 
-	@Override
-	public void appendReversePathPart(final StringBuilder stringBuilder) {
-	}
+    @Override
+    public void appendReversePathPart(final StringBuilder stringBuilder) {
+    }
 
-	@Override
-	public MultiLanguageString getName() {
-		return new MultiLanguageString("");
-	}
+    @Override
+    public MultiLanguageString getName() {
+        return new MultiLanguageString("");
+    }
 }

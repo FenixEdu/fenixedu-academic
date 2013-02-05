@@ -14,25 +14,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TeacherDepartmentDegreesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return getDegrees((StudentsPerformanceInfoBean) source);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return getDegrees((StudentsPerformanceInfoBean) source);
+    }
 
-	static public Set<Degree> getDegrees(StudentsPerformanceInfoBean bean) {
-		Set<Degree> degrees = new TreeSet<Degree>(Collections.reverseOrder(Degree.COMPARATOR_BY_FIRST_ENROLMENTS_PERIOD_AND_ID));
+    static public Set<Degree> getDegrees(StudentsPerformanceInfoBean bean) {
+        Set<Degree> degrees = new TreeSet<Degree>(Collections.reverseOrder(Degree.COMPARATOR_BY_FIRST_ENROLMENTS_PERIOD_AND_ID));
 
-		List<Tutorship> tutorships = bean.getTutorships();
+        List<Tutorship> tutorships = bean.getTutorships();
 
-		for (Tutorship tutorship : tutorships) {
-			degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
-		}
-		return degrees;
-	}
+        for (Tutorship tutorship : tutorships) {
+            degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
+        }
+        return degrees;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

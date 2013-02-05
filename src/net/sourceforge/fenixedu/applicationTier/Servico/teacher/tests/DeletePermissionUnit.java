@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewPermissionUnit;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePermissionUnit extends FenixService {
-	@Service
-	public static void run(NewPermissionUnit permissionUnit) throws FenixServiceException {
-		permissionUnit.delete();
-	}
+    @Service
+    public static void run(NewPermissionUnit permissionUnit) throws FenixServiceException {
+        permissionUnit.delete();
+    }
 }

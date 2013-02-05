@@ -21,95 +21,95 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  */
 public class ClassOperator extends OperatorArgument {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public static final int CLASS_NAME = 0;
+    public static final int CLASS_NAME = 0;
 
-	public static final String DOMAIN_PREFIX = "net.sourceforge.fenixedu.domain.";
+    public static final String DOMAIN_PREFIX = "net.sourceforge.fenixedu.domain.";
 
-	public ClassOperator(Argument argument) {
-		super();
+    public ClassOperator(Argument argument) {
+        super();
 
-		addArgument(argument);
-	}
+        addArgument(argument);
+    }
 
-	/**
-	 * Creates a new <code>ClassOperator</code> representing the given class.
-	 * This constructor is usefull when you need an external representation of
-	 * the operator.
-	 * 
-	 * @param type
-	 *            the type this operator will be representing
-	 */
-	public ClassOperator(Class type) {
-		this(new StaticArgument(simplify(type.getName())));
-	}
+    /**
+     * Creates a new <code>ClassOperator</code> representing the given class.
+     * This constructor is usefull when you need an external representation of
+     * the operator.
+     * 
+     * @param type
+     *            the type this operator will be representing
+     */
+    public ClassOperator(Class type) {
+        this(new StaticArgument(simplify(type.getName())));
+    }
 
-	ClassOperator(GroupContextProvider provider, Argument argument) {
-		super();
+    ClassOperator(GroupContextProvider provider, Argument argument) {
+        super();
 
-		setContextProvider(provider);
-		addArgument(argument);
-	}
+        setContextProvider(provider);
+        addArgument(argument);
+    }
 
-	@Override
-	protected void checkOperatorArguments() {
-		int size = getArguments().size();
+    @Override
+    protected void checkOperatorArguments() {
+        int size = getArguments().size();
 
-		if (size != 1) {
-			throw new WrongNumberOfArgumentsException(size, 1, 1);
-		}
-	}
+        if (size != 1) {
+            throw new WrongNumberOfArgumentsException(size, 1, 1);
+        }
+    }
 
-	@Override
-	protected Class execute() {
-		String className = getClassName();
+    @Override
+    protected Class execute() {
+        String className = getClassName();
 
-		try {
-			if (className.startsWith(DOMAIN_PREFIX)) {
-				return Class.forName(className);
-			} else {
-				try {
-					return Class.forName(DOMAIN_PREFIX + className);
-				} catch (ClassNotFoundException e) {
+        try {
+            if (className.startsWith(DOMAIN_PREFIX)) {
+                return Class.forName(className);
+            } else {
+                try {
+                    return Class.forName(DOMAIN_PREFIX + className);
+                } catch (ClassNotFoundException e) {
 
-					return Class.forName(className);
-				}
-			}
-		} catch (ClassNotFoundException e1) {
-			throw new InvalidClassNameSpecified(DOMAIN_PREFIX, className);
-		}
-	}
+                    return Class.forName(className);
+                }
+            }
+        } catch (ClassNotFoundException e1) {
+            throw new InvalidClassNameSpecified(DOMAIN_PREFIX, className);
+        }
+    }
 
-	protected String getClassName() {
-		return String.valueOf(argument(CLASS_NAME).getValue());
-	}
+    protected String getClassName() {
+        return String.valueOf(argument(CLASS_NAME).getValue());
+    }
 
-	/**
-	 * Simplifies the name of the type based on the prefix {@value #DOMAIN_PREFIX}.
-	 * 
-	 * @param typeName
-	 *            the type name to simplify
-	 * @return the symplified name of the type
-	 */
-	public static String simplify(String typeName) {
-		if (typeName.startsWith(DOMAIN_PREFIX)) {
-			return typeName.substring(DOMAIN_PREFIX.length());
-		} else {
-			return typeName;
-		}
-	}
+    /**
+     * Simplifies the name of the type based on the prefix {@value #DOMAIN_PREFIX}.
+     * 
+     * @param typeName
+     *            the type name to simplify
+     * @return the symplified name of the type
+     */
+    public static String simplify(String typeName) {
+        if (typeName.startsWith(DOMAIN_PREFIX)) {
+            return typeName.substring(DOMAIN_PREFIX.length());
+        } else {
+            return typeName;
+        }
+    }
 
-	@Override
-	public boolean isDynamic() {
-		checkOperatorArguments();
+    @Override
+    public boolean isDynamic() {
+        checkOperatorArguments();
 
-		return argument(CLASS_NAME).isDynamic();
-	}
+        return argument(CLASS_NAME).isDynamic();
+    }
 
-	@Override
-	protected String getMainValueString() {
-		return String.format("$C(%s)", argument(CLASS_NAME));
-	}
+    @Override
+    protected String getMainValueString() {
+        return String.format("$C(%s)", argument(CLASS_NAME));
+    }
 
 }

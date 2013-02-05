@@ -38,47 +38,46 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "manager", path = "/readDegree", input = "/readDegrees.do", scope = "session")
 @Forwards(value = { @Forward(name = "viewDegree", path = "/manager/readDegree_bd.jsp"),
-		@Forward(name = "readDegrees", path = "/readDegrees.do") })
+        @Forward(name = "readDegrees", path = "/readDegrees.do") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
-		key = "resources.Action.exceptions.NonExistingActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+        key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ReadDegreeAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		Integer degreeId = null;
-		if (request.getParameter("degreeId") != null) {
-			degreeId = new Integer(request.getParameter("degreeId"));
-		}
-		InfoDegree degree = null;
+        Integer degreeId = null;
+        if (request.getParameter("degreeId") != null) {
+            degreeId = new Integer(request.getParameter("degreeId"));
+        }
+        InfoDegree degree = null;
 
-		try {
-			degree = ReadDegree.run(degreeId);
+        try {
+            degree = ReadDegree.run(degreeId);
 
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingDegree", "", e);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExistingDegree", "", e);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		// in case the degree really exists
-		List degreeCurricularPlans = null;
+        // in case the degree really exists
+        List degreeCurricularPlans = null;
 
-		try {
-			degreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeId);
+        try {
+            degreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeId);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		Collections.sort(degreeCurricularPlans);
-		request.setAttribute("infoDegree", degree);
-		request.setAttribute("curricularPlansList", degreeCurricularPlans);
-		return mapping.findForward("viewDegree");
-	}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        Collections.sort(degreeCurricularPlans);
+        request.setAttribute("infoDegree", degree);
+        request.setAttribute("curricularPlansList", degreeCurricularPlans);
+        return mapping.findForward("viewDegree");
+    }
 }

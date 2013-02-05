@@ -26,35 +26,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  *         Date: 2006-02-22
  */
-@Mapping(
-		module = "manager",
-		path = "/personManagement/createPerson",
-		input = "createPerson",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "manager", path = "/personManagement/createPerson", input = "createPerson", scope = "request",
+        parameter = "method")
 @Forwards(value = {
-		@Forward(name = "Prepare", path = "/manager/personManagement/createPerson.jsp", tileProperties = @Tile(
-				title = "private.staffarea.interfacegiaf.interfacegiaf.createperson")),
-		@Forward(name = "Success", path = "/manager/personManagement/createPersonSuccess.jsp", tileProperties = @Tile(
-				title = "private.staffarea.interfacegiaf.interfacegiaf.createperson")) })
+        @Forward(name = "Prepare", path = "/manager/personManagement/createPerson.jsp", tileProperties = @Tile(
+                title = "private.staffarea.interfacegiaf.interfacegiaf.createperson")),
+        @Forward(name = "Success", path = "/manager/personManagement/createPersonSuccess.jsp", tileProperties = @Tile(
+                title = "private.staffarea.interfacegiaf.interfacegiaf.createperson")) })
 public class CreatePersonAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
-		return mapping.findForward("Prepare");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixFilterException, FenixServiceException {
+        return mapping.findForward("Prepare");
+    }
 
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixFilterException, FenixServiceException {
 
-		final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
+        final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
 
-		AddPersonRole.run(person, RoleType.PERSON);
+        AddPersonRole.run(person, RoleType.PERSON);
 
-		// It simply returns Success - The object is created by the renderer
-		// mechanism
-		request.setAttribute("person", person);
-		return mapping.findForward("Success");
-	}
+        // It simply returns Success - The object is created by the renderer
+        // mechanism
+        request.setAttribute("person", person);
+        return mapping.findForward("Success");
+    }
 
 }

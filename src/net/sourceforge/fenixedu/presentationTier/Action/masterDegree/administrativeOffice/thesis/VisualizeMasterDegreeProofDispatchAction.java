@@ -28,66 +28,66 @@ import org.apache.struts.action.ActionMapping;
 
 public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchAction {
 
-	public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 
-		new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
-				studentCurricularPlan);
+        new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
+                studentCurricularPlan);
 
-		final List<MasterDegreeProofVersion> masterDegreeProofHistory =
-				studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
-		if (!masterDegreeProofHistory.isEmpty()) {
-			request.setAttribute(PresentationConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
-		}
+        final List<MasterDegreeProofVersion> masterDegreeProofHistory =
+                studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
+        if (!masterDegreeProofHistory.isEmpty()) {
+            request.setAttribute(PresentationConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
+        }
 
-		final MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
-		MasterDegreeProofVersion masterDegreeProofVersion = masterDegreeThesis.getActiveMasterDegreeProofVersion();
+        final MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+        MasterDegreeProofVersion masterDegreeProofVersion = masterDegreeThesis.getActiveMasterDegreeProofVersion();
 
-		if (masterDegreeProofVersion == null) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
-					mapping.findForward("errorNonExistingProofVersion"));
-		}
+        if (masterDegreeProofVersion == null) {
+            throw new NonExistingActionException("error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
+                    mapping.findForward("errorNonExistingProofVersion"));
+        }
 
-		if (masterDegreeProofVersion.getJuries().isEmpty() == false) {
-			request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
-		}
+        if (masterDegreeProofVersion.getJuries().isEmpty() == false) {
+            request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
+        }
 
-		if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
-			request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
-		}
+        if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
+            request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
+        }
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-		String formattedProofDate = null;
-		Date proofDate = masterDegreeProofVersion.getProofDate();
-		if (proofDate != null) {
-			formattedProofDate = simpleDateFormat.format(proofDate);
-		}
+        String formattedProofDate = null;
+        Date proofDate = masterDegreeProofVersion.getProofDate();
+        if (proofDate != null) {
+            formattedProofDate = simpleDateFormat.format(proofDate);
+        }
 
-		String formattedThesisDeliveryDate = null;
-		Date thesisDeliveryDate = masterDegreeProofVersion.getThesisDeliveryDate();
-		if (thesisDeliveryDate != null) {
-			formattedThesisDeliveryDate = simpleDateFormat.format(thesisDeliveryDate);
-		}
+        String formattedThesisDeliveryDate = null;
+        Date thesisDeliveryDate = masterDegreeProofVersion.getThesisDeliveryDate();
+        if (thesisDeliveryDate != null) {
+            formattedThesisDeliveryDate = simpleDateFormat.format(thesisDeliveryDate);
+        }
 
-		Date lastModification = new Date(masterDegreeProofVersion.getLastModification().getTime());
-		simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
-		String formattedLastModification = simpleDateFormat.format(lastModification);
+        Date lastModification = new Date(masterDegreeProofVersion.getLastModification().getTime());
+        simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
+        String formattedLastModification = simpleDateFormat.format(lastModification);
 
-		request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesis
-				.getActiveMasterDegreeThesisDataVersion().getDissertationTitle());
-		request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
-		request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
-		request.setAttribute(PresentationConstants.PROOF_DATE, formattedProofDate);
-		request.setAttribute(PresentationConstants.THESIS_DELIVERY_DATE, formattedThesisDeliveryDate);
-		request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
-		request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
+        request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesis
+                .getActiveMasterDegreeThesisDataVersion().getDissertationTitle());
+        request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
+        request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
+        request.setAttribute(PresentationConstants.PROOF_DATE, formattedProofDate);
+        request.setAttribute(PresentationConstants.THESIS_DELIVERY_DATE, formattedThesisDeliveryDate);
+        request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
+        request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
 }

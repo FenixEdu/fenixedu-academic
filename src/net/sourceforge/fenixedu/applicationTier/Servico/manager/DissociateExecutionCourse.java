@@ -12,26 +12,26 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DissociateExecutionCourse extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
-		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
-		if (curricularCourse == null) {
-			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-		}
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+        }
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		if (executionCourse == null) {
-			throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-		}
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        if (executionCourse == null) {
+            throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+        }
 
-		List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-		List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
-		if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
-			executionCourses.remove(executionCourse);
-			curricularCourses.remove(curricularCourse);
-		}
-	}
+        if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
+            executionCourses.remove(executionCourse);
+            curricularCourses.remove(curricularCourse);
+        }
+    }
 
 }

@@ -15,22 +15,22 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
  */
 public class EditCourseInformation extends FenixService {
 
-	public void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
-		final CourseReport courseReport;
-		if (courseReportID != 0) {
-			courseReport = rootDomainObject.readCourseReportByOID(courseReportID);
-		} else {
-			final ExecutionCourse executionCourse =
-					rootDomainObject.readExecutionCourseByOID(infoCourseReport.getInfoExecutionCourse().getIdInternal());
+    public void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
+        final CourseReport courseReport;
+        if (courseReportID != 0) {
+            courseReport = rootDomainObject.readCourseReportByOID(courseReportID);
+        } else {
+            final ExecutionCourse executionCourse =
+                    rootDomainObject.readExecutionCourseByOID(infoCourseReport.getInfoExecutionCourse().getIdInternal());
 
-			courseReport = executionCourse.createCourseReport(newReport);
-		}
+            courseReport = executionCourse.createCourseReport(newReport);
+        }
 
-		if (courseReport == null) {
-			throw new FenixServiceException();
-		}
+        if (courseReport == null) {
+            throw new FenixServiceException();
+        }
 
-		courseReport.edit(newReport);
-	}
+        courseReport.edit(newReport);
+    }
 
 }

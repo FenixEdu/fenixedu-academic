@@ -9,22 +9,22 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions
  */
 public class NoSuchGroupBuilderException extends GroupExpressionParserException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String MESSAGE = "accessControl.group.builder.noSuchGroup";
-	private String name;
+    private static final String MESSAGE = "accessControl.group.builder.noSuchGroup";
+    private String name;
 
-	public NoSuchGroupBuilderException(String name) {
-		super(MESSAGE, name);
+    public NoSuchGroupBuilderException(String name) {
+        super(MESSAGE, name);
 
-		this.name = name;
-	}
+        this.name = name;
+    }
 
-	/**
-	 * @return the name that was asked for
-	 */
-	public String getName() {
-		return this.name;
-	}
+    /**
+     * @return the name that was asked for
+     */
+    public String getName() {
+        return this.name;
+    }
 
 }

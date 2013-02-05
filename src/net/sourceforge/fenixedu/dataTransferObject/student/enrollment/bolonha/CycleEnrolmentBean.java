@@ -16,103 +16,103 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CycleEnrolmentBean implements Serializable {
 
-	private static final long serialVersionUID = -7926077929745839701L;
+    private static final long serialVersionUID = -7926077929745839701L;
 
-	private StudentCurricularPlan studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-	private ExecutionSemester executionSemester;
+    private ExecutionSemester executionSemester;
 
-	private CycleCourseGroup cycleCourseGroupToEnrol;
+    private CycleCourseGroup cycleCourseGroupToEnrol;
 
-	private CycleType sourceCycleAffinity;
+    private CycleType sourceCycleAffinity;
 
-	private CycleType cycleTypeToEnrol;
+    private CycleType cycleTypeToEnrol;
 
-	public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-			final CycleType sourceCycleAffinity, final CycleType cycleTypeToEnrol) {
-		setStudentCurricularPlan(studentCurricularPlan);
-		setExecutionPeriod(executionSemester);
-		setSourceCycleAffinity(sourceCycleAffinity);
-		setCycleTypeToEnrol(cycleTypeToEnrol);
-	}
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final CycleType sourceCycleAffinity, final CycleType cycleTypeToEnrol) {
+        setStudentCurricularPlan(studentCurricularPlan);
+        setExecutionPeriod(executionSemester);
+        setSourceCycleAffinity(sourceCycleAffinity);
+        setCycleTypeToEnrol(cycleTypeToEnrol);
+    }
 
-	public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-			final CycleCourseGroup cycleCourseGroup) {
-		this(studentCurricularPlan, executionSemester, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
-		setCycleCourseGroupToEnrol(cycleCourseGroup);
-	}
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final CycleCourseGroup cycleCourseGroup) {
+        this(studentCurricularPlan, executionSemester, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
+        setCycleCourseGroupToEnrol(cycleCourseGroup);
+    }
 
-	public StudentCurricularPlan getStudentCurricularPlan() {
-		return this.studentCurricularPlan;
-	}
+    public StudentCurricularPlan getStudentCurricularPlan() {
+        return this.studentCurricularPlan;
+    }
 
-	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-		this.studentCurricularPlan = studentCurricularPlan;
-	}
+    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		return this.executionSemester;
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        return this.executionSemester;
+    }
 
-	public void setExecutionPeriod(ExecutionSemester executionSemester) {
-		this.executionSemester = executionSemester;
-	}
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
+    }
 
-	public CycleCourseGroup getCycleCourseGroupToEnrol() {
-		return this.cycleCourseGroupToEnrol;
-	}
+    public CycleCourseGroup getCycleCourseGroupToEnrol() {
+        return this.cycleCourseGroupToEnrol;
+    }
 
-	public void setCycleCourseGroupToEnrol(CycleCourseGroup cycleCourseGroup) {
-		this.cycleCourseGroupToEnrol = cycleCourseGroup;
-	}
+    public void setCycleCourseGroupToEnrol(CycleCourseGroup cycleCourseGroup) {
+        this.cycleCourseGroupToEnrol = cycleCourseGroup;
+    }
 
-	public CycleType getSourceCycleAffinity() {
-		return sourceCycleAffinity;
-	}
+    public CycleType getSourceCycleAffinity() {
+        return sourceCycleAffinity;
+    }
 
-	public void setSourceCycleAffinity(CycleType sourceCycleAffinity) {
-		this.sourceCycleAffinity = sourceCycleAffinity;
-	}
+    public void setSourceCycleAffinity(CycleType sourceCycleAffinity) {
+        this.sourceCycleAffinity = sourceCycleAffinity;
+    }
 
-	public CycleType getCycleTypeToEnrol() {
-		return cycleTypeToEnrol;
-	}
+    public CycleType getCycleTypeToEnrol() {
+        return cycleTypeToEnrol;
+    }
 
-	public void setCycleTypeToEnrol(CycleType cycleTypeToEnrol) {
-		this.cycleTypeToEnrol = cycleTypeToEnrol;
-	}
+    public void setCycleTypeToEnrol(CycleType cycleTypeToEnrol) {
+        this.cycleTypeToEnrol = cycleTypeToEnrol;
+    }
 
-	public List<CycleCourseGroup> getCycleDestinationAffinities() {
-		final List<CycleCourseGroup> affinities = getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
+    public List<CycleCourseGroup> getCycleDestinationAffinities() {
+        final List<CycleCourseGroup> affinities = getDegreeCurricularPlan().getDestinationAffinities(getSourceCycleAffinity());
 
-		if (affinities.isEmpty()) {
-			return Collections.emptyList();
-		}
+        if (affinities.isEmpty()) {
+            return Collections.emptyList();
+        }
 
-		if (!isStudent()) {
-			return affinities;
-		}
+        if (!isStudent()) {
+            return affinities;
+        }
 
-		final List<CycleCourseGroup> result = new ArrayList<CycleCourseGroup>();
-		for (final CycleCourseGroup cycleCourseGroup : affinities) {
-			final DegreeCurricularPlan degreeCurricularPlan = cycleCourseGroup.getParentDegreeCurricularPlan();
-			if (degreeCurricularPlan.hasEnrolmentPeriodInCurricularCourses(getExecutionPeriod())) {
-				result.add(cycleCourseGroup);
-			}
-		}
-		return result;
-	}
+        final List<CycleCourseGroup> result = new ArrayList<CycleCourseGroup>();
+        for (final CycleCourseGroup cycleCourseGroup : affinities) {
+            final DegreeCurricularPlan degreeCurricularPlan = cycleCourseGroup.getParentDegreeCurricularPlan();
+            if (degreeCurricularPlan.hasEnrolmentPeriodInCurricularCourses(getExecutionPeriod())) {
+                result.add(cycleCourseGroup);
+            }
+        }
+        return result;
+    }
 
-	private boolean isStudent() {
-		return AccessControl.getUserView().hasRoleType(RoleType.STUDENT);
-	}
+    private boolean isStudent() {
+        return AccessControl.getUserView().hasRoleType(RoleType.STUDENT);
+    }
 
-	private DegreeCurricularPlan getDegreeCurricularPlan() {
-		return getStudentCurricularPlan().getDegreeCurricularPlan();
-	}
+    private DegreeCurricularPlan getDegreeCurricularPlan() {
+        return getStudentCurricularPlan().getDegreeCurricularPlan();
+    }
 
-	public CycleCurriculumGroup getSourceCycle() {
-		return getStudentCurricularPlan().getCycle(getSourceCycleAffinity());
-	}
+    public CycleCurriculumGroup getSourceCycle() {
+        return getStudentCurricularPlan().getCycle(getSourceCycleAffinity());
+    }
 
 }

@@ -17,22 +17,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteShifts extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(final List<Integer> shiftOIDs) throws FenixServiceException {
-		final List<DomainException> exceptionList = new ArrayList<DomainException>();
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(final List<Integer> shiftOIDs) throws FenixServiceException {
+        final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
-		for (final Integer shiftID : shiftOIDs) {
-			try {
-				rootDomainObject.readShiftByOID(shiftID).delete();
-			} catch (DomainException e) {
-				exceptionList.add(e);
-			}
-		}
+        for (final Integer shiftID : shiftOIDs) {
+            try {
+                rootDomainObject.readShiftByOID(shiftID).delete();
+            } catch (DomainException e) {
+                exceptionList.add(e);
+            }
+        }
 
-		if (!exceptionList.isEmpty()) {
-			throw new FenixServiceMultipleException(exceptionList);
-		}
-	}
+        if (!exceptionList.isEmpty()) {
+            throw new FenixServiceMultipleException(exceptionList);
+        }
+    }
 
 }

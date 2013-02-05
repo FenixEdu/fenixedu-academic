@@ -20,34 +20,30 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(
-		module = "teacher",
-		path = "/weeklyWorkLoad",
-		input = "/weeklyWorkLoad.do?method=prepare",
-		scope = "session",
-		parameter = "method")
+@Mapping(module = "teacher", path = "/weeklyWorkLoad", input = "/weeklyWorkLoad.do?method=prepare", scope = "session",
+        parameter = "method")
 @Forwards(value = { @Forward(name = "showWeeklyWorkLoad", path = "/teacher/weeklyWorkLoad.jsp", tileProperties = @Tile(
-		navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
+        navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixFilterException, FenixServiceException {
 
-		final String executionCourseIDString = request.getParameter("executionCourseID");
-		final Integer executionCourseID =
-				(executionCourseIDString == null || executionCourseIDString.length() == 0) ? null : Integer
-						.valueOf(executionCourseIDString);
+        final String executionCourseIDString = request.getParameter("executionCourseID");
+        final Integer executionCourseID =
+                (executionCourseIDString == null || executionCourseIDString.length() == 0) ? null : Integer
+                        .valueOf(executionCourseIDString);
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-		request.setAttribute("executionCourse", executionCourse);
-		request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        request.setAttribute("executionCourse", executionCourse);
+        request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
 
-		final InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
-		infoSiteCommon.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-		final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(infoSiteCommon, null);
-		request.setAttribute("siteView", executionCourseSiteView);
+        final InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
+        infoSiteCommon.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+        final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(infoSiteCommon, null);
+        request.setAttribute("siteView", executionCourseSiteView);
 
-		return mapping.findForward("showWeeklyWorkLoad");
-	}
+        return mapping.findForward("showWeeklyWorkLoad");
+    }
 
 }

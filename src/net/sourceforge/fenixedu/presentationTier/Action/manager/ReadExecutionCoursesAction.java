@@ -33,37 +33,35 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author lmac1
  */
 @Mapping(module = "manager", path = "/readExecutionCourses", input = "/readExecutionPeriods.do", scope = "request")
-@Forwards(value = { @Forward(
-		name = "readExecutionCourses",
-		path = "/manager/readExecutionCoursesByExecutionPeriod_bd.jsp",
-		tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })
+@Forwards(value = { @Forward(name = "readExecutionCourses", path = "/manager/readExecutionCoursesByExecutionPeriod_bd.jsp",
+        tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })
 public class ReadExecutionCoursesAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		IUserView userView = UserView.getUser();
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        IUserView userView = UserView.getUser();
 
-		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
-		List executionCourses = null;
+        Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+        List executionCourses = null;
 
-		try {
-			executionCourses = ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
+        try {
+            executionCourses = ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
 
-			if (executionCourses != null && executionCourses.size() > 0) {
-				Collections.sort(executionCourses, new BeanComparator("nome"));
-				InfoExecutionPeriod infoExecutionPeriod =
-						((InfoExecutionCourse) executionCourses.get(0)).getInfoExecutionPeriod();
+            if (executionCourses != null && executionCourses.size() > 0) {
+                Collections.sort(executionCourses, new BeanComparator("nome"));
+                InfoExecutionPeriod infoExecutionPeriod =
+                        ((InfoExecutionCourse) executionCourses.get(0)).getInfoExecutionPeriod();
 
-				String executionPeriodNameAndYear =
-						new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());
-				request.setAttribute("executionPeriodNameAndYear", executionPeriodNameAndYear);
-			}
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("infoExecutionCoursesList", executionCourses);
+                String executionPeriodNameAndYear =
+                        new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());
+                request.setAttribute("executionPeriodNameAndYear", executionPeriodNameAndYear);
+            }
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("infoExecutionCoursesList", executionCourses);
 
-		return mapping.findForward("readExecutionCourses");
-	}
+        return mapping.findForward("readExecutionCourses");
+    }
 }

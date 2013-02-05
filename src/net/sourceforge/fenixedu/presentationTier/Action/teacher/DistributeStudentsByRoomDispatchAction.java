@@ -30,78 +30,73 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "teacher",
-		path = "/distributeStudentsByRoom",
-		input = "/examEnrollmentManager.do?method=prepareEnrolmentManagement",
-		attribute = "roomDistributionForm",
-		formBean = "roomDistributionForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "teacher", path = "/distributeStudentsByRoom",
+        input = "/examEnrollmentManager.do?method=prepareEnrolmentManagement", attribute = "roomDistributionForm",
+        formBean = "roomDistributionForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-rooms", path = "distribute.students.by.room"),
-		@Forward(name = "show-distribution", path = "/showStudentsEnrolledInExam.do?method=prepare") })
+        @Forward(name = "show-distribution", path = "/showStudentsEnrolledInExam.do?method=prepare") })
 public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		final DynaActionForm distributionExam = (DynaActionForm) form;
-		final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
-		final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
+        final DynaActionForm distributionExam = (DynaActionForm) form;
+        final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
+        final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
 
-		final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = new InfoSiteExamExecutionCourses();
-		final Object[] args =
-				{ executionCourseCode, new InfoSiteCommon(), infoSiteExamExecutionCourses, null, evaluationCode, null };
+        final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = new InfoSiteExamExecutionCourses();
+        final Object[] args =
+                { executionCourseCode, new InfoSiteCommon(), infoSiteExamExecutionCourses, null, evaluationCode, null };
 
-		final TeacherAdministrationSiteView siteView =
-				(TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService", args);
+        final TeacherAdministrationSiteView siteView =
+                (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService", args);
 
-		final InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
-		final List<InfoExecutionCourse> infoExecutionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
+        final InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
+        final List<InfoExecutionCourse> infoExecutionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
 
-		int totalAttendStudents = 0;
-		for (final InfoExecutionCourse infoExecutionCourse : infoExecutionCourses) {
-			totalAttendStudents += infoExecutionCourse.getNumberOfAttendingStudents().intValue();
-		}
+        int totalAttendStudents = 0;
+        for (final InfoExecutionCourse infoExecutionCourse : infoExecutionCourses) {
+            totalAttendStudents += infoExecutionCourse.getNumberOfAttendingStudents().intValue();
+        }
 
-		Collections.sort(infoExam.getAssociatedRooms(), new ReverseComparator(new BeanComparator("capacidadeExame")));
+        Collections.sort(infoExam.getAssociatedRooms(), new ReverseComparator(new BeanComparator("capacidadeExame")));
 
-		request.setAttribute("infoExam", infoExam);
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", executionCourseCode);
-		request.setAttribute("evaluationCode", evaluationCode);
-		request.setAttribute("attendStudents", Integer.valueOf(totalAttendStudents));
+        request.setAttribute("infoExam", infoExam);
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("objectCode", executionCourseCode);
+        request.setAttribute("evaluationCode", evaluationCode);
+        request.setAttribute("attendStudents", Integer.valueOf(totalAttendStudents));
 
-		return mapping.findForward("show-rooms");
-	}
+        return mapping.findForward("show-rooms");
+    }
 
-	public ActionForward distribute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward distribute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final DynaActionForm distributionExam = (DynaActionForm) form;
-		final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
-		final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
-		final Boolean distributeOnlyEnroledStudents = Boolean.valueOf((String) distributionExam.get("enroll"));
-		final List rooms = Arrays.asList((Integer[]) distributionExam.get("rooms"));
+        final DynaActionForm distributionExam = (DynaActionForm) form;
+        final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
+        final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
+        final Boolean distributeOnlyEnroledStudents = Boolean.valueOf((String) distributionExam.get("enroll"));
+        final List rooms = Arrays.asList((Integer[]) distributionExam.get("rooms"));
 
-		final Object[] args = { executionCourseCode, evaluationCode, rooms, Boolean.FALSE, distributeOnlyEnroledStudents };
-		try {
-			ServiceUtils.executeService("WrittenEvaluationRoomDistribution", args);
-			request.setAttribute("objectCode", executionCourseCode);
-			request.setAttribute("evaluationCode", evaluationCode);
-			return mapping.findForward("show-distribution");
+        final Object[] args = { executionCourseCode, evaluationCode, rooms, Boolean.FALSE, distributeOnlyEnroledStudents };
+        try {
+            ServiceUtils.executeService("WrittenEvaluationRoomDistribution", args);
+            request.setAttribute("objectCode", executionCourseCode);
+            request.setAttribute("evaluationCode", evaluationCode);
+            return mapping.findForward("show-distribution");
 
-		} catch (DomainException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error", new ActionError(e.getKey()));
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
-		} catch (FenixServiceException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error", new ActionError(e.getMessage()));
-			saveErrors(request, actionErrors);
-			return prepare(mapping, form, request, response);
-		}
-	}
+        } catch (DomainException e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError(e.getKey()));
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        } catch (FenixServiceException e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
+    }
 
 }

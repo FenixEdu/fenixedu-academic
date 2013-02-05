@@ -9,28 +9,28 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 
 public class CooperationParticipantBean extends ParticipantBean implements Serializable {
 
-	Cooperation cooperation;
+    Cooperation cooperation;
 
-	public CooperationParticipantBean() {
-		super();
-		this.setCooperation(null);
-	}
+    public CooperationParticipantBean() {
+        super();
+        this.setCooperation(null);
+    }
 
-	public Cooperation getCooperation() {
-		return this.cooperation;
-	}
+    public Cooperation getCooperation() {
+        return this.cooperation;
+    }
 
-	public void setCooperation(Cooperation cooperation) {
-		this.cooperation = cooperation;
-	}
+    public void setCooperation(Cooperation cooperation) {
+        this.cooperation = cooperation;
+    }
 
-	@Override
-	public List<ResearchActivityParticipationRole> getAllowedRoles() {
-		return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
-	}
+    @Override
+    public List<ResearchActivityParticipationRole> getAllowedRoles() {
+        return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+    }
 
-	@Override
-	public DomainObject getActivity() {
-		return getCooperation();
-	}
+    @Override
+    public DomainObject getActivity() {
+        return getCooperation();
+    }
 }

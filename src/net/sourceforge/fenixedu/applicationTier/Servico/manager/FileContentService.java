@@ -24,31 +24,31 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
  */
 public abstract class FileContentService extends FenixService {
 
-	protected boolean isPublic(Group permittedGroup) {
-		if (permittedGroup == null) {
-			return true;
-		}
+    protected boolean isPublic(Group permittedGroup) {
+        if (permittedGroup == null) {
+            return true;
+        }
 
-		if (permittedGroup instanceof EveryoneGroup) {
-			return true;
-		}
+        if (permittedGroup instanceof EveryoneGroup) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-			Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			return fileManager.saveFile(filePath, originalFilename, permission, metaData, is);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
-	}
+    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
+            Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
+        final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+        InputStream is = null;
+        try {
+            is = new FileInputStream(file);
+            return fileManager.saveFile(filePath, originalFilename, permission, metaData, is);
+        } catch (FileNotFoundException e) {
+            throw new FenixServiceException(e.getMessage());
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
 }

@@ -22,179 +22,179 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCourseReportFile_Base {
 
-	public EctsLabelCurricularCourseReportFile() {
-		super();
-	}
+    public EctsLabelCurricularCourseReportFile() {
+        super();
+    }
 
-	@Override
-	public String getJobName() {
-		return "Listagem para ECTS LABEL Disciplinas";
-	}
+    @Override
+    public String getJobName() {
+        return "Listagem para ECTS LABEL Disciplinas";
+    }
 
-	@Override
-	protected String getPrefix() {
-		return "ectsLabel_Disciplinas";
-	}
+    @Override
+    protected String getPrefix() {
+        return "ectsLabel_Disciplinas";
+    }
 
-	@Override
-	public void renderReport(Spreadsheet spreadsheet) throws Exception {
+    @Override
+    public void renderReport(Spreadsheet spreadsheet) throws Exception {
 
-		createEctsLabelCurricularCoursesHeader(spreadsheet);
+        createEctsLabelCurricularCoursesHeader(spreadsheet);
 
-		for (final Degree degree : Degree.readNotEmptyDegrees()) {
-			if (checkDegreeType(getDegreeType(), degree)) {
-				for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-					if (checkExecutionYear(getExecutionYear(), degreeCurricularPlan)) {
-						for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
-							if (checkExecutionYear(getExecutionYear(), curricularCourse)
-									&& !curricularCourse.isOptionalCurricularCourse()) {
-								for (final Context context : curricularCourse
-										.getParentContextsByExecutionYear(getExecutionYear())) {
-									addEctsLabelContextRow(spreadsheet, context, getExecutionYear());
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+        for (final Degree degree : Degree.readNotEmptyDegrees()) {
+            if (checkDegreeType(getDegreeType(), degree)) {
+                for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+                    if (checkExecutionYear(getExecutionYear(), degreeCurricularPlan)) {
+                        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
+                            if (checkExecutionYear(getExecutionYear(), curricularCourse)
+                                    && !curricularCourse.isOptionalCurricularCourse()) {
+                                for (final Context context : curricularCourse
+                                        .getParentContextsByExecutionYear(getExecutionYear())) {
+                                    addEctsLabelContextRow(spreadsheet, context, getExecutionYear());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	private void createEctsLabelCurricularCoursesHeader(final Spreadsheet spreadsheet) {
-		spreadsheet.setHeader("Tipo Curso");
-		spreadsheet.setHeader("Nome Curso");
-		spreadsheet.setHeader("Sigla Curso");
-		spreadsheet.setHeader("Nome Disciplina");
-		spreadsheet.setHeader("Nome Disciplina (inglês)");
-		spreadsheet.setHeader("Código Disciplina");
-		spreadsheet.setHeader("Ano curricular");
-		spreadsheet.setHeader("Semestre");
-		spreadsheet.setHeader("Duração");
-		spreadsheet.setHeader("Tipo");
-		spreadsheet.setHeader("Créditos ECTS");
-		spreadsheet.setHeader("Idioma");
-		spreadsheet.setHeader("Docentes");
-		spreadsheet.setHeader("Horas de contacto");
-		spreadsheet.setHeader("Objectivos");
-		spreadsheet.setHeader("Objectivos (inglês)");
-		spreadsheet.setHeader("Programa");
-		spreadsheet.setHeader("Programa (inglês)");
-		spreadsheet.setHeader("Bibliografia Principal");
-		spreadsheet.setHeader("Bibliografia Secundária (inglês)");
-		spreadsheet.setHeader("Avaliação");
-		spreadsheet.setHeader("Avaliação (inglês)");
-		spreadsheet.setHeader("Estimativa total de trabalho");
-	}
+    private void createEctsLabelCurricularCoursesHeader(final Spreadsheet spreadsheet) {
+        spreadsheet.setHeader("Tipo Curso");
+        spreadsheet.setHeader("Nome Curso");
+        spreadsheet.setHeader("Sigla Curso");
+        spreadsheet.setHeader("Nome Disciplina");
+        spreadsheet.setHeader("Nome Disciplina (inglês)");
+        spreadsheet.setHeader("Código Disciplina");
+        spreadsheet.setHeader("Ano curricular");
+        spreadsheet.setHeader("Semestre");
+        spreadsheet.setHeader("Duração");
+        spreadsheet.setHeader("Tipo");
+        spreadsheet.setHeader("Créditos ECTS");
+        spreadsheet.setHeader("Idioma");
+        spreadsheet.setHeader("Docentes");
+        spreadsheet.setHeader("Horas de contacto");
+        spreadsheet.setHeader("Objectivos");
+        spreadsheet.setHeader("Objectivos (inglês)");
+        spreadsheet.setHeader("Programa");
+        spreadsheet.setHeader("Programa (inglês)");
+        spreadsheet.setHeader("Bibliografia Principal");
+        spreadsheet.setHeader("Bibliografia Secundária (inglês)");
+        spreadsheet.setHeader("Avaliação");
+        spreadsheet.setHeader("Avaliação (inglês)");
+        spreadsheet.setHeader("Estimativa total de trabalho");
+    }
 
-	private void addEctsLabelContextRow(final Spreadsheet spreadsheet, final Context context, final ExecutionYear executionYear) {
+    private void addEctsLabelContextRow(final Spreadsheet spreadsheet, final Context context, final ExecutionYear executionYear) {
 
-		final Row row = spreadsheet.addRow();
-		final ExecutionSemester executionSemester = getExecutionSemester(context, executionYear);
-		final CurricularCourse curricular = (CurricularCourse) context.getChildDegreeModule();
+        final Row row = spreadsheet.addRow();
+        final ExecutionSemester executionSemester = getExecutionSemester(context, executionYear);
+        final CurricularCourse curricular = (CurricularCourse) context.getChildDegreeModule();
 
-		row.setCell(curricular.getDegree().getDegreeType().getLocalizedName());
-		row.setCell(curricular.getDegree().getNameFor(executionSemester).getContent());
-		row.setCell(curricular.getDegree().getSigla());
-		row.setCell(curricular.getName(executionSemester));
-		row.setCell(curricular.getNameEn(executionSemester));
-		final CompetenceCourse competenceCourse = curricular.getCompetenceCourse();
-		if (competenceCourse != null) {
-			row.setCell(competenceCourse.getAcronym(executionSemester));
-		} else {
-			row.setCell("");
-		}
+        row.setCell(curricular.getDegree().getDegreeType().getLocalizedName());
+        row.setCell(curricular.getDegree().getNameFor(executionSemester).getContent());
+        row.setCell(curricular.getDegree().getSigla());
+        row.setCell(curricular.getName(executionSemester));
+        row.setCell(curricular.getNameEn(executionSemester));
+        final CompetenceCourse competenceCourse = curricular.getCompetenceCourse();
+        if (competenceCourse != null) {
+            row.setCell(competenceCourse.getAcronym(executionSemester));
+        } else {
+            row.setCell("");
+        }
 
-		row.setCell(context.getCurricularYear());
-		setSemesterAndDuration(row, context);
-		row.setCell(curricular.hasCompetenceCourseLevel() ? curricular.getCompetenceCourseLevel().getLocalizedName() : "");
-		row.setCell(curricular.getEctsCredits(executionSemester));
+        row.setCell(context.getCurricularYear());
+        setSemesterAndDuration(row, context);
+        row.setCell(curricular.hasCompetenceCourseLevel() ? curricular.getCompetenceCourseLevel().getLocalizedName() : "");
+        row.setCell(curricular.getEctsCredits(executionSemester));
 
-		row.setCell(getLanguage(curricular));
-		row.setCell(getTeachers(curricular, executionSemester));
-		row.setCell(curricular.getContactLoad(context.getCurricularPeriod(), executionSemester));
+        row.setCell(getLanguage(curricular));
+        row.setCell(getTeachers(curricular, executionSemester));
+        row.setCell(curricular.getContactLoad(context.getCurricularPeriod(), executionSemester));
 
-		row.setCell(normalize(curricular.getObjectives(executionSemester)));
-		row.setCell(normalize(curricular.getObjectivesEn(executionSemester)));
-		row.setCell(normalize(curricular.getProgram(executionSemester)));
-		row.setCell(normalize(curricular.getProgramEn(executionSemester)));
+        row.setCell(normalize(curricular.getObjectives(executionSemester)));
+        row.setCell(normalize(curricular.getObjectivesEn(executionSemester)));
+        row.setCell(normalize(curricular.getProgram(executionSemester)));
+        row.setCell(normalize(curricular.getProgramEn(executionSemester)));
 
-		final BibliographicReferences references = getBibliographicReferences(curricular, executionSemester);
-		if (references == null) {
-			row.setCell(" ");
-			row.setCell(" ");
-		} else {
-			row.setCell(normalize(getBibliographicReferences(references.getMainBibliographicReferences())));
-			row.setCell(normalize(getBibliographicReferences(references.getSecondaryBibliographicReferences())));
-		}
+        final BibliographicReferences references = getBibliographicReferences(curricular, executionSemester);
+        if (references == null) {
+            row.setCell(" ");
+            row.setCell(" ");
+        } else {
+            row.setCell(normalize(getBibliographicReferences(references.getMainBibliographicReferences())));
+            row.setCell(normalize(getBibliographicReferences(references.getSecondaryBibliographicReferences())));
+        }
 
-		row.setCell(normalize(curricular.getEvaluationMethod(executionSemester)));
-		row.setCell(normalize(curricular.getEvaluationMethodEn(executionSemester)));
+        row.setCell(normalize(curricular.getEvaluationMethod(executionSemester)));
+        row.setCell(normalize(curricular.getEvaluationMethodEn(executionSemester)));
 
-		row.setCell(curricular.getTotalLoad(context.getCurricularPeriod(), executionSemester));
-	}
+        row.setCell(curricular.getTotalLoad(context.getCurricularPeriod(), executionSemester));
+    }
 
-	private String getLanguage(final CurricularCourse curricularCourse) {
-		final DegreeType degreeType = curricularCourse.getDegreeType();
-		if (degreeType.hasExactlyOneCycleType() && degreeType.getCycleType() == CycleType.FIRST_CYCLE) {
-			return "Português";
-		} else {
-			return "Português/Inglês";
-		}
-	}
+    private String getLanguage(final CurricularCourse curricularCourse) {
+        final DegreeType degreeType = curricularCourse.getDegreeType();
+        if (degreeType.hasExactlyOneCycleType() && degreeType.getCycleType() == CycleType.FIRST_CYCLE) {
+            return "Português";
+        } else {
+            return "Português/Inglês";
+        }
+    }
 
-	private String getTeachers(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-		final StringBuilder builder = new StringBuilder();
-		for (final ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
-			for (final Professorship professorship : executionCourse.getProfessorshipsSortedAlphabetically()) {
-				builder.append(professorship.getPerson().getName()).append("; ");
-			}
-		}
-		return builder.toString();
-	}
+    private String getTeachers(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+        final StringBuilder builder = new StringBuilder();
+        for (final ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
+            for (final Professorship professorship : executionCourse.getProfessorshipsSortedAlphabetically()) {
+                builder.append(professorship.getPerson().getName()).append("; ");
+            }
+        }
+        return builder.toString();
+    }
 
-	private BibliographicReferences getBibliographicReferences(final CurricularCourse curricularCourse,
-			final ExecutionSemester executionSemester) {
-		final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-		return competenceCourse == null ? null : competenceCourse.getBibliographicReferences(executionSemester);
-	}
+    private BibliographicReferences getBibliographicReferences(final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester) {
+        final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+        return competenceCourse == null ? null : competenceCourse.getBibliographicReferences(executionSemester);
+    }
 
-	private String getBibliographicReferences(final List<BibliographicReference> references) {
-		Collections.sort(references);
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (final BibliographicReference bibliographicReference : references) {
-			if (stringBuilder.length() > 0) {
-				stringBuilder.append("; ");
-			}
-			stringBuilder.append(bibliographicReference.getTitle());
-			stringBuilder.append(", ");
-			stringBuilder.append(bibliographicReference.getAuthors());
-			stringBuilder.append(", ");
-			stringBuilder.append(bibliographicReference.getYear());
-			stringBuilder.append(", ");
-			stringBuilder.append(bibliographicReference.getReference());
-		}
-		return stringBuilder.toString();
-	}
+    private String getBibliographicReferences(final List<BibliographicReference> references) {
+        Collections.sort(references);
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (final BibliographicReference bibliographicReference : references) {
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append("; ");
+            }
+            stringBuilder.append(bibliographicReference.getTitle());
+            stringBuilder.append(", ");
+            stringBuilder.append(bibliographicReference.getAuthors());
+            stringBuilder.append(", ");
+            stringBuilder.append(bibliographicReference.getYear());
+            stringBuilder.append(", ");
+            stringBuilder.append(bibliographicReference.getReference());
+        }
+        return stringBuilder.toString();
+    }
 
-	private ExecutionSemester getExecutionSemester(final Context context, final ExecutionYear executionYear) {
-		final CurricularPeriod curricularPeriod = context.getCurricularPeriod();
-		if (curricularPeriod.getAcademicPeriod().getName().equals("SEMESTER")) {
-			return (curricularPeriod.getChildOrder().intValue() == 1) ? executionYear.getFirstExecutionPeriod() : executionYear
-					.getLastExecutionPeriod();
-		} else {
-			return executionYear.getFirstExecutionPeriod();
-		}
-	}
+    private ExecutionSemester getExecutionSemester(final Context context, final ExecutionYear executionYear) {
+        final CurricularPeriod curricularPeriod = context.getCurricularPeriod();
+        if (curricularPeriod.getAcademicPeriod().getName().equals("SEMESTER")) {
+            return (curricularPeriod.getChildOrder().intValue() == 1) ? executionYear.getFirstExecutionPeriod() : executionYear
+                    .getLastExecutionPeriod();
+        } else {
+            return executionYear.getFirstExecutionPeriod();
+        }
+    }
 
-	private void setSemesterAndDuration(final Row row, final Context context) {
-		final CurricularPeriod curricularPeriod = context.getCurricularPeriod();
-		if (curricularPeriod.getAcademicPeriod().getName().equals("SEMESTER")) {
-			row.setCell(curricularPeriod.getChildOrder());
-			row.setCell("Semestral");
-		} else {
-			row.setCell(" ");
-			row.setCell("Anual");
-		}
-	}
+    private void setSemesterAndDuration(final Row row, final Context context) {
+        final CurricularPeriod curricularPeriod = context.getCurricularPeriod();
+        if (curricularPeriod.getAcademicPeriod().getName().equals("SEMESTER")) {
+            row.setCell(curricularPeriod.getChildOrder());
+            row.setCell("Semestral");
+        } else {
+            row.setCell(" ");
+            row.setCell("Anual");
+        }
+    }
 
 }

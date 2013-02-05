@@ -8,74 +8,74 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AuditProcessBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExecutionCourseAudit executionCourseAudit;
-	private String measuresToTake;
-	private String conclusions;
-	private Boolean approvedByTeacher;
-	private Boolean approvedByStudent;
-	private transient InputStream inputStream;
+    private ExecutionCourseAudit executionCourseAudit;
+    private String measuresToTake;
+    private String conclusions;
+    private Boolean approvedByTeacher;
+    private Boolean approvedByStudent;
+    private transient InputStream inputStream;
 
-	public AuditProcessBean(ExecutionCourseAudit executionCourseAudit) {
-		setExecutionCourseAudit(executionCourseAudit);
-		setMeasuresToTake(executionCourseAudit.getMeasuresToTake());
-		setConclusions(executionCourseAudit.getConclusions());
-		setApprovedByTeacher(executionCourseAudit.getApprovedByTeacher());
-		setApprovedByStudent(executionCourseAudit.getApprovedByStudent());
-	}
+    public AuditProcessBean(ExecutionCourseAudit executionCourseAudit) {
+        setExecutionCourseAudit(executionCourseAudit);
+        setMeasuresToTake(executionCourseAudit.getMeasuresToTake());
+        setConclusions(executionCourseAudit.getConclusions());
+        setApprovedByTeacher(executionCourseAudit.getApprovedByTeacher());
+        setApprovedByStudent(executionCourseAudit.getApprovedByStudent());
+    }
 
-	public ExecutionCourseAudit getExecutionCourseAudit() {
-		return executionCourseAudit;
-	}
+    public ExecutionCourseAudit getExecutionCourseAudit() {
+        return executionCourseAudit;
+    }
 
-	public void setExecutionCourseAudit(ExecutionCourseAudit executionCourseAudit) {
-		this.executionCourseAudit = executionCourseAudit;
-	}
+    public void setExecutionCourseAudit(ExecutionCourseAudit executionCourseAudit) {
+        this.executionCourseAudit = executionCourseAudit;
+    }
 
-	public String getMeasuresToTake() {
-		return measuresToTake;
-	}
+    public String getMeasuresToTake() {
+        return measuresToTake;
+    }
 
-	public void setMeasuresToTake(String measuresToTake) {
-		this.measuresToTake = measuresToTake;
-	}
+    public void setMeasuresToTake(String measuresToTake) {
+        this.measuresToTake = measuresToTake;
+    }
 
-	public String getConclusions() {
-		return conclusions;
-	}
+    public String getConclusions() {
+        return conclusions;
+    }
 
-	public void setConclusions(String conclusions) {
-		this.conclusions = conclusions;
-	}
+    public void setConclusions(String conclusions) {
+        this.conclusions = conclusions;
+    }
 
-	public Boolean getApprovedByTeacher() {
-		return approvedByTeacher;
-	}
+    public Boolean getApprovedByTeacher() {
+        return approvedByTeacher;
+    }
 
-	public void setApprovedByTeacher(Boolean approvedByTeacher) {
-		this.approvedByTeacher = approvedByTeacher;
-	}
+    public void setApprovedByTeacher(Boolean approvedByTeacher) {
+        this.approvedByTeacher = approvedByTeacher;
+    }
 
-	public Boolean getApprovedByStudent() {
-		return approvedByStudent;
-	}
+    public Boolean getApprovedByStudent() {
+        return approvedByStudent;
+    }
 
-	public void setApprovedByStudent(Boolean approvedByStudent) {
-		this.approvedByStudent = approvedByStudent;
-	}
+    public void setApprovedByStudent(Boolean approvedByStudent) {
+        this.approvedByStudent = approvedByStudent;
+    }
 
-	@Service
-	public void saveComments() {
-		getExecutionCourseAudit().setMeasuresToTake(getMeasuresToTake());
-		getExecutionCourseAudit().setConclusions(getConclusions());
-	}
+    @Service
+    public void saveComments() {
+        getExecutionCourseAudit().setMeasuresToTake(getMeasuresToTake());
+        getExecutionCourseAudit().setConclusions(getConclusions());
+    }
 
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-	}
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 }

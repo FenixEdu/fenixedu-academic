@@ -40,229 +40,229 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentDismissals", module = "academicAdministration", formBean = "studentDismissalForm")
 @Forwards({ @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
-		@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
-		@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
-		@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
-		@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp")
+        @Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
+        @Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
+        @Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
+        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp")
 
 })
 public class StudentDismissalsDA extends FenixDispatchAction {
 
-	private StudentCurricularPlan getSCP(final HttpServletRequest request) {
-		final Integer scpID = getIntegerFromRequest(request, "scpID");
-		return rootDomainObject.readStudentCurricularPlanByOID(scpID);
-	}
+    private StudentCurricularPlan getSCP(final HttpServletRequest request) {
+        final Integer scpID = getIntegerFromRequest(request, "scpID");
+        return rootDomainObject.readStudentCurricularPlanByOID(scpID);
+    }
 
-	public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("studentCurricularPlan", getSCP(request));
-		return mapping.findForward("manage");
-	}
+    public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("studentCurricularPlan", getSCP(request));
+        return mapping.findForward("manage");
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		final DismissalBean dismissalBean = createDismissalBean();
-		dismissalBean.setStudentCurricularPlan(getSCP(request));
+        final DismissalBean dismissalBean = createDismissalBean();
+        dismissalBean.setStudentCurricularPlan(getSCP(request));
 
-		request.setAttribute("dismissalBean", dismissalBean);
-		dismissalBean.setEnrolments(buildStudentEnrolmentsInformation(dismissalBean));
-		dismissalBean.setExternalEnrolments(buildStudentExternalEnrolmentsInformation(dismissalBean));
+        request.setAttribute("dismissalBean", dismissalBean);
+        dismissalBean.setEnrolments(buildStudentEnrolmentsInformation(dismissalBean));
+        dismissalBean.setExternalEnrolments(buildStudentExternalEnrolmentsInformation(dismissalBean));
 
-		return mapping.findForward("chooseDismissalEnrolments");
-	}
+        return mapping.findForward("chooseDismissalEnrolments");
+    }
 
-	protected DismissalBean createDismissalBean() {
-		return new DismissalBean();
-	}
+    protected DismissalBean createDismissalBean() {
+        return new DismissalBean();
+    }
 
-	protected Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
-		final Collection<SelectedExternalEnrolment> externalEnrolments = new HashSet<SelectedExternalEnrolment>();
-		for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
-				.getSortedExternalEnrolments()) {
-			externalEnrolments.add(new DismissalBean.SelectedExternalEnrolment(externalEnrolment));
-		}
-		return externalEnrolments;
-	}
+    protected Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
+        final Collection<SelectedExternalEnrolment> externalEnrolments = new HashSet<SelectedExternalEnrolment>();
+        for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
+                .getSortedExternalEnrolments()) {
+            externalEnrolments.add(new DismissalBean.SelectedExternalEnrolment(externalEnrolment));
+        }
+        return externalEnrolments;
+    }
 
-	protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
-		final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
+    protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
+        final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
 
-		for (final StudentCurricularPlan scp : dismissalBean.getStudent().getAllStudentCurricularPlans()) {
+        for (final StudentCurricularPlan scp : dismissalBean.getStudent().getAllStudentCurricularPlans()) {
 
-			if (scp.equals(dismissalBean.getStudentCurricularPlan())) {
-				continue;
-			}
+            if (scp.equals(dismissalBean.getStudentCurricularPlan())) {
+                continue;
+            }
 
-			final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(scp.getDismissalApprovedEnrolments());
-			Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
+            final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(scp.getDismissalApprovedEnrolments());
+            Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
 
-			for (final Enrolment enrolment : approvedEnrolments) {
-				enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
-			}
-		}
-		return enrolments;
-	}
+            for (final Enrolment enrolment : approvedEnrolments) {
+                enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
+            }
+        }
+        return enrolments;
+    }
 
-	public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DismissalBean dismissalBean = getRenderedObject("dismissalBean");
-		dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
+        final DismissalBean dismissalBean = getRenderedObject("dismissalBean");
+        dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
 
-		final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
-		final ExecutionSemester actualEP = ExecutionSemester.readActualExecutionSemester();
+        final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
+        final ExecutionSemester actualEP = ExecutionSemester.readActualExecutionSemester();
 
-		dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp
-				.getMostRecentExecutionYear().getFirstExecutionPeriod());
+        dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp
+                .getMostRecentExecutionYear().getFirstExecutionPeriod());
 
-		request.setAttribute("dismissalBean", dismissalBean);
+        request.setAttribute("dismissalBean", dismissalBean);
 
-		return mapping.findForward("chooseEquivalents");
-	}
+        return mapping.findForward("chooseEquivalents");
+    }
 
-	public ActionForward dismissalTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward dismissalTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DismissalBean dismissalBean = getRenderedObject();
-		dismissalBean.setCredits(null);
-		dismissalBean.setCourseGroup(null);
-		dismissalBean.setDismissals(null);
-		dismissalBean.setCurriculumGroup(null);
+        final DismissalBean dismissalBean = getRenderedObject();
+        dismissalBean.setCredits(null);
+        dismissalBean.setCourseGroup(null);
+        dismissalBean.setDismissals(null);
+        dismissalBean.setCurriculumGroup(null);
 
-		RenderUtils.invalidateViewState();
-		request.setAttribute("dismissalBean", dismissalBean);
+        RenderUtils.invalidateViewState();
+        request.setAttribute("dismissalBean", dismissalBean);
 
-		return mapping.findForward("chooseEquivalents");
-	}
+        return mapping.findForward("chooseEquivalents");
+    }
 
-	private void checkArguments(HttpServletRequest request, DismissalBean dismissalBean) throws FenixActionException {
-		if (dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
-			if (!dismissalBean.hasAnyDismissals() && !dismissalBean.hasAnyOptionalDismissals()) {
-				addActionMessage("error", request, "error.studentDismissal.curricularCourse.required");
-				throw new FenixActionException();
-			}
-		} else if (dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
-			if (dismissalBean.getCourseGroup() == null) {
-				addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
-				throw new FenixActionException();
-			}
-		} else {
-			if (dismissalBean.getCurriculumGroup() == null) {
-				addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
-				throw new FenixActionException();
-			}
-		}
-	}
+    private void checkArguments(HttpServletRequest request, DismissalBean dismissalBean) throws FenixActionException {
+        if (dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
+            if (!dismissalBean.hasAnyDismissals() && !dismissalBean.hasAnyOptionalDismissals()) {
+                addActionMessage("error", request, "error.studentDismissal.curricularCourse.required");
+                throw new FenixActionException();
+            }
+        } else if (dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
+            if (dismissalBean.getCourseGroup() == null) {
+                addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
+                throw new FenixActionException();
+            }
+        } else {
+            if (dismissalBean.getCurriculumGroup() == null) {
+                addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
+                throw new FenixActionException();
+            }
+        }
+    }
 
-	public ActionForward confirmCreateDismissals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward confirmCreateDismissals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DismissalBean dismissalBean = getRenderedObject();
-		request.setAttribute("dismissalBean", dismissalBean);
+        final DismissalBean dismissalBean = getRenderedObject();
+        request.setAttribute("dismissalBean", dismissalBean);
 
-		try {
-			checkArguments(request, dismissalBean);
+        try {
+            checkArguments(request, dismissalBean);
 
-		} catch (FenixActionException e) {
-			return stepTwo(mapping, actionForm, request, response);
-		}
+        } catch (FenixActionException e) {
+            return stepTwo(mapping, actionForm, request, response);
+        }
 
-		if (dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
-			setCurriculumGroups(dismissalBean);
-		}
+        if (dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
+            setCurriculumGroups(dismissalBean);
+        }
 
-		return mapping.findForward("confirmCreateDismissals");
-	}
+        return mapping.findForward("confirmCreateDismissals");
+    }
 
-	private void setCurriculumGroups(DismissalBean dismissalBean) {
-		for (SelectedCurricularCourse selectedCurricularCourse : dismissalBean.getDismissals()) {
-			Collection<? extends CurriculumGroup> curricularCoursePossibleGroups =
-					dismissalBean.getStudentCurricularPlan().getCurricularCoursePossibleGroups(
-							selectedCurricularCourse.getCurricularCourse());
-			if (!curricularCoursePossibleGroups.isEmpty()) {
-				if (curricularCoursePossibleGroups.size() == 1) {
-					selectedCurricularCourse.setCurriculumGroup(curricularCoursePossibleGroups.iterator().next());
-				} else {
-					for (CurriculumGroup curriculumGroup : curricularCoursePossibleGroups) {
-						if (!curriculumGroup.isNoCourseGroupCurriculumGroup()) {
-							selectedCurricularCourse.setCurriculumGroup(curriculumGroup);
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
+    private void setCurriculumGroups(DismissalBean dismissalBean) {
+        for (SelectedCurricularCourse selectedCurricularCourse : dismissalBean.getDismissals()) {
+            Collection<? extends CurriculumGroup> curricularCoursePossibleGroups =
+                    dismissalBean.getStudentCurricularPlan().getCurricularCoursePossibleGroups(
+                            selectedCurricularCourse.getCurricularCourse());
+            if (!curricularCoursePossibleGroups.isEmpty()) {
+                if (curricularCoursePossibleGroups.size() == 1) {
+                    selectedCurricularCourse.setCurriculumGroup(curricularCoursePossibleGroups.iterator().next());
+                } else {
+                    for (CurriculumGroup curriculumGroup : curricularCoursePossibleGroups) {
+                        if (!curriculumGroup.isNoCourseGroupCurriculumGroup()) {
+                            selectedCurricularCourse.setCurriculumGroup(curriculumGroup);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	public ActionForward stepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("dismissalBean", getRenderedObject());
-		return mapping.findForward("chooseDismissalEnrolments");
-	}
+    public ActionForward stepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("dismissalBean", getRenderedObject());
+        return mapping.findForward("chooseDismissalEnrolments");
+    }
 
-	public ActionForward stepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("dismissalBean", getRenderedObject());
-		return mapping.findForward("chooseEquivalents");
-	}
+    public ActionForward stepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("dismissalBean", getRenderedObject());
+        return mapping.findForward("chooseEquivalents");
+    }
 
-	public ActionForward stepThree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("dismissalBean", getRenderedObject());
-		return mapping.findForward("confirmCreateDismissals");
-	}
+    public ActionForward stepThree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("dismissalBean", getRenderedObject());
+        return mapping.findForward("confirmCreateDismissals");
+    }
 
-	public ActionForward createDismissals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward createDismissals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final DismissalBean dismissalBean = getRenderedObject();
+        final DismissalBean dismissalBean = getRenderedObject();
 
-		try {
-			checkArguments(request, dismissalBean);
-		} catch (FenixActionException e) {
-			return stepTwo(mapping, form, request, response);
-		}
+        try {
+            checkArguments(request, dismissalBean);
+        } catch (FenixActionException e) {
+            return stepTwo(mapping, form, request, response);
+        }
 
-		try {
-			executeCreateDismissalService(dismissalBean);
-		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), e.getArgs());
-			return confirmCreateDismissals(mapping, form, request, response);
-		}
+        try {
+            executeCreateDismissalService(dismissalBean);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            return confirmCreateDismissals(mapping, form, request, response);
+        }
 
-		return manage(mapping, form, request, response);
-	}
+        return manage(mapping, form, request, response);
+    }
 
-	protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixServiceException {
-		// Do nothing, the dismissals MUST be created in the concrete classes
-	}
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixServiceException {
+        // Do nothing, the dismissals MUST be created in the concrete classes
+    }
 
-	public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
-		final StudentCurricularPlan studentCurricularPlan = getSCP(request);
+        final String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
+        final StudentCurricularPlan studentCurricularPlan = getSCP(request);
 
-		try {
-			DeleteCredits.run(studentCurricularPlan, creditsIDs);
-		} catch (final IllegalDataAccessException e) {
-			addActionMessage(request, "error.notAuthorized");
+        try {
+            DeleteCredits.run(studentCurricularPlan, creditsIDs);
+        } catch (final IllegalDataAccessException e) {
+            addActionMessage(request, "error.notAuthorized");
 
-		} catch (final DomainException e) {
-			addActionMessage(request, e.getMessage());
-		}
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage());
+        }
 
-		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
-		return mapping.findForward("manage");
-	}
+        request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+        return mapping.findForward("manage");
+    }
 
-	public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("registrationId", getSCP(request).getRegistration().getIdInternal().toString());
-		return mapping.findForward("visualizeRegistration");
-	}
+    public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("registrationId", getSCP(request).getRegistration().getIdInternal().toString());
+        return mapping.findForward("visualizeRegistration");
+    }
 
-	public ActionForward prepareChooseNotNeedToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("dismissalBean", getRenderedObject());
-		return mapping.findForward("chooseNotNeedToEnrol");
-	}
+    public ActionForward prepareChooseNotNeedToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("dismissalBean", getRenderedObject());
+        return mapping.findForward("chooseNotNeedToEnrol");
+    }
 
 }

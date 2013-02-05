@@ -16,21 +16,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ErasmusUniversityProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
-		Country selectedCountry = bean.getSelectedCountry();
-		MobilityApplicationPeriod period = (MobilityApplicationPeriod) bean.getParentProcess().getCandidacyPeriod();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
+        Country selectedCountry = bean.getSelectedCountry();
+        MobilityApplicationPeriod period = (MobilityApplicationPeriod) bean.getParentProcess().getCandidacyPeriod();
 
-		List<UniversityUnit> universityUnitList = period.getUniversityUnitsAssociatedToCountry(selectedCountry);
-		Collections.sort(universityUnitList, new BeanComparator("nameI18n"));
+        List<UniversityUnit> universityUnitList = period.getUniversityUnitsAssociatedToCountry(selectedCountry);
+        Collections.sort(universityUnitList, new BeanComparator("nameI18n"));
 
-		return universityUnitList;
-	}
+        return universityUnitList;
+    }
 
 }

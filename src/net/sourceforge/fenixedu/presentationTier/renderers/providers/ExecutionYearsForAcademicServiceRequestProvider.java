@@ -10,16 +10,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionYearsForAcademicServiceRequestProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final List<ExecutionYear> result = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(result, ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
-		return result;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final List<ExecutionYear> result = ExecutionYear.readNotClosedExecutionYears();
+        Collections.sort(result, ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

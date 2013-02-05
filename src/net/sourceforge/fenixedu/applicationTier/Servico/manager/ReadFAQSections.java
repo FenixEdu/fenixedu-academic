@@ -14,16 +14,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadFAQSections extends FenixService {
 
-	@Service
-	public static Collection run() {
-		List<FAQSection> faqSections = rootDomainObject.getFAQSections();
-		return CollectionUtils.collect(faqSections, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				FAQSection faqSection = (FAQSection) arg0;
-				return InfoFAQSection.newInfoFromDomain(faqSection);
-			}
-		});
-	}
+    @Service
+    public static Collection run() {
+        List<FAQSection> faqSections = rootDomainObject.getFAQSections();
+        return CollectionUtils.collect(faqSections, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                FAQSection faqSection = (FAQSection) arg0;
+                return InfoFAQSection.newInfoFromDomain(faqSection);
+            }
+        });
+    }
 
 }

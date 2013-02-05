@@ -13,22 +13,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PhdProgramsAssociatedToCoordinator implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		List<PhdProgram> programs = new ArrayList<PhdProgram>();
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        List<PhdProgram> programs = new ArrayList<PhdProgram>();
 
-		for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
-			if (program.isCoordinatorFor(AccessControl.getPerson(), ExecutionYear.readCurrentExecutionYear())) {
-				programs.add(program);
-			}
-		}
+        for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+            if (program.isCoordinatorFor(AccessControl.getPerson(), ExecutionYear.readCurrentExecutionYear())) {
+                programs.add(program);
+            }
+        }
 
-		return programs;
-	}
+        return programs;
+    }
 
 }

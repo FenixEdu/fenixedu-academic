@@ -15,14 +15,14 @@ package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 
 public enum Specialization {
 
-	STUDENT_CURRICULAR_PLAN_MASTER_DEGREE,
+    STUDENT_CURRICULAR_PLAN_MASTER_DEGREE,
 
-	STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE,
+    STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE,
 
-	STUDENT_CURRICULAR_PLAN_SPECIALIZATION;
+    STUDENT_CURRICULAR_PLAN_SPECIALIZATION;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
 }

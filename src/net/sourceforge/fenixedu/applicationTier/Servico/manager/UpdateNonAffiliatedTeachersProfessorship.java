@@ -11,23 +11,23 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
 public class UpdateNonAffiliatedTeachersProfessorship extends FenixService {
 
-	public void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId) throws FenixServiceException {
+    public void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId) throws FenixServiceException {
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		if (executionCourse == null) {
-			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-		}
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        if (executionCourse == null) {
+            throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+        }
 
-		List<NonAffiliatedTeacher> nonAffiliatedTeachersToRemove = new ArrayList<NonAffiliatedTeacher>();
-		for (NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
-			if (!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getIdInternal())) {
-				nonAffiliatedTeachersToRemove.add(nonAffiliatedTeacher);
-			}
-		}
+        List<NonAffiliatedTeacher> nonAffiliatedTeachersToRemove = new ArrayList<NonAffiliatedTeacher>();
+        for (NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
+            if (!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getIdInternal())) {
+                nonAffiliatedTeachersToRemove.add(nonAffiliatedTeacher);
+            }
+        }
 
-		for (NonAffiliatedTeacher nonAffiliatedTeacher : nonAffiliatedTeachersToRemove) {
-			executionCourse.removeNonAffiliatedTeachers(nonAffiliatedTeacher);
-		}
-	}
+        for (NonAffiliatedTeacher nonAffiliatedTeacher : nonAffiliatedTeachersToRemove) {
+            executionCourse.removeNonAffiliatedTeachers(nonAffiliatedTeacher);
+        }
+    }
 
 }

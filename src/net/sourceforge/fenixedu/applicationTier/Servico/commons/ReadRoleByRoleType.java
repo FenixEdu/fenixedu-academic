@@ -11,8 +11,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadRoleByRoleType extends FenixService {
 
-	@Service
-	public static Role run(RoleType roleType) {
-		return Role.getRoleByRoleType(roleType);
-	}
+    @Service
+    public static Role run(RoleType roleType) {
+        return Role.getRoleByRoleType(roleType);
+    }
 }

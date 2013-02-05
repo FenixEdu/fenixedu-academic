@@ -23,138 +23,138 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class CreateScormFile extends CreateFileContent {
 
-	public static class CreateScormFileItemForItemArgs {
-		private Site site;
+    public static class CreateScormFileItemForItemArgs {
+        private Site site;
 
-		private Container container;
+        private Container container;
 
-		private File file;
+        private File file;
 
-		private String originalFilename;
+        private String originalFilename;
 
-		private String displayName;
+        private String displayName;
 
-		private Group permittedGroup;
+        private Group permittedGroup;
 
-		private ScormMetaDataHash scormParameters;
+        private ScormMetaDataHash scormParameters;
 
-		private Person person;
+        private Person person;
 
-		private EducationalResourceType educationalResourceType;
+        private EducationalResourceType educationalResourceType;
 
-		public CreateScormFileItemForItemArgs(Site site, Container container, File file, String originalFilename,
-				String displayName, Group permittedGroup, ScormMetaDataHash scormParameters, Person person,
-				EducationalResourceType educationalResourceType) {
-			this.site = site;
-			this.container = container;
-			this.file = file;
-			this.originalFilename = originalFilename;
-			this.displayName = displayName;
-			this.permittedGroup = permittedGroup;
-			this.scormParameters = scormParameters;
-			this.person = person;
-			this.educationalResourceType = educationalResourceType;
-		}
+        public CreateScormFileItemForItemArgs(Site site, Container container, File file, String originalFilename,
+                String displayName, Group permittedGroup, ScormMetaDataHash scormParameters, Person person,
+                EducationalResourceType educationalResourceType) {
+            this.site = site;
+            this.container = container;
+            this.file = file;
+            this.originalFilename = originalFilename;
+            this.displayName = displayName;
+            this.permittedGroup = permittedGroup;
+            this.scormParameters = scormParameters;
+            this.person = person;
+            this.educationalResourceType = educationalResourceType;
+        }
 
-		public String getDisplayName() {
-			return displayName;
-		}
+        public String getDisplayName() {
+            return displayName;
+        }
 
-		public void setDisplayName(String displayName) {
-			this.displayName = displayName;
-		}
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
 
-		public File getFile() {
-			return file;
-		}
+        public File getFile() {
+            return file;
+        }
 
-		public void setFile(File file) {
-			this.file = file;
-		}
+        public void setFile(File file) {
+            this.file = file;
+        }
 
-		public Container getContainer() {
-			return container;
-		}
+        public Container getContainer() {
+            return container;
+        }
 
-		public void setContainer(Container container) {
-			this.container = container;
-		}
+        public void setContainer(Container container) {
+            this.container = container;
+        }
 
-		public String getOriginalFilename() {
-			return originalFilename;
-		}
+        public String getOriginalFilename() {
+            return originalFilename;
+        }
 
-		public void setOriginalFilename(String originalFilename) {
-			this.originalFilename = originalFilename;
-		}
+        public void setOriginalFilename(String originalFilename) {
+            this.originalFilename = originalFilename;
+        }
 
-		public Group getPermittedGroup() {
-			return permittedGroup;
-		}
+        public Group getPermittedGroup() {
+            return permittedGroup;
+        }
 
-		public void setPermittedGroup(Group permittedGroup) {
-			this.permittedGroup = permittedGroup;
-		}
+        public void setPermittedGroup(Group permittedGroup) {
+            this.permittedGroup = permittedGroup;
+        }
 
-		public ScormMetaDataHash getScormParameters() {
-			return scormParameters;
-		}
+        public ScormMetaDataHash getScormParameters() {
+            return scormParameters;
+        }
 
-		public void setScormParameters(ScormMetaDataHash scormParameters) {
-			this.scormParameters = scormParameters;
-		}
+        public void setScormParameters(ScormMetaDataHash scormParameters) {
+            this.scormParameters = scormParameters;
+        }
 
-		public Person getPerson() {
-			return person;
-		}
+        public Person getPerson() {
+            return person;
+        }
 
-		public void setPerson(Person person) {
-			this.person = person;
-		}
+        public void setPerson(Person person) {
+            this.person = person;
+        }
 
-		public EducationalResourceType getEducationalResourceType() {
-			return educationalResourceType;
-		}
+        public EducationalResourceType getEducationalResourceType() {
+            return educationalResourceType;
+        }
 
-		public void setEducationalResourceType(EducationalResourceType resourceType) {
-			this.educationalResourceType = resourceType;
-		}
+        public void setEducationalResourceType(EducationalResourceType resourceType) {
+            this.educationalResourceType = resourceType;
+        }
 
-		public Site getSite() {
-			return site;
-		}
+        public Site getSite() {
+            return site;
+        }
 
-		public void setSite(Site site) {
-			this.site = site;
-		}
+        public void setSite(Site site) {
+            this.site = site;
+        }
 
-	}
+    }
 
-	private ThreadLocal<ScormMetaDataHash> extraScormParam = null;
+    private ThreadLocal<ScormMetaDataHash> extraScormParam = null;
 
-	public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException {
-		extraScormParam = new ThreadLocal<ScormMetaDataHash>();
-		extraScormParam.set(args.getScormParameters());
+    public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException {
+        extraScormParam = new ThreadLocal<ScormMetaDataHash>();
+        extraScormParam.set(args.getScormParameters());
 
-		super.run(args.getSite(), args.getContainer(), args.getFile(), args.getOriginalFilename(), args.getDisplayName(),
-				args.getPermittedGroup(), args.getPerson(), args.getEducationalResourceType());
-	}
+        super.run(args.getSite(), args.getContainer(), args.getFile(), args.getOriginalFilename(), args.getDisplayName(),
+                args.getPermittedGroup(), args.getPerson(), args.getEducationalResourceType());
+    }
 
-	@Override
-	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-			Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-		final IScormFileManager fileManager = FileManagerFactory.getFactoryInstance().getScormFileManager();
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, is, extraScormParam.get());
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
-	}
+    @Override
+    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
+            Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
+        final IScormFileManager fileManager = FileManagerFactory.getFactoryInstance().getScormFileManager();
+        InputStream is = null;
+        try {
+            is = new FileInputStream(file);
+            return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, is, extraScormParam.get());
+        } catch (FileNotFoundException e) {
+            throw new FenixServiceException(e.getMessage());
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
 
 }

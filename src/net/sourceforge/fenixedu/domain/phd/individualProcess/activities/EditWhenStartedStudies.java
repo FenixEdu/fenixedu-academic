@@ -7,29 +7,29 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBe
 
 public class EditWhenStartedStudies extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+    @Override
+    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-		final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) object;
+        final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) object;
 
-		process.check(bean.getWhenStartedStudies(),
-				"error.PhdIndividualProgramProcess.EditWhenStartedStudies.invalid.when.started.studies");
+        process.check(bean.getWhenStartedStudies(),
+                "error.PhdIndividualProgramProcess.EditWhenStartedStudies.invalid.when.started.studies");
 
-		process.setWhenStartedStudies(bean.getWhenStartedStudies());
+        process.setWhenStartedStudies(bean.getWhenStartedStudies());
 
-		if (process.hasRegistration()) {
-			process.getRegistration().editStartDates(bean.getWhenStartedStudies(),
-					process.getCandidacyProcess().getWhenRatified(), bean.getWhenStartedStudies());
-		}
+        if (process.hasRegistration()) {
+            process.getRegistration().editStartDates(bean.getWhenStartedStudies(),
+                    process.getCandidacyProcess().getWhenRatified(), bean.getWhenStartedStudies());
+        }
 
-		return process;
-	}
+        return process;
+    }
 
 }

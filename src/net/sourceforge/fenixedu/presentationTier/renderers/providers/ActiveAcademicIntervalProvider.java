@@ -11,15 +11,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ActiveAcademicIntervalProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new AcademicIntervalConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new AcademicIntervalConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object current) {
-		List<AcademicInterval> result = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
-		Collections.sort(result, AcademicInterval.REVERSE_COMPARATOR_BY_BEGIN_DATE);
-		return result;
-	}
+    @Override
+    public Object provide(Object source, Object current) {
+        List<AcademicInterval> result = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
+        Collections.sort(result, AcademicInterval.REVERSE_COMPARATOR_BY_BEGIN_DATE);
+        return result;
+    }
 }

@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class RequestLogYear extends RequestLogYear_Base {
 
-	public RequestLogYear() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public RequestLogYear() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		this.removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        this.removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
 }

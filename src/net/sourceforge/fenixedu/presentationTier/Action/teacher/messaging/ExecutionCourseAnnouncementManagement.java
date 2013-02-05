@@ -23,59 +23,59 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "teacher", path = "/announcementManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "teacher-view-announcement"),
-		@Forward(name = "uploadFile", path = "teacher-announcement-uploadFile"),
-		@Forward(name = "edit", path = "teacher-edit-announcement"),
-		@Forward(name = "listAnnouncements", path = "teacher-list-announcements"),
-		@Forward(name = "add", path = "teacher-add-announcement"),
-		@Forward(name = "editFile", path = "teacher-announcement-editFile") })
+        @Forward(name = "uploadFile", path = "teacher-announcement-uploadFile"),
+        @Forward(name = "edit", path = "teacher-edit-announcement"),
+        @Forward(name = "listAnnouncements", path = "teacher-list-announcements"),
+        @Forward(name = "add", path = "teacher-add-announcement"),
+        @Forward(name = "editFile", path = "teacher-announcement-editFile") })
 public class ExecutionCourseAnnouncementManagement extends AnnouncementManagement {
 
-	protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
-		return Integer.valueOf(request.getParameter("objectCode"));
-	}
+    protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
+        return Integer.valueOf(request.getParameter("objectCode"));
+    }
 
-	protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-		return RootDomainObject.getInstance().readExecutionCourseByOID(this.getRequestedExecutionCourseId(request));
-	}
+    protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
+        return RootDomainObject.getInstance().readExecutionCourseByOID(this.getRequestedExecutionCourseId(request));
+    }
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).findForwardConfigs();
-		final SiteView siteView =
-				(SiteView) ServiceUtils.executeService("ReadCourseInformation",
-						new Object[] { this.getRequestedExecutionCourseId(request) });
-		request.setAttribute("siteView", siteView);
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).findForwardConfigs();
+        final SiteView siteView =
+                (SiteView) ServiceUtils.executeService("ReadCourseInformation",
+                        new Object[] { this.getRequestedExecutionCourseId(request) });
+        request.setAttribute("siteView", siteView);
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	@Override
-	protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-		return rootDomainObject.readExecutionCourseByOID(this.getRequestedExecutionCourseId(request)).getBoard();
-	}
+    @Override
+    protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
+        return rootDomainObject.readExecutionCourseByOID(this.getRequestedExecutionCourseId(request)).getBoard();
+    }
 
-	@Override
-	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return super.viewAnnouncements(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return super.viewAnnouncements(mapping, actionForm, request, response);
+    }
 
-	@Override
-	protected String getExtraRequestParameters(HttpServletRequest request) {
-		return "objectCode=" + this.getRequestedExecutionCourseId(request);
-	}
+    @Override
+    protected String getExtraRequestParameters(HttpServletRequest request) {
+        return "objectCode=" + this.getRequestedExecutionCourseId(request);
+    }
 
-	@Override
-	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-		return "/announcementManagement.do";
+    @Override
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+        return "/announcementManagement.do";
 
-	}
+    }
 
-	@Override
-	protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-		final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-		return board.hasWriter(getUserView(request).getPerson()) ? Collections.singletonList(board) : Collections.EMPTY_LIST;
-	}
+    @Override
+    protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
+        final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
+        return board.hasWriter(getUserView(request).getPerson()) ? Collections.singletonList(board) : Collections.EMPTY_LIST;
+    }
 
 }

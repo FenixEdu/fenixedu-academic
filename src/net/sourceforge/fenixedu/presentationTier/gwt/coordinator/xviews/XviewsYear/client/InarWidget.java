@@ -11,108 +11,108 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class InarWidget extends Composite {
 
-	private int frameWidth;
-	private int frameHeight;
-	private String dcpId;
-	private String eyId;
-	private InarServiceAsync inarService;
-	private String rawYearLabel;
-	private int[] rawInar;
+    private int frameWidth;
+    private int frameHeight;
+    private String dcpId;
+    private String eyId;
+    private InarServiceAsync inarService;
+    private String rawYearLabel;
+    private int[] rawInar;
 
-	private XviewsYear window;
-	private HorizontalPanel mainPanel;
+    private XviewsYear window;
+    private HorizontalPanel mainPanel;
 
-	private Widget yearCanvas;
-	private int yearCanvasWidth;
-	private int yearCanvasHeight;
+    private Widget yearCanvas;
+    private int yearCanvasWidth;
+    private int yearCanvasHeight;
 
-	private Widget inarBarCanvas;
-	private int inarBarCanvasWidth;
-	private int inarBarCanvasHeight;
+    private Widget inarBarCanvas;
+    private int inarBarCanvasWidth;
+    private int inarBarCanvasHeight;
 
-	private Widget totalsCanvas;
-	private int totalsCanvasWidth;
-	private int totalsCanvasHeight;
+    private Widget totalsCanvas;
+    private int totalsCanvasWidth;
+    private int totalsCanvasHeight;
 
-	public InarWidget(XviewsYear window, int width, int height, String eyId, String dcpId, InarServiceAsync inarService) {
-		this.window = window;
-		this.frameWidth = width;
-		this.frameHeight = height;
-		this.dcpId = dcpId;
-		this.eyId = eyId;
-		this.inarService = inarService;
+    public InarWidget(XviewsYear window, int width, int height, String eyId, String dcpId, InarServiceAsync inarService) {
+        this.window = window;
+        this.frameWidth = width;
+        this.frameHeight = height;
+        this.dcpId = dcpId;
+        this.eyId = eyId;
+        this.inarService = inarService;
 
-		mainPanel = new HorizontalPanel();
-		initWidget(mainPanel);
-		cropCanvas();
+        mainPanel = new HorizontalPanel();
+        initWidget(mainPanel);
+        cropCanvas();
 
-		loadYear();
+        loadYear();
 
-	}
+    }
 
-	private void cropCanvas() {
+    private void cropCanvas() {
 
-		inarBarCanvasWidth = (int) (frameWidth * 0.75);
-		yearCanvasWidth = (frameWidth - inarBarCanvasWidth) / 2;
-		totalsCanvasWidth = frameWidth - inarBarCanvasWidth - yearCanvasWidth;
+        inarBarCanvasWidth = (int) (frameWidth * 0.75);
+        yearCanvasWidth = (frameWidth - inarBarCanvasWidth) / 2;
+        totalsCanvasWidth = frameWidth - inarBarCanvasWidth - yearCanvasWidth;
 
-		yearCanvasHeight = frameHeight;
-		inarBarCanvasHeight = frameHeight;
-		totalsCanvasHeight = frameHeight;
+        yearCanvasHeight = frameHeight;
+        inarBarCanvasHeight = frameHeight;
+        totalsCanvasHeight = frameHeight;
 
-	}
+    }
 
-	private void loadYear() {
-		inarService.getExecutionYear(eyId, new AsyncCallback<String>() {
+    private void loadYear() {
+        inarService.getExecutionYear(eyId, new AsyncCallback<String>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				window.notifyServiceFailure();
+            @Override
+            public void onFailure(Throwable caught) {
+                window.notifyServiceFailure();
 
-			}
+            }
 
-			@Override
-			public void onSuccess(String result) {
-				rawYearLabel = result;
-				loadYearLabelWidget();
+            @Override
+            public void onSuccess(String result) {
+                rawYearLabel = result;
+                loadYearLabelWidget();
 
-			}
+            }
 
-		});
+        });
 
-	}
+    }
 
-	private void loadYearLabelWidget() {
-		yearCanvas = new ExecutionYearLabel(yearCanvasWidth, yearCanvasHeight, rawYearLabel);
-		mainPanel.insert(yearCanvas, 0);
-		loadInar();
-	}
+    private void loadYearLabelWidget() {
+        yearCanvas = new ExecutionYearLabel(yearCanvasWidth, yearCanvasHeight, rawYearLabel);
+        mainPanel.insert(yearCanvas, 0);
+        loadInar();
+    }
 
-	private void loadInar() {
-		inarService.getInar(eyId, dcpId, new AsyncCallback<int[]>() {
+    private void loadInar() {
+        inarService.getInar(eyId, dcpId, new AsyncCallback<int[]>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				window.notifyServiceFailure();
-			}
+            @Override
+            public void onFailure(Throwable caught) {
+                window.notifyServiceFailure();
+            }
 
-			@Override
-			public void onSuccess(int[] result) {
-				rawInar = result;
-				loadInarAndTotalsWidgets();
+            @Override
+            public void onSuccess(int[] result) {
+                rawInar = result;
+                loadInarAndTotalsWidgets();
 
-			}
+            }
 
-		});
+        });
 
-	}
+    }
 
-	private void loadInarAndTotalsWidgets() {
-		inarBarCanvas = new InarBar(window, inarBarCanvasWidth, inarBarCanvasHeight, rawInar);
-		mainPanel.insert(inarBarCanvas, 1);
-		totalsCanvas = new TotalsLabel(totalsCanvasWidth, totalsCanvasHeight, rawInar[4]);
-		mainPanel.insert(totalsCanvas, 2);
-		window.widgetReady();
-	}
+    private void loadInarAndTotalsWidgets() {
+        inarBarCanvas = new InarBar(window, inarBarCanvasWidth, inarBarCanvasHeight, rawInar);
+        mainPanel.insert(inarBarCanvas, 1);
+        totalsCanvas = new TotalsLabel(totalsCanvasWidth, totalsCanvasHeight, rawInar[4]);
+        mainPanel.insert(totalsCanvas, 2);
+        window.widgetReady();
+    }
 
 }

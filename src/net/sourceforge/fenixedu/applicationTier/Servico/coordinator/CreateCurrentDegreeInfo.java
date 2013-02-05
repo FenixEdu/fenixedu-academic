@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCurrentDegreeInfo extends FenixService {
 
-	@Service
-	public static DegreeInfo run(Degree degree) {
-		return degree.createCurrentDegreeInfo();
-	}
+    @Service
+    public static DegreeInfo run(Degree degree) {
+        return degree.createCurrentDegreeInfo();
+    }
 
 }

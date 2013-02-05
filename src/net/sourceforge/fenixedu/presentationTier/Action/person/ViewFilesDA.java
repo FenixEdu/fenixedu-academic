@@ -33,87 +33,86 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(module = "messaging", path = "/viewFiles", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(
-				head = "/messaging/files/context.jsp")),
-		@Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(
-				head = "/messaging/files/context.jsp")),
-		@Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(
-				head = "/commons/renderers/treeRendererHeader.jsp",
-				title = "private.messaging.files")),
-		@Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(
-				head = "/messaging/files/context.jsp")) })
+        @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(
+                head = "/messaging/files/context.jsp")),
+        @Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(
+                head = "/messaging/files/context.jsp")),
+        @Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(
+                head = "/commons/renderers/treeRendererHeader.jsp", title = "private.messaging.files")),
+        @Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(
+                head = "/messaging/files/context.jsp")) })
 public class ViewFilesDA extends UnitFunctionalities {
 
-	public ActionForward showSources(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		List<PersonFileSource> result = new ArrayList<PersonFileSource>();
+    public ActionForward showSources(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        List<PersonFileSource> result = new ArrayList<PersonFileSource>();
 
-		MultiLanguageString departmentsName =
-				new MultiLanguageString().with(Language.pt, "Departamentos").with(Language.en, "Departments");
-		PersonFileSourceGroupBean departmentsGroup = new PersonFileSourceGroupBean(departmentsName);
+        MultiLanguageString departmentsName =
+                new MultiLanguageString().with(Language.pt, "Departamentos").with(Language.en, "Departments");
+        PersonFileSourceGroupBean departmentsGroup = new PersonFileSourceGroupBean(departmentsName);
 
-		SortedSet<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
-		departments.addAll(RootDomainObject.getInstance().getDepartments());
-		for (Department department : departments) {
-			departmentsGroup.add(new PersonFileSourceBean(department.getDepartmentUnit()));
-		}
+        SortedSet<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
+        departments.addAll(RootDomainObject.getInstance().getDepartments());
+        for (Department department : departments) {
+            departmentsGroup.add(new PersonFileSourceBean(department.getDepartmentUnit()));
+        }
 
-		MultiLanguageString researchUnitsName =
-				new MultiLanguageString().with(Language.pt, "Unidades de Investigação").with(Language.en, "Research Units");
-		PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
+        MultiLanguageString researchUnitsName =
+                new MultiLanguageString().with(Language.pt, "Unidades de Investigação").with(Language.en, "Research Units");
+        PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
 
-		SortedSet<Unit> researchUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
-		researchUnits.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.RESEARCH_UNIT));
-		for (Unit unit : researchUnits) {
-			researchUnitsGroup.add(new PersonFileSourceBean(unit));
-		}
+        SortedSet<Unit> researchUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+        researchUnits.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.RESEARCH_UNIT));
+        for (Unit unit : researchUnits) {
+            researchUnitsGroup.add(new PersonFileSourceBean(unit));
+        }
 
-		MultiLanguageString scientificAreaName =
-				new MultiLanguageString().with(Language.pt, "Áreas Ciêntificas").with(Language.en, "Scientific Areas");
-		PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
+        MultiLanguageString scientificAreaName =
+                new MultiLanguageString().with(Language.pt, "Áreas Ciêntificas").with(Language.en, "Scientific Areas");
+        PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
 
-		SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
-		scientificAreas.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
-		for (Unit unit : scientificAreas) {
-			scientificAreaUnits.add(new PersonFileSourceBean(unit));
-		}
+        SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+        scientificAreas.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
+        for (Unit unit : scientificAreas) {
+            scientificAreaUnits.add(new PersonFileSourceBean(unit));
+        }
 
-		PersonFileSourceBean pedagogicalCouncil = new PersonFileSourceBean(PedagogicalCouncilSite.getSite().getUnit());
+        PersonFileSourceBean pedagogicalCouncil = new PersonFileSourceBean(PedagogicalCouncilSite.getSite().getUnit());
 
-		PersonFileSourceBean scientific = new PersonFileSourceBean(ScientificCouncilSite.getSite().getUnit());
+        PersonFileSourceBean scientific = new PersonFileSourceBean(ScientificCouncilSite.getSite().getUnit());
 
-		result.add(departmentsGroup);
-		result.add(researchUnitsGroup);
-		result.add(scientificAreaUnits);
-		result.add(pedagogicalCouncil);
-		result.add(scientific);
+        result.add(departmentsGroup);
+        result.add(researchUnitsGroup);
+        result.add(scientificAreaUnits);
+        result.add(pedagogicalCouncil);
+        result.add(scientific);
 
-		Collections.sort(result, PersonFileSource.COMPARATOR);
+        Collections.sort(result, PersonFileSource.COMPARATOR);
 
-		filterSources(result, getLoggedPerson(request));
+        filterSources(result, getLoggedPerson(request));
 
-		request.setAttribute("sources", result);
+        request.setAttribute("sources", result);
 
-		return mapping.findForward("showSources");
-	}
+        return mapping.findForward("showSources");
+    }
 
-	private void filterSources(List<PersonFileSource> result, Person person) {
-		Iterator<PersonFileSource> iterator = result.iterator();
+    private void filterSources(List<PersonFileSource> result, Person person) {
+        Iterator<PersonFileSource> iterator = result.iterator();
 
-		while (iterator.hasNext()) {
-			PersonFileSource source = iterator.next();
+        while (iterator.hasNext()) {
+            PersonFileSource source = iterator.next();
 
-			if (source.getCount() == 0 && !source.isAllowedToUpload(person)) {
-				iterator.remove();
-			} else {
-				filterSources(source.getChildren(), person);
-			}
-		}
-	}
+            if (source.getCount() == 0 && !source.isAllowedToUpload(person)) {
+                iterator.remove();
+            } else {
+                filterSources(source.getChildren(), person);
+            }
+        }
+    }
 
-	public ActionForward viewFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return manageFiles(mapping, form, request, response);
-	}
+    public ActionForward viewFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return manageFiles(mapping, form, request, response);
+    }
 
 }

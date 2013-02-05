@@ -26,105 +26,105 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
 
-	/**
-	 * Serial version id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public DegreesOfExecutionCourseGroup(ExecutionCourse executionCourse) {
-		super(executionCourse);
-	}
+    public DegreesOfExecutionCourseGroup(ExecutionCourse executionCourse) {
+        super(executionCourse);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		HashSet<Person> elements = new HashSet<Person>();
-		if (hasExecutionCourse()) {
-			List<Degree> degreeList = new ArrayList<Degree>();
-			for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-				degreeList.add(curricularCourse.getDegree());
-			}
-			for (Degree degree : degreeList) {
-				for (Registration registration : degree.getActiveRegistrations()) {
-					elements.add(registration.getPerson());
-				}
-			}
-		}
-		return elements;
-	}
+    @Override
+    public Set<Person> getElements() {
+        HashSet<Person> elements = new HashSet<Person>();
+        if (hasExecutionCourse()) {
+            List<Degree> degreeList = new ArrayList<Degree>();
+            for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+                degreeList.add(curricularCourse.getDegree());
+            }
+            for (Degree degree : degreeList) {
+                for (Registration registration : degree.getActiveRegistrations()) {
+                    elements.add(registration.getPerson());
+                }
+            }
+        }
+        return elements;
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		if (person != null && person.hasStudent() && hasExecutionCourse()) {
-			for (Registration registration : person.getStudent().getAllRegistrations()) {
-				for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-					if (curricularCourse.getDegree() == registration.getDegree()) {
-						return true;
-					}
-				}
-			}
+    @Override
+    public boolean isMember(Person person) {
+        if (person != null && person.hasStudent() && hasExecutionCourse()) {
+            for (Registration registration : person.getStudent().getAllRegistrations()) {
+                for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+                    if (curricularCourse.getDegree() == registration.getDegree()) {
+                        return true;
+                    }
+                }
+            }
 
-			for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-				if (attends.getRegistration().getStudent() == person.getStudent()) {
-					return true;
-				}
-			}
-		}
+            for (final Attends attends : getExecutionCourse().getAttendsSet()) {
+                if (attends.getRegistration().getStudent() == person.getStudent()) {
+                    return true;
+                }
+            }
+        }
 
-		return isDegreeCoordinator(person);
-	}
+        return isDegreeCoordinator(person);
+    }
 
-	private boolean isDegreeCoordinator(final Person person) {
-		if (person != null && person.hasAnyCoordinators()) {
-			final ExecutionCourse executionCourse = getExecutionCourse();
-			if (executionCourse != null) {
-				final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
-				for (final Coordinator coordinator : person.getCoordinatorsSet()) {
-					final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
-					if (executionDegrees.contains(executionDegree)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    private boolean isDegreeCoordinator(final Person person) {
+        if (person != null && person.hasAnyCoordinators()) {
+            final ExecutionCourse executionCourse = getExecutionCourse();
+            if (executionCourse != null) {
+                final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
+                for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+                    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+                    if (executionDegrees.contains(executionDegree)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		return object != null && object instanceof DegreesOfExecutionCourseGroup;
-	}
+    @Override
+    public boolean equals(Object object) {
+        return object != null && object instanceof DegreesOfExecutionCourseGroup;
+    }
 
-	@Override
-	public int hashCode() {
-		return this.getClass().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return this.getClass().hashCode();
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new DegreesOfExecutionCourseGroup((ExecutionCourse) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new DegreesOfExecutionCourseGroup((ExecutionCourse) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

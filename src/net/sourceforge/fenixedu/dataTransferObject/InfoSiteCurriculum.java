@@ -13,44 +13,44 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 public class InfoSiteCurriculum extends DataTranferObject implements ISiteComponent {
 
-	private InfoCurriculum infoCurriculum;
+    private InfoCurriculum infoCurriculum;
 
-	private InfoCurricularCourse infoCurricularCourse;
+    private InfoCurricularCourse infoCurricularCourse;
 
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	/**
-	 * @param infoCurricularCourse
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @param infoCurricularCourse
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoCurriculum getInfoCurriculum() {
-		return infoCurriculum;
-	}
+    /**
+     * @return
+     */
+    public InfoCurriculum getInfoCurriculum() {
+        return infoCurriculum;
+    }
 
-	/**
-	 * @param infoCurriculum
-	 */
-	public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
-		this.infoCurriculum = infoCurriculum;
-	}
+    /**
+     * @param infoCurriculum
+     */
+    public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
+        this.infoCurriculum = infoCurriculum;
+    }
 
-	/**
+    /**
      *  
      */
-	public InfoSiteCurriculum() {
-		super();
+    public InfoSiteCurriculum() {
+        super();
 
-	}
+    }
 
 }

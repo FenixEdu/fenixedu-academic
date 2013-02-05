@@ -28,33 +28,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "manager", path = "/deletePrecedence", input = "df.page.manage.precedences", scope = "request")
-@Forwards(value = { @Forward(
-		name = "showPrecedences",
-		path = "/manager/precedences/managePrecedences.jsp",
-		tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
+@Forwards(value = { @Forward(name = "showPrecedences", path = "/manager/precedences/managePrecedences.jsp",
+        tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class DeletePrecedenceFromDegreeCurricularPlanAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		Integer degreeID = new Integer(request.getParameter("degreeId"));
-		Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
-		Integer precedenceID = new Integer(request.getParameter("precedenceId"));
+        Integer degreeID = new Integer(request.getParameter("degreeId"));
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer precedenceID = new Integer(request.getParameter("precedenceId"));
 
-		try {
-			DeletePrecedenceFromDegreeCurricularPlan.run(precedenceID);
-			Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
-			request.setAttribute("precedences", result);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            DeletePrecedenceFromDegreeCurricularPlan.run(precedenceID);
+            Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
+            request.setAttribute("precedences", result);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute("degreeId", degreeID);
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+        request.setAttribute("degreeId", degreeID);
+        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-		return mapping.findForward("showPrecedences");
-	}
+        return mapping.findForward("showPrecedences");
+    }
 }

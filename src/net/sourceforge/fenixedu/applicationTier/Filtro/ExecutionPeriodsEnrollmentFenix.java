@@ -23,47 +23,47 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  */
 public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
-	private static final ExecutionSemester since;
-	static {
-		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2004/2005");
-		since = executionYear == null ? null : executionYear.getFirstExecutionPeriod();
-	}
+    private static final ExecutionSemester since;
+    static {
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2004/2005");
+        since = executionYear == null ? null : executionYear.getFirstExecutionPeriod();
+    }
 
-	private final Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
+    private final Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ServidorAplicacao.Filtro.AccessControlFilter#execute(pt.utl.ist.berserk
-	 * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-	 */
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		List serviceResult = (List) response.getReturnObject();
-		ServiceParameters parameters = request.getServiceParameters();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ServidorAplicacao.Filtro.AccessControlFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        List serviceResult = (List) response.getReturnObject();
+        ServiceParameters parameters = request.getServiceParameters();
 
-		DegreeType degreeType = (DegreeType) parameters.getParameter(0);
-		// FIXME: should be replaced with:
-		// 'parameters.getParameter("degreeType")',
-		// when the services starts to genereate stubs
+        DegreeType degreeType = (DegreeType) parameters.getParameter(0);
+        // FIXME: should be replaced with:
+        // 'parameters.getParameter("degreeType")',
+        // when the services starts to genereate stubs
 
-		List newRes = new ArrayList();
-		for (Iterator iter = serviceResult.iterator(); iter.hasNext();) {
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) iter.next();
-			ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
+        List newRes = new ArrayList();
+        for (Iterator iter = serviceResult.iterator(); iter.hasNext();) {
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) iter.next();
+            ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
 
-			if (executionSemester.isAfterOrEquals(since)) {
-				newRes.add(infoExecutionPeriod);
-			} else if (executionSemester.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
-					&& degreeType != null
-					&& (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
-							.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))) {
-				// master degree extra execution periods
-				newRes.add((infoExecutionPeriod));
-			}
-		}
-		response.setReturnObject(newRes);
-	}
+            if (executionSemester.isAfterOrEquals(since)) {
+                newRes.add(infoExecutionPeriod);
+            } else if (executionSemester.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
+                    && degreeType != null
+                    && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
+                            .equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))) {
+                // master degree extra execution periods
+                newRes.add((infoExecutionPeriod));
+            }
+        }
+        response.setReturnObject(newRes);
+    }
 
 }

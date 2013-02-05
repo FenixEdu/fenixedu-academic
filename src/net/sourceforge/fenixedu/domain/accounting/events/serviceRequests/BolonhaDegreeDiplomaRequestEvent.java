@@ -11,24 +11,24 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaR
 
 public class BolonhaDegreeDiplomaRequestEvent extends BolonhaDegreeDiplomaRequestEvent_Base {
 
-	protected BolonhaDegreeDiplomaRequestEvent() {
-		super();
-	}
+    protected BolonhaDegreeDiplomaRequestEvent() {
+        super();
+    }
 
-	public BolonhaDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
-			final Person person, final DiplomaRequest diplomaRequest) {
-		this();
-		super.init(administrativeOffice, eventType, person, diplomaRequest);
-	}
+    public BolonhaDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
+            final Person person, final DiplomaRequest diplomaRequest) {
+        this();
+        super.init(administrativeOffice, eventType, person, diplomaRequest);
+    }
 
-	@Override
-	public boolean isDepositSupported() {
-		return true;
-	}
+    @Override
+    public boolean isDepositSupported() {
+        return true;
+    }
 
-	@Override
-	public Set<EntryType> getPossibleEntryTypesForDeposit() {
-		return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
-	}
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
+    }
 
 }

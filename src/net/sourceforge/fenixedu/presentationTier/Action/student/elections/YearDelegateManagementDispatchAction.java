@@ -37,188 +37,186 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/yearDelegateManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "showYearDelegateManagement",
-		path = "/student/elections/yearDelegateManagement.jsp",
-		tileProperties = @Tile(title = "private.student.participate.electionofyeardelegate")) })
+@Forwards(value = { @Forward(name = "showYearDelegateManagement", path = "/student/elections/yearDelegateManagement.jsp",
+        tileProperties = @Tile(title = "private.student.participate.electionofyeardelegate")) })
 public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Person person = getLoggedPerson(request);
-		final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
+        final Person person = getLoggedPerson(request);
+        final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
 
-		final DelegateElectionPeriod currentPeriod =
-				(yearDelegateElection != null ? yearDelegateElection.getCurrentElectionPeriod() : null);
-		StudentVoteBean studentVoteBean = new StudentVoteBean();
+        final DelegateElectionPeriod currentPeriod =
+                (yearDelegateElection != null ? yearDelegateElection.getCurrentElectionPeriod() : null);
+        StudentVoteBean studentVoteBean = new StudentVoteBean();
 
-		if (currentPeriod != null && currentPeriod.isCandidacyPeriod()) {
-			request.setAttribute("currentYearDelegateElection", yearDelegateElection);
+        if (currentPeriod != null && currentPeriod.isCandidacyPeriod()) {
+            request.setAttribute("currentYearDelegateElection", yearDelegateElection);
 
-			YearDelegateElection personDelegateElection = getPersonYearDelegateElection(person.getStudent());
-			if (personDelegateElection != null) {
-				// j� � candidato: pode remover-se da lista de candidatos
-				request.setAttribute("candidatedYearDelegate", Collections.singletonList(personDelegateElection));
-			}
+            YearDelegateElection personDelegateElection = getPersonYearDelegateElection(person.getStudent());
+            if (personDelegateElection != null) {
+                // j� � candidato: pode remover-se da lista de candidatos
+                request.setAttribute("candidatedYearDelegate", Collections.singletonList(personDelegateElection));
+            }
 
-			final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidates());
-			Collections.sort(candidates, Student.NAME_COMPARATOR);
-			request.setAttribute("candidates", candidates);
-		}
+            final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidates());
+            Collections.sort(candidates, Student.NAME_COMPARATOR);
+            request.setAttribute("candidates", candidates);
+        }
 
-		if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
-			if (((DelegateElectionVotingPeriod) currentPeriod).getVotingStudents().contains(person.getStudent())) {
-				// aluno ja votou: pode apenas verificar em quem votou e alterar
-				// voto?
-				request.setAttribute("votedYearDelegate", yearDelegateElection);
-			} else {
-				// aluno ainda nao votou: pode votar
-				final List<Student> candidatesList = yearDelegateElection.getCandidates();
+        if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
+            if (((DelegateElectionVotingPeriod) currentPeriod).getVotingStudents().contains(person.getStudent())) {
+                // aluno ja votou: pode apenas verificar em quem votou e alterar
+                // voto?
+                request.setAttribute("votedYearDelegate", yearDelegateElection);
+            } else {
+                // aluno ainda nao votou: pode votar
+                final List<Student> candidatesList = yearDelegateElection.getCandidates();
 
-				List<StudentVoteBean> candidatesBeanList = new ArrayList<StudentVoteBean>();
-				for (final Student student : candidatesList) {
-					candidatesBeanList.add(new StudentVoteBean(student));
-				}
+                List<StudentVoteBean> candidatesBeanList = new ArrayList<StudentVoteBean>();
+                for (final Student student : candidatesList) {
+                    candidatesBeanList.add(new StudentVoteBean(student));
+                }
 
-				final List<Student> otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
+                final List<Student> otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
 
-				List<StudentVoteBean> otherStudentsBeanList = new ArrayList<StudentVoteBean>();
-				for (final Student student : otherStudentsList) {
-					otherStudentsBeanList.add(new StudentVoteBean(student));
-				}
-				Collections.sort(candidatesBeanList, new BeanComparator("student.person.name"));
-				Collections.sort(otherStudentsBeanList, new BeanComparator("student.person.name"));
+                List<StudentVoteBean> otherStudentsBeanList = new ArrayList<StudentVoteBean>();
+                for (final Student student : otherStudentsList) {
+                    otherStudentsBeanList.add(new StudentVoteBean(student));
+                }
+                Collections.sort(candidatesBeanList, new BeanComparator("student.person.name"));
+                Collections.sort(otherStudentsBeanList, new BeanComparator("student.person.name"));
 
-				request.setAttribute("notVotedYearDelegate", yearDelegateElection);
-				request.setAttribute("candidatesBeanList", candidatesBeanList);
-				request.setAttribute("otherStudentsBeanList", studentVoteBean);
+                request.setAttribute("notVotedYearDelegate", yearDelegateElection);
+                request.setAttribute("candidatesBeanList", candidatesBeanList);
+                request.setAttribute("otherStudentsBeanList", studentVoteBean);
 
-			}
-		}
+            }
+        }
 
-		if (yearDelegateElection != null && yearDelegateElection.hasLastVotingPeriod()
-				&& yearDelegateElection.getLastVotingPeriod().isPastPeriod()) {
-			final List<DelegateElectionResultsByStudentDTO> electionResultsByStudentDTOList =
-					yearDelegateElection.getLastVotingPeriod().getDelegateElectionResults();
+        if (yearDelegateElection != null && yearDelegateElection.hasLastVotingPeriod()
+                && yearDelegateElection.getLastVotingPeriod().isPastPeriod()) {
+            final List<DelegateElectionResultsByStudentDTO> electionResultsByStudentDTOList =
+                    yearDelegateElection.getLastVotingPeriod().getDelegateElectionResults();
 
-			request.setAttribute("yearDelegateResultsElection", electionResultsByStudentDTOList);
-			request.setAttribute("yearDelegateElection", yearDelegateElection);
-		}
+            request.setAttribute("yearDelegateResultsElection", electionResultsByStudentDTOList);
+            request.setAttribute("yearDelegateElection", yearDelegateElection);
+        }
 
-		return mapping.findForward("showYearDelegateManagement");
-	}
+        return mapping.findForward("showYearDelegateManagement");
+    }
 
-	private YearDelegateElection getPersonYearDelegateElection(Student student) {
-		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		for (DelegateElection delegateElection : student.getElectionsWithStudentCandidacies()) {
-			if (delegateElection instanceof YearDelegateElection) {
-				YearDelegateElection yearDelegateElection = (YearDelegateElection) delegateElection;
-				if (yearDelegateElection.getExecutionYear() == executionYear) {
-					return yearDelegateElection;
-				}
-			}
-		}
-		return null;
-	}
+    private YearDelegateElection getPersonYearDelegateElection(Student student) {
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        for (DelegateElection delegateElection : student.getElectionsWithStudentCandidacies()) {
+            if (delegateElection instanceof YearDelegateElection) {
+                YearDelegateElection yearDelegateElection = (YearDelegateElection) delegateElection;
+                if (yearDelegateElection.getExecutionYear() == executionYear) {
+                    return yearDelegateElection;
+                }
+            }
+        }
+        return null;
+    }
 
-	public ActionForward addCandidateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward addCandidateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Person person = getLoggedPerson(request);
-		final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
+        final Person person = getLoggedPerson(request);
+        final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
 
-		try {
-			AddCandidateYearDelegateElections.run(yearDelegateElection, person.getStudent());
-		} catch (FenixServiceException ex) {
-			addActionMessage(request, ex.getMessage(), ex.getArgs());
-		}
-		return prepare(mapping, actionForm, request, response);
-	}
+        try {
+            AddCandidateYearDelegateElections.run(yearDelegateElection, person.getStudent());
+        } catch (FenixServiceException ex) {
+            addActionMessage(request, ex.getMessage(), ex.getArgs());
+        }
+        return prepare(mapping, actionForm, request, response);
+    }
 
-	public ActionForward removeCandidateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward removeCandidateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Person person = getLoggedPerson(request);
-		final YearDelegateElection yearDelegateElection = getPersonYearDelegateElection(person.getStudent());
+        final Person person = getLoggedPerson(request);
+        final YearDelegateElection yearDelegateElection = getPersonYearDelegateElection(person.getStudent());
 
-		try {
-			RemoveCandidateYearDelegateElections.run(yearDelegateElection, person.getStudent());
-		} catch (FenixServiceException ex) {
-			addActionMessage(request, ex.getMessage(), ex.getArgs());
-		}
-		return prepare(mapping, actionForm, request, response);
-	}
+        try {
+            RemoveCandidateYearDelegateElections.run(yearDelegateElection, person.getStudent());
+        } catch (FenixServiceException ex) {
+            addActionMessage(request, ex.getMessage(), ex.getArgs());
+        }
+        return prepare(mapping, actionForm, request, response);
+    }
 
-	public ActionForward vote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException, Exception {
+    public ActionForward vote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException, Exception {
 
-		final Person person = getLoggedPerson(request);
-		final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
-		final StudentVoteBean voteBean = (StudentVoteBean) RenderUtils.getViewState("prepareVote").getMetaObject().getObject();
+        final Person person = getLoggedPerson(request);
+        final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
+        final StudentVoteBean voteBean = (StudentVoteBean) RenderUtils.getViewState("prepareVote").getMetaObject().getObject();
 
-		final Student votedStudent = voteBean.getStudent();
-		try {
-			VoteYearDelegateElections.run(yearDelegateElection, person.getStudent(), votedStudent);
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getMessage(), ex.getArgs());
-		} catch (FenixServiceException ex) {
-			addActionMessage(request, ex.getMessage(), ex.getArgs());
-		}
+        final Student votedStudent = voteBean.getStudent();
+        try {
+            VoteYearDelegateElections.run(yearDelegateElection, person.getStudent(), votedStudent);
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getMessage(), ex.getArgs());
+        } catch (FenixServiceException ex) {
+            addActionMessage(request, ex.getMessage(), ex.getArgs());
+        }
 
-		return prepare(mapping, actionForm, request, response);
-	}
+        return prepare(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareVote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException, Exception {
+    public ActionForward prepareVote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException, Exception {
 
-		final Person person = getLoggedPerson(request);
-		final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
-		StudentVoteBean voteBean = null;
+        final Person person = getLoggedPerson(request);
+        final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
+        StudentVoteBean voteBean = null;
 
-		if (RenderUtils.getViewState("candidate") != null) {
-			voteBean = (StudentVoteBean) RenderUtils.getViewState("candidate").getMetaObject().getObject();
-		} else if (RenderUtils.getViewState("otherStudentsBeanList") != null) {
-			voteBean = getRenderedObject("otherStudentsBeanList");
+        if (RenderUtils.getViewState("candidate") != null) {
+            voteBean = (StudentVoteBean) RenderUtils.getViewState("candidate").getMetaObject().getObject();
+        } else if (RenderUtils.getViewState("otherStudentsBeanList") != null) {
+            voteBean = getRenderedObject("otherStudentsBeanList");
 
-		}
-		voteBean = getStudentVoteOrBlankVote(voteBean);
-		request.setAttribute("studentVote", voteBean.getStudent());
-		request.setAttribute("blankVote", isBlankVote(voteBean));
-		request.setAttribute("votedStudentBean", voteBean);
-		request.setAttribute("notVotedYearDelegate", yearDelegateElection);
+        }
+        voteBean = getStudentVoteOrBlankVote(voteBean);
+        request.setAttribute("studentVote", voteBean.getStudent());
+        request.setAttribute("blankVote", isBlankVote(voteBean));
+        request.setAttribute("votedStudentBean", voteBean);
+        request.setAttribute("notVotedYearDelegate", yearDelegateElection);
 
-		return mapping.findForward("showYearDelegateManagement");
-	}
+        return mapping.findForward("showYearDelegateManagement");
+    }
 
-	/*
-	 * AUXIALIARY METHODS
-	 */
+    /*
+     * AUXIALIARY METHODS
+     */
 
-	private YearDelegateElection getYearDelegateElectionForStudent(Student student) {
-		final List<Registration> registrations = student.getActiveRegistrations();
-		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-		for (Registration registration : registrations) {
-			if (registration != null) {
-				YearDelegateElection yearDelegateElectionsGivenExecutionYear =
-						registration.getYearDelegateElectionsGivenExecutionYear(currentExecutionYear);
-				if (yearDelegateElectionsGivenExecutionYear != null) {
-					return yearDelegateElectionsGivenExecutionYear;
-				}
-			}
-		}
-		return null;
-	}
+    private YearDelegateElection getYearDelegateElectionForStudent(Student student) {
+        final List<Registration> registrations = student.getActiveRegistrations();
+        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        for (Registration registration : registrations) {
+            if (registration != null) {
+                YearDelegateElection yearDelegateElectionsGivenExecutionYear =
+                        registration.getYearDelegateElectionsGivenExecutionYear(currentExecutionYear);
+                if (yearDelegateElectionsGivenExecutionYear != null) {
+                    return yearDelegateElectionsGivenExecutionYear;
+                }
+            }
+        }
+        return null;
+    }
 
-	private StudentVoteBean getStudentVoteOrBlankVote(StudentVoteBean voteBean) {
-		if (isBlankVote(voteBean)) {
-			return new StudentVoteBean();
-		}
-		return voteBean;
-	}
+    private StudentVoteBean getStudentVoteOrBlankVote(StudentVoteBean voteBean) {
+        if (isBlankVote(voteBean)) {
+            return new StudentVoteBean();
+        }
+        return voteBean;
+    }
 
-	private boolean isBlankVote(StudentVoteBean voteBean) {
-		return voteBean == null || voteBean.getStudent() == null;
-	}
+    private boolean isBlankVote(StudentVoteBean voteBean) {
+        return voteBean == null || voteBean.getStudent() == null;
+    }
 
 }

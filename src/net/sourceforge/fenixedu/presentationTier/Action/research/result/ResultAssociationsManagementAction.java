@@ -23,124 +23,120 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "researcher", path = "/result/resultAssociationsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(
-				name = "editUnitAssociations",
-				path = "/researcher/result/editResultUnitAssociations.jsp",
-				tileProperties = @Tile(
-						title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-		@Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do", tileProperties = @Tile(
-				title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-		@Forward(name = "ListPublications", path = "/resultPublications/listPublications.do", tileProperties = @Tile(
-				title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-		@Forward(name = "editPatent", path = "/resultPatents/showPatent.do", tileProperties = @Tile(
-				title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")),
-		@Forward(
-				name = "editEventAssociations",
-				path = "/researcher/result/editResultEventAssociations.jsp",
-				tileProperties = @Tile(
-						title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-		@Forward(name = "listPatents", path = "/resultPatents/management.do", tileProperties = @Tile(
-				title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
+        @Forward(name = "editUnitAssociations", path = "/researcher/result/editResultUnitAssociations.jsp",
+                tileProperties = @Tile(
+                        title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+        @Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do", tileProperties = @Tile(
+                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+        @Forward(name = "ListPublications", path = "/resultPublications/listPublications.do", tileProperties = @Tile(
+                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+        @Forward(name = "editPatent", path = "/resultPatents/showPatent.do", tileProperties = @Tile(
+                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")),
+        @Forward(name = "editEventAssociations", path = "/researcher/result/editResultEventAssociations.jsp",
+                tileProperties = @Tile(
+                        title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+        @Forward(name = "listPatents", path = "/resultPatents/management.do", tileProperties = @Tile(
+                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
 public class ResultAssociationsManagementAction extends ResultsManagementAction {
 
-	/**
-	 * Actions for Result Unit Associations
-	 */
-	public ActionForward prepareEditUnitAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		final ResearchResult result = getResultFromRequest(request);
-		if (result == null) {
-			return backToResultList(mapping, form, request, response);
-		}
-		setResUnitAssRequestAttributes(request, result);
+    /**
+     * Actions for Result Unit Associations
+     */
+    public ActionForward prepareEditUnitAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        final ResearchResult result = getResultFromRequest(request);
+        if (result == null) {
+            return backToResultList(mapping, form, request, response);
+        }
+        setResUnitAssRequestAttributes(request, result);
 
-		return mapping.findForward("editUnitAssociations");
-	}
+        return mapping.findForward("editUnitAssociations");
+    }
 
-	public ActionForward addSugestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		ResultUnitAssociationCreationBean bean =
-				(ResultUnitAssociationCreationBean) RenderUtils.getViewState("suggestion").getMetaObject().getObject();
-		request.setAttribute("unitBean", bean);
-		bean.setSuggestion(true);
+    public ActionForward addSugestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        ResultUnitAssociationCreationBean bean =
+                (ResultUnitAssociationCreationBean) RenderUtils.getViewState("suggestion").getMetaObject().getObject();
+        request.setAttribute("unitBean", bean);
+        bean.setSuggestion(true);
 
-		try {
+        try {
 
-			CreateResultUnitAssociation.run(bean);
-		} catch (FileManagerException e) {
-			e.printStackTrace();
-			addActionMessage(request, "label.communicationError");
-		} catch (Exception e) {
-			addActionMessage(request, e.getMessage());
-		}
-		request.setAttribute("result", bean.getResult());
-		RenderUtils.invalidateViewState("suggestion");
-		return mapping.findForward("editUnitAssociations");
-	}
+            CreateResultUnitAssociation.run(bean);
+        } catch (FileManagerException e) {
+            e.printStackTrace();
+            addActionMessage(request, "label.communicationError");
+        } catch (Exception e) {
+            addActionMessage(request, e.getMessage());
+        }
+        request.setAttribute("result", bean.getResult());
+        RenderUtils.invalidateViewState("suggestion");
+        return mapping.findForward("editUnitAssociations");
+    }
 
-	public ActionForward changeTypeOfUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward changeTypeOfUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		ResultUnitAssociationCreationBean bean =
-				(ResultUnitAssociationCreationBean) RenderUtils.getViewState("unitBean").getMetaObject().getObject();
-		request.setAttribute("unitBean", bean);
+        ResultUnitAssociationCreationBean bean =
+                (ResultUnitAssociationCreationBean) RenderUtils.getViewState("unitBean").getMetaObject().getObject();
+        request.setAttribute("unitBean", bean);
 
-		if (getFromRequest(request, "editExisting") != null) {
-			request.setAttribute("editExisting", "editExisting");
-		}
-		final ResearchResult result = getResultFromRequest(request);
-		request.setAttribute("result", result);
+        if (getFromRequest(request, "editExisting") != null) {
+            request.setAttribute("editExisting", "editExisting");
+        }
+        final ResearchResult result = getResultFromRequest(request);
+        request.setAttribute("result", result);
 
-		RenderUtils.invalidateViewState("unitBean");
-		return mapping.findForward("editUnitAssociations");
-	}
+        RenderUtils.invalidateViewState("unitBean");
+        return mapping.findForward("editUnitAssociations");
+    }
 
-	public ActionForward prepareEditUnitRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		request.setAttribute("editExisting", "editExisting");
-		return prepareEditUnitAssociations(mapping, form, request, response);
-	}
+    public ActionForward prepareEditUnitRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        request.setAttribute("editExisting", "editExisting");
+        return prepareEditUnitAssociations(mapping, form, request, response);
+    }
 
-	public ActionForward createUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		final ResultUnitAssociationCreationBean bean = getRenderedObject("unitBean");
-		bean.setSuggestion(false);
-		try {
+    public ActionForward createUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        final ResultUnitAssociationCreationBean bean = getRenderedObject("unitBean");
+        bean.setSuggestion(false);
+        try {
 
-			CreateResultUnitAssociation.run(bean);
-		} catch (FileManagerException e) {
-			e.printStackTrace();
-			addActionMessage(request, "label.communicationError");
-		} catch (Exception e) {
-			addActionMessage(request, e.getMessage());
-		}
+            CreateResultUnitAssociation.run(bean);
+        } catch (FileManagerException e) {
+            e.printStackTrace();
+            addActionMessage(request, "label.communicationError");
+        } catch (Exception e) {
+            addActionMessage(request, e.getMessage());
+        }
 
-		return prepareEditUnitAssociations(mapping, form, request, response);
-	}
+        return prepareEditUnitAssociations(mapping, form, request, response);
+    }
 
-	public ActionForward removeUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		final Integer associationId = getRequestParameterAsInteger(request, "associationId");
+    public ActionForward removeUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        final Integer associationId = getRequestParameterAsInteger(request, "associationId");
 
-		try {
+        try {
 
-			DeleteResultUnitAssociation.run(associationId);
-		} catch (Exception e) {
-			final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-			return processException(request, mapping, defaultForward, e);
-		}
+            DeleteResultUnitAssociation.run(associationId);
+        } catch (Exception e) {
+            final ActionForward defaultForward = backToResultList(mapping, form, request, response);
+            return processException(request, mapping, defaultForward, e);
+        }
 
-		return prepareEditUnitAssociations(mapping, form, request, response);
-	}
+        return prepareEditUnitAssociations(mapping, form, request, response);
+    }
 
-	private void setResUnitAssRequestAttributes(HttpServletRequest request, ResearchResult result) throws FenixFilterException,
-			FenixServiceException {
-		if (getFromRequest(request, "editExisting") != null) {
-			request.setAttribute("editExisting", "editExisting");
-		}
+    private void setResUnitAssRequestAttributes(HttpServletRequest request, ResearchResult result) throws FenixFilterException,
+            FenixServiceException {
+        if (getFromRequest(request, "editExisting") != null) {
+            request.setAttribute("editExisting", "editExisting");
+        }
 
-		request.setAttribute("unitBean", new ResultUnitAssociationCreationBean(result));
-		request.setAttribute("result", result);
-		RenderUtils.invalidateViewState("unitBean");
-	}
+        request.setAttribute("unitBean", new ResultUnitAssociationCreationBean(result));
+        request.setAttribute("result", result);
+        RenderUtils.invalidateViewState("unitBean");
+    }
 }

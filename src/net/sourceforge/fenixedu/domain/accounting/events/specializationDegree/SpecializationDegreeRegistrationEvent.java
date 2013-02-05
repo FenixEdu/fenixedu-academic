@@ -24,120 +24,120 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeRegistrationEvent_Base {
 
-	private SpecializationDegreeRegistrationEvent() {
-		super();
-	}
+    private SpecializationDegreeRegistrationEvent() {
+        super();
+    }
 
-	public SpecializationDegreeRegistrationEvent(AdministrativeOffice administrativeOffice, Person person,
-			Registration registration) {
-		this();
-		init(administrativeOffice, person, registration);
-	}
+    public SpecializationDegreeRegistrationEvent(AdministrativeOffice administrativeOffice, Person person,
+            Registration registration) {
+        this();
+        init(administrativeOffice, person, registration);
+    }
 
-	private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
-		super.init(administrativeOffice, EventType.SPECIALIZATION_DEGREE_REGISTRATION, person);
-		checkParameters(registration);
-		super.setRegistration(registration);
-	}
+    private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
+        super.init(administrativeOffice, EventType.SPECIALIZATION_DEGREE_REGISTRATION, person);
+        checkParameters(registration);
+        super.setRegistration(registration);
+    }
 
-	private void checkParameters(Registration registration) {
-		if (registration == null) {
-			throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
-		}
+    private void checkParameters(Registration registration) {
+        if (registration == null) {
+            throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
+        }
 
-		if (registration.getDegreeType().equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
-			throw new DomainException(
-					"error.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent.registrationType.incorrect");
-		}
-	}
+        if (registration.getDegreeType().equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
+            throw new DomainException(
+                    "error.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent.registrationType.incorrect");
+        }
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
-				.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ")
-				.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
-				.appendLabel(getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
+                .appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ")
+                .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
+                .appendLabel(getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	private ExecutionDegree getExecutionDegree() {
-		return getRegistration().getStudentCandidacy().getExecutionDegree();
-	}
+    private ExecutionDegree getExecutionDegree() {
+        return getRegistration().getStudentCandidacy().getExecutionDegree();
+    }
 
-	private Degree getDegree() {
-		return getExecutionDegree().getDegree();
-	}
+    private Degree getDegree() {
+        return getExecutionDegree().getDegree();
+    }
 
-	@Override
-	public PostingRule getPostingRule() {
-		return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+    }
 
-	private AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
-		return getAdministrativeOffice().getServiceAgreementTemplate();
-	}
+    private AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
+        return getAdministrativeOffice().getServiceAgreementTemplate();
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
-	}
+    @Override
+    public Account getToAccount() {
+        return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getPerson().getAccountBy(AccountType.EXTERNAL);
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getPerson().getAccountBy(AccountType.EXTERNAL);
+    }
 
-	@Override
-	public void setRegistration(Registration registration) {
-		throw new DomainException("error.accounting.events.dfa.SpecializationDegreeRegistrationEvent.cannot.modify.registration");
-	}
+    @Override
+    public void setRegistration(Registration registration) {
+        throw new DomainException("error.accounting.events.dfa.SpecializationDegreeRegistrationEvent.cannot.modify.registration");
+    }
 
-	public DateTime getRegistrationDate() {
-		return getRegistration().getStartDate().toDateTimeAtMidnight();
-	}
+    public DateTime getRegistrationDate() {
+        return getRegistration().getStartDate().toDateTimeAtMidnight();
+    }
 
-	public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriodInDegreeCurricularPlan() {
-		return getExecutionDegree().getDegreeCurricularPlan().getRegistrationPeriod(getExecutionYear());
-	}
+    public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriodInDegreeCurricularPlan() {
+        return getExecutionDegree().getDegreeCurricularPlan().getRegistrationPeriod(getExecutionYear());
+    }
 
-	public boolean hasRegistrationPeriodInDegreeCurricularPlan() {
-		return getExecutionDegree().getDegreeCurricularPlan().hasRegistrationPeriodFor(getExecutionYear());
-	}
+    public boolean hasRegistrationPeriodInDegreeCurricularPlan() {
+        return getExecutionDegree().getDegreeCurricularPlan().hasRegistrationPeriodFor(getExecutionYear());
+    }
 
-	private ExecutionYear getExecutionYear() {
-		return getExecutionDegree().getExecutionYear();
-	}
+    private ExecutionYear getExecutionYear() {
+        return getExecutionDegree().getExecutionYear();
+    }
 
-	public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {
-		return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(getExecutionYear());
-	}
+    public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {
+        return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(getExecutionYear());
+    }
 
-	public boolean hasCandidacyPeriodInDegreeCurricularPlan() {
-		return getExecutionDegree().getDegreeCurricularPlan().hasCandidacyPeriodFor(getExecutionYear());
-	}
+    public boolean hasCandidacyPeriodInDegreeCurricularPlan() {
+        return getExecutionDegree().getDegreeCurricularPlan().hasCandidacyPeriodFor(getExecutionYear());
+    }
 
-	private StudentCandidacy getCandidacy() {
-		return getRegistration().getStudentCandidacy();
-	}
+    private StudentCandidacy getCandidacy() {
+        return getRegistration().getStudentCandidacy();
+    }
 
-	public DateTime getCandidacyDate() {
-		return getCandidacy().getCandidacyDate();
-	}
+    public DateTime getCandidacyDate() {
+        return getCandidacy().getCandidacyDate();
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = super.getDescription();
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
-		labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-		labelFormatter.appendLabel(getExecutionYear().getYear());
-		return labelFormatter;
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = super.getDescription();
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
+        labelFormatter.appendLabel(getExecutionYear().getYear());
+        return labelFormatter;
+    }
 
-	@Override
-	public boolean isSpecializationDegreeRegistrationEvent() {
-		return true;
-	}
+    @Override
+    public boolean isSpecializationDegreeRegistrationEvent() {
+        return true;
+    }
 }

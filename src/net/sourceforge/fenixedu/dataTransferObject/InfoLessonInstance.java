@@ -11,70 +11,70 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoLessonInstance extends InfoShowOccupation {
 
-	private LessonInstance lessonInstanceReference;
+    private LessonInstance lessonInstanceReference;
 
-	public InfoLessonInstance(LessonInstance lessonInstance) {
-		this.lessonInstanceReference = lessonInstance;
-	}
+    public InfoLessonInstance(LessonInstance lessonInstance) {
+        this.lessonInstanceReference = lessonInstance;
+    }
 
-	public LessonInstance getLessonInstance() {
-		return lessonInstanceReference;
-	}
+    public LessonInstance getLessonInstance() {
+        return lessonInstanceReference;
+    }
 
-	@Override
-	public DiaSemana getDiaSemana() {
-		return getLessonInstance().getDayOfweek();
-	}
+    @Override
+    public DiaSemana getDiaSemana() {
+        return getLessonInstance().getDayOfweek();
+    }
 
-	@Override
-	public InfoRoomOccupation getInfoRoomOccupation() {
-		return getLessonInstance().hasLessonInstanceSpaceOccupation() ? InfoRoomOccupation.newInfoFromDomain(getLessonInstance()
-				.getLessonInstanceSpaceOccupation()) : null;
-	}
+    @Override
+    public InfoRoomOccupation getInfoRoomOccupation() {
+        return getLessonInstance().hasLessonInstanceSpaceOccupation() ? InfoRoomOccupation.newInfoFromDomain(getLessonInstance()
+                .getLessonInstanceSpaceOccupation()) : null;
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getLessonInstance().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getLessonInstance().getIdInternal();
+    }
 
-	@Override
-	public Calendar getInicio() {
-		return getLessonInstance().getBeginDateTime().toCalendar(Language.getLocale());
-	}
+    @Override
+    public Calendar getInicio() {
+        return getLessonInstance().getBeginDateTime().toCalendar(Language.getLocale());
+    }
 
-	@Override
-	public Calendar getFim() {
-		return getLessonInstance().getEndDateTime().toCalendar(Language.getLocale());
-	}
+    @Override
+    public Calendar getFim() {
+        return getLessonInstance().getEndDateTime().toCalendar(Language.getLocale());
+    }
 
-	@Override
-	public InfoShift getInfoShift() {
-		return getLessonInstance().getLesson().hasShift() ? InfoShift.newInfoFromDomain(getLesson().getShift()) : null;
-	}
+    @Override
+    public InfoShift getInfoShift() {
+        return getLessonInstance().getLesson().hasShift() ? InfoShift.newInfoFromDomain(getLesson().getShift()) : null;
+    }
 
-	@Override
-	public ShiftType getTipo() {
-		return null;
-	}
+    @Override
+    public ShiftType getTipo() {
+        return null;
+    }
 
-	public String getShiftTypeCodesPrettyPrint() {
-		if (getLessonInstance().hasCourseLoad()) {
-			return getLessonInstance().getCourseLoad().getType().getSiglaTipoAula();
-		} else {
-			return getLessonInstance().getLesson().getShift().getShiftTypesCodePrettyPrint();
-		}
-	}
+    public String getShiftTypeCodesPrettyPrint() {
+        if (getLessonInstance().hasCourseLoad()) {
+            return getLessonInstance().getCourseLoad().getType().getSiglaTipoAula();
+        } else {
+            return getLessonInstance().getLesson().getShift().getShiftTypesCodePrettyPrint();
+        }
+    }
 
-	public String getShiftTypesPrettyPrint() {
-		if (getLessonInstance().hasCourseLoad()) {
-			return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonInstance().getCourseLoad()
-					.getType().getName());
-		} else {
-			return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
-		}
-	}
+    public String getShiftTypesPrettyPrint() {
+        if (getLessonInstance().hasCourseLoad()) {
+            return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonInstance().getCourseLoad()
+                    .getType().getName());
+        } else {
+            return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
+        }
+    }
 
-	private Lesson getLesson() {
-		return getLessonInstance().getLesson();
-	}
+    private Lesson getLesson() {
+        return getLessonInstance().getLesson();
+    }
 }

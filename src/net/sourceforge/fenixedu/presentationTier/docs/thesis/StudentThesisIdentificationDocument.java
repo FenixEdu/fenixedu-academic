@@ -20,180 +20,180 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class StudentThesisIdentificationDocument extends ThesisDocument {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public StudentThesisIdentificationDocument(Thesis thesis) {
-		super(thesis);
-	}
+    public StudentThesisIdentificationDocument(Thesis thesis) {
+        super(thesis);
+    }
 
-	@Override
-	protected void fillThesisInfo() {
-		Thesis thesis = getThesis();
+    @Override
+    protected void fillThesisInfo() {
+        Thesis thesis = getThesis();
 
-		ThesisFile file = thesis.getDissertation();
-		if (file != null) {
-			addParameter("thesisTitle", file.getTitle());
-			addParameter("thesisSubtitle", neverNull(file.getSubTitle()));
-			addParameter("thesisLanguage", getLanguage(file));
-		} else {
-			addParameter("thesisTitle", EMPTY_STR);
-			addParameter("thesisSubtitle", EMPTY_STR);
-			addParameter("thesisLanguage", EMPTY_STR);
-		}
+        ThesisFile file = thesis.getDissertation();
+        if (file != null) {
+            addParameter("thesisTitle", file.getTitle());
+            addParameter("thesisSubtitle", neverNull(file.getSubTitle()));
+            addParameter("thesisLanguage", getLanguage(file));
+        } else {
+            addParameter("thesisTitle", EMPTY_STR);
+            addParameter("thesisSubtitle", EMPTY_STR);
+            addParameter("thesisLanguage", EMPTY_STR);
+        }
 
-		String date = null;
+        String date = null;
 
-		DateTime discussion = thesis.getDiscussed();
-		if (discussion != null) {
-			date = String.format(new Locale("pt"), "%1$td/%1$tm/%1$tY", discussion.toDate());
-		}
+        DateTime discussion = thesis.getDiscussed();
+        if (discussion != null) {
+            date = String.format(new Locale("pt"), "%1$td/%1$tm/%1$tY", discussion.toDate());
+        }
 
-		addParameter("discussion", neverNull(date));
+        addParameter("discussion", neverNull(date));
 
-		int index = 0;
-		for (String keyword : splitKeywords(thesis.getKeywordsPt())) {
-			addParameter("keywordPt" + index++, keyword);
-		}
+        int index = 0;
+        for (String keyword : splitKeywords(thesis.getKeywordsPt())) {
+            addParameter("keywordPt" + index++, keyword);
+        }
 
-		while (index < 6) {
-			addParameter("keywordPt" + index++, EMPTY_STR);
-		}
+        while (index < 6) {
+            addParameter("keywordPt" + index++, EMPTY_STR);
+        }
 
-		index = 0;
-		for (String keyword : splitKeywords(thesis.getKeywordsEn())) {
-			addParameter("keywordEn" + index++, keyword);
-		}
+        index = 0;
+        for (String keyword : splitKeywords(thesis.getKeywordsEn())) {
+            addParameter("keywordEn" + index++, keyword);
+        }
 
-		while (index < 6) {
-			addParameter("keywordEn" + index++, EMPTY_STR);
-		}
+        while (index < 6) {
+            addParameter("keywordEn" + index++, EMPTY_STR);
+        }
 
-		addParameter("keywordsPt", thesis.getKeywordsPt());
-		addParameter("keywordsEn", thesis.getKeywordsEn());
+        addParameter("keywordsPt", thesis.getKeywordsPt());
+        addParameter("keywordsEn", thesis.getKeywordsEn());
 
-		addParameter("abstractPt", neverNull(thesis.getThesisAbstractPt()));
-		addParameter("abstractEn", neverNull(thesis.getThesisAbstractEn()));
-	}
+        addParameter("abstractPt", neverNull(thesis.getThesisAbstractPt()));
+        addParameter("abstractEn", neverNull(thesis.getThesisAbstractEn()));
+    }
 
-	private String getLanguage(ThesisFile file) {
-		Language language = file.getLanguage();
+    private String getLanguage(ThesisFile file) {
+        Language language = file.getLanguage();
 
-		if (language == null) {
-			return EMPTY_STR;
-		}
+        if (language == null) {
+            return EMPTY_STR;
+        }
 
-		return getEnumerationBundle().getString(language.name());
-	}
+        return getEnumerationBundle().getString(language.name());
+    }
 
-	private List<String> splitKeywords(String keywords) {
-		List<String> result = new ArrayList<String>();
+    private List<String> splitKeywords(String keywords) {
+        List<String> result = new ArrayList<String>();
 
-		if (keywords == null) {
-			return result;
-		}
+        if (keywords == null) {
+            return result;
+        }
 
-		for (String part : keywords.split(",")) {
-			String trimmed = part.trim();
+        for (String part : keywords.split(",")) {
+            String trimmed = part.trim();
 
-			if (trimmed.length() > 0) {
-				result.add(trimmed);
-			}
-		}
+            if (trimmed.length() > 0) {
+                result.add(trimmed);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public String getReportFileName() {
-		Thesis thesis = getThesis();
-		return "identificacao-aluno-" + thesis.getStudent().getNumber();
-	}
+    @Override
+    public String getReportFileName() {
+        Thesis thesis = getThesis();
+        return "identificacao-aluno-" + thesis.getStudent().getNumber();
+    }
 
-	@Override
-	public JasperPrintProcessor getPreProcessor() {
-		return LineProcessor.instance;
-	}
+    @Override
+    public JasperPrintProcessor getPreProcessor() {
+        return LineProcessor.instance;
+    }
 
-	private static class LineProcessor implements JasperPrintProcessor {
+    private static class LineProcessor implements JasperPrintProcessor {
 
-		private static LineProcessor instance = new LineProcessor();
+        private static LineProcessor instance = new LineProcessor();
 
-		private static String[][] FIELD_LINE_MAP = { { "textField-title", "13", "line-title-2" },
-				{ "textField-subtitle", "13", "line-subtitle-2" } };
+        private static String[][] FIELD_LINE_MAP = { { "textField-title", "13", "line-title-2" },
+                { "textField-subtitle", "13", "line-subtitle-2" } };
 
-		private static float LINE_DISTANCE = 11.5f;
+        private static float LINE_DISTANCE = 11.5f;
 
-		@Override
-		public JasperPrint process(JasperPrint jasperPrint) {
-			Map<String, JRPrintElement> map = getElementsMap(jasperPrint);
+        @Override
+        public JasperPrint process(JasperPrint jasperPrint) {
+            Map<String, JRPrintElement> map = getElementsMap(jasperPrint);
 
-			for (String[] element2 : FIELD_LINE_MAP) {
-				String elementKey = element2[0];
-				Integer height = new Integer(element2[1]);
+            for (String[] element2 : FIELD_LINE_MAP) {
+                String elementKey = element2[0];
+                Integer height = new Integer(element2[1]);
 
-				JRPrintElement element = map.get(elementKey);
+                JRPrintElement element = map.get(elementKey);
 
-				if (element == null) {
-					continue;
-				}
+                if (element == null) {
+                    continue;
+                }
 
-				if (element.getHeight() > height.intValue()) {
-					// height increased
-					for (int j = 2; j < element2.length; j++) {
-						JRPrintElement line = map.get(element2[j]);
+                if (element.getHeight() > height.intValue()) {
+                    // height increased
+                    for (int j = 2; j < element2.length; j++) {
+                        JRPrintElement line = map.get(element2[j]);
 
-						if (line != null) {
-							line.setY(element.getY() + ((int) (j * LINE_DISTANCE)));
-						}
-					}
-				} else {
-					// height is the same
-					for (int j = 2; j < element2.length; j++) {
-						JRPrintElement line = map.get(element2[j]);
+                        if (line != null) {
+                            line.setY(element.getY() + ((int) (j * LINE_DISTANCE)));
+                        }
+                    }
+                } else {
+                    // height is the same
+                    for (int j = 2; j < element2.length; j++) {
+                        JRPrintElement line = map.get(element2[j]);
 
-						if (line != null) {
-							removeElement(jasperPrint, line);
-						}
-					}
-				}
-			}
+                        if (line != null) {
+                            removeElement(jasperPrint, line);
+                        }
+                    }
+                }
+            }
 
-			return jasperPrint;
-		}
+            return jasperPrint;
+        }
 
-		private Map<String, JRPrintElement> getElementsMap(JasperPrint jasperPrint) {
-			Map<String, JRPrintElement> map = new HashMap<String, JRPrintElement>();
+        private Map<String, JRPrintElement> getElementsMap(JasperPrint jasperPrint) {
+            Map<String, JRPrintElement> map = new HashMap<String, JRPrintElement>();
 
-			Iterator pages = jasperPrint.getPages().iterator();
-			while (pages.hasNext()) {
-				JRPrintPage page = (JRPrintPage) pages.next();
+            Iterator pages = jasperPrint.getPages().iterator();
+            while (pages.hasNext()) {
+                JRPrintPage page = (JRPrintPage) pages.next();
 
-				Iterator elements = page.getElements().iterator();
-				while (elements.hasNext()) {
-					JRPrintElement element = (JRPrintElement) elements.next();
+                Iterator elements = page.getElements().iterator();
+                while (elements.hasNext()) {
+                    JRPrintElement element = (JRPrintElement) elements.next();
 
-					map.put(element.getKey(), element);
-				}
-			}
+                    map.put(element.getKey(), element);
+                }
+            }
 
-			return map;
-		}
+            return map;
+        }
 
-		private void removeElement(JasperPrint jasperPrint, JRPrintElement target) {
-			Iterator pages = jasperPrint.getPages().iterator();
-			while (pages.hasNext()) {
-				JRPrintPage page = (JRPrintPage) pages.next();
+        private void removeElement(JasperPrint jasperPrint, JRPrintElement target) {
+            Iterator pages = jasperPrint.getPages().iterator();
+            while (pages.hasNext()) {
+                JRPrintPage page = (JRPrintPage) pages.next();
 
-				Iterator elements = page.getElements().iterator();
-				while (elements.hasNext()) {
-					JRPrintElement element = (JRPrintElement) elements.next();
+                Iterator elements = page.getElements().iterator();
+                while (elements.hasNext()) {
+                    JRPrintElement element = (JRPrintElement) elements.next();
 
-					if (element == target) {
-						elements.remove();
-					}
-				}
-			}
-		}
+                    if (element == target) {
+                        elements.remove();
+                    }
+                }
+            }
+        }
 
-	}
+    }
 }

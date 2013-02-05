@@ -15,20 +15,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class GeneratePasswordsForCandidacies extends FenixService {
 
-	@Checked("RolePredicates.OPERATOR_PREDICATE")
-	@Service
-	public static List<PasswordBean> run(final List<Integer> studentCandidacyIds) {
+    @Checked("RolePredicates.OPERATOR_PREDICATE")
+    @Service
+    public static List<PasswordBean> run(final List<Integer> studentCandidacyIds) {
 
-		final Set<StudentCandidacy> studentCandidacies = StudentCandidacy.readByIds(studentCandidacyIds);
-		final List<PasswordBean> result = new ArrayList<PasswordBean>();
-		for (final StudentCandidacy studentCandidacy : studentCandidacies) {
-			final Person person = studentCandidacy.getPerson();
-			final String newPassword = GeneratePassword.getInstance().generatePassword(person);
-			person.setPassword(PasswordEncryptor.encryptPassword(newPassword));
+        final Set<StudentCandidacy> studentCandidacies = StudentCandidacy.readByIds(studentCandidacyIds);
+        final List<PasswordBean> result = new ArrayList<PasswordBean>();
+        for (final StudentCandidacy studentCandidacy : studentCandidacies) {
+            final Person person = studentCandidacy.getPerson();
+            final String newPassword = GeneratePassword.getInstance().generatePassword(person);
+            person.setPassword(PasswordEncryptor.encryptPassword(newPassword));
 
-			result.add(new PasswordBean(person, newPassword));
-		}
+            result.add(new PasswordBean(person, newPassword));
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

@@ -14,31 +14,31 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SectionProviderForContents implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		if (source instanceof SectionBean) {
-			SectionBean bean = (SectionBean) source;
-			return bean.getContainer().getOrderedChildren();
-		} else {
-			Section section = (Section) source;
-			Container container = getParent(section);
-			return container == null ? Collections.EMPTY_LIST : container.getOrderedChildren(new Class[] { Section.class,
-					MetaDomainObjectPortal.class });
-		}
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        if (source instanceof SectionBean) {
+            SectionBean bean = (SectionBean) source;
+            return bean.getContainer().getOrderedChildren();
+        } else {
+            Section section = (Section) source;
+            Container container = getParent(section);
+            return container == null ? Collections.EMPTY_LIST : container.getOrderedChildren(new Class[] { Section.class,
+                    MetaDomainObjectPortal.class });
+        }
+    }
 
-	private Container getParent(Section section) {
-		for (Node node : section.getParents()) {
-			Container container = node.getParent();
-			if (!(container instanceof Module)) {
-				return container;
-			}
-		}
-		return null;
-	}
+    private Container getParent(Section section) {
+        for (Node node : section.getParents()) {
+            Container container = node.getParent();
+            if (!(container instanceof Module)) {
+                return container;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

@@ -8,25 +8,25 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 
 public class StudentPropaeudeuticEnrolmentsBean extends StudentOptionalEnrolmentBean implements NoCourseGroupEnrolmentBean {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	public StudentPropaeudeuticEnrolmentsBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
-		setStudentCurricularPlan(studentCurricularPlan);
-		setExecutionPeriod(executionSemester);
-	}
+    public StudentPropaeudeuticEnrolmentsBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+        setStudentCurricularPlan(studentCurricularPlan);
+        setExecutionPeriod(executionSemester);
+    }
 
-	@Override
-	public NoCourseGroupCurriculumGroupType getGroupType() {
-		return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
-	}
+    @Override
+    public NoCourseGroupCurriculumGroupType getGroupType() {
+        return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
+    }
 
-	@Override
-	public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup() {
-		return getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(getGroupType());
-	}
+    @Override
+    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup() {
+        return getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(getGroupType());
+    }
 
-	@Override
-	public CurricularRuleLevel getCurricularRuleLevel() {
-		return super.getCurricularRuleLevel() != null ? super.getCurricularRuleLevel() : getGroupType().getCurricularRuleLevel();
-	}
+    @Override
+    public CurricularRuleLevel getCurricularRuleLevel() {
+        return super.getCurricularRuleLevel() != null ? super.getCurricularRuleLevel() : getGroupType().getCurricularRuleLevel();
+    }
 }

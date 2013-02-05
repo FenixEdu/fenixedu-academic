@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewChoice;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteChoice extends FenixService {
-	@Service
-	public static void run(NewChoice choice) throws FenixServiceException {
-		choice.delete();
-	}
+    @Service
+    public static void run(NewChoice choice) throws FenixServiceException {
+        choice.delete();
+    }
 }

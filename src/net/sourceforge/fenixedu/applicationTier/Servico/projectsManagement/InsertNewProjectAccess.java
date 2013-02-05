@@ -24,123 +24,123 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
  */
 public class InsertNewProjectAccess extends FenixService {
 
-	public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate,
-			final BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
-		Person person = Person.readPersonByUsername(username);
-		if (person == null) {
-			throw new IllegalArgumentException();
-		}
+    public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate,
+            final BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
+        Person person = Person.readPersonByUsername(username);
+        if (person == null) {
+            throw new IllegalArgumentException();
+        }
 
-		// deletePastProjectAccesses(person);
+        // deletePastProjectAccesses(person);
 
-		Integer coordinatorCode = new Integer(userNumber);
-		Boolean isCostCenter = setProjectsRoles(person, costCenter, instance);
+        Integer coordinatorCode = new Integer(userNumber);
+        Boolean isCostCenter = setProjectsRoles(person, costCenter, instance);
 
-		List<String> projectCodes = new ArrayList<String>();
+        List<String> projectCodes = new ArrayList<String>();
 
-		for (ProjectAccess projectAccess : person.readProjectAccessesByCoordinator(coordinatorCode, instance)) {
-			projectCodes.add(projectAccess.getKeyProject());
-		}
+        for (ProjectAccess projectAccess : person.readProjectAccessesByCoordinator(coordinatorCode, instance)) {
+            projectCodes.add(projectAccess.getKeyProject());
+        }
 
-		PersistentProject persistentProject = new PersistentProject();
-		List<InfoProject> projectList =
-				persistentProject.readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes, instance);
+        PersistentProject persistentProject = new PersistentProject();
+        List<InfoProject> projectList =
+                persistentProject.readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes, instance);
 
-		for (InfoProject project : projectList) {
-			if (ProjectAccess.getByPersonAndProject(person, project.getProjectCode(), instance) != null) {
-				throw new IllegalArgumentException();
-			}
-			ProjectAccess projectAccess = new ProjectAccess();
-			projectAccess.setPerson(person);
-			projectAccess.setKeyProjectCoordinator(coordinatorCode);
-			projectAccess.setKeyProject(project.getProjectCode());
-			projectAccess.setBeginDate(beginDate);
-			projectAccess.setEndDate(endDate);
-			projectAccess.setCostCenter(isCostCenter);
-			projectAccess.setInstance(instance);
-			if (instance == BackendInstance.IT) {
-				projectAccess.setItProject(true);
-			} else if (instance == BackendInstance.IST) {
-				projectAccess.setItProject(false);
-			}
-		}
+        for (InfoProject project : projectList) {
+            if (ProjectAccess.getByPersonAndProject(person, project.getProjectCode(), instance) != null) {
+                throw new IllegalArgumentException();
+            }
+            ProjectAccess projectAccess = new ProjectAccess();
+            projectAccess.setPerson(person);
+            projectAccess.setKeyProjectCoordinator(coordinatorCode);
+            projectAccess.setKeyProject(project.getProjectCode());
+            projectAccess.setBeginDate(beginDate);
+            projectAccess.setEndDate(endDate);
+            projectAccess.setCostCenter(isCostCenter);
+            projectAccess.setInstance(instance);
+            if (instance == BackendInstance.IT) {
+                projectAccess.setItProject(true);
+            } else if (instance == BackendInstance.IST) {
+                projectAccess.setItProject(false);
+            }
+        }
 
-	}
+    }
 
-	public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
-			GregorianCalendar endDate, BackendInstance instance, String userNumber) {
-		Person person = Person.readPersonByUsername(username);
-		if (person == null) {
-			throw new IllegalArgumentException();
-		}
+    public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
+            GregorianCalendar endDate, BackendInstance instance, String userNumber) {
+        Person person = Person.readPersonByUsername(username);
+        if (person == null) {
+            throw new IllegalArgumentException();
+        }
 
-		Boolean isCostCenter = setProjectsRoles(person, costCenter, instance);
+        Boolean isCostCenter = setProjectsRoles(person, costCenter, instance);
 
-		for (String projectCode : projectCodes) {
-			ProjectAccess projectAccess = getPersonOldProjectAccess(person, projectCode, instance);
-			if (projectAccess == null) {
-				projectAccess = new ProjectAccess();
-				projectAccess.setPerson(person);
-				projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
-				projectAccess.setKeyProject(projectCode);
-				projectAccess.setCostCenter(isCostCenter);
-				projectAccess.setInstance(instance);
-				if (instance == BackendInstance.IT) {
-					projectAccess.setItProject(true);
-				} else if (instance == BackendInstance.IST) {
-					projectAccess.setItProject(false);
-				}
-			}
-			projectAccess.setBeginDate(beginDate);
-			projectAccess.setEndDate(endDate);
-		}
+        for (String projectCode : projectCodes) {
+            ProjectAccess projectAccess = getPersonOldProjectAccess(person, projectCode, instance);
+            if (projectAccess == null) {
+                projectAccess = new ProjectAccess();
+                projectAccess.setPerson(person);
+                projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
+                projectAccess.setKeyProject(projectCode);
+                projectAccess.setCostCenter(isCostCenter);
+                projectAccess.setInstance(instance);
+                if (instance == BackendInstance.IT) {
+                    projectAccess.setItProject(true);
+                } else if (instance == BackendInstance.IST) {
+                    projectAccess.setItProject(false);
+                }
+            }
+            projectAccess.setBeginDate(beginDate);
+            projectAccess.setEndDate(endDate);
+        }
 
-		// deletePastProjectAccesses(person);
-	}
+        // deletePastProjectAccesses(person);
+    }
 
-	private ProjectAccess getPersonOldProjectAccess(Person person, String projectCode, final BackendInstance instance) {
-		for (ProjectAccess projectAccess : person.getProjectAccesses()) {
-			if (projectAccess.getKeyProject().equals(projectCode) && projectAccess.getInstance() == instance) {
-				return projectAccess;
-			}
-		}
-		return null;
-	}
+    private ProjectAccess getPersonOldProjectAccess(Person person, String projectCode, final BackendInstance instance) {
+        for (ProjectAccess projectAccess : person.getProjectAccesses()) {
+            if (projectAccess.getKeyProject().equals(projectCode) && projectAccess.getInstance() == instance) {
+                return projectAccess;
+            }
+        }
+        return null;
+    }
 
-	private Boolean setProjectsRoles(Person person, String costCenter, final BackendInstance instance) {
-		final boolean isCostCenter = costCenter != null && !costCenter.equals("");
-		final RoleType roleType = isCostCenter ? instance.institutionalRoleType : instance.roleType;
+    private Boolean setProjectsRoles(Person person, String costCenter, final BackendInstance instance) {
+        final boolean isCostCenter = costCenter != null && !costCenter.equals("");
+        final RoleType roleType = isCostCenter ? instance.institutionalRoleType : instance.roleType;
 
-		if (!hasProjectsManagerRole(person, roleType)) {
-			person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
-		}
-		return isCostCenter;
-	}
+        if (!hasProjectsManagerRole(person, roleType)) {
+            person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
+        }
+        return isCostCenter;
+    }
 
-	// private void deletePastProjectAccesses(Person person) {
-	// List<ProjectAccess> projectAccessesToRemove = new
-	// ArrayList<ProjectAccess>();
-	// Date currentDate = Calendar.getInstance().getTime();
-	//
-	// for (ProjectAccess projectAccess : person.getProjectAccesses()) {
-	// if (projectAccess.getEnd().before(currentDate)) {
-	// projectAccessesToRemove.add(projectAccess);
-	// }
-	// }
-	//
-	// for (ProjectAccess projectAccess : projectAccessesToRemove) {
-	// projectAccess.delete();
-	// }
-	// }
+    // private void deletePastProjectAccesses(Person person) {
+    // List<ProjectAccess> projectAccessesToRemove = new
+    // ArrayList<ProjectAccess>();
+    // Date currentDate = Calendar.getInstance().getTime();
+    //
+    // for (ProjectAccess projectAccess : person.getProjectAccesses()) {
+    // if (projectAccess.getEnd().before(currentDate)) {
+    // projectAccessesToRemove.add(projectAccess);
+    // }
+    // }
+    //
+    // for (ProjectAccess projectAccess : projectAccessesToRemove) {
+    // projectAccess.delete();
+    // }
+    // }
 
-	private boolean hasProjectsManagerRole(Person person, RoleType roleType) {
-		Iterator iterator = person.getPersonRoles().iterator();
-		while (iterator.hasNext()) {
-			if (((Role) iterator.next()).getRoleType().equals(roleType)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasProjectsManagerRole(Person person, RoleType roleType) {
+        Iterator iterator = person.getPersonRoles().iterator();
+        while (iterator.hasNext()) {
+            if (((Role) iterator.next()).getRoleType().equals(roleType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

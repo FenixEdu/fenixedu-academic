@@ -16,24 +16,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "publico", path = "/announcementsRSS", scope = "session")
 public class GenerateAnnoucementsRSS extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final String executionCourseIdString = request.getParameter("id");
-		final Integer executionCourseId = Integer.valueOf(executionCourseIdString);
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		if (executionCourse == null) {
-			return forward("/publico/notFound.do");
-		}
-		final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
-		if (announcementBoard == null) {
-			return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getIdInternal());
-		}
-		return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal());
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final String executionCourseIdString = request.getParameter("id");
+        final Integer executionCourseId = Integer.valueOf(executionCourseIdString);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        if (executionCourse == null) {
+            return forward("/publico/notFound.do");
+        }
+        final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
+        if (announcementBoard == null) {
+            return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getIdInternal());
+        }
+        return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal());
+    }
 
-	private ActionForward forward(String purl) {
-		return new ActionForward(purl);
-	}
+    private ActionForward forward(String purl) {
+        return new ActionForward(purl);
+    }
 
 }

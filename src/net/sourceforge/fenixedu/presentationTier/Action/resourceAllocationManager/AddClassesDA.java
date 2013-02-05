@@ -26,45 +26,45 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
+        InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
-		List classes = ReadAvailableClassesForShift.run(infoShift.getIdInternal());
+        List classes = ReadAvailableClassesForShift.run(infoShift.getIdInternal());
 
-		if (classes != null && !classes.isEmpty()) {
-			Collections.sort(classes, new BeanComparator("nome"));
-			request.setAttribute(PresentationConstants.CLASSES, classes);
-		}
+        if (classes != null && !classes.isEmpty()) {
+            Collections.sort(classes, new BeanComparator("nome"));
+            request.setAttribute(PresentationConstants.CLASSES, classes);
+        }
 
-		return mapping.findForward("ListClasses");
-	}
+        return mapping.findForward("ListClasses");
+    }
 
-	public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
+        InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
-		DynaActionForm addClassesForm = (DynaActionForm) form;
-		String[] selectedClasses = (String[]) addClassesForm.get("selectedItems");
+        DynaActionForm addClassesForm = (DynaActionForm) form;
+        String[] selectedClasses = (String[]) addClassesForm.get("selectedItems");
 
-		List classOIDs = new ArrayList();
-		for (String selectedClasse : selectedClasses) {
-			classOIDs.add(new Integer(selectedClasse));
-		}
+        List classOIDs = new ArrayList();
+        for (String selectedClasse : selectedClasses) {
+            classOIDs.add(new Integer(selectedClasse));
+        }
 
-		try {
-			AddSchoolClassesToShift.run(infoShift, classOIDs);
-		} catch (FenixServiceException ex) {
-			// No probem, the user refreshed the page after adding classes
-			request.setAttribute("selectMultipleItemsForm", null);
-			return mapping.getInputForward();
-		}
+        try {
+            AddSchoolClassesToShift.run(infoShift, classOIDs);
+        } catch (FenixServiceException ex) {
+            // No probem, the user refreshed the page after adding classes
+            request.setAttribute("selectMultipleItemsForm", null);
+            return mapping.getInputForward();
+        }
 
-		request.setAttribute("selectMultipleItemsForm", null);
+        request.setAttribute("selectMultipleItemsForm", null);
 
-		return mapping.findForward("EditShift");
-	}
+        return mapping.findForward("EditShift");
+    }
 
 }

@@ -22,23 +22,23 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadStudentsFromDegreeCurricularPlan extends FenixService {
 
-	public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException {
-		// Read the Students
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+    public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException {
+        // Read the Students
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-		List students = degreeCurricularPlan.getStudentCurricularPlans();
+        List students = degreeCurricularPlan.getStudentCurricularPlans();
 
-		if ((students == null) || (students.isEmpty())) {
-			throw new NonExistingServiceException();
-		}
+        if ((students == null) || (students.isEmpty())) {
+            throw new NonExistingServiceException();
+        }
 
-		return (List) CollectionUtils.collect(students, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
-				return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
-			}
+        return (List) CollectionUtils.collect(students, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
+                return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+            }
 
-		});
-	}
+        });
+    }
 }

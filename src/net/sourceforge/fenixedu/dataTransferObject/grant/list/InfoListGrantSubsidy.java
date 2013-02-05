@@ -15,37 +15,37 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsi
  */
 public class InfoListGrantSubsidy extends InfoObject {
 
-	private InfoGrantSubsidy infoGrantSubsidy;
+    private InfoGrantSubsidy infoGrantSubsidy;
 
-	private List infoGrantParts;
+    private List infoGrantParts;
 
-	/**
-	 * @return Returns the infoGrantParts.
-	 */
-	public List getInfoGrantParts() {
-		return infoGrantParts;
-	}
+    /**
+     * @return Returns the infoGrantParts.
+     */
+    public List getInfoGrantParts() {
+        return infoGrantParts;
+    }
 
-	/**
-	 * @param infoGrantParts
-	 *            The infoGrantParts to set.
-	 */
-	public void setInfoGrantParts(List infoGrantParts) {
-		this.infoGrantParts = infoGrantParts;
-	}
+    /**
+     * @param infoGrantParts
+     *            The infoGrantParts to set.
+     */
+    public void setInfoGrantParts(List infoGrantParts) {
+        this.infoGrantParts = infoGrantParts;
+    }
 
-	/**
-	 * @return Returns the infoGrantSubsidy.
-	 */
-	public InfoGrantSubsidy getInfoGrantSubsidy() {
-		return infoGrantSubsidy;
-	}
+    /**
+     * @return Returns the infoGrantSubsidy.
+     */
+    public InfoGrantSubsidy getInfoGrantSubsidy() {
+        return infoGrantSubsidy;
+    }
 
-	/**
-	 * @param infoGrantSubsidy
-	 *            The infoGrantSubsidy to set.
-	 */
-	public void setInfoGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy) {
-		this.infoGrantSubsidy = infoGrantSubsidy;
-	}
+    /**
+     * @param infoGrantSubsidy
+     *            The infoGrantSubsidy to set.
+     */
+    public void setInfoGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy) {
+        this.infoGrantSubsidy = infoGrantSubsidy;
+    }
 }

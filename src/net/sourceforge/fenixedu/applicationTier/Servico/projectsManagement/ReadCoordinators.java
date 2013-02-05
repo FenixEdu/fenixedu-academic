@@ -23,39 +23,39 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ReadCoordinators extends FenixService {
 
-	public List run(String username, String costCenter, BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
-		List<InfoRubric> coordinatorsList = new ArrayList<InfoRubric>();
+    public List run(String username, String costCenter, BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
+        List<InfoRubric> coordinatorsList = new ArrayList<InfoRubric>();
 
-		Integer thisCoordinator = new Integer(userNumber);
+        Integer thisCoordinator = new Integer(userNumber);
 
-		List<Integer> coordinatorsCodes = new ArrayList<Integer>();
+        List<Integer> coordinatorsCodes = new ArrayList<Integer>();
 
-		List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, instance);
-		for (ProjectAccess access : accesses) {
-			Integer keyProjectCoordinator = access.getKeyProjectCoordinator();
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, instance);
+        for (ProjectAccess access : accesses) {
+            Integer keyProjectCoordinator = access.getKeyProjectCoordinator();
 
-			if (!coordinatorsCodes.contains(keyProjectCoordinator)) {
-				coordinatorsCodes.add(keyProjectCoordinator);
-			}
-		}
+            if (!coordinatorsCodes.contains(keyProjectCoordinator)) {
+                coordinatorsCodes.add(keyProjectCoordinator);
+            }
+        }
 
-		if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator)) {
-			if ((StringUtils.isEmpty(costCenter)) && new PersistentProject().countUserProject(thisCoordinator, instance) != 0) {
-				coordinatorsCodes.add(thisCoordinator);
-			} else if ((!StringUtils.isEmpty(costCenter))) {
-				if (new PersistentProjectUser().getInstitucionalProjectByCCIDs(thisCoordinator, instance).size() != 0) {
-					coordinatorsCodes.add(thisCoordinator);
-				}
-			}
-		}
-		PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
-		for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
-			IRubric rubric = persistentProjectUser.readProjectCoordinator(coordinatorsCodes.get(coord), instance);
-			if (rubric != null) {
-				coordinatorsList.add(InfoRubric.newInfoFromDomain(rubric));
-			}
-		}
+        if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator)) {
+            if ((StringUtils.isEmpty(costCenter)) && new PersistentProject().countUserProject(thisCoordinator, instance) != 0) {
+                coordinatorsCodes.add(thisCoordinator);
+            } else if ((!StringUtils.isEmpty(costCenter))) {
+                if (new PersistentProjectUser().getInstitucionalProjectByCCIDs(thisCoordinator, instance).size() != 0) {
+                    coordinatorsCodes.add(thisCoordinator);
+                }
+            }
+        }
+        PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
+        for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
+            IRubric rubric = persistentProjectUser.readProjectCoordinator(coordinatorsCodes.get(coord), instance);
+            if (rubric != null) {
+                coordinatorsList.add(InfoRubric.newInfoFromDomain(rubric));
+            }
+        }
 
-		return coordinatorsList;
-	}
+        return coordinatorsList;
+    }
 }

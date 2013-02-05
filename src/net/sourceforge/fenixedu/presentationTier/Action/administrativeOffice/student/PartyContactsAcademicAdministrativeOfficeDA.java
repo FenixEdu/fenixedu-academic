@@ -28,90 +28,90 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/partyContacts", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp"),
-		@Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp"),
-		@Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp"),
-		@Forward(name = "editPersonalData", path = "/student.do?method=prepareEditPersonalData") })
+        @Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp"),
+        @Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp"),
+        @Forward(name = "editPersonalData", path = "/student.do?method=prepareEditPersonalData") })
 public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsManagementDispatchAction {
 
-	private Student getStudent(final HttpServletRequest request) {
-		final String studentID = request.getParameter("studentID");
-		final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
-		request.setAttribute("student", student);
-		return student;
-	}
+    private Student getStudent(final HttpServletRequest request) {
+        final String studentID = request.getParameter("studentID");
+        final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
+        request.setAttribute("student", student);
+        return student;
+    }
 
-	@Override
-	protected Person getParty(final HttpServletRequest request) {
-		return getStudent(request).getPerson();
-	}
+    @Override
+    protected Person getParty(final HttpServletRequest request) {
+        return getStudent(request).getPerson();
+    }
 
-	@Override
-	public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("student", getStudent(request));
-		return super.postbackSetPublic(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("student", getStudent(request));
+        return super.postbackSetPublic(mapping, actionForm, request, response);
+    }
 
-	@Override
-	public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("student", getStudent(request));
-		return super.postbackSetElements(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("student", getStudent(request));
+        return super.postbackSetElements(mapping, actionForm, request, response);
+    }
 
-	@Override
-	public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("student", getStudent(request));
-		return super.invalid(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("student", getStudent(request));
+        return super.invalid(mapping, actionForm, request, response);
+    }
 
-	@Override
-	public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("editPersonalData");
-	}
+    @Override
+    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("editPersonalData");
+    }
 
-	@Override
-	public boolean editContact(PartyContactBean contact) {
-		return EditPartyContact.run(contact, false);
-	}
+    @Override
+    public boolean editContact(PartyContactBean contact) {
+        return EditPartyContact.run(contact, false);
+    }
 
-	@Override
-	public PartyContact createContact(PartyContactBean contact) {
-		return CreatePartyContact.run(contact, false);
-	}
+    @Override
+    public PartyContact createContact(PartyContactBean contact) {
+        return CreatePartyContact.run(contact, false);
+    }
 
-	@Override
-	public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response, PartyContact partyContact) {
-		if (partyContact instanceof PhysicalAddress || partyContact instanceof WebAddress) {
-			if (partyContact.hasPartyContactValidation()) {
-				partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
-			}
-			return backToShowInformation(mapping, actionForm, request, response);
-		}
-		getStudent(request);
-		return mapping.findForward("inputValidationCode");
-	}
+    @Override
+    public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response, PartyContact partyContact) {
+        if (partyContact instanceof PhysicalAddress || partyContact instanceof WebAddress) {
+            if (partyContact.hasPartyContactValidation()) {
+                partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
+            }
+            return backToShowInformation(mapping, actionForm, request, response);
+        }
+        getStudent(request);
+        return mapping.findForward("inputValidationCode");
+    }
 
-	@Override
-	protected void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
-	}
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
+    }
 
-	@Override
-	protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
-	}
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
+    }
 
-	@Override
-	public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Override
+    public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Person person = getStudent(request).getPerson();
-		List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Person person = getStudent(request).getPerson();
+        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
 
-		request.setAttribute("logsList", logsList);
-		return mapping.findForward("viewStudentLogChanges");
-	}
+        request.setAttribute("logsList", logsList);
+        return mapping.findForward("viewStudentLogChanges");
+    }
 
 }

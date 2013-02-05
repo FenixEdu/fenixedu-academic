@@ -10,43 +10,43 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 
 public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCandidacyEvent_Base {
 
-	private SecondCycleIndividualCandidacyEvent() {
-		super();
-	}
+    private SecondCycleIndividualCandidacyEvent() {
+        super();
+    }
 
-	public SecondCycleIndividualCandidacyEvent(final SecondCycleIndividualCandidacy candidacy, final Person person) {
-		this();
-		super.init(candidacy, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, person);
+    public SecondCycleIndividualCandidacyEvent(final SecondCycleIndividualCandidacy candidacy, final Person person) {
+        this();
+        super.init(candidacy, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, person);
 
-		attachAvailablePaymentCode(person);
-	}
+        attachAvailablePaymentCode(person);
+    }
 
-	@Override
-	protected AdministrativeOffice readAdministrativeOffice() {
-		return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-	}
+    @Override
+    protected AdministrativeOffice readAdministrativeOffice() {
+        return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
-	public boolean hasSecondCycleIndividualCandidacyExemption() {
-		return getSecondCycleIndividualCandidacyExemption() != null;
-	}
+    public boolean hasSecondCycleIndividualCandidacyExemption() {
+        return getSecondCycleIndividualCandidacyExemption() != null;
+    }
 
-	public SecondCycleIndividualCandidacyExemption getSecondCycleIndividualCandidacyExemption() {
-		for (final Exemption exemption : getExemptionsSet()) {
-			if (exemption instanceof SecondCycleIndividualCandidacyExemption) {
-				return (SecondCycleIndividualCandidacyExemption) exemption;
-			}
-		}
-		return null;
-	}
+    public SecondCycleIndividualCandidacyExemption getSecondCycleIndividualCandidacyExemption() {
+        for (final Exemption exemption : getExemptionsSet()) {
+            if (exemption instanceof SecondCycleIndividualCandidacyExemption) {
+                return (SecondCycleIndividualCandidacyExemption) exemption;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	protected EntryType getEntryType() {
-		return EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE;
-	}
+    @Override
+    protected EntryType getEntryType() {
+        return EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE;
+    }
 
 }

@@ -18,17 +18,17 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
  */
 public class CareerTeacherAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
-	@Override
-	protected boolean verifyCondition(IUserView id, Integer objectId) {
-		final Person person = id.getPerson();
-		final Teacher teacher = person == null ? null : person.getTeacher();
-		final Career career = rootDomainObject.readCareerByOID(objectId);
-		return teacher != null && career.getTeacher() == teacher;
-	}
+    @Override
+    protected boolean verifyCondition(IUserView id, Integer objectId) {
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
+        final Career career = rootDomainObject.readCareerByOID(objectId);
+        return teacher != null && career.getTeacher() == teacher;
+    }
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.TEACHER;
+    }
 
 }

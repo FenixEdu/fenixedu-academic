@@ -19,33 +19,33 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/eventReports", module = "manager")
 @Forwards({ @Forward(name = "listReports", path = "/manager/accounting/reports/events/listReports.jsp"),
-		@Forward(name = "createReportRequest", path = "/manager/accounting/reports/events/createReportRequest.jsp"),
-		@Forward(name = "viewRequest", path = "/manager/accounting/reports/events/viewRequest.jsp"),
-		@Forward(name = "viewErrors", path = "/manager/accounting/reports/events/viewErrors.jsp") })
+        @Forward(name = "createReportRequest", path = "/manager/accounting/reports/events/createReportRequest.jsp"),
+        @Forward(name = "viewRequest", path = "/manager/accounting/reports/events/viewRequest.jsp"),
+        @Forward(name = "viewErrors", path = "/manager/accounting/reports/events/viewErrors.jsp") })
 public class EventReportsDAForManager extends EventReportsDA {
 
-	@Override
-	protected List<EventReportQueueJob> readPendingOrCancelledJobs() {
-		return EventReportQueueJob.readPendingOrCancelledJobs(null);
-	}
+    @Override
+    protected List<EventReportQueueJob> readPendingOrCancelledJobs() {
+        return EventReportQueueJob.readPendingOrCancelledJobs(null);
+    }
 
-	@Override
-	protected List<EventReportQueueJob> readDoneReports() {
-		return EventReportQueueJob.readDoneReports(null);
-	}
+    @Override
+    protected List<EventReportQueueJob> readDoneReports() {
+        return EventReportQueueJob.readDoneReports(null);
+    }
 
-	@Override
-	protected EventReportQueueJobBean createEventReportQueueJobBean() {
-		return EventReportQueueJobBean.createBeanForManager();
-	}
+    @Override
+    protected EventReportQueueJobBean createEventReportQueueJobBean() {
+        return EventReportQueueJobBean.createBeanForManager();
+    }
 
-	public ActionForward viewErrors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-			final HttpServletResponse response) {
-		EventReportQueueJob queueJob = readEventReportQueueJob(request);
+    public ActionForward viewErrors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        EventReportQueueJob queueJob = readEventReportQueueJob(request);
 
-		request.setAttribute("queueJob", queueJob);
+        request.setAttribute("queueJob", queueJob);
 
-		return mapping.findForward("viewErrors");
-	}
+        return mapping.findForward("viewErrors");
+    }
 
 }

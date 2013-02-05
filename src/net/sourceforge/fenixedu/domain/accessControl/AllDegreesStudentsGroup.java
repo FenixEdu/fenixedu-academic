@@ -21,36 +21,36 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class AllDegreesStudentsGroup extends Group {
 
-	private static final long serialVersionUID = 2693414643122716513L;
+    private static final long serialVersionUID = 2693414643122716513L;
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = super.buildSet();
-		final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
-		for (final Person person : role.getAssociatedPersons()) {
-			Registration registration = person.getStudentByType(DegreeType.DEGREE);
-			if (registration != null) {
-				elements.add(person);
-			}
-		}
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
+        final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
+        for (final Person person : role.getAssociatedPersons()) {
+            Registration registration = person.getStudentByType(DegreeType.DEGREE);
+            if (registration != null) {
+                elements.add(person);
+            }
+        }
 
-		return elements;
-	}
+        return elements;
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		if (person != null && person.getStudent() != null) {
-			for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-				if (registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isMember(Person person) {
+        if (person != null && person.getStudent() != null) {
+            for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+                if (registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[0];
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
+    }
 }

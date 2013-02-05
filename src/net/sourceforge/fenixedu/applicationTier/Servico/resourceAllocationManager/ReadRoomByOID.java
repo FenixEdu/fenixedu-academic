@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadRoomByOID extends FenixService {
 
-	@Service
-	public static InfoRoom run(Integer oid) {
-		final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(oid);
-		return InfoRoom.newInfoFromDomain(room);
-	}
+    @Service
+    public static InfoRoom run(Integer oid) {
+        final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(oid);
+        return InfoRoom.newInfoFromDomain(room);
+    }
 
 }

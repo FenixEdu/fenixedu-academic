@@ -13,27 +13,27 @@ import org.joda.time.DateTime;
 
 public class AbandonIndividualProgramProcess extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcessState(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+    @Override
+    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcessState(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-		PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
-		DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
+        PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+        DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
 
-		PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.ABANDON, userView.getPerson(),
-				"", stateDate);
+        PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.ABANDON, userView.getPerson(),
+                "", stateDate);
 
-		if (process.hasRegistration() && process.getRegistration().isActive()) {
-			RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
-					RegistrationStateType.EXTERNAL_ABANDON);
-		}
+        if (process.hasRegistration() && process.getRegistration().isActive()) {
+            RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
+                    RegistrationStateType.EXTERNAL_ABANDON);
+        }
 
-		return process;
-	}
+        return process;
+    }
 }

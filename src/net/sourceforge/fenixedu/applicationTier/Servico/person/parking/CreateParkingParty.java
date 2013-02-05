@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateParkingParty extends FenixService {
 
-	@Service
-	public static ParkingParty run(final Party party) {
-		return new ParkingParty(party);
-	}
+    @Service
+    public static ParkingParty run(final Party party) {
+        return new ParkingParty(party);
+    }
 }

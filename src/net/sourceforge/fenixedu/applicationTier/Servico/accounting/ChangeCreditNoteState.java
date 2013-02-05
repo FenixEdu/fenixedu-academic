@@ -9,10 +9,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeCreditNoteState {
 
-	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-	@Service
-	public static void run(final Person responsible, final CreditNote creditNote, final CreditNoteState state) {
-		creditNote.changeState(responsible, PaymentMode.CASH, state);
-	}
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+    @Service
+    public static void run(final Person responsible, final CreditNote creditNote, final CreditNoteState state) {
+        creditNote.changeState(responsible, PaymentMode.CASH, state);
+    }
 
 }

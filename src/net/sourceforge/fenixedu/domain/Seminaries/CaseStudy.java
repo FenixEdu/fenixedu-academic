@@ -18,21 +18,21 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class CaseStudy extends CaseStudy_Base {
 
-	public CaseStudy() {
-		super();
+    public CaseStudy() {
+        super();
 
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public CaseStudy(String name, String description, String code) {
-		this();
-		this.setName(name);
-		this.setDescription(description);
-		this.setCode(code);
-	}
+    public CaseStudy(String name, String description, String code) {
+        this();
+        this.setName(name);
+        this.setDescription(description);
+        this.setCode(code);
+    }
 
-	public static List<CaseStudy> getAllCaseStudies() {
-		return RootDomainObject.getInstance().getCaseStudys();
-	}
+    public static List<CaseStudy> getAllCaseStudies() {
+        return RootDomainObject.getInstance().getCaseStudys();
+    }
 
 }

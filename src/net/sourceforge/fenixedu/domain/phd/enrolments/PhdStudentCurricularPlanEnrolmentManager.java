@@ -15,61 +15,61 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEn
 
 public class PhdStudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolmentManager {
 
-	public PhdStudentCurricularPlanEnrolmentManager(final EnrolmentContext enrolmentContext) {
-		super(enrolmentContext);
-	}
+    public PhdStudentCurricularPlanEnrolmentManager(final EnrolmentContext enrolmentContext) {
+        super(enrolmentContext);
+    }
 
-	@Override
-	protected void assertOtherRolesPreConditions() {
-		if (!isResponsiblePersonCoordinator()) {
-			super.assertOtherRolesPreConditions();
-		}
-	}
+    @Override
+    protected void assertOtherRolesPreConditions() {
+        if (!isResponsiblePersonCoordinator()) {
+            super.assertOtherRolesPreConditions();
+        }
+    }
 
-	@Override
-	protected void addRuntimeRules(final Set<ICurricularRule> curricularRules, final CurricularCourse curricularCourse) {
-		super.addRuntimeRules(curricularRules, curricularCourse);
+    @Override
+    protected void addRuntimeRules(final Set<ICurricularRule> curricularRules, final CurricularCourse curricularCourse) {
+        super.addRuntimeRules(curricularRules, curricularCourse);
 
-		if (mustValidateCurricularCourses()) {
-			curricularRules.add(new PhdValidCurricularCoursesRule(curricularCourse));
-		}
-	}
+        if (mustValidateCurricularCourses()) {
+            curricularRules.add(new PhdValidCurricularCoursesRule(curricularCourse));
+        }
+    }
 
-	private boolean mustValidateCurricularCourses() {
+    private boolean mustValidateCurricularCourses() {
 
-		if (!getRegistration().hasPhdIndividualProgramProcess()) {
-			return false;
-		}
+        if (!getRegistration().hasPhdIndividualProgramProcess()) {
+            return false;
+        }
 
-		return getRegistration().getPhdIndividualProgramProcess().hasCurricularCoursesToEnrol();
-	}
+        return getRegistration().getPhdIndividualProgramProcess().hasCurricularCoursesToEnrol();
+    }
 
-	@Override
-	protected RuleResult evaluateExtraRules(final RuleResult actualResult) {
-		/*
-		 * Override to avoid running previous years rule, because student must
-		 * enrol in available courses already defined in study plan
-		 */
-		return actualResult;
-	}
+    @Override
+    protected RuleResult evaluateExtraRules(final RuleResult actualResult) {
+        /*
+         * Override to avoid running previous years rule, because student must
+         * enrol in available courses already defined in study plan
+         */
+        return actualResult;
+    }
 
-	/*
-	 * This code can be changed in future, but for now student enrolments stay
-	 * temporary until validation by coordinator or academic admin office
-	 */
-	@Override
-	protected EnrollmentCondition getEnrolmentCondition(Enrolment enrolment, EnrolmentResultType resultType) {
-		if (enrolment == null) {
-			return isResponsiblePersonStudent() ? EnrollmentCondition.TEMPORARY : super.getEnrolmentCondition(enrolment,
-					resultType);
-		}
-		return wasPerformedByStudent(enrolment) ? EnrollmentCondition.TEMPORARY : super.getEnrolmentCondition(enrolment,
-				resultType);
-	}
+    /*
+     * This code can be changed in future, but for now student enrolments stay
+     * temporary until validation by coordinator or academic admin office
+     */
+    @Override
+    protected EnrollmentCondition getEnrolmentCondition(Enrolment enrolment, EnrolmentResultType resultType) {
+        if (enrolment == null) {
+            return isResponsiblePersonStudent() ? EnrollmentCondition.TEMPORARY : super.getEnrolmentCondition(enrolment,
+                    resultType);
+        }
+        return wasPerformedByStudent(enrolment) ? EnrollmentCondition.TEMPORARY : super.getEnrolmentCondition(enrolment,
+                resultType);
+    }
 
-	private boolean wasPerformedByStudent(final Enrolment enrolment) {
-		final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
-		return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
-	}
+    private boolean wasPerformedByStudent(final Enrolment enrolment) {
+        final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
+        return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
+    }
 
 }

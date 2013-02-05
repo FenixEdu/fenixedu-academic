@@ -10,87 +10,87 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 
 public enum EnrolmentPeriodType {
-	REINGRESSION {
+    REINGRESSION {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return ReingressionPeriod.class;
-		}
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return ReingressionPeriod.class;
+        }
 
-		@Override
-		public boolean isReingressionPeriod() {
-			return true;
-		}
-	},
+        @Override
+        public boolean isReingressionPeriod() {
+            return true;
+        }
+    },
 
-	ENROLMENT_PERIOD_IN_SPECIAL_SEASON_EVALUATIONS {
+    ENROLMENT_PERIOD_IN_SPECIAL_SEASON_EVALUATIONS {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return EnrolmentPeriodInSpecialSeasonEvaluations.class;
-		}
-	},
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInSpecialSeasonEvaluations.class;
+        }
+    },
 
-	ENROLMENT_PERIOD_IN_IMPROVEMENT_OF_APPROVED_ENROLMENT {
+    ENROLMENT_PERIOD_IN_IMPROVEMENT_OF_APPROVED_ENROLMENT {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return EnrolmentPeriodInImprovementOfApprovedEnrolment.class;
-		}
-	},
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInImprovementOfApprovedEnrolment.class;
+        }
+    },
 
-	ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_SPECIAL_SEASON {
+    ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_SPECIAL_SEASON {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return EnrolmentPeriodInCurricularCoursesSpecialSeason.class;
-		}
-	},
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInCurricularCoursesSpecialSeason.class;
+        }
+    },
 
-	ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_FLUNKED_SEASON {
+    ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_FLUNKED_SEASON {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return EnrolmentPeriodInCurricularCoursesFlunkedSeason.class;
-		}
-	},
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInCurricularCoursesFlunkedSeason.class;
+        }
+    },
 
-	ENROLMENT_PERIOD_IN_CURRICULAR_COURSES {
+    ENROLMENT_PERIOD_IN_CURRICULAR_COURSES {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return EnrolmentPeriodInCurricularCourses.class;
-		}
-	},
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInCurricularCourses.class;
+        }
+    },
 
-	ENROLMENT_PERIOD_IN_CLASSES {
+    ENROLMENT_PERIOD_IN_CLASSES {
 
-		@Override
-		protected Class<? extends EnrolmentPeriod> getClassFor() {
-			return EnrolmentPeriodInClasses.class;
-		}
-	};
+        @Override
+        protected Class<? extends EnrolmentPeriod> getClassFor() {
+            return EnrolmentPeriodInClasses.class;
+        }
+    };
 
-	protected abstract Class<? extends EnrolmentPeriod> getClassFor();
+    protected abstract Class<? extends EnrolmentPeriod> getClassFor();
 
-	public boolean is(EnrolmentPeriod enrolmentPeriod) {
-		return this.getClassFor().equals(enrolmentPeriod.getClass());
-	}
+    public boolean is(EnrolmentPeriod enrolmentPeriod) {
+        return this.getClassFor().equals(enrolmentPeriod.getClass());
+    }
 
-	public boolean isReingressionPeriod() {
-		return false;
-	}
+    public boolean isReingressionPeriod() {
+        return false;
+    }
 
-	public static EnrolmentPeriodType readTypeByClass(Class<? extends EnrolmentPeriod> clazz) {
-		EnrolmentPeriodType[] values = EnrolmentPeriodType.values();
+    public static EnrolmentPeriodType readTypeByClass(Class<? extends EnrolmentPeriod> clazz) {
+        EnrolmentPeriodType[] values = EnrolmentPeriodType.values();
 
-		for (EnrolmentPeriodType enrolmentPeriodType : values) {
-			if (enrolmentPeriodType.getClassFor().equals(clazz)) {
-				return enrolmentPeriodType;
-			}
-		}
+        for (EnrolmentPeriodType enrolmentPeriodType : values) {
+            if (enrolmentPeriodType.getClassFor().equals(clazz)) {
+                return enrolmentPeriodType;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

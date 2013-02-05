@@ -21,54 +21,54 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public abstract class CoordinatorAuthorizationFilter extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		Person person = getRemoteUser(request).getPerson();
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        Person person = getRemoteUser(request).getPerson();
 
-		if (!person.hasRole(RoleType.COORDINATOR)) {
-			deny();
-		}
+        if (!person.hasRole(RoleType.COORDINATOR)) {
+            deny();
+        }
 
-		SortedSet<Coordinator> coordinators = new TreeSet<Coordinator>(new CoordinatorByExecutionDegreeComparator());
-		coordinators.addAll(person.getCoordinators());
+        SortedSet<Coordinator> coordinators = new TreeSet<Coordinator>(new CoordinatorByExecutionDegreeComparator());
+        coordinators.addAll(person.getCoordinators());
 
-		if (coordinators.isEmpty()) {
-			deny();
-		}
+        if (coordinators.isEmpty()) {
+            deny();
+        }
 
-		ExecutionYear executionYear = getSpecificExecutionYear(request, response);
+        ExecutionYear executionYear = getSpecificExecutionYear(request, response);
 
-		Coordinator coordinator = coordinators.first();
-		ExecutionYear coordinatorExecutionYear = coordinator.getExecutionDegree().getExecutionYear();
+        Coordinator coordinator = coordinators.first();
+        ExecutionYear coordinatorExecutionYear = coordinator.getExecutionDegree().getExecutionYear();
 
-		if (executionYear == null || coordinatorExecutionYear.compareTo(executionYear) < 0) {
-			deny();
-		}
-	}
+        if (executionYear == null || coordinatorExecutionYear.compareTo(executionYear) < 0) {
+            deny();
+        }
+    }
 
-	/**
-	 * @return the execution year that represents the scope of the resource
-	 *         being accessed.
-	 */
-	protected abstract ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response);
+    /**
+     * @return the execution year that represents the scope of the resource
+     *         being accessed.
+     */
+    protected abstract ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response);
 
-	public void deny() throws NotAuthorizedFilterException {
-		throw new NotAuthorizedFilterException();
-	}
+    public void deny() throws NotAuthorizedFilterException {
+        throw new NotAuthorizedFilterException();
+    }
 
-	/**
-	 * Compares coordinators by they respective execution year. The most recent
-	 * execution year first.
-	 * 
-	 * @author cfgi
-	 */
-	public static class CoordinatorByExecutionDegreeComparator implements Comparator<Coordinator> {
+    /**
+     * Compares coordinators by they respective execution year. The most recent
+     * execution year first.
+     * 
+     * @author cfgi
+     */
+    public static class CoordinatorByExecutionDegreeComparator implements Comparator<Coordinator> {
 
-		@Override
-		public int compare(Coordinator o1, Coordinator o2) {
-			return ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR.compare(o2.getExecutionDegree(), o1.getExecutionDegree());
-		}
+        @Override
+        public int compare(Coordinator o1, Coordinator o2) {
+            return ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR.compare(o2.getExecutionDegree(), o1.getExecutionDegree());
+        }
 
-	}
+    }
 
 }

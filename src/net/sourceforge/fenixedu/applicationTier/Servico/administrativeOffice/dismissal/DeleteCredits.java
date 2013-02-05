@@ -7,24 +7,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteCredits {
 
-	@Service
-	public static void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
-		for (String creditsID : creditsIDs) {
-			Credits credits = getCreditsByID(studentCurricularPlan, Integer.valueOf(creditsID));
-			if (credits == null) {
-				throw new FenixServiceException();
-			}
-			credits.delete();
-		}
-	}
+    @Service
+    public static void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
+        for (String creditsID : creditsIDs) {
+            Credits credits = getCreditsByID(studentCurricularPlan, Integer.valueOf(creditsID));
+            if (credits == null) {
+                throw new FenixServiceException();
+            }
+            credits.delete();
+        }
+    }
 
-	private static Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, Integer creditsID) {
-		for (Credits credits : studentCurricularPlan.getCreditsSet()) {
-			if (credits.getIdInternal().equals(creditsID)) {
-				return credits;
-			}
-		}
-		return null;
-	}
+    private static Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, Integer creditsID) {
+        for (Credits credits : studentCurricularPlan.getCreditsSet()) {
+            if (credits.getIdInternal().equals(creditsID)) {
+                return credits;
+            }
+        }
+        return null;
+    }
 
 }

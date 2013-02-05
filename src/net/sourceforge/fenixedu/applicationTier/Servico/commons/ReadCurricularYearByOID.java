@@ -18,24 +18,24 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularYearByOID extends FenixService {
 
-	@Service
-	public static InfoCurricularYear run(Integer oid) throws FenixServiceException {
-		InfoCurricularYear result = null;
+    @Service
+    public static InfoCurricularYear run(Integer oid) throws FenixServiceException {
+        InfoCurricularYear result = null;
 
-		CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(oid);
-		if (curricularYear != null) {
-			result = InfoCurricularYear.newInfoFromDomain(curricularYear);
-		} else {
-			throw new UnexistingCurricularYearException();
-		}
+        CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(oid);
+        if (curricularYear != null) {
+            result = InfoCurricularYear.newInfoFromDomain(curricularYear);
+        } else {
+            throw new UnexistingCurricularYearException();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public static class UnexistingCurricularYearException extends FenixServiceException {
-		public UnexistingCurricularYearException() {
-			super();
-		}
-	}
+    public static class UnexistingCurricularYearException extends FenixServiceException {
+        public UnexistingCurricularYearException() {
+            super();
+        }
+    }
 
 }

@@ -14,67 +14,67 @@ import org.joda.time.DateTime;
 
 public class CertificateRequestPR extends CertificateRequestPR_Base {
 
-	protected CertificateRequestPR() {
-		super();
-	}
+    protected CertificateRequestPR() {
+        super();
+    }
 
-	public CertificateRequestPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
-			Money maximumAmount) {
-		init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage,
-				maximumAmount);
-	}
+    public CertificateRequestPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
+            Money maximumAmount) {
+        init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage,
+                maximumAmount);
+    }
 
-	protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
-			Money maximumAmount) {
-		super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, maximumAmount);
-		checkParameters(amountPerPage);
-		super.setAmountPerPage(amountPerPage);
-	}
+    protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
+            Money maximumAmount) {
+        super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, maximumAmount);
+        checkParameters(amountPerPage);
+        super.setAmountPerPage(amountPerPage);
+    }
 
-	private void checkParameters(Money amountPerPage) {
-		if (amountPerPage == null) {
-			throw new DomainException(
-					"error.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage.cannot.be.null");
-		}
-	}
+    private void checkParameters(Money amountPerPage) {
+        if (amountPerPage == null) {
+            throw new DomainException(
+                    "error.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage.cannot.be.null");
+        }
+    }
 
-	@Override
-	public void setAmountPerPage(Money amountPerPage) {
-		throw new DomainException(
-				"error.accounting.postingRules.serviceRequests.CertificateRequestPR.cannot.modify.amountPerPage");
-	}
+    @Override
+    public void setAmountPerPage(Money amountPerPage) {
+        throw new DomainException(
+                "error.accounting.postingRules.serviceRequests.CertificateRequestPR.cannot.modify.amountPerPage");
+    }
 
-	@Override
-	protected Integer getNumberOfUnits(Event event) {
-		return ((CertificateRequestEvent) event).getNumberOfUnits();
-	}
+    @Override
+    protected Integer getNumberOfUnits(Event event) {
+        return ((CertificateRequestEvent) event).getNumberOfUnits();
+    }
 
-	protected boolean isUrgent(CertificateRequestEvent certificateRequestEvent) {
-		return certificateRequestEvent.isUrgentRequest();
-	}
+    protected boolean isUrgent(CertificateRequestEvent certificateRequestEvent) {
+        return certificateRequestEvent.isUrgentRequest();
+    }
 
-	@Override
-	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-		final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
-		Money totalAmountToPay =
-				isUrgent(certificateRequestEvent) ? getBaseAmount().multiply(BigDecimal.valueOf(2)).add(getAmountForUnits(event)) : super
-						.doCalculationForAmountToPay(event, when, applyDiscount);
-		totalAmountToPay = totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
+    @Override
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
+        Money totalAmountToPay =
+                isUrgent(certificateRequestEvent) ? getBaseAmount().multiply(BigDecimal.valueOf(2)).add(getAmountForUnits(event)) : super
+                        .doCalculationForAmountToPay(event, when, applyDiscount);
+        totalAmountToPay = totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
 
-		return totalAmountToPay;
-	}
+        return totalAmountToPay;
+    }
 
-	protected Money calculateAmountToPayForPages(CertificateRequestEvent event) {
-		return getAmountPerPage().multiply(BigDecimal.valueOf(event.getNumberOfPages()));
-	}
+    protected Money calculateAmountToPayForPages(CertificateRequestEvent event) {
+        return getAmountPerPage().multiply(BigDecimal.valueOf(event.getNumberOfPages()));
+    }
 
-	public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
-			final Money maximumAmount) {
-		deactivate();
-		return new CertificateRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
-				getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage, maximumAmount);
-	}
+    public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
+            final Money maximumAmount) {
+        deactivate();
+        return new CertificateRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
+                getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage, maximumAmount);
+    }
 
 }

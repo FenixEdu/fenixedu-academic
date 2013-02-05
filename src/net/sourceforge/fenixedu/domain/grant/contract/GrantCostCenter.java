@@ -19,64 +19,64 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GrantCostCenter extends GrantCostCenter_Base {
 
-	public GrantCostCenter(String number, String designation, Teacher responsibleTeacher) {
-		for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
-			if (grantPaymentEntity.isCostCenter() && !((GrantCostCenter) grantPaymentEntity).equals(this)
-					&& grantPaymentEntity.getNumber().equalsIgnoreCase(number)) {
-				throw new DomainException("errors.grant.costcenter.duplicateEntry", number);
-			}
-		}
-		init(number, designation, responsibleTeacher);
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public GrantCostCenter(String number, String designation, Teacher responsibleTeacher) {
+        for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
+            if (grantPaymentEntity.isCostCenter() && !((GrantCostCenter) grantPaymentEntity).equals(this)
+                    && grantPaymentEntity.getNumber().equalsIgnoreCase(number)) {
+                throw new DomainException("errors.grant.costcenter.duplicateEntry", number);
+            }
+        }
+        init(number, designation, responsibleTeacher);
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected void init(String number, String designation, Teacher responsibleTeacher) {
-		check(responsibleTeacher, "message.grant.paymentEntity.emptyTeacher");
-		checkNumber(number);
-		setNumber(number);
-		setDesignation(designation);
-		setResponsibleTeacher(responsibleTeacher);
-	}
+    protected void init(String number, String designation, Teacher responsibleTeacher) {
+        check(responsibleTeacher, "message.grant.paymentEntity.emptyTeacher");
+        checkNumber(number);
+        setNumber(number);
+        setDesignation(designation);
+        setResponsibleTeacher(responsibleTeacher);
+    }
 
-	private void checkNumber(String number) {
-		check(number, "message.grant.paymentEntity.emptyCostCenter");
-		try {
-			Integer.parseInt(number);
-		} catch (NumberFormatException e) {
-			throw new DomainException("message.grant.paymentEntity.invalidCostCenter");
-		}
-	}
+    private void checkNumber(String number) {
+        check(number, "message.grant.paymentEntity.emptyCostCenter");
+        try {
+            Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            throw new DomainException("message.grant.paymentEntity.invalidCostCenter");
+        }
+    }
 
-	public static GrantCostCenter readGrantCostCenterByNumber(String number) {
-		for (GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
-			if (grantPaymentEntity instanceof GrantCostCenter && grantPaymentEntity.getNumber().equals(number)) {
-				return (GrantCostCenter) grantPaymentEntity;
-			}
-		}
-		return null;
-	}
+    public static GrantCostCenter readGrantCostCenterByNumber(String number) {
+        for (GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
+            if (grantPaymentEntity instanceof GrantCostCenter && grantPaymentEntity.getNumber().equals(number)) {
+                return (GrantCostCenter) grantPaymentEntity;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public boolean isCostCenter() {
-		return true;
-	}
+    @Override
+    public boolean isCostCenter() {
+        return true;
+    }
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public void editGrantCostCenter(String number, String designation, Teacher responsibleTeacher) {
-		for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
-			if (grantPaymentEntity.isCostCenter() && grantPaymentEntity.getNumber().equalsIgnoreCase(number)
-					&& !((GrantCostCenter) grantPaymentEntity).equals(this)) {
-				throw new DomainException("errors.grant.costcenter.duplicateEntry", number);
-			}
-		}
-		init(number, designation, responsibleTeacher);
-	}
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public void editGrantCostCenter(String number, String designation, Teacher responsibleTeacher) {
+        for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
+            if (grantPaymentEntity.isCostCenter() && grantPaymentEntity.getNumber().equalsIgnoreCase(number)
+                    && !((GrantCostCenter) grantPaymentEntity).equals(this)) {
+                throw new DomainException("errors.grant.costcenter.duplicateEntry", number);
+            }
+        }
+        init(number, designation, responsibleTeacher);
+    }
 
-	public Unit getUnit() {
-		if (StringUtils.isNotEmpty(getNumber())) {
-			return Unit.readByCostCenterCode(Integer.valueOf(getNumber()));
-		}
-		return null;
-	}
+    public Unit getUnit() {
+        if (StringUtils.isNotEmpty(getNumber())) {
+            return Unit.readByCostCenterCode(Integer.valueOf(getNumber()));
+        }
+        return null;
+    }
 }

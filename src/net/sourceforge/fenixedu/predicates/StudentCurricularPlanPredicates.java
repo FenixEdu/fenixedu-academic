@@ -13,97 +13,97 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class StudentCurricularPlanPredicates {
 
-	static public final AccessControlPredicate<StudentCurricularPlan> ENROL =
-			new AccessControlPredicate<StudentCurricularPlan>() {
+    static public final AccessControlPredicate<StudentCurricularPlan> ENROL =
+            new AccessControlPredicate<StudentCurricularPlan>() {
 
-				@Override
-				public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
-					final Person person = AccessControl.getPerson();
-					return person.hasRole(RoleType.STUDENT)
-							|| hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
-									studentCurricularPlan.getDegree())
-							|| person.hasRole(RoleType.MANAGER)
-							|| person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)
-							/*
-							 * used in PhdIndividualProgramProcess enrolments management
-							 */
-							|| person.isCoordinatorFor(studentCurricularPlan.getDegreeCurricularPlan(),
-									ExecutionYear.readCurrentExecutionYear());
-				}
-			};
+                @Override
+                public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+                    final Person person = AccessControl.getPerson();
+                    return person.hasRole(RoleType.STUDENT)
+                            || hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
+                                    studentCurricularPlan.getDegree())
+                            || person.hasRole(RoleType.MANAGER)
+                            || person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)
+                            /*
+                             * used in PhdIndividualProgramProcess enrolments management
+                             */
+                            || person.isCoordinatorFor(studentCurricularPlan.getDegreeCurricularPlan(),
+                                    ExecutionYear.readCurrentExecutionYear());
+                }
+            };
 
-	static public final AccessControlPredicate<StudentCurricularPlan> ENROL_IN_AFFINITY_CYCLE =
-			new AccessControlPredicate<StudentCurricularPlan>() {
-				@Override
-				public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
-					final Person person = AccessControl.getPerson();
+    static public final AccessControlPredicate<StudentCurricularPlan> ENROL_IN_AFFINITY_CYCLE =
+            new AccessControlPredicate<StudentCurricularPlan>() {
+                @Override
+                public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+                    final Person person = AccessControl.getPerson();
 
-					if (person.hasRole(RoleType.MANAGER)) {
-						return true;
-					}
+                    if (person.hasRole(RoleType.MANAGER)) {
+                        return true;
+                    }
 
-					if (!studentCurricularPlan.isConclusionProcessed()) {
-						return person.hasRole(RoleType.STUDENT)
-								|| hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
-										studentCurricularPlan.getDegree())
-								|| person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
-					}
+                    if (!studentCurricularPlan.isConclusionProcessed()) {
+                        return person.hasRole(RoleType.STUDENT)
+                                || hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS,
+                                        studentCurricularPlan.getDegree())
+                                || person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
+                    }
 
-					if (studentCurricularPlan.isEmptyDegree()) {
-						return true;
-					}
+                    if (studentCurricularPlan.isEmptyDegree()) {
+                        return true;
+                    }
 
-					return hasAuthorization(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-							studentCurricularPlan.getDegree());
-				}
-			};
+                    return hasAuthorization(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                            studentCurricularPlan.getDegree());
+                }
+            };
 
-	static public AccessControlPredicate<StudentCurricularPlan> ENROL_WITHOUT_RULES =
-			new AccessControlPredicate<StudentCurricularPlan>() {
+    static public AccessControlPredicate<StudentCurricularPlan> ENROL_WITHOUT_RULES =
+            new AccessControlPredicate<StudentCurricularPlan>() {
 
-				@Override
-				public boolean evaluate(final StudentCurricularPlan studentCurricularPlan) {
-					final Person person = AccessControl.getPerson();
+                @Override
+                public boolean evaluate(final StudentCurricularPlan studentCurricularPlan) {
+                    final Person person = AccessControl.getPerson();
 
-					if (person.hasRole(RoleType.MANAGER)) {
-						return true;
-					}
+                    if (person.hasRole(RoleType.MANAGER)) {
+                        return true;
+                    }
 
-					return hasAuthorization(person, AcademicOperationType.ENROLMENT_WITHOUT_RULES,
-							studentCurricularPlan.getDegree());
-				}
-			};
+                    return hasAuthorization(person, AcademicOperationType.ENROLMENT_WITHOUT_RULES,
+                            studentCurricularPlan.getDegree());
+                }
+            };
 
-	static public final AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES =
-			new AccessControlPredicate<StudentCurricularPlan>() {
+    static public final AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES =
+            new AccessControlPredicate<StudentCurricularPlan>() {
 
-				@Override
-				public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
-					final Person person = AccessControl.getPerson();
-					return hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS, studentCurricularPlan.getDegree())
-							|| person.hasRole(RoleType.MANAGER);
-				}
-			};
+                @Override
+                public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+                    final Person person = AccessControl.getPerson();
+                    return hasAuthorization(person, AcademicOperationType.STUDENT_ENROLMENTS, studentCurricularPlan.getDegree())
+                            || person.hasRole(RoleType.MANAGER);
+                }
+            };
 
-	static public AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES_WITHOUT_RULES =
-			new AccessControlPredicate<StudentCurricularPlan>() {
+    static public AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES_WITHOUT_RULES =
+            new AccessControlPredicate<StudentCurricularPlan>() {
 
-				@Override
-				public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
-					final Person person = AccessControl.getPerson();
+                @Override
+                public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+                    final Person person = AccessControl.getPerson();
 
-					if (person.hasRole(RoleType.MANAGER)) {
-						return true;
-					}
+                    if (person.hasRole(RoleType.MANAGER)) {
+                        return true;
+                    }
 
-					return hasAuthorization(person, AcademicOperationType.MOVE_CURRICULUM_LINES_WITHOUT_RULES,
-							studentCurricularPlan.getDegree());
-				}
+                    return hasAuthorization(person, AcademicOperationType.MOVE_CURRICULUM_LINES_WITHOUT_RULES,
+                            studentCurricularPlan.getDegree());
+                }
 
-			};
+            };
 
-	static private boolean hasAuthorization(Party party, AcademicOperationType operation, AcademicProgram program) {
-		return AcademicAuthorizationGroup.getProgramsForOperation(party, operation).contains(program);
-	}
+    static private boolean hasAuthorization(Party party, AcademicOperationType operation, AcademicProgram program) {
+        return AcademicAuthorizationGroup.getProgramsForOperation(party, operation).contains(program);
+    }
 
 }

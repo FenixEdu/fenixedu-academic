@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class LessonPlanningsToSummariesManagementProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		SummariesManagementBean bean = (SummariesManagementBean) source;
-		ShiftType lessonType = bean.getLessonType();
-		if (lessonType != null) {
-			ExecutionCourse executionCourse = bean.getExecutionCourse();
-			return executionCourse.getLessonPlanningsOrderedByOrder(lessonType);
-		}
-		return new ArrayList<LessonPlanning>();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        SummariesManagementBean bean = (SummariesManagementBean) source;
+        ShiftType lessonType = bean.getLessonType();
+        if (lessonType != null) {
+            ExecutionCourse executionCourse = bean.getExecutionCourse();
+            return executionCourse.getLessonPlanningsOrderedByOrder(lessonType);
+        }
+        return new ArrayList<LessonPlanning>();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

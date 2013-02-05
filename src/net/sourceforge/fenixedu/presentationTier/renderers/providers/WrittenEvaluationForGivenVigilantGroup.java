@@ -17,39 +17,39 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class WrittenEvaluationForGivenVigilantGroup implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		ConvokeBean bean = (ConvokeBean) source;
-		VigilantGroup selectedGroup = bean.getSelectedVigilantGroup();
-		List<WrittenEvaluation> evaluationsAfterCurrentDate = new ArrayList<WrittenEvaluation>();
-		if (selectedGroup != null) {
-			List<WrittenEvaluation> writtenEvaluationsForExecutionCourse = selectedGroup.getAllAssociatedWrittenEvaluations();
-			List<WrittenEvaluation> writtenEvaluations = getOpenWrittenEvaluations(writtenEvaluationsForExecutionCourse);
-			evaluationsAfterCurrentDate.addAll(writtenEvaluations);
-			Collections.sort(evaluationsAfterCurrentDate, new BeanComparator("name"));
-		}
+        ConvokeBean bean = (ConvokeBean) source;
+        VigilantGroup selectedGroup = bean.getSelectedVigilantGroup();
+        List<WrittenEvaluation> evaluationsAfterCurrentDate = new ArrayList<WrittenEvaluation>();
+        if (selectedGroup != null) {
+            List<WrittenEvaluation> writtenEvaluationsForExecutionCourse = selectedGroup.getAllAssociatedWrittenEvaluations();
+            List<WrittenEvaluation> writtenEvaluations = getOpenWrittenEvaluations(writtenEvaluationsForExecutionCourse);
+            evaluationsAfterCurrentDate.addAll(writtenEvaluations);
+            Collections.sort(evaluationsAfterCurrentDate, new BeanComparator("name"));
+        }
 
-		return evaluationsAfterCurrentDate;
+        return evaluationsAfterCurrentDate;
 
-	}
+    }
 
-	private List<WrittenEvaluation> getOpenWrittenEvaluations(List<WrittenEvaluation> writtenEvaluations) {
-		YearMonthDay currentDate = new YearMonthDay();
-		List<WrittenEvaluation> evaluations = new ArrayList<WrittenEvaluation>(writtenEvaluations);
-		List<WrittenEvaluation> evaluationsAfterCurrentDate = new ArrayList<WrittenEvaluation>();
+    private List<WrittenEvaluation> getOpenWrittenEvaluations(List<WrittenEvaluation> writtenEvaluations) {
+        YearMonthDay currentDate = new YearMonthDay();
+        List<WrittenEvaluation> evaluations = new ArrayList<WrittenEvaluation>(writtenEvaluations);
+        List<WrittenEvaluation> evaluationsAfterCurrentDate = new ArrayList<WrittenEvaluation>();
 
-		for (WrittenEvaluation writtenEvaluation : evaluations) {
-			if (writtenEvaluation.getDayDateYearMonthDay().isAfter(currentDate)) {
-				evaluationsAfterCurrentDate.add(writtenEvaluation);
-			}
-		}
-		return evaluationsAfterCurrentDate;
-	}
+        for (WrittenEvaluation writtenEvaluation : evaluations) {
+            if (writtenEvaluation.getDayDateYearMonthDay().isAfter(currentDate)) {
+                evaluationsAfterCurrentDate.add(writtenEvaluation);
+            }
+        }
+        return evaluationsAfterCurrentDate;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

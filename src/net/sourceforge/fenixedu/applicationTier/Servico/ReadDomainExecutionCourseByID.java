@@ -18,14 +18,14 @@ import pt.ist.fenixWebFramework.services.Service;
  *          lepc Exp $
  */
 public class ReadDomainExecutionCourseByID extends FenixService {
-	@Service
-	public static ExecutionCourse run(Integer idInternal) throws FenixServiceException {
+    @Service
+    public static ExecutionCourse run(Integer idInternal) throws FenixServiceException {
 
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
-		if (executionCourse == null) {
-			throw new NonExistingServiceException();
-		}
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
+        if (executionCourse == null) {
+            throw new NonExistingServiceException();
+        }
 
-		return executionCourse;
-	}
+        return executionCourse;
+    }
 }

@@ -22,256 +22,256 @@ import bibtex.dom.BibtexString;
  */
 public class BookPart extends BookPart_Base {
 
-	private static final String usedSchema = "result.publication.presentation.BookPart";
+    private static final String usedSchema = "result.publication.presentation.BookPart";
 
-	public BookPart() {
-		super();
-	}
+    public BookPart() {
+        super();
+    }
 
-	public BookPart(Person participator, ResultParticipationRole participatorRole, String title, MultiLanguageString keywords,
-			String bookTitle, String chapter, String volume, String publisher, Integer year, Integer firstPage, Integer lastPage,
-			String series, String edition, String organization, Country country, String address, MultiLanguageString note,
-			Month month, String url) {
+    public BookPart(Person participator, ResultParticipationRole participatorRole, String title, MultiLanguageString keywords,
+            String bookTitle, String chapter, String volume, String publisher, Integer year, Integer firstPage, Integer lastPage,
+            String series, String edition, String organization, Country country, String address, MultiLanguageString note,
+            Month month, String url) {
 
-		super.checkRequiredParameters(keywords, note);
-		checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
-		super.setCreatorParticipation(participator, participatorRole);
-		fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume, series, edition,
-				country, address, note, month, url);
+        super.checkRequiredParameters(keywords, note);
+        checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
+        super.setCreatorParticipation(participator, participatorRole);
+        fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume, series, edition,
+                country, address, note, month, url);
 
-	}
+    }
 
-	@Checked("ResultPredicates.writePredicate")
-	public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter, Integer firstPage,
-			Integer lastPage, String publisher, Integer year, String volume, String series, String edition, Country country,
-			String address, MultiLanguageString note, Month month, String url) {
+    @Checked("ResultPredicates.writePredicate")
+    public void setEditAll(String title, MultiLanguageString keywords, String bookTitle, String chapter, Integer firstPage,
+            Integer lastPage, String publisher, Integer year, String volume, String series, String edition, Country country,
+            String address, MultiLanguageString note, Month month, String url) {
 
-		super.checkRequiredParameters(keywords, note);
-		checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
-		fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume, series, edition,
-				country, address, note, month, url);
-		super.setModifiedByAndDate();
-	}
+        super.checkRequiredParameters(keywords, note);
+        checkRequiredParameters(title, bookTitle, firstPage, lastPage, publisher, year);
+        fillAllAttributes(title, keywords, bookTitle, chapter, firstPage, lastPage, publisher, year, volume, series, edition,
+                country, address, note, month, url);
+        super.setModifiedByAndDate();
+    }
 
-	private void checkRequiredParameters(String title, String bookTitle, Integer firstPage, Integer lastPage, String publisher,
-			Integer year) {
-		if (title == null || title.length() == 0) {
-			throw new DomainException("error.researcher.BookPart.title.null");
-		}
-		if (publisher == null) {
-			throw new DomainException("error.researcher.BookPart.publisher.null");
-		}
-		if (year == null) {
-			throw new DomainException("error.researcher.BookPart.year.null");
-		}
-		if (bookTitle == null || bookTitle.length() == 0) {
-			throw new DomainException("error.researcher.BookPart.bookTitle.null");
-		}
-	}
+    private void checkRequiredParameters(String title, String bookTitle, Integer firstPage, Integer lastPage, String publisher,
+            Integer year) {
+        if (title == null || title.length() == 0) {
+            throw new DomainException("error.researcher.BookPart.title.null");
+        }
+        if (publisher == null) {
+            throw new DomainException("error.researcher.BookPart.publisher.null");
+        }
+        if (year == null) {
+            throw new DomainException("error.researcher.BookPart.year.null");
+        }
+        if (bookTitle == null || bookTitle.length() == 0) {
+            throw new DomainException("error.researcher.BookPart.bookTitle.null");
+        }
+    }
 
-	private void fillAllAttributes(String title, MultiLanguageString keywords, String bookTitle, String chapter,
-			Integer firstPage, Integer lastPage, String publisher, Integer year, String volume, String series, String edition,
-			Country country, String address, MultiLanguageString note, Month month, String url) {
-		super.setTitle(title);
-		super.setPublisher(publisher);
-		super.setBookTitle(bookTitle);
-		super.setYear(year);
-		super.setChapter(chapter);
-		super.setFirstPage(firstPage);
-		super.setLastPage(lastPage);
-		super.setVolume(volume);
-		super.setSeries(series);
-		super.setEdition(edition);
-		super.setCountry(country);
-		super.setAddress(address);
-		super.setNote(note);
-		super.setMonth(month);
-		super.setUrl(url);
-		super.setKeywords(keywords);
+    private void fillAllAttributes(String title, MultiLanguageString keywords, String bookTitle, String chapter,
+            Integer firstPage, Integer lastPage, String publisher, Integer year, String volume, String series, String edition,
+            Country country, String address, MultiLanguageString note, Month month, String url) {
+        super.setTitle(title);
+        super.setPublisher(publisher);
+        super.setBookTitle(bookTitle);
+        super.setYear(year);
+        super.setChapter(chapter);
+        super.setFirstPage(firstPage);
+        super.setLastPage(lastPage);
+        super.setVolume(volume);
+        super.setSeries(series);
+        super.setEdition(edition);
+        super.setCountry(country);
+        super.setAddress(address);
+        super.setNote(note);
+        super.setMonth(month);
+        super.setUrl(url);
+        super.setKeywords(keywords);
 
-	}
+    }
 
-	@Override
-	public String getResume() {
-		String resume = getParticipationsAndTitleString();
+    @Override
+    public String getResume() {
+        String resume = getParticipationsAndTitleString();
 
-		if ((getBookTitle() != null) && (getBookTitle().length() > 0)) {
-			resume = resume + getBookTitle() + ", ";
-		}
-		if ((getChapter() != null) && (getChapter().length() > 0)) {
-			resume = resume + getChapter() + ", ";
-		}
-		if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null) && (getLastPage() > 0)) {
-			resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
-		}
-		if ((getEdition() != null) && (getEdition().length() > 0)) {
-			resume = resume + "Ed. " + getEdition() + ", ";
-		}
-		if ((getVolume() != null) && (getVolume().length() > 0)) {
-			resume = resume + "Vol. " + getVolume() + ", ";
-		}
-		if ((getSeries() != null) && (getSeries().length() > 0)) {
-			resume = resume + "Serie " + getSeries() + ", ";
-		}
-		if ((getYear() != null) && (getYear() > 0)) {
-			resume = resume + getYear() + ", ";
-		}
-		if (getPublisher() != null) {
-			resume = resume + getPublisher() + ", ";
-		}
-		if ((getAddress() != null) && (getAddress().length() > 0)) {
-			resume = resume + getAddress() + ", ";
-		}
+        if ((getBookTitle() != null) && (getBookTitle().length() > 0)) {
+            resume = resume + getBookTitle() + ", ";
+        }
+        if ((getChapter() != null) && (getChapter().length() > 0)) {
+            resume = resume + getChapter() + ", ";
+        }
+        if ((getFirstPage() != null) && (getFirstPage() > 0) && (getLastPage() != null) && (getLastPage() > 0)) {
+            resume = resume + "Pag. " + getFirstPage() + " - " + getLastPage() + ", ";
+        }
+        if ((getEdition() != null) && (getEdition().length() > 0)) {
+            resume = resume + "Ed. " + getEdition() + ", ";
+        }
+        if ((getVolume() != null) && (getVolume().length() > 0)) {
+            resume = resume + "Vol. " + getVolume() + ", ";
+        }
+        if ((getSeries() != null) && (getSeries().length() > 0)) {
+            resume = resume + "Serie " + getSeries() + ", ";
+        }
+        if ((getYear() != null) && (getYear() > 0)) {
+            resume = resume + getYear() + ", ";
+        }
+        if (getPublisher() != null) {
+            resume = resume + getPublisher() + ", ";
+        }
+        if ((getAddress() != null) && (getAddress().length() > 0)) {
+            resume = resume + getAddress() + ", ";
+        }
 
-		resume = finishResume(resume);
-		return resume;
-	}
+        resume = finishResume(resume);
+        return resume;
+    }
 
-	@Override
-	public BibtexEntry exportToBibtexEntry() {
-		BibtexFile bibtexFile = new BibtexFile();
+    @Override
+    public BibtexEntry exportToBibtexEntry() {
+        BibtexFile bibtexFile = new BibtexFile();
 
-		BibtexEntry bibEntry;
-		bibEntry = bibtexFile.makeEntry("inbook", generateBibtexKey());
+        BibtexEntry bibEntry;
+        bibEntry = bibtexFile.makeEntry("inbook", generateBibtexKey());
 
-		bibEntry.setField("title", bibtexFile.makeString(getTitle()));
-		bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
-		if ((getBookTitle() != null) && (getBookTitle().length() > 0)) {
-			bibEntry.setField("booktitle", bibtexFile.makeString(getBookTitle()));
-		}
-		if ((getChapter() != null) && (getChapter().length() > 0)) {
-			bibEntry.setField("chapter", bibtexFile.makeString(getChapter()));
-		}
-		if ((getVolume() != null) && (getVolume().length() > 0)) {
-			bibEntry.setField("volume", bibtexFile.makeString(getVolume()));
-		}
-		if ((getSeries() != null) && (getSeries().length() > 0)) {
-			bibEntry.setField("series", bibtexFile.makeString(getSeries()));
-		}
-		if ((getEdition() != null) && (getEdition().length() > 0)) {
-			bibEntry.setField("edition", bibtexFile.makeString(getEdition()));
-		}
-		if (getPublisher() != null) {
-			bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
-		}
-		if (getOrganization() != null) {
-			bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
-		}
-		if ((getFirstPage() != null) && (getLastPage() != null) && (getFirstPage() < getLastPage())) {
-			bibEntry.setField("pages", bibtexFile.makeString(getFirstPage() + "-" + getLastPage()));
-		}
-		if ((getAddress() != null) && (getAddress().length() > 0)) {
-			bibEntry.setField("address", bibtexFile.makeString(getAddress()));
-		}
-		if (getMonth() != null) {
-			bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
-		}
-		if ((getNote() != null) && (getNote().hasContent())) {
-			bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
-		}
+        bibEntry.setField("title", bibtexFile.makeString(getTitle()));
+        bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
+        if ((getBookTitle() != null) && (getBookTitle().length() > 0)) {
+            bibEntry.setField("booktitle", bibtexFile.makeString(getBookTitle()));
+        }
+        if ((getChapter() != null) && (getChapter().length() > 0)) {
+            bibEntry.setField("chapter", bibtexFile.makeString(getChapter()));
+        }
+        if ((getVolume() != null) && (getVolume().length() > 0)) {
+            bibEntry.setField("volume", bibtexFile.makeString(getVolume()));
+        }
+        if ((getSeries() != null) && (getSeries().length() > 0)) {
+            bibEntry.setField("series", bibtexFile.makeString(getSeries()));
+        }
+        if ((getEdition() != null) && (getEdition().length() > 0)) {
+            bibEntry.setField("edition", bibtexFile.makeString(getEdition()));
+        }
+        if (getPublisher() != null) {
+            bibEntry.setField("publisher", bibtexFile.makeString(getPublisher()));
+        }
+        if (getOrganization() != null) {
+            bibEntry.setField("organization", bibtexFile.makeString(getOrganization()));
+        }
+        if ((getFirstPage() != null) && (getLastPage() != null) && (getFirstPage() < getLastPage())) {
+            bibEntry.setField("pages", bibtexFile.makeString(getFirstPage() + "-" + getLastPage()));
+        }
+        if ((getAddress() != null) && (getAddress().length() > 0)) {
+            bibEntry.setField("address", bibtexFile.makeString(getAddress()));
+        }
+        if (getMonth() != null) {
+            bibEntry.setField("month", bibtexFile.makeString(getMonth().toString().toLowerCase()));
+        }
+        if ((getNote() != null) && (getNote().hasContent())) {
+            bibEntry.setField("note", bibtexFile.makeString(getNote().getContent()));
+        }
 
-		BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
-		if (authorsList != null) {
-			BibtexString bplString = bibtexFile.makeString(bibtexPersonListToString(authorsList));
-			bibEntry.setField("author", bplString);
-		}
+        BibtexPersonList authorsList = getBibtexAuthorsList(bibtexFile, getAuthors());
+        if (authorsList != null) {
+            BibtexString bplString = bibtexFile.makeString(bibtexPersonListToString(authorsList));
+            bibEntry.setField("author", bplString);
+        }
 
-		BibtexPersonList editorsList = getBibtexEditorsList(bibtexFile, getEditors());
-		if (editorsList != null) {
-			BibtexString bplString = bibtexFile.makeString(bibtexPersonListToString(editorsList));
-			bibEntry.setField("editor", bplString);
-		}
+        BibtexPersonList editorsList = getBibtexEditorsList(bibtexFile, getEditors());
+        if (editorsList != null) {
+            BibtexString bplString = bibtexFile.makeString(bibtexPersonListToString(editorsList));
+            bibEntry.setField("editor", bplString);
+        }
 
-		return bibEntry;
-	}
+        return bibEntry;
+    }
 
-	@Override
-	public void setTitle(String title) {
-		throw new DomainException("error.researcher.BookPart.call", "setTitle");
-	}
+    @Override
+    public void setTitle(String title) {
+        throw new DomainException("error.researcher.BookPart.call", "setTitle");
+    }
 
-	@Override
-	public void setPublisher(String publisher) {
-		throw new DomainException("error.researcher.BookPart.call", "setPublisher");
-	}
+    @Override
+    public void setPublisher(String publisher) {
+        throw new DomainException("error.researcher.BookPart.call", "setPublisher");
+    }
 
-	@Override
-	public void setYear(Integer year) {
-		throw new DomainException("error.researcher.BookPart.call", "setYear");
-	}
+    @Override
+    public void setYear(Integer year) {
+        throw new DomainException("error.researcher.BookPart.call", "setYear");
+    }
 
-	@Override
-	public void setChapter(String chapter) {
-		throw new DomainException("error.researcher.BookPart.call", "setChapter");
-	}
+    @Override
+    public void setChapter(String chapter) {
+        throw new DomainException("error.researcher.BookPart.call", "setChapter");
+    }
 
-	@Override
-	public void setFirstPage(Integer firstPage) {
-		throw new DomainException("error.researcher.BookPart.call", "setFirstPage");
-	}
+    @Override
+    public void setFirstPage(Integer firstPage) {
+        throw new DomainException("error.researcher.BookPart.call", "setFirstPage");
+    }
 
-	@Override
-	public void setLastPage(Integer lastPage) {
-		throw new DomainException("error.researcher.BookPart.call", "setLastPage");
-	}
+    @Override
+    public void setLastPage(Integer lastPage) {
+        throw new DomainException("error.researcher.BookPart.call", "setLastPage");
+    }
 
-	@Override
-	public void setVolume(String volume) {
-		throw new DomainException("error.researcher.BookPart.call", "setVolume");
-	}
+    @Override
+    public void setVolume(String volume) {
+        throw new DomainException("error.researcher.BookPart.call", "setVolume");
+    }
 
-	@Override
-	public void setSeries(String series) {
-		throw new DomainException("error.researcher.BookPart.call", "setSeries");
-	}
+    @Override
+    public void setSeries(String series) {
+        throw new DomainException("error.researcher.BookPart.call", "setSeries");
+    }
 
-	@Override
-	public void setEdition(String edition) {
-		throw new DomainException("error.researcher.BookPart.call", "setEdition");
-	}
+    @Override
+    public void setEdition(String edition) {
+        throw new DomainException("error.researcher.BookPart.call", "setEdition");
+    }
 
-	@Override
-	public void setCountry(Country country) {
-		throw new DomainException("error.researcher.BookPart.call", "setCountry");
-	}
+    @Override
+    public void setCountry(Country country) {
+        throw new DomainException("error.researcher.BookPart.call", "setCountry");
+    }
 
-	@Override
-	public void setAddress(String address) {
-		throw new DomainException("error.researcher.BookPart.call", "setTitle");
-	}
+    @Override
+    public void setAddress(String address) {
+        throw new DomainException("error.researcher.BookPart.call", "setTitle");
+    }
 
-	@Override
-	public void setNote(MultiLanguageString note) {
-		throw new DomainException("error.researcher.BookPart.call", "setNote");
-	}
+    @Override
+    public void setNote(MultiLanguageString note) {
+        throw new DomainException("error.researcher.BookPart.call", "setNote");
+    }
 
-	@Override
-	public void setMonth(Month month) {
-		throw new DomainException("error.researcher.BookPart.call", "setMonth");
-	}
+    @Override
+    public void setMonth(Month month) {
+        throw new DomainException("error.researcher.BookPart.call", "setMonth");
+    }
 
-	@Override
-	public void setUrl(String url) {
-		throw new DomainException("error.researcher.BookPart.call", "setUrl");
-	}
+    @Override
+    public void setUrl(String url) {
+        throw new DomainException("error.researcher.BookPart.call", "setUrl");
+    }
 
-	@Override
-	public void setBookTitle(String bookTitle) {
-		throw new DomainException("error.researcher.BookPart.call", "setBookTitle");
-	}
+    @Override
+    public void setBookTitle(String bookTitle) {
+        throw new DomainException("error.researcher.BookPart.call", "setBookTitle");
+    }
 
-	@Override
-	public void setOrganization(String organization) {
-		throw new DomainException("error.researcher.BookPart.call", "setOrganization");
-	}
+    @Override
+    public void setOrganization(String organization) {
+        throw new DomainException("error.researcher.BookPart.call", "setOrganization");
+    }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
-	}
+    @Override
+    public String getSchema() {
+        return usedSchema;
+    }
 
-	@Override
-	public Boolean getIsPossibleSelectPersonRole() {
-		return true;
-	}
+    @Override
+    public Boolean getIsPossibleSelectPersonRole() {
+        return true;
+    }
 }

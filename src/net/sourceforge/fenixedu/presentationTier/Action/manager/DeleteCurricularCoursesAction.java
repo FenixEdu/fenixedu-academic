@@ -33,49 +33,44 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author lmac1
  */
 
-@Mapping(
-		module = "manager",
-		path = "/deleteCurricularCourses",
-		input = "/readDegreeCurricularPlan.do",
-		attribute = "curricularCourseForm",
-		formBean = "curricularCourseForm",
-		scope = "request")
+@Mapping(module = "manager", path = "/deleteCurricularCourses", input = "/readDegreeCurricularPlan.do",
+        attribute = "curricularCourseForm", formBean = "curricularCourseForm", scope = "request")
 @Forwards(value = { @Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do") })
 public class DeleteCurricularCoursesAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
-		DynaActionForm deleteForm = (DynaActionForm) form;
+        IUserView userView = UserView.getUser();
+        DynaActionForm deleteForm = (DynaActionForm) form;
 
-		List curricularCoursesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+        List curricularCoursesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-		List errorsList = new ArrayList();
+        List errorsList = new ArrayList();
 
-		try {
-			errorsList = DeleteCurricularCoursesOfDegreeCurricularPlan.run(curricularCoursesIds);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        try {
+            errorsList = DeleteCurricularCoursesOfDegreeCurricularPlan.run(curricularCoursesIds);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		if (!errorsList.isEmpty()) {
-			int size = errorsList.size();
-			int count = 0;
-			String name, code;
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			while (count < size) {
-				// Create an ACTION_ERROR for each CURRICULAR_COURSE
-				name = (String) errorsList.get(count);
-				code = (String) errorsList.get(count + 1);
-				error = new ActionError("errors.invalid.delete.not.empty.curricular.course", name, code);
-				actionErrors.add("errors.invalid.delete.not.empty.curricular.course", error);
-				count = count + 2;
-			}
-			saveErrors(request, actionErrors);
-		}
-		return mapping.findForward("readDegreeCurricularPlan");
-	}
+        if (!errorsList.isEmpty()) {
+            int size = errorsList.size();
+            int count = 0;
+            String name, code;
+            ActionErrors actionErrors = new ActionErrors();
+            ActionError error = null;
+            while (count < size) {
+                // Create an ACTION_ERROR for each CURRICULAR_COURSE
+                name = (String) errorsList.get(count);
+                code = (String) errorsList.get(count + 1);
+                error = new ActionError("errors.invalid.delete.not.empty.curricular.course", name, code);
+                actionErrors.add("errors.invalid.delete.not.empty.curricular.course", error);
+                count = count + 2;
+            }
+            saveErrors(request, actionErrors);
+        }
+        return mapping.findForward("readDegreeCurricularPlan");
+    }
 }

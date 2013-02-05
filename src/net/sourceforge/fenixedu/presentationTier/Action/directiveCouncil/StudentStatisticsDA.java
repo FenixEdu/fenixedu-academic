@@ -26,103 +26,101 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentStatistics", module = "directiveCouncil")
-@Forwards({ @Forward(
-		name = "show.student.statistics",
-		path = "/directiveCouncil/showStudentStatistics.jsp",
-		tileProperties = @Tile(title = "private.steeringcouncil.studentstatistics")) })
+@Forwards({ @Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp",
+        tileProperties = @Tile(title = "private.steeringcouncil.studentstatistics")) })
 public class StudentStatisticsDA extends FenixDispatchAction {
 
-	public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
-		private DegreeType degreeType;
-		private ExecutionYear executionYearReference;
-		private ExecutionDegree executionDegreeReference;
+    public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
+        private DegreeType degreeType;
+        private ExecutionYear executionYearReference;
+        private ExecutionDegree executionDegreeReference;
 
-		@Override
-		public DegreeType getDegreeType() {
-			return degreeType;
-		}
+        @Override
+        public DegreeType getDegreeType() {
+            return degreeType;
+        }
 
-		public void setDegreeType(DegreeType degreeType) {
-			this.degreeType = degreeType;
-		}
+        public void setDegreeType(DegreeType degreeType) {
+            this.degreeType = degreeType;
+        }
 
-		@Override
-		public ExecutionYear getExecutionYear() {
-			return executionYearReference;
-		}
+        @Override
+        public ExecutionYear getExecutionYear() {
+            return executionYearReference;
+        }
 
-		public void setExecutionYear(final ExecutionYear executionYear) {
-			executionYearReference = executionYear;
-		}
+        public void setExecutionYear(final ExecutionYear executionYear) {
+            executionYearReference = executionYear;
+        }
 
-		public ExecutionDegree getExecutionDegree() {
-			return executionDegreeReference;
-		}
+        public ExecutionDegree getExecutionDegree() {
+            return executionDegreeReference;
+        }
 
-		public void setExecutionDegree(final ExecutionDegree executionDegree) {
-			executionDegreeReference = executionDegree;
-		}
+        public void setExecutionDegree(final ExecutionDegree executionDegree) {
+            executionDegreeReference = executionDegree;
+        }
 
-		public ExecutionYear getExecutionYearFourYearsBack() {
-			final ExecutionYear executionYear = getExecutionYear();
-			return executionYear == null ? null : ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear);
-		}
-	}
+        public ExecutionYear getExecutionYearFourYearsBack() {
+            final ExecutionYear executionYear = getExecutionYear();
+            return executionYear == null ? null : ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear);
+        }
+    }
 
-	public static class StatisticsBean implements Serializable {
+    public static class StatisticsBean implements Serializable {
 
-		private final ContextBean contextBean;
+        private final ContextBean contextBean;
 
-		public StatisticsBean(final ContextBean contextBean) {
-			this.contextBean = contextBean;
-		}
+        public StatisticsBean(final ContextBean contextBean) {
+            this.contextBean = contextBean;
+        }
 
-		public int getNumberOfRegisteredStudents() {
-			final ExecutionDegree executionDegree = contextBean.getExecutionDegree();
-			int counter = 0;
-			if (executionDegree == null) {
-				final ExecutionYear executionYear = contextBean.getExecutionYear();
-				final DegreeType degreeType = contextBean.getDegreeType();
-				for (final Degree degree : rootDomainObject.getDegreesSet()) {
-					if (degree.getDegreeType() == degreeType) {
-						counter += countDegreeRegistrations(executionYear, degree);
-					}
-				}
-			} else {
-				final Degree degree = executionDegree.getDegree();
-				counter = countDegreeRegistrations(executionDegree.getExecutionYear(), degree);
-			}
-			return counter;
-		}
+        public int getNumberOfRegisteredStudents() {
+            final ExecutionDegree executionDegree = contextBean.getExecutionDegree();
+            int counter = 0;
+            if (executionDegree == null) {
+                final ExecutionYear executionYear = contextBean.getExecutionYear();
+                final DegreeType degreeType = contextBean.getDegreeType();
+                for (final Degree degree : rootDomainObject.getDegreesSet()) {
+                    if (degree.getDegreeType() == degreeType) {
+                        counter += countDegreeRegistrations(executionYear, degree);
+                    }
+                }
+            } else {
+                final Degree degree = executionDegree.getDegree();
+                counter = countDegreeRegistrations(executionDegree.getExecutionYear(), degree);
+            }
+            return counter;
+        }
 
-		private int countDegreeRegistrations(final ExecutionYear executionYear, final Degree degree) {
-			int counter = 0;
-			for (final Registration registration : degree.getRegistrationsSet()) {
-				if (registration.isRegistered(executionYear)) {
-					counter++;
-				}
-			}
-			return counter;
-		}
+        private int countDegreeRegistrations(final ExecutionYear executionYear, final Degree degree) {
+            int counter = 0;
+            for (final Registration registration : degree.getRegistrationsSet()) {
+                if (registration.isRegistered(executionYear)) {
+                    counter++;
+                }
+            }
+            return counter;
+        }
 
-		public Boolean getShowResult() {
-			return (contextBean.getDegreeType() != null && contextBean.getExecutionYear() != null)
-					|| contextBean.getExecutionDegree() != null;
-		}
-	}
+        public Boolean getShowResult() {
+            return (contextBean.getDegreeType() != null && contextBean.getExecutionYear() != null)
+                    || contextBean.getExecutionDegree() != null;
+        }
+    }
 
-	public ActionForward showStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ContextBean contextBean = getRenderedObject();
-		if (contextBean == null) {
-			contextBean = new ContextBean();
-			contextBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-		}
-		RenderUtils.invalidateViewState();
-		request.setAttribute("contextBean", contextBean);
-		request.setAttribute("statisticsBean", new StatisticsBean(contextBean));
+    public ActionForward showStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ContextBean contextBean = getRenderedObject();
+        if (contextBean == null) {
+            contextBean = new ContextBean();
+            contextBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("contextBean", contextBean);
+        request.setAttribute("statisticsBean", new StatisticsBean(contextBean));
 
-		return mapping.findForward("show.student.statistics");
-	}
+        return mapping.findForward("show.student.statistics");
+    }
 
 }

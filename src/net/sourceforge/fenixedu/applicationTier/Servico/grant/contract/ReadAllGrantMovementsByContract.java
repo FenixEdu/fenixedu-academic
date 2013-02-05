@@ -14,19 +14,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllGrantMovementsByContract extends FenixService {
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public static List run(Integer grantContractId) throws FenixServiceException {
-		List<InfoGrantContractMovement> result = new ArrayList<InfoGrantContractMovement>();
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer grantContractId) throws FenixServiceException {
+        List<InfoGrantContractMovement> result = new ArrayList<InfoGrantContractMovement>();
 
-		GrantContract grantContract = rootDomainObject.readGrantContractByOID(grantContractId);
-		List<GrantContractMovement> grantMovements = grantContract.getAssociatedGrantContractMovements();
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(grantContractId);
+        List<GrantContractMovement> grantMovements = grantContract.getAssociatedGrantContractMovements();
 
-		for (GrantContractMovement grantContractMovement : grantMovements) {
-			result.add(InfoGrantContractMovementWithContract.newInfoFromDomain(grantContractMovement));
-		}
+        for (GrantContractMovement grantContractMovement : grantMovements) {
+            result.add(InfoGrantContractMovementWithContract.newInfoFromDomain(grantContractMovement));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

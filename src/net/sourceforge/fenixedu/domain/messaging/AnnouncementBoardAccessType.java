@@ -11,5 +11,5 @@ package net.sourceforge.fenixedu.domain.messaging;
  * 
  */
 public enum AnnouncementBoardAccessType {
-	ABAT_PUBLIC, ABAT_PRIVATE, ABAT_ALL;
+    ABAT_PUBLIC, ABAT_PRIVATE, ABAT_ALL;
 }

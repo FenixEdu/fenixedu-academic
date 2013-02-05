@@ -10,41 +10,41 @@ import pt.ist.fenixframework.plugins.remote.UriType;
 
 public class RemoteObjectDescriptionRequest extends RemoteClassDescriptionRequest {
 
-	private final Object target;
+    private final Object target;
 
-	public RemoteObjectDescriptionRequest(final Object target) {
-		super(target.getClass());
-		this.target = target;
-	}
+    public RemoteObjectDescriptionRequest(final Object target) {
+        super(target.getClass());
+        this.target = target;
+    }
 
-	@Override
-	protected String getTag() {
-		return "domainObject";
-	}
+    @Override
+    protected String getTag() {
+        return "domainObject";
+    }
 
-	@Override
-	protected UriType getUriType() {
-		return UriType.OBJECT;
-	}
+    @Override
+    protected UriType getUriType() {
+        return UriType.OBJECT;
+    }
 
-	@Override
-	protected String getResource() {
-		return ((DomainObject) target).getExternalId();
-	}
+    @Override
+    protected String getResource() {
+        return ((DomainObject) target).getExternalId();
+    }
 
-	@Override
-	protected boolean isMethodAvailable(final Method method) {
-		final int modifiers = method.getModifiers();
-		final Class<?>[] parameterTypes = method.getParameterTypes();
-		return Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)
-				&& (parameterTypes == null || parameterTypes.length == 0);
-	}
+    @Override
+    protected boolean isMethodAvailable(final Method method) {
+        final int modifiers = method.getModifiers();
+        final Class<?>[] parameterTypes = method.getParameterTypes();
+        return Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers)
+                && (parameterTypes == null || parameterTypes.length == 0);
+    }
 
-	@Override
-	protected void writeIdentificationInfo(final Writer writer) throws IOException {
-		final Class clazz = target.getClass();
-		writeTag(writer, "domainClassName", clazz.getName());
-		writeTag(writer, "domainObjectOid", getResource());
-	}
+    @Override
+    protected void writeIdentificationInfo(final Writer writer) throws IOException {
+        final Class clazz = target.getClass();
+        writeTag(writer, "domainClassName", clazz.getName());
+        writeTag(writer, "domainObjectOid", getResource());
+    }
 
 }

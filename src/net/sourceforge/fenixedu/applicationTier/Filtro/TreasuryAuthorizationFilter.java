@@ -10,27 +10,27 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author jpvl
  */
 public class TreasuryAuthorizationFilter extends AuthorizationByRoleFilter {
-	// the singleton of this class
-	public final static TreasuryAuthorizationFilter instance = new TreasuryAuthorizationFilter();
+    // the singleton of this class
+    public final static TreasuryAuthorizationFilter instance = new TreasuryAuthorizationFilter();
 
-	/**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the
-	 *         authorization access to services.
-	 */
-	public static Filtro getInstance() {
-		return instance;
-	}
+    /**
+     * The singleton access method of this class.
+     * 
+     * @return Returns the instance of this class responsible for the
+     *         authorization access to services.
+     */
+    public static Filtro getInstance() {
+        return instance;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.TREASURY;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.TREASURY;
+    }
 
 }

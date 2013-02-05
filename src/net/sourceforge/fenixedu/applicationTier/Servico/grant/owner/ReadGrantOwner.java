@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class ReadGrantOwner extends ReadDomainObjectService {
 
-	@Override
-	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-		return InfoGrantOwnerWithPerson.newInfoFromDomain((GrantOwner) domainObject);
-	}
+    @Override
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoGrantOwnerWithPerson.newInfoFromDomain((GrantOwner) domainObject);
+    }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readGrantOwnerByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+        return rootDomainObject.readGrantOwnerByOID(idInternal);
+    }
 
 }

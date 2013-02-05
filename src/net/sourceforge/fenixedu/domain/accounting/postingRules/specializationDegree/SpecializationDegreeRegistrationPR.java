@@ -21,49 +21,49 @@ import org.joda.time.DateTime;
 
 public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegistrationPR_Base {
 
-	public SpecializationDegreeRegistrationPR() {
-		super();
-	}
+    public SpecializationDegreeRegistrationPR() {
+        super();
+    }
 
-	public SpecializationDegreeRegistrationPR(DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty) {
-		this();
-		super.init(EntryType.REGISTRATION_FEE, EventType.SPECIALIZATION_DEGREE_REGISTRATION, startDate, endDate,
-				serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
-	}
+    public SpecializationDegreeRegistrationPR(DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty) {
+        this();
+        super.init(EntryType.REGISTRATION_FEE, EventType.SPECIALIZATION_DEGREE_REGISTRATION, startDate, endDate,
+                serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
+    }
 
-	@Override
-	protected boolean hasPenalty(Event event, DateTime when) {
-		return hasPenaltyForRegistration((SpecializationDegreeRegistrationEvent) event);
-	}
+    @Override
+    protected boolean hasPenalty(Event event, DateTime when) {
+        return hasPenaltyForRegistration((SpecializationDegreeRegistrationEvent) event);
+    }
 
-	private boolean hasPenaltyForRegistration(final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent) {
-		return specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
-				&& !specializationDegreeRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(
-						specializationDegreeRegistrationEvent.getRegistrationDate());
-	}
+    private boolean hasPenaltyForRegistration(final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent) {
+        return specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
+                && !specializationDegreeRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(
+                        specializationDegreeRegistrationEvent.getRegistrationDate());
+    }
 
-	public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
-		deactivate();
+    public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
+        deactivate();
 
-		return new SpecializationDegreeRegistrationPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-				fixedAmount, penaltyAmount);
-	}
+        return new SpecializationDegreeRegistrationPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
+                fixedAmount, penaltyAmount);
+    }
 
-	@Override
-	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-		checkPreconditionsToProcess(event);
-		return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
-	}
+    @Override
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+        checkPreconditionsToProcess(event);
+        return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
+    }
 
-	private void checkPreconditionsToProcess(Event event) {
-		final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent =
-				(SpecializationDegreeRegistrationEvent) event;
-		if (!specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
-			throw new DomainException(
-					"error.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR.cannot.process.without.registration.period.defined");
-		}
-	}
+    private void checkPreconditionsToProcess(Event event) {
+        final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent =
+                (SpecializationDegreeRegistrationEvent) event;
+        if (!specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
+            throw new DomainException(
+                    "error.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR.cannot.process.without.registration.period.defined");
+        }
+    }
 
 }

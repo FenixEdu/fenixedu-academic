@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class GiveUpQuestion extends FenixService {
-	@Service
-	public static void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException {
-		atomicQuestion.giveUpQuestion();
-	}
+    @Service
+    public static void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException {
+        atomicQuestion.giveUpQuestion();
+    }
 }

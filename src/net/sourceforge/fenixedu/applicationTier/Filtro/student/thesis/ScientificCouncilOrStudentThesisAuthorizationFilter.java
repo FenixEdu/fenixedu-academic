@@ -7,12 +7,12 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class ScientificCouncilOrStudentThesisAuthorizationFilter extends StudentThesisAuthorizationFilter {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		final IUserView userView = getRemoteUser(request);
-		if (!userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
-			super.execute(request, response);
-		}
-	}
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        final IUserView userView = getRemoteUser(request);
+        if (!userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+            super.execute(request, response);
+        }
+    }
 
 }

@@ -15,8 +15,8 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 public class AlternativeSiteForm extends DynaValidatorForm {
 
-	@Override
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
-		this.set("dynamicMailDistribution", false);
-	}
+    @Override
+    public void reset(ActionMapping mapping, HttpServletRequest request) {
+        this.set("dynamicMailDistribution", false);
+    }
 }

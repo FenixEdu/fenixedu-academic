@@ -7,89 +7,89 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
  */
 public class StaticArgument extends Argument {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Object value;
+    private Object value;
 
-	private boolean string;
-	private boolean number;
+    private boolean string;
+    private boolean number;
 
-	protected StaticArgument() {
-		super();
+    protected StaticArgument() {
+        super();
 
-		this.number = false;
-		this.string = false;
-	}
+        this.number = false;
+        this.string = false;
+    }
 
-	public StaticArgument(Object value) {
-		this();
+    public StaticArgument(Object value) {
+        this();
 
-		this.value = value;
-	}
+        this.value = value;
+    }
 
-	public StaticArgument(String string) {
-		this((Object) string);
+    public StaticArgument(String string) {
+        this((Object) string);
 
-		this.string = true;
-	}
+        this.string = true;
+    }
 
-	public StaticArgument(Integer value) {
-		this((Object) value);
+    public StaticArgument(Integer value) {
+        this((Object) value);
 
-		this.number = true;
-	}
+        this.number = true;
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	@Override
-	public Object getValue() {
-		return value;
-	}
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public Object getValue() {
+        return value;
+    }
 
-	public boolean isString() {
-		return this.string;
-	}
+    public boolean isString() {
+        return this.string;
+    }
 
-	public String getString() {
-		return (String) getValue();
-	}
+    public String getString() {
+        return (String) getValue();
+    }
 
-	public boolean isNumber() {
-		return this.number;
-	}
+    public boolean isNumber() {
+        return this.number;
+    }
 
-	public Integer getNumber() {
-		return (Integer) getValue();
-	}
+    public Integer getNumber() {
+        return (Integer) getValue();
+    }
 
-	/**
-	 * The value of a static argument is always available.
-	 * 
-	 * @return <code>false</code>
-	 */
-	@Override
-	public boolean isDynamic() {
-		return false;
-	}
+    /**
+     * The value of a static argument is always available.
+     * 
+     * @return <code>false</code>
+     */
+    @Override
+    public boolean isDynamic() {
+        return false;
+    }
 
-	@Override
-	public String toString() {
-		if (isNumber()) {
-			return String.valueOf(getValue());
-		} else {
-			String string = String.valueOf(getValue());
+    @Override
+    public String toString() {
+        if (isNumber()) {
+            return String.valueOf(getValue());
+        } else {
+            String string = String.valueOf(getValue());
 
-			if (string.indexOf('\'') != -1) {
-				return "\"" + escapeString(string) + "\"";
-			} else {
-				return "'" + string + "'";
-			}
-		}
-	}
+            if (string.indexOf('\'') != -1) {
+                return "\"" + escapeString(string) + "\"";
+            } else {
+                return "'" + string + "'";
+            }
+        }
+    }
 
-	private String escapeString(String string) {
-		return string.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+    private String escapeString(String string) {
+        return string.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
 
-	}
+    }
 }

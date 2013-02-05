@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AnnulReceipt {
 
-	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
-	@Service
-	public static void run(final Person responsible, final Receipt receipt) {
-		receipt.annul(responsible);
-	}
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Service
+    public static void run(final Person responsible, final Receipt receipt) {
+        receipt.annul(responsible);
+    }
 
 }

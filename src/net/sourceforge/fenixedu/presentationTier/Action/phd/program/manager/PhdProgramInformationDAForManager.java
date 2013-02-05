@@ -16,15 +16,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdProgramInformation", module = "manager")
 @Forwards({ @Forward(name = "listPhdPrograms", path = "/phd/manager/program/information/listPhdPrograms.jsp"),
-		@Forward(name = "listPhdProgramInformations", path = "/phd/manager/program/information/listPhdProgramInformations.jsp") })
+        @Forward(name = "listPhdProgramInformations", path = "/phd/manager/program/information/listPhdProgramInformations.jsp") })
 public class PhdProgramInformationDAForManager extends PhdProgramInformationDA {
 
-	@Override
-	public ActionForward listPhdPrograms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Override
+    public ActionForward listPhdPrograms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("phdPrograms", RootDomainObject.getInstance().getPhdPrograms());
-		return mapping.findForward("listPhdPrograms");
-	}
+        request.setAttribute("phdPrograms", RootDomainObject.getInstance().getPhdPrograms());
+        return mapping.findForward("listPhdPrograms");
+    }
 
 }

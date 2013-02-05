@@ -12,30 +12,30 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ConfirmStudentsFinalEvaluation extends FenixService {
 
-	@Service
-	public static Boolean run(Integer curricularCourseCode, String yearString, IUserView userView) {
+    @Service
+    public static Boolean run(Integer curricularCourseCode, String yearString, IUserView userView) {
 
-		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
-		final List<Enrolment> enrolments =
-				(yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
+        final List<Enrolment> enrolments =
+                (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 
-		final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
-		for (final Enrolment enrolment : enrolments) {
-			final List<EnrolmentEvaluation> allEnrolmentEvaluations = enrolment.getEvaluations();
-			enrolmentEvaluations.add(allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1));
-		}
+        final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
+        for (final Enrolment enrolment : enrolments) {
+            final List<EnrolmentEvaluation> allEnrolmentEvaluations = enrolment.getEvaluations();
+            enrolmentEvaluations.add(allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1));
+        }
 
-		if (!enrolmentEvaluations.isEmpty()) {
-			for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
-				if (enrolmentEvaluation.hasGrade() && enrolmentEvaluation.isTemporary()
-						&& enrolmentEvaluation.hasExamDateYearMonthDay()) {
-					enrolmentEvaluation.confirmSubmission(userView.getPerson(), "Lançamento de Notas na Secretaria");
-				}
-			}
-		}
+        if (!enrolmentEvaluations.isEmpty()) {
+            for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
+                if (enrolmentEvaluation.hasGrade() && enrolmentEvaluation.isTemporary()
+                        && enrolmentEvaluation.hasExamDateYearMonthDay()) {
+                    enrolmentEvaluation.confirmSubmission(userView.getPerson(), "Lançamento de Notas na Secretaria");
+                }
+            }
+        }
 
-		return Boolean.TRUE;
-	}
+        return Boolean.TRUE;
+    }
 
 }

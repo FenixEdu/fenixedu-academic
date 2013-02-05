@@ -20,17 +20,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 
 @Mapping(path = "/manageRegistrationStartDates", module = "academicAdministration")
-@Forwards({ @Forward(
-		name = "showEditStartDates",
-		path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
+@Forwards({ @Forward(name = "showEditStartDates",
+        path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
 public class ManageRegistrationStartDatesDA extends FenixDispatchAction {
 
-	@Input
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		final Integer registrationId = getIntegerFromRequest(request, "registrationId");
-		request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationId));
-		return mapping.findForward("showEditStartDates");
-	}
+    @Input
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final Integer registrationId = getIntegerFromRequest(request, "registrationId");
+        request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationId));
+        return mapping.findForward("showEditStartDates");
+    }
 
 }

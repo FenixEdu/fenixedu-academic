@@ -17,32 +17,32 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
  */
 public class MonthAnnouncementArchiveEntry {
 
-	private Integer month;
+    private Integer month;
 
-	final private Collection<Announcement> announcements = new ArrayList<Announcement>();
+    final private Collection<Announcement> announcements = new ArrayList<Announcement>();
 
-	public int getAnnouncementCount() {
-		return announcements.size();
-	}
+    public int getAnnouncementCount() {
+        return announcements.size();
+    }
 
-	public MonthAnnouncementArchiveEntry(Integer month) {
-		this.month = month;
-	}
+    public MonthAnnouncementArchiveEntry(Integer month) {
+        this.month = month;
+    }
 
-	public Integer getMonth() {
-		return month;
-	}
+    public Integer getMonth() {
+        return month;
+    }
 
-	public void setMonth(Integer month) {
-		this.month = month;
-	}
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
 
-	public Collection<Announcement> getAnnouncements() {
-		return announcements;
-	}
+    public Collection<Announcement> getAnnouncements() {
+        return announcements;
+    }
 
-	public void addAnnouncement(Announcement announcement) {
-		this.announcements.add(announcement);
-	}
+    public void addAnnouncement(Announcement announcement) {
+        this.announcements.add(announcement);
+    }
 
 }

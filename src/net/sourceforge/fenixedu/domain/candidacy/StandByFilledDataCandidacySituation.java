@@ -8,38 +8,38 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class StandByFilledDataCandidacySituation extends StandByFilledDataCandidacySituation_Base {
 
-	public StandByFilledDataCandidacySituation(Candidacy candidacy) {
-		this(candidacy, AccessControl.getPerson());
-	}
+    public StandByFilledDataCandidacySituation(Candidacy candidacy) {
+        this(candidacy, AccessControl.getPerson());
+    }
 
-	public StandByFilledDataCandidacySituation(Candidacy candidacy, Person person) {
-		super();
-		init(candidacy, person);
-	}
+    public StandByFilledDataCandidacySituation(Candidacy candidacy, Person person) {
+        super();
+        init(candidacy, person);
+    }
 
-	@Override
-	public boolean canChangePersonalData() {
-		return true;
-	}
+    @Override
+    public boolean canChangePersonalData() {
+        return true;
+    }
 
-	@Override
-	public CandidacySituationType getCandidacySituationType() {
-		return CandidacySituationType.STAND_BY_FILLED_DATA;
-	}
+    @Override
+    public CandidacySituationType getCandidacySituationType() {
+        return CandidacySituationType.STAND_BY_FILLED_DATA;
+    }
 
-	@Override
-	public boolean getCanCandidacyDataBeValidated() {
-		return true;
-	}
+    @Override
+    public boolean getCanCandidacyDataBeValidated() {
+        return true;
+    }
 
-	@Override
-	public Collection<Operation> getOperationsForPerson(Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Collection<Operation> getOperationsForPerson(Person person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public boolean canExecuteOperationAutomatically() {
-		return false;
-	}
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+        return false;
+    }
 }

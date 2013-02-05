@@ -23,16 +23,16 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ReadTeacherInformationAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
 
-		Object[] args = { request.getParameter("username"), request.getParameter("executionYear") };
-		SiteView siteView = (SiteView) ServiceUtils.executeService("ReadTeacherInformation", args);
-		InfoSiteTeacherInformation infoSiteTeacherInformation = (InfoSiteTeacherInformation) siteView.getComponent();
-		request.setAttribute("infoSiteTeacherInformation", infoSiteTeacherInformation);
+        Object[] args = { request.getParameter("username"), request.getParameter("executionYear") };
+        SiteView siteView = (SiteView) ServiceUtils.executeService("ReadTeacherInformation", args);
+        InfoSiteTeacherInformation infoSiteTeacherInformation = (InfoSiteTeacherInformation) siteView.getComponent();
+        request.setAttribute("infoSiteTeacherInformation", infoSiteTeacherInformation);
 
-		return mapping.findForward("show");
-	}
+        return mapping.findForward("show");
+    }
 }

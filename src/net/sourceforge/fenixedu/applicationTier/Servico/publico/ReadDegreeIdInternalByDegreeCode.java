@@ -13,11 +13,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDegreeIdInternalByDegreeCode extends FenixService {
 
-	@Service
-	public static Integer run(String degreeCode) {
-		Degree degree = Degree.readBySigla(degreeCode);
+    @Service
+    public static Integer run(String degreeCode) {
+        Degree degree = Degree.readBySigla(degreeCode);
 
-		return degree != null ? degree.getIdInternal() : null;
-	}
+        return degree != null ? degree.getIdInternal() : null;
+    }
 
 }

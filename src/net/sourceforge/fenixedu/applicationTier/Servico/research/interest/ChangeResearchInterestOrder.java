@@ -11,21 +11,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeResearchInterestOrder extends FenixService {
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(Party party, List<ResearchInterest> researchInterests) {
-		if (party.getResearchInterests().size() != researchInterests.size()) {
-			throw new DomainException("research.interests.size.mismatch");
-		}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(Party party, List<ResearchInterest> researchInterests) {
+        if (party.getResearchInterests().size() != researchInterests.size()) {
+            throw new DomainException("research.interests.size.mismatch");
+        }
 
-		for (int i = 0; i < researchInterests.size(); i++) {
-			ResearchInterest researchInterest = researchInterests.get(i);
+        for (int i = 0; i < researchInterests.size(); i++) {
+            ResearchInterest researchInterest = researchInterests.get(i);
 
-			if (!researchInterest.getParty().equals(party)) {
-				throw new DomainException("research.interests.party.mismatch");
-			}
+            if (!researchInterest.getParty().equals(party)) {
+                throw new DomainException("research.interests.party.mismatch");
+            }
 
-			researchInterest.setOrder(i + 1);
-		}
-	}
+            researchInterest.setOrder(i + 1);
+        }
+    }
 }

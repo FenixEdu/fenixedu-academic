@@ -14,52 +14,52 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 
 public class DepartmentPresidentGroup extends DomainBackedGroup<DepartmentUnit> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public DepartmentPresidentGroup(final DepartmentUnit unit) {
-		super(unit);
-	}
+    public DepartmentPresidentGroup(final DepartmentUnit unit) {
+        super(unit);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		final DepartmentUnit unit = getObject();
-		final Person person = unit.getCurrentDepartmentPresident();
-		return person == null ? Collections.EMPTY_SET : Collections.singleton(person);
-	}
+    @Override
+    public Set<Person> getElements() {
+        final DepartmentUnit unit = getObject();
+        final Person person = unit.getCurrentDepartmentPresident();
+        return person == null ? Collections.EMPTY_SET : Collections.singleton(person);
+    }
 
-	@Override
-	public boolean isMember(final Person person) {
-		final DepartmentUnit unit = getObject();
-		return person != null && person == unit.getCurrentDepartmentPresident();
-	}
+    @Override
+    public boolean isMember(final Person person) {
+        final DepartmentUnit unit = getObject();
+        return person != null && person == unit.getCurrentDepartmentPresident();
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new DepartmentPresidentGroup((DepartmentUnit) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException("accessControl.group.builder.unitMembers.notUnit",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new DepartmentPresidentGroup((DepartmentUnit) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.unitMembers.notUnit",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 
 }

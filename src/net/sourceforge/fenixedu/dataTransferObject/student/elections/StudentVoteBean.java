@@ -17,90 +17,90 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class StudentVoteBean implements Serializable {
 
-	private Student student;
-	private boolean selectedStudent;
+    private Student student;
+    private boolean selectedStudent;
 
-	public StudentVoteBean() {
-	}
+    public StudentVoteBean() {
+    }
 
-	public StudentVoteBean(Student student) {
-		setStudent(student);
-		setSelectedStudent(false);
-	}
+    public StudentVoteBean(Student student) {
+        setStudent(student);
+        setSelectedStudent(false);
+    }
 
-	public Student getStudent() {
-		return (this.student == null) ? null : student;
+    public Student getStudent() {
+        return (this.student == null) ? null : student;
 
-	}
+    }
 
-	public void setStudent(Student student) {
-		this.student = student;
+    public void setStudent(Student student) {
+        this.student = student;
 
-	}
+    }
 
-	public boolean getSelectedStudent() {
-		return selectedStudent;
-	}
+    public boolean getSelectedStudent() {
+        return selectedStudent;
+    }
 
-	public void setSelectedStudent(boolean selectedStudent) {
-		this.selectedStudent = selectedStudent;
-	}
+    public void setSelectedStudent(boolean selectedStudent) {
+        this.selectedStudent = selectedStudent;
+    }
 
-	public List<Student> getSelectedStudentVote(String studentType) {
-		final IUserView userView = AccessControl.getUserView();
-		final Student student = userView.getPerson().getStudent();
-		final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(student);
+    public List<Student> getSelectedStudentVote(String studentType) {
+        final IUserView userView = AccessControl.getUserView();
+        final Student student = userView.getPerson().getStudent();
+        final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(student);
 
-		final DelegateElectionPeriod currentPeriod =
-				(yearDelegateElection != null ? yearDelegateElection.getCurrentElectionPeriod() : null);
-		List<Student> otherStudentsList = new ArrayList<Student>();
+        final DelegateElectionPeriod currentPeriod =
+                (yearDelegateElection != null ? yearDelegateElection.getCurrentElectionPeriod() : null);
+        List<Student> otherStudentsList = new ArrayList<Student>();
 
-		if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
-			if (studentType.equals("notCandidate")) {
-				otherStudentsList = getNotCandidatedStudents(yearDelegateElection);
-			}
-			if (studentType.equals("candidate")) {
-				otherStudentsList = getCandidates(yearDelegateElection);
-			}
-			List<Student> otherStudentsBeanList = new ArrayList<Student>();
-			for (final Student studentList : otherStudentsList) {
-				otherStudentsBeanList.add(studentList);
-			}
+        if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
+            if (studentType.equals("notCandidate")) {
+                otherStudentsList = getNotCandidatedStudents(yearDelegateElection);
+            }
+            if (studentType.equals("candidate")) {
+                otherStudentsList = getCandidates(yearDelegateElection);
+            }
+            List<Student> otherStudentsBeanList = new ArrayList<Student>();
+            for (final Student studentList : otherStudentsList) {
+                otherStudentsBeanList.add(studentList);
+            }
 
-			Collections.sort(otherStudentsBeanList, Student.NAME_COMPARATOR);
-			return otherStudentsBeanList;
-		}
-		return new ArrayList<Student>();
-	}
+            Collections.sort(otherStudentsBeanList, Student.NAME_COMPARATOR);
+            return otherStudentsBeanList;
+        }
+        return new ArrayList<Student>();
+    }
 
-	public YearDelegateElection getYearDelegateElectionForStudent(Student student) {
-		YearDelegateElection yearDelegateElection = null;
+    public YearDelegateElection getYearDelegateElectionForStudent(Student student) {
+        YearDelegateElection yearDelegateElection = null;
 
-		final Registration registration = student.getLastActiveRegistration();
+        final Registration registration = student.getLastActiveRegistration();
 
-		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-		if (registration != null) {
-			final int curricularYear = registration.getCurricularYear(currentExecutionYear);
-			yearDelegateElection =
-					registration.getDegree().getYearDelegateElectionWithLastCandidacyPeriod(currentExecutionYear,
-							CurricularYear.readByYear(curricularYear));
-			return yearDelegateElection;
-		}
-		return null;
-	}
+        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        if (registration != null) {
+            final int curricularYear = registration.getCurricularYear(currentExecutionYear);
+            yearDelegateElection =
+                    registration.getDegree().getYearDelegateElectionWithLastCandidacyPeriod(currentExecutionYear,
+                            CurricularYear.readByYear(curricularYear));
+            return yearDelegateElection;
+        }
+        return null;
+    }
 
-	private List<Student> getCandidates(YearDelegateElection yearDelegateElection) {
-		if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
-			return yearDelegateElection.getLastVotingPeriod().getCandidatesForNewRoundElections();
-		}
-		return yearDelegateElection.getCandidates();
-	}
+    private List<Student> getCandidates(YearDelegateElection yearDelegateElection) {
+        if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
+            return yearDelegateElection.getLastVotingPeriod().getCandidatesForNewRoundElections();
+        }
+        return yearDelegateElection.getCandidates();
+    }
 
-	private List<Student> getNotCandidatedStudents(YearDelegateElection yearDelegateElection) {
-		if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
-			return new LinkedList<Student>();
-		}
-		return yearDelegateElection.getNotCandidatedStudents();
-	}
+    private List<Student> getNotCandidatedStudents(YearDelegateElection yearDelegateElection) {
+        if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
+            return new LinkedList<Student>();
+        }
+        return yearDelegateElection.getNotCandidatedStudents();
+    }
 
 }

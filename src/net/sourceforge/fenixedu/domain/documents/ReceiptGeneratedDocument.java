@@ -14,27 +14,27 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Pedro Santos (pmrsa)
  */
 public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
-	protected ReceiptGeneratedDocument(Receipt source, Party addressee, Person operator, String filename, byte[] content) {
-		super();
-		setSource(source);
-		init(GeneratedDocumentType.RECEIPT, addressee, operator, filename, content);
-	}
+    protected ReceiptGeneratedDocument(Receipt source, Party addressee, Person operator, String filename, byte[] content) {
+        super();
+        setSource(source);
+        init(GeneratedDocumentType.RECEIPT, addressee, operator, filename, content);
+    }
 
-	@Override
-	protected Group computePermittedGroup() {
-		return new RoleGroup(RoleType.MANAGER);
-	}
+    @Override
+    protected Group computePermittedGroup() {
+        return new RoleGroup(RoleType.MANAGER);
+    }
 
-	@Override
-	public void delete() {
-		removeSource();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        removeSource();
+        super.delete();
+    }
 
-	@Service
-	public static void store(Receipt source, String filename, byte[] content) {
-		if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
-			new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
-		}
-	}
+    @Service
+    public static void store(Receipt source, String filename, byte[] content) {
+        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+            new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
+        }
+    }
 }

@@ -22,101 +22,101 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "researcher", path = "/activities/createEvent", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "CreateEvent", path = "/researcher/activities/createEventParticipation.jsp"),
-		@Forward(name = "Success", path = "/activities/activitiesManagement.do?method=listActivities") })
+        @Forward(name = "Success", path = "/activities/activitiesManagement.do?method=listActivities") })
 public class CreateEventDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		request.setAttribute("party", getLoggedPerson(request));
-		return mapping.findForward("CreateEvent");
-	}
+        request.setAttribute("party", getLoggedPerson(request));
+        return mapping.findForward("CreateEvent");
+    }
 
-	public ActionForward prepareEventSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareEventSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ResearchEventCreationBean bean = getEventBean(request);
-		if (bean == null) {
-			bean = new ResearchEventCreationBean();
-		}
+        ResearchEventCreationBean bean = getEventBean(request);
+        if (bean == null) {
+            bean = new ResearchEventCreationBean();
+        }
 
-		request.setAttribute("eventBean", bean);
-		request.setAttribute("eventCreationSchema", "eventCreation.eventName");
+        request.setAttribute("eventBean", bean);
+        request.setAttribute("eventCreationSchema", "eventCreation.eventName");
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward prepareCreateEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreateEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ResearchEventCreationBean bean = getEventBean(request);
-		if (bean == null) {
-			return prepareEventSearch(mapping, form, request, response);
-		}
+        ResearchEventCreationBean bean = getEventBean(request);
+        if (bean == null) {
+            return prepareEventSearch(mapping, form, request, response);
+        }
 
-		if (bean.getEvent() != null) {
-			request.setAttribute("existentEventBean", bean);
-			request.setAttribute("eventCreationSchema", "eventCreation.existentEvent");
-			return prepare(mapping, form, request, response);
-		} else {
-			request.setAttribute("inexistentEventBean", bean);
-			request.setAttribute("eventCreationSchema", "eventCreation.inexistentEvent");
-			return prepare(mapping, form, request, response);
-		}
-	}
+        if (bean.getEvent() != null) {
+            request.setAttribute("existentEventBean", bean);
+            request.setAttribute("eventCreationSchema", "eventCreation.existentEvent");
+            return prepare(mapping, form, request, response);
+        } else {
+            request.setAttribute("inexistentEventBean", bean);
+            request.setAttribute("eventCreationSchema", "eventCreation.inexistentEvent");
+            return prepare(mapping, form, request, response);
+        }
+    }
 
-	public ActionForward createExistentEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward createExistentEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Person person = getLoggedPerson(request);
-		ResearchEventCreationBean bean = getEventBean(request);
-		if (bean == null) {
-			return prepareEventSearch(mapping, form, request, response);
-		}
+        Person person = getLoggedPerson(request);
+        ResearchEventCreationBean bean = getEventBean(request);
+        if (bean == null) {
+            return prepareEventSearch(mapping, form, request, response);
+        }
 
-		if (bean.getRole() != null) {
-			try {
-				CreateResearchActivityParticipation.run(bean.getEvent(), bean.getRole(), person, bean.getRoleMessage());
-			} catch (DomainException e) {
-				addActionMessage(request, e.getMessage());
-				request.setAttribute("existentEventBean", bean);
-				request.setAttribute("eventCreationSchema", "eventCreation.existentEvent");
-				return prepare(mapping, form, request, response);
-			}
-		}
+        if (bean.getRole() != null) {
+            try {
+                CreateResearchActivityParticipation.run(bean.getEvent(), bean.getRole(), person, bean.getRoleMessage());
+            } catch (DomainException e) {
+                addActionMessage(request, e.getMessage());
+                request.setAttribute("existentEventBean", bean);
+                request.setAttribute("eventCreationSchema", "eventCreation.existentEvent");
+                return prepare(mapping, form, request, response);
+            }
+        }
 
-		return mapping.findForward("Success");
-	}
+        return mapping.findForward("Success");
+    }
 
-	public ActionForward createInexistentEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = getLoggedPerson(request);
+    public ActionForward createInexistentEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = getLoggedPerson(request);
 
-		ResearchEventCreationBean bean = getEventBean(request);
-		if (bean == null) {
-			return prepareEventSearch(mapping, form, request, response);
-		}
+        ResearchEventCreationBean bean = getEventBean(request);
+        if (bean == null) {
+            return prepareEventSearch(mapping, form, request, response);
+        }
 
-		ResearchEvent event = null;
-		try {
-			event = CreateResearchEvent.run(bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl());
-			CreateResearchActivityParticipation.run(event, bean.getRole(), person, bean.getRoleMessage());
-		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage());
-			request.setAttribute("inexistentEventBean", bean);
-			request.setAttribute("eventCreationSchema", "eventCreation.inexistentEvent");
-			return prepare(mapping, form, request, response);
-		}
+        ResearchEvent event = null;
+        try {
+            event = CreateResearchEvent.run(bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl());
+            CreateResearchActivityParticipation.run(event, bean.getRole(), person, bean.getRoleMessage());
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage());
+            request.setAttribute("inexistentEventBean", bean);
+            request.setAttribute("eventCreationSchema", "eventCreation.inexistentEvent");
+            return prepare(mapping, form, request, response);
+        }
 
-		return mapping.findForward("Success");
-	}
+        return mapping.findForward("Success");
+    }
 
-	public ResearchEventCreationBean getEventBean(HttpServletRequest request) {
-		ResearchEventCreationBean bean = null;
-		if (RenderUtils.getViewState() != null) {
-			bean = (ResearchEventCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-			return bean;
-		}
-		return bean;
-	}
+    public ResearchEventCreationBean getEventBean(HttpServletRequest request) {
+        ResearchEventCreationBean bean = null;
+        if (RenderUtils.getViewState() != null) {
+            bean = (ResearchEventCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+            return bean;
+        }
+        return bean;
+    }
 }

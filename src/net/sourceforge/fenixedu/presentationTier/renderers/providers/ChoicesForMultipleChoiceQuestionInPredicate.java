@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ChoicesForMultipleChoiceQuestionInPredicate implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		PredicateBean predicateBean = (PredicateBean) source;
-		NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) predicateBean.getQuestion();
-		return multipleChoiceQuestion.getOrderedChoices();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        PredicateBean predicateBean = (PredicateBean) source;
+        NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) predicateBean.getQuestion();
+        return multipleChoiceQuestion.getOrderedChoices();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

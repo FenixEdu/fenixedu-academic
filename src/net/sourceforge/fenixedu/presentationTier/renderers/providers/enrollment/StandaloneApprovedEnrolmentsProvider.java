@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class StandaloneApprovedEnrolmentsProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
-		return documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan()
-				.getStandaloneApprovedEnrolmentsNotInDismissal();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
+        return documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan()
+                .getStandaloneApprovedEnrolmentsNotInDismissal();
+    }
 }

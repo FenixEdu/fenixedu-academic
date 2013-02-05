@@ -29,48 +29,39 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author jpvl
  */
-@Mapping(
-		module = "departmentAdmOffice",
-		path = "/removeProfessorship",
-		input = "/showTeacherProfessorshipsForManagement.do",
-		attribute = "teacherExecutionCourseForm",
-		formBean = "teacherExecutionCourseForm",
-		scope = "request",
-		validate = false,
-		parameter = "method")
+@Mapping(module = "departmentAdmOffice", path = "/removeProfessorship", input = "/showTeacherProfessorshipsForManagement.do",
+        attribute = "teacherExecutionCourseForm", formBean = "teacherExecutionCourseForm", scope = "request", validate = false,
+        parameter = "method")
 @Forwards(value = { @Forward(name = "successfull-delete", path = "/showTeacherProfessorshipsForManagement.do") })
 @Exceptions(
-		value = {
-				@ExceptionHandling(
-						type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException.class,
-						key = "message.professorship.isResponsibleFor",
-						handler = org.apache.struts.action.ExceptionHandler.class,
-						path = "/showTeacherProfessorshipsForManagement.do",
-						scope = "request"),
-				@ExceptionHandling(
-						type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship.ExistingAssociatedCredits.class,
-						key = "message.existing.associatedCredits",
-						handler = org.apache.struts.action.ExceptionHandler.class,
-						path = "/showTeacherProfessorshipsForManagement.do",
-						scope = "request") })
+        value = {
+                @ExceptionHandling(
+                        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException.class,
+                        key = "message.professorship.isResponsibleFor",
+                        handler = org.apache.struts.action.ExceptionHandler.class,
+                        path = "/showTeacherProfessorshipsForManagement.do", scope = "request"),
+                @ExceptionHandling(
+                        type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship.ExistingAssociatedCredits.class,
+                        key = "message.existing.associatedCredits", handler = org.apache.struts.action.ExceptionHandler.class,
+                        path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
 public class RemoveProfessorshipAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
 
-		String id = (String) teacherExecutionCourseForm.get("teacherId");
-		Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
+        String id = (String) teacherExecutionCourseForm.get("teacherId");
+        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
 
-		ActionMessages actionMessages = getMessages(request);
-		try {
-			RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), RootDomainObject.getInstance()
-					.readExecutionCourseByOID(executionCourseId));
-		} catch (DomainException de) {
-			actionMessages.add(de.getMessage(), new ActionMessage(de.getMessage()));
-			saveMessages(request, actionMessages);
-		}
-		return mapping.findForward("successfull-delete");
-	}
+        ActionMessages actionMessages = getMessages(request);
+        try {
+            RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), RootDomainObject.getInstance()
+                    .readExecutionCourseByOID(executionCourseId));
+        } catch (DomainException de) {
+            actionMessages.add(de.getMessage(), new ActionMessage(de.getMessage()));
+            saveMessages(request, actionMessages);
+        }
+        return mapping.findForward("successfull-delete");
+    }
 }

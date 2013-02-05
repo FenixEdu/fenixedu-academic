@@ -6,57 +6,57 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 public class TeacherAdministrationSiteView extends SiteView {
 
-	public TeacherAdministrationSiteView() {
-	}
+    public TeacherAdministrationSiteView() {
+    }
 
-	/**
-	 * @param commonComponent
-	 * @param bodyComponent
-	 */
-	public TeacherAdministrationSiteView(ISiteComponent commonComponent, ISiteComponent bodyComponent) {
-		setCommonComponent(commonComponent);
-		setComponent(bodyComponent);
-	}
+    /**
+     * @param commonComponent
+     * @param bodyComponent
+     */
+    public TeacherAdministrationSiteView(ISiteComponent commonComponent, ISiteComponent bodyComponent) {
+        setCommonComponent(commonComponent);
+        setComponent(bodyComponent);
+    }
 
-	private ISiteComponent commonComponent;
+    private ISiteComponent commonComponent;
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String result = "[TeacherAdministrationSiteView";
-		result += ", commonComponent=" + getCommonComponent();
-		result += ", bodyComponent=" + getComponent();
-		result += "]";
-		return result;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        String result = "[TeacherAdministrationSiteView";
+        result += ", commonComponent=" + getCommonComponent();
+        result += ", bodyComponent=" + getComponent();
+        result += "]";
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof TeacherAdministrationSiteView) {
-			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) obj;
-			boolean result1 = getCommonComponent().equals(siteView.getCommonComponent());
-			boolean result2 = getComponent().equals(siteView.getComponent());
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TeacherAdministrationSiteView) {
+            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) obj;
+            boolean result1 = getCommonComponent().equals(siteView.getCommonComponent());
+            boolean result2 = getComponent().equals(siteView.getComponent());
 
-			return result1 && result2;
-		}
-		return false;
-	}
+            return result1 && result2;
+        }
+        return false;
+    }
 
-	/**
-	 * @return
-	 */
-	public ISiteComponent getCommonComponent() {
+    /**
+     * @return
+     */
+    public ISiteComponent getCommonComponent() {
 
-		return commonComponent;
-	}
+        return commonComponent;
+    }
 
-	/**
-	 * @param component
-	 */
-	public void setCommonComponent(ISiteComponent component) {
-		commonComponent = component;
-	}
+    /**
+     * @param component
+     */
+    public void setCommonComponent(ISiteComponent component) {
+        commonComponent = component;
+    }
 
 }

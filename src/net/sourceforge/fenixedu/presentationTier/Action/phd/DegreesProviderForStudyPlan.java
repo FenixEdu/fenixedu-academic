@@ -9,15 +9,15 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class DegreesProviderForStudyPlan extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
-		final PhdStudyPlanBean bean = (PhdStudyPlanBean) source;
+    @Override
+    public Object provide(Object source, Object current) {
+        final PhdStudyPlanBean bean = (PhdStudyPlanBean) source;
 
-		final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
-		result.add(bean.getProcess().getPhdProgram().getDegree());
-		result.add(Degree.readEmptyDegree());
+        result.add(bean.getProcess().getPhdProgram().getDegree());
+        result.add(Degree.readEmptyDegree());
 
-		return result;
-	}
+        return result;
+    }
 }

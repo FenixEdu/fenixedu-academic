@@ -11,24 +11,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveCoordinators extends FenixService {
 
-	@Service
-	public static void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
+    @Service
+    public static void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
 
-		for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
-			final Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorToRemoveID);
-			if (coordinator != null) {
-				final Person person = coordinator.getPerson();
+        for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
+            final Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorToRemoveID);
+            if (coordinator != null) {
+                final Person person = coordinator.getPerson();
 
-				CoordinationTeamLog.createLog(coordinator.getExecutionDegree().getDegree(), coordinator.getExecutionDegree()
-						.getExecutionYear(), "resources.MessagingResources", "log.degree.coordinationteam.removemember",
-						coordinator.getPerson().getPresentationName(), coordinator.getExecutionDegree().getPresentationName());
+                CoordinationTeamLog.createLog(coordinator.getExecutionDegree().getDegree(), coordinator.getExecutionDegree()
+                        .getExecutionYear(), "resources.MessagingResources", "log.degree.coordinationteam.removemember",
+                        coordinator.getPerson().getPresentationName(), coordinator.getExecutionDegree().getPresentationName());
 
-				coordinator.delete();
-				if (!person.hasAnyCoordinators()) {
-					person.removeRoleByType(RoleType.COORDINATOR);
-				}
-			}
-		}
-	}
+                coordinator.delete();
+                if (!person.hasAnyCoordinators()) {
+                    person.removeRoleByType(RoleType.COORDINATOR);
+                }
+            }
+        }
+    }
 
 }

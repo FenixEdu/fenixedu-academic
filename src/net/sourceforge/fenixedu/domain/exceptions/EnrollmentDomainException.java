@@ -4,28 +4,28 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 
 public class EnrollmentDomainException extends DomainException {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private RuleResult falseResult;
+    private RuleResult falseResult;
 
-	public EnrollmentDomainException(String key, String... args) {
-		super(key, args);
-	}
+    public EnrollmentDomainException(String key, String... args) {
+        super(key, args);
+    }
 
-	public EnrollmentDomainException(String key, Throwable cause, String... args) {
-		super(key, cause, args);
-	}
+    public EnrollmentDomainException(String key, Throwable cause, String... args) {
+        super(key, cause, args);
+    }
 
-	public EnrollmentDomainException(final RuleResult falseRuleResult) {
-		super();
-		this.falseResult = falseRuleResult;
-	}
+    public EnrollmentDomainException(final RuleResult falseRuleResult) {
+        super();
+        this.falseResult = falseRuleResult;
+    }
 
-	public RuleResult getFalseResult() {
-		return this.falseResult;
-	}
+    public RuleResult getFalseResult() {
+        return this.falseResult;
+    }
 
 }

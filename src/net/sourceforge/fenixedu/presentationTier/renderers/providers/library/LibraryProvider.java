@@ -6,15 +6,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class LibraryProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		RootDomainObject root = RootDomainObject.getInstance();
-		return root.getLibraries();
-	}
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        RootDomainObject root = RootDomainObject.getInstance();
+        return root.getLibraries();
+    }
 
 }

@@ -14,9 +14,9 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
  */
 public class EditFilePermissions extends FileContentService {
 
-	public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, DomainException,
-			FileManagerException {
-		fileContent.setPermittedGroup(group);
-	}
+    public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, DomainException,
+            FileManagerException {
+        fileContent.setPermittedGroup(group);
+    }
 
 }

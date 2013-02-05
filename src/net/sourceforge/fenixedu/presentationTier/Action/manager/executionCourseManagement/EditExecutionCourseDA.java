@@ -16,48 +16,48 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editExecutionCourseChooseExPeriod", module = "manager")
 @Forwards({
-		@Forward(name = "editChooseExecutionPeriod", path = "/manager/executionCourseManagement/editChooseExecutionPeriod.jsp"),
-		@Forward(name = "editChooseCourseAndYear", path = "/manager/executionCourseManagement/editChooseCourseAndYear.jsp"),
-		@Forward(name = "editExecutionCourse", path = "/manager/executionCourseManagement/listExecutionCourseActions.jsp") })
+        @Forward(name = "editChooseExecutionPeriod", path = "/manager/executionCourseManagement/editChooseExecutionPeriod.jsp"),
+        @Forward(name = "editChooseCourseAndYear", path = "/manager/executionCourseManagement/editChooseCourseAndYear.jsp"),
+        @Forward(name = "editExecutionCourse", path = "/manager/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDA extends FenixDispatchAction {
 
-	public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("sessionBean", new ExecutionCourseBean());
+        request.setAttribute("sessionBean", new ExecutionCourseBean());
 
-		return mapping.findForward("editChooseExecutionPeriod");
-	}
+        return mapping.findForward("editChooseExecutionPeriod");
+    }
 
-	public ActionForward secondPrepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward secondPrepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
+        ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
 
-		/*
-		 * Se chooseNotLinked=checked, entao limpar as dropboxes do curso e ano
-		 * curricular.
-		 */
-		if (bean.getChooseNotLinked() != null) {
-			if (bean.getChooseNotLinked()) {
-				bean.setExecutionDegree(null);
-				bean.setCurricularYear(null);
-			}
-		}
+        /*
+         * Se chooseNotLinked=checked, entao limpar as dropboxes do curso e ano
+         * curricular.
+         */
+        if (bean.getChooseNotLinked() != null) {
+            if (bean.getChooseNotLinked()) {
+                bean.setExecutionDegree(null);
+                bean.setCurricularYear(null);
+            }
+        }
 
-		request.setAttribute("sessionBean", bean);
+        request.setAttribute("sessionBean", bean);
 
-		RenderUtils.invalidateViewState("sessionBeanJSP");
+        RenderUtils.invalidateViewState("sessionBeanJSP");
 
-		return mapping.findForward("editChooseCourseAndYear");
-	}
+        return mapping.findForward("editChooseCourseAndYear");
+    }
 
-	public ActionForward listExecutionCourseActions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward listExecutionCourseActions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
-		request.setAttribute("sessionBean", bean);
+        ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
+        request.setAttribute("sessionBean", bean);
 
-		return mapping.findForward("editExecutionCourse");
-	}
+        return mapping.findForward("editExecutionCourse");
+    }
 }

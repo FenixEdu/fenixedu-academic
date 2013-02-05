@@ -13,20 +13,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurriculumGroupsProviderForRegistrationAcademicServiceRequest implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
-		final StudentCurricularPlan studentCurricularPlan = bean.getRegistration().getLastStudentCurricularPlan();
-		final List<CurriculumGroup> curriculumGroups =
-				new ArrayList<CurriculumGroup>(studentCurricularPlan.getRoot().getAllCurriculumGroups());
-		curriculumGroups.removeAll(studentCurricularPlan.getRoot().getCycleCurriculumGroups());
-		Collections.sort(curriculumGroups, CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
-		return curriculumGroups;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
+        final StudentCurricularPlan studentCurricularPlan = bean.getRegistration().getLastStudentCurricularPlan();
+        final List<CurriculumGroup> curriculumGroups =
+                new ArrayList<CurriculumGroup>(studentCurricularPlan.getRoot().getAllCurriculumGroups());
+        curriculumGroups.removeAll(studentCurricularPlan.getRoot().getCycleCurriculumGroups());
+        Collections.sort(curriculumGroups, CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
+        return curriculumGroups;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

@@ -20,46 +20,46 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class SeminaryCandidacy extends SeminaryCandidacy_Base {
 
-	public SeminaryCandidacy() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public SeminaryCandidacy() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		for (CaseStudyChoice choice : getCaseStudyChoices()) {
-			choice.delete();
-		}
+    public void delete() {
+        for (CaseStudyChoice choice : getCaseStudyChoices()) {
+            choice.delete();
+        }
 
-		removeCurricularCourse();
-		removeModality();
-		removeSeminary();
-		removeStudent();
-		removeTheme();
+        removeCurricularCourse();
+        removeModality();
+        removeSeminary();
+        removeStudent();
+        removeTheme();
 
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	public static List<SeminaryCandidacy> getByStudentAndSeminary(Registration registration, Seminary seminary) {
-		List<SeminaryCandidacy> candidacies = new ArrayList<SeminaryCandidacy>();
+    public static List<SeminaryCandidacy> getByStudentAndSeminary(Registration registration, Seminary seminary) {
+        List<SeminaryCandidacy> candidacies = new ArrayList<SeminaryCandidacy>();
 
-		for (SeminaryCandidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
-			if (!candidacy.getStudent().equals(registration)) {
-				continue;
-			}
+        for (SeminaryCandidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
+            if (!candidacy.getStudent().equals(registration)) {
+                continue;
+            }
 
-			if (!candidacy.getSeminary().equals(registration)) {
-				continue;
-			}
+            if (!candidacy.getSeminary().equals(registration)) {
+                continue;
+            }
 
-			candidacies.add(candidacy);
-		}
+            candidacies.add(candidacy);
+        }
 
-		return candidacies;
-	}
+        return candidacies;
+    }
 
-	public static List<SeminaryCandidacy> getAllCandidacies() {
-		return RootDomainObject.getInstance().getCandidacys();
-	}
+    public static List<SeminaryCandidacy> getAllCandidacies() {
+        return RootDomainObject.getInstance().getCandidacys();
+    }
 
 }

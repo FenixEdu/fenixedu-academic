@@ -37,113 +37,113 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "searchPage", path = "/executionCourse/inquiries/searchInquiriesResultPage.jsp", useTile = false) })
 public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
-		if (searchPageDTO.isEmptyExecutionSemesterID()) {
-			final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-			if (executionSemester != null) {
-				final ExecutionSemester previous = executionSemester.getPreviousExecutionPeriod();
-				if (previous != null) {
-					searchPageDTO.setExecutionSemesterID(previous.getOid());
-				}
-			}
-		}
+        SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
+        if (searchPageDTO.isEmptyExecutionSemesterID()) {
+            final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+            if (executionSemester != null) {
+                final ExecutionSemester previous = executionSemester.getPreviousExecutionPeriod();
+                if (previous != null) {
+                    searchPageDTO.setExecutionSemesterID(previous.getOid());
+                }
+            }
+        }
 
-		if (!searchPageDTO.isEmptyExecutionSemesterID()) {
-			return selectExecutionSemester(actionMapping, actionForm, request, response);
-		}
+        if (!searchPageDTO.isEmptyExecutionSemesterID()) {
+            return selectExecutionSemester(actionMapping, actionForm, request, response);
+        }
 
-		request.setAttribute("executionCourses", Collections.EMPTY_LIST);
-		request.setAttribute("executionDegrees", Collections.EMPTY_LIST);
-		request.setAttribute("executionSemesters", getExecutionSemesters());
+        request.setAttribute("executionCourses", Collections.EMPTY_LIST);
+        request.setAttribute("executionDegrees", Collections.EMPTY_LIST);
+        request.setAttribute("executionSemesters", getExecutionSemesters());
 
-		return actionMapping.findForward("searchPage");
-	}
+        return actionMapping.findForward("searchPage");
+    }
 
-	public ActionForward selectExecutionSemester(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward selectExecutionSemester(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
+        SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
 
-		ExecutionSemester executionSemester = searchPageDTO.getExecutionSemester();
-		if (executionSemester == null) {
-			return prepare(actionMapping, actionForm, request, response);
-		}
+        ExecutionSemester executionSemester = searchPageDTO.getExecutionSemester();
+        if (executionSemester == null) {
+            return prepare(actionMapping, actionForm, request, response);
+        }
 
-		request.setAttribute("executionCourses", Collections.EMPTY_LIST);
-		request.setAttribute("executionDegrees", getExecutionDegrees(executionSemester));
-		request.setAttribute("executionSemesters", getExecutionSemesters());
+        request.setAttribute("executionCourses", Collections.EMPTY_LIST);
+        request.setAttribute("executionDegrees", getExecutionDegrees(executionSemester));
+        request.setAttribute("executionSemesters", getExecutionSemesters());
 
-		return actionMapping.findForward("searchPage");
-	}
+        return actionMapping.findForward("searchPage");
+    }
 
-	public ActionForward selectExecutionDegree(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward selectExecutionDegree(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
+        SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
 
-		ExecutionSemester executionSemester = searchPageDTO.getExecutionSemester();
-		if (executionSemester == null) {
-			return prepare(actionMapping, actionForm, request, response);
-		}
+        ExecutionSemester executionSemester = searchPageDTO.getExecutionSemester();
+        if (executionSemester == null) {
+            return prepare(actionMapping, actionForm, request, response);
+        }
 
-		ExecutionDegree executionDegree = searchPageDTO.getExecutionDegree();
-		if (executionDegree == null) {
-			return selectExecutionSemester(actionMapping, actionForm, request, response);
-		}
+        ExecutionDegree executionDegree = searchPageDTO.getExecutionDegree();
+        if (executionDegree == null) {
+            return selectExecutionSemester(actionMapping, actionForm, request, response);
+        }
 
-		Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-		for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
-			final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
-			if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
-				final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
-				final TeachingInquiry responsibleTeachingInquiry = executionCourse.getResponsibleTeachingInquiry();
-				if ((publicDisclosure != null && publicDisclosure.booleanValue())
-						|| (responsibleTeachingInquiry != null && responsibleTeachingInquiry
-								.getResultsDisclosureToAcademicComunity())) {
-					executionCourses.add(studentInquiriesCourseResult.getExecutionCourse());
-				}
-			}
-		}
-		Collections.sort((List<ExecutionCourse>) executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+        Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+        for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
+            final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
+            if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
+                final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
+                final TeachingInquiry responsibleTeachingInquiry = executionCourse.getResponsibleTeachingInquiry();
+                if ((publicDisclosure != null && publicDisclosure.booleanValue())
+                        || (responsibleTeachingInquiry != null && responsibleTeachingInquiry
+                                .getResultsDisclosureToAcademicComunity())) {
+                    executionCourses.add(studentInquiriesCourseResult.getExecutionCourse());
+                }
+            }
+        }
+        Collections.sort((List<ExecutionCourse>) executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 
-		request.setAttribute("executionCourses", executionCourses);
-		request.setAttribute("executionDegrees", getExecutionDegrees(executionSemester));
-		request.setAttribute("executionSemesters", getExecutionSemesters());
+        request.setAttribute("executionCourses", executionCourses);
+        request.setAttribute("executionDegrees", getExecutionDegrees(executionSemester));
+        request.setAttribute("executionSemesters", getExecutionSemesters());
 
-		return actionMapping.findForward("searchPage");
-	}
+        return actionMapping.findForward("searchPage");
+    }
 
-	public ActionForward selectExecutionCourse(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward selectExecutionCourse(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("executionCourse", ((SearchInquiriesResultPageDTO) actionForm).getExecutionCourse());
-		return selectExecutionDegree(actionMapping, actionForm, request, response);
-	}
+        request.setAttribute("executionCourse", ((SearchInquiriesResultPageDTO) actionForm).getExecutionCourse());
+        return selectExecutionDegree(actionMapping, actionForm, request, response);
+    }
 
-	private Collection<ExecutionSemester> getExecutionSemesters() {
-		Collection<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
-		for (final ExecutionSemester executionSemester : ExecutionSemester.readNotClosedPublicExecutionPeriods()) {
-			if (executionSemester.getInquiryResponsePeriod(InquiryResponsePeriodType.STUDENT) != null) {
-				executionSemesters.add(executionSemester);
-			}
-		}
-		Collections.sort((List<ExecutionSemester>) executionSemesters, new ReverseComparator(
-				ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-		return executionSemesters;
-	}
+    private Collection<ExecutionSemester> getExecutionSemesters() {
+        Collection<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
+        for (final ExecutionSemester executionSemester : ExecutionSemester.readNotClosedPublicExecutionPeriods()) {
+            if (executionSemester.getInquiryResponsePeriod(InquiryResponsePeriodType.STUDENT) != null) {
+                executionSemesters.add(executionSemester);
+            }
+        }
+        Collections.sort((List<ExecutionSemester>) executionSemesters, new ReverseComparator(
+                ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+        return executionSemesters;
+    }
 
-	private Collection<ExecutionDegree> getExecutionDegrees(ExecutionSemester executionSemester) {
-		Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-		for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
-			if (!executionDegree.getStudentInquiriesCourseResults().isEmpty()) {
-				executionDegrees.add(executionDegree);
-			}
-		}
-		Collections.sort((List<ExecutionDegree>) executionDegrees,
-				ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-		return executionDegrees;
-	}
+    private Collection<ExecutionDegree> getExecutionDegrees(ExecutionSemester executionSemester) {
+        Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
+        for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
+            if (!executionDegree.getStudentInquiriesCourseResults().isEmpty()) {
+                executionDegrees.add(executionDegree);
+            }
+        }
+        Collections.sort((List<ExecutionDegree>) executionDegrees,
+                ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+        return executionDegrees;
+    }
 }

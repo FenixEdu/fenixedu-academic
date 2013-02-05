@@ -8,12 +8,12 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions
  */
 public class VariableNotDefinedException extends GroupDynamicExpressionException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String MESSAGE = "accessControl.group.expression.variable.notDefined";
+    private static final String MESSAGE = "accessControl.group.expression.variable.notDefined";
 
-	public VariableNotDefinedException(String variable) {
-		super(MESSAGE, variable);
-	}
+    public VariableNotDefinedException(String variable) {
+        super(MESSAGE, variable);
+    }
 
 }

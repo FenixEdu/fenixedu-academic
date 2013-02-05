@@ -8,34 +8,34 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class RegistrationSelectExecutionYearBean implements Serializable {
 
-	private Registration registration;
-	private ExecutionYear executionYear;
+    private Registration registration;
+    private ExecutionYear executionYear;
 
-	protected RegistrationSelectExecutionYearBean() {
-	}
+    protected RegistrationSelectExecutionYearBean() {
+    }
 
-	public RegistrationSelectExecutionYearBean(Registration registration) {
-		this();
-		setRegistration(registration);
-	}
+    public RegistrationSelectExecutionYearBean(Registration registration) {
+        this();
+        setRegistration(registration);
+    }
 
-	public Registration getRegistration() {
-		return registration;
-	}
+    public Registration getRegistration() {
+        return registration;
+    }
 
-	protected void setRegistration(Registration registration) {
-		this.registration = registration;
-	}
+    protected void setRegistration(Registration registration) {
+        this.registration = registration;
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	public Student getStudent() {
-		return getRegistration().getStudent();
-	}
+    public Student getStudent() {
+        return getRegistration().getStudent();
+    }
 }

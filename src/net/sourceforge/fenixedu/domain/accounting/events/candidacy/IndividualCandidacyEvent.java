@@ -27,85 +27,85 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
 
-	protected IndividualCandidacyEvent() {
-		super();
-	}
+    protected IndividualCandidacyEvent() {
+        super();
+    }
 
-	protected void init(final IndividualCandidacy candidacy, final EventType eventType, final Person person) {
-		final AdministrativeOffice administrativeOffice = readAdministrativeOffice();
-		checkParameters(candidacy, administrativeOffice);
-		super.init(administrativeOffice, eventType, person);
-		setIndividualCandidacy(candidacy);
-	}
+    protected void init(final IndividualCandidacy candidacy, final EventType eventType, final Person person) {
+        final AdministrativeOffice administrativeOffice = readAdministrativeOffice();
+        checkParameters(candidacy, administrativeOffice);
+        super.init(administrativeOffice, eventType, person);
+        setIndividualCandidacy(candidacy);
+    }
 
-	protected void attachAvailablePaymentCode(final Person person) {
-		YearMonthDay candidacyDate = getIndividualCandidacy().getCandidacyDate().toDateTimeAtStartOfDay().toYearMonthDay();
-		IndividualCandidacyPaymentCode paymentCode =
-				IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(getPaymentCodeType(), candidacyDate, this, person);
-		if (paymentCode == null) {
-			throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
-		}
-	}
+    protected void attachAvailablePaymentCode(final Person person) {
+        YearMonthDay candidacyDate = getIndividualCandidacy().getCandidacyDate().toDateTimeAtStartOfDay().toYearMonthDay();
+        IndividualCandidacyPaymentCode paymentCode =
+                IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(getPaymentCodeType(), candidacyDate, this, person);
+        if (paymentCode == null) {
+            throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
+        }
+    }
 
-	protected void checkParameters(final IndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {
-		if (candidacy == null) {
-			throw new DomainException("error.IndividualCandidacyEvent.invalid.candidacy");
-		}
-		if (administrativeOffice == null) {
-			throw new DomainException("error.IndividualCandidacyEvent.invalid.administrativeOffice");
-		}
-	}
+    protected void checkParameters(final IndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {
+        if (candidacy == null) {
+            throw new DomainException("error.IndividualCandidacyEvent.invalid.candidacy");
+        }
+        if (administrativeOffice == null) {
+            throw new DomainException("error.IndividualCandidacyEvent.invalid.administrativeOffice");
+        }
+    }
 
-	abstract protected AdministrativeOffice readAdministrativeOffice();
+    abstract protected AdministrativeOffice readAdministrativeOffice();
 
-	public PaymentCodeType getPaymentCodeType() {
-		PostingRule postingRule =
-				getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-						getWhenOccured());
+    public PaymentCodeType getPaymentCodeType() {
+        PostingRule postingRule =
+                getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+                        getWhenOccured());
 
-		return postingRule.calculatePaymentCodeTypeFromEvent(this, getWhenOccured(), false);
-	}
+        return postingRule.calculatePaymentCodeTypeFromEvent(this, getWhenOccured(), false);
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		return new LabelFormatter().appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-	}
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        return new LabelFormatter().appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getPerson().getExternalAccount();
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getPerson().getExternalAccount();
+    }
 
-	@Override
-	public PostingRule getPostingRule() {
-		return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-				getWhenOccured());
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+                getWhenOccured());
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getAdministrativeOffice().getUnit().getInternalAccount();
-	}
+    @Override
+    public Account getToAccount() {
+        return getAdministrativeOffice().getUnit().getInternalAccount();
+    }
 
-	public Student getCandidacyStudent() {
-		return getIndividualCandidacy().getStudent();
-	}
+    public Student getCandidacyStudent() {
+        return getIndividualCandidacy().getStudent();
+    }
 
-	public boolean hasCandidacyStudent() {
-		return getIndividualCandidacy().hasStudent();
-	}
+    public boolean hasCandidacyStudent() {
+        return getIndividualCandidacy().hasStudent();
+    }
 
-	@Override
-	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-			SibsTransactionDetailDTO transactionDetail) {
-		return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
-				transactionDetail);
-	}
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+            SibsTransactionDetailDTO transactionDetail) {
+        return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
+                transactionDetail);
+    }
 
-	protected abstract EntryType getEntryType();
+    protected abstract EntryType getEntryType();
 
-	@Override
-	public boolean isIndividualCandidacyEvent() {
-		return true;
-	}
+    @Override
+    public boolean isIndividualCandidacyEvent() {
+        return true;
+    }
 }

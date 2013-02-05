@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class OldInquiriesTeachersRes extends OldInquiriesTeachersRes_Base {
 
-	public OldInquiriesTeachersRes() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public OldInquiriesTeachersRes() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		removeExecutionPeriod();
-		removeDegree();
-		removeTeacher();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeExecutionPeriod();
+        removeDegree();
+        removeTeacher();
+        deleteDomainObject();
+    }
 
 }

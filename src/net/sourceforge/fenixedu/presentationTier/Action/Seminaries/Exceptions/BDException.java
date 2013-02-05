@@ -15,41 +15,41 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  * 
  */
 public class BDException extends FenixServiceException {
-	private int errorType;
+    private int errorType;
 
-	/**
-	 * @return
-	 */
-	@Override
-	public int getErrorType() {
-		return this.errorType;
-	}
+    /**
+     * @return
+     */
+    @Override
+    public int getErrorType() {
+        return this.errorType;
+    }
 
-	public BDException() {
-	}
+    public BDException() {
+    }
 
-	public BDException(int errorType) {
-		this.errorType = errorType;
-	}
+    public BDException(int errorType) {
+        this.errorType = errorType;
+    }
 
-	public BDException(String s) {
-		super(s);
-	}
+    public BDException(String s) {
+        super(s);
+    }
 
-	public BDException(Throwable cause) {
-		super(cause);
-	}
+    public BDException(Throwable cause) {
+        super(cause);
+    }
 
-	public BDException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public BDException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[BDException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[BDException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

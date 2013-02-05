@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 
 public class DeleteUnitSiteBanner extends FenixService {
 
-	public void run(final UnitSite site, final UnitSiteBanner banner) {
-		banner.delete();
-	}
+    public void run(final UnitSite site, final UnitSiteBanner banner) {
+        banner.delete();
+    }
 
 }

@@ -8,49 +8,49 @@ import org.joda.time.DateTime;
 
 public class AccountingTransactionDetailDTO implements Serializable {
 
-	private DateTime whenRegistered;
+    private DateTime whenRegistered;
 
-	private PaymentMode paymentMode;
+    private PaymentMode paymentMode;
 
-	private String comments;
+    private String comments;
 
-	public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode) {
-		this(whenRegistered, paymentMode, null);
+    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode) {
+        this(whenRegistered, paymentMode, null);
 
-	}
+    }
 
-	public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode, String comments) {
-		this.comments = comments;
-		this.paymentMode = paymentMode;
-		this.whenRegistered = whenRegistered;
-	}
+    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode, String comments) {
+        this.comments = comments;
+        this.paymentMode = paymentMode;
+        this.whenRegistered = whenRegistered;
+    }
 
-	public String getComments() {
-		return comments;
-	}
+    public String getComments() {
+        return comments;
+    }
 
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
-	public PaymentMode getPaymentMode() {
-		return paymentMode;
-	}
+    public PaymentMode getPaymentMode() {
+        return paymentMode;
+    }
 
-	public void setPaymentMode(PaymentMode paymentMode) {
-		this.paymentMode = paymentMode;
-	}
+    public void setPaymentMode(PaymentMode paymentMode) {
+        this.paymentMode = paymentMode;
+    }
 
-	public DateTime getWhenRegistered() {
-		return whenRegistered;
-	}
+    public DateTime getWhenRegistered() {
+        return whenRegistered;
+    }
 
-	public void setWhenRegistered(DateTime whenRegistered) {
-		this.whenRegistered = whenRegistered;
-	}
+    public void setWhenRegistered(DateTime whenRegistered) {
+        this.whenRegistered = whenRegistered;
+    }
 
-	public boolean isSibsTransactionDetail() {
-		return false;
-	}
+    public boolean isSibsTransactionDetail() {
+        return false;
+    }
 
 }

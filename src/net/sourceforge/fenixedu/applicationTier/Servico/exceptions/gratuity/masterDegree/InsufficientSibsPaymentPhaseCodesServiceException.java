@@ -12,41 +12,41 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class InsufficientSibsPaymentPhaseCodesServiceException extends FenixServiceException {
 
-	/**
+    /**
      *  
      */
-	public InsufficientSibsPaymentPhaseCodesServiceException() {
-		super();
-	}
+    public InsufficientSibsPaymentPhaseCodesServiceException() {
+        super();
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public InsufficientSibsPaymentPhaseCodesServiceException(String message) {
-		super(message);
-	}
+    /**
+     * @param errorType
+     */
+    public InsufficientSibsPaymentPhaseCodesServiceException(String message) {
+        super(message);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InsufficientSibsPaymentPhaseCodesServiceException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public InsufficientSibsPaymentPhaseCodesServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InsufficientSibsPaymentPhaseCodesServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public InsufficientSibsPaymentPhaseCodesServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InsufficientSibsPaymentPhaseCodesServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InsufficientSibsPaymentPhaseCodesServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

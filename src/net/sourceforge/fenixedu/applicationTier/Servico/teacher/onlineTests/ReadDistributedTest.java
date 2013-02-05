@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
  */
 public class ReadDistributedTest extends FenixService {
 
-	public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws InvalidArgumentsServiceException {
-		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-		if (distributedTest == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+    public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws InvalidArgumentsServiceException {
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        if (distributedTest == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		return InfoDistributedTest.newInfoFromDomain(distributedTest);
-	}
+        return InfoDistributedTest.newInfoFromDomain(distributedTest);
+    }
 
 }

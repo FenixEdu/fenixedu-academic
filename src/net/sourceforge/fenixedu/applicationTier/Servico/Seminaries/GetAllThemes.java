@@ -23,18 +23,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetAllThemes extends FenixService {
 
-	public List run() throws BDException {
-		List seminariesInfo = new LinkedList();
+    public List run() throws BDException {
+        List seminariesInfo = new LinkedList();
 
-		List themes = Theme.getAllThemes();
-		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
+        List themes = Theme.getAllThemes();
+        for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
 
-			InfoTheme infoTheme = InfoTheme.newInfoFromDomain((Theme) iterator.next());
+            InfoTheme infoTheme = InfoTheme.newInfoFromDomain((Theme) iterator.next());
 
-			seminariesInfo.add(infoTheme);
-		}
+            seminariesInfo.add(infoTheme);
+        }
 
-		return seminariesInfo;
-	}
+        return seminariesInfo;
+    }
 
 }

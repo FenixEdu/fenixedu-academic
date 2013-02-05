@@ -9,38 +9,38 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum NoCourseGroupCurriculumGroupType {
 
-	PROPAEDEUTICS(CurricularRuleLevel.PROPAEUDEUTICS_ENROLMENT),
+    PROPAEDEUTICS(CurricularRuleLevel.PROPAEUDEUTICS_ENROLMENT),
 
-	EXTRA_CURRICULAR(CurricularRuleLevel.EXTRA_ENROLMENT),
+    EXTRA_CURRICULAR(CurricularRuleLevel.EXTRA_ENROLMENT),
 
-	STANDALONE(CurricularRuleLevel.STANDALONE_ENROLMENT),
+    STANDALONE(CurricularRuleLevel.STANDALONE_ENROLMENT),
 
-	INTERNAL_CREDITS_SOURCE_GROUP(CurricularRuleLevel.NULL_LEVEL);
+    INTERNAL_CREDITS_SOURCE_GROUP(CurricularRuleLevel.NULL_LEVEL);
 
-	private CurricularRuleLevel level;
+    private CurricularRuleLevel level;
 
-	private NoCourseGroupCurriculumGroupType() {
-		level = null;
-	}
+    private NoCourseGroupCurriculumGroupType() {
+        level = null;
+    }
 
-	private NoCourseGroupCurriculumGroupType(final CurricularRuleLevel level) {
-		this.level = level;
-	}
+    private NoCourseGroupCurriculumGroupType(final CurricularRuleLevel level) {
+        this.level = level;
+    }
 
-	public CurricularRuleLevel getCurricularRuleLevel() {
-		return level;
-	}
+    public CurricularRuleLevel getCurricularRuleLevel() {
+        return level;
+    }
 
-	public String getLocalizedName() {
-		return getLocalizedName(Language.getLocale());
-	}
+    public String getLocalizedName() {
+        return getLocalizedName(Language.getLocale());
+    }
 
-	public String getLocalizedName(final Locale locale) {
-		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-	}
+    public String getLocalizedName(final Locale locale) {
+        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+    }
 
-	public String getQualifiedName() {
-		return StringAppender.append(getClass().getSimpleName(), ".", name());
-	}
+    public String getQualifiedName() {
+        return StringAppender.append(getClass().getSimpleName(), ".", name());
+    }
 
 }

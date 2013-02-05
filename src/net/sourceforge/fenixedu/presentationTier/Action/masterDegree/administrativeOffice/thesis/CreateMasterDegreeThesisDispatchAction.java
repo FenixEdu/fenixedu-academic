@@ -22,41 +22,41 @@ import org.apache.struts.action.ActionMapping;
 
 public class CreateMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-	public ActionForward getStudentForCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
-		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+    public ActionForward getStudentForCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
+        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess) {
-			return mapping.findForward("start");
-		}
-		throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("error"));
+        if (isSuccess) {
+            return mapping.findForward("start");
+        }
+        throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("error"));
 
-	}
+    }
 
-	public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
 
-		try {
-			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-					actionErrors);
+        try {
+            operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+            operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+                    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+                    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+                    actionErrors);
 
-		} catch (Exception e1) {
-			throw new FenixActionException(e1);
-		}
+        } catch (Exception e1) {
+            throw new FenixActionException(e1);
+        }
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
 }

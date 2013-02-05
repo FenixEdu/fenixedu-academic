@@ -30,23 +30,23 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "show-report", path = "/commons/curriculumHistoric/showCurriculumHistoricReport.jsp") })
 public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 
-	public ActionForward showCurriculumHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward showCurriculumHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-		final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
-		final Integer semester = getIntegerFromRequest(request, "semester");
-		final AcademicInterval academicInterval =
-				AcademicInterval.getAcademicIntervalFromResumedString(request.getParameter("academicInterval"));
+        final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
+        final Integer semester = getIntegerFromRequest(request, "semester");
+        final AcademicInterval academicInterval =
+                AcademicInterval.getAcademicIntervalFromResumedString(request.getParameter("academicInterval"));
 
-		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
 
-		final AcademicInterval interval =
-				curricularCourse.isAnual() ? academicInterval : academicInterval.getChildAcademicInterval(
-						AcademicPeriod.SEMESTER, semester);
+        final AcademicInterval interval =
+                curricularCourse.isAnual() ? academicInterval : academicInterval.getChildAcademicInterval(
+                        AcademicPeriod.SEMESTER, semester);
 
-		request.setAttribute("infoCurriculumHistoricReport", new InfoCurriculumHistoricReport(interval, curricularCourse));
+        request.setAttribute("infoCurriculumHistoricReport", new InfoCurriculumHistoricReport(interval, curricularCourse));
 
-		return mapping.findForward("show-report");
-	}
+        return mapping.findForward("show-report");
+    }
 
 }

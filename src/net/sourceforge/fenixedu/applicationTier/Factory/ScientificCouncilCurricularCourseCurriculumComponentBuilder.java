@@ -23,47 +23,47 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
 
-	private static ScientificCouncilCurricularCourseCurriculumComponentBuilder instance = null;
+    private static ScientificCouncilCurricularCourseCurriculumComponentBuilder instance = null;
 
-	public ScientificCouncilCurricularCourseCurriculumComponentBuilder() {
-	}
+    public ScientificCouncilCurricularCourseCurriculumComponentBuilder() {
+    }
 
-	public static ScientificCouncilCurricularCourseCurriculumComponentBuilder getInstance() {
-		if (instance == null) {
-			instance = new ScientificCouncilCurricularCourseCurriculumComponentBuilder();
-		}
-		return instance;
-	}
+    public static ScientificCouncilCurricularCourseCurriculumComponentBuilder getInstance() {
+        if (instance == null) {
+            instance = new ScientificCouncilCurricularCourseCurriculumComponentBuilder();
+        }
+        return instance;
+    }
 
-	public ISiteComponent getComponent(ISiteComponent component, Integer curricularCourseId, Integer curriculumId)
-			throws FenixServiceException {
-		if (component instanceof InfoSiteCurriculum) {
-			return getInfoSiteCurriculum((InfoSiteCurriculum) component, curricularCourseId);
-		}
-		return null;
+    public ISiteComponent getComponent(ISiteComponent component, Integer curricularCourseId, Integer curriculumId)
+            throws FenixServiceException {
+        if (component instanceof InfoSiteCurriculum) {
+            return getInfoSiteCurriculum((InfoSiteCurriculum) component, curricularCourseId);
+        }
+        return null;
 
-	}
+    }
 
-	/**
-	 * @param curriculum
-	 * @param curricularCourseId
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
-	private ISiteComponent getInfoSiteCurriculum(InfoSiteCurriculum component, Integer curricularCourseId)
-			throws FenixServiceException {
-		CurricularCourse curricularCourse =
-				(CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+    /**
+     * @param curriculum
+     * @param curricularCourseId
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    private ISiteComponent getInfoSiteCurriculum(InfoSiteCurriculum component, Integer curricularCourseId)
+            throws FenixServiceException {
+        CurricularCourse curricularCourse =
+                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
 
-		Curriculum curriculum = curricularCourse.findLatestCurriculum();
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
-		if (curriculum != null) {
-			InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
-			component.setInfoCurriculum(infoCurriculum);
-		}
-		component.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+        if (curriculum != null) {
+            InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
+            component.setInfoCurriculum(infoCurriculum);
+        }
+        component.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
 
-		return component;
-	}
+        return component;
+    }
 
 }

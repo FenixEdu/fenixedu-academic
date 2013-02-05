@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ChooseCorrector extends FenixService {
-	@Service
-	public static void run(NewAtomicQuestion atomicQuestion, Predicate predicate, Integer percentage)
-			throws FenixServiceException {
-		new NewCorrector(atomicQuestion, predicate, percentage);
-	}
+    @Service
+    public static void run(NewAtomicQuestion atomicQuestion, Predicate predicate, Integer percentage)
+            throws FenixServiceException {
+        new NewCorrector(atomicQuestion, predicate, percentage);
+    }
 }

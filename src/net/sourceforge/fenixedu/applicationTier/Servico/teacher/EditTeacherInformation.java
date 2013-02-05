@@ -15,78 +15,78 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 
 public class EditTeacherInformation extends FenixService {
 
-	public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
-			List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) {
+    public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
+            List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) {
 
-		Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
 
-		editServiceProviderRegime(infoServiceProviderRegime, teacher);
-		editWeeklyOcupation(infoWeeklyOcupation, teacher);
-		editOrientations(infoOrientations, teacher);
-		editPublicationNumbers(infoPublicationsNumbers, teacher);
+        editServiceProviderRegime(infoServiceProviderRegime, teacher);
+        editWeeklyOcupation(infoWeeklyOcupation, teacher);
+        editOrientations(infoOrientations, teacher);
+        editPublicationNumbers(infoPublicationsNumbers, teacher);
 
-		// TODO <cargos de gestão>
+        // TODO <cargos de gestão>
 
-		return Boolean.TRUE;
-	}
+        return Boolean.TRUE;
+    }
 
-	private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime, Teacher teacher) {
+    private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime, Teacher teacher) {
 
-		ServiceProviderRegime serviceProviderRegime =
-				rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
+        ServiceProviderRegime serviceProviderRegime =
+                rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
 
-		if (serviceProviderRegime == null) {
-			serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
+        if (serviceProviderRegime == null) {
+            serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
 
-		} else {
-			serviceProviderRegime.edit(infoServiceProviderRegime);
+        } else {
+            serviceProviderRegime.edit(infoServiceProviderRegime);
 
-		}
+        }
 
-	}
+    }
 
-	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) {
-		// Weekly Ocupation
-		WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
-		if (weeklyOcupation == null) {
-			weeklyOcupation = new WeeklyOcupation(teacher, infoWeeklyOcupation);
-		} else {
-			weeklyOcupation.edit(infoWeeklyOcupation);
-		}
-	}
+    private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) {
+        // Weekly Ocupation
+        WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
+        if (weeklyOcupation == null) {
+            weeklyOcupation = new WeeklyOcupation(teacher, infoWeeklyOcupation);
+        } else {
+            weeklyOcupation.edit(infoWeeklyOcupation);
+        }
+    }
 
-	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
-		// Orientations
-		for (InfoOrientation infoOrientation : infoOrientations) {
-			Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
+    private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
+        // Orientations
+        for (InfoOrientation infoOrientation : infoOrientations) {
+            Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
 
-			if (orientation == null) {
-				orientation = new Orientation(teacher, infoOrientation);
+            if (orientation == null) {
+                orientation = new Orientation(teacher, infoOrientation);
 
-			} else {
-				orientation.edit(infoOrientation);
-			}
+            } else {
+                orientation.edit(infoOrientation);
+            }
 
-		}
+        }
 
-	}
+    }
 
-	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) {
-		// Publications Number
-		for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
-			PublicationsNumber publicationsNumber =
-					rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());
+    private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) {
+        // Publications Number
+        for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
+            PublicationsNumber publicationsNumber =
+                    rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());
 
-			if (publicationsNumber == null) {
-				publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);
+            if (publicationsNumber == null) {
+                publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);
 
-			} else {
-				publicationsNumber.edit(infoPublicationsNumber);
+            } else {
+                publicationsNumber.edit(infoPublicationsNumber);
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 
 }

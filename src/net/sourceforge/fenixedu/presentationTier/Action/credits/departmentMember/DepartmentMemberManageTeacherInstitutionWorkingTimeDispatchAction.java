@@ -23,49 +23,43 @@ import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "departmentMember",
-		path = "/institutionWorkingTimeManagement",
-		input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0",
-		attribute = "teacherInstitutionWorkingTimeForm",
-		formBean = "teacherInstitutionWorkingTimeForm",
-		scope = "request",
-		parameter = "method")
-@Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class,
-		scope = "request") })
+@Mapping(module = "departmentMember", path = "/institutionWorkingTimeManagement",
+        input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0",
+        attribute = "teacherInstitutionWorkingTimeForm", formBean = "teacherInstitutionWorkingTimeForm", scope = "request",
+        parameter = "method")
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction extends
-		ManageTeacherInstitutionWorkingTimeDispatchAction {
+        ManageTeacherInstitutionWorkingTimeDispatchAction {
 
-	@Override
-	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-		InstitutionWorkTime institutionWorkTime =
-				DomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
-		Teacher teacher = institutionWorkTime.getTeacherService().getTeacher();
-		if (teacher == null || teacher != getLoggedTeacher(request)) {
-			createNewActionMessage(request);
-			return mapping.findForward("viewAnnualTeachingCredits");
-		}
-		request.setAttribute("institutionWorkTime", institutionWorkTime);
-		return mapping.findForward("edit-institution-work-time");
-	}
+    @Override
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+        InstitutionWorkTime institutionWorkTime =
+                DomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
+        Teacher teacher = institutionWorkTime.getTeacherService().getTeacher();
+        if (teacher == null || teacher != getLoggedTeacher(request)) {
+            createNewActionMessage(request);
+            return mapping.findForward("viewAnnualTeachingCredits");
+        }
+        request.setAttribute("institutionWorkTime", institutionWorkTime);
+        return mapping.findForward("edit-institution-work-time");
+    }
 
-	private void createNewActionMessage(HttpServletRequest request) {
-		ActionMessages actionMessages = new ActionMessages();
-		actionMessages.add("", new ActionMessage("message.invalid.teacher"));
-		saveMessages(request, actionMessages);
-	}
+    private void createNewActionMessage(HttpServletRequest request) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("", new ActionMessage("message.invalid.teacher"));
+        saveMessages(request, actionMessages);
+    }
 
-	private Teacher getLoggedTeacher(HttpServletRequest request) {
-		IUserView userView = UserView.getUser();
-		return userView.getPerson().getTeacher();
-	}
+    private Teacher getLoggedTeacher(HttpServletRequest request) {
+        IUserView userView = UserView.getUser();
+        return userView.getPerson().getTeacher();
+    }
 
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws NumberFormatException, FenixFilterException, FenixServiceException {
-		return delete(mapping, form, request, response, RoleType.DEPARTMENT_MEMBER);
-	}
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws NumberFormatException, FenixFilterException, FenixServiceException {
+        return delete(mapping, form, request, response, RoleType.DEPARTMENT_MEMBER);
+    }
 
 }

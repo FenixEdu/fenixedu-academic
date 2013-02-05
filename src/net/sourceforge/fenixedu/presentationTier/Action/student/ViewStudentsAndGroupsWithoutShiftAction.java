@@ -32,36 +32,36 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(module = "student", path = "/viewStudentsAndGroupsWithoutShift", scope = "request")
 @Forwards(value = { @Forward(name = "sucess", path = "/student/viewStudentsAndGroupsWithoutShift_bd.jsp"),
-		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+        @Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
 public class ViewStudentsAndGroupsWithoutShiftAction extends FenixContextAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
+        InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-		try {
-			infoSiteStudentsAndGroups = ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCode);
+        try {
+            infoSiteStudentsAndGroups = ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCode);
 
-		} catch (InvalidSituationServiceException e) {
-			ActionErrors actionErrors2 = new ActionErrors();
-			ActionError error2 = null;
-			error2 = new ActionError("error.noProject");
-			actionErrors2.add("error.noProject", error2);
-			saveErrors(request, actionErrors2);
-			return mapping.findForward("viewExecutionCourseProjects");
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        } catch (InvalidSituationServiceException e) {
+            ActionErrors actionErrors2 = new ActionErrors();
+            ActionError error2 = null;
+            error2 = new ActionError("error.noProject");
+            actionErrors2.add("error.noProject", error2);
+            saveErrors(request, actionErrors2);
+            return mapping.findForward("viewExecutionCourseProjects");
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
+        request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
 
-		return mapping.findForward("sucess");
-	}
+        return mapping.findForward("sucess");
+    }
 }

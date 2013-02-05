@@ -20,27 +20,27 @@ import pt.utl.ist.berserk.ServiceResponse;
  * 
  */
 public class CandidaciesAccessFilter extends Filtro {
-	public CandidaciesAccessFilter() {
-	}
+    public CandidaciesAccessFilter() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-	 * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-	 */
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView id = getRemoteUser(request);
-		if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-				|| (id.getRoleTypes() == null)) {
-			throw new NotAuthorizedException();
-		}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView id = getRemoteUser(request);
+        if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
+                || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedException();
+        }
 
-	}
+    }
 
-	private RoleType getRoleType() {
-		return RoleType.SEMINARIES_COORDINATOR;
-	}
+    private RoleType getRoleType() {
+        return RoleType.SEMINARIES_COORDINATOR;
+    }
 }

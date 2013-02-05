@@ -21,47 +21,47 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadGratuityValuesByExecutionDegree extends FenixService {
 
-	@Service
-	public static Object run(Integer executionDegreeID) throws FenixServiceException {
-		if (executionDegreeID == null) {
-			throw new FenixServiceException("error.impossible.noGratuityValues");
-		}
+    @Service
+    public static Object run(Integer executionDegreeID) throws FenixServiceException {
+        if (executionDegreeID == null) {
+            throw new FenixServiceException("error.impossible.noGratuityValues");
+        }
 
-		List infoPaymentPhases = null;
+        List infoPaymentPhases = null;
 
-		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-		GratuityValues gratuityValues = executionDegree.getGratuityValues();
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
-		InfoGratuityValues infoGratuityValues = null;
-		if (gratuityValues != null) {
-			infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree.newInfoFromDomain(gratuityValues);
+        InfoGratuityValues infoGratuityValues = null;
+        if (gratuityValues != null) {
+            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree.newInfoFromDomain(gratuityValues);
 
-			infoPaymentPhases = new ArrayList();
-			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
-				@Override
-				public Object transform(Object input) {
-					PaymentPhase paymentPhase = (PaymentPhase) input;
-					return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
-				}
-			}, infoPaymentPhases);
+            infoPaymentPhases = new ArrayList();
+            CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
+                @Override
+                public Object transform(Object input) {
+                    PaymentPhase paymentPhase = (PaymentPhase) input;
+                    return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
+                }
+            }, infoPaymentPhases);
 
-			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(infoPaymentPhases, new Predicate() {
-				@Override
-				public boolean evaluate(Object input) {
-					InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase) input;
-					if (aInfoPaymentPhase.getDescription() != null
-							&& aInfoPaymentPhase.getDescription().equals(PresentationConstants.REGISTRATION_PAYMENT)) {
-						return true;
-					}
-					return false;
-				}
-			});
-			if (infoPaymentPhase != null) {
-				infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
-			}
+            InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(infoPaymentPhases, new Predicate() {
+                @Override
+                public boolean evaluate(Object input) {
+                    InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase) input;
+                    if (aInfoPaymentPhase.getDescription() != null
+                            && aInfoPaymentPhase.getDescription().equals(PresentationConstants.REGISTRATION_PAYMENT)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            if (infoPaymentPhase != null) {
+                infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
+            }
 
-			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
-		}
-		return infoGratuityValues;
-	}
+            infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
+        }
+        return infoGratuityValues;
+    }
 }

@@ -11,18 +11,18 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
  */
 public class ReadExecutionDegreeByCandidateID extends FenixService {
 
-	public InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException {
+    public InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException {
 
-		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-		ExecutionDegree executionDegree =
-				rootDomainObject.readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getIdInternal());
+        ExecutionDegree executionDegree =
+                rootDomainObject.readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getIdInternal());
 
-		if (executionDegree == null) {
-			throw new NonExistingServiceException();
-		}
+        if (executionDegree == null) {
+            throw new NonExistingServiceException();
+        }
 
-		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	}
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    }
 
 }

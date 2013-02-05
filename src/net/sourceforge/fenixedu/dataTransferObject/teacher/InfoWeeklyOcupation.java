@@ -18,163 +18,163 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
  */
 public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
 
-	private InfoTeacher infoTeacher;
+    private InfoTeacher infoTeacher;
 
-	private Integer research;
+    private Integer research;
 
-	private Integer management;
+    private Integer management;
 
-	private Integer lecture;
+    private Integer lecture;
 
-	private Integer support;
+    private Integer support;
 
-	private Integer other;
+    private Integer other;
 
-	private Date lastModificationDate;
+    private Date lastModificationDate;
 
-	public InfoWeeklyOcupation() {
-	}
+    public InfoWeeklyOcupation() {
+    }
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	/**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
-	/**
-	 * @return Returns the other.
-	 */
-	public Integer getOther() {
-		return other;
-	}
+    /**
+     * @return Returns the other.
+     */
+    public Integer getOther() {
+        return other;
+    }
 
-	/**
-	 * @param other
-	 *            The other to set.
-	 */
-	public void setOther(Integer other) {
-		this.other = other;
-	}
+    /**
+     * @param other
+     *            The other to set.
+     */
+    public void setOther(Integer other) {
+        this.other = other;
+    }
 
-	/**
-	 * @return Returns the research.
-	 */
-	public Integer getResearch() {
-		return research;
-	}
+    /**
+     * @return Returns the research.
+     */
+    public Integer getResearch() {
+        return research;
+    }
 
-	/**
-	 * @param research
-	 *            The research to set.
-	 */
-	public void setResearch(Integer research) {
-		this.research = research;
-	}
+    /**
+     * @param research
+     *            The research to set.
+     */
+    public void setResearch(Integer research) {
+        this.research = research;
+    }
 
-	/**
-	 * @return Returns the management.
-	 */
-	public Integer getManagement() {
-		return management;
-	}
+    /**
+     * @return Returns the management.
+     */
+    public Integer getManagement() {
+        return management;
+    }
 
-	/**
-	 * @param management
-	 *            The management to set.
-	 */
-	public void setManagement(Integer management) {
-		this.management = management;
-	}
+    /**
+     * @param management
+     *            The management to set.
+     */
+    public void setManagement(Integer management) {
+        this.management = management;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoWeeklyOcupation) {
-			resultado = getInfoTeacher().equals(((InfoWeeklyOcupation) obj).getInfoTeacher());
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoWeeklyOcupation) {
+            resultado = getInfoTeacher().equals(((InfoWeeklyOcupation) obj).getInfoTeacher());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return Returns the lastModificationDate.
-	 */
-	public Date getLastModificationDate() {
-		return lastModificationDate;
-	}
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate() {
+        return lastModificationDate;
+    }
 
-	/**
-	 * @param lastModificationDate
-	 *            The lastModificationDate to set.
-	 */
-	public void setLastModificationDate(Date lastModificationDate) {
-		this.lastModificationDate = lastModificationDate;
-	}
+    /**
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
-	/**
-	 * @return Returns the lecture.
-	 */
-	public Integer getLecture() {
-		return lecture;
-	}
+    /**
+     * @return Returns the lecture.
+     */
+    public Integer getLecture() {
+        return lecture;
+    }
 
-	/**
-	 * @param lecture
-	 *            The lecture to set.
-	 */
-	public void setLecture(Integer lecture) {
-		this.lecture = lecture;
-	}
+    /**
+     * @param lecture
+     *            The lecture to set.
+     */
+    public void setLecture(Integer lecture) {
+        this.lecture = lecture;
+    }
 
-	/**
-	 * @return Returns the support.
-	 */
-	public Integer getSupport() {
-		return support;
-	}
+    /**
+     * @return Returns the support.
+     */
+    public Integer getSupport() {
+        return support;
+    }
 
-	/**
-	 * @param support
-	 *            The support to set.
-	 */
-	public void setSupport(Integer support) {
-		this.support = support;
-	}
+    /**
+     * @param support
+     *            The support to set.
+     */
+    public void setSupport(Integer support) {
+        this.support = support;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
-	 * (Dominio.DomainObject)
-	 */
-	public void copyFromDomain(WeeklyOcupation weeklyOcupation) {
-		super.copyFromDomain(weeklyOcupation);
-		if (weeklyOcupation != null) {
-			setLecture(weeklyOcupation.getLecture());
-			setManagement(weeklyOcupation.getManagement());
-			setOther(weeklyOcupation.getOther());
-			setResearch(weeklyOcupation.getResearch());
-			setSupport(weeklyOcupation.getSupport());
-			setLastModificationDate(weeklyOcupation.getLastModificationDate());
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
+     */
+    public void copyFromDomain(WeeklyOcupation weeklyOcupation) {
+        super.copyFromDomain(weeklyOcupation);
+        if (weeklyOcupation != null) {
+            setLecture(weeklyOcupation.getLecture());
+            setManagement(weeklyOcupation.getManagement());
+            setOther(weeklyOcupation.getOther());
+            setResearch(weeklyOcupation.getResearch());
+            setSupport(weeklyOcupation.getSupport());
+            setLastModificationDate(weeklyOcupation.getLastModificationDate());
+        }
+    }
 
-	public static InfoWeeklyOcupation newInfoFromDomain(WeeklyOcupation weeklyOcupation) {
-		InfoWeeklyOcupation infoWeeklyOcupation = null;
-		if (weeklyOcupation != null) {
-			infoWeeklyOcupation = new InfoWeeklyOcupation();
-			infoWeeklyOcupation.copyFromDomain(weeklyOcupation);
-		}
+    public static InfoWeeklyOcupation newInfoFromDomain(WeeklyOcupation weeklyOcupation) {
+        InfoWeeklyOcupation infoWeeklyOcupation = null;
+        if (weeklyOcupation != null) {
+            infoWeeklyOcupation = new InfoWeeklyOcupation();
+            infoWeeklyOcupation.copyFromDomain(weeklyOcupation);
+        }
 
-		return infoWeeklyOcupation;
-	}
+        return infoWeeklyOcupation;
+    }
 }

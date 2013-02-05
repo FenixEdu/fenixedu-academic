@@ -19,11 +19,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
-			Integer enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
-		return (new GetEnrolmentGrade()).run((Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentOID));
-	}
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
+            Integer enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
+        return (new GetEnrolmentGrade()).run((Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentOID));
+    }
 
 }

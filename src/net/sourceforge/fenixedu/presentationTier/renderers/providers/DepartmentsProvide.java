@@ -10,16 +10,16 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DepartmentsProvide implements DataProvider {
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final List<Department> departments = new ArrayList<Department>(RootDomainObject.getInstance().getDepartments());
+        final List<Department> departments = new ArrayList<Department>(RootDomainObject.getInstance().getDepartments());
 
-		return departments;
-	}
+        return departments;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

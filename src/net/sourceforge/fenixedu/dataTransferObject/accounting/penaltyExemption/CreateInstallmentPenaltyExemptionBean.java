@@ -9,38 +9,38 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 
 public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptionBean implements Serializable {
 
-	private List<Installment> installments;
+    private List<Installment> installments;
 
-	public CreateInstallmentPenaltyExemptionBean(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
-		super(gratuityEventWithPaymentPlan);
-		setGratuityEventWithPaymentPlan(gratuityEventWithPaymentPlan);
-		setInstallments(new ArrayList<Installment>());
-	}
+    public CreateInstallmentPenaltyExemptionBean(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
+        super(gratuityEventWithPaymentPlan);
+        setGratuityEventWithPaymentPlan(gratuityEventWithPaymentPlan);
+        setInstallments(new ArrayList<Installment>());
+    }
 
-	public GratuityEventWithPaymentPlan getGratuityEventWithPaymentPlan() {
-		return (GratuityEventWithPaymentPlan) getEvent();
-	}
+    public GratuityEventWithPaymentPlan getGratuityEventWithPaymentPlan() {
+        return (GratuityEventWithPaymentPlan) getEvent();
+    }
 
-	private void setGratuityEventWithPaymentPlan(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
-		setEvent(gratuityEventWithPaymentPlan);
-	}
+    private void setGratuityEventWithPaymentPlan(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
+        setEvent(gratuityEventWithPaymentPlan);
+    }
 
-	public List<Installment> getInstallments() {
-		final List<Installment> result = new ArrayList<Installment>();
-		for (final Installment installment : installments) {
-			result.add(installment);
-		}
+    public List<Installment> getInstallments() {
+        final List<Installment> result = new ArrayList<Installment>();
+        for (final Installment installment : installments) {
+            result.add(installment);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public void setInstallments(List<Installment> installments) {
-		final List<Installment> result = new ArrayList<Installment>();
-		for (final Installment installment : installments) {
-			result.add(installment);
-		}
+    public void setInstallments(List<Installment> installments) {
+        final List<Installment> result = new ArrayList<Installment>();
+        for (final Installment installment : installments) {
+            result.add(installment);
+        }
 
-		this.installments = result;
-	}
+        this.installments = result;
+    }
 
 }

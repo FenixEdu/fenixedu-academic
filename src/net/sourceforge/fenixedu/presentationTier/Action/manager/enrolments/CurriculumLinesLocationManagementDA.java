@@ -25,15 +25,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {
 
-	@Override
-	protected boolean isWithRules(final HttpServletRequest request) {
-		return false;
-	}
+    @Override
+    protected boolean isWithRules(final HttpServletRequest request) {
+        return false;
+    }
 
-	public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("studentId", getStudentCurricularPlan(request).getRegistration().getStudent().getIdInternal());
-		return mapping.findForward("backToChooseStudentCurricularPlan");
-	}
+    public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("studentId", getStudentCurricularPlan(request).getRegistration().getStudent().getIdInternal());
+        return mapping.findForward("backToChooseStudentCurricularPlan");
+    }
 
 }

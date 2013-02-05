@@ -7,12 +7,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ConfirmMarkSheet {
 
-	@Service
-	public static void run(MarkSheet markSheet, Person person) throws InvalidArgumentsServiceException {
-		if (markSheet == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		markSheet.confirm(person);
-	}
+    @Service
+    public static void run(MarkSheet markSheet, Person person) throws InvalidArgumentsServiceException {
+        if (markSheet == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+        markSheet.confirm(person);
+    }
 
 }

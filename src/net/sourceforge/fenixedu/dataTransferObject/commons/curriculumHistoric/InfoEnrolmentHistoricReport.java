@@ -13,72 +13,72 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoEnrolmentHistoricReport implements Serializable {
 
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 
-	private Enrolment enrolment;
+    private Enrolment enrolment;
 
-	public Enrolment getEnrolment() {
-		return this.enrolment;
-	}
+    public Enrolment getEnrolment() {
+        return this.enrolment;
+    }
 
-	private void setEnrolment(final Enrolment enrolment) {
-		this.enrolment = enrolment;
+    private void setEnrolment(final Enrolment enrolment) {
+        this.enrolment = enrolment;
 
-	}
+    }
 
-	public StudentCurricularPlan getStudentCurricularPlan() {
-		return getEnrolment().getStudentCurricularPlan();
-	}
+    public StudentCurricularPlan getStudentCurricularPlan() {
+        return getEnrolment().getStudentCurricularPlan();
+    }
 
-	public InfoEnrolmentHistoricReport(final Enrolment enrolment) {
-		setEnrolment(enrolment);
-	}
+    public InfoEnrolmentHistoricReport(final Enrolment enrolment) {
+        setEnrolment(enrolment);
+    }
 
-	public String getLatestNormalEnrolmentEvaluationInformation() {
-		return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.NORMAL);
-	}
+    public String getLatestNormalEnrolmentEvaluationInformation() {
+        return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.NORMAL);
+    }
 
-	public String getLatestSpecialSeasonEnrolmentEvaluationInformation() {
-		return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.SPECIAL_SEASON);
-	}
+    public String getLatestSpecialSeasonEnrolmentEvaluationInformation() {
+        return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.SPECIAL_SEASON);
+    }
 
-	public String getLatestImprovementEnrolmentEvaluationInformation() {
-		return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.IMPROVEMENT);
-	}
+    public String getLatestImprovementEnrolmentEvaluationInformation() {
+        return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.IMPROVEMENT);
+    }
 
-	private String getLatestEnrolmentEvaluationInformation(final EnrolmentEvaluationType enrolmentEvaluationType) {
-		final EnrolmentEvaluation latestEnrolmentEvaluation =
-				getEnrolment().getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
-		if (latestEnrolmentEvaluation == null) {
-			return "--";
-		}
+    private String getLatestEnrolmentEvaluationInformation(final EnrolmentEvaluationType enrolmentEvaluationType) {
+        final EnrolmentEvaluation latestEnrolmentEvaluation =
+                getEnrolment().getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
+        if (latestEnrolmentEvaluation == null) {
+            return "--";
+        }
 
-		final Grade grade = latestEnrolmentEvaluation.getGrade();
-		if (!latestEnrolmentEvaluation.isFinal()) {
-			return bundle.getString("msg.enrolled");
-		} else if (grade.isEmpty() || grade.isNotEvaluated()) {
-			return bundle.getString("msg.notEvaluated");
-		} else if (grade.isNotApproved()) {
-			return bundle.getString("msg.notApproved");
-		} else if (!grade.isNumeric() && grade.isApproved()) {
-			return bundle.getString("msg.approved");
-		} else {
-			return grade.getValue();
-		}
-	}
+        final Grade grade = latestEnrolmentEvaluation.getGrade();
+        if (!latestEnrolmentEvaluation.isFinal()) {
+            return bundle.getString("msg.enrolled");
+        } else if (grade.isEmpty() || grade.isNotEvaluated()) {
+            return bundle.getString("msg.notEvaluated");
+        } else if (grade.isNotApproved()) {
+            return bundle.getString("msg.notApproved");
+        } else if (!grade.isNumeric() && grade.isApproved()) {
+            return bundle.getString("msg.approved");
+        } else {
+            return grade.getValue();
+        }
+    }
 
-	public String getLatestEnrolmentEvaluationInformation() {
-		if (getEnrolment().isApproved()) {
-			final Grade grade = getEnrolment().getGrade();
+    public String getLatestEnrolmentEvaluationInformation() {
+        if (getEnrolment().isApproved()) {
+            final Grade grade = getEnrolment().getGrade();
 
-			if (grade.getGradeScale() == GradeScale.TYPEAP) {
-				return bundle.getString("msg.approved");
-			} else {
-				return grade.getValue();
-			}
-		} else {
-			return bundle.getString(getEnrolment().getEnrollmentState().name());
-		}
-	}
+            if (grade.getGradeScale() == GradeScale.TYPEAP) {
+                return bundle.getString("msg.approved");
+            } else {
+                return grade.getValue();
+            }
+        } else {
+            return bundle.getString(getEnrolment().getEnrollmentState().name());
+        }
+    }
 
 }

@@ -18,21 +18,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteExecutionCourses extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
-		final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
+        final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
-		for (final Integer executionCourseID : executionCourseIDs) {
-			final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        for (final Integer executionCourseID : executionCourseIDs) {
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-			if (!executionCourse.canBeDeleted()) {
-				undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
-			} else {
-				executionCourse.delete();
-			}
-		}
-		return undeletedExecutionCoursesCodes;
-	}
+            if (!executionCourse.canBeDeleted()) {
+                undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+            } else {
+                executionCourse.delete();
+            }
+        }
+        return undeletedExecutionCoursesCodes;
+    }
 
 }

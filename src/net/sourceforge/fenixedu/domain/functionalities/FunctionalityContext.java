@@ -16,40 +16,40 @@ import net.sourceforge.fenixedu.domain.contents.Content;
  */
 public interface FunctionalityContext {
 
-	/**
-	 * Name of the attribute under which the current functionality context is
-	 * registered in the request.
-	 */
-	public static final String CONTEXT_KEY = FunctionalityContext.class.getName() + ".CONTEXT";
+    /**
+     * Name of the attribute under which the current functionality context is
+     * registered in the request.
+     */
+    public static final String CONTEXT_KEY = FunctionalityContext.class.getName() + ".CONTEXT";
 
-	/**
-	 * @return the current request being served
-	 */
-	public HttpServletRequest getRequest();
+    /**
+     * @return the current request being served
+     */
+    public HttpServletRequest getRequest();
 
-	/**
-	 * @return the current <code>UserView</code>
-	 */
-	public IUserView getUserView();
+    /**
+     * @return the current <code>UserView</code>
+     */
+    public IUserView getUserView();
 
-	/**
-	 * The context gives access to the current logged user.
-	 * 
-	 * @return the current logged user or <code>null</code> if the user is
-	 *         anonymous
-	 */
-	public User getLoggedUser();
+    /**
+     * The context gives access to the current logged user.
+     * 
+     * @return the current logged user or <code>null</code> if the user is
+     *         anonymous
+     */
+    public User getLoggedUser();
 
-	public Content getSelectedContent();
+    public Content getSelectedContent();
 
-	public Container getSelectedContainer();
+    public Container getSelectedContainer();
 
-	public Container getSelectedTopLevelContainer();
+    public Container getSelectedTopLevelContainer();
 
-	public Content getLastContentInPath(Class type);
+    public Content getLastContentInPath(Class type);
 
-	public String getCurrentContextPath();
+    public String getCurrentContextPath();
 
-	public List<Content> getSelectedContents();
+    public List<Content> getSelectedContents();
 
 }

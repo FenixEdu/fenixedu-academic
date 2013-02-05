@@ -12,20 +12,20 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class FindTeachersService extends SearchService {
 
-	@Override
-	protected InfoObject newInfoFromDomain(DomainObject object) {
-		return InfoTeacher.newInfoFromDomain((Teacher) object);
-	}
+    @Override
+    protected InfoObject newInfoFromDomain(DomainObject object) {
+        return InfoTeacher.newInfoFromDomain((Teacher) object);
+    }
 
-	@Override
-	protected List doSearch(HashMap searchParameters) {
-		Teacher teacher = Teacher.readTeacherByUsername((((String) searchParameters.get("teacherId"))).trim());
+    @Override
+    protected List doSearch(HashMap searchParameters) {
+        Teacher teacher = Teacher.readTeacherByUsername((((String) searchParameters.get("teacherId"))).trim());
 
-		List<Teacher> returnList = new ArrayList<Teacher>();
-		if (teacher != null) {
-			returnList.add(teacher);
-		}
-		return returnList;
-	}
+        List<Teacher> returnList = new ArrayList<Teacher>();
+        if (teacher != null) {
+            returnList.add(teacher);
+        }
+        return returnList;
+    }
 
 }

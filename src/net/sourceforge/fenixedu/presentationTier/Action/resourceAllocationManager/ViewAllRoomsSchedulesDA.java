@@ -23,57 +23,57 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 
-	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		/* Criar o bean de pavilhoes */
-		List<String> pavillionsNamesList = new ArrayList<String>();
-		List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
-		for (LabelValueBean building : readExistingBuldings) {
-			pavillionsNamesList.add(building.getLabel());
-		}
+        /* Criar o bean de pavilhoes */
+        List<String> pavillionsNamesList = new ArrayList<String>();
+        List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
+        for (LabelValueBean building : readExistingBuldings) {
+            pavillionsNamesList.add(building.getLabel());
+        }
 
-		request.setAttribute(PresentationConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
+        request.setAttribute(PresentationConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
 
-		return mapping.findForward("choose");
-	}
+        return mapping.findForward("choose");
+    }
 
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
 
-		AcademicInterval academicInterval =
-				AcademicInterval.getAcademicIntervalFromResumedString((String) request
-						.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+        AcademicInterval academicInterval =
+                AcademicInterval.getAcademicIntervalFromResumedString((String) request
+                        .getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
-		List<String> pavillions = new ArrayList<String>();
-		List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
-		for (LabelValueBean building : readExistingBuldings) {
-			pavillions.add(building.getLabel());
-		}
+        List<String> pavillions = new ArrayList<String>();
+        List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
+        for (LabelValueBean building : readExistingBuldings) {
+            pavillions.add(building.getLabel());
+        }
 
-		Boolean selectAllPavillions = (Boolean) chooseViewAllRoomsSchedulesContextForm.get("selectAllPavillions");
-		List<String> selectedPavillions = null;
-		if (selectAllPavillions != null && selectAllPavillions.booleanValue()) {
-			selectedPavillions = pavillions;
-		} else {
-			String[] selectedPavillionsNames = (String[]) chooseViewAllRoomsSchedulesContextForm.get("selectedPavillions");
-			selectedPavillions = new ArrayList();
-			for (String selectedPavillionsName : selectedPavillionsNames) {
-				selectedPavillions.add(selectedPavillionsName);
-			}
-		}
+        Boolean selectAllPavillions = (Boolean) chooseViewAllRoomsSchedulesContextForm.get("selectAllPavillions");
+        List<String> selectedPavillions = null;
+        if (selectAllPavillions != null && selectAllPavillions.booleanValue()) {
+            selectedPavillions = pavillions;
+        } else {
+            String[] selectedPavillionsNames = (String[]) chooseViewAllRoomsSchedulesContextForm.get("selectedPavillions");
+            selectedPavillions = new ArrayList();
+            for (String selectedPavillionsName : selectedPavillionsNames) {
+                selectedPavillions.add(selectedPavillionsName);
+            }
+        }
 
-		List infoViewClassScheduleList = ReadPavillionsRoomsLessons.run(selectedPavillions, academicInterval);
+        List infoViewClassScheduleList = ReadPavillionsRoomsLessons.run(selectedPavillions, academicInterval);
 
-		if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
-			request.removeAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
-		} else {
-			request.setAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE, infoViewClassScheduleList);
-			request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval);
-		}
+        if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
+            request.removeAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
+        } else {
+            request.setAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE, infoViewClassScheduleList);
+            request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval);
+        }
 
-		return mapping.findForward("list");
-	}
+        return mapping.findForward("list");
+    }
 
 }

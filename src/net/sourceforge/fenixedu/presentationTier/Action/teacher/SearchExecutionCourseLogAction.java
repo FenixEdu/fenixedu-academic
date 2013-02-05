@@ -33,140 +33,139 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "teacher", path = "/searchECLog", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "search", path = "/teacher/viewLogSearch.jsp", tileProperties = @Tile(
-		navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-		title = "private.teacher.changesLog",
-		bundle = "TITLES_RESOURCES")) })
+        navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.changesLog",
+        bundle = "TITLES_RESOURCES")) })
 public class SearchExecutionCourseLogAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
-		SearchExecutionCourseLogBean seclb = new SearchExecutionCourseLogBean(executionCourse);
-		seclb.setExecutionCourseLogTypes(new ArrayList<ExecutionCourseLogTypes>());
+    public ActionForward prepareInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
+        SearchExecutionCourseLogBean seclb = new SearchExecutionCourseLogBean(executionCourse);
+        seclb.setExecutionCourseLogTypes(new ArrayList<ExecutionCourseLogTypes>());
 
-		request.setAttribute("searchBean", seclb);
-		request.setAttribute("executionCourse", seclb.getExecutionCourse());
+        request.setAttribute("searchBean", seclb);
+        request.setAttribute("executionCourse", seclb.getExecutionCourse());
 
-		return mapping.findForward("search");
-	}
+        return mapping.findForward("search");
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
-		SearchExecutionCourseLogBean seclb = readSearchBean(request, executionCourse);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
+        SearchExecutionCourseLogBean seclb = readSearchBean(request, executionCourse);
 
-		searchLogs(seclb);
-		request.setAttribute("searchBean", seclb);
-		request.setAttribute("executionCourse", seclb.getExecutionCourse());
+        searchLogs(seclb);
+        request.setAttribute("searchBean", seclb);
+        request.setAttribute("executionCourse", seclb.getExecutionCourse());
 
-		prepareAttendsCollectionPages(request, seclb, seclb.getExecutionCourse());
-		return mapping.findForward("search");
-	}
+        prepareAttendsCollectionPages(request, seclb, seclb.getExecutionCourse());
+        return mapping.findForward("search");
+    }
 
-	private SearchExecutionCourseLogBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
-		String executionCourseID = request.getParameter("executionCourse");
-		Integer executionCourseIDInteger = (executionCourseID == null) ? null : Integer.parseInt(executionCourseID);
-		if (executionCourseIDInteger != null) {
-			SearchExecutionCourseLogBean seclb =
-					new SearchExecutionCourseLogBean(rootDomainObject.readExecutionCourseByOID(executionCourseIDInteger));
+    private SearchExecutionCourseLogBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
+        String executionCourseID = request.getParameter("executionCourse");
+        Integer executionCourseIDInteger = (executionCourseID == null) ? null : Integer.parseInt(executionCourseID);
+        if (executionCourseIDInteger != null) {
+            SearchExecutionCourseLogBean seclb =
+                    new SearchExecutionCourseLogBean(rootDomainObject.readExecutionCourseByOID(executionCourseIDInteger));
 
-			String viewPhoto = request.getParameter("viewPhoto");
-			if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
-				seclb.setViewPhoto(true);
-			} else {
-				seclb.setViewPhoto(false);
-			}
+            String viewPhoto = request.getParameter("viewPhoto");
+            if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
+                seclb.setViewPhoto(true);
+            } else {
+                seclb.setViewPhoto(false);
+            }
 
-			String logTypes = request.getParameter("executionCourseLogTypes");
-			if (logTypes != null) {
-				List<ExecutionCourseLogTypes> list = new ArrayList<ExecutionCourseLogTypes>();
-				for (String logType : logTypes.split(":")) {
-					list.add(ExecutionCourseLogTypes.valueOf(logType));
-				}
-				seclb.setExecutionCourseLogTypes(list);
-			}
+            String logTypes = request.getParameter("executionCourseLogTypes");
+            if (logTypes != null) {
+                List<ExecutionCourseLogTypes> list = new ArrayList<ExecutionCourseLogTypes>();
+                for (String logType : logTypes.split(":")) {
+                    list.add(ExecutionCourseLogTypes.valueOf(logType));
+                }
+                seclb.setExecutionCourseLogTypes(list);
+            }
 
-			String professorships = request.getParameter("professorships");
-			if (professorships != null) {
-				List<Professorship> list = new ArrayList<Professorship>();
-				for (String professorship : professorships.split(":")) {
-					list.add(rootDomainObject.readProfessorshipByOID(Integer.parseInt(professorship)));
-				}
-				seclb.setProfessorships(list);
-			}
+            String professorships = request.getParameter("professorships");
+            if (professorships != null) {
+                List<Professorship> list = new ArrayList<Professorship>();
+                for (String professorship : professorships.split(":")) {
+                    list.add(rootDomainObject.readProfessorshipByOID(Integer.parseInt(professorship)));
+                }
+                seclb.setProfessorships(list);
+            }
 
-			String months = request.getParameter("months");
-			if (months != null) {
-				List<Month> list = new ArrayList<Month>();
-				for (String month : months.split(":")) {
-					list.add(Month.fromInt(Integer.valueOf(month).intValue()));
-				}
-				seclb.setMonths(list);
-			}
+            String months = request.getParameter("months");
+            if (months != null) {
+                List<Month> list = new ArrayList<Month>();
+                for (String month : months.split(":")) {
+                    list.add(Month.fromInt(Integer.valueOf(month).intValue()));
+                }
+                seclb.setMonths(list);
+            }
 
-			return seclb;
-		} else {
-			return new SearchExecutionCourseLogBean(executionCourse);
-		}
-	}
+            return seclb;
+        } else {
+            return new SearchExecutionCourseLogBean(executionCourse);
+        }
+    }
 
-	private void prepareAttendsCollectionPages(HttpServletRequest request, SearchExecutionCourseLogBean seclb,
-			ExecutionCourse executionCourse) {
-		Collection<ExecutionCourseLog> ecLogs = seclb.getExecutionCourseLogs();
-		List<ExecutionCourseLog> listECLogs = new ArrayList<ExecutionCourseLog>(ecLogs);
-		Collections.sort(listECLogs, ExecutionCourseLog.COMPARATOR_BY_WHEN_DATETIME);
-		int entriesPerPage = 20;
-		final CollectionPager<ExecutionCourseLog> pager = new CollectionPager<ExecutionCourseLog>(listECLogs, entriesPerPage);
-		request.setAttribute("numberOfPages", (listECLogs.size() / entriesPerPage) + 1);
+    private void prepareAttendsCollectionPages(HttpServletRequest request, SearchExecutionCourseLogBean seclb,
+            ExecutionCourse executionCourse) {
+        Collection<ExecutionCourseLog> ecLogs = seclb.getExecutionCourseLogs();
+        List<ExecutionCourseLog> listECLogs = new ArrayList<ExecutionCourseLog>(ecLogs);
+        Collections.sort(listECLogs, ExecutionCourseLog.COMPARATOR_BY_WHEN_DATETIME);
+        int entriesPerPage = 20;
+        final CollectionPager<ExecutionCourseLog> pager = new CollectionPager<ExecutionCourseLog>(listECLogs, entriesPerPage);
+        request.setAttribute("numberOfPages", (listECLogs.size() / entriesPerPage) + 1);
 
-		final String pageParameter = request.getParameter("pageNumber");
-		final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
-		request.setAttribute("pageNumber", page);
+        final String pageParameter = request.getParameter("pageNumber");
+        final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
+        request.setAttribute("pageNumber", page);
 
-		SearchExecutionCourseLogBean logPagesBean = new SearchExecutionCourseLogBean(executionCourse);
+        SearchExecutionCourseLogBean logPagesBean = new SearchExecutionCourseLogBean(executionCourse);
 
-		searchLogs(logPagesBean);
+        searchLogs(logPagesBean);
 
-		logPagesBean.setExecutionCourseLogs(pager.getPage(page));
-		if (seclb.getViewPhoto()) {
-			logPagesBean.setViewPhoto(true);
-		}
-		request.setAttribute("logPagesBean", logPagesBean);
-	}
+        logPagesBean.setExecutionCourseLogs(pager.getPage(page));
+        if (seclb.getViewPhoto()) {
+            logPagesBean.setViewPhoto(true);
+        }
+        request.setAttribute("logPagesBean", logPagesBean);
+    }
 
-	// copied from ExecutionCourse, was public
-	// @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
-	private void searchLogs(SearchExecutionCourseLogBean bean) {
-		final Predicate<ExecutionCourseLog> filter = bean.getFilters();
-		final Collection<ExecutionCourseLog> validLogs = new HashSet<ExecutionCourseLog>();
-		for (final ExecutionCourseLog log : bean.getExecutionCourse().getExecutionCourseLogs()) {
-			if (filter.eval(log)) {
-				validLogs.add(log);
-			}
-		}
-		bean.setExecutionCourseLogs(validLogs);
-	}
+    // copied from ExecutionCourse, was public
+    // @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
+    private void searchLogs(SearchExecutionCourseLogBean bean) {
+        final Predicate<ExecutionCourseLog> filter = bean.getFilters();
+        final Collection<ExecutionCourseLog> validLogs = new HashSet<ExecutionCourseLog>();
+        for (final ExecutionCourseLog log : bean.getExecutionCourse().getExecutionCourseLogs()) {
+            if (filter.eval(log)) {
+                validLogs.add(log);
+            }
+        }
+        bean.setExecutionCourseLogs(validLogs);
+    }
 
-	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("objectCode", request.getAttribute("objectCode"));
+        request.setAttribute("objectCode", request.getAttribute("objectCode"));
 
-		SearchExecutionCourseLogBean bean = getRenderedObject();
-		RenderUtils.invalidateViewState();
-		searchLogs(bean);
+        SearchExecutionCourseLogBean bean = getRenderedObject();
+        RenderUtils.invalidateViewState();
+        searchLogs(bean);
 
-		request.setAttribute("searchBean", bean);
-		request.setAttribute("executionCourse", bean.getExecutionCourse());
+        request.setAttribute("searchBean", bean);
+        request.setAttribute("executionCourse", bean.getExecutionCourse());
 
-		prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
+        prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
 
-		return mapping.findForward("search");
-	}
+        return mapping.findForward("search");
+    }
 
 }

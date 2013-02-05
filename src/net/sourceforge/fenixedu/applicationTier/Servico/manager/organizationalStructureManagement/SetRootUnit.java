@@ -7,18 +7,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SetRootUnit extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(final Unit unit, final Boolean institutionUnit) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Unit unit, final Boolean institutionUnit) {
 
-		if (unit.isPlanetUnit()) {
-			rootDomainObject.setEarthUnit(unit);
+        if (unit.isPlanetUnit()) {
+            rootDomainObject.setEarthUnit(unit);
 
-		} else if (institutionUnit) {
-			rootDomainObject.setInstitutionUnit(unit);
+        } else if (institutionUnit) {
+            rootDomainObject.setInstitutionUnit(unit);
 
-		} else if (!institutionUnit) {
-			rootDomainObject.setExternalInstitutionUnit(unit);
-		}
-	}
+        } else if (!institutionUnit) {
+            rootDomainObject.setExternalInstitutionUnit(unit);
+        }
+    }
 }

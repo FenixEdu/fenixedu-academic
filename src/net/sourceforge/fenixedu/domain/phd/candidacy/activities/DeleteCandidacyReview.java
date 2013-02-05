@@ -8,30 +8,30 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class DeleteCandidacyReview extends PhdProgramCandidacyProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-		if (process.isAllowedToManageProcess(userView)) {
-			return;
-		}
+    @Override
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+        if (process.isAllowedToManageProcess(userView)) {
+            return;
+        }
 
-		if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-			if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
-				return;
-			}
-		}
+        if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+            if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
+                return;
+            }
+        }
 
-		throw new PreConditionNotValidException(
-				"error.phd.candidacy.PhdProgramCandidacyProcess.DeleteCandidacyReview.cannot.delete.review.after.sending.for.ratification");
+        throw new PreConditionNotValidException(
+                "error.phd.candidacy.PhdProgramCandidacyProcess.DeleteCandidacyReview.cannot.delete.review.after.sending.for.ratification");
 
-	}
+    }
 
-	@Override
-	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-		PhdProgramProcessDocument document = (PhdProgramProcessDocument) object;
+    @Override
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        PhdProgramProcessDocument document = (PhdProgramProcessDocument) object;
 
-		document.delete();
+        document.delete();
 
-		return process;
-	}
+        return process;
+    }
 
 }

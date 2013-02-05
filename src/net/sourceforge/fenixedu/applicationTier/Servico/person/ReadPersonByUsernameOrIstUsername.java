@@ -16,8 +16,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPersonByUsernameOrIstUsername extends FenixService {
 
-	@Service
-	public static Person run(String username) throws FenixServiceException {
-		return Person.readPersonByUsername(username);
-	}
+    @Service
+    public static Person run(String username) throws FenixServiceException {
+        return Person.readPersonByUsername(username);
+    }
 }

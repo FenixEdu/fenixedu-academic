@@ -21,17 +21,17 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends FenixService {
 
-	@Service
-	public static InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
-		Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-		if (registration == null) {
-			return null;
-		}
-		StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-		if (studentCurricularPlan != null) {
-			return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
-		}
-		return null;
-	}
+    @Service
+    public static InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        if (registration == null) {
+            return null;
+        }
+        StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+        if (studentCurricularPlan != null) {
+            return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+        }
+        return null;
+    }
 
 }

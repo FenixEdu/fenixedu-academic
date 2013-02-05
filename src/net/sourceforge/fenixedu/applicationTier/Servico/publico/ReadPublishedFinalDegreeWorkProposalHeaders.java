@@ -20,20 +20,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPublishedFinalDegreeWorkProposalHeaders extends FenixService {
 
-	@Service
-	public static List<FinalDegreeWorkProposalHeader> run(Integer executionDegreeOID) {
-		final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
+    @Service
+    public static List<FinalDegreeWorkProposalHeader> run(Integer executionDegreeOID) {
+        final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-		if (executionDegree != null && executionDegree.hasScheduling()) {
-			final Set<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().findPublishedProposals();
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+        if (executionDegree != null && executionDegree.hasScheduling()) {
+            final Set<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().findPublishedProposals();
 
-			for (final Proposal proposal : finalDegreeWorkProposals) {
-				result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
-			}
-		}
+            for (final Proposal proposal : finalDegreeWorkProposals) {
+                result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

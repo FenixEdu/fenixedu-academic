@@ -24,42 +24,42 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateConvokes extends FenixService {
 
-	@Service
-	public static void run(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
-			ExamCoordinator coordinator, String emailMessage) {
-		group.convokeVigilants(vigilants, writtenEvaluation);
+    @Service
+    public static void run(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
+            ExamCoordinator coordinator, String emailMessage) {
+        group.convokeVigilants(vigilants, writtenEvaluation);
 
-		Set<Person> recievers = new HashSet<Person>();
-		Set<String> bccs = new HashSet<String>();
+        Set<Person> recievers = new HashSet<Person>();
+        Set<String> bccs = new HashSet<String>();
 
-		if (emailMessage.length() != 0) {
-			Person person = coordinator.getPerson();
-			for (VigilantWrapper vigilant : vigilants) {
-				recievers.add(vigilant.getPerson());
-			}
+        if (emailMessage.length() != 0) {
+            Person person = coordinator.getPerson();
+            for (VigilantWrapper vigilant : vigilants) {
+                recievers.add(vigilant.getPerson());
+            }
 
-			String groupEmail = group.getContactEmail();
-			String replyTo;
+            String groupEmail = group.getContactEmail();
+            String replyTo;
 
-			recievers.addAll(writtenEvaluation.getTeachers());
+            recievers.addAll(writtenEvaluation.getTeachers());
 
-			if (groupEmail != null) {
-				bccs.add(groupEmail);
-				replyTo = groupEmail;
-			} else {
-				replyTo = person.getEmail();
-			}
+            if (groupEmail != null) {
+                bccs.add(groupEmail);
+                replyTo = groupEmail;
+            } else {
+                replyTo = person.getEmail();
+            }
 
-			DateTime date = writtenEvaluation.getBeginningDateTime();
-			String beginDateString = date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();
+            DateTime date = writtenEvaluation.getBeginningDateTime();
+            String beginDateString = date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();
 
-			String subject =
-					BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject", new String[] {
-							group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString });
+            String subject =
+                    BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject", new String[] {
+                            group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString });
 
-			new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
-					new FixedSetGroup(recievers)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
-					emailMessage, bccs);
-		}
-	}
+            new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
+                    new FixedSetGroup(recievers)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
+                    emailMessage, bccs);
+        }
+    }
 }

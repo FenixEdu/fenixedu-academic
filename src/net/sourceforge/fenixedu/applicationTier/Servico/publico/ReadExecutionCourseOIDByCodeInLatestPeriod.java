@@ -10,16 +10,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourseOIDByCodeInLatestPeriod extends FenixService {
 
-	@Service
-	public static Integer run(String executionCourseCode) {
-		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-		ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseCode);
+    @Service
+    public static Integer run(String executionCourseCode) {
+        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseCode);
 
-		if (executionCourse != null) {
-			return executionCourse.getIdInternal();
-		}
+        if (executionCourse != null) {
+            return executionCourse.getIdInternal();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

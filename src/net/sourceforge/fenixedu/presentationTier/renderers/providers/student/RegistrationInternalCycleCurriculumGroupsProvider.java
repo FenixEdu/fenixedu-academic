@@ -11,20 +11,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class RegistrationInternalCycleCurriculumGroupsProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final IRegistrationBean iRegistrationBean = (IRegistrationBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final IRegistrationBean iRegistrationBean = (IRegistrationBean) source;
 
-		final Collection<CycleCurriculumGroup> result =
-				new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-		result.addAll(iRegistrationBean.getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
+        final Collection<CycleCurriculumGroup> result =
+                new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+        result.addAll(iRegistrationBean.getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
 
-		return result;
-	}
+        return result;
+    }
 
 }

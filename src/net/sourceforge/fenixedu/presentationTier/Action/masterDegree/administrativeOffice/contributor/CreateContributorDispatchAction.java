@@ -33,103 +33,96 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  */
-@Mapping(
-		module = "academicAdministration",
-		path = "/createContributorDispatchAction",
-		input = "contributor.createContributor",
-		attribute = "createContributorForm",
-		formBean = "createContributorForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "academicAdministration", path = "/createContributorDispatchAction", input = "contributor.createContributor",
+        attribute = "createContributorForm", formBean = "createContributorForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp"),
-		@Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp") })
+        @Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
-		key = "resources.Action.exceptions.ExistingActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
+        key = "resources.Action.exceptions.ExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateContributorDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaActionForm createContributorForm = (DynaActionForm) form;
+        DynaActionForm createContributorForm = (DynaActionForm) form;
 
-		createContributorForm.set("contributorNumber", null);
-		createContributorForm.set("contributorName", null);
-		createContributorForm.set("contributorAddress", null);
-		createContributorForm.set("areaCode", null);
-		createContributorForm.set("areaOfAreaCode", null);
-		createContributorForm.set("area", null);
-		createContributorForm.set("parishOfResidence", null);
-		createContributorForm.set("districtSubdivisionOfResidence", null);
-		createContributorForm.set("districtOfResidence", null);
+        createContributorForm.set("contributorNumber", null);
+        createContributorForm.set("contributorName", null);
+        createContributorForm.set("contributorAddress", null);
+        createContributorForm.set("areaCode", null);
+        createContributorForm.set("areaOfAreaCode", null);
+        createContributorForm.set("area", null);
+        createContributorForm.set("parishOfResidence", null);
+        createContributorForm.set("districtSubdivisionOfResidence", null);
+        createContributorForm.set("districtOfResidence", null);
 
-		return mapping.findForward("PrepareReady");
-	}
+        return mapping.findForward("PrepareReady");
+    }
 
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaActionForm createContributorForm = (DynaActionForm) form;
-		IUserView userView = getUserView(request);
+        DynaActionForm createContributorForm = (DynaActionForm) form;
+        IUserView userView = getUserView(request);
 
-		final String contributorName = (String) createContributorForm.get("contributorName");
-		try {
-			Integer.valueOf((String) createContributorForm.get("contributorName"));
+        final String contributorName = (String) createContributorForm.get("contributorName");
+        try {
+            Integer.valueOf((String) createContributorForm.get("contributorName"));
 
-			ActionErrors errors = new ActionErrors();
-			errors.add("error.invalid.contributorName", new ActionError("error.invalid.contributorName"));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		} catch (NumberFormatException e) {
-			// do nothing, name is not a number, it's correct
-		}
+            ActionErrors errors = new ActionErrors();
+            errors.add("error.invalid.contributorName", new ActionError("error.invalid.contributorName"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        } catch (NumberFormatException e) {
+            // do nothing, name is not a number, it's correct
+        }
 
-		Integer contributorNumber = null;
-		try {
-			contributorNumber = Integer.valueOf((String) createContributorForm.get("contributorNumber"));
-			if (contributorNumber.intValue() == 0) {
-				ActionErrors errors = new ActionErrors();
-				errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
-				saveErrors(request, errors);
-				return mapping.getInputForward();
-			}
-		} catch (NumberFormatException e) {
-			ActionErrors errors = new ActionErrors();
-			errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
+        Integer contributorNumber = null;
+        try {
+            contributorNumber = Integer.valueOf((String) createContributorForm.get("contributorNumber"));
+            if (contributorNumber.intValue() == 0) {
+                ActionErrors errors = new ActionErrors();
+                errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
+                saveErrors(request, errors);
+                return mapping.getInputForward();
+            }
+        } catch (NumberFormatException e) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
 
-		if (StringUtils.isEmpty(createContributorForm.getString("contributorType"))) {
-			ActionErrors errors = new ActionErrors();
-			errors.add("error.invalid.contributorType", new ActionError("error.invalid.contributorType"));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
+        if (StringUtils.isEmpty(createContributorForm.getString("contributorType"))) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("error.invalid.contributorType", new ActionError("error.invalid.contributorType"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
 
-		InfoContributor infoContributor = new InfoContributor();
-		infoContributor.setContributorType(ContributorType.valueOf((String) createContributorForm.get("contributorType")));
-		infoContributor.setContributorName(contributorName);
-		infoContributor.setContributorNumber(contributorNumber.toString());
-		infoContributor.setContributorAddress((String) createContributorForm.get("contributorAddress"));
-		infoContributor.setAreaCode((String) createContributorForm.get("areaCode"));
-		infoContributor.setAreaOfAreaCode((String) createContributorForm.get("areaOfAreaCode"));
-		infoContributor.setArea((String) createContributorForm.get("area"));
-		infoContributor.setParishOfResidence((String) createContributorForm.get("parishOfResidence"));
-		infoContributor.setDistrictSubdivisionOfResidence((String) createContributorForm.get("districtSubdivisionOfResidence"));
-		infoContributor.setDistrictOfResidence((String) createContributorForm.get("districtOfResidence"));
+        InfoContributor infoContributor = new InfoContributor();
+        infoContributor.setContributorType(ContributorType.valueOf((String) createContributorForm.get("contributorType")));
+        infoContributor.setContributorName(contributorName);
+        infoContributor.setContributorNumber(contributorNumber.toString());
+        infoContributor.setContributorAddress((String) createContributorForm.get("contributorAddress"));
+        infoContributor.setAreaCode((String) createContributorForm.get("areaCode"));
+        infoContributor.setAreaOfAreaCode((String) createContributorForm.get("areaOfAreaCode"));
+        infoContributor.setArea((String) createContributorForm.get("area"));
+        infoContributor.setParishOfResidence((String) createContributorForm.get("parishOfResidence"));
+        infoContributor.setDistrictSubdivisionOfResidence((String) createContributorForm.get("districtSubdivisionOfResidence"));
+        infoContributor.setDistrictOfResidence((String) createContributorForm.get("districtOfResidence"));
 
-		Object args[] = { infoContributor };
-		try {
-			infoContributor.createContributor();
-		} catch (InvalidArgumentsServiceException e) {
-			throw new ExistingActionException("O Contribuinte", e);
-		}
+        Object args[] = { infoContributor };
+        try {
+            infoContributor.createContributor();
+        } catch (InvalidArgumentsServiceException e) {
+            throw new ExistingActionException("O Contribuinte", e);
+        }
 
-		return mapping.findForward("CreateSuccess");
+        return mapping.findForward("CreateSuccess");
 
-	}
+    }
 
 }

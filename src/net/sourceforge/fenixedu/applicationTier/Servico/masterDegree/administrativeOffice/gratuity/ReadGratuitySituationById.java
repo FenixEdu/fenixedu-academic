@@ -17,19 +17,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadGratuitySituationById extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
-		InfoGratuitySituation infoGratuitySituation = null;
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
+        InfoGratuitySituation infoGratuitySituation = null;
 
-		GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
-		if (gratuitySituation == null) {
-			throw new NonExistingServiceException("error.exception.masterDegree.gratuity.notExistingGratuitySituation");
-		}
+        GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
+        if (gratuitySituation == null) {
+            throw new NonExistingServiceException("error.exception.masterDegree.gratuity.notExistingGratuitySituation");
+        }
 
-		infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree.newInfoFromDomain(gratuitySituation);
+        infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree.newInfoFromDomain(gratuitySituation);
 
-		return infoGratuitySituation;
+        return infoGratuitySituation;
 
-	}
+    }
 }

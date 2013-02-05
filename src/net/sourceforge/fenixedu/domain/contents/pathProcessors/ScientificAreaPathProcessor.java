@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 
 public class ScientificAreaPathProcessor extends AbstractUnitAcronymPathProcessor {
 
-	@Override
-	protected Class[] getAcceptableTypes() {
-		return new Class[] { DepartmentUnit.class, ScientificAreaUnit.class };
-	}
+    @Override
+    protected Class[] getAcceptableTypes() {
+        return new Class[] { DepartmentUnit.class, ScientificAreaUnit.class };
+    }
 
 }

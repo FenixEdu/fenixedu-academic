@@ -20,22 +20,22 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveStudentCurricularPlanByDegreeType extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType) {
 
-		final Person person = userView.getPerson();
-		final Registration registration = person.getStudentByType(degreeType);
+        final Person person = userView.getPerson();
+        final Registration registration = person.getStudentByType(degreeType);
 
-		if (registration != null) {
-			final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-			if (studentCurricularPlan != null) {
-				final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
-				return infoStudentCurricularPlan;
-			}
-		}
+        if (registration != null) {
+            final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+            if (studentCurricularPlan != null) {
+                final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
+                return infoStudentCurricularPlan;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

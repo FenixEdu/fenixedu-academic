@@ -11,92 +11,92 @@ import java.util.Map;
  * @author João Mota
  */
 public class InfoAttendWithEnrollment extends InfoObject implements Serializable {
-	protected InfoStudent _aluno;
+    protected InfoStudent _aluno;
 
-	protected InfoExecutionCourse _disciplinaExecucao;
+    protected InfoExecutionCourse _disciplinaExecucao;
 
-	protected Integer enrollments;
+    protected Integer enrollments;
 
-	protected InfoEnrolment infoEnrolment;
+    protected InfoEnrolment infoEnrolment;
 
-	protected Map infoShifts;
+    protected Map infoShifts;
 
-	public InfoAttendWithEnrollment() {
-	}
+    public InfoAttendWithEnrollment() {
+    }
 
-	public InfoAttendWithEnrollment(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
-		setAluno(aluno);
-		setDisciplinaExecucao(disciplinaExecucao);
-	}
+    public InfoAttendWithEnrollment(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
+        setAluno(aluno);
+        setDisciplinaExecucao(disciplinaExecucao);
+    }
 
-	public InfoStudent getAluno() {
-		return _aluno;
-	}
+    public InfoStudent getAluno() {
+        return _aluno;
+    }
 
-	public void setAluno(InfoStudent aluno) {
-		_aluno = aluno;
-	}
+    public void setAluno(InfoStudent aluno) {
+        _aluno = aluno;
+    }
 
-	public InfoExecutionCourse getDisciplinaExecucao() {
-		return _disciplinaExecucao;
-	}
+    public InfoExecutionCourse getDisciplinaExecucao() {
+        return _disciplinaExecucao;
+    }
 
-	public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
-		_disciplinaExecucao = disciplinaExecucao;
-	}
+    public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
+        _disciplinaExecucao = disciplinaExecucao;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoFrequenta) {
-			InfoFrequenta frequenta = (InfoFrequenta) obj;
-			resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoFrequenta) {
+            InfoFrequenta frequenta = (InfoFrequenta) obj;
+            resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return Returns the enrollments.
-	 */
-	public Integer getEnrollments() {
-		return enrollments;
-	}
+    /**
+     * @return Returns the enrollments.
+     */
+    public Integer getEnrollments() {
+        return enrollments;
+    }
 
-	/**
-	 * @param enrollments
-	 *            The enrollments to set.
-	 */
-	public void setEnrollments(Integer enrollments) {
-		this.enrollments = enrollments;
-	}
+    /**
+     * @param enrollments
+     *            The enrollments to set.
+     */
+    public void setEnrollments(Integer enrollments) {
+        this.enrollments = enrollments;
+    }
 
-	/**
-	 * @return Returns the infoEnrolment.
-	 */
-	public InfoEnrolment getInfoEnrolment() {
-		return infoEnrolment;
-	}
+    /**
+     * @return Returns the infoEnrolment.
+     */
+    public InfoEnrolment getInfoEnrolment() {
+        return infoEnrolment;
+    }
 
-	/**
-	 * @param infoEnrolment
-	 *            The infoEnrolment to set.
-	 */
-	public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
-		this.infoEnrolment = infoEnrolment;
-	}
+    /**
+     * @param infoEnrolment
+     *            The infoEnrolment to set.
+     */
+    public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
+        this.infoEnrolment = infoEnrolment;
+    }
 
-	/**
-	 * @return Returns the infoShifts.
-	 */
-	public Map getInfoShifts() {
-		return infoShifts;
-	}
+    /**
+     * @return Returns the infoShifts.
+     */
+    public Map getInfoShifts() {
+        return infoShifts;
+    }
 
-	/**
-	 * @param infoShifts
-	 *            The infoShifts to set.
-	 */
-	public void setInfoShifts(Map infoShifts) {
-		this.infoShifts = infoShifts;
-	}
+    /**
+     * @param infoShifts
+     *            The infoShifts to set.
+     */
+    public void setInfoShifts(Map infoShifts) {
+        this.infoShifts = infoShifts;
+    }
 }

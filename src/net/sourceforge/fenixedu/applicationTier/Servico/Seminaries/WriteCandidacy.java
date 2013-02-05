@@ -22,51 +22,51 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class WriteCandidacy extends FenixService {
 
-	public void run(InfoCandidacy infoCandidacy) {
-		SeminaryCandidacy candidacy = new SeminaryCandidacy();
-		candidacy.setApproved(infoCandidacy.getApproved());
-		candidacy.setMotivation(infoCandidacy.getMotivation());
+    public void run(InfoCandidacy infoCandidacy) {
+        SeminaryCandidacy candidacy = new SeminaryCandidacy();
+        candidacy.setApproved(infoCandidacy.getApproved());
+        candidacy.setMotivation(infoCandidacy.getMotivation());
 
-		// Modality
-		final Modality modality = rootDomainObject.readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());
-		candidacy.setModality(modality);
+        // Modality
+        final Modality modality = rootDomainObject.readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());
+        candidacy.setModality(modality);
 
-		// Registration
-		final Registration readStudent = rootDomainObject.readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
-		candidacy.setStudent(readStudent);
+        // Registration
+        final Registration readStudent = rootDomainObject.readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
+        candidacy.setStudent(readStudent);
 
-		// Seminary
-		final Seminary readSeminary = rootDomainObject.readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
-		candidacy.setSeminary(readSeminary);
+        // Seminary
+        final Seminary readSeminary = rootDomainObject.readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
+        candidacy.setSeminary(readSeminary);
 
-		// Curricular Course
-		final CurricularCourse readCurricularCourse =
-				(CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getIdInternal());
-		candidacy.setCurricularCourse(readCurricularCourse);
+        // Curricular Course
+        final CurricularCourse readCurricularCourse =
+                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getIdInternal());
+        candidacy.setCurricularCourse(readCurricularCourse);
 
-		// Theme
-		if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
-			candidacy.setTheme(null);
-		} else {
-			final Theme readTheme = rootDomainObject.readThemeByOID(infoCandidacy.getTheme().getIdInternal());
-			candidacy.setTheme(readTheme);
-		}
-		if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
-			candidacy.setTheme(null);
-		}
+        // Theme
+        if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
+            candidacy.setTheme(null);
+        } else {
+            final Theme readTheme = rootDomainObject.readThemeByOID(infoCandidacy.getTheme().getIdInternal());
+            candidacy.setTheme(readTheme);
+        }
+        if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
+            candidacy.setTheme(null);
+        }
 
-		// Seminary Case Study Choices
-		for (InfoCaseStudyChoice infoCaseStudyChoice : infoCandidacy.getCaseStudyChoices()) {
-			final CaseStudyChoice caseStudyChoice = new CaseStudyChoice();
+        // Seminary Case Study Choices
+        for (InfoCaseStudyChoice infoCaseStudyChoice : infoCandidacy.getCaseStudyChoices()) {
+            final CaseStudyChoice caseStudyChoice = new CaseStudyChoice();
 
-			caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
+            caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-			final CaseStudy caseStudy = rootDomainObject.readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
-			caseStudyChoice.setCaseStudy(caseStudy);
+            final CaseStudy caseStudy = rootDomainObject.readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            caseStudyChoice.setCaseStudy(caseStudy);
 
-			caseStudyChoice.setCandidacy(candidacy);
-			candidacy.addCaseStudyChoices(caseStudyChoice);
-		}
-	}
+            caseStudyChoice.setCandidacy(candidacy);
+            candidacy.addCaseStudyChoices(caseStudyChoice);
+        }
+    }
 
 }

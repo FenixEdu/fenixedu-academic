@@ -7,32 +7,32 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PhdMigrationProcessStateType {
 
-	NOT_MIGRATED,
+    NOT_MIGRATED,
 
-	CANDIDACY_CREATED,
+    CANDIDACY_CREATED,
 
-	CANDIDACY_RATIFIED,
+    CANDIDACY_RATIFIED,
 
-	WORK_DEVELOPMENT,
+    WORK_DEVELOPMENT,
 
-	REQUESTED_THESIS_DISCUSSION,
+    REQUESTED_THESIS_DISCUSSION,
 
-	COMPLETED_THESIS_DISCUSSION,
+    COMPLETED_THESIS_DISCUSSION,
 
-	CANCELED,
+    CANCELED,
 
-	CONCLUDED;
+    CONCLUDED;
 
-	public String getLocalizedName() {
-		return getLocalizedName(Language.getLocale());
-	}
+    public String getLocalizedName() {
+        return getLocalizedName(Language.getLocale());
+    }
 
-	public String getLocalizedName(final Locale locale) {
-		return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
-	}
+    public String getLocalizedName(final Locale locale) {
+        return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
+    }
 
-	public String getQualifiedName() {
-		return getClass().getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return getClass().getSimpleName() + "." + name();
+    }
 
 }

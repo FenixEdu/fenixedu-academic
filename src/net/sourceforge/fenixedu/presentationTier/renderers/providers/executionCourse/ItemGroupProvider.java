@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ItemGroupProvider extends ItemProvider {
 
-	@Override
-	public Object provideForContext(Section section, Item self) {
-		return UnmodifiableList.decorate(section.getSite().getContextualPermissionGroups());
-	}
+    @Override
+    public Object provideForContext(Section section, Item self) {
+        return UnmodifiableList.decorate(section.getSite().getContextualPermissionGroups());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

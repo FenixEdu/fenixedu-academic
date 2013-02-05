@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
  */
 public class ReadFinalDegreeWorkProposal extends FenixService {
 
-	public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
-		return InfoProposal.newInfoFromDomain(rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID));
-	}
+    public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
+        return InfoProposal.newInfoFromDomain(rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID));
+    }
 
 }

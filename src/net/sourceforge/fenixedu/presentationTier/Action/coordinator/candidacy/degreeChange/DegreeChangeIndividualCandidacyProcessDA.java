@@ -17,48 +17,43 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(
-		path = "/caseHandlingDegreeChangeIndividualCandidacyProcess",
-		module = "coordinator",
-		formBeanClass = FenixActionForm.class)
+@Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "coordinator",
+        formBeanClass = FenixActionForm.class)
 @Forwards({
-		@Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
-		@Forward(
-				name = "introduce-candidacy-result",
-				path = "/coordinator/candidacy/degreeChange/introduceCandidacyResult.jsp",
-				tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.coursechange")),
-		@Forward(
-				name = "list-allowed-activities",
-				path = "/coordinator/candidacy/degreeChange/listIndividualCandidacyActivities.jsp",
-				tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.coursechange")) })
+        @Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
+        @Forward(name = "introduce-candidacy-result", path = "/coordinator/candidacy/degreeChange/introduceCandidacyResult.jsp",
+                tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.coursechange")),
+        @Forward(name = "list-allowed-activities",
+                path = "/coordinator/candidacy/degreeChange/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(
+                        title = "private.coordinator.management.courses.applicationprocesses.coursechange")) })
 public class DegreeChangeIndividualCandidacyProcessDA extends
-		net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange.DegreeChangeIndividualCandidacyProcessDA {
+        net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange.DegreeChangeIndividualCandidacyProcessDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	@Override
-	public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
-		request.setAttribute("seriesGrade", getProcess(request).getCandidacy()
-				.getDegreeChangeIndividualCandidacySeriesGradeForDegree(degreeCurricularPlan.getDegree()));
-		return super.listProcessAllowedActivities(mapping, form, request, response);
-	}
+    @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        request.setAttribute("seriesGrade", getProcess(request).getCandidacy()
+                .getDegreeChangeIndividualCandidacySeriesGradeForDegree(degreeCurricularPlan.getDegree()));
+        return super.listProcessAllowedActivities(mapping, form, request, response);
+    }
 
-	@Override
-	public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
-		request.setAttribute("individualCandidacyResultBean", new DegreeChangeIndividualCandidacyResultBean(getProcess(request),
-				degreeCurricularPlan.getDegree()));
-		return mapping.findForward("introduce-candidacy-result");
-	}
+    @Override
+    public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        request.setAttribute("individualCandidacyResultBean", new DegreeChangeIndividualCandidacyResultBean(getProcess(request),
+                degreeCurricularPlan.getDegree()));
+        return mapping.findForward("introduce-candidacy-result");
+    }
 
 }

@@ -14,232 +14,232 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.lang.StringUtils;
 
 public class BibliographicReferences implements Serializable {
-	private List<BibliographicReference> bibliographicReferencesList;
+    private List<BibliographicReference> bibliographicReferencesList;
 
-	public SortedSet<BibliographicReference> getBibliographicReferencesSortedByOrder() {
-		final SortedSet<BibliographicReference> bibliographicReferences = new TreeSet<BibliographicReference>();
-		bibliographicReferences.addAll(getBibliographicReferencesList());
-		return bibliographicReferences;
-	}
+    public SortedSet<BibliographicReference> getBibliographicReferencesSortedByOrder() {
+        final SortedSet<BibliographicReference> bibliographicReferences = new TreeSet<BibliographicReference>();
+        bibliographicReferences.addAll(getBibliographicReferencesList());
+        return bibliographicReferences;
+    }
 
-	public List<BibliographicReference> getBibliographicReferencesList() {
-		if (this.bibliographicReferencesList == null) {
-			this.bibliographicReferencesList = new ArrayList<BibliographicReference>();
-		}
-		return this.bibliographicReferencesList;
-	}
+    public List<BibliographicReference> getBibliographicReferencesList() {
+        if (this.bibliographicReferencesList == null) {
+            this.bibliographicReferencesList = new ArrayList<BibliographicReference>();
+        }
+        return this.bibliographicReferencesList;
+    }
 
-	public int getBibliographicReferencesListCount() {
-		return getBibliographicReferencesList().size();
-	}
+    public int getBibliographicReferencesListCount() {
+        return getBibliographicReferencesList().size();
+    }
 
-	public BibliographicReference getBibliographicReference(int oid) {
-		return getBibliographicReferencesList().get(oid);
-	}
+    public BibliographicReference getBibliographicReference(int oid) {
+        return getBibliographicReferencesList().get(oid);
+    }
 
-	public void createBibliographicReference(String year, String title, String authors, String reference, String url,
-			BibliographicReferenceType type) {
-		getBibliographicReferencesList().add(
-				new BibliographicReference(year, title, authors, reference, url, type, getBibliographicReferencesListCount()));
-	}
+    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
+            BibliographicReferenceType type) {
+        getBibliographicReferencesList().add(
+                new BibliographicReference(year, title, authors, reference, url, type, getBibliographicReferencesListCount()));
+    }
 
-	public void createBibliographicReference(String year, String title, String authors, String reference, String url,
-			BibliographicReferenceType type, int order) {
-		getBibliographicReferencesList().add(new BibliographicReference(year, title, authors, reference, url, type, order));
-	}
+    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
+            BibliographicReferenceType type, int order) {
+        getBibliographicReferencesList().add(new BibliographicReference(year, title, authors, reference, url, type, order));
+    }
 
-	public void editBibliographicReference(int oid, String year, String title, String authors, String reference, String url,
-			BibliographicReferenceType type) {
-		getBibliographicReferencesList().get(oid).edit(year, title, authors, reference, url, type);
-	}
+    public void editBibliographicReference(int oid, String year, String title, String authors, String reference, String url,
+            BibliographicReferenceType type) {
+        getBibliographicReferencesList().get(oid).edit(year, title, authors, reference, url, type);
+    }
 
-	public void deleteBibliographicReference(int oid) {
-		removeBibliographicReference(oid);
-		reOrderBibliographicReferences();
-	}
+    public void deleteBibliographicReference(int oid) {
+        removeBibliographicReference(oid);
+        reOrderBibliographicReferences();
+    }
 
-	public void switchBibliographicReferencePosition(int oldPosition, int newPosition) {
-		try {
-			if (validPositions(oldPosition, newPosition)) {
-				final BibliographicReference bibliographicReference = getBibliographicReference(oldPosition);
-				removeBibliographicReference(oldPosition);
-				getBibliographicReferencesList().add(newPosition, bibliographicReference);
-				reOrderBibliographicReferences();
-			}
-		} catch (IndexOutOfBoundsException e) {
-			throw new DomainException("bibliographicReferences.invalid.reference.positions");
-		}
-	}
+    public void switchBibliographicReferencePosition(int oldPosition, int newPosition) {
+        try {
+            if (validPositions(oldPosition, newPosition)) {
+                final BibliographicReference bibliographicReference = getBibliographicReference(oldPosition);
+                removeBibliographicReference(oldPosition);
+                getBibliographicReferencesList().add(newPosition, bibliographicReference);
+                reOrderBibliographicReferences();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new DomainException("bibliographicReferences.invalid.reference.positions");
+        }
+    }
 
-	private boolean validPositions(int oldPosition, int newPosition) {
-		if (oldPosition == newPosition || newPosition < 0 || newPosition == getBibliographicReferencesListCount()) {
-			return false;
-		}
-		return true;
-	}
+    private boolean validPositions(int oldPosition, int newPosition) {
+        if (oldPosition == newPosition || newPosition < 0 || newPosition == getBibliographicReferencesListCount()) {
+            return false;
+        }
+        return true;
+    }
 
-	private BibliographicReference removeBibliographicReference(int oid) {
-		return getBibliographicReferencesList().remove(oid);
-	}
+    private BibliographicReference removeBibliographicReference(int oid) {
+        return getBibliographicReferencesList().remove(oid);
+    }
 
-	private void reOrderBibliographicReferences() {
-		for (int i = 0; i < getBibliographicReferencesListCount(); i++) {
-			getBibliographicReference(i).setOrder(i);
-		}
-	}
+    private void reOrderBibliographicReferences() {
+        for (int i = 0; i < getBibliographicReferencesListCount(); i++) {
+            getBibliographicReference(i).setOrder(i);
+        }
+    }
 
-	public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
-		private String year;
+    public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
+        private String year;
 
-		private String title;
+        private String title;
 
-		private String authors;
+        private String authors;
 
-		private String reference;
+        private String reference;
 
-		private String url;
+        private String url;
 
-		private BibliographicReferenceType type;
+        private BibliographicReferenceType type;
 
-		private int order;
+        private int order;
 
-		public BibliographicReference(String year, String title, String authors, String reference, String url,
-				BibliographicReferenceType type, int order) {
-			if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
-				setInformation(year, title, authors, reference, url, type, order);
-			}
-		}
+        public BibliographicReference(String year, String title, String authors, String reference, String url,
+                BibliographicReferenceType type, int order) {
+            if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
+                setInformation(year, title, authors, reference, url, type, order);
+            }
+        }
 
-		public void edit(String year, String title, String authors, String reference, String url, BibliographicReferenceType type) {
-			if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
-				setInformation(year, title, authors, reference, url, type, getOrder());
-			}
-		}
+        public void edit(String year, String title, String authors, String reference, String url, BibliographicReferenceType type) {
+            if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(authors)) {
+                setInformation(year, title, authors, reference, url, type, getOrder());
+            }
+        }
 
-		private void setInformation(String year, String title, String authors, String reference, String url,
-				BibliographicReferenceType type, int order) {
-			setYear(year);
-			setTitle(title);
-			setAuthors(authors);
-			setReference(reference);
-			setUrl(url);
-			setType(type);
-			setOrder(order);
-		}
+        private void setInformation(String year, String title, String authors, String reference, String url,
+                BibliographicReferenceType type, int order) {
+            setYear(year);
+            setTitle(title);
+            setAuthors(authors);
+            setReference(reference);
+            setUrl(url);
+            setType(type);
+            setOrder(order);
+        }
 
-		public String getAuthors() {
-			return authors;
-		}
+        public String getAuthors() {
+            return authors;
+        }
 
-		public void setAuthors(String authors) {
-			this.authors = authors;
-		}
+        public void setAuthors(String authors) {
+            this.authors = authors;
+        }
 
-		public String getReference() {
-			return reference;
-		}
+        public String getReference() {
+            return reference;
+        }
 
-		public void setReference(String reference) {
-			this.reference = reference;
-		}
+        public void setReference(String reference) {
+            this.reference = reference;
+        }
 
-		public String getTitle() {
-			return title;
-		}
+        public String getTitle() {
+            return title;
+        }
 
-		public void setTitle(String title) {
-			this.title = title;
-		}
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
-		public BibliographicReferenceType getType() {
-			return type;
-		}
+        public BibliographicReferenceType getType() {
+            return type;
+        }
 
-		public void setType(BibliographicReferenceType type) {
-			this.type = type;
-		}
+        public void setType(BibliographicReferenceType type) {
+            this.type = type;
+        }
 
-		public String getUrl() {
-			return url == null || url.length() == 0 || url.equalsIgnoreCase("http://") ? null : url;
-		}
+        public String getUrl() {
+            return url == null || url.length() == 0 || url.equalsIgnoreCase("http://") ? null : url;
+        }
 
-		public void setUrl(String url) {
-			this.url = url;
-		}
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
-		public String getYear() {
-			return year;
-		}
+        public String getYear() {
+            return year;
+        }
 
-		public void setYear(String year) {
-			this.year = year;
-		}
+        public void setYear(String year) {
+            this.year = year;
+        }
 
-		public int getOrder() {
-			return order;
-		}
+        public int getOrder() {
+            return order;
+        }
 
-		public void setOrder(Integer order) {
-			this.order = order;
-		}
+        public void setOrder(Integer order) {
+            this.order = order;
+        }
 
-		@Override
-		public int compareTo(BibliographicReference bibliographicReference) {
-			return getOrder() - bibliographicReference.getOrder();
-		}
+        @Override
+        public int compareTo(BibliographicReference bibliographicReference) {
+            return getOrder() - bibliographicReference.getOrder();
+        }
 
-		public boolean isMain() {
-			return getType() == BibliographicReferenceType.MAIN;
-		}
+        public boolean isMain() {
+            return getType() == BibliographicReferenceType.MAIN;
+        }
 
-		public boolean isSecondary() {
-			return getType() == BibliographicReferenceType.SECONDARY;
-		}
+        public boolean isSecondary() {
+            return getType() == BibliographicReferenceType.SECONDARY;
+        }
 
-		@Override
-		public String toString() {
-			StringBuilder result = new StringBuilder();
+        @Override
+        public String toString() {
+            StringBuilder result = new StringBuilder();
 
-			result.append(year).append(" || ");
-			result.append(title).append(" || ");
-			result.append(authors).append(" || ");
-			result.append(reference).append(" || ");
-			result.append(url).append("\n");
+            result.append(year).append(" || ");
+            result.append(title).append(" || ");
+            result.append(authors).append(" || ");
+            result.append(reference).append(" || ");
+            result.append(url).append("\n");
 
-			return result.toString();
-		}
-	}
+            return result.toString();
+        }
+    }
 
-	public enum BibliographicReferenceType {
-		MAIN, SECONDARY;
+    public enum BibliographicReferenceType {
+        MAIN, SECONDARY;
 
-		public String getName() {
-			return name();
-		}
-	}
+        public String getName() {
+            return name();
+        }
+    }
 
-	public List<BibliographicReference> getMainBibliographicReferences() {
-		List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+    public List<BibliographicReference> getMainBibliographicReferences() {
+        List<BibliographicReference> result = new ArrayList<BibliographicReference>();
 
-		for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
-			if (bibliographicReference.isMain()) {
-				result.add(bibliographicReference);
-			}
-		}
+        for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
+            if (bibliographicReference.isMain()) {
+                result.add(bibliographicReference);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public List<BibliographicReference> getSecondaryBibliographicReferences() {
-		List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+    public List<BibliographicReference> getSecondaryBibliographicReferences() {
+        List<BibliographicReference> result = new ArrayList<BibliographicReference>();
 
-		for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
-			if (bibliographicReference.isSecondary()) {
-				result.add(bibliographicReference);
-			}
-		}
+        for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
+            if (bibliographicReference.isSecondary()) {
+                result.add(bibliographicReference);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

@@ -16,56 +16,56 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DiskArchive extends Archive {
 
-	private File directory;
+    private File directory;
 
-	/**
-	 * @param root
-	 *            the root directory under wich all resources will be saved
-	 */
-	public DiskArchive(File root, HttpServletResponse response) throws IOException {
-		super(response, null);
+    /**
+     * @param root
+     *            the root directory under wich all resources will be saved
+     */
+    public DiskArchive(File root, HttpServletResponse response) throws IOException {
+        super(response, null);
 
-		this.directory = root;
-	}
+        this.directory = root;
+    }
 
-	public static File getTemporaryDirectory() throws IOException {
-		File file = File.createTempFile("archive", null);
-		file.delete();
-		file.mkdir();
+    public static File getTemporaryDirectory() throws IOException {
+        File file = File.createTempFile("archive", null);
+        file.delete();
+        file.mkdir();
 
-		return file;
-	}
+        return file;
+    }
 
-	protected File getRoot() {
-		return this.directory;
-	}
+    protected File getRoot() {
+        return this.directory;
+    }
 
-	/**
-	 * Obtains a new file stream. The stream is created based on the resource
-	 * name and the root directoy of the archive.
-	 */
-	@Override
-	public OutputStream getStream(Resource resource) throws IOException {
-		File file = new File(this.directory, resource.getName());
+    /**
+     * Obtains a new file stream. The stream is created based on the resource
+     * name and the root directoy of the archive.
+     */
+    @Override
+    public OutputStream getStream(Resource resource) throws IOException {
+        File file = new File(this.directory, resource.getName());
 
-		File parent = file.getParentFile();
-		if (parent != null) {
-			parent.mkdirs();
-		}
+        File parent = file.getParentFile();
+        if (parent != null) {
+            parent.mkdirs();
+        }
 
-		return new FileOutputStream(file);
-	}
+        return new FileOutputStream(file);
+    }
 
-	@Override
-	public String toString() {
-		return String.format("Archive[%s]", this.directory);
-	}
+    @Override
+    public String toString() {
+        return String.format("Archive[%s]", this.directory);
+    }
 
-	/**
-	 * Does nothing.
-	 */
-	@Override
-	public void finish() throws IOException {
-		// do nothing
-	}
+    /**
+     * Does nothing.
+     */
+    @Override
+    public void finish() throws IOException {
+        // do nothing
+    }
 }

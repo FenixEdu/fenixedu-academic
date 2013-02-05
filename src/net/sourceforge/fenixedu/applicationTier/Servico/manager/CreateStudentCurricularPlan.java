@@ -18,24 +18,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateStudentCurricularPlan extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(final Integer studentNumber, final DegreeType degreeType,
-			final StudentCurricularPlanState studentCurricularPlanState, final Integer degreeCurricularPlanId,
-			final Date startDate) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(final Integer studentNumber, final DegreeType degreeType,
+            final StudentCurricularPlanState studentCurricularPlanState, final Integer degreeCurricularPlanId,
+            final Date startDate) throws FenixServiceException {
 
-		final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-		if (registration == null) {
-			throw new NonExistingServiceException("exception.student.does.not.exist");
-		}
+        final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        if (registration == null) {
+            throw new NonExistingServiceException("exception.student.does.not.exist");
+        }
 
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-		if (degreeCurricularPlan == null) {
-			throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
-		}
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        if (degreeCurricularPlan == null) {
+            throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
+        }
 
-		StudentCurricularPlan
-				.createWithEmptyStructure(registration, degreeCurricularPlan, YearMonthDay.fromDateFields(startDate));
-	}
+        StudentCurricularPlan
+                .createWithEmptyStructure(registration, degreeCurricularPlan, YearMonthDay.fromDateFields(startDate));
+    }
 
 }

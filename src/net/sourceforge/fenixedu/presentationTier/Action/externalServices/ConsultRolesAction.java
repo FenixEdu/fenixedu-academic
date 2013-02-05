@@ -22,49 +22,49 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/consultRoles", scope = "request", parameter = "method")
 public class ConsultRolesAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final String host = HostAccessControl.getRemoteAddress(request);
-		final String ip = request.getRemoteAddr();
-		final String password = request.getParameter("password");
-		final String userUId = request.getParameter("userUId");
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final String host = HostAccessControl.getRemoteAddress(request);
+        final String ip = request.getRemoteAddr();
+        final String password = request.getParameter("password");
+        final String userUId = request.getParameter("userUId");
 
-		String message = "ko";
+        String message = "ko";
 
-		try {
+        try {
 
-			final Set<Role> roles = ConsultRoles.run(host, ip, password, userUId);
-			final StringBuilder stringBuilder = new StringBuilder();
-			if (roles == null) {
-				stringBuilder.append("User does not exist");
-			} else {
-				stringBuilder.append("ok");
-				for (final Role role : roles) {
-					stringBuilder.append('\n');
-					stringBuilder.append(role.getRoleType().getName());
-				}
-				stringBuilder.append('\n');
-			}
-			message = stringBuilder.toString();
-		} catch (NotAuthorizedException ex) {
-			message = "Not authorized";
-		} catch (Throwable ex) {
-			message = ex.getMessage();
-			ex.printStackTrace();
-		} finally {
-			writeResponse(response, message);
-		}
+            final Set<Role> roles = ConsultRoles.run(host, ip, password, userUId);
+            final StringBuilder stringBuilder = new StringBuilder();
+            if (roles == null) {
+                stringBuilder.append("User does not exist");
+            } else {
+                stringBuilder.append("ok");
+                for (final Role role : roles) {
+                    stringBuilder.append('\n');
+                    stringBuilder.append(role.getRoleType().getName());
+                }
+                stringBuilder.append('\n');
+            }
+            message = stringBuilder.toString();
+        } catch (NotAuthorizedException ex) {
+            message = "Not authorized";
+        } catch (Throwable ex) {
+            message = ex.getMessage();
+            ex.printStackTrace();
+        } finally {
+            writeResponse(response, message);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private void writeResponse(final HttpServletResponse response, final String message) throws IOException {
-		final ServletOutputStream servletOutputStream = response.getOutputStream();
-		response.setContentType("text/html");
-		servletOutputStream.print(message);
-		servletOutputStream.flush();
-		response.flushBuffer();
-	}
+    private void writeResponse(final HttpServletResponse response, final String message) throws IOException {
+        final ServletOutputStream servletOutputStream = response.getOutputStream();
+        response.setContentType("text/html");
+        servletOutputStream.print(message);
+        servletOutputStream.flush();
+        response.flushBuffer();
+    }
 
 }

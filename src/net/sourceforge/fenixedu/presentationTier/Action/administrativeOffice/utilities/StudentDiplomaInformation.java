@@ -19,191 +19,191 @@ import org.joda.time.YearMonthDay;
 
 public class StudentDiplomaInformation implements java.io.Serializable {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = -7632049994026398211L;
+    private static final long serialVersionUID = -7632049994026398211L;
 
-	static final SimpleDateFormat DATE_FORMAT;
+    static final SimpleDateFormat DATE_FORMAT;
 
-	static {
-		DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
-		DATE_FORMAT.setLenient(false);
-	}
+    static {
+        DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
+        DATE_FORMAT.setLenient(false);
+    }
 
-	private String graduateTitle;
+    private String graduateTitle;
 
-	private String name;
+    private String name;
 
-	private String nameOfFather;
+    private String nameOfFather;
 
-	private String nameOfMother;
+    private String nameOfMother;
 
-	private String birthLocale;
+    private String birthLocale;
 
-	private String degreeName;
+    private String degreeName;
 
-	private String dissertationTitle;
+    private String dissertationTitle;
 
-	private String classificationResult;
+    private String classificationResult;
 
-	private YearMonthDay conclusionDate;
+    private YearMonthDay conclusionDate;
 
-	private boolean isMasterDegree;
+    private boolean isMasterDegree;
 
-	private String filename;
+    private String filename;
 
-	@SuppressWarnings("unchecked")
-	public static StudentDiplomaInformation buildFromXmlFile(InputStream stream, String fileName) {
+    @SuppressWarnings("unchecked")
+    public static StudentDiplomaInformation buildFromXmlFile(InputStream stream, String fileName) {
 
-		final StudentDiplomaInformation result = createFrom(parseXml(stream));
-		result.filename = fileName;
+        final StudentDiplomaInformation result = createFrom(parseXml(stream));
+        result.filename = fileName;
 
-		return result;
-	}
+        return result;
+    }
 
-	private static StudentDiplomaInformation createFrom(final Map<String, String> parseResult) {
-		final StudentDiplomaInformation result = new StudentDiplomaInformation();
+    private static StudentDiplomaInformation createFrom(final Map<String, String> parseResult) {
+        final StudentDiplomaInformation result = new StudentDiplomaInformation();
 
-		result.isMasterDegree = Boolean.parseBoolean(parseResult.get("MasterDegree"));
-		result.graduateTitle = parseResult.get("GraduateTitle");
-		result.name = parseResult.get("Name");
-		result.nameOfFather = parseResult.get("NameOfFather");
-		result.nameOfMother = parseResult.get("NameOfMother");
-		result.birthLocale = parseResult.get("BirthLocale");
-		result.degreeName = parseResult.get("DegreeFilteredName");
-		result.dissertationTitle = parseResult.get("DissertationTitle");
-		result.classificationResult = parseResult.get("ClassificationResult");
-		result.conclusionDate = parseDate(parseResult.get("ConclusionDate"));
+        result.isMasterDegree = Boolean.parseBoolean(parseResult.get("MasterDegree"));
+        result.graduateTitle = parseResult.get("GraduateTitle");
+        result.name = parseResult.get("Name");
+        result.nameOfFather = parseResult.get("NameOfFather");
+        result.nameOfMother = parseResult.get("NameOfMother");
+        result.birthLocale = parseResult.get("BirthLocale");
+        result.degreeName = parseResult.get("DegreeFilteredName");
+        result.dissertationTitle = parseResult.get("DissertationTitle");
+        result.classificationResult = parseResult.get("ClassificationResult");
+        result.conclusionDate = parseDate(parseResult.get("ConclusionDate"));
 
-		return result;
-	}
+        return result;
+    }
 
-	@SuppressWarnings("unchecked")
-	private static Map<String, String> parseXml(InputStream stream) {
+    @SuppressWarnings("unchecked")
+    private static Map<String, String> parseXml(InputStream stream) {
 
-		try {
-			final SAXBuilder parser = new SAXBuilder(false);
-			final Document document = parser.build(stream);
-			final Element rootElement = document.getRootElement();
-			final Map<String, String> result = new HashMap<String, String>();
+        try {
+            final SAXBuilder parser = new SAXBuilder(false);
+            final Document document = parser.build(stream);
+            final Element rootElement = document.getRootElement();
+            final Map<String, String> result = new HashMap<String, String>();
 
-			if (rootElement.getName().equals("Aluno_Mestrado")) {
-				result.put("MasterDegree", Boolean.TRUE.toString());
-			} else if (rootElement.getName().equals("Aluno_Doutoramento")) {
-				result.put("MasterDegree", Boolean.FALSE.toString());
-			} else {
-				throw new RuntimeException("Unexpected diploma type");
-			}
+            if (rootElement.getName().equals("Aluno_Mestrado")) {
+                result.put("MasterDegree", Boolean.TRUE.toString());
+            } else if (rootElement.getName().equals("Aluno_Doutoramento")) {
+                result.put("MasterDegree", Boolean.FALSE.toString());
+            } else {
+                throw new RuntimeException("Unexpected diploma type");
+            }
 
-			final Element diplomaElement = rootElement.getChild("Carta_Curso");
-			for (final Element childElement : (List<Element>) diplomaElement.getChildren()) {
-				result.put(childElement.getName(), childElement.getValue());
-			}
+            final Element diplomaElement = rootElement.getChild("Carta_Curso");
+            for (final Element childElement : (List<Element>) diplomaElement.getChildren()) {
+                result.put(childElement.getName(), childElement.getValue());
+            }
 
-			return result;
+            return result;
 
-		} catch (JDOMException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        } catch (JDOMException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private static YearMonthDay parseDate(final String rawDate) {
-		try {
-			return YearMonthDay.fromDateFields(DATE_FORMAT.parse(rawDate));
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private static YearMonthDay parseDate(final String rawDate) {
+        try {
+            return YearMonthDay.fromDateFields(DATE_FORMAT.parse(rawDate));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public String getGraduateTitle() {
-		return graduateTitle;
-	}
+    public String getGraduateTitle() {
+        return graduateTitle;
+    }
 
-	public void setGraduateTitle(String graduateTitle) {
-		this.graduateTitle = graduateTitle;
-	}
+    public void setGraduateTitle(String graduateTitle) {
+        this.graduateTitle = graduateTitle;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getNameOfFather() {
-		return nameOfFather;
-	}
+    public String getNameOfFather() {
+        return nameOfFather;
+    }
 
-	public void setNameOfFather(String nameOfFather) {
-		this.nameOfFather = nameOfFather;
-	}
+    public void setNameOfFather(String nameOfFather) {
+        this.nameOfFather = nameOfFather;
+    }
 
-	public String getNameOfMother() {
-		return nameOfMother;
-	}
+    public String getNameOfMother() {
+        return nameOfMother;
+    }
 
-	public void setNameOfMother(String nameOfMother) {
-		this.nameOfMother = nameOfMother;
-	}
+    public void setNameOfMother(String nameOfMother) {
+        this.nameOfMother = nameOfMother;
+    }
 
-	public String getBirthLocale() {
-		return birthLocale;
-	}
+    public String getBirthLocale() {
+        return birthLocale;
+    }
 
-	public void setBirthLocale(String birthLocale) {
-		this.birthLocale = birthLocale;
-	}
+    public void setBirthLocale(String birthLocale) {
+        this.birthLocale = birthLocale;
+    }
 
-	public String getDegreeName() {
-		return degreeName;
-	}
+    public String getDegreeName() {
+        return degreeName;
+    }
 
-	public void setDegreeName(String degreeName) {
-		this.degreeName = degreeName;
-	}
+    public void setDegreeName(String degreeName) {
+        this.degreeName = degreeName;
+    }
 
-	public String getDissertationTitle() {
-		return dissertationTitle;
-	}
+    public String getDissertationTitle() {
+        return dissertationTitle;
+    }
 
-	public void setDissertationTitle(String dissertationTitle) {
-		this.dissertationTitle = dissertationTitle;
-	}
+    public void setDissertationTitle(String dissertationTitle) {
+        this.dissertationTitle = dissertationTitle;
+    }
 
-	public String getClassificationResult() {
-		return classificationResult;
-	}
+    public String getClassificationResult() {
+        return classificationResult;
+    }
 
-	public void setClassificationResult(String classificationResult) {
-		this.classificationResult = classificationResult;
-	}
+    public void setClassificationResult(String classificationResult) {
+        this.classificationResult = classificationResult;
+    }
 
-	public YearMonthDay getConclusionDate() {
-		return conclusionDate;
-	}
+    public YearMonthDay getConclusionDate() {
+        return conclusionDate;
+    }
 
-	public void setConclusionDate(YearMonthDay conclusionDate) {
-		this.conclusionDate = conclusionDate;
-	}
+    public void setConclusionDate(YearMonthDay conclusionDate) {
+        this.conclusionDate = conclusionDate;
+    }
 
-	public boolean isMasterDegree() {
-		return isMasterDegree;
-	}
+    public boolean isMasterDegree() {
+        return isMasterDegree;
+    }
 
-	public void setMasterDegree(boolean isMasterDegree) {
-		this.isMasterDegree = isMasterDegree;
-	}
+    public void setMasterDegree(boolean isMasterDegree) {
+        this.isMasterDegree = isMasterDegree;
+    }
 
-	public String getFilename() {
-		return filename;
-	}
+    public String getFilename() {
+        return filename;
+    }
 
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
 }

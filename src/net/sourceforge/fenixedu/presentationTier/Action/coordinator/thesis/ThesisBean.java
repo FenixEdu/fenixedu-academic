@@ -18,186 +18,186 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisBean implements Serializable {
 
-	/**
-	 * Serial version id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	private Student student;
+    private Student student;
 
-	private PersonTarget targetType;
-	private ThesisEvaluationParticipant target;
+    private PersonTarget targetType;
+    private ThesisEvaluationParticipant target;
 
-	private Degree degree;
-	private boolean internal;
-	private String rawPersonName;
-	private PersonName personName;
-	private UnitName unitName;
-	private String rawUnitName;
+    private Degree degree;
+    private boolean internal;
+    private String rawPersonName;
+    private PersonName personName;
+    private UnitName unitName;
+    private String rawUnitName;
 
-	private MultiLanguageString title;
-	private String comment;
+    private MultiLanguageString title;
+    private String comment;
 
-	private String mark;
-	private DateTime discussion;
+    private String mark;
+    private DateTime discussion;
 
-	private Thesis thesis;
+    private Thesis thesis;
 
-	public ThesisBean() {
-		super();
+    public ThesisBean() {
+        super();
 
-		this.degree = null;
-		this.student = null;
-		this.personName = null;
-		this.unitName = null;
-		this.target = null;
+        this.degree = null;
+        this.student = null;
+        this.personName = null;
+        this.unitName = null;
+        this.target = null;
 
-		this.internal = true;
-	}
+        this.internal = true;
+    }
 
-	public ThesisBean(final Thesis thesis) {
-		this();
-		setThesis(thesis);
-	}
+    public ThesisBean(final Thesis thesis) {
+        this();
+        setThesis(thesis);
+    }
 
-	public Degree getDegree() {
-		return this.degree;
-	}
+    public Degree getDegree() {
+        return this.degree;
+    }
 
-	public void setDegree(Degree degree) {
-		this.degree = degree;
-	}
+    public void setDegree(Degree degree) {
+        this.degree = degree;
+    }
 
-	public Student getStudent() {
-		return this.student;
-	}
+    public Student getStudent() {
+        return this.student;
+    }
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
-	public PersonTarget getTargetType() {
-		return this.targetType;
-	}
+    public PersonTarget getTargetType() {
+        return this.targetType;
+    }
 
-	public void setTargetType(PersonTarget target) {
-		this.targetType = target;
-	}
+    public void setTargetType(PersonTarget target) {
+        this.targetType = target;
+    }
 
-	public ThesisEvaluationParticipant getTarget() {
-		return this.target;
-	}
+    public ThesisEvaluationParticipant getTarget() {
+        return this.target;
+    }
 
-	public void setTarget(ThesisEvaluationParticipant target) {
-		this.target = target;
-	}
+    public void setTarget(ThesisEvaluationParticipant target) {
+        this.target = target;
+    }
 
-	public Person getPerson() {
-		PersonName personName = getPersonName();
+    public Person getPerson() {
+        PersonName personName = getPersonName();
 
-		if (personName == null) {
-			return null;
-		} else {
-			return personName.getPerson();
-		}
-	}
+        if (personName == null) {
+            return null;
+        } else {
+            return personName.getPerson();
+        }
+    }
 
-	public PersonName getPersonName() {
-		return this.personName;
-	}
+    public PersonName getPersonName() {
+        return this.personName;
+    }
 
-	public boolean isInternal() {
-		return this.internal;
-	}
+    public boolean isInternal() {
+        return this.internal;
+    }
 
-	public void setInternal(boolean internal) {
-		this.internal = internal;
-	}
+    public void setInternal(boolean internal) {
+        this.internal = internal;
+    }
 
-	public void setPersonName(PersonName personName) {
-		this.personName = personName;
-	}
+    public void setPersonName(PersonName personName) {
+        this.personName = personName;
+    }
 
-	public Unit getUnit() {
-		UnitName unitName = getUnitName();
+    public Unit getUnit() {
+        UnitName unitName = getUnitName();
 
-		if (unitName == null) {
-			return null;
-		} else {
-			return unitName.getUnit();
-		}
-	}
+        if (unitName == null) {
+            return null;
+        } else {
+            return unitName.getUnit();
+        }
+    }
 
-	public UnitName getUnitName() {
-		return this.unitName;
-	}
+    public UnitName getUnitName() {
+        return this.unitName;
+    }
 
-	public void setUnitName(UnitName unitName) {
-		this.unitName = unitName;
-	}
+    public void setUnitName(UnitName unitName) {
+        this.unitName = unitName;
+    }
 
-	public String getRawPersonName() {
-		return this.rawPersonName;
-	}
+    public String getRawPersonName() {
+        return this.rawPersonName;
+    }
 
-	public void setRawPersonName(String rawPersonName) {
-		this.rawPersonName = rawPersonName;
-	}
+    public void setRawPersonName(String rawPersonName) {
+        this.rawPersonName = rawPersonName;
+    }
 
-	public String getRawUnitName() {
-		return this.rawUnitName;
-	}
+    public String getRawUnitName() {
+        return this.rawUnitName;
+    }
 
-	public void setRawUnitName(String rawUnitName) {
-		this.rawUnitName = rawUnitName;
-	}
+    public void setRawUnitName(String rawUnitName) {
+        this.rawUnitName = rawUnitName;
+    }
 
-	public MultiLanguageString getTitle() {
-		return this.title;
-	}
+    public MultiLanguageString getTitle() {
+        return this.title;
+    }
 
-	public void setTitle(MultiLanguageString title) {
-		this.title = title;
-	}
+    public void setTitle(MultiLanguageString title) {
+        this.title = title;
+    }
 
-	public MultiLanguageString getFinalTitle() {
-		return getTitle();
-	}
+    public MultiLanguageString getFinalTitle() {
+        return getTitle();
+    }
 
-	public void setFinalTitle(MultiLanguageString title) {
-		setTitle(title);
-	}
+    public void setFinalTitle(MultiLanguageString title) {
+        setTitle(title);
+    }
 
-	public String getComment() {
-		return this.comment;
-	}
+    public String getComment() {
+        return this.comment;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	public DateTime getDiscussion() {
-		return this.discussion;
-	}
+    public DateTime getDiscussion() {
+        return this.discussion;
+    }
 
-	public void setDiscussion(DateTime discussion) {
-		this.discussion = discussion;
-	}
+    public void setDiscussion(DateTime discussion) {
+        this.discussion = discussion;
+    }
 
-	public String getMark() {
-		return this.mark;
-	}
+    public String getMark() {
+        return this.mark;
+    }
 
-	public void setMark(String mark) {
-		this.mark = mark;
-	}
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
 
-	public Thesis getThesis() {
-		return thesis;
-	}
+    public Thesis getThesis() {
+        return thesis;
+    }
 
-	public void setThesis(final Thesis thesis) {
-		this.thesis = thesis;
-	}
+    public void setThesis(final Thesis thesis) {
+        this.thesis = thesis;
+    }
 
 }

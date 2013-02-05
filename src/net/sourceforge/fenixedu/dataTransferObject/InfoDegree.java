@@ -14,94 +14,94 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoDegree extends InfoObject implements Comparable {
 
-	private final Degree degreeDomainReference;
+    private final Degree degreeDomainReference;
 
-	private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
-	public InfoDegree(final Degree degree) {
-		degreeDomainReference = degree;
-	}
+    public InfoDegree(final Degree degree) {
+        degreeDomainReference = degree;
+    }
 
-	public Degree getDegree() {
-		return degreeDomainReference;
-	}
+    public Degree getDegree() {
+        return degreeDomainReference;
+    }
 
-	@Override
-	public String toString() {
-		return getDegree().toString();
-	}
+    @Override
+    public String toString() {
+        return getDegree().toString();
+    }
 
-	public String getSigla() {
-		return getDegree().getSigla();
-	}
+    public String getSigla() {
+        return getDegree().getSigla();
+    }
 
-	public String getNome() {
-		return showEnVersion && !StringUtils.isEmpty(getNameEn()) ? getNameEn() : getDegree().getNome();
-	}
+    public String getNome() {
+        return showEnVersion && !StringUtils.isEmpty(getNameEn()) ? getNameEn() : getDegree().getNome();
+    }
 
-	public String getPresentationName() {
-		return getDegree().getPresentationName();
-	}
+    public String getPresentationName() {
+        return getDegree().getPresentationName();
+    }
 
-	public String getNameEn() {
-		return getDegree().getNameEn();
-	}
+    public String getNameEn() {
+        return getDegree().getNameEn();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof InfoDegree && getDegree().equals(((InfoDegree) obj).getDegree());
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof InfoDegree && getDegree().equals(((InfoDegree) obj).getDegree());
+    }
 
-	public boolean isBolonhaDegree() {
-		return getDegree().isBolonhaDegree();
-	}
+    public boolean isBolonhaDegree() {
+        return getDegree().isBolonhaDegree();
+    }
 
-	public Enum getDegreeType() {
-		return getDegree().getDegreeType();
-	}
+    public Enum getDegreeType() {
+        return getDegree().getDegreeType();
+    }
 
-	public Enum getTipoCurso() {
-		return getDegree().getDegreeType();
-	}
+    public Enum getTipoCurso() {
+        return getDegree().getDegreeType();
+    }
 
-	public List getInfoDegreeCurricularPlans() {
-		final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
-		for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlansSet()) {
-			infoDegreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
-		}
-		return infoDegreeCurricularPlans;
-	}
+    public List getInfoDegreeCurricularPlans() {
+        final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlansSet()) {
+            infoDegreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
+        }
+        return infoDegreeCurricularPlans;
+    }
 
-	@Override
-	public int compareTo(Object arg0) {
-		InfoDegree degree = (InfoDegree) arg0;
-		return this.getNome().compareTo(degree.getNome());
-	}
+    @Override
+    public int compareTo(Object arg0) {
+        InfoDegree degree = (InfoDegree) arg0;
+        return this.getNome().compareTo(degree.getNome());
+    }
 
-	public List getInfoDegreeInfos() {
-		final List<InfoDegreeInfo> infoDegreeInfos = new ArrayList<InfoDegreeInfo>();
-		for (final DegreeInfo degreeInfo : getDegree().getDegreeInfosSet()) {
-			infoDegreeInfos.add(InfoDegreeInfo.newInfoFromDomain(degreeInfo));
-		}
-		return infoDegreeInfos;
-	}
+    public List getInfoDegreeInfos() {
+        final List<InfoDegreeInfo> infoDegreeInfos = new ArrayList<InfoDegreeInfo>();
+        for (final DegreeInfo degreeInfo : getDegree().getDegreeInfosSet()) {
+            infoDegreeInfos.add(InfoDegreeInfo.newInfoFromDomain(degreeInfo));
+        }
+        return infoDegreeInfos;
+    }
 
-	public GradeScale getGradeScale() {
-		return getDegree().getGradeScale();
-	}
+    public GradeScale getGradeScale() {
+        return getDegree().getGradeScale();
+    }
 
-	public static InfoDegree newInfoFromDomain(final Degree degree) {
-		return degree == null ? null : new InfoDegree(degree);
-	}
+    public static InfoDegree newInfoFromDomain(final Degree degree) {
+        return degree == null ? null : new InfoDegree(degree);
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getDegree().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getDegree().getIdInternal();
+    }
 
-	@Override
-	public void setIdInternal(Integer integer) {
-		throw new Error("Method should not be called!");
-	}
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
 
 }

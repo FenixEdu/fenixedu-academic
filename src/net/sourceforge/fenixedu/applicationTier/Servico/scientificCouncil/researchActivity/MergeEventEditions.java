@@ -8,26 +8,26 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipati
 
 public class MergeEventEditions extends FenixService {
 
-	public void run(MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean) {
-		EventEdition eventEdition = new EventEdition(mergeEventEditionPageContainerBean.getEvent());
-		eventEdition.setEdition(mergeEventEditionPageContainerBean.getEdition());
-		eventEdition.setEventLocation(mergeEventEditionPageContainerBean.getEventLocation());
-		eventEdition.setStartDate(mergeEventEditionPageContainerBean.getStartDate());
-		eventEdition.setEndDate(mergeEventEditionPageContainerBean.getEndDate());
-		eventEdition.setUrl(mergeEventEditionPageContainerBean.getUrl());
-		eventEdition.setOrganization(mergeEventEditionPageContainerBean.getOrganization());
+    public void run(MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean) {
+        EventEdition eventEdition = new EventEdition(mergeEventEditionPageContainerBean.getEvent());
+        eventEdition.setEdition(mergeEventEditionPageContainerBean.getEdition());
+        eventEdition.setEventLocation(mergeEventEditionPageContainerBean.getEventLocation());
+        eventEdition.setStartDate(mergeEventEditionPageContainerBean.getStartDate());
+        eventEdition.setEndDate(mergeEventEditionPageContainerBean.getEndDate());
+        eventEdition.setUrl(mergeEventEditionPageContainerBean.getUrl());
+        eventEdition.setOrganization(mergeEventEditionPageContainerBean.getOrganization());
 
-		for (DomainObject domainObject : mergeEventEditionPageContainerBean.getSelectedObjects()) {
-			EventEdition edition = (EventEdition) domainObject;
-			eventEdition.getEventConferenceArticlesAssociations().addAll(edition.getEventConferenceArticlesAssociations());
-			eventEdition.getAssociatedProjects().addAll(edition.getAssociatedProjects());
+        for (DomainObject domainObject : mergeEventEditionPageContainerBean.getSelectedObjects()) {
+            EventEdition edition = (EventEdition) domainObject;
+            eventEdition.getEventConferenceArticlesAssociations().addAll(edition.getEventConferenceArticlesAssociations());
+            eventEdition.getAssociatedProjects().addAll(edition.getAssociatedProjects());
 
-			for (EventEditionParticipation eventEditionParticipation : edition.getParticipationsSet()) {
-				eventEdition.addUniqueParticipation(eventEditionParticipation);
-			}
+            for (EventEditionParticipation eventEditionParticipation : edition.getParticipationsSet()) {
+                eventEdition.addUniqueParticipation(eventEditionParticipation);
+            }
 
-			edition.delete();
-		}
-	}
+            edition.delete();
+        }
+    }
 
 }

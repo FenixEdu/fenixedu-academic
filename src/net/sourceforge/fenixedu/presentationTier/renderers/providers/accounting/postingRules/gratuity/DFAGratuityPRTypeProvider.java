@@ -13,34 +13,34 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DFAGratuityPRTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(DFAGratuityByAmountPerEctsPR.class, DFAGratuityByNumberOfEnrolmentsPR.class);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(DFAGratuityByAmountPerEctsPR.class, DFAGratuityByNumberOfEnrolmentsPR.class);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new BiDirectionalConverter() {
+    @Override
+    public Converter getConverter() {
+        return new BiDirectionalConverter() {
 
-			/**
+            /**
 	     * 
 	     */
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public String deserialize(Object target) {
-				return ((Class<?>) target).getName();
-			}
+            @Override
+            public String deserialize(Object target) {
+                return ((Class<?>) target).getName();
+            }
 
-			@Override
-			public Object convert(Class type, Object target) {
-				try {
-					return Class.forName((String) target);
-				} catch (ClassNotFoundException e) {
-					throw new RuntimeCacheException(e);
-				}
-			}
-		};
-	}
+            @Override
+            public Object convert(Class type, Object target) {
+                try {
+                    return Class.forName((String) target);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeCacheException(e);
+                }
+            }
+        };
+    }
 
 }

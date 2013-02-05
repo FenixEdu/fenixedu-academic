@@ -49,447 +49,446 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/paymentsManagement", module = "manager")
 @Forwards({
-		@Forward(name = "searchPersons", path = "/manager/payments/events/searchPersons.jsp"),
-		@Forward(name = "showEvents", path = "/manager/payments/events/showEvents.jsp"),
-		@Forward(name = "editCancelEventJustification", path = "/manager/payments/events/editCancelEventJustification.jsp"),
-		@Forward(name = "showPaymentsForEvent", path = "/manager/payments/events/showPaymentsForEvent.jsp"),
-		@Forward(
-				name = "chooseTargetEventForPaymentsTransfer",
-				path = "/manager/payments/events/chooseTargetEventForPaymentsTransfer.jsp"),
-		@Forward(name = "annulTransaction", path = "/manager/payments/events/annulTransaction.jsp"),
-		@Forward(name = "showOperations", path = "/manager/payments/showOperations.jsp"),
-		@Forward(name = "showReceipts", path = "/manager/payments/receipts/showReceipts.jsp"),
-		@Forward(name = "showReceipt", path = "/manager/payments/receipts/showReceipt.jsp"),
-		@Forward(name = "depositAmount", path = "/manager/payments/events/depositAmount.jsp"),
-		@Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
-		@Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp"),
-		@Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp"),
-		@Forward(name = "viewEventsForCancellation", path = "/manager/payments/events/viewEventsForCancellation.jsp") })
+        @Forward(name = "searchPersons", path = "/manager/payments/events/searchPersons.jsp"),
+        @Forward(name = "showEvents", path = "/manager/payments/events/showEvents.jsp"),
+        @Forward(name = "editCancelEventJustification", path = "/manager/payments/events/editCancelEventJustification.jsp"),
+        @Forward(name = "showPaymentsForEvent", path = "/manager/payments/events/showPaymentsForEvent.jsp"),
+        @Forward(name = "chooseTargetEventForPaymentsTransfer",
+                path = "/manager/payments/events/chooseTargetEventForPaymentsTransfer.jsp"),
+        @Forward(name = "annulTransaction", path = "/manager/payments/events/annulTransaction.jsp"),
+        @Forward(name = "showOperations", path = "/manager/payments/showOperations.jsp"),
+        @Forward(name = "showReceipts", path = "/manager/payments/receipts/showReceipts.jsp"),
+        @Forward(name = "showReceipt", path = "/manager/payments/receipts/showReceipt.jsp"),
+        @Forward(name = "depositAmount", path = "/manager/payments/events/depositAmount.jsp"),
+        @Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
+        @Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp"),
+        @Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp"),
+        @Forward(name = "viewEventsForCancellation", path = "/manager/payments/events/viewEventsForCancellation.jsp") })
 public class PaymentsManagementDA extends FenixDispatchAction {
 
-	public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("searchPersonBean", new SimpleSearchPersonWithStudentBean());
+        request.setAttribute("searchPersonBean", new SimpleSearchPersonWithStudentBean());
 
-		return mapping.findForward("searchPersons");
-	}
+        return mapping.findForward("searchPersons");
+    }
 
-	public ActionForward prepareSearchPersonInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSearchPersonInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("searchPersonBean", getObjectFromViewState("searchPersonBean"));
+        request.setAttribute("searchPersonBean", getObjectFromViewState("searchPersonBean"));
 
-		return mapping.findForward("searchPersons");
-	}
+        return mapping.findForward("searchPersons");
+    }
 
-	public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		final SimpleSearchPersonWithStudentBean searchPersonBean =
-				(SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
-		request.setAttribute("searchPersonBean", searchPersonBean);
+    public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        final SimpleSearchPersonWithStudentBean searchPersonBean =
+                (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
+        request.setAttribute("searchPersonBean", searchPersonBean);
 
-		final Collection<Person> persons = searchPerson(request, searchPersonBean);
-		if (persons.size() == 1) {
-			request.setAttribute("personId", persons.iterator().next().getIdInternal());
+        final Collection<Person> persons = searchPerson(request, searchPersonBean);
+        if (persons.size() == 1) {
+            request.setAttribute("personId", persons.iterator().next().getIdInternal());
 
-			return showOperations(mapping, form, request, response);
+            return showOperations(mapping, form, request, response);
 
-		}
+        }
 
-		request.setAttribute("persons", persons);
-		return mapping.findForward("searchPersons");
-	}
+        request.setAttribute("persons", persons);
+        return mapping.findForward("searchPersons");
+    }
 
-	public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		request.setAttribute("person", getPerson(request));
+        request.setAttribute("person", getPerson(request));
 
-		return mapping.findForward("showEvents");
+        return mapping.findForward("showEvents");
 
-	}
+    }
 
-	public ActionForward showPaymentsForEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showPaymentsForEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final Event event = getEvent(request);
-		request.setAttribute("event", event);
+        final Event event = getEvent(request);
+        request.setAttribute("event", event);
 
-		if (!StringUtils.isEmpty(event.getCreatedBy())) {
-			User responsible = User.readUserByUserUId(event.getCreatedBy());
-			request.setAttribute("responsible", responsible.getPerson());
-		}
+        if (!StringUtils.isEmpty(event.getCreatedBy())) {
+            User responsible = User.readUserByUserUId(event.getCreatedBy());
+            request.setAttribute("responsible", responsible.getPerson());
+        }
 
-		if (event.isOpen()) {
-			request.setAttribute("entryDTOs", event.calculateEntries());
-			request.setAttribute("accountingEventPaymentCodes", event.getNonProcessedPaymentCodes());
-		}
+        if (event.isOpen()) {
+            request.setAttribute("entryDTOs", event.calculateEntries());
+            request.setAttribute("accountingEventPaymentCodes", event.getNonProcessedPaymentCodes());
+        }
 
-		return mapping.findForward("showPaymentsForEvent");
-	}
+        return mapping.findForward("showPaymentsForEvent");
+    }
 
-	private Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
-			throws FenixFilterException, FenixServiceException {
-		final SearchParameters searchParameters =
-				new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
-						searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
-								.getIdDocumentType().toString() : null, null, null, null, null, null,
-						searchPersonBean.getStudentNumber(), Boolean.FALSE, searchPersonBean.getPaymentCode());
+    private Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
+            throws FenixFilterException, FenixServiceException {
+        final SearchParameters searchParameters =
+                new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
+                        searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
+                                .getIdDocumentType().toString() : null, null, null, null, null, null,
+                        searchPersonBean.getStudentNumber(), Boolean.FALSE, searchPersonBean.getPaymentCode());
 
-		final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+        final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-		final CollectionPager<Person> result =
-				(CollectionPager<Person>) executeService("SearchPerson", new Object[] { searchParameters, predicate });
+        final CollectionPager<Person> result =
+                (CollectionPager<Person>) executeService("SearchPerson", new Object[] { searchParameters, predicate });
 
-		return result.getCollection();
+        return result.getCollection();
 
-	}
+    }
 
-	public ActionForward prepareCancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("cancelEventBean", new CancelEventBean(getEvent(request), getLoggedPerson(request)));
+        request.setAttribute("cancelEventBean", new CancelEventBean(getEvent(request), getLoggedPerson(request)));
 
-		return mapping.findForward("editCancelEventJustification");
-	}
+        return mapping.findForward("editCancelEventJustification");
+    }
 
-	public ActionForward cancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward cancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final CancelEventBean cancelEventBean = getCancelEventBean();
+        final CancelEventBean cancelEventBean = getCancelEventBean();
 
-		try {
-			CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getResponsible(), cancelEventBean.getJustification());
-		} catch (DomainExceptionWithLabelFormatter ex) {
+        try {
+            CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getResponsible(), cancelEventBean.getJustification());
+        } catch (DomainExceptionWithLabelFormatter ex) {
 
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-			request.setAttribute("cancelEventBean", cancelEventBean);
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+            request.setAttribute("cancelEventBean", cancelEventBean);
 
-			return mapping.findForward("editCancelEventJustification");
-		} catch (DomainException ex) {
+            return mapping.findForward("editCancelEventJustification");
+        } catch (DomainException ex) {
 
-			addActionMessage(request, ex.getKey(), ex.getArgs());
-			request.setAttribute("cancelEventBean", cancelEventBean);
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+            request.setAttribute("cancelEventBean", cancelEventBean);
 
-			return mapping.findForward("editCancelEventJustification");
-		}
+            return mapping.findForward("editCancelEventJustification");
+        }
 
-		request.setAttribute("person", cancelEventBean.getEvent().getPerson());
+        request.setAttribute("person", cancelEventBean.getEvent().getPerson());
 
-		return mapping.findForward("showEvents");
+        return mapping.findForward("showEvents");
 
-	}
+    }
 
-	public ActionForward openEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		try {
-			OpenEvent.run(getEvent(request));
-		} catch (DomainExceptionWithLabelFormatter ex) {
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getKey(), ex.getArgs());
-		}
+    public ActionForward openEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        try {
+            OpenEvent.run(getEvent(request));
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+        }
 
-		request.setAttribute("personId", getEvent(request).getPerson().getIdInternal());
+        request.setAttribute("personId", getEvent(request).getPerson().getIdInternal());
 
-		return showEvents(mapping, form, request, response);
+        return showEvents(mapping, form, request, response);
 
-	}
+    }
 
-	private CancelEventBean getCancelEventBean() {
-		final CancelEventBean cancelEventBean = (CancelEventBean) getObjectFromViewState("cancelEventBean");
-		return cancelEventBean;
-	}
+    private CancelEventBean getCancelEventBean() {
+        final CancelEventBean cancelEventBean = (CancelEventBean) getObjectFromViewState("cancelEventBean");
+        return cancelEventBean;
+    }
 
-	public ActionForward backToShowEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward backToShowEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("person", getPerson(request));
+        request.setAttribute("person", getPerson(request));
 
-		return mapping.findForward("showEvents");
+        return mapping.findForward("showEvents");
 
-	}
+    }
 
-	protected Person getPerson(HttpServletRequest request) {
-		return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
-	}
+    protected Person getPerson(HttpServletRequest request) {
+        return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+    }
 
-	private Event getEvent(HttpServletRequest request) {
-		return rootDomainObject.readEventByOID(getIntegerFromRequest(request, "eventId"));
-	}
+    private Event getEvent(HttpServletRequest request) {
+        return rootDomainObject.readEventByOID(getIntegerFromRequest(request, "eventId"));
+    }
 
-	public ActionForward prepareTransferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareTransferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final Event event = getEvent(request);
+        final Event event = getEvent(request);
 
-		final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean =
-				new TransferPaymentsToOtherEventAndCancelBean(event, getLoggedPerson(request));
+        final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean =
+                new TransferPaymentsToOtherEventAndCancelBean(event, getLoggedPerson(request));
 
-		request.setAttribute("transferPaymentsBean", transferPaymentsBean);
+        request.setAttribute("transferPaymentsBean", transferPaymentsBean);
 
-		return mapping.findForward("chooseTargetEventForPaymentsTransfer");
+        return mapping.findForward("chooseTargetEventForPaymentsTransfer");
 
-	}
+    }
 
-	public ActionForward transferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward transferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean =
-				(TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
+        final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean =
+                (TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
 
-		try {
-			TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getResponsible(),
-					transferPaymentsBean.getSourceEvent(), transferPaymentsBean.getTargetEvent(),
-					transferPaymentsBean.getCancelJustification());
-		} catch (DomainExceptionWithLabelFormatter ex) {
+        try {
+            TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getResponsible(),
+                    transferPaymentsBean.getSourceEvent(), transferPaymentsBean.getTargetEvent(),
+                    transferPaymentsBean.getCancelJustification());
+        } catch (DomainExceptionWithLabelFormatter ex) {
 
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-			request.setAttribute("transferPaymentsBean", transferPaymentsBean);
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+            request.setAttribute("transferPaymentsBean", transferPaymentsBean);
 
-			return mapping.findForward("chooseTargetEventForPaymentsTransfer");
-		} catch (DomainException ex) {
+            return mapping.findForward("chooseTargetEventForPaymentsTransfer");
+        } catch (DomainException ex) {
 
-			addActionMessage(request, ex.getKey(), ex.getArgs());
-			request.setAttribute("transferPaymentsBean", transferPaymentsBean);
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+            request.setAttribute("transferPaymentsBean", transferPaymentsBean);
 
-			return mapping.findForward("chooseTargetEventForPaymentsTransfer");
-		}
+            return mapping.findForward("chooseTargetEventForPaymentsTransfer");
+        }
 
-		request.setAttribute("event", transferPaymentsBean.getSourceEvent());
+        request.setAttribute("event", transferPaymentsBean.getSourceEvent());
 
-		return mapping.findForward("showPaymentsForEvent");
+        return mapping.findForward("showPaymentsForEvent");
 
-	}
+    }
 
-	public ActionForward prepareAnnulTransaction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareAnnulTransaction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("annulAccountingTransactionBean", new AnnulAccountingTransactionBean(getTransaction(request)));
+        request.setAttribute("annulAccountingTransactionBean", new AnnulAccountingTransactionBean(getTransaction(request)));
 
-		return mapping.findForward("annulTransaction");
+        return mapping.findForward("annulTransaction");
 
-	}
+    }
 
-	public ActionForward prepareAnnulTransactionInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareAnnulTransactionInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("annulAccountingTransactionBean", getObjectFromViewState("annulAccountingTransactionBean"));
+        request.setAttribute("annulAccountingTransactionBean", getObjectFromViewState("annulAccountingTransactionBean"));
 
-		return mapping.findForward("annulTransaction");
-	}
+        return mapping.findForward("annulTransaction");
+    }
 
-	public ActionForward annulTransaction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		final AnnulAccountingTransactionBean annulAccountingTransactionBean =
-				(AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
-		try {
+    public ActionForward annulTransaction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        final AnnulAccountingTransactionBean annulAccountingTransactionBean =
+                (AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
+        try {
 
-			AnnulAccountingTransaction.run(getLoggedPerson(request).getEmployee(), annulAccountingTransactionBean);
-		} catch (DomainExceptionWithLabelFormatter ex) {
+            AnnulAccountingTransaction.run(getLoggedPerson(request).getEmployee(), annulAccountingTransactionBean);
+        } catch (DomainExceptionWithLabelFormatter ex) {
 
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-			request.setAttribute("annulAccountingTransactionBean", annulAccountingTransactionBean);
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+            request.setAttribute("annulAccountingTransactionBean", annulAccountingTransactionBean);
 
-			return mapping.findForward("annulTransaction");
-		} catch (DomainException ex) {
+            return mapping.findForward("annulTransaction");
+        } catch (DomainException ex) {
 
-			addActionMessage(request, ex.getKey(), ex.getArgs());
-			request.setAttribute("annulAccountingTransactionBean", annulAccountingTransactionBean);
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+            request.setAttribute("annulAccountingTransactionBean", annulAccountingTransactionBean);
 
-			return mapping.findForward("annulTransaction");
-		}
+            return mapping.findForward("annulTransaction");
+        }
 
-		return showEvents(mapping, form, request, response);
-	}
+        return showEvents(mapping, form, request, response);
+    }
 
-	private AccountingTransaction getTransaction(HttpServletRequest request) {
-		return rootDomainObject.readAccountingTransactionByOID(getIntegerFromRequest(request, "transactionId"));
-	}
+    private AccountingTransaction getTransaction(HttpServletRequest request) {
+        return rootDomainObject.readAccountingTransactionByOID(getIntegerFromRequest(request, "transactionId"));
+    }
 
-	public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("person", getPerson(request));
+        request.setAttribute("person", getPerson(request));
 
-		return mapping.findForward("showOperations");
-	}
+        return mapping.findForward("showOperations");
+    }
 
-	public ActionForward showReceipts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showReceipts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("person", getPerson(request));
+        request.setAttribute("person", getPerson(request));
 
-		return mapping.findForward("showReceipts");
-	}
+        return mapping.findForward("showReceipts");
+    }
 
-	public ActionForward showReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("receipt", getReceipt(request));
+        request.setAttribute("receipt", getReceipt(request));
 
-		return mapping.findForward("showReceipt");
-	}
+        return mapping.findForward("showReceipt");
+    }
 
-	public ActionForward annulReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward annulReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		try {
-			AnnulReceipt.run(getLoggedPerson(request), getReceipt(request));
-		} catch (DomainExceptionWithLabelFormatter ex) {
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getKey(), ex.getArgs());
-		}
+        try {
+            AnnulReceipt.run(getLoggedPerson(request), getReceipt(request));
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+        }
 
-		return showReceipts(mapping, form, request, response);
-	}
+        return showReceipts(mapping, form, request, response);
+    }
 
-	private Receipt getReceipt(HttpServletRequest request) {
-		return rootDomainObject.readReceiptByOID(getIntegerFromRequest(request, "receiptId"));
-	}
+    private Receipt getReceipt(HttpServletRequest request) {
+        return rootDomainObject.readReceiptByOID(getIntegerFromRequest(request, "receiptId"));
+    }
 
-	@Override
-	protected Map<String, String> getMessageResourceProviderBundleMappings() {
-		final Map<String, String> bundleMappings = new HashMap<String, String>();
-		bundleMappings.put("enum", "ENUMERATION_RESOURCES");
-		bundleMappings.put("application", "DEFAULT");
-		return bundleMappings;
-	}
+    @Override
+    protected Map<String, String> getMessageResourceProviderBundleMappings() {
+        final Map<String, String> bundleMappings = new HashMap<String, String>();
+        bundleMappings.put("enum", "ENUMERATION_RESOURCES");
+        bundleMappings.put("application", "DEFAULT");
+        return bundleMappings;
+    }
 
-	public ActionForward prepareDepositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareDepositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("depositAmountBean", new DepositAmountBean(getEvent(request)));
+        request.setAttribute("depositAmountBean", new DepositAmountBean(getEvent(request)));
 
-		return mapping.findForward("depositAmount");
-	}
+        return mapping.findForward("depositAmount");
+    }
 
-	public ActionForward prepareDepositAmountInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareDepositAmountInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("depositAmountBean", getRenderedObject("depositAmountBean"));
+        request.setAttribute("depositAmountBean", getRenderedObject("depositAmountBean"));
 
-		return mapping.findForward("depositAmount");
-	}
+        return mapping.findForward("depositAmount");
+    }
 
-	public ActionForward depositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward depositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final DepositAmountBean renderedObject = getRenderedObject("depositAmountBean");
-		try {
-			DepositAmountOnEvent.run(renderedObject);
-		} catch (DomainException e) {
-			addActionMessage(request, e.getKey(), e.getArgs());
+        final DepositAmountBean renderedObject = getRenderedObject("depositAmountBean");
+        try {
+            DepositAmountOnEvent.run(renderedObject);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
 
-			request.setAttribute("depositAmountBean", renderedObject);
+            request.setAttribute("depositAmountBean", renderedObject);
 
-			return mapping.findForward("depositAmount");
-		}
+            return mapping.findForward("depositAmount");
+        }
 
-		return showEvents(mapping, form, request, response);
-	}
+        return showEvents(mapping, form, request, response);
+    }
 
-	public ActionForward prepareViewPaymentCodeMappings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("paymentCodeMappingBean", new PaymentCodeMappingBean());
-		return mapping.findForward("viewCodes");
-	}
+    public ActionForward prepareViewPaymentCodeMappings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("paymentCodeMappingBean", new PaymentCodeMappingBean());
+        return mapping.findForward("viewCodes");
+    }
 
-	public ActionForward viewPaymentCodeMappings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewPaymentCodeMappings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PaymentCodeMappingBean bean = getRenderedObject("paymentCodeMappingBean");
-		request.setAttribute("paymentCodeMappingBean", bean);
+        final PaymentCodeMappingBean bean = getRenderedObject("paymentCodeMappingBean");
+        request.setAttribute("paymentCodeMappingBean", bean);
 
-		if (bean.hasExecutionInterval()) {
-			request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
-		}
+        if (bean.hasExecutionInterval()) {
+            request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
+        }
 
-		return mapping.findForward("viewCodes");
-	}
+        return mapping.findForward("viewCodes");
+    }
 
-	public ActionForward prepareCreatePaymentCodeMapping(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		RenderUtils.invalidateViewState();
-		final PaymentCodeMappingBean bean = new PaymentCodeMappingBean();
-		bean.setExecutionInterval((ExecutionInterval) getDomainObject(request, "executionIntervalOid"));
-		request.setAttribute("paymentCodeMappingBean", bean);
-		return mapping.findForward("createPaymentCodeMapping");
-	}
+    public ActionForward prepareCreatePaymentCodeMapping(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        RenderUtils.invalidateViewState();
+        final PaymentCodeMappingBean bean = new PaymentCodeMappingBean();
+        bean.setExecutionInterval((ExecutionInterval) getDomainObject(request, "executionIntervalOid"));
+        request.setAttribute("paymentCodeMappingBean", bean);
+        return mapping.findForward("createPaymentCodeMapping");
+    }
 
-	public ActionForward createPaymentCodeMapping(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createPaymentCodeMapping(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PaymentCodeMappingBean bean = getRenderedObject("paymentCodeMappingBean");
-		request.setAttribute("paymentCodeMappingBean", bean);
+        final PaymentCodeMappingBean bean = getRenderedObject("paymentCodeMappingBean");
+        request.setAttribute("paymentCodeMappingBean", bean);
 
-		try {
-			bean.create();
-		} catch (final DomainException e) {
-			addActionMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("createPaymentCodeMapping");
-		}
+        try {
+            bean.create();
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("createPaymentCodeMapping");
+        }
 
-		request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
-		RenderUtils.invalidateViewState();
-		bean.clear();
-		return mapping.findForward("viewCodes");
-	}
+        request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
+        RenderUtils.invalidateViewState();
+        bean.clear();
+        return mapping.findForward("viewCodes");
+    }
 
-	public ActionForward createPaymentCodeMappingInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("paymentCodeMappingBean", getRenderedObject("paymentCodeMappingBean"));
-		return mapping.findForward("createPaymentCodeMapping");
-	}
+    public ActionForward createPaymentCodeMappingInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("paymentCodeMappingBean", getRenderedObject("paymentCodeMappingBean"));
+        return mapping.findForward("createPaymentCodeMapping");
+    }
 
-	public ActionForward deletePaymentCodeMapping(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward deletePaymentCodeMapping(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PaymentCodeMapping codeMapping = getDomainObject(request, "paymentCodeMappingOid");
-		final PaymentCodeMappingBean bean = new PaymentCodeMappingBean();
-		bean.setExecutionInterval(codeMapping.getExecutionInterval());
+        final PaymentCodeMapping codeMapping = getDomainObject(request, "paymentCodeMappingOid");
+        final PaymentCodeMappingBean bean = new PaymentCodeMappingBean();
+        bean.setExecutionInterval(codeMapping.getExecutionInterval());
 
-		request.setAttribute("paymentCodeMappingBean", bean);
-		request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
+        request.setAttribute("paymentCodeMappingBean", bean);
+        request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
 
-		try {
-			codeMapping.delete();
-		} catch (final DomainException e) {
-			addActionMessage(request, e.getMessage(), e.getArgs());
-		}
+        try {
+            codeMapping.delete();
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+        }
 
-		return mapping.findForward("viewCodes");
-	}
+        return mapping.findForward("viewCodes");
+    }
 
-	public ActionForward prepareChangePaymentPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("event", getEvent(request));
-		return mapping.findForward("changePaymentPlan");
-	}
+    public ActionForward prepareChangePaymentPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("event", getEvent(request));
+        return mapping.findForward("changePaymentPlan");
+    }
 
-	public ActionForward deleteDiscount(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward deleteDiscount(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final Discount discount = getDomainObject(request, "discountOid");
-		request.setAttribute("eventId", discount.getEvent().getIdInternal());
+        final Discount discount = getDomainObject(request, "discountOid");
+        request.setAttribute("eventId", discount.getEvent().getIdInternal());
 
-		try {
-			discount.delete();
-		} catch (final DomainException e) {
-			addActionMessage(request, e.getMessage(), e.getArgs());
-		}
+        try {
+            discount.delete();
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+        }
 
-		return showPaymentsForEvent(mapping, actionForm, request, response);
-	}
+        return showPaymentsForEvent(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareViewEventsToCancel(final ActionMapping mapping, final ActionForm actionForm,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		Person person = getDomainObject(request, "personId");
-		request.setAttribute("person", person);
+    public ActionForward prepareViewEventsToCancel(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        Person person = getDomainObject(request, "personId");
+        request.setAttribute("person", person);
 
-		return mapping.findForward("viewEventsForCancellation");
-	}
+        return mapping.findForward("viewEventsForCancellation");
+    }
 
 }

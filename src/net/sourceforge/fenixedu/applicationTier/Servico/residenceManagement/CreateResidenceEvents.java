@@ -10,12 +10,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResidenceEvents extends FenixService {
 
-	@Service
-	public static void run(List<ResidenceEventBean> beans, ResidenceMonth month) {
-		for (ResidenceEventBean bean : beans) {
-			if (!month.isEventPresent(bean.getStudent().getPerson())) {
-				new ResidenceEvent(month, bean.getStudent().getPerson(), bean.getRoomValue(), bean.getRoom());
-			}
-		}
-	}
+    @Service
+    public static void run(List<ResidenceEventBean> beans, ResidenceMonth month) {
+        for (ResidenceEventBean bean : beans) {
+            if (!month.isEventPresent(bean.getStudent().getPerson())) {
+                new ResidenceEvent(month, bean.getStudent().getPerson(), bean.getRoomValue(), bean.getRoom());
+            }
+        }
+    }
 }

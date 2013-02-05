@@ -20,12 +20,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "success", path = "/showProfessorships.do?method=list") })
 public class IndexTeacherAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(getUserView(request).getPerson().getTeacher());
-		request.setAttribute("infoTeacher", infoTeacher);
-		return mapping.findForward("success");
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(getUserView(request).getPerson().getTeacher());
+        request.setAttribute("infoTeacher", infoTeacher);
+        return mapping.findForward("success");
+    }
 
 }

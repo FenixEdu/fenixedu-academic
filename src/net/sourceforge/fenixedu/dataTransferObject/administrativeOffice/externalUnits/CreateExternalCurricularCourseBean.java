@@ -6,62 +6,62 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CreateExternalCurricularCourseBean implements Serializable {
 
-	private Unit parentUnit;
-	private String name;
-	private String code;
-	private boolean enrolStudent;
-	private CreateExternalEnrolmentBean externalEnrolmentBean;
+    private Unit parentUnit;
+    private String name;
+    private String code;
+    private boolean enrolStudent;
+    private CreateExternalEnrolmentBean externalEnrolmentBean;
 
-	protected CreateExternalCurricularCourseBean() {
+    protected CreateExternalCurricularCourseBean() {
 
-	}
+    }
 
-	public CreateExternalCurricularCourseBean(final Unit parentUnit) {
-		setParentUnit(parentUnit);
-		setExternalEnrolmentBean(new CreateExternalEnrolmentBean());
-	}
+    public CreateExternalCurricularCourseBean(final Unit parentUnit) {
+        setParentUnit(parentUnit);
+        setExternalEnrolmentBean(new CreateExternalEnrolmentBean());
+    }
 
-	public Unit getParentUnit() {
-		return this.parentUnit;
-	}
+    public Unit getParentUnit() {
+        return this.parentUnit;
+    }
 
-	public void setParentUnit(Unit parentUnit) {
-		this.parentUnit = parentUnit;
-	}
+    public void setParentUnit(Unit parentUnit) {
+        this.parentUnit = parentUnit;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public boolean isEnrolStudent() {
-		return enrolStudent;
-	}
+    public boolean isEnrolStudent() {
+        return enrolStudent;
+    }
 
-	public boolean isToEnrolStudent() {
-		return isEnrolStudent();
-	}
+    public boolean isToEnrolStudent() {
+        return isEnrolStudent();
+    }
 
-	public void setEnrolStudent(boolean enrolStudent) {
-		this.enrolStudent = enrolStudent;
-	}
+    public void setEnrolStudent(boolean enrolStudent) {
+        this.enrolStudent = enrolStudent;
+    }
 
-	public CreateExternalEnrolmentBean getExternalEnrolmentBean() {
-		return externalEnrolmentBean;
-	}
+    public CreateExternalEnrolmentBean getExternalEnrolmentBean() {
+        return externalEnrolmentBean;
+    }
 
-	public void setExternalEnrolmentBean(CreateExternalEnrolmentBean externalEnrolmentBean) {
-		this.externalEnrolmentBean = externalEnrolmentBean;
-	}
+    public void setExternalEnrolmentBean(CreateExternalEnrolmentBean externalEnrolmentBean) {
+        this.externalEnrolmentBean = externalEnrolmentBean;
+    }
 }

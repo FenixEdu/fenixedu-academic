@@ -15,29 +15,29 @@ import java.util.List;
  */
 public class InfoSiteClassesComponent extends DataTranferObject implements ISiteComponent {
 
-	private List infoClasses;
+    private List infoClasses;
 
-	/**
-	 * @return
-	 */
-	public List getInfoClasses() {
-		return infoClasses;
-	}
+    /**
+     * @return
+     */
+    public List getInfoClasses() {
+        return infoClasses;
+    }
 
-	/**
-	 * @param infoClasses
-	 */
-	public void setInfoClasses(List infoClasses) {
-		this.infoClasses = infoClasses;
-	}
+    /**
+     * @param infoClasses
+     */
+    public void setInfoClasses(List infoClasses) {
+        this.infoClasses = infoClasses;
+    }
 
-	/**
+    /**
      *  
      */
-	public InfoSiteClassesComponent() {
-	}
+    public InfoSiteClassesComponent() {
+    }
 
-	public InfoSiteClassesComponent(List infoClasses) {
-		setInfoClasses(infoClasses);
-	}
+    public InfoSiteClassesComponent(List infoClasses) {
+        setInfoClasses(infoClasses);
+    }
 }

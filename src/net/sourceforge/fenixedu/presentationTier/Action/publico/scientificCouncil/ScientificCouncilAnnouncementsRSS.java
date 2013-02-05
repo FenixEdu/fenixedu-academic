@@ -11,16 +11,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "publico", path = "/scientificCouncil/announcementsRSS", scope = "session", parameter = "method")
 public class ScientificCouncilAnnouncementsRSS extends AnnouncementRSS {
 
-	@Override
-	protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
-		UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) board;
-		return unitBoard.getUnit().getNameWithAcronym() + ": " + board.getName();
-	}
+    @Override
+    protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
+        UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) board;
+        return unitBoard.getUnit().getNameWithAcronym() + ": " + board.getName();
+    }
 
-	@Override
-	protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
-		String selectedDepartment = request.getParameter("unitID");
-		return "/publico/scientificCouncil/announcements.do?method=viewAnnouncement&unitID=" + selectedDepartment;
-	}
+    @Override
+    protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
+        String selectedDepartment = request.getParameter("unitID");
+        return "/publico/scientificCouncil/announcements.do?method=viewAnnouncement&unitID=" + selectedDepartment;
+    }
 
 }

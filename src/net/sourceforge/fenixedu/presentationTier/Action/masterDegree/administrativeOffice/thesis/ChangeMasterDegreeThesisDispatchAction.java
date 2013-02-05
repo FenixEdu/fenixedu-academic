@@ -24,64 +24,64 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-	public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 
-		new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
-				studentCurricularPlan);
+        new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
+                studentCurricularPlan);
 
-		MasterDegreeThesisDataVersion thesisDataVersion =
-				studentCurricularPlan.getMasterDegreeThesis().getActiveMasterDegreeThesisDataVersion();
+        MasterDegreeThesisDataVersion thesisDataVersion =
+                studentCurricularPlan.getMasterDegreeThesis().getActiveMasterDegreeThesisDataVersion();
 
-		if (!thesisDataVersion.getGuiders().isEmpty()) {
-			request.setAttribute(PresentationConstants.GUIDERS_LIST, thesisDataVersion.getGuiders());
-		}
+        if (!thesisDataVersion.getGuiders().isEmpty()) {
+            request.setAttribute(PresentationConstants.GUIDERS_LIST, thesisDataVersion.getGuiders());
+        }
 
-		if (!thesisDataVersion.getAssistentGuiders().isEmpty()) {
-			request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion.getAssistentGuiders());
-		}
+        if (!thesisDataVersion.getAssistentGuiders().isEmpty()) {
+            request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion.getAssistentGuiders());
+        }
 
-		if (!thesisDataVersion.getExternalAssistentGuiders().isEmpty()) {
-			request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-					thesisDataVersion.getExternalAssistentGuiders());
-		}
+        if (!thesisDataVersion.getExternalAssistentGuiders().isEmpty()) {
+            request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+                    thesisDataVersion.getExternalAssistentGuiders());
+        }
 
-		if (!thesisDataVersion.getExternalGuiders().isEmpty()) {
-			request.setAttribute(PresentationConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion.getExternalGuiders());
-		}
+        if (!thesisDataVersion.getExternalGuiders().isEmpty()) {
+            request.setAttribute(PresentationConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion.getExternalGuiders());
+        }
 
-		DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
-		changeMasterDegreeThesisForm.set("dissertationTitle", thesisDataVersion.getDissertationTitle());
+        DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
+        changeMasterDegreeThesisForm.set("dissertationTitle", thesisDataVersion.getDissertationTitle());
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
-	public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
 
-		try {
-			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-					actionErrors);
+        try {
+            operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+            operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+                    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+                    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+                    actionErrors);
 
-		} catch (Exception e1) {
-			throw new FenixActionException(e1);
-		}
+        } catch (Exception e1) {
+            throw new FenixActionException(e1);
+        }
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
 }

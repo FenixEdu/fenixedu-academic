@@ -47,116 +47,111 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Tânia Pousão
  * 
  */
-@Mapping(
-		module = "manager",
-		path = "/generateFiles",
-		input = "/generateFiles.do?method=prepareChooseForGenerateFiles&page=0",
-		attribute = "chooseForGenerateFilesForm",
-		formBean = "chooseForGenerateFilesForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "manager", path = "/generateFiles", input = "/generateFiles.do?method=prepareChooseForGenerateFiles&page=0",
+        attribute = "chooseForGenerateFilesForm", formBean = "chooseForGenerateFilesForm", scope = "request",
+        parameter = "method")
 @Forwards(value = { @Forward(name = "confirmation", path = "/manager/generateFiles/confirmation.jsp"),
-		@Forward(name = "chooseForGenerateFiles", path = "/manager/generateFiles/chooseForGenerateFiles.jsp"),
-		@Forward(name = "firstPage", path = "/manager/generateFiles/welcomeScreen.jsp") })
+        @Forward(name = "chooseForGenerateFiles", path = "/manager/generateFiles/chooseForGenerateFiles.jsp"),
+        @Forward(name = "firstPage", path = "/manager/generateFiles/welcomeScreen.jsp") })
 public class GenerateFilesAction extends FenixDispatchAction {
 
-	private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-	public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("firstPage");
-	}
+    public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("firstPage");
+    }
 
-	public ActionForward prepareChooseForGenerateFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
-		String file = request.getParameter("file");
-		request.setAttribute("file", file);
+    public ActionForward prepareChooseForGenerateFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        String file = request.getParameter("file");
+        request.setAttribute("file", file);
 
-		// execution years
-		List executionYears = null;
+        // execution years
+        List executionYears = null;
 
-		executionYears = ReadNotClosedExecutionYears.run();
+        executionYears = ReadNotClosedExecutionYears.run();
 
-		if (executionYears != null && !executionYears.isEmpty()) {
-			ComparatorChain comparator = new ComparatorChain();
-			comparator.addComparator(new BeanComparator("year"), true);
-			Collections.sort(executionYears, comparator);
+        if (executionYears != null && !executionYears.isEmpty()) {
+            ComparatorChain comparator = new ComparatorChain();
+            comparator.addComparator(new BeanComparator("year"), true);
+            Collections.sort(executionYears, comparator);
 
-			List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
-			request.setAttribute("executionYears", executionYearLabels);
-		}
-		return mapping.findForward("chooseForGenerateFiles");
-	}
+            List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
+            request.setAttribute("executionYears", executionYearLabels);
+        }
+        return mapping.findForward("chooseForGenerateFiles");
+    }
 
-	private List buildLabelValueBeanForJsp(List infoExecutionYears) {
-		List executionYearLabels = new ArrayList();
-		CollectionUtils.collect(infoExecutionYears, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+    private List buildLabelValueBeanForJsp(List infoExecutionYears) {
+        List executionYearLabels = new ArrayList();
+        CollectionUtils.collect(infoExecutionYears, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
-				LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
-				return executionYear;
-			}
-		}, executionYearLabels);
-		return executionYearLabels;
-	}
+                LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
+                return executionYear;
+            }
+        }, executionYearLabels);
+        return executionYearLabels;
+    }
 
-	public ActionForward generateGratuityFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = getUserView(request);
+    public ActionForward generateGratuityFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        IUserView userView = getUserView(request);
 
-		String fileType = request.getParameter("file");
-		request.setAttribute("file", fileType);
+        String fileType = request.getParameter("file");
+        request.setAttribute("file", fileType);
 
-		String executionYear = request.getParameter("executionYear");
-		request.setAttribute("executionYear", executionYear);
+        String executionYear = request.getParameter("executionYear");
+        request.setAttribute("executionYear", executionYear);
 
-		InfoExecutionYear infoExecutionYear = null;
-		infoExecutionYear = ReadExecutionYear.run(executionYear);
+        InfoExecutionYear infoExecutionYear = null;
+        infoExecutionYear = ReadExecutionYear.run(executionYear);
 
-		if (infoExecutionYear == null) {
-			throw new FenixActionException();
-		}
+        if (infoExecutionYear == null) {
+            throw new FenixActionException();
+        }
 
-		Date paymentEndDate = dateFormat.parse(((DynaActionForm) actionForm).getString("paymentEndDate"));
-		byte[] generatedFile = null;
-		try {
-			// Create respective file
-			if (fileType.equals("sibs")) {
-				generatedFile =
-						GenerateOutgoingSibsPaymentFileByExecutionYearID.run(infoExecutionYear.getIdInternal(), paymentEndDate);
-			} else if (fileType.equals("letters")) {
-				generatedFile =
-						GeneratePaymentLettersFileByExecutionYearID.run(infoExecutionYear.getIdInternal(), paymentEndDate);
-			}
-		} catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
-			addErrorMessage(request, "noList", "error.generateFiles.invalidBind", exception.getMessage());
-			return mapping.getInputForward();
+        Date paymentEndDate = dateFormat.parse(((DynaActionForm) actionForm).getString("paymentEndDate"));
+        byte[] generatedFile = null;
+        try {
+            // Create respective file
+            if (fileType.equals("sibs")) {
+                generatedFile =
+                        GenerateOutgoingSibsPaymentFileByExecutionYearID.run(infoExecutionYear.getIdInternal(), paymentEndDate);
+            } else if (fileType.equals("letters")) {
+                generatedFile =
+                        GeneratePaymentLettersFileByExecutionYearID.run(infoExecutionYear.getIdInternal(), paymentEndDate);
+            }
+        } catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
+            addErrorMessage(request, "noList", "error.generateFiles.invalidBind", exception.getMessage());
+            return mapping.getInputForward();
 
-		} catch (InsuranceNotDefinedServiceException exception) {
-			addErrorMessage(request, "noList", exception.getMessage());
-			return mapping.getInputForward();
+        } catch (InsuranceNotDefinedServiceException exception) {
+            addErrorMessage(request, "noList", exception.getMessage());
+            return mapping.getInputForward();
 
-		} catch (FileNotCreatedServiceException exception) {
-			addErrorMessage(request, "noList", exception.getMessage());
-			return mapping.getInputForward();
+        } catch (FileNotCreatedServiceException exception) {
+            addErrorMessage(request, "noList", exception.getMessage());
+            return mapping.getInputForward();
 
-		} catch (FenixServiceException exception) {
-			exception.printStackTrace();
-			addErrorMessage(request, "noList", "error.generateFiles.emptyList");
-			return mapping.getInputForward();
-		}
+        } catch (FenixServiceException exception) {
+            exception.printStackTrace();
+            addErrorMessage(request, "noList", "error.generateFiles.emptyList");
+            return mapping.getInputForward();
+        }
 
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-disposition",
-				"attachment; filename=" + fileType + infoExecutionYear.getYear().replace("/", "-") + ".txt");
-		ServletOutputStream writer = response.getOutputStream();
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" + fileType + infoExecutionYear.getYear().replace("/", "-") + ".txt");
+        ServletOutputStream writer = response.getOutputStream();
 
-		writer.write(generatedFile);
-		writer.flush();
-		response.flushBuffer();
+        writer.write(generatedFile);
+        writer.flush();
+        response.flushBuffer();
 
-		return null;
-	}
+        return null;
+    }
 }

@@ -10,26 +10,26 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRu
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends
-		GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester_Base {
+        GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester_Base {
 
-	protected GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester() {
-		super();
-	}
+    protected GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester() {
+        super();
+    }
 
-	public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
-			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
-		this(executionYear, serviceAgreementTemplate, false);
-	}
+    public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
+            final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
+        this(executionYear, serviceAgreementTemplate, false);
+    }
 
-	public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
-			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
-		this();
-		super.init(executionYear, serviceAgreementTemplate, defaultPlan);
-	}
+    public GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
+            final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+        this();
+        super.init(executionYear, serviceAgreementTemplate, defaultPlan);
+    }
 
-	@Override
-	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-		return Collections.singletonList(PaymentPlanRuleFactory.create(HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule.class));
-	}
+    @Override
+    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+        return Collections.singletonList(PaymentPlanRuleFactory.create(HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule.class));
+    }
 
 }

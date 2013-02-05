@@ -8,98 +8,98 @@ import com.google.common.base.Function;
 
 public class OccupationPeriodReference extends OccupationPeriodReference_Base {
 
-	public static Function<OccupationPeriodReference, OccupationPeriod> FUNCTION_TO_PERIOD =
-			new Function<OccupationPeriodReference, OccupationPeriod>() {
+    public static Function<OccupationPeriodReference, OccupationPeriod> FUNCTION_TO_PERIOD =
+            new Function<OccupationPeriodReference, OccupationPeriod>() {
 
-				@Override
-				public OccupationPeriod apply(OccupationPeriodReference reference) {
-					return reference.getOccupationPeriod();
-				}
+                @Override
+                public OccupationPeriod apply(OccupationPeriodReference reference) {
+                    return reference.getOccupationPeriod();
+                }
 
-			};
+            };
 
-	public static Function<OccupationPeriodReference, ExecutionDegree> FUNCTION_TO_DEGREE =
-			new Function<OccupationPeriodReference, ExecutionDegree>() {
+    public static Function<OccupationPeriodReference, ExecutionDegree> FUNCTION_TO_DEGREE =
+            new Function<OccupationPeriodReference, ExecutionDegree>() {
 
-				@Override
-				public ExecutionDegree apply(OccupationPeriodReference reference) {
-					return reference.getExecutionDegree();
-				}
+                @Override
+                public ExecutionDegree apply(OccupationPeriodReference reference) {
+                    return reference.getExecutionDegree();
+                }
 
-			};
+            };
 
-	private OccupationPeriodReference() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    private OccupationPeriodReference() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public OccupationPeriodReference(OccupationPeriod period, ExecutionDegree degree, OccupationPeriodType type,
-			Integer semester, CurricularYearList curricularYears) {
-		this();
-		if (period == null || degree == null) {
-			throw new DomainException("exception.null.arguments");
-		}
-		setOccupationPeriod(period);
-		setExecutionDegree(degree);
-		setPeriodType(type);
-		setSemester(semester);
-		setCurricularYears(curricularYears);
-	}
+    public OccupationPeriodReference(OccupationPeriod period, ExecutionDegree degree, OccupationPeriodType type,
+            Integer semester, CurricularYearList curricularYears) {
+        this();
+        if (period == null || degree == null) {
+            throw new DomainException("exception.null.arguments");
+        }
+        setOccupationPeriod(period);
+        setExecutionDegree(degree);
+        setPeriodType(type);
+        setSemester(semester);
+        setCurricularYears(curricularYears);
+    }
 
-	public void delete() {
-		removeOccupationPeriod();
-		removeExecutionDegree();
-		removeRootDomainObject();
+    public void delete() {
+        removeOccupationPeriod();
+        removeExecutionDegree();
+        removeRootDomainObject();
 
-		deleteDomainObject();
-	}
+        deleteDomainObject();
+    }
 
-	public String getCurricularYearsString() {
-		CurricularYearList years = getCurricularYears();
-		if (years == null) {
-			return "-1";
-		}
+    public String getCurricularYearsString() {
+        CurricularYearList years = getCurricularYears();
+        if (years == null) {
+            return "-1";
+        }
 
-		List<Integer> yearList = years.getYears();
+        List<Integer> yearList = years.getYears();
 
-		StringBuilder returnStr = new StringBuilder();
+        StringBuilder returnStr = new StringBuilder();
 
-		for (Integer year : yearList) {
-			if (returnStr.length() > 0) {
-				returnStr.append(",");
-			}
+        for (Integer year : yearList) {
+            if (returnStr.length() > 0) {
+                returnStr.append(",");
+            }
 
-			returnStr.append(year);
-		}
+            returnStr.append(year);
+        }
 
-		return returnStr.toString();
-	}
+        return returnStr.toString();
+    }
 
-	public String getCurricularYearsPresentationString() {
-		CurricularYearList years = getCurricularYears();
-		if (years == null || years.hasAll()) {
-			return "Todos os anos";
-		}
+    public String getCurricularYearsPresentationString() {
+        CurricularYearList years = getCurricularYears();
+        if (years == null || years.hasAll()) {
+            return "Todos os anos";
+        }
 
-		List<Integer> yearList = years.getYears();
+        List<Integer> yearList = years.getYears();
 
-		StringBuilder returnStr = new StringBuilder();
+        StringBuilder returnStr = new StringBuilder();
 
-		for (Integer year : yearList) {
-			if (returnStr.length() > 0) {
-				returnStr.append(", ");
-			}
+        for (Integer year : yearList) {
+            if (returnStr.length() > 0) {
+                returnStr.append(", ");
+            }
 
-			returnStr.append(year + "º");
-		}
+            returnStr.append(year + "º");
+        }
 
-		if (yearList.size() > 1) {
-			returnStr.append(" Anos");
-		} else {
-			returnStr.append(" Ano");
-		}
+        if (yearList.size() > 1) {
+            returnStr.append(" Anos");
+        } else {
+            returnStr.append(" Ano");
+        }
 
-		return returnStr.toString();
-	}
+        return returnStr.toString();
+    }
 
 }

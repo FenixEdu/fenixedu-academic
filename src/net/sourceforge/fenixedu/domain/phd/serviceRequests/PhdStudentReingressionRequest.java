@@ -17,103 +17,103 @@ import org.joda.time.DateTime;
 
 public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest_Base {
 
-	private PhdStudentReingressionRequest() {
-		super();
-	}
+    private PhdStudentReingressionRequest() {
+        super();
+    }
 
-	private PhdStudentReingressionRequest(final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
-		super();
+    private PhdStudentReingressionRequest(final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
+        super();
 
-		init(academicServiceRequestCreateBean);
-	}
+        init(academicServiceRequestCreateBean);
+    }
 
-	@Override
-	protected void init(PhdAcademicServiceRequestCreateBean bean) {
-		if (!bean.getRequestType().equals(getAcademicServiceRequestType())) {
-			throw new DomainException("error.PhdStudentReingressionRequest.type.not.supported");
-		}
+    @Override
+    protected void init(PhdAcademicServiceRequestCreateBean bean) {
+        if (!bean.getRequestType().equals(getAcademicServiceRequestType())) {
+            throw new DomainException("error.PhdStudentReingressionRequest.type.not.supported");
+        }
 
-		if (!isValidRequest(bean)) {
-			throw new PhdDomainOperationException(
-					"error.PhdStudentReingressionRequest.phd.individual.program.process.must.be.flunked.or.suspended");
-		}
+        if (!isValidRequest(bean)) {
+            throw new PhdDomainOperationException(
+                    "error.PhdStudentReingressionRequest.phd.individual.program.process.must.be.flunked.or.suspended");
+        }
 
-		super.init(bean);
-	}
+        super.init(bean);
+    }
 
-	private static boolean isValidRequest(final PhdAcademicServiceRequestCreateBean bean) {
-		return bean.getPhdIndividualProgramProcess().isFlunked() || bean.getPhdIndividualProgramProcess().isSuspended();
-	}
+    private static boolean isValidRequest(final PhdAcademicServiceRequestCreateBean bean) {
+        return bean.getPhdIndividualProgramProcess().isFlunked() || bean.getPhdIndividualProgramProcess().isSuspended();
+    }
 
-	@Override
-	public AcademicServiceRequestType getAcademicServiceRequestType() {
-		return AcademicServiceRequestType.PHD_STUDENT_REINGRESSION;
-	}
+    @Override
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+        return AcademicServiceRequestType.PHD_STUDENT_REINGRESSION;
+    }
 
-	@Override
-	public EventType getEventType() {
-		return null;
-	}
+    @Override
+    public EventType getEventType() {
+        return null;
+    }
 
-	@Override
-	public boolean hasPersonalInfo() {
-		return false;
-	}
+    @Override
+    public boolean hasPersonalInfo() {
+        return false;
+    }
 
-	@Override
-	public boolean isPayedUponCreation() {
-		return false;
-	}
+    @Override
+    public boolean isPayedUponCreation() {
+        return false;
+    }
 
-	@Override
-	public boolean isPossibleToSendToOtherEntity() {
-		return false;
-	}
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return false;
+    }
 
-	@Override
-	public boolean isManagedWithRectorateSubmissionBatch() {
-		return false;
-	}
+    @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
 
-	@Override
-	public boolean isToPrint() {
-		return false;
-	}
+    @Override
+    public boolean isToPrint() {
+        return false;
+    }
 
-	@Override
-	public Boolean getFreeProcessed() {
-		return true;
-	}
+    @Override
+    public Boolean getFreeProcessed() {
+        return true;
+    }
 
-	public static PhdAcademicServiceRequest createRequest(
-			final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
-		return new PhdStudentReingressionRequest(academicServiceRequestCreateBean);
-	}
+    public static PhdAcademicServiceRequest createRequest(
+            final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
+        return new PhdStudentReingressionRequest(academicServiceRequestCreateBean);
+    }
 
-	@Override
-	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-		super.internalChangeState(academicServiceRequestBean);
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.internalChangeState(academicServiceRequestBean);
 
-		ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources");
+        ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources");
 
-		if (academicServiceRequestBean.isToConclude()) {
-			PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
-			PhdProgramProcessState lastActiveState = process.getLastActiveState();
-			String remarks =
-					String.format(
-							phdBundle
-									.getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
-							getServiceRequestNumberYear());
+        if (academicServiceRequestBean.isToConclude()) {
+            PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
+            PhdProgramProcessState lastActiveState = process.getLastActiveState();
+            String remarks =
+                    String.format(
+                            phdBundle
+                                    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+                            getServiceRequestNumberYear());
 
-			process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
+            process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
 
-			if (process.hasRegistration() && !process.getRegistration().isActive()) {
-				RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
+            if (process.hasRegistration() && !process.getRegistration().isActive()) {
+                RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
 
-				RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
-						registrationLastActiveState.getStateType());
-			}
+                RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
+                        registrationLastActiveState.getStateType());
+            }
 
-		}
-	}
+        }
+    }
 }

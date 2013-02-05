@@ -19,66 +19,66 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProcessEmail_Base {
 
-	protected PhdIndividualProgramProcessEmail() {
-		super();
-	}
+    protected PhdIndividualProgramProcessEmail() {
+        super();
+    }
 
-	protected PhdIndividualProgramProcessEmail(String subject, String message, String additionalTo, String additionalBcc,
-			Person creator, PhdIndividualProgramProcess individualProcess) {
-		init(subject, message, additionalTo, additionalBcc, creator, new DateTime());
-		setPhdIndividualProgramProcess(individualProcess);
-	}
+    protected PhdIndividualProgramProcessEmail(String subject, String message, String additionalTo, String additionalBcc,
+            Person creator, PhdIndividualProgramProcess individualProcess) {
+        init(subject, message, additionalTo, additionalBcc, creator, new DateTime());
+        setPhdIndividualProgramProcess(individualProcess);
+    }
 
-	@Override
-	protected Collection<? extends ReplyTo> getReplyTos() {
-		return getSender().getReplyTosSet();
-	}
+    @Override
+    protected Collection<? extends ReplyTo> getReplyTos() {
+        return getSender().getReplyTosSet();
+    }
 
-	@Override
-	protected Sender getSender() {
-		return this.getPhdIndividualProgramProcess().getAdministrativeOffice().getUnit().getUnitBasedSender().get(0);
-	}
+    @Override
+    protected Sender getSender() {
+        return this.getPhdIndividualProgramProcess().getAdministrativeOffice().getUnit().getUnitBasedSender().get(0);
+    }
 
-	@Override
-	protected Collection<Recipient> getRecipients() {
-		return null;
-	}
+    @Override
+    protected Collection<Recipient> getRecipients() {
+        return null;
+    }
 
-	@Override
-	protected String getBccs() {
-		return getAdditionalBcc();
-	}
+    @Override
+    protected String getBccs() {
+        return getAdditionalBcc();
+    }
 
-	@Service
-	static public PhdIndividualProgramProcessEmail createEmail(PhdIndividualProgramProcessEmailBean bean) {
-		final String errorWhileValidating = validateEmailBean(bean);
-		if (errorWhileValidating != null) {
-			throw new DomainException(errorWhileValidating);
-		}
+    @Service
+    static public PhdIndividualProgramProcessEmail createEmail(PhdIndividualProgramProcessEmailBean bean) {
+        final String errorWhileValidating = validateEmailBean(bean);
+        if (errorWhileValidating != null) {
+            throw new DomainException(errorWhileValidating);
+        }
 
-		final Person creator = AccessControl.getPerson();
+        final Person creator = AccessControl.getPerson();
 
-		return new PhdIndividualProgramProcessEmail(bean.getSubject(), bean.getMessage(), null,
-				bean.getBccsWithSelectedParticipants(), creator, bean.getProcess());
-	}
+        return new PhdIndividualProgramProcessEmail(bean.getSubject(), bean.getMessage(), null,
+                bean.getBccsWithSelectedParticipants(), creator, bean.getProcess());
+    }
 
-	private static String validateEmailBean(PhdIndividualProgramProcessEmailBean bean) {
-		final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+    private static String validateEmailBean(PhdIndividualProgramProcessEmailBean bean) {
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
-		if (bean.getParticipantsGroup().isEmpty() && bean.getSelectedParticipants().isEmpty()
-				&& StringUtils.isEmpty(bean.getBccs())) {
-			return resourceBundle.getString("error.email.validation.no.recipients");
-		}
+        if (bean.getParticipantsGroup().isEmpty() && bean.getSelectedParticipants().isEmpty()
+                && StringUtils.isEmpty(bean.getBccs())) {
+            return resourceBundle.getString("error.email.validation.no.recipients");
+        }
 
-		if (StringUtils.isEmpty(bean.getSubject())) {
-			return resourceBundle.getString("error.email.validation.subject.empty");
-		}
+        if (StringUtils.isEmpty(bean.getSubject())) {
+            return resourceBundle.getString("error.email.validation.subject.empty");
+        }
 
-		if (StringUtils.isEmpty(bean.getMessage())) {
-			return resourceBundle.getString("error.email.validation.message.empty");
-		}
+        if (StringUtils.isEmpty(bean.getMessage())) {
+            return resourceBundle.getString("error.email.validation.message.empty");
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

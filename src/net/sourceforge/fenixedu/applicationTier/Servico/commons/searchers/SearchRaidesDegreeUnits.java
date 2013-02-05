@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class SearchRaidesDegreeUnits extends SearchParties {
 
-	@Override
-	protected Collection search(String value, int size) {
-		return UnitName.findExternalAcademicUnit(value, size);
-	}
+    @Override
+    protected Collection search(String value, int size) {
+        return UnitName.findExternalAcademicUnit(value, size);
+    }
 }

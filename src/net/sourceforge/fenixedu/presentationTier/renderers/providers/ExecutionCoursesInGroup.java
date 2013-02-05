@@ -8,18 +8,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionCoursesInGroup implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
-		VigilantGroup group = bean.getSelectedVigilantGroup();
-		return group.getExecutionCourses();
+        VigilancyCourseGroupBean bean = (VigilancyCourseGroupBean) source;
+        VigilantGroup group = bean.getSelectedVigilantGroup();
+        return group.getExecutionCourses();
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
 }

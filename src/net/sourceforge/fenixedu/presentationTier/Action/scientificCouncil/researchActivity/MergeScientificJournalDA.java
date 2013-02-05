@@ -21,43 +21,43 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class MergeScientificJournalDA extends MergeResearchActivityDA {
 
-	public ActionForward chooseScientificJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		MergeScientificJournalPageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
-		ScientificJournal scientificJournal = (ScientificJournal) researchActivityPageContainerBean.getSelected();
-		researchActivityPageContainerBean.setSelected(null);
+    public ActionForward chooseScientificJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        MergeScientificJournalPageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
+        ScientificJournal scientificJournal = (ScientificJournal) researchActivityPageContainerBean.getSelected();
+        researchActivityPageContainerBean.setSelected(null);
 
-		copyProperties(scientificJournal, researchActivityPageContainerBean);
+        copyProperties(scientificJournal, researchActivityPageContainerBean);
 
-		RenderUtils.invalidateViewState();
-		request.setAttribute("mergeList", researchActivityPageContainerBean);
-		return mapping.findForward("show-research-activity-merge-list");
-	}
+        RenderUtils.invalidateViewState();
+        request.setAttribute("mergeList", researchActivityPageContainerBean);
+        return mapping.findForward("show-research-activity-merge-list");
+    }
 
-	private void copyProperties(ScientificJournal scientificJournal,
-			MergeScientificJournalPageContainerBean researchActivityPageContainerBean) {
-		researchActivityPageContainerBean.setName(scientificJournal.getName());
-		researchActivityPageContainerBean.setIssn(scientificJournal.getIssn());
-		researchActivityPageContainerBean.setUrl(scientificJournal.getUrl());
-		researchActivityPageContainerBean.setResearchActivityLocationType(scientificJournal.getLocationType());
-		researchActivityPageContainerBean.setStage(scientificJournal.getStage());
-	}
+    private void copyProperties(ScientificJournal scientificJournal,
+            MergeScientificJournalPageContainerBean researchActivityPageContainerBean) {
+        researchActivityPageContainerBean.setName(scientificJournal.getName());
+        researchActivityPageContainerBean.setIssn(scientificJournal.getIssn());
+        researchActivityPageContainerBean.setUrl(scientificJournal.getUrl());
+        researchActivityPageContainerBean.setResearchActivityLocationType(scientificJournal.getLocationType());
+        researchActivityPageContainerBean.setStage(scientificJournal.getStage());
+    }
 
-	@Override
-	protected MergeResearchActivityPageContainerBean getNewBean() {
-		return new MergeScientificJournalPageContainerBean();
-	}
+    @Override
+    protected MergeResearchActivityPageContainerBean getNewBean() {
+        return new MergeScientificJournalPageContainerBean();
+    }
 
-	@Override
-	protected String getServiceName() {
-		return "MergeScientificJournals";
-	}
+    @Override
+    protected String getServiceName() {
+        return "MergeScientificJournals";
+    }
 
-	@Override
-	protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
-		List<ScientificJournal> scientificJournals = new ArrayList<ScientificJournal>(rootDomainObject.getScientificJournals());
-		Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
-		return scientificJournals;
-	}
+    @Override
+    protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
+        List<ScientificJournal> scientificJournals = new ArrayList<ScientificJournal>(rootDomainObject.getScientificJournals());
+        Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
+        return scientificJournals;
+    }
 
 }

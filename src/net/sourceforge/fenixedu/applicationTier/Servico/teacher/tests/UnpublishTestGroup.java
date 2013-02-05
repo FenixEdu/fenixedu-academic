@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class UnpublishTestGroup extends FenixService {
-	@Service
-	public static void run(NewTestGroup testGroup) throws FenixServiceException {
-		testGroup.unpublish();
-	}
+    @Service
+    public static void run(NewTestGroup testGroup) throws FenixServiceException {
+        testGroup.unpublish();
+    }
 }

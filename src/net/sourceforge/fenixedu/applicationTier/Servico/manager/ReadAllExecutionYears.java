@@ -11,15 +11,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllExecutionYears extends FenixService {
 
-	@Service
-	public static List<InfoExecutionYear> run() throws FenixServiceException {
-		List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
+    @Service
+    public static List<InfoExecutionYear> run() throws FenixServiceException {
+        List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
 
-		for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-			result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
-		}
+        for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+            result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

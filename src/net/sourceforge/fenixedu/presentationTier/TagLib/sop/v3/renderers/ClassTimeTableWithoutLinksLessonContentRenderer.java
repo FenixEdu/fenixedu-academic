@@ -15,108 +15,108 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSlotContentRenderer {
 
-	@Override
-	public StringBuilder render(String context, LessonSlot lessonSlot) {
+    @Override
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
 
-		StringBuilder strBuffer = new StringBuilder();
-		InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        StringBuilder strBuffer = new StringBuilder();
+        InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-		if (showOccupation instanceof InfoLesson) {
+        if (showOccupation instanceof InfoLesson) {
 
-			InfoLesson lesson = (InfoLesson) showOccupation;
-			if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
-				strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
-			}
+            InfoLesson lesson = (InfoLesson) showOccupation;
+            if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
+            }
 
-			if (lessonSlot.isSinleSlot()) {
-				strBuffer.append("<br/>");
-			}
+            if (lessonSlot.isSinleSlot()) {
+                strBuffer.append("<br/>");
+            }
 
-			if (lessonSlot.isSinleSlot()
-					|| (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-							.isSecondRowAlreadyAppended())) {
+            if (lessonSlot.isSinleSlot()
+                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
+                            .isSecondRowAlreadyAppended())) {
 
-				strBuffer.append("(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
+                strBuffer.append("(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
-				if (lesson.getInfoRoomOccupation() != null) {
-					strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
-				}
+                if (lesson.getInfoRoomOccupation() != null) {
+                    strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                }
 
-				if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
-					strBuffer.append("&nbsp;&nbsp;[Q]");
-				}
-			}
+                if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
+                    strBuffer.append("&nbsp;&nbsp;[Q]");
+                }
+            }
 
-			if (lessonSlot.isSinleSlot()
-					|| (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-							.isSecondRowAlreadyAppended())) {
-				lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
-			}
+            if (lessonSlot.isSinleSlot()
+                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
+                            .isSecondRowAlreadyAppended())) {
+                lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
+            }
 
-			if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
-				lessonSlot.getInfoLessonWrapper().setFirstRowAlreadyAppended(true);
-			}
+            if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
+                lessonSlot.getInfoLessonWrapper().setFirstRowAlreadyAppended(true);
+            }
 
-		} else if (showOccupation instanceof InfoLessonInstance) {
+        } else if (showOccupation instanceof InfoLessonInstance) {
 
-			InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
-			if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
-				strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
-			}
+            InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+            if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
+            }
 
-			if (lessonSlot.isSinleSlot()) {
-				strBuffer.append("<br/>");
-			}
+            if (lessonSlot.isSinleSlot()) {
+                strBuffer.append("<br/>");
+            }
 
-			if (lessonSlot.isSinleSlot()
-					|| (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-							.isSecondRowAlreadyAppended())) {
+            if (lessonSlot.isSinleSlot()
+                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
+                            .isSecondRowAlreadyAppended())) {
 
-				strBuffer.append("(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
+                strBuffer.append("(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
-				if (lesson.getInfoRoomOccupation() != null) {
-					strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
-				}
-			}
+                if (lesson.getInfoRoomOccupation() != null) {
+                    strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                }
+            }
 
-			if (lessonSlot.isSinleSlot()
-					|| (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-							.isSecondRowAlreadyAppended())) {
-				lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
-			}
+            if (lessonSlot.isSinleSlot()
+                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
+                            .isSecondRowAlreadyAppended())) {
+                lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
+            }
 
-			if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
-				lessonSlot.getInfoLessonWrapper().setFirstRowAlreadyAppended(true);
-			}
+            if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
+                lessonSlot.getInfoLessonWrapper().setFirstRowAlreadyAppended(true);
+            }
 
-		} else if (showOccupation instanceof InfoExam) {
+        } else if (showOccupation instanceof InfoExam) {
 
-			InfoExam infoExam = (InfoExam) showOccupation;
-			for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-				InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-				if (iterEC != 0) {
-					strBuffer.append(", ");
-				}
-				strBuffer.append(infoEC.getSigla());
-			}
-			strBuffer.append(" - ");
-			strBuffer.append(infoExam.getSeason().getSeason());
-			strBuffer.append("ª época");
+            InfoExam infoExam = (InfoExam) showOccupation;
+            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
+                InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
+                strBuffer.append(infoEC.getSigla());
+            }
+            strBuffer.append(" - ");
+            strBuffer.append(infoExam.getSeason().getSeason());
+            strBuffer.append("ª época");
 
-		} else if (showOccupation instanceof InfoWrittenTest) {
+        } else if (showOccupation instanceof InfoWrittenTest) {
 
-			InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-			for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-				InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-				if (iterEC != 0) {
-					strBuffer.append(", ");
-				}
-				strBuffer.append(infoEC.getSigla());
-			}
-			strBuffer.append(" - ");
-			strBuffer.append(infoWrittenTest.getDescription());
-		}
+            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
+            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
+                InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
+                strBuffer.append(infoEC.getSigla());
+            }
+            strBuffer.append(" - ");
+            strBuffer.append(infoWrittenTest.getDescription());
+        }
 
-		return strBuffer;
-	}
+        return strBuffer;
+    }
 }

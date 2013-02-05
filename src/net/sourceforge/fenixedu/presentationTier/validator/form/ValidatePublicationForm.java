@@ -23,12 +23,12 @@ import org.apache.struts.action.ActionMessages;
  */
 public class ValidatePublicationForm implements Serializable {
 
-	/**
+    /**
      *  
      */
-	public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
-			HttpServletRequest request, ServletContext application) {
-		return (errors.isEmpty());
-	}
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,
+            HttpServletRequest request, ServletContext application) {
+        return (errors.isEmpty());
+    }
 
 }

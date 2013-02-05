@@ -8,27 +8,27 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
  */
 public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
 
-	/**
-	 * @param infoCredits
-	 */
-	public InfoCreditsWithTeacher(InfoCredits infoCredits) {
-		super(infoCredits);
-	}
+    /**
+     * @param infoCredits
+     */
+    public InfoCreditsWithTeacher(InfoCredits infoCredits) {
+        super(infoCredits);
+    }
 
-	private InfoTeacher infoTeacher;
+    private InfoTeacher infoTeacher;
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	/**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 }

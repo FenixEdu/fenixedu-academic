@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ReadExecutionPeriod extends FenixService {
 
-	public InfoExecutionPeriod run(Integer executionCourseCode) throws FenixServiceException {
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-		ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-		return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
-	}
+    public InfoExecutionPeriod run(Integer executionCourseCode) throws FenixServiceException {
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+        return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+    }
 
 }

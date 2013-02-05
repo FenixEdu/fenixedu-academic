@@ -17,57 +17,57 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveResearchActivityParticipation extends FenixService {
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(EventParticipation participation) {
-		ResearchEvent event = participation.getEvent();
-		participation.delete();
-		event.sweep();
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(EventParticipation participation) {
+        ResearchEvent event = participation.getEvent();
+        participation.delete();
+        event.sweep();
+    }
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(ScientificJournalParticipation participation) {
-		ScientificJournal journal = participation.getScientificJournal();
-		participation.delete();
-		journal.sweep();
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(ScientificJournalParticipation participation) {
+        ScientificJournal journal = participation.getScientificJournal();
+        participation.delete();
+        journal.sweep();
+    }
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(EventEditionParticipation participation) {
-		EventEdition edition = participation.getEventEdition();
-		participation.delete();
-		edition.sweep();
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(EventEditionParticipation participation) {
+        EventEdition edition = participation.getEventEdition();
+        participation.delete();
+        edition.sweep();
+    }
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(JournalIssueParticipation participation) {
-		JournalIssue issue = participation.getJournalIssue();
-		participation.delete();
-		issue.sweep();
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(JournalIssueParticipation participation) {
+        JournalIssue issue = participation.getJournalIssue();
+        participation.delete();
+        issue.sweep();
+    }
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(CooperationParticipation participation) {
-		Cooperation cooperation = participation.getCooperation();
-		participation.delete();
-		cooperation.sweet();
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(CooperationParticipation participation) {
+        Cooperation cooperation = participation.getCooperation();
+        participation.delete();
+        cooperation.sweet();
+    }
 
-	public static void run(Participation participation) {
-		if (participation instanceof EventParticipation) {
-			run((EventParticipation) participation);
-		} else if (participation instanceof ScientificJournalParticipation) {
-			run((ScientificJournalParticipation) participation);
-		} else if (participation instanceof EventEditionParticipation) {
-			run((EventEditionParticipation) participation);
-		} else if (participation instanceof JournalIssueParticipation) {
-			run((JournalIssueParticipation) participation);
-		} else if (participation instanceof CooperationParticipation) {
-			run((CooperationParticipation) participation);
-		}
-	}
+    public static void run(Participation participation) {
+        if (participation instanceof EventParticipation) {
+            run((EventParticipation) participation);
+        } else if (participation instanceof ScientificJournalParticipation) {
+            run((ScientificJournalParticipation) participation);
+        } else if (participation instanceof EventEditionParticipation) {
+            run((EventEditionParticipation) participation);
+        } else if (participation instanceof JournalIssueParticipation) {
+            run((JournalIssueParticipation) participation);
+        } else if (participation instanceof CooperationParticipation) {
+            run((CooperationParticipation) participation);
+        }
+    }
 }

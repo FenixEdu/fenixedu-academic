@@ -5,9 +5,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePartyContact {
 
-	@Service
-	public static void run(PartyContact contact) {
-		contact.getParty().logDeleteContact(contact);
-		contact.delete();
-	}
+    @Service
+    public static void run(PartyContact contact) {
+        contact.getParty().logDeleteContact(contact);
+        contact.delete();
+    }
 }

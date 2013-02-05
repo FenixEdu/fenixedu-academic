@@ -28,37 +28,37 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
 public class ViewQucAuditProcessDA extends FenixDispatchAction {
 
-	public ActionForward viewProcessDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewProcessDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
-		ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+        String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
+        ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
 
-		List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
+        List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
 
-		request.setAttribute("executionCourseAudit", executionCourseAudit);
-		request.setAttribute("competenceCoursesToAudit", competenceCoursesToAudit);
-		return mapping.findForward("viewProcessDetails");
-	}
+        request.setAttribute("executionCourseAudit", executionCourseAudit);
+        request.setAttribute("competenceCoursesToAudit", competenceCoursesToAudit);
+        return mapping.findForward("viewProcessDetails");
+    }
 
-	protected List<CompetenceCourseResultsResume> getCompetenceCourseResultsBeans(ExecutionCourseAudit executionCourseAudit) {
-		List<CompetenceCourseResultsResume> competenceCoursesToAudit = new ArrayList<CompetenceCourseResultsResume>();
-		for (CompetenceCourse competenceCourse : executionCourseAudit.getExecutionCourse().getCompetenceCourses()) {
-			CompetenceCourseResultsResume competenceCourseResultsResume = null;
-			for (ExecutionDegree executionDegree : executionCourseAudit.getExecutionCourse().getExecutionDegrees()) {
-				CurricularCourseResumeResult courseResumeResult =
-						new CurricularCourseResumeResult(executionCourseAudit.getExecutionCourse(), executionDegree,
-								"label.inquiry.execution", executionDegree.getDegree().getSigla(), AccessControl.getPerson(),
-								ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true, true, true);
-				if (courseResumeResult.getResultBlocks().size() > 1) {
-					if (competenceCourseResultsResume == null) {
-						competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
-						competenceCoursesToAudit.add(competenceCourseResultsResume);
-					}
-					competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
-				}
-			}
-		}
-		return competenceCoursesToAudit;
-	}
+    protected List<CompetenceCourseResultsResume> getCompetenceCourseResultsBeans(ExecutionCourseAudit executionCourseAudit) {
+        List<CompetenceCourseResultsResume> competenceCoursesToAudit = new ArrayList<CompetenceCourseResultsResume>();
+        for (CompetenceCourse competenceCourse : executionCourseAudit.getExecutionCourse().getCompetenceCourses()) {
+            CompetenceCourseResultsResume competenceCourseResultsResume = null;
+            for (ExecutionDegree executionDegree : executionCourseAudit.getExecutionCourse().getExecutionDegrees()) {
+                CurricularCourseResumeResult courseResumeResult =
+                        new CurricularCourseResumeResult(executionCourseAudit.getExecutionCourse(), executionDegree,
+                                "label.inquiry.execution", executionDegree.getDegree().getSigla(), AccessControl.getPerson(),
+                                ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true, true, true);
+                if (courseResumeResult.getResultBlocks().size() > 1) {
+                    if (competenceCourseResultsResume == null) {
+                        competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
+                        competenceCoursesToAudit.add(competenceCourseResultsResume);
+                    }
+                    competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
+                }
+            }
+        }
+        return competenceCoursesToAudit;
+    }
 }

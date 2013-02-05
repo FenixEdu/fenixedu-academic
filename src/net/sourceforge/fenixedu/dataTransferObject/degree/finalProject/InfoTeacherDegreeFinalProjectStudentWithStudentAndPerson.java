@@ -13,23 +13,23 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
  */
 public class InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson extends InfoTeacherDegreeFinalProjectStudent {
 
-	@Override
-	public void copyFromDomain(final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
-		super.copyFromDomain(teacherDegreeFinalProjectStudent);
-		if (teacherDegreeFinalProjectStudent != null) {
-			setInfoStudent(InfoStudent.newInfoFromDomain(teacherDegreeFinalProjectStudent.getStudent()));
-			setInfoTeacher(InfoTeacher.newInfoFromDomain(teacherDegreeFinalProjectStudent.getTeacher()));
-		}
-	}
+    @Override
+    public void copyFromDomain(final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
+        super.copyFromDomain(teacherDegreeFinalProjectStudent);
+        if (teacherDegreeFinalProjectStudent != null) {
+            setInfoStudent(InfoStudent.newInfoFromDomain(teacherDegreeFinalProjectStudent.getStudent()));
+            setInfoTeacher(InfoTeacher.newInfoFromDomain(teacherDegreeFinalProjectStudent.getTeacher()));
+        }
+    }
 
-	public static InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson newInfoFromDomain(
-			final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
-		if (teacherDegreeFinalProjectStudent != null) {
-			InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson infoTeacherDegreeFinalProjectStudent =
-					new InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson();
-			infoTeacherDegreeFinalProjectStudent.copyFromDomain(teacherDegreeFinalProjectStudent);
-			return infoTeacherDegreeFinalProjectStudent;
-		}
-		return null;
-	}
+    public static InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson newInfoFromDomain(
+            final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) {
+        if (teacherDegreeFinalProjectStudent != null) {
+            InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson infoTeacherDegreeFinalProjectStudent =
+                    new InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson();
+            infoTeacherDegreeFinalProjectStudent.copyFromDomain(teacherDegreeFinalProjectStudent);
+            return infoTeacherDegreeFinalProjectStudent;
+        }
+        return null;
+    }
 }

@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyLastYearRe
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 
 public class CopyLastYearRealDataToTSDProcessPhase extends FenixService {
-	public void run(Integer tsdProcessPhaseId) {
-		TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+    public void run(Integer tsdProcessPhaseId) {
+        TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
 
-		CopyLastYearRealDataService service = CopyLastYearRealDataService.getInstance();
+        CopyLastYearRealDataService service = CopyLastYearRealDataService.getInstance();
 
-		service.copyLastYearRealDataToTSDProcessPhase(tsdProcessPhase);
-	}
+        service.copyLastYearRealDataToTSDProcessPhase(tsdProcessPhase);
+    }
 }

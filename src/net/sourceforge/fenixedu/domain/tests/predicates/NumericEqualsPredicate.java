@@ -8,41 +8,41 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class NumericEqualsPredicate extends AtomicPredicate implements Predicate {
-	private final double value;
+    private final double value;
 
-	public NumericEqualsPredicate(double value) {
-		super();
+    public NumericEqualsPredicate(double value) {
+        super();
 
-		this.value = value;
-	}
+        this.value = value;
+    }
 
-	public NumericEqualsPredicate(PredicateBean predicateBean) {
-		this(predicateBean.getValue());
-	}
+    public NumericEqualsPredicate(PredicateBean predicateBean) {
+        this(predicateBean.getValue());
+    }
 
-	@Override
-	public boolean evaluate(NewQuestion question, Person person) {
-		NewNumericQuestion numericQuestion = (NewNumericQuestion) question;
+    @Override
+    public boolean evaluate(NewQuestion question, Person person) {
+        NewNumericQuestion numericQuestion = (NewNumericQuestion) question;
 
-		if (!numericQuestion.isAnswered(person)) {
-			return false;
-		}
+        if (!numericQuestion.isAnswered(person)) {
+            return false;
+        }
 
-		return numericQuestion.getNumericAnswer(person).equals(value);
-	}
+        return numericQuestion.getNumericAnswer(person).equals(value);
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public double getValue() {
+        return value;
+    }
 
-	@Override
-	public boolean uses(Object object) {
-		return false;
-	}
+    @Override
+    public boolean uses(Object object) {
+        return false;
+    }
 
-	@Override
-	public Predicate transform(HashMap<Object, Object> transformMap) {
-		return new NumericEqualsPredicate(getValue());
-	}
+    @Override
+    public Predicate transform(HashMap<Object, Object> transformMap) {
+        return new NumericEqualsPredicate(getValue());
+    }
 
 }

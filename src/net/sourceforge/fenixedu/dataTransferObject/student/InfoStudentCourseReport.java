@@ -16,122 +16,122 @@ import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
  * 
  */
 public class InfoStudentCourseReport extends InfoObject {
-	private String strongPoints;
+    private String strongPoints;
 
-	private String weakPoints;
+    private String weakPoints;
 
-	private String studentReport;
+    private String studentReport;
 
-	private Date lastModificationDate;
+    private Date lastModificationDate;
 
-	private InfoCurricularCourse infoCurricularCourse;
+    private InfoCurricularCourse infoCurricularCourse;
 
-	/**
+    /**
      *  
      */
-	public InfoStudentCourseReport() {
-		super();
-	}
+    public InfoStudentCourseReport() {
+        super();
+    }
 
-	/**
-	 * @param idInternal
-	 */
-	public InfoStudentCourseReport(Integer idInternal) {
-		super(idInternal);
-	}
+    /**
+     * @param idInternal
+     */
+    public InfoStudentCourseReport(Integer idInternal) {
+        super(idInternal);
+    }
 
-	/**
-	 * @return Returns the infoCurricularCourse.
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    /**
+     * @return Returns the infoCurricularCourse.
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	/**
-	 * @param infoCurricularCourse
-	 *            The infoCurricularCourse to set.
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @param infoCurricularCourse
+     *            The infoCurricularCourse to set.
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
-	/**
-	 * @return Returns the lastModificationDate.
-	 */
-	public Date getLastModificationDate() {
-		return lastModificationDate;
-	}
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate() {
+        return lastModificationDate;
+    }
 
-	/**
-	 * @param lastModificationDate
-	 *            The lastModificationDate to set.
-	 */
-	public void setLastModificationDate(Date lastModificationDate) {
-		this.lastModificationDate = lastModificationDate;
-	}
+    /**
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
-	/**
-	 * @return Returns the strongPoints.
-	 */
-	public String getStrongPoints() {
-		return strongPoints;
-	}
+    /**
+     * @return Returns the strongPoints.
+     */
+    public String getStrongPoints() {
+        return strongPoints;
+    }
 
-	/**
-	 * @param strongPoints
-	 *            The strongPoints to set.
-	 */
-	public void setStrongPoints(String strongPoints) {
-		this.strongPoints = strongPoints;
-	}
+    /**
+     * @param strongPoints
+     *            The strongPoints to set.
+     */
+    public void setStrongPoints(String strongPoints) {
+        this.strongPoints = strongPoints;
+    }
 
-	/**
-	 * @return Returns the studentReport.
-	 */
-	public String getStudentReport() {
-		return studentReport;
-	}
+    /**
+     * @return Returns the studentReport.
+     */
+    public String getStudentReport() {
+        return studentReport;
+    }
 
-	/**
-	 * @param studentReport
-	 *            The studentReport to set.
-	 */
-	public void setStudentReport(String studentReport) {
-		this.studentReport = studentReport;
-	}
+    /**
+     * @param studentReport
+     *            The studentReport to set.
+     */
+    public void setStudentReport(String studentReport) {
+        this.studentReport = studentReport;
+    }
 
-	/**
-	 * @return Returns the weakPoints.
-	 */
-	public String getWeakPoints() {
-		return weakPoints;
-	}
+    /**
+     * @return Returns the weakPoints.
+     */
+    public String getWeakPoints() {
+        return weakPoints;
+    }
 
-	/**
-	 * @param weakPoints
-	 *            The weakPoints to set.
-	 */
-	public void setWeakPoints(String weakPoints) {
-		this.weakPoints = weakPoints;
-	}
+    /**
+     * @param weakPoints
+     *            The weakPoints to set.
+     */
+    public void setWeakPoints(String weakPoints) {
+        this.weakPoints = weakPoints;
+    }
 
-	public void copyFromDomain(StudentCourseReport scr) {
-		super.copyFromDomain(scr);
-		if (scr != null) {
-			setStrongPoints(scr.getStrongPoints());
-			setWeakPoints(scr.getWeakPoints());
-			setStudentReport(scr.getStudentReport());
-			setLastModificationDate(scr.getLastModificationDate());
-		}
-	}
+    public void copyFromDomain(StudentCourseReport scr) {
+        super.copyFromDomain(scr);
+        if (scr != null) {
+            setStrongPoints(scr.getStrongPoints());
+            setWeakPoints(scr.getWeakPoints());
+            setStudentReport(scr.getStudentReport());
+            setLastModificationDate(scr.getLastModificationDate());
+        }
+    }
 
-	public static InfoStudentCourseReport newInfoFromDomain(StudentCourseReport scr) {
-		InfoStudentCourseReport infoStudentCourseReport = null;
-		if (scr != null) {
-			infoStudentCourseReport = new InfoStudentCourseReport();
-			infoStudentCourseReport.copyFromDomain(scr);
-		}
-		return infoStudentCourseReport;
-	}
+    public static InfoStudentCourseReport newInfoFromDomain(StudentCourseReport scr) {
+        InfoStudentCourseReport infoStudentCourseReport = null;
+        if (scr != null) {
+            infoStudentCourseReport = new InfoStudentCourseReport();
+            infoStudentCourseReport.copyFromDomain(scr);
+        }
+        return infoStudentCourseReport;
+    }
 
 }

@@ -21,152 +21,152 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class GenerateStudentReport implements Serializable {
 
-	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources/EnumerationResources");
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources/EnumerationResources");
 
-	public static class StudentReportPredicate implements Serializable {
+    public static class StudentReportPredicate implements Serializable {
 
-		private ExecutionYear executionYear;
+        private ExecutionYear executionYear;
 
-		private DegreeType degreeType;
+        private DegreeType degreeType;
 
-		private boolean concluded = false;
+        private boolean concluded = false;
 
-		private boolean active = false;
+        private boolean active = false;
 
-		{
-			setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-		}
+        {
+            setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        }
 
-		public ExecutionYear getExecutionYear() {
-			return executionYear;
-		}
+        public ExecutionYear getExecutionYear() {
+            return executionYear;
+        }
 
-		public void setExecutionYear(final ExecutionYear executionYear) {
-			this.executionYear = executionYear;
-		}
+        public void setExecutionYear(final ExecutionYear executionYear) {
+            this.executionYear = executionYear;
+        }
 
-		public DegreeType getDegreeType() {
-			return degreeType;
-		}
+        public DegreeType getDegreeType() {
+            return degreeType;
+        }
 
-		public void setDegreeType(DegreeType degreeType) {
-			this.degreeType = degreeType;
-		}
+        public void setDegreeType(DegreeType degreeType) {
+            this.degreeType = degreeType;
+        }
 
-		public boolean getConcluded() {
-			return concluded;
-		}
+        public boolean getConcluded() {
+            return concluded;
+        }
 
-		public void setConcluded(boolean concluded) {
-			this.concluded = concluded;
-		}
+        public void setConcluded(boolean concluded) {
+            this.concluded = concluded;
+        }
 
-		public boolean getActive() {
-			return active;
-		}
+        public boolean getActive() {
+            return active;
+        }
 
-		public void setActive(boolean active) {
-			this.active = active;
-		}
+        public void setActive(boolean active) {
+            this.active = active;
+        }
 
-		public boolean getAreRequiredFieldsFilledOut() {
-			return (getActive() || getConcluded()) && getExecutionYear() != null;
-		}
+        public boolean getAreRequiredFieldsFilledOut() {
+            return (getActive() || getConcluded()) && getExecutionYear() != null;
+        }
 
-		public boolean applyFor(final DegreeType forDegreeType) {
-			final DegreeType degreeType = getDegreeType();
-			return degreeType == null || degreeType == forDegreeType;
-		}
+        public boolean applyFor(final DegreeType forDegreeType) {
+            final DegreeType degreeType = getDegreeType();
+            return degreeType == null || degreeType == forDegreeType;
+        }
 
-		public boolean applyFor(final Registration registration) {
-			final ExecutionYear executionYear = getExecutionYear();
-			final RegistrationState registrationState = registration.getLastRegistrationState(executionYear);
-			if (registrationState == null) {
-				return false;
-			}
-			final RegistrationStateType registrationStateType = registrationState.getStateType();
-			return (getActive() && registrationStateType.isActive())
-					|| (getConcluded() && registrationStateType == RegistrationStateType.CONCLUDED && executionYear
-							.containsDate(registrationState.getStateDate()));
-		}
+        public boolean applyFor(final Registration registration) {
+            final ExecutionYear executionYear = getExecutionYear();
+            final RegistrationState registrationState = registration.getLastRegistrationState(executionYear);
+            if (registrationState == null) {
+                return false;
+            }
+            final RegistrationStateType registrationStateType = registrationState.getStateType();
+            return (getActive() && registrationStateType.isActive())
+                    || (getConcluded() && registrationStateType == RegistrationStateType.CONCLUDED && executionYear
+                            .containsDate(registrationState.getStateDate()));
+        }
 
-	}
+    }
 
-	public static Spreadsheet generateReport(final StudentReportPredicate studentReportPredicate) {
-		final Spreadsheet spreadsheet = new Spreadsheet("StudentDataAuthorizations");
-		addHeaders(spreadsheet);
-		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		for (final Degree degree : Degree.readNotEmptyDegrees()) {
-			final DegreeType degreeType = degree.getDegreeType();
-			if (studentReportPredicate.applyFor(degreeType)) {
-				processDegree(spreadsheet, studentReportPredicate, degree, executionYear);
-			}
-		}
-		return spreadsheet;
-	}
+    public static Spreadsheet generateReport(final StudentReportPredicate studentReportPredicate) {
+        final Spreadsheet spreadsheet = new Spreadsheet("StudentDataAuthorizations");
+        addHeaders(spreadsheet);
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        for (final Degree degree : Degree.readNotEmptyDegrees()) {
+            final DegreeType degreeType = degree.getDegreeType();
+            if (studentReportPredicate.applyFor(degreeType)) {
+                processDegree(spreadsheet, studentReportPredicate, degree, executionYear);
+            }
+        }
+        return spreadsheet;
+    }
 
-	private static void addHeaders(final Spreadsheet spreadsheet) {
-		spreadsheet.setHeader("Número");
-		spreadsheet.setHeader("Nome");
-		spreadsheet.setHeader("Curso");
-		spreadsheet.setHeader("Ramo");
-		spreadsheet.setHeader("Ano Curricular");
-		spreadsheet.setHeader("Média");
-		spreadsheet.setHeader("Ano Léctivo de Conclusão");
-		spreadsheet.setHeader("Morada");
-		spreadsheet.setHeader("Localidade");
-		spreadsheet.setHeader("Código Postal");
-		spreadsheet.setHeader("Localidade do Código Postal");
-		spreadsheet.setHeader("Telefone");
-		spreadsheet.setHeader("Telemovel");
-		spreadsheet.setHeader("E-mail");
-		spreadsheet.setHeader("Autorização");
-	}
+    private static void addHeaders(final Spreadsheet spreadsheet) {
+        spreadsheet.setHeader("Número");
+        spreadsheet.setHeader("Nome");
+        spreadsheet.setHeader("Curso");
+        spreadsheet.setHeader("Ramo");
+        spreadsheet.setHeader("Ano Curricular");
+        spreadsheet.setHeader("Média");
+        spreadsheet.setHeader("Ano Léctivo de Conclusão");
+        spreadsheet.setHeader("Morada");
+        spreadsheet.setHeader("Localidade");
+        spreadsheet.setHeader("Código Postal");
+        spreadsheet.setHeader("Localidade do Código Postal");
+        spreadsheet.setHeader("Telefone");
+        spreadsheet.setHeader("Telemovel");
+        spreadsheet.setHeader("E-mail");
+        spreadsheet.setHeader("Autorização");
+    }
 
-	private static void processDegree(final Spreadsheet spreadsheet, final StudentReportPredicate studentReportPredicate,
-			final Degree degree, final ExecutionYear executionYear) {
-		for (final Registration registration : degree.getRegistrationsSet()) {
-			if (studentReportPredicate.applyFor(registration)) {
-				final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-				if (studentCurricularPlan != null) {
-					processStudentCurricularPlan(spreadsheet, studentCurricularPlan, executionYear);
-				}
-			}
-		}
-	}
+    private static void processDegree(final Spreadsheet spreadsheet, final StudentReportPredicate studentReportPredicate,
+            final Degree degree, final ExecutionYear executionYear) {
+        for (final Registration registration : degree.getRegistrationsSet()) {
+            if (studentReportPredicate.applyFor(registration)) {
+                final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+                if (studentCurricularPlan != null) {
+                    processStudentCurricularPlan(spreadsheet, studentCurricularPlan, executionYear);
+                }
+            }
+        }
+    }
 
-	private static void processStudentCurricularPlan(final Spreadsheet spreadsheet,
-			final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-		final Registration registration = studentCurricularPlan.getRegistration();
-		final Student student = registration.getStudent();
-		final Person person = student.getPerson();
-		final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-		final Degree degree = degreeCurricularPlan.getDegree();
-		final Branch branch = studentCurricularPlan.getBranch();
-		StudentDataShareAuthorization dataAccess =
-				student.getPersonalDataAuthorizationAt(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight());
-		final Row row = spreadsheet.addRow();
-		row.setCell(student.getNumber().toString());
-		row.setCell(person.getName());
-		row.setCell(degree.getDegreeType().getLocalizedName() + " "
-				+ degree.getNameFor(registration.getStartExecutionYear()).getContent());
-		row.setCell(branch == null ? "" : branch.getName());
-		row.setCell("" + registration.getCurricularYear(executionYear));
-		row.setCell("" + registration.getAverage(executionYear));
-		if (registration.isConcluded()) {
-			row.setCell(executionYear.getYear());
-		} else {
-			row.setCell("");
-		}
-		row.setCell(person.getAddress());
-		row.setCell(person.getArea());
-		row.setCell(person.getAreaCode());
-		row.setCell(person.getAreaOfAreaCode());
-		row.setCell(person.getDefaultPhoneNumber());
-		row.setCell(person.getDefaultMobilePhoneNumber());
-		row.setCell(person.getEmail());
-		row.setCell(dataAccess != null ? dataAccess.getAuthorizationChoice().getDescription() : StudentPersonalDataAuthorizationChoice.NO_END
-				.getDescription());
-	}
+    private static void processStudentCurricularPlan(final Spreadsheet spreadsheet,
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+        final Registration registration = studentCurricularPlan.getRegistration();
+        final Student student = registration.getStudent();
+        final Person person = student.getPerson();
+        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        final Degree degree = degreeCurricularPlan.getDegree();
+        final Branch branch = studentCurricularPlan.getBranch();
+        StudentDataShareAuthorization dataAccess =
+                student.getPersonalDataAuthorizationAt(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight());
+        final Row row = spreadsheet.addRow();
+        row.setCell(student.getNumber().toString());
+        row.setCell(person.getName());
+        row.setCell(degree.getDegreeType().getLocalizedName() + " "
+                + degree.getNameFor(registration.getStartExecutionYear()).getContent());
+        row.setCell(branch == null ? "" : branch.getName());
+        row.setCell("" + registration.getCurricularYear(executionYear));
+        row.setCell("" + registration.getAverage(executionYear));
+        if (registration.isConcluded()) {
+            row.setCell(executionYear.getYear());
+        } else {
+            row.setCell("");
+        }
+        row.setCell(person.getAddress());
+        row.setCell(person.getArea());
+        row.setCell(person.getAreaCode());
+        row.setCell(person.getAreaOfAreaCode());
+        row.setCell(person.getDefaultPhoneNumber());
+        row.setCell(person.getDefaultMobilePhoneNumber());
+        row.setCell(person.getEmail());
+        row.setCell(dataAccess != null ? dataAccess.getAuthorizationChoice().getDescription() : StudentPersonalDataAuthorizationChoice.NO_END
+                .getDescription());
+    }
 
 }

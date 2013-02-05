@@ -7,56 +7,56 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 public class TestFilterResultBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Functionality functionality;
-	private boolean accessible;
+    private Functionality functionality;
+    private boolean accessible;
 
-	private Map<String, String[]> parameters;
+    private Map<String, String[]> parameters;
 
-	public TestFilterResultBean(Functionality functionality, boolean accessible, Map<String, String[]> parameters) {
-		super();
+    public TestFilterResultBean(Functionality functionality, boolean accessible, Map<String, String[]> parameters) {
+        super();
 
-		this.functionality = functionality;
-		this.accessible = accessible;
-		this.parameters = parameters;
-	}
+        this.functionality = functionality;
+        this.accessible = accessible;
+        this.parameters = parameters;
+    }
 
-	public boolean isAccessible() {
-		return this.accessible;
-	}
+    public boolean isAccessible() {
+        return this.accessible;
+    }
 
-	public Functionality getFunctionality() {
-		return this.functionality;
-	}
+    public Functionality getFunctionality() {
+        return this.functionality;
+    }
 
-	public String getPublicPath() {
-		StringBuilder publicPath = new StringBuilder(getFunctionality().getPublicPath());
+    public String getPublicPath() {
+        StringBuilder publicPath = new StringBuilder(getFunctionality().getPublicPath());
 
-		boolean firstParameter = true;
+        boolean firstParameter = true;
 
-		if (!publicPath.toString().contains("?")) {
-			if (this.parameters.keySet().size() > 0) {
-				publicPath.append("?");
-			}
-		} else {
-			firstParameter = false;
-		}
+        if (!publicPath.toString().contains("?")) {
+            if (this.parameters.keySet().size() > 0) {
+                publicPath.append("?");
+            }
+        } else {
+            firstParameter = false;
+        }
 
-		for (String parameter : this.parameters.keySet()) {
-			String[] values = this.parameters.get(parameter);
+        for (String parameter : this.parameters.keySet()) {
+            String[] values = this.parameters.get(parameter);
 
-			if (!firstParameter) {
-				publicPath.append("&");
-			}
+            if (!firstParameter) {
+                publicPath.append("&");
+            }
 
-			firstParameter = false;
+            firstParameter = false;
 
-			for (String value : values) {
-				publicPath.append(parameter + "=" + value);
-			}
-		}
+            for (String value : values) {
+                publicPath.append(parameter + "=" + value);
+            }
+        }
 
-		return publicPath.toString();
-	}
+        return publicPath.toString();
+    }
 }

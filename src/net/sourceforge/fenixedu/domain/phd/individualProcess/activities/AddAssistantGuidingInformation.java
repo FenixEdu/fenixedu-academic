@@ -9,22 +9,22 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 
 public class AddAssistantGuidingInformation extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-		// no precondition to check
-	}
+    @Override
+    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+        // no precondition to check
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		PhdParticipantBean bean = (PhdParticipantBean) object;
-		PhdParticipant addAssistantGuiding = process.addAssistantGuiding((PhdParticipantBean) object);
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        PhdParticipantBean bean = (PhdParticipantBean) object;
+        PhdParticipant addAssistantGuiding = process.addAssistantGuiding((PhdParticipantBean) object);
 
-		if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
-			PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
-			new PhdGuiderAcceptanceLetter(addAssistantGuiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
-					.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
-		}
+        if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+            PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
+            new PhdGuiderAcceptanceLetter(addAssistantGuiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
+                    .getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
+        }
 
-		return process;
-	}
+        return process;
+    }
 }

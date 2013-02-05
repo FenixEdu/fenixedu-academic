@@ -8,31 +8,31 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class InquiryGlobalComment extends InquiryGlobalComment_Base {
 
-	public InquiryGlobalComment(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setExecutionCourse(executionCourse);
-		setExecutionDegree(executionDegree);
-		setCommentOnTeacher(false);
-	}
+    public InquiryGlobalComment(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setExecutionCourse(executionCourse);
+        setExecutionDegree(executionDegree);
+        setCommentOnTeacher(false);
+    }
 
-	public InquiryGlobalComment(Person teacher, ExecutionSemester executionSemester) {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setTeacher(teacher);
-		setExecutionSemester(executionSemester);
-		setCommentOnTeacher(true);
-	}
+    public InquiryGlobalComment(Person teacher, ExecutionSemester executionSemester) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setTeacher(teacher);
+        setExecutionSemester(executionSemester);
+        setCommentOnTeacher(true);
+    }
 
-	public void delete() {
-		for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().get(0).delete()) {
-			;
-		}
-		removeExecutionCourse();
-		removeExecutionDegree();
-		removeExecutionSemester();
-		removeTeacher();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().get(0).delete()) {
+            ;
+        }
+        removeExecutionCourse();
+        removeExecutionDegree();
+        removeExecutionSemester();
+        removeTeacher();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 }

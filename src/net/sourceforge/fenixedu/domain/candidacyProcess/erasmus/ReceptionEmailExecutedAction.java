@@ -12,52 +12,52 @@ import org.apache.commons.lang.StringUtils;
 
 public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_Base {
 
-	protected ReceptionEmailExecutedAction() {
-		super();
-	}
+    protected ReceptionEmailExecutedAction() {
+        super();
+    }
 
-	protected ReceptionEmailExecutedAction(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
-			List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
-		this();
+    protected ReceptionEmailExecutedAction(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
+            List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
+        this();
 
-		init(type, applicationProcess, subjectCandidacyProcesses, template);
+        init(type, applicationProcess, subjectCandidacyProcesses, template);
 
-		sendEmails();
-	}
+        sendEmails();
+    }
 
-	protected void init(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
-			List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
-		super.init(type, applicationProcess, subjectCandidacyProcesses);
+    protected void init(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
+            List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
+        super.init(type, applicationProcess, subjectCandidacyProcesses);
 
-		if (StringUtils.isEmpty(template.getSubject())) {
-			throw new DomainException("error.reception.email.executed.action.subject.is.empty");
-		}
+        if (StringUtils.isEmpty(template.getSubject())) {
+            throw new DomainException("error.reception.email.executed.action.subject.is.empty");
+        }
 
-		if (StringUtils.isEmpty(template.getBody())) {
-			throw new DomainException("error.reception.email.executed.action.body.is.empty");
-		}
+        if (StringUtils.isEmpty(template.getBody())) {
+            throw new DomainException("error.reception.email.executed.action.body.is.empty");
+        }
 
-		if (!ExecutedActionType.SENT_RECEPTION_EMAIL.equals(type)) {
-			throw new DomainException("error.reception.email.executed.action.type.is.incorrect");
-		}
+        if (!ExecutedActionType.SENT_RECEPTION_EMAIL.equals(type)) {
+            throw new DomainException("error.reception.email.executed.action.type.is.incorrect");
+        }
 
-		setMobilityEmailTemplate(template);
-	}
+        setMobilityEmailTemplate(template);
+    }
 
-	private void sendEmails() {
-		getMobilityEmailTemplate().sendMultiEmailFor(getSubjectMobilityIndividualApplicationProcess());
+    private void sendEmails() {
+        getMobilityEmailTemplate().sendMultiEmailFor(getSubjectMobilityIndividualApplicationProcess());
 
-	}
+    }
 
-	protected static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess applicationProcess,
-			List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
-		return new ReceptionEmailExecutedAction(ExecutedActionType.SENT_RECEPTION_EMAIL, applicationProcess,
-				subjectCandidacyProcesses, template);
-	}
+    protected static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess applicationProcess,
+            List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
+        return new ReceptionEmailExecutedAction(ExecutedActionType.SENT_RECEPTION_EMAIL, applicationProcess,
+                subjectCandidacyProcesses, template);
+    }
 
-	public static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess process, final SendReceptionEmailBean bean) {
-		MobilityEmailTemplate receptionTemplate =
-				process.getCandidacyPeriod().getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION);
-		return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), receptionTemplate);
-	}
+    public static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess process, final SendReceptionEmailBean bean) {
+        MobilityEmailTemplate receptionTemplate =
+                process.getCandidacyPeriod().getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION);
+        return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), receptionTemplate);
+    }
 }

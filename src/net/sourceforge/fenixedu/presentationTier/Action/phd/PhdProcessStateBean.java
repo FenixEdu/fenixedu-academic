@@ -9,29 +9,29 @@ import org.joda.time.DateTime;
 
 public class PhdProcessStateBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private DateTime stateDate;
-	private PhdProcessState state;
+    private DateTime stateDate;
+    private PhdProcessState state;
 
-	public PhdProcessStateBean(final PhdProcessState state) {
-		this.state = state;
-		this.stateDate = state.getStateDate();
-	}
+    public PhdProcessStateBean(final PhdProcessState state) {
+        this.state = state;
+        this.stateDate = state.getStateDate();
+    }
 
-	public DateTime getStateDate() {
-		return stateDate;
-	}
+    public DateTime getStateDate() {
+        return stateDate;
+    }
 
-	public void setStateDate(DateTime stateDate) {
-		this.stateDate = stateDate;
-	}
+    public void setStateDate(DateTime stateDate) {
+        this.stateDate = stateDate;
+    }
 
-	public PhdProcessState getState() {
-		return state;
-	}
+    public PhdProcessState getState() {
+        return state;
+    }
 
-	public PhdProgramProcess getPhdProcess() {
-		return state.getProcess();
-	}
+    public PhdProgramProcess getPhdProcess() {
+        return state.getProcess();
+    }
 }

@@ -13,70 +13,70 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	public ImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
-		super(curriculumGroup, executionSemester, null);
-	}
+    public ImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
+        super(curriculumGroup, executionSemester, null);
+    }
 
-	@Override
-	protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group, ExecutionSemester executionSemester) {
-		return Collections.emptyList();
-	}
+    @Override
+    protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group, ExecutionSemester executionSemester) {
+        return Collections.emptyList();
+    }
 
-	@Override
-	protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
-			ExecutionSemester executionSemester) {
-		List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
-		for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
-			if (curriculumModule.isEnrolment()) {
-				Enrolment enrolment = (Enrolment) curriculumModule;
-				if (enrolment.isImprovementEnroled() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
-					result.add(new StudentCurriculumEnrolmentBean(enrolment));
-				}
-			}
-		}
+    @Override
+    protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
+            ExecutionSemester executionSemester) {
+        List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
+        for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
+            if (curriculumModule.isEnrolment()) {
+                Enrolment enrolment = (Enrolment) curriculumModule;
+                if (enrolment.isImprovementEnroled() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
+                    result.add(new StudentCurriculumEnrolmentBean(enrolment));
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-			ExecutionSemester executionSemester) {
-		List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
-		for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
-			if (curriculumModule.isEnrolment()) {
-				Enrolment enrolment = (Enrolment) curriculumModule;
-				if (enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
-					result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
-				}
-			}
-		}
+    @Override
+    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
+            ExecutionSemester executionSemester) {
+        List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
+        for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
+            if (curriculumModule.isEnrolment()) {
+                Enrolment enrolment = (Enrolment) curriculumModule;
+                if (enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
+                    result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-			ExecutionSemester executionSemester, int[] curricularYears) {
-		final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-		for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
-			result.add(new ImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
-		}
+    @Override
+    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
+            ExecutionSemester executionSemester, int[] curricularYears) {
+        final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
+        for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
+            result.add(new ImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
-		final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
-		Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_EXECUTION_PERIOD);
-		return result;
-	}
+    @Override
+    public List<IDegreeModuleToEvaluate> getSortedDegreeModulesToEvaluate() {
+        final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>(getCurricularCoursesToEnrol());
+        Collections.sort(result, IDegreeModuleToEvaluate.COMPARATOR_BY_EXECUTION_PERIOD);
+        return result;
+    }
 
-	@Override
-	public boolean isToBeDisabled() {
-		return true;
-	}
+    @Override
+    public boolean isToBeDisabled() {
+        return true;
+    }
 
 }

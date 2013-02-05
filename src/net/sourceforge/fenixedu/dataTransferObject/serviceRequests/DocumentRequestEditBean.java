@@ -8,69 +8,69 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Certific
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 
 public class DocumentRequestEditBean implements Serializable {
-	private Person responsible;
+    private Person responsible;
 
-	private DocumentRequest documentRequest;
+    private DocumentRequest documentRequest;
 
-	private AcademicServiceRequestSituationType academicServiceRequestSituationType;
+    private AcademicServiceRequestSituationType academicServiceRequestSituationType;
 
-	private Integer numberOfPages;
+    private Integer numberOfPages;
 
-	private String justification;
+    private String justification;
 
-	public DocumentRequestEditBean() {
+    public DocumentRequestEditBean() {
 
-	}
+    }
 
-	public DocumentRequestEditBean(DocumentRequest documentRequest, Person responsible) {
-		setDocumentRequest(documentRequest);
-		setResponsible(responsible);
-		setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
-		setJustification(documentRequest.getActiveSituation().getJustification());
+    public DocumentRequestEditBean(DocumentRequest documentRequest, Person responsible) {
+        setDocumentRequest(documentRequest);
+        setResponsible(responsible);
+        setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
+        setJustification(documentRequest.getActiveSituation().getJustification());
 
-		if (documentRequest.isCertificate()) {
-			setNumberOfPages(((CertificateRequest) documentRequest).getNumberOfPages());
-		}
-	}
+        if (documentRequest.isCertificate()) {
+            setNumberOfPages(((CertificateRequest) documentRequest).getNumberOfPages());
+        }
+    }
 
-	public DocumentRequest getDocumentRequest() {
-		return this.documentRequest;
-	}
+    public DocumentRequest getDocumentRequest() {
+        return this.documentRequest;
+    }
 
-	public void setDocumentRequest(DocumentRequest documentRequest) {
-		this.documentRequest = documentRequest;
-	}
+    public void setDocumentRequest(DocumentRequest documentRequest) {
+        this.documentRequest = documentRequest;
+    }
 
-	public Person getResponsible() {
-		return responsible;
-	}
+    public Person getResponsible() {
+        return responsible;
+    }
 
-	public void setResponsible(Person responsible) {
-		this.responsible = responsible;
-	}
+    public void setResponsible(Person responsible) {
+        this.responsible = responsible;
+    }
 
-	public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
-		return academicServiceRequestSituationType;
-	}
+    public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
+        return academicServiceRequestSituationType;
+    }
 
-	public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-		this.academicServiceRequestSituationType = academicServiceRequestSituationType;
-	}
+    public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+        this.academicServiceRequestSituationType = academicServiceRequestSituationType;
+    }
 
-	public Integer getNumberOfPages() {
-		return numberOfPages;
-	}
+    public Integer getNumberOfPages() {
+        return numberOfPages;
+    }
 
-	public void setNumberOfPages(Integer numberOfPages) {
-		this.numberOfPages = numberOfPages;
-	}
+    public void setNumberOfPages(Integer numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
 
-	public String getJustification() {
-		return justification;
-	}
+    public String getJustification() {
+        return justification;
+    }
 
-	public void setJustification(String justification) {
-		this.justification = justification;
-	}
+    public void setJustification(String justification) {
+        this.justification = justification;
+    }
 
 }

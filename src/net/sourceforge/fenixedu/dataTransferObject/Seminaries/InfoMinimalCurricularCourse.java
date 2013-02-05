@@ -9,33 +9,33 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 
 public class InfoMinimalCurricularCourse extends InfoCurricularCourse {
 
-	String name;
+    String name;
 
-	public InfoMinimalCurricularCourse(CurricularCourse curricularCourse) {
-		super(curricularCourse);
-	}
+    public InfoMinimalCurricularCourse(CurricularCourse curricularCourse) {
+        super(curricularCourse);
+    }
 
-	public void copyFromDomain(CurricularCourse curricularCourse) {
-		if (curricularCourse != null) {
-			setName(curricularCourse.getName());
-		}
-	}
+    public void copyFromDomain(CurricularCourse curricularCourse) {
+        if (curricularCourse != null) {
+            setName(curricularCourse.getName());
+        }
+    }
 
-	public static InfoMinimalCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
-		InfoMinimalCurricularCourse infoCurricularCourse = null;
-		if (curricularCourse != null) {
-			infoCurricularCourse = new InfoMinimalCurricularCourse(curricularCourse);
-			infoCurricularCourse.copyFromDomain(curricularCourse);
-		}
-		return infoCurricularCourse;
-	}
+    public static InfoMinimalCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
+        InfoMinimalCurricularCourse infoCurricularCourse = null;
+        if (curricularCourse != null) {
+            infoCurricularCourse = new InfoMinimalCurricularCourse(curricularCourse);
+            infoCurricularCourse.copyFromDomain(curricularCourse);
+        }
+        return infoCurricularCourse;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

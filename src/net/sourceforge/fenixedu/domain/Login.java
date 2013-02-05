@@ -16,283 +16,283 @@ import org.joda.time.YearMonthDay;
 
 public class Login extends Login_Base {
 
-	public Login(User user) {
-		super();
-		checkIfUserAlreadyHaveLogin(user);
-		setUser(user);
-		setIsPassInKerberos(Boolean.FALSE);
-	}
+    public Login(User user) {
+        super();
+        checkIfUserAlreadyHaveLogin(user);
+        setUser(user);
+        setIsPassInKerberos(Boolean.FALSE);
+    }
 
-	@Override
-	public void delete() {
-		for (; !getAlias().isEmpty(); getAlias().get(0).delete()) {
-			;
-		}
-		for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete()) {
-			;
-		}
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        for (; !getAlias().isEmpty(); getAlias().get(0).delete()) {
+            ;
+        }
+        for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete()) {
+            ;
+        }
+        super.delete();
+    }
 
-	public LoginPeriod readLoginPeriodByTimeInterval(YearMonthDay begin, YearMonthDay end) {
-		for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
-			if (loginPeriod.getBeginDate().equals(begin)
-					&& ((loginPeriod.getEndDate() == null && end == null) || (loginPeriod.getEndDate().equals(end)))) {
-				return loginPeriod;
-			}
-		}
-		return null;
-	}
+    public LoginPeriod readLoginPeriodByTimeInterval(YearMonthDay begin, YearMonthDay end) {
+        for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
+            if (loginPeriod.getBeginDate().equals(begin)
+                    && ((loginPeriod.getEndDate() == null && end == null) || (loginPeriod.getEndDate().equals(end)))) {
+                return loginPeriod;
+            }
+        }
+        return null;
+    }
 
-	public boolean isOpened() {
-		YearMonthDay currentDate = new YearMonthDay();
-		for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
-			if ((loginPeriod.getEndDate() == null || !loginPeriod.getEndDate().isBefore(currentDate))
-					&& !loginPeriod.getBeginDate().isAfter(currentDate)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isOpened() {
+        YearMonthDay currentDate = new YearMonthDay();
+        for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
+            if ((loginPeriod.getEndDate() == null || !loginPeriod.getEndDate().isBefore(currentDate))
+                    && !loginPeriod.getBeginDate().isAfter(currentDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public boolean isLogin() {
-		return true;
-	}
+    @Override
+    public boolean isLogin() {
+        return true;
+    }
 
-	public String getUsername() {
-		String userUId = getUserUId();
-		if (userUId != null) {
-			return userUId;
-		} else {
-			return getMostImportantAlias();
-		}
-	}
+    public String getUsername() {
+        String userUId = getUserUId();
+        if (userUId != null) {
+            return userUId;
+        } else {
+            return getMostImportantAlias();
+        }
+    }
 
-	public String getMostImportantAlias() {
-		List<Role> personRoles = getUser().getPerson().getPersonRoles();
-		Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
-		if (mostImportantRole != null) {
-			RoleType roleType = mostImportantRole.getRoleType();
-			List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);
-			if (!loginAlias.isEmpty()) {
-				return loginAlias.get(0).getAlias();
-			}
-		}
-		return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
-	}
+    public String getMostImportantAlias() {
+        List<Role> personRoles = getUser().getPerson().getPersonRoles();
+        Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
+        if (mostImportantRole != null) {
+            RoleType roleType = mostImportantRole.getRoleType();
+            List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);
+            if (!loginAlias.isEmpty()) {
+                return loginAlias.get(0).getAlias();
+            }
+        }
+        return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
+    }
 
-	public String getUserUId() {
-		LoginAlias loginAliasByType = getInstitutionalLoginAlias();
-		return (loginAliasByType != null) ? loginAliasByType.getAlias() : null;
-	}
+    public String getUserUId() {
+        LoginAlias loginAliasByType = getInstitutionalLoginAlias();
+        return (loginAliasByType != null) ? loginAliasByType.getAlias() : null;
+    }
 
-	public void setUsername(RoleType roleType) {
-		removeAliasWithoutCloseLogin(roleType);
-		openLoginIfNecessary(roleType);
-		updateAliases(roleType);
-	}
+    public void setUsername(RoleType roleType) {
+        removeAliasWithoutCloseLogin(roleType);
+        openLoginIfNecessary(roleType);
+        updateAliases(roleType);
+    }
 
-	public void setUserUID() {
-		final LoginAlias loginAlias = getInstitutionalLoginAlias();
-		if (loginAlias == null) {
-			final String userUId = UsernameUtils.updateIstUsername(getUser().getPerson());
-			if (!StringUtils.isEmpty(userUId)) {
-				LoginAlias.createNewInstitutionalLoginAlias(this, userUId);
-				getUser().setUserUId(userUId);
-			}
-		}
-	}
+    public void setUserUID() {
+        final LoginAlias loginAlias = getInstitutionalLoginAlias();
+        if (loginAlias == null) {
+            final String userUId = UsernameUtils.updateIstUsername(getUser().getPerson());
+            if (!StringUtils.isEmpty(userUId)) {
+                LoginAlias.createNewInstitutionalLoginAlias(this, userUId);
+                getUser().setUserUId(userUId);
+            }
+        }
+    }
 
-	public LoginAlias readLoginAliasByAlias(String alias) {
-		if (alias != null) {
-			for (LoginAlias loginAlias : getAlias()) {
-				if (loginAlias.getAlias().equalsIgnoreCase(alias)) {
-					return loginAlias;
-				}
-			}
-		}
-		return null;
-	}
+    public LoginAlias readLoginAliasByAlias(String alias) {
+        if (alias != null) {
+            for (LoginAlias loginAlias : getAlias()) {
+                if (loginAlias.getAlias().equalsIgnoreCase(alias)) {
+                    return loginAlias;
+                }
+            }
+        }
+        return null;
+    }
 
-	public LoginAlias getInstitutionalLoginAlias() {
-		for (LoginAlias loginAlias : getAlias()) {
-			if (loginAlias.getType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
-				return loginAlias;
-			}
-		}
-		return null;
-	}
+    public LoginAlias getInstitutionalLoginAlias() {
+        for (LoginAlias loginAlias : getAlias()) {
+            if (loginAlias.getType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
+                return loginAlias;
+            }
+        }
+        return null;
+    }
 
-	public List<LoginAlias> getRoleLoginAlias(RoleType roleType) {
-		List<LoginAlias> result = new ArrayList<LoginAlias>();
-		if (roleType != null) {
-			for (LoginAlias loginAlias : getAlias()) {
-				if (loginAlias.getType().equals(LoginAliasType.ROLE_TYPE_ALIAS) && loginAlias.getRoleType().equals(roleType)) {
-					result.add(loginAlias);
-				}
-			}
-		}
-		return result;
-	}
+    public List<LoginAlias> getRoleLoginAlias(RoleType roleType) {
+        List<LoginAlias> result = new ArrayList<LoginAlias>();
+        if (roleType != null) {
+            for (LoginAlias loginAlias : getAlias()) {
+                if (loginAlias.getType().equals(LoginAliasType.ROLE_TYPE_ALIAS) && loginAlias.getRoleType().equals(roleType)) {
+                    result.add(loginAlias);
+                }
+            }
+        }
+        return result;
+    }
 
-	public List<LoginAlias> getAllRoleLoginAlias() {
-		return readAllLoginAliasByType(LoginAliasType.ROLE_TYPE_ALIAS);
-	}
+    public List<LoginAlias> getAllRoleLoginAlias() {
+        return readAllLoginAliasByType(LoginAliasType.ROLE_TYPE_ALIAS);
+    }
 
-	public List<LoginAlias> getAllCustomLoginAlias() {
-		return readAllLoginAliasByType(LoginAliasType.CUSTOM_ALIAS);
-	}
+    public List<LoginAlias> getAllCustomLoginAlias() {
+        return readAllLoginAliasByType(LoginAliasType.CUSTOM_ALIAS);
+    }
 
-	public List<LoginAlias> readAllLoginAliasByType(LoginAliasType aliasType) {
-		List<LoginAlias> result = new ArrayList<LoginAlias>();
-		for (LoginAlias loginAlias : getAlias()) {
-			if (loginAlias.getType().equals(aliasType)) {
-				result.add(loginAlias);
-			}
-		}
-		return result;
-	}
+    public List<LoginAlias> readAllLoginAliasByType(LoginAliasType aliasType) {
+        List<LoginAlias> result = new ArrayList<LoginAlias>();
+        for (LoginAlias loginAlias : getAlias()) {
+            if (loginAlias.getType().equals(aliasType)) {
+                result.add(loginAlias);
+            }
+        }
+        return result;
+    }
 
-	public Set<LoginAlias> getLoginAliasOrderByImportance() {
-		Set<LoginAlias> result = new TreeSet<LoginAlias>(LoginAlias.COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS);
-		result.addAll(getAlias());
-		return result;
-	}
+    public Set<LoginAlias> getLoginAliasOrderByImportance() {
+        Set<LoginAlias> result = new TreeSet<LoginAlias>(LoginAlias.COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS);
+        result.addAll(getAlias());
+        return result;
+    }
 
-	public void removeAlias(RoleType roleType) {
-		removeAliasWithoutCloseLogin(roleType);
-		closeLoginIfNecessary();
-	}
+    public void removeAlias(RoleType roleType) {
+        removeAliasWithoutCloseLogin(roleType);
+        closeLoginIfNecessary();
+    }
 
-	public boolean hasUsername(String username) {
-		return readLoginAliasByAlias(username) != null;
-	}
+    public boolean hasUsername(String username) {
+        return readLoginAliasByAlias(username) != null;
+    }
 
-	public Set<LoginPeriod> getLoginPeriodsWithoutInvitationPeriods() {
-		Person person = getUser().getPerson();
-		Login login = person.getLoginIdentification();
-		Set<LoginPeriod> loginPeriods = new TreeSet<LoginPeriod>(LoginPeriod.COMPARATOR_BY_BEGIN_DATE);
-		loginPeriods.addAll(login.getLoginPeriods());
-		for (Invitation invitation : person.getInvitationsOrderByDate()) {
-			LoginPeriod period = login.readLoginPeriodByTimeInterval(invitation.getBeginDate(), invitation.getEndDate());
-			if (period != null) {
-				loginPeriods.remove(period);
-			}
-		}
-		return loginPeriods;
-	}
+    public Set<LoginPeriod> getLoginPeriodsWithoutInvitationPeriods() {
+        Person person = getUser().getPerson();
+        Login login = person.getLoginIdentification();
+        Set<LoginPeriod> loginPeriods = new TreeSet<LoginPeriod>(LoginPeriod.COMPARATOR_BY_BEGIN_DATE);
+        loginPeriods.addAll(login.getLoginPeriods());
+        for (Invitation invitation : person.getInvitationsOrderByDate()) {
+            LoginPeriod period = login.readLoginPeriodByTimeInterval(invitation.getBeginDate(), invitation.getEndDate());
+            if (period != null) {
+                loginPeriods.remove(period);
+            }
+        }
+        return loginPeriods;
+    }
 
-	public static Login readLoginByUsername(String username) {
-		final LoginAlias loginAlias = LoginAlias.readLoginByUsername(username);
-		return loginAlias == null ? null : loginAlias.getLogin();
-	}
+    public static Login readLoginByUsername(String username) {
+        final LoginAlias loginAlias = LoginAlias.readLoginByUsername(username);
+        return loginAlias == null ? null : loginAlias.getLogin();
+    }
 
-	public void closeLoginIfNecessary() {
-		Person person = getUser().getPerson();
+    public void closeLoginIfNecessary() {
+        Person person = getUser().getPerson();
 
-		if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.EMPLOYEE)
-				&& !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
-				&& !person.hasRole(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)
-				&& !person.hasRole(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
-				&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
-				&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER) && !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
-				&& !person.hasRole(RoleType.ADIST_PROJECTS_MANAGER) && !person.hasRole(RoleType.MANAGER)
-				&& !person.hasRole(RoleType.GRANT_OWNER)) {
+        if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.EMPLOYEE)
+                && !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
+                && !person.hasRole(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)
+                && !person.hasRole(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
+                && !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
+                && !person.hasRole(RoleType.IT_PROJECTS_MANAGER) && !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
+                && !person.hasRole(RoleType.ADIST_PROJECTS_MANAGER) && !person.hasRole(RoleType.MANAGER)
+                && !person.hasRole(RoleType.GRANT_OWNER)) {
 
-			// minusDays(1) -> This is for person dont make login today
-			YearMonthDay currentDate = new YearMonthDay().minusDays(1);
-			for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
-				if (loginPeriod.getEndDate() == null) {
-					loginPeriod.setEndDate(currentDate);
-				}
-			}
-		}
-	}
+            // minusDays(1) -> This is for person dont make login today
+            YearMonthDay currentDate = new YearMonthDay().minusDays(1);
+            for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
+                if (loginPeriod.getEndDate() == null) {
+                    loginPeriod.setEndDate(currentDate);
+                }
+            }
+        }
+    }
 
-	public void openLoginIfNecessary(RoleType roleType) {
-		switch (roleType) {
-		case MANAGER:
-		case TEACHER:
-		case RESEARCHER:
-		case EMPLOYEE:
-		case STUDENT:
-		case ALUMNI:
-		case CANDIDATE:
-		case INSTITUCIONAL_PROJECTS_MANAGER:
-		case ISTID_INSTITUCIONAL_PROJECTS_MANAGER:
-		case ADIST_INSTITUCIONAL_PROJECTS_MANAGER:
-		case ISTID_PROJECTS_MANAGER:
-		case ADIST_PROJECTS_MANAGER:
-		case PROJECTS_MANAGER:
-		case GRANT_OWNER:
-			for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
-				if (loginPeriod.getEndDate() == null) {
-					return;
-				}
-			}
-			// minusDays(2) -> This is for prevent errors in
-			// closeLoginIfNecessary (setEndDate line).
-			addLoginPeriods(new LoginPeriod(new YearMonthDay().minusDays(2), this));
-			break;
+    public void openLoginIfNecessary(RoleType roleType) {
+        switch (roleType) {
+        case MANAGER:
+        case TEACHER:
+        case RESEARCHER:
+        case EMPLOYEE:
+        case STUDENT:
+        case ALUMNI:
+        case CANDIDATE:
+        case INSTITUCIONAL_PROJECTS_MANAGER:
+        case ISTID_INSTITUCIONAL_PROJECTS_MANAGER:
+        case ADIST_INSTITUCIONAL_PROJECTS_MANAGER:
+        case ISTID_PROJECTS_MANAGER:
+        case ADIST_PROJECTS_MANAGER:
+        case PROJECTS_MANAGER:
+        case GRANT_OWNER:
+            for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
+                if (loginPeriod.getEndDate() == null) {
+                    return;
+                }
+            }
+            // minusDays(2) -> This is for prevent errors in
+            // closeLoginIfNecessary (setEndDate line).
+            addLoginPeriods(new LoginPeriod(new YearMonthDay().minusDays(2), this));
+            break;
 
-		default:
-			break;
-		}
-	}
+        default:
+            break;
+        }
+    }
 
-	private void removeAliasWithoutCloseLogin(RoleType roleType) {
-		if (roleType != null) {
-			for (final Iterator<LoginAlias> iter = getAlias().iterator(); iter.hasNext();) {
-				final LoginAlias loginAlias = iter.next();
-				if (loginAlias.getRoleType() != null && loginAlias.getRoleType().equals(roleType)) {
-					iter.remove();
-					loginAlias.delete();
-				}
-			}
-		}
-	}
+    private void removeAliasWithoutCloseLogin(RoleType roleType) {
+        if (roleType != null) {
+            for (final Iterator<LoginAlias> iter = getAlias().iterator(); iter.hasNext();) {
+                final LoginAlias loginAlias = iter.next();
+                if (loginAlias.getRoleType() != null && loginAlias.getRoleType().equals(roleType)) {
+                    iter.remove();
+                    loginAlias.delete();
+                }
+            }
+        }
+    }
 
-	private void checkIfUserAlreadyHaveLogin(User user) {
-		if (user != null) {
-			Login login = user.readUserLoginIdentification();
-			if (login != null && !login.equals(this)) {
-				throw new DomainException("error.user.login.already.exists");
-			}
-		}
-	}
+    private void checkIfUserAlreadyHaveLogin(User user) {
+        if (user != null) {
+            Login login = user.readUserLoginIdentification();
+            if (login != null && !login.equals(this)) {
+                throw new DomainException("error.user.login.already.exists");
+            }
+        }
+    }
 
-	public void updateAliases(final RoleType roleType) {
-		final String newAlias = makeNewAlias(roleType);
-		if (newAlias != null && !hasAlias(newAlias)) {
-			LoginAlias.createNewCustomLoginAlias(this, newAlias);
-		}
-	}
+    public void updateAliases(final RoleType roleType) {
+        final String newAlias = makeNewAlias(roleType);
+        if (newAlias != null && !hasAlias(newAlias)) {
+            LoginAlias.createNewCustomLoginAlias(this, newAlias);
+        }
+    }
 
-	private boolean hasAlias(final String newAlias) {
-		for (final LoginAlias loginAlias : getAliasSet()) {
-			if (loginAlias.getAlias().equals(newAlias)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasAlias(final String newAlias) {
+        for (final LoginAlias loginAlias : getAliasSet()) {
+            if (loginAlias.getAlias().equals(newAlias)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private String makeNewAlias(final RoleType roleType) {
-		final Person person = getUser().getPerson();
-		return roleType == RoleType.EMPLOYEE ? makeNewAliasEmployee(person) : roleType == RoleType.TEACHER ? makeNewAliasTeacher(person) : roleType == RoleType.GRANT_OWNER ? makeNewAliasGrantOwner(person) : null;
-	}
+    private String makeNewAlias(final RoleType roleType) {
+        final Person person = getUser().getPerson();
+        return roleType == RoleType.EMPLOYEE ? makeNewAliasEmployee(person) : roleType == RoleType.TEACHER ? makeNewAliasTeacher(person) : roleType == RoleType.GRANT_OWNER ? makeNewAliasGrantOwner(person) : null;
+    }
 
-	private String makeNewAliasEmployee(final Person person) {
-		return person.hasEmployee() ? "F" + person.getEmployee().getEmployeeNumber() : null;
-	}
+    private String makeNewAliasEmployee(final Person person) {
+        return person.hasEmployee() ? "F" + person.getEmployee().getEmployeeNumber() : null;
+    }
 
-	private String makeNewAliasTeacher(final Person person) {
-		return person.hasEmployee() && person.hasTeacher() ? "D" + person.getEmployee().getEmployeeNumber() : null;
-	}
+    private String makeNewAliasTeacher(final Person person) {
+        return person.hasEmployee() && person.hasTeacher() ? "D" + person.getEmployee().getEmployeeNumber() : null;
+    }
 
-	private String makeNewAliasGrantOwner(final Person person) {
-		return person.hasGrantOwner() ? "B" + person.getGrantOwner().getNumber() : null;
-	}
+    private String makeNewAliasGrantOwner(final Person person) {
+        return person.hasGrantOwner() ? "B" + person.getGrantOwner().getNumber() : null;
+    }
 
 }

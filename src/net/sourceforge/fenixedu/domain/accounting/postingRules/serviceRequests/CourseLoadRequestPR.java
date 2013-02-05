@@ -14,42 +14,42 @@ import org.joda.time.DateTime;
 
 public class CourseLoadRequestPR extends CourseLoadRequestPR_Base {
 
-	protected CourseLoadRequestPR() {
-		super();
-	}
+    protected CourseLoadRequestPR() {
+        super();
+    }
 
-	public CourseLoadRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
-			final DateTime endDate, final Money certificateAmount, final Money amountFirstPage, final Money amountPerPage) {
-		this();
-		super.init(EntryType.COURSE_LOAD_REQUEST_FEE, EventType.COURSE_LOAD_REQUEST, startDate, endDate,
-				serviceAgreementTemplate, certificateAmount, amountPerPage);
-		checkParameters(amountFirstPage);
-		super.setAmountFirstPage(amountFirstPage);
-	}
+    public CourseLoadRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
+            final DateTime endDate, final Money certificateAmount, final Money amountFirstPage, final Money amountPerPage) {
+        this();
+        super.init(EntryType.COURSE_LOAD_REQUEST_FEE, EventType.COURSE_LOAD_REQUEST, startDate, endDate,
+                serviceAgreementTemplate, certificateAmount, amountPerPage);
+        checkParameters(amountFirstPage);
+        super.setAmountFirstPage(amountFirstPage);
+    }
 
-	protected void checkParameters(final Money amountFirstPage) {
-		if (amountFirstPage == null) {
-			throw new DomainException("error.accounting.postingRules.CourseLoadRequestPR.amountFirstPage.cannot.be.null");
-		}
-	}
+    protected void checkParameters(final Money amountFirstPage) {
+        if (amountFirstPage == null) {
+            throw new DomainException("error.accounting.postingRules.CourseLoadRequestPR.amountFirstPage.cannot.be.null");
+        }
+    }
 
-	public CourseLoadRequestPR edit(final Money baseAmount, final Money amountFirstPage, final Money amountPerUnit) {
-		deactivate();
-		return new CourseLoadRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,
-				amountFirstPage, amountPerUnit);
-	}
+    public CourseLoadRequestPR edit(final Money baseAmount, final Money amountFirstPage, final Money amountPerUnit) {
+        deactivate();
+        return new CourseLoadRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,
+                amountFirstPage, amountPerUnit);
+    }
 
-	@Override
-	protected Money getAmountForPages(final Event event) {
-		final CertificateRequestEvent requestEvent = (CertificateRequestEvent) event;
-		// remove certificate page number
-		int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
-		return (extraPages <= 0) ? Money.ZERO : getAmountFirstPage().add(
-				getAmountPerPage().multiply(BigDecimal.valueOf(--extraPages)));
-	}
+    @Override
+    protected Money getAmountForPages(final Event event) {
+        final CertificateRequestEvent requestEvent = (CertificateRequestEvent) event;
+        // remove certificate page number
+        int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
+        return (extraPages <= 0) ? Money.ZERO : getAmountFirstPage().add(
+                getAmountPerPage().multiply(BigDecimal.valueOf(--extraPages)));
+    }
 
-	@Override
-	protected boolean isUrgent(final Event event) {
-		return ((CertificateRequestEvent) event).isUrgentRequest();
-	}
+    @Override
+    protected boolean isUrgent(final Event event) {
+        return ((CertificateRequestEvent) event).isUrgentRequest();
+    }
 }

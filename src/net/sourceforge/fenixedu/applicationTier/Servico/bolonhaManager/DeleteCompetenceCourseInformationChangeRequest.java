@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteCompetenceCourseInformationChangeRequest extends FenixService {
 
-	@Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
-	@Service
-	public static void run(CompetenceCourseInformationChangeRequest request) {
-		request.delete();
-	}
+    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
+    @Service
+    public static void run(CompetenceCourseInformationChangeRequest request) {
+        request.delete();
+    }
 }

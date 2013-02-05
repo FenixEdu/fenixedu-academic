@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PhdThesisProcessStateProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		PhdThesisProcessBean bean = (PhdThesisProcessBean) source;
-		return bean.getThesisProcess().getPossibleNextStates();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        PhdThesisProcessBean bean = (PhdThesisProcessBean) source;
+        return bean.getThesisProcess().getPossibleNextStates();
+    }
 
 }

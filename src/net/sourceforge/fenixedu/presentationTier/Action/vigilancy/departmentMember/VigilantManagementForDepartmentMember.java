@@ -6,7 +6,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "departmentMember", path = "/vigilancy/vigilantManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "displayConvokeMap", path = "/departmentMember/vigilancy/manageVigilant.jsp"),
-		@Forward(name = "showReport", path = "/departmentMember/vigilancy/showWrittenEvaluationReport.jsp") })
+        @Forward(name = "showReport", path = "/departmentMember/vigilancy/showWrittenEvaluationReport.jsp") })
 public class VigilantManagementForDepartmentMember extends
-		net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantManagement {
+        net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantManagement {
 }

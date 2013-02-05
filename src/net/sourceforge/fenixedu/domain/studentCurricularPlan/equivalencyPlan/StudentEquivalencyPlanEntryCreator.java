@@ -6,20 +6,20 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 
 public class StudentEquivalencyPlanEntryCreator extends EquivalencePlanEntryCreator {
 
-	private final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan;
+    private final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan;
 
-	public StudentEquivalencyPlanEntryCreator(final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan,
-			final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan) {
-		super(studentCurricularPlanEquivalencePlan);
-		this.degreeCurricularPlanEquivalencePlan = degreeCurricularPlanEquivalencePlan;
-	}
+    public StudentEquivalencyPlanEntryCreator(final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan,
+            final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan) {
+        super(studentCurricularPlanEquivalencePlan);
+        this.degreeCurricularPlanEquivalencePlan = degreeCurricularPlanEquivalencePlan;
+    }
 
-	public DegreeCurricularPlanEquivalencePlan getDegreeCurricularPlanEquivalencePlan() {
-		return degreeCurricularPlanEquivalencePlan;
-	}
+    public DegreeCurricularPlanEquivalencePlan getDegreeCurricularPlanEquivalencePlan() {
+        return degreeCurricularPlanEquivalencePlan;
+    }
 
-	public StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan() {
-		return (StudentCurricularPlanEquivalencePlan) getEquivalencePlan();
-	}
+    public StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan() {
+        return (StudentCurricularPlanEquivalencePlan) getEquivalencePlan();
+    }
 
 }

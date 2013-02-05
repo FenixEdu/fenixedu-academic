@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 
 public abstract class AlumniEntityManagementDA extends FenixDispatchAction {
 
-	public AlumniEntityManagementDA() {
-		super();
-	}
+    public AlumniEntityManagementDA() {
+        super();
+    }
 
-	protected Alumni getAlumniFromLoggedPerson(HttpServletRequest request) throws Exception {
-		Student alumniStudent = getLoggedPerson(request).getStudent();
-		if (alumniStudent.hasAlumni()) {
-			return alumniStudent.getAlumni();
-		} else {
-			return RegisterAlumniData.run(alumniStudent);
-		}
-	}
+    protected Alumni getAlumniFromLoggedPerson(HttpServletRequest request) throws Exception {
+        Student alumniStudent = getLoggedPerson(request).getStudent();
+        if (alumniStudent.hasAlumni()) {
+            return alumniStudent.getAlumni();
+        } else {
+            return RegisterAlumniData.run(alumniStudent);
+        }
+    }
 
 }

@@ -10,43 +10,43 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InsuranceExemptionJustificationByDispatch extends InsuranceExemptionJustificationByDispatch_Base {
 
-	protected InsuranceExemptionJustificationByDispatch() {
-		super();
-	}
+    protected InsuranceExemptionJustificationByDispatch() {
+        super();
+    }
 
-	public InsuranceExemptionJustificationByDispatch(final InsuranceExemption exemption,
-			final InsuranceExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
-		this();
-		init(exemption, justificationType, reason, dispatchDate);
+    public InsuranceExemptionJustificationByDispatch(final InsuranceExemption exemption,
+            final InsuranceExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
+        this();
+        init(exemption, justificationType, reason, dispatchDate);
 
-	}
+    }
 
-	private void init(InsuranceExemption exemption, InsuranceExemptionJustificationType justificationType, String reason,
-			YearMonthDay dispatchDate) {
-		checkParameters(justificationType, reason, dispatchDate);
+    private void init(InsuranceExemption exemption, InsuranceExemptionJustificationType justificationType, String reason,
+            YearMonthDay dispatchDate) {
+        checkParameters(justificationType, reason, dispatchDate);
 
-		super.init(exemption, justificationType, reason);
+        super.init(exemption, justificationType, reason);
 
-		super.setDispatchDate(dispatchDate);
+        super.setDispatchDate(dispatchDate);
 
-	}
+    }
 
-	private void checkParameters(InsuranceExemptionJustificationType justificationType, String reason, YearMonthDay dispatchDate) {
-		if (dispatchDate == null || StringUtils.isEmpty(reason)) {
-			throw new DomainExceptionWithLabelFormatter(
-					"error.accounting.events.InsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-					new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
-		}
-	}
+    private void checkParameters(InsuranceExemptionJustificationType justificationType, String reason, YearMonthDay dispatchDate) {
+        if (dispatchDate == null || StringUtils.isEmpty(reason)) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.events.InsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
+                    new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
+        }
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
-		labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
-				.appendLabel(getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+                .appendLabel(getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
 }

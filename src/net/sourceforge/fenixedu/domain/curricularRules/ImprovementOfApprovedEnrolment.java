@@ -13,69 +13,69 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent {
 
-	private Enrolment toApply;
+    private Enrolment toApply;
 
-	public ImprovementOfApprovedEnrolment(final Enrolment enrolment) {
-		if (enrolment == null) {
-			throw new DomainException("curricular.rule.invalid.parameters");
-		} else {
-			this.toApply = enrolment;
-		}
-	}
+    public ImprovementOfApprovedEnrolment(final Enrolment enrolment) {
+        if (enrolment == null) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        } else {
+            this.toApply = enrolment;
+        }
+    }
 
-	@Override
-	public List<GenericPair<Object, Boolean>> getLabel() {
-		return Collections.singletonList(new GenericPair<Object, Boolean>("label.improvementOfApprovedEnrolment", true));
-	}
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel() {
+        return Collections.singletonList(new GenericPair<Object, Boolean>("label.improvementOfApprovedEnrolment", true));
+    }
 
-	public Enrolment getEnrolment() {
-		return toApply;
-	}
+    public Enrolment getEnrolment() {
+        return toApply;
+    }
 
-	@Override
-	public DegreeModule getDegreeModuleToApplyRule() {
-		return getEnrolment().getDegreeModule();
-	}
+    @Override
+    public DegreeModule getDegreeModuleToApplyRule() {
+        return getEnrolment().getDegreeModule();
+    }
 
-	@Override
-	public CourseGroup getContextCourseGroup() {
-		return null;
-	}
+    @Override
+    public CourseGroup getContextCourseGroup() {
+        return null;
+    }
 
-	@Override
-	public CompositeRule getParentCompositeRule() {
-		return null;
-	}
+    @Override
+    public CompositeRule getParentCompositeRule() {
+        return null;
+    }
 
-	@Override
-	public CurricularRuleType getCurricularRuleType() {
-		return CurricularRuleType.IMPROVEMENT_OF_APPROVED_ENROLMENT;
-	}
+    @Override
+    public CurricularRuleType getCurricularRuleType() {
+        return CurricularRuleType.IMPROVEMENT_OF_APPROVED_ENROLMENT;
+    }
 
-	@Override
-	public ExecutionSemester getBegin() {
-		return ExecutionSemester.readActualExecutionSemester();
-	}
+    @Override
+    public ExecutionSemester getBegin() {
+        return ExecutionSemester.readActualExecutionSemester();
+    }
 
-	@Override
-	public ExecutionSemester getEnd() {
-		return null;
-	}
+    @Override
+    public ExecutionSemester getEnd() {
+        return null;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof ImprovementOfApprovedEnrolment) {
-			ImprovementOfApprovedEnrolment improvementOfApprovedEnrolment = (ImprovementOfApprovedEnrolment) obj;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ImprovementOfApprovedEnrolment) {
+            ImprovementOfApprovedEnrolment improvementOfApprovedEnrolment = (ImprovementOfApprovedEnrolment) obj;
 
-			return toApply == improvementOfApprovedEnrolment.getEnrolment();
-		}
+            return toApply == improvementOfApprovedEnrolment.getEnrolment();
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public VerifyRuleExecutor createVerifyRuleExecutor() {
-		return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
-	}
+    @Override
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+        return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+    }
 
 }

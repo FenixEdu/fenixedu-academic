@@ -25,55 +25,55 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber extends
-		FenixService {
+        FenixService {
 
-	@Checked("RolePredicates.TEACHER_PREDICATE")
-	@Service
-	public static List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode,
-			String teacherId) throws FenixServiceException {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode,
+            String teacherId) throws FenixServiceException {
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-		Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
-		Teacher teacher = Teacher.readByIstId(teacherId);
+        Teacher teacher = Teacher.readByIstId(teacherId);
 
-		if (executionSemester == null) {
-			throw new FenixServiceException("nullExecutionPeriodId");
-		}
-		if (degree == null) {
-			throw new FenixServiceException("nullDegreeId");
-		}
-		if (curricularYear == null) {
-			throw new FenixServiceException("nullCurricularYear");
-		}
-		if (courseCode == null) {
-			throw new FenixServiceException("nullCourseCode");
-		}
-		if (teacher == null) {
-			throw new FenixServiceException("nullTeacherNumber");
-		}
+        if (executionSemester == null) {
+            throw new FenixServiceException("nullExecutionPeriodId");
+        }
+        if (degree == null) {
+            throw new FenixServiceException("nullDegreeId");
+        }
+        if (curricularYear == null) {
+            throw new FenixServiceException("nullCurricularYear");
+        }
+        if (courseCode == null) {
+            throw new FenixServiceException("nullCourseCode");
+        }
+        if (teacher == null) {
+            throw new FenixServiceException("nullTeacherNumber");
+        }
 
-		List<OldInquiriesTeachersRes> oldInquiriesTeachersResList =
-				degree.getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(executionSemester,
-						curricularYear, courseCode, teacher);
+        List<OldInquiriesTeachersRes> oldInquiriesTeachersResList =
+                degree.getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(executionSemester,
+                        curricularYear, courseCode, teacher);
 
-		CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
+        CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
 
-			@Override
-			public Object transform(Object oldInquiriesTeachersRes) {
-				InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
-				try {
-					ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
+            @Override
+            public Object transform(Object oldInquiriesTeachersRes) {
+                InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
+                try {
+                    ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
 
-				} catch (Exception ex) {
-				}
+                } catch (Exception ex) {
+                }
 
-				return ioits;
-			}
-		});
+                return ioits;
+            }
+        });
 
-		return oldInquiriesTeachersResList;
-	}
+        return oldInquiriesTeachersResList;
+    }
 
 }

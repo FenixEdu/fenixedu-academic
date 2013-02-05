@@ -41,363 +41,360 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
-@Mapping(
-		path = "/caseHandlingMobilityApplicationProcess",
-		module = "academicAdministration",
-		formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
+@Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdministration",
+        formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({
-		@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
-		@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-		@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-		@Forward(
-				name = "view-child-process-with-missing.required-documents",
-				path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
+        @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
+        @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+        @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
+        @Forward(name = "view-child-process-with-missing.required-documents",
+                path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
-	static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
-		private Integer selectedProcessId;
+    static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
+        private Integer selectedProcessId;
 
-		private String[] selectedProcesses;
+        private String[] selectedProcesses;
 
-		public Integer getSelectedProcessId() {
-			return selectedProcessId;
-		}
+        public Integer getSelectedProcessId() {
+            return selectedProcessId;
+        }
 
-		public void setSelectedProcessId(Integer selectedProcessId) {
-			this.selectedProcessId = selectedProcessId;
-		}
+        public void setSelectedProcessId(Integer selectedProcessId) {
+            this.selectedProcessId = selectedProcessId;
+        }
 
-		public String[] getSelectedProcesses() {
-			return selectedProcesses;
-		}
+        public String[] getSelectedProcesses() {
+            return selectedProcesses;
+        }
 
-		public void setSelectedProcesses(String[] selectedProcesses) {
-			this.selectedProcesses = selectedProcesses;
-		}
-	}
+        public void setSelectedProcesses(String[] selectedProcesses) {
+            this.selectedProcesses = selectedProcesses;
+        }
+    }
 
-	@Override
-	public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("candidacyProcessBean", new MobilityApplicationProcessBean(ExecutionYear.readCurrentExecutionYear()));
-		return mapping.findForward("prepare-create-new-process");
-	}
+    @Override
+    public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("candidacyProcessBean", new MobilityApplicationProcessBean(ExecutionYear.readCurrentExecutionYear()));
+        return mapping.findForward("prepare-create-new-process");
+    }
 
-	@Override
-	public ActionForward prepareExecuteEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		final CandidacyProcess process = getProcess(request);
-		final MobilityApplicationProcess map = (MobilityApplicationProcess) process;
-		final MobilityApplicationProcessBean bean = new MobilityApplicationProcessBean(process);
-		bean.setForSemester(((MobilityApplicationProcess) process).getForSemester());
-		request.setAttribute("candidacyProcessBean", bean);
-		if (map.hasAnyChildProcesses()) {
-			request.setAttribute("preLoadLevel", "Error");
-		} else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0
-				|| map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
-			request.setAttribute("preLoadLevel", "Warn");
-		} else {
-			request.setAttribute("preLoadLevel", "Ok");
-		}
+    @Override
+    public ActionForward prepareExecuteEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        final CandidacyProcess process = getProcess(request);
+        final MobilityApplicationProcess map = (MobilityApplicationProcess) process;
+        final MobilityApplicationProcessBean bean = new MobilityApplicationProcessBean(process);
+        bean.setForSemester(((MobilityApplicationProcess) process).getForSemester());
+        request.setAttribute("candidacyProcessBean", bean);
+        if (map.hasAnyChildProcesses()) {
+            request.setAttribute("preLoadLevel", "Error");
+        } else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0
+                || map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
+            request.setAttribute("preLoadLevel", "Warn");
+        } else {
+            request.setAttribute("preLoadLevel", "Ok");
+        }
 
-		return mapping.findForward("prepare-edit-candidacy-period");
-	}
+        return mapping.findForward("prepare-edit-candidacy-period");
+    }
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		setChooseDegreeBean(request);
-		setChooseMobilityProgramBean(request);
-		request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.selectDegree");
-		request.setAttribute("chooseMobilityProgramBeanSchemaName", "MobilityChooseProgramBean.selectMobilityProgram");
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        setChooseDegreeBean(request);
+        setChooseMobilityProgramBean(request);
+        request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.selectDegree");
+        request.setAttribute("chooseMobilityProgramBeanSchemaName", "MobilityChooseProgramBean.selectMobilityProgram");
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		String processEid = request.getParameter("processEid");
-		MobilityApplicationProcess process = AbstractDomainObject.fromExternalId(processEid);
-		preLoadLastProcessConfigurations(process);
-		return listProcessAllowedActivities(mapping, actionForm, request, response);
-	}
+    public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        String processEid = request.getParameter("processEid");
+        MobilityApplicationProcess process = AbstractDomainObject.fromExternalId(processEid);
+        preLoadLastProcessConfigurations(process);
+        return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 
-	@Service
-	private void preLoadLastProcessConfigurations(MobilityApplicationProcess process) {
-		process.resetConfigurations();
-		process.preLoadLastConfigurations();
-	}
+    @Service
+    private void preLoadLastProcessConfigurations(MobilityApplicationProcess process) {
+        process.resetConfigurations();
+        process.preLoadLastConfigurations();
+    }
 
-	protected void setChooseMobilityProgramBean(HttpServletRequest request) {
-		ChooseMobilityProgramBean chooseMobilityProgramBean =
-				(ChooseMobilityProgramBean) getObjectFromViewState("choose.mobility.program.bean");
+    protected void setChooseMobilityProgramBean(HttpServletRequest request) {
+        ChooseMobilityProgramBean chooseMobilityProgramBean =
+                (ChooseMobilityProgramBean) getObjectFromViewState("choose.mobility.program.bean");
 
-		if (chooseMobilityProgramBean == null) {
-			chooseMobilityProgramBean = new ChooseMobilityProgramBean(getProcess(request));
-		}
+        if (chooseMobilityProgramBean == null) {
+            chooseMobilityProgramBean = new ChooseMobilityProgramBean(getProcess(request));
+        }
 
-		request.setAttribute("chooseMobilityProgramBean", chooseMobilityProgramBean);
-	}
+        request.setAttribute("chooseMobilityProgramBean", chooseMobilityProgramBean);
+    }
 
-	protected ChooseMobilityProgramBean getChooseMobilityProgramBean(HttpServletRequest request) {
-		return (ChooseMobilityProgramBean) request.getAttribute("chooseMobilityProgramBean");
-	}
+    protected ChooseMobilityProgramBean getChooseMobilityProgramBean(HttpServletRequest request) {
+        return (ChooseMobilityProgramBean) request.getAttribute("chooseMobilityProgramBean");
+    }
 
-	protected void setChooseDegreeBean(HttpServletRequest request) {
-		ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
+    protected void setChooseDegreeBean(HttpServletRequest request) {
+        ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
-		if (chooseDegreeBean == null) {
-			chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
-		}
+        if (chooseDegreeBean == null) {
+            chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
+        }
 
-		request.setAttribute("chooseDegreeBean", chooseDegreeBean);
-	}
+        request.setAttribute("chooseDegreeBean", chooseDegreeBean);
+    }
 
-	protected ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
-		return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
-	}
+    protected ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+        return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
+    }
 
-	@Override
-	protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
-			IndividualCandidacyProcess individualCandidacyProcess) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
+            IndividualCandidacyProcess individualCandidacyProcess) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	protected Class getCandidacyPeriodType() {
-		return MobilityApplicationPeriod.class;
-	}
+    @Override
+    protected Class getCandidacyPeriodType() {
+        return MobilityApplicationPeriod.class;
+    }
 
-	@Override
-	protected Class getChildProcessType() {
-		return MobilityIndividualApplicationProcess.class;
-	}
+    @Override
+    protected Class getChildProcessType() {
+        return MobilityIndividualApplicationProcess.class;
+    }
 
-	@Override
-	protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		if (!hasExecutionInterval(request)) {
-			final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
+    @Override
+    protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        if (!hasExecutionInterval(request)) {
+            final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
 
-			if (executionIntervals.size() == 1) {
-				final ExecutionInterval executionInterval = executionIntervals.get(0);
-				final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+            if (executionIntervals.size() == 1) {
+                final ExecutionInterval executionInterval = executionIntervals.get(0);
+                final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
-				if (candidacyProcesses.size() == 1) {
-					setCandidacyProcessInformation(request, candidacyProcesses.get(0));
-					setCandidacyProcessInformation(actionForm, getProcess(request));
-					request.setAttribute("candidacyProcesses", candidacyProcesses);
-					return;
-				}
-			}
+                if (candidacyProcesses.size() == 1) {
+                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    return;
+                }
+            }
 
-			request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-			request.setAttribute("executionIntervals", executionIntervals);
+            request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+            request.setAttribute("executionIntervals", executionIntervals);
 
-		} else {
-			final ExecutionInterval executionInterval = getExecutionInterval(request);
-			final MobilityApplicationProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+        } else {
+            final ExecutionInterval executionInterval = getExecutionInterval(request);
+            final MobilityApplicationProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
 
-			if (candidacyProcess != null) {
-				setCandidacyProcessInformation(request, candidacyProcess);
-				setCandidacyProcessInformation(actionForm, getProcess(request));
-			} else {
-				final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+            if (candidacyProcess != null) {
+                setCandidacyProcessInformation(request, candidacyProcess);
+                setCandidacyProcessInformation(actionForm, getProcess(request));
+            } else {
+                final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
-				if (candidacyProcesses.size() == 1) {
-					setCandidacyProcessInformation(request, candidacyProcesses.get(0));
-					setCandidacyProcessInformation(actionForm, getProcess(request));
-					request.setAttribute("candidacyProcesses", candidacyProcesses);
-					return;
-				}
+                if (candidacyProcesses.size() == 1) {
+                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(actionForm, getProcess(request));
+                    request.setAttribute("candidacyProcesses", candidacyProcesses);
+                    return;
+                }
 
-				request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-				request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
-			}
-			request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
-		}
-	}
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
+            }
+            request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
+        }
+    }
 
-	protected List<MobilityApplicationProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
-		final List<MobilityApplicationProcess> result = new ArrayList<MobilityApplicationProcess>();
-		for (final MobilityApplicationPeriod period : executionInterval.getMobilityApplicationPeriods()) {
-			result.add(period.getMobilityApplicationProcess());
-		}
-		return result;
-	}
+    protected List<MobilityApplicationProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+        final List<MobilityApplicationProcess> result = new ArrayList<MobilityApplicationProcess>();
+        for (final MobilityApplicationPeriod period : executionInterval.getMobilityApplicationPeriods()) {
+            result.add(period.getMobilityApplicationProcess());
+        }
+        return result;
+    }
 
-	protected List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
-		return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
-	}
+    protected List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
+        return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+    }
 
-	@Override
-	protected MobilityApplicationProcess getCandidacyProcess(final HttpServletRequest request,
-			final ExecutionInterval executionInterval) {
+    @Override
+    protected MobilityApplicationProcess getCandidacyProcess(final HttpServletRequest request,
+            final ExecutionInterval executionInterval) {
 
-		final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
-		if (selectedProcessId != null) {
-			for (final MobilityApplicationPeriod applicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
-				if (applicationPeriod.getMobilityApplicationProcess().getIdInternal().equals(selectedProcessId)) {
-					return applicationPeriod.getMobilityApplicationProcess();
-				}
-			}
-		}
-		return null;
-	}
+        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        if (selectedProcessId != null) {
+            for (final MobilityApplicationPeriod applicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
+                if (applicationPeriod.getMobilityApplicationProcess().getIdInternal().equals(selectedProcessId)) {
+                    return applicationPeriod.getMobilityApplicationProcess();
+                }
+            }
+        }
+        return null;
+    }
 
-	@Override
-	protected Class getProcessType() {
-		return MobilityApplicationProcess.class;
-	}
+    @Override
+    protected Class getProcessType() {
+        return MobilityApplicationProcess.class;
+    }
 
-	protected void setCandidacyProcessInformation(final ActionForm actionForm, final MobilityApplicationProcess process) {
-		final ErasmusCandidacyProcessForm form = (ErasmusCandidacyProcessForm) actionForm;
-		form.setSelectedProcessId(process.getIdInternal());
-		form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
-	}
+    protected void setCandidacyProcessInformation(final ActionForm actionForm, final MobilityApplicationProcess process) {
+        final ErasmusCandidacyProcessForm form = (ErasmusCandidacyProcessForm) actionForm;
+        form.setSelectedProcessId(process.getIdInternal());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+    }
 
-	@Override
-	protected MobilityApplicationProcess getProcess(HttpServletRequest request) {
-		return (MobilityApplicationProcess) super.getProcess(request);
-	}
+    @Override
+    protected MobilityApplicationProcess getProcess(HttpServletRequest request) {
+        return (MobilityApplicationProcess) super.getProcess(request);
+    }
 
-	@Override
-	protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
-			HttpServletRequest request) {
-		final Degree selectedDegree = getChooseDegreeBean(request).getDegree();
-		final MobilityProgram mobilityProgram = getChooseMobilityProgramBean(request).getMobilityProgram();
-		if (selectedDegree == null) {
-			if (mobilityProgram == null) {
-				return Predicates.alwaysTrue();
-			} else {
-				return new Predicate<IndividualCandidacyProcess>() {
-					@Override
-					public boolean apply(IndividualCandidacyProcess process) {
-						return ((MobilityIndividualApplicationProcess) process).getMobilityProgram().equals(mobilityProgram);
-					}
-				};
-			}
-		} else {
-			return new Predicate<IndividualCandidacyProcess>() {
-				@Override
-				public boolean apply(IndividualCandidacyProcess process) {
+    @Override
+    protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
+            HttpServletRequest request) {
+        final Degree selectedDegree = getChooseDegreeBean(request).getDegree();
+        final MobilityProgram mobilityProgram = getChooseMobilityProgramBean(request).getMobilityProgram();
+        if (selectedDegree == null) {
+            if (mobilityProgram == null) {
+                return Predicates.alwaysTrue();
+            } else {
+                return new Predicate<IndividualCandidacyProcess>() {
+                    @Override
+                    public boolean apply(IndividualCandidacyProcess process) {
+                        return ((MobilityIndividualApplicationProcess) process).getMobilityProgram().equals(mobilityProgram);
+                    }
+                };
+            }
+        } else {
+            return new Predicate<IndividualCandidacyProcess>() {
+                @Override
+                public boolean apply(IndividualCandidacyProcess process) {
 
-					MobilityIndividualApplicationProcess mobilityProcess = (MobilityIndividualApplicationProcess) process;
+                    MobilityIndividualApplicationProcess mobilityProcess = (MobilityIndividualApplicationProcess) process;
 
-					if (mobilityProgram != null && !mobilityProcess.getMobilityProgram().equals(mobilityProgram)) {
-						return false;
-					}
+                    if (mobilityProgram != null && !mobilityProcess.getMobilityProgram().equals(mobilityProgram)) {
+                        return false;
+                    }
 
-					return ((MobilityIndividualApplicationProcess) process).getCandidacy().getSelectedDegree() == selectedDegree;
-				}
-			};
-		}
-	}
+                    return ((MobilityIndividualApplicationProcess) process).getCandidacy().getSelectedDegree() == selectedDegree;
+                }
+            };
+        }
+    }
 
-	@Override
-	protected ActionForward introForward(ActionMapping mapping) {
-		return mapping.findForward("intro");
-	}
+    @Override
+    protected ActionForward introForward(ActionMapping mapping) {
+        return mapping.findForward("intro");
+    }
 
-	@Override
-	public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		setCandidacyProcessInformation(request, getProcess(request));
-		setCandidacyProcessInformation(form, getProcess(request));
-		request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
-		return introForward(mapping);
-	}
+    @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        setCandidacyProcessInformation(request, getProcess(request));
+        setCandidacyProcessInformation(form, getProcess(request));
+        request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
+        return introForward(mapping);
+    }
 
-	public ActionForward prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		setCandidacyProcessInformation(request, getProcess(request));
-		setCandidacyProcessInformation(form, getProcess(request));
-		request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
+    public ActionForward prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        setCandidacyProcessInformation(request, getProcess(request));
+        setCandidacyProcessInformation(form, getProcess(request));
+        request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
 
-		return mapping.findForward("view-child-process-with-missing.required-documents");
-	}
+        return mapping.findForward("view-child-process-with-missing.required-documents");
+    }
 
-	public static class ErasmusCandidacyDegreesProvider implements DataProvider {
+    public static class ErasmusCandidacyDegreesProvider implements DataProvider {
 
-		@Override
-		public Object provide(Object source, Object currentValue) {
-			final List<Degree> degrees =
-					new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-							DegreeType.BOLONHA_MASTER_DEGREE));
+        @Override
+        public Object provide(Object source, Object currentValue) {
+            final List<Degree> degrees =
+                    new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+                            DegreeType.BOLONHA_MASTER_DEGREE));
 
-			degrees.remove(Degree.readBySigla("MSCIT"));
+            degrees.remove(Degree.readBySigla("MSCIT"));
 
-			java.util.Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+            java.util.Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
-			return degrees;
-		}
+            return degrees;
+        }
 
-		@Override
-		public Converter getConverter() {
-			return new DomainObjectKeyConverter();
-		}
+        @Override
+        public Converter getConverter() {
+            return new DomainObjectKeyConverter();
+        }
 
-	}
+    }
 
-	public static class MobilityApplicationsMobilityProgramsProvider implements DataProvider {
+    public static class MobilityApplicationsMobilityProgramsProvider implements DataProvider {
 
-		@Override
-		public Converter getConverter() {
-			return new DomainObjectKeyConverter();
-		}
+        @Override
+        public Converter getConverter() {
+            return new DomainObjectKeyConverter();
+        }
 
-		@Override
-		public Object provide(Object arg0, Object arg1) {
-			final Set<MobilityProgram> mobilityPrograms =
-					new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
-			for (Program program : RootDomainObject.getInstance().getPrograms()) {
-				if (program instanceof MobilityProgram) {
-					mobilityPrograms.add((MobilityProgram) program);
-				}
-			}
-			return mobilityPrograms;
-		}
+        @Override
+        public Object provide(Object arg0, Object arg1) {
+            final Set<MobilityProgram> mobilityPrograms =
+                    new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
+            for (Program program : RootDomainObject.getInstance().getPrograms()) {
+                if (program instanceof MobilityProgram) {
+                    mobilityPrograms.add((MobilityProgram) program);
+                }
+            }
+            return mobilityPrograms;
+        }
 
-	}
+    }
 
-	public static class ChooseMobilityProgramBean implements Serializable {
-		/**
+    public static class ChooseMobilityProgramBean implements Serializable {
+        /**
 	 * 
 	 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private MobilityProgram mobilityProgram;
+        private MobilityProgram mobilityProgram;
 
-		private CandidacyProcess candidacyProcess;
+        private CandidacyProcess candidacyProcess;
 
-		public ChooseMobilityProgramBean() {
+        public ChooseMobilityProgramBean() {
 
-		}
+        }
 
-		public ChooseMobilityProgramBean(final CandidacyProcess process) {
-			this.candidacyProcess = process;
-		}
+        public ChooseMobilityProgramBean(final CandidacyProcess process) {
+            this.candidacyProcess = process;
+        }
 
-		public MobilityProgram getMobilityProgram() {
-			return this.mobilityProgram;
-		}
+        public MobilityProgram getMobilityProgram() {
+            return this.mobilityProgram;
+        }
 
-		public void setMobilityProgram(MobilityProgram mobilityProgram) {
-			this.mobilityProgram = mobilityProgram;
-		}
+        public void setMobilityProgram(MobilityProgram mobilityProgram) {
+            this.mobilityProgram = mobilityProgram;
+        }
 
-		public CandidacyProcess getCandidacyProcess() {
-			return candidacyProcess;
-		}
+        public CandidacyProcess getCandidacyProcess() {
+            return candidacyProcess;
+        }
 
-		public void setCandidacyProcess(final CandidacyProcess process) {
-			this.candidacyProcess = process;
-		}
-	}
+        public void setCandidacyProcess(final CandidacyProcess process) {
+            this.candidacyProcess = process;
+        }
+    }
 
 }

@@ -15,25 +15,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionYearsForDegree implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final SortedSet<ExecutionYear> result =
-				new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final SortedSet<ExecutionYear> result =
+                new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
 
-		final DFACandidacyBean bean = (DFACandidacyBean) source;
-		if (bean.getDegree() != null) {
-			for (final DegreeCurricularPlan dcp : bean.getDegree().getDegreeCurricularPlansSet()) {
-				result.addAll(dcp.getExecutionYears());
-			}
-		} else {
-			bean.setExecutionYear(null);
-		}
-		return result;
-	}
+        final DFACandidacyBean bean = (DFACandidacyBean) source;
+        if (bean.getDegree() != null) {
+            for (final DegreeCurricularPlan dcp : bean.getDegree().getDegreeCurricularPlansSet()) {
+                result.addAll(dcp.getExecutionYears());
+            }
+        } else {
+            bean.setExecutionYear(null);
+        }
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

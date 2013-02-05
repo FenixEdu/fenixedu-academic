@@ -39,100 +39,95 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-@Mapping(
-		module = "masterDegreeAdministrativeOffice",
-		path = "/gratuitySituationDetails",
-		attribute = "createGuideFromTransactionsForm",
-		formBean = "createGuideFromTransactionsForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/gratuitySituationDetails",
+        attribute = "createGuideFromTransactionsForm", formBean = "createGuideFromTransactionsForm", scope = "request",
+        parameter = "method")
 @Forwards(
-		value = { @Forward(name = "showDetails", path = "gratuitySituationDetails", tileProperties = @Tile(title = "teste49")) })
+        value = { @Forward(name = "showDetails", path = "gratuitySituationDetails", tileProperties = @Tile(title = "teste49")) })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
-		key = "resources.Action.exceptions.NonExistingActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+        key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction {
 
-	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		String gratuitySituationId = getFromRequest("gratuitySituationId", request);
-		String studentId = getFromRequest("studentId", request);
+        String gratuitySituationId = getFromRequest("gratuitySituationId", request);
+        String studentId = getFromRequest("studentId", request);
 
-		DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-		createGuideFromTransactionsForm.set("gratuitySituationId", new Integer(gratuitySituationId));
-		createGuideFromTransactionsForm.set("studentId", new Integer(studentId));
+        DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
+        createGuideFromTransactionsForm.set("gratuitySituationId", new Integer(gratuitySituationId));
+        createGuideFromTransactionsForm.set("studentId", new Integer(studentId));
 
-		// Read Registration
-		InfoStudent infoStudent = null;
+        // Read Registration
+        InfoStudent infoStudent = null;
 
-		try {
-			infoStudent = (InfoStudent) ReadStudentById.run(new Integer(studentId));
+        try {
+            infoStudent = (InfoStudent) ReadStudentById.run(new Integer(studentId));
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if (infoStudent == null) {
-			throw new FenixActionException("error.exception.masterDegree.nonExistentStudent");
-		}
-		request.setAttribute(PresentationConstants.STUDENT, infoStudent);
+        if (infoStudent == null) {
+            throw new FenixActionException("error.exception.masterDegree.nonExistentStudent");
+        }
+        request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
-		// Read Gratuity Situation
-		InfoGratuitySituation infoGratuitySituation = null;
+        // Read Gratuity Situation
+        InfoGratuitySituation infoGratuitySituation = null;
 
-		try {
-			infoGratuitySituation = ReadGratuitySituationById.run(new Integer(gratuitySituationId));
+        try {
+            infoGratuitySituation = ReadGratuitySituationById.run(new Integer(gratuitySituationId));
 
-		} catch (ExcepcaoInexistente e) {
-			throw new FenixActionException(e);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute(PresentationConstants.GRATUITY_SITUATION, infoGratuitySituation);
+        } catch (ExcepcaoInexistente e) {
+            throw new FenixActionException(e);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute(PresentationConstants.GRATUITY_SITUATION, infoGratuitySituation);
 
-		// Read Transactions
-		List infoTransactions = null;
+        // Read Transactions
+        List infoTransactions = null;
 
-		try {
-			infoTransactions = ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getIdInternal());
+        try {
+            infoTransactions = ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getIdInternal());
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute(PresentationConstants.TRANSACTION_LIST, infoTransactions);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute(PresentationConstants.TRANSACTION_LIST, infoTransactions);
 
-		Iterator it = infoTransactions.iterator();
-		InfoTransaction infoTransaction = null;
-		List transactionsWithoutGuideList = new ArrayList();
-		while (it.hasNext()) {
-			infoTransaction = (InfoTransaction) it.next();
-			if (infoTransaction instanceof InfoPaymentTransaction) {
-				InfoPaymentTransaction infoPaymentTransaction = (InfoPaymentTransaction) infoTransaction;
-				if (infoPaymentTransaction.getInfoGuideEntry() == null) {
-					transactionsWithoutGuideList.add(infoPaymentTransaction.getIdInternal());
-				} else {
-					transactionsWithoutGuideList.add(null);
-				}
-			} else {
-				transactionsWithoutGuideList.add(null);
-			}
-		}
-		request.setAttribute(PresentationConstants.TRANSACTIONS_WITHOUT_GUIDE_LIST, transactionsWithoutGuideList);
+        Iterator it = infoTransactions.iterator();
+        InfoTransaction infoTransaction = null;
+        List transactionsWithoutGuideList = new ArrayList();
+        while (it.hasNext()) {
+            infoTransaction = (InfoTransaction) it.next();
+            if (infoTransaction instanceof InfoPaymentTransaction) {
+                InfoPaymentTransaction infoPaymentTransaction = (InfoPaymentTransaction) infoTransaction;
+                if (infoPaymentTransaction.getInfoGuideEntry() == null) {
+                    transactionsWithoutGuideList.add(infoPaymentTransaction.getIdInternal());
+                } else {
+                    transactionsWithoutGuideList.add(null);
+                }
+            } else {
+                transactionsWithoutGuideList.add(null);
+            }
+        }
+        request.setAttribute(PresentationConstants.TRANSACTIONS_WITHOUT_GUIDE_LIST, transactionsWithoutGuideList);
 
-		return mapping.findForward("showDetails");
+        return mapping.findForward("showDetails");
 
-	}
+    }
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
+    }
 }

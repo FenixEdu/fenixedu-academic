@@ -34,87 +34,87 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		final IUserView userView = getRemoteUser(request);
-		final Object[] arguments = getServiceCallArguments(request);
-		if (arguments == null || arguments.length < 1 || arguments[0] == null) {
-			throw new NotAuthorizedFilterException();
-		}
-		final ExecutionDegree executionDegree = (ExecutionDegree) arguments[0];
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        final IUserView userView = getRemoteUser(request);
+        final Object[] arguments = getServiceCallArguments(request);
+        if (arguments == null || arguments.length < 1 || arguments[0] == null) {
+            throw new NotAuthorizedFilterException();
+        }
+        final ExecutionDegree executionDegree = (ExecutionDegree) arguments[0];
 
-		if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
-			throw new NotAuthorizedFilterException();
-		}
+        if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
+            throw new NotAuthorizedFilterException();
+        }
 
-		if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, executionDegree)))
-				|| (userView == null) || (userView.getRoleTypes() == null)) {
-			throw new NotAuthorizedFilterException();
-		}
+        if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, executionDegree)))
+                || (userView == null) || (userView.getRoleTypes() == null)) {
+            throw new NotAuthorizedFilterException();
+        }
 
-	}
+    }
 
-	public static boolean verifyCondition(IUserView id, ExecutionDegree executionDegree) {
-		if (id != null) {
-			final Person person = id.getPerson();
-			if (person != null) {
-				if (person.hasRole(RoleType.COORDINATOR)) {
-					for (final Coordinator coordinator : person.getCoordinators()) {
-						if (executionDegree == coordinator.getExecutionDegree()) {
-							return true;
-						}
-					}
-					for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
-						if (executionDegree == scientificCommission.getExecutionDegree()
-								|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
-										.getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
-										.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
-							return true;
-						}
-					}
-				}
-				if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-					final Employee employee = person.getEmployee();
-					final Department department = employee.getCurrentDepartmentWorkingPlace();
-					final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
-					return hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
-							|| hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit());
-				}
-			}
-		}
+    public static boolean verifyCondition(IUserView id, ExecutionDegree executionDegree) {
+        if (id != null) {
+            final Person person = id.getPerson();
+            if (person != null) {
+                if (person.hasRole(RoleType.COORDINATOR)) {
+                    for (final Coordinator coordinator : person.getCoordinators()) {
+                        if (executionDegree == coordinator.getExecutionDegree()) {
+                            return true;
+                        }
+                    }
+                    for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
+                        if (executionDegree == scientificCommission.getExecutionDegree()
+                                || (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
+                                        .getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
+                                        .getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
+                            return true;
+                        }
+                    }
+                }
+                if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+                    final Employee employee = person.getEmployee();
+                    final Department department = employee.getCurrentDepartmentWorkingPlace();
+                    final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
+                    return hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
+                            || hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit());
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	protected static boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree,
-			final Set<CompetenceCourse> competenceCourses) {
-		for (final CompetenceCourse competenceCourse : competenceCourses) {
-			for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
-				if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
-					final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-					if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    protected static boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree,
+            final Set<CompetenceCourse> competenceCourses) {
+        for (final CompetenceCourse competenceCourse : competenceCourses) {
+            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
+                if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
+                    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                    if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	private static boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree, final Unit unit) {
-		if (unit.isCompetenceCourseGroupUnit()) {
-			final CompetenceCourseGroupUnit competenceCourseGroupUnit = (CompetenceCourseGroupUnit) unit;
-			if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourseGroupUnit.getCompetenceCoursesSet())) {
-				return true;
-			}
-		}
-		for (final Accountability accountability : unit.getChildsSet()) {
-			final Party party = accountability.getChildParty();
-			if (party.isUnit() && hasDissertationCompetenceCourseForDepartment(executionDegree, (Unit) party)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private static boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree, final Unit unit) {
+        if (unit.isCompetenceCourseGroupUnit()) {
+            final CompetenceCourseGroupUnit competenceCourseGroupUnit = (CompetenceCourseGroupUnit) unit;
+            if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourseGroupUnit.getCompetenceCoursesSet())) {
+                return true;
+            }
+        }
+        for (final Accountability accountability : unit.getChildsSet()) {
+            final Party party = accountability.getChildParty();
+            if (party.isUnit() && hasDissertationCompetenceCourseForDepartment(executionDegree, (Unit) party)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

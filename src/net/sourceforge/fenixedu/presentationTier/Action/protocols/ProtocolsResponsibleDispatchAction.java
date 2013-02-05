@@ -24,41 +24,41 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "departmentMember", path = "/protocols", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-protocols", path = "/departmentMember/protocols/showProtocols.jsp"),
-		@Forward(name = "view-protocol", path = "/departmentMember/protocols/viewProtocol.jsp") })
+        @Forward(name = "view-protocol", path = "/departmentMember/protocols/viewProtocol.jsp") })
 public class ProtocolsResponsibleDispatchAction extends FenixDispatchAction {
 
-	public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final IUserView userView = UserView.getUser();
+        final IUserView userView = UserView.getUser();
 
-		YearMonthDay now = new YearMonthDay();
-		List<ProtocolHistory> protocolHistories = new ArrayList<ProtocolHistory>();
-		for (Protocol protocol : userView.getPerson().getProtocols()) {
-			ProtocolHistory protocolHistory = protocol.getLastProtocolHistory();
-			if (protocolHistory.getEndDate() != null && !protocolHistory.getEndDate().isBefore(now)
-					&& Months.monthsBetween(now, protocolHistory.getEndDate()).getMonths() <= 1) {
-				protocolHistories.add(protocolHistory);
-			}
-		}
+        YearMonthDay now = new YearMonthDay();
+        List<ProtocolHistory> protocolHistories = new ArrayList<ProtocolHistory>();
+        for (Protocol protocol : userView.getPerson().getProtocols()) {
+            ProtocolHistory protocolHistory = protocol.getLastProtocolHistory();
+            if (protocolHistory.getEndDate() != null && !protocolHistory.getEndDate().isBefore(now)
+                    && Months.monthsBetween(now, protocolHistory.getEndDate()).getMonths() <= 1) {
+                protocolHistories.add(protocolHistory);
+            }
+        }
 
-		request.setAttribute("protocolHistories", protocolHistories);
-		return mapping.findForward("show-protocols");
-	}
+        request.setAttribute("protocolHistories", protocolHistories);
+        return mapping.findForward("show-protocols");
+    }
 
-	public ActionForward viewProtocol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward viewProtocol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final IUserView userView = UserView.getUser();
-		Integer protocolId = new Integer(request.getParameter("idInternal"));
+        final IUserView userView = UserView.getUser();
+        Integer protocolId = new Integer(request.getParameter("idInternal"));
 
-		Protocol protocol = rootDomainObject.readProtocolByOID(protocolId);
-		if (!protocol.getResponsibles().contains(userView.getPerson())) {
-			return showProtocols(mapping, actionForm, request, response);
-		}
+        Protocol protocol = rootDomainObject.readProtocolByOID(protocolId);
+        if (!protocol.getResponsibles().contains(userView.getPerson())) {
+            return showProtocols(mapping, actionForm, request, response);
+        }
 
-		request.setAttribute("protocol", protocol);
-		return mapping.findForward("view-protocol");
-	}
+        request.setAttribute("protocol", protocol);
+        return mapping.findForward("view-protocol");
+    }
 
 }

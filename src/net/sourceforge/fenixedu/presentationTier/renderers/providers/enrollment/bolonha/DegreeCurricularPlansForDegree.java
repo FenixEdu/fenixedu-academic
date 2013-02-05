@@ -12,34 +12,34 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlansForDegree implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
 
-		final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-		if (optionalEnrollmentBean.hasDegree() && optionalEnrollmentBean.hasDegreeType()) {
-			if (optionalEnrollmentBean.getDegree().getDegreeType() == optionalEnrollmentBean.getDegreeType()) {
-				result.addAll(optionalEnrollmentBean.getDegree().getDegreeCurricularPlansForYear(
-						optionalEnrollmentBean.getExecutionYear()));
-			} else {
-				optionalEnrollmentBean.setDegree(null);
-				optionalEnrollmentBean.setDegreeType(null);
-			}
-		}
+        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        if (optionalEnrollmentBean.hasDegree() && optionalEnrollmentBean.hasDegreeType()) {
+            if (optionalEnrollmentBean.getDegree().getDegreeType() == optionalEnrollmentBean.getDegreeType()) {
+                result.addAll(optionalEnrollmentBean.getDegree().getDegreeCurricularPlansForYear(
+                        optionalEnrollmentBean.getExecutionYear()));
+            } else {
+                optionalEnrollmentBean.setDegree(null);
+                optionalEnrollmentBean.setDegreeType(null);
+            }
+        }
 
-		Collections.sort(result, DegreeCurricularPlan.COMPARATOR_BY_NAME);
+        Collections.sort(result, DegreeCurricularPlan.COMPARATOR_BY_NAME);
 
-		final DegreeCurricularPlan currentSelectedDegreeCurricularPlan = (DegreeCurricularPlan) currentValue;
-		if (!result.contains(currentSelectedDegreeCurricularPlan)) {
-			optionalEnrollmentBean.setDegreeCurricularPlan(null);
-		}
+        final DegreeCurricularPlan currentSelectedDegreeCurricularPlan = (DegreeCurricularPlan) currentValue;
+        if (!result.contains(currentSelectedDegreeCurricularPlan)) {
+            optionalEnrollmentBean.setDegreeCurricularPlan(null);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

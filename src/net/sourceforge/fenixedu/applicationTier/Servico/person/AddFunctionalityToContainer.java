@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddFunctionalityToContainer extends FenixService {
 
-	@Service
-	public static void run(Functionality functionality, Container container) {
-		container.addChild(functionality);
-	}
+    @Service
+    public static void run(Functionality functionality, Container container) {
+        container.addChild(functionality);
+    }
 }

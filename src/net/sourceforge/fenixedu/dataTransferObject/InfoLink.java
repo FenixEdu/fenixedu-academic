@@ -15,46 +15,46 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
  * 
  */
 public class InfoLink extends DataTranferObject {
-	private String linkName;
+    private String linkName;
 
-	private String link;
+    private String link;
 
-	/**
-	 * @return
-	 */
-	public String getLink() {
-		return link;
-	}
+    /**
+     * @return
+     */
+    public String getLink() {
+        return link;
+    }
 
-	/**
-	 * @param link
-	 */
-	public void setLink(String link) {
-		try {
-			this.link = new String(link.getBytes(PropertiesManager.DEFAULT_CHARSET), PropertiesManager.DEFAULT_CHARSET);
-		} catch (UnsupportedEncodingException e) {
-			this.link = link;
-		}
+    /**
+     * @param link
+     */
+    public void setLink(String link) {
+        try {
+            this.link = new String(link.getBytes(PropertiesManager.DEFAULT_CHARSET), PropertiesManager.DEFAULT_CHARSET);
+        } catch (UnsupportedEncodingException e) {
+            this.link = link;
+        }
 
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public String getLinkName() {
-		return linkName;
-	}
+    /**
+     * @return
+     */
+    public String getLinkName() {
+        return linkName;
+    }
 
-	/**
-	 * @param linkName
-	 */
-	public void setLinkName(String linkName) {
-		try {
-			this.linkName = new String(linkName.getBytes(PropertiesManager.DEFAULT_CHARSET), PropertiesManager.DEFAULT_CHARSET);
-		} catch (UnsupportedEncodingException e) {
-			this.linkName = linkName;
-		}
+    /**
+     * @param linkName
+     */
+    public void setLinkName(String linkName) {
+        try {
+            this.linkName = new String(linkName.getBytes(PropertiesManager.DEFAULT_CHARSET), PropertiesManager.DEFAULT_CHARSET);
+        } catch (UnsupportedEncodingException e) {
+            this.linkName = linkName;
+        }
 
-	}
+    }
 
 }

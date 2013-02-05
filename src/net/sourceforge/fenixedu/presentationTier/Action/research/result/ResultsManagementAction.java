@@ -27,176 +27,176 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		String unitId = request.getParameter("unitId");
-		if (unitId != null) {
-			ResearchUnit unit =
-					(ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
-			request.setAttribute("unit", unit);
-		}
-		return super.execute(mapping, form, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        String unitId = request.getParameter("unitId");
+        if (unitId != null) {
+            ResearchUnit unit =
+                    (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
+            request.setAttribute("unit", unit);
+        }
+        return super.execute(mapping, form, request, response);
+    }
 
-	public ActionForward backToResult(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final ResearchResult result = getResultFromRequest(request);
-		if (result == null) {
-			return backToResultList(mapping, form, request, response);
-		}
+    public ActionForward backToResult(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final ResearchResult result = getResultFromRequest(request);
+        if (result == null) {
+            return backToResultList(mapping, form, request, response);
+        }
 
-		request.setAttribute("resultId", result.getIdInternal());
-		if (result instanceof ResearchResultPatent) {
-			return mapping.findForward("editPatent");
-		} else if (result instanceof ResearchResultPublication) {
-			return mapping.findForward("viewEditPublication");
-		}
-		return null;
-	}
+        request.setAttribute("resultId", result.getIdInternal());
+        if (result instanceof ResearchResultPatent) {
+            return mapping.findForward("editPatent");
+        } else if (result instanceof ResearchResultPublication) {
+            return mapping.findForward("viewEditPublication");
+        }
+        return null;
+    }
 
-	public ActionForward backToResultList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final String resultType = (String) getFromRequest(request, "resultType");
+    public ActionForward backToResultList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final String resultType = (String) getFromRequest(request, "resultType");
 
-		if (!(resultType == null || resultType.equals(""))) {
-			if (resultType.compareTo(ResearchResultPatent.class.getSimpleName()) == 0) {
-				return mapping.findForward("listPatents");
-			}
-			return mapping.findForward("ListPublications");
-		}
-		return null;
-	}
+        if (!(resultType == null || resultType.equals(""))) {
+            if (resultType.compareTo(ResearchResultPatent.class.getSimpleName()) == 0) {
+                return mapping.findForward("listPatents");
+            }
+            return mapping.findForward("ListPublications");
+        }
+        return null;
+    }
 
-	public ActionForward associatePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward associatePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final ResearchResult result = getResultByIdFromRequest(request);
-		request.setAttribute("publication", result);
+        final ResearchResult result = getResultByIdFromRequest(request);
+        request.setAttribute("publication", result);
 
-		return mapping.findForward("associatePrize");
+        return mapping.findForward("associatePrize");
 
-	}
+    }
 
-	public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		String prizeID = request.getParameter("oid");
-		Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
-		if (prize.isDeletableByUser((getLoggedPerson(request)))) {
-			try {
-				executeService("DeletePrize", new Object[] { prize });
-			} catch (DomainException e) {
-				addActionMessage(request, e.getMessage());
-			}
-		}
-		return associatePrize(mapping, form, request, response);
-	}
+        String prizeID = request.getParameter("oid");
+        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        if (prize.isDeletableByUser((getLoggedPerson(request)))) {
+            try {
+                executeService("DeletePrize", new Object[] { prize });
+            } catch (DomainException e) {
+                addActionMessage(request, e.getMessage());
+            }
+        }
+        return associatePrize(mapping, form, request, response);
+    }
 
-	public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		String prizeID = request.getParameter("oid");
-		Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
-		if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
-			request.setAttribute("prize", prize);
-		}
-		request.setAttribute("result", getResultByIdFromRequest(request));
-		return mapping.findForward("editPrize");
-	}
+        String prizeID = request.getParameter("oid");
+        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
+            request.setAttribute("prize", prize);
+        }
+        request.setAttribute("result", getResultByIdFromRequest(request));
+        return mapping.findForward("editPrize");
+    }
 
-	protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
-		final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
+    protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
+        final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 
-		if (resultId != null) {
-			try {
-				return ResearchResult.readByOid(resultId);
-			} catch (DomainException e) {
-				addMessage(request, e.getKey(), e.getArgs());
-			}
-		}
-		return null;
-	}
+        if (resultId != null) {
+            try {
+                return ResearchResult.readByOid(resultId);
+            } catch (DomainException e) {
+                addMessage(request, e.getKey(), e.getArgs());
+            }
+        }
+        return null;
+    }
 
-	public final ResearchResult getResultFromRequest(HttpServletRequest request) {
-		ResearchResult result = null;
-		try {
-			result = getResultByIdFromRequest(request);
-		} catch (Exception e) {
-		}
+    public final ResearchResult getResultFromRequest(HttpServletRequest request) {
+        ResearchResult result = null;
+        try {
+            result = getResultByIdFromRequest(request);
+        } catch (Exception e) {
+        }
 
-		if (result == null) {
-			try {
-				final Object object = getRenderedObject(null);
+        if (result == null) {
+            try {
+                final Object object = getRenderedObject(null);
 
-				if (object instanceof ResearchResult) {
-					result = (ResearchResult) object;
-				}
-				if (object instanceof ResultPublicationBean) {
-					result = ResearchResult.readByOid(((ResultPublicationBean) object).getIdInternal());
-				}
+                if (object instanceof ResearchResult) {
+                    result = (ResearchResult) object;
+                }
+                if (object instanceof ResultPublicationBean) {
+                    result = ResearchResult.readByOid(((ResultPublicationBean) object).getIdInternal());
+                }
 
-			} catch (Exception e) {
-			}
-		}
+            } catch (Exception e) {
+            }
+        }
 
-		if (result != null) {
-			request.setAttribute("result", result);
-		}
+        if (result != null) {
+            request.setAttribute("result", result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public <RenderedObjectType> RenderedObjectType getRenderedObject(String id) {
-		if (id == null || id.equals("")) {
-			if (RenderUtils.getViewState() != null) {
-				return (RenderedObjectType) RenderUtils.getViewState().getMetaObject().getObject();
-			}
-		} else {
-			if (RenderUtils.getViewState(id) != null) {
-				return (RenderedObjectType) RenderUtils.getViewState(id).getMetaObject().getObject();
-			}
-		}
-		return null;
-	}
+    @Override
+    public <RenderedObjectType> RenderedObjectType getRenderedObject(String id) {
+        if (id == null || id.equals("")) {
+            if (RenderUtils.getViewState() != null) {
+                return (RenderedObjectType) RenderUtils.getViewState().getMetaObject().getObject();
+            }
+        } else {
+            if (RenderUtils.getViewState(id) != null) {
+                return (RenderedObjectType) RenderUtils.getViewState(id).getMetaObject().getObject();
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
-		if (e instanceof DomainException) {
-			final DomainException ex = (DomainException) e;
+    @Override
+    public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
+        if (e instanceof DomainException) {
+            final DomainException ex = (DomainException) e;
 
-			addMessage(request, ex.getKey(), ex.getArgs());
+            addMessage(request, ex.getKey(), ex.getArgs());
 
-			if (RenderUtils.getViewState() != null) {
-				ViewDestination destination = RenderUtils.getViewState().getDestination("exception");
-				RenderUtils.invalidateViewState();
-				if (destination != null) {
-					return destination.getActionForward();
-				}
-			}
+            if (RenderUtils.getViewState() != null) {
+                ViewDestination destination = RenderUtils.getViewState().getDestination("exception");
+                RenderUtils.invalidateViewState();
+                if (destination != null) {
+                    return destination.getActionForward();
+                }
+            }
 
-		} else if (e instanceof FileManagerException) {
-			addActionMessage(request, "label.communicationError");
-			e.printStackTrace();
-		} else {
+        } else if (e instanceof FileManagerException) {
+            addActionMessage(request, "label.communicationError");
+            e.printStackTrace();
+        } else {
 
-			addMessage(request, e.getMessage());
-			e.printStackTrace();
+            addMessage(request, e.getMessage());
+            e.printStackTrace();
 
-		}
+        }
 
-		return input;
-	}
+        return input;
+    }
 
-	private void addMessage(HttpServletRequest request, String key, String... args) {
-		ActionMessages messages = getMessages(request);
+    private void addMessage(HttpServletRequest request, String key, String... args) {
+        ActionMessages messages = getMessages(request);
 
-		if (messages == null) {
-			messages = new ActionMessages();
-		}
+        if (messages == null) {
+            messages = new ActionMessages();
+        }
 
-		messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
-		saveMessages(request, messages);
-	}
+        messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+        saveMessages(request, messages);
+    }
 }

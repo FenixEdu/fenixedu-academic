@@ -29,151 +29,147 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/careerWorkshopApplication", module = "student")
 @Forwards({
-		@Forward(name = "careerWorkshop", path = "/student/careerWorkshop/careerWorkshop.jsp", tileProperties = @Tile(
-				title = "private.student.participate.istcareerworkshops")),
-		@Forward(
-				name = "careerWorkshopApplicationForm",
-				path = "/student/careerWorkshop/careerWorkshopApplicationForm.jsp",
-				tileProperties = @Tile(title = "private.student.participate.istcareerworkshops")),
-		@Forward(
-				name = "careerWorkshopConfirmationForm",
-				path = "/student/careerWorkshop/careerWorkshopConfirmationForm.jsp",
-				tileProperties = @Tile(title = "private.student.participate.istcareerworkshops")) })
+        @Forward(name = "careerWorkshop", path = "/student/careerWorkshop/careerWorkshop.jsp", tileProperties = @Tile(
+                title = "private.student.participate.istcareerworkshops")),
+        @Forward(name = "careerWorkshopApplicationForm", path = "/student/careerWorkshop/careerWorkshopApplicationForm.jsp",
+                tileProperties = @Tile(title = "private.student.participate.istcareerworkshops")),
+        @Forward(name = "careerWorkshopConfirmationForm", path = "/student/careerWorkshop/careerWorkshopConfirmationForm.jsp",
+                tileProperties = @Tile(title = "private.student.participate.istcareerworkshops")) })
 public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Student student = getLoggedStudent(request);
-		CareerWorkshopApplicationEvent openApplicationEvent = CareerWorkshopApplicationEvent.getActualEvent();
-		List<CareerWorkshopApplicationEvent> openApplicationEvents = new ArrayList<CareerWorkshopApplicationEvent>();
-		if (openApplicationEvent != null) {
-			openApplicationEvents.add(openApplicationEvent);
-		}
-		List<CareerWorkshopConfirmationEvent> pendingForConfirmation = student.getApplicationsWaitingForConfirmation();
-		request.setAttribute("openApplicationEvents", openApplicationEvents);
-		request.setAttribute("pendingForConfirmation", pendingForConfirmation);
-		return actionMapping.findForward("careerWorkshop");
-	}
+        final Student student = getLoggedStudent(request);
+        CareerWorkshopApplicationEvent openApplicationEvent = CareerWorkshopApplicationEvent.getActualEvent();
+        List<CareerWorkshopApplicationEvent> openApplicationEvents = new ArrayList<CareerWorkshopApplicationEvent>();
+        if (openApplicationEvent != null) {
+            openApplicationEvents.add(openApplicationEvent);
+        }
+        List<CareerWorkshopConfirmationEvent> pendingForConfirmation = student.getApplicationsWaitingForConfirmation();
+        request.setAttribute("openApplicationEvents", openApplicationEvents);
+        request.setAttribute("pendingForConfirmation", pendingForConfirmation);
+        return actionMapping.findForward("careerWorkshop");
+    }
 
-	public ActionForward presentApplication(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward presentApplication(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Student student = getLoggedStudent(request);
-		final String eventExternalId = request.getParameter("eventId");
-		CareerWorkshopApplicationEvent event = AbstractDomainObject.fromExternalId(eventExternalId);
-		CareerWorkshopApplication application = retrieveThisWorkshopApplication(student, event);
-		request.setAttribute("application", application);
-		return actionMapping.findForward("careerWorkshopApplicationForm");
-	}
+        final Student student = getLoggedStudent(request);
+        final String eventExternalId = request.getParameter("eventId");
+        CareerWorkshopApplicationEvent event = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplication application = retrieveThisWorkshopApplication(student, event);
+        request.setAttribute("application", application);
+        return actionMapping.findForward("careerWorkshopApplicationForm");
+    }
 
-	public ActionForward submitApplication(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward submitApplication(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		CareerWorkshopApplication application = getDomainObject(request, "applicationExternalId");
+        CareerWorkshopApplication application = getDomainObject(request, "applicationExternalId");
 
-		if (isApplicationPeriodExpired(application)) {
-			addActionMessage("error", request, "error.careerWorkshops.applicationPeriodExpired");
-			return prepare(actionMapping, actionForm, request, response);
-		}
+        if (isApplicationPeriodExpired(application)) {
+            addActionMessage("error", request, "error.careerWorkshops.applicationPeriodExpired");
+            return prepare(actionMapping, actionForm, request, response);
+        }
 
-		boolean comingFromSubmission = true;
-		String[] sessionPreferences = new String[CareerWorkshopSessions.values().length];
-		for (CareerWorkshopSessions careerWorkshopSessions : CareerWorkshopSessions.values()) {
-			sessionPreferences[careerWorkshopSessions.ordinal()] =
-					(String) getFromRequest(request, careerWorkshopSessions.name());
-		}
-		application.setSessionPreferences(sessionPreferences);
+        boolean comingFromSubmission = true;
+        String[] sessionPreferences = new String[CareerWorkshopSessions.values().length];
+        for (CareerWorkshopSessions careerWorkshopSessions : CareerWorkshopSessions.values()) {
+            sessionPreferences[careerWorkshopSessions.ordinal()] =
+                    (String) getFromRequest(request, careerWorkshopSessions.name());
+        }
+        application.setSessionPreferences(sessionPreferences);
 
-		String[] themePreferences = new String[CareerWorkshopThemes.values().length];
-		for (CareerWorkshopThemes careerWorkshopThemes : CareerWorkshopThemes.values()) {
-			themePreferences[careerWorkshopThemes.ordinal()] = (String) getFromRequest(request, careerWorkshopThemes.name());
-		}
-		application.setThemePreferences(themePreferences);
+        String[] themePreferences = new String[CareerWorkshopThemes.values().length];
+        for (CareerWorkshopThemes careerWorkshopThemes : CareerWorkshopThemes.values()) {
+            themePreferences[careerWorkshopThemes.ordinal()] = (String) getFromRequest(request, careerWorkshopThemes.name());
+        }
+        application.setThemePreferences(themePreferences);
 
-		application.sealApplication();
+        application.sealApplication();
 
-		request.setAttribute("comingFromSubmission", comingFromSubmission);
+        request.setAttribute("comingFromSubmission", comingFromSubmission);
 
-		request.setAttribute("application", application);
-		return actionMapping.findForward("careerWorkshopApplicationForm");
-	}
+        request.setAttribute("application", application);
+        return actionMapping.findForward("careerWorkshopApplicationForm");
+    }
 
-	private boolean isApplicationPeriodExpired(CareerWorkshopApplication application) {
-		DateTime thisInstant = new DateTime();
-		return thisInstant.isAfter(application.getCareerWorkshopApplicationEvent().getEndDate());
-	}
+    private boolean isApplicationPeriodExpired(CareerWorkshopApplication application) {
+        DateTime thisInstant = new DateTime();
+        return thisInstant.isAfter(application.getCareerWorkshopApplicationEvent().getEndDate());
+    }
 
-	public ActionForward presentConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward presentConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Student student = getLoggedStudent(request);
-		final String eventExternalId = request.getParameter("eventId");
-		CareerWorkshopConfirmationEvent event = AbstractDomainObject.fromExternalId(eventExternalId);
-		CareerWorkshopApplication application =
-				retrieveThisWorkshopApplication(student, event.getCareerWorkshopApplicationEvent());
-		CareerWorkshopConfirmation confirmation = retrieveThisWorskhopApplicationConfirmation(student, event, application);
+        final Student student = getLoggedStudent(request);
+        final String eventExternalId = request.getParameter("eventId");
+        CareerWorkshopConfirmationEvent event = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplication application =
+                retrieveThisWorkshopApplication(student, event.getCareerWorkshopApplicationEvent());
+        CareerWorkshopConfirmation confirmation = retrieveThisWorskhopApplicationConfirmation(student, event, application);
 
-		request.setAttribute("confirmationForm", confirmation);
-		request.setAttribute("confirmationBean", new CareerWorkshopConfirmationBean(confirmation.getExternalId()));
-		return actionMapping.findForward("careerWorkshopConfirmationForm");
+        request.setAttribute("confirmationForm", confirmation);
+        request.setAttribute("confirmationBean", new CareerWorkshopConfirmationBean(confirmation.getExternalId()));
+        return actionMapping.findForward("careerWorkshopConfirmationForm");
 
-	}
+    }
 
-	public ActionForward acceptConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward acceptConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		CareerWorkshopConfirmationBean bean = getRenderedObject("confirmationBean");
-		CareerWorkshopConfirmation confirmation = AbstractDomainObject.fromExternalId(bean.getExternalId());
-		if (isConfirmationPeriodExpired(confirmation)) {
-			addActionMessage("error", request, "error.careerWorkshops.confirmationPeriodExpired");
-			return prepare(actionMapping, actionForm, request, response);
-		}
-		confirmation.setConfirmationCode(bean.getConfirmationCode());
-		confirmation.setConfirmation(true);
-		confirmation.sealConfirmation();
+        CareerWorkshopConfirmationBean bean = getRenderedObject("confirmationBean");
+        CareerWorkshopConfirmation confirmation = AbstractDomainObject.fromExternalId(bean.getExternalId());
+        if (isConfirmationPeriodExpired(confirmation)) {
+            addActionMessage("error", request, "error.careerWorkshops.confirmationPeriodExpired");
+            return prepare(actionMapping, actionForm, request, response);
+        }
+        confirmation.setConfirmationCode(bean.getConfirmationCode());
+        confirmation.setConfirmation(true);
+        confirmation.sealConfirmation();
 
-		addActionMessage("success", request, "message.careerWorkshops.confirmationSuccessful");
+        addActionMessage("success", request, "message.careerWorkshops.confirmationSuccessful");
 
-		return prepare(actionMapping, actionForm, request, response);
+        return prepare(actionMapping, actionForm, request, response);
 
-	}
+    }
 
-	private boolean isConfirmationPeriodExpired(CareerWorkshopConfirmation confirmation) {
-		DateTime thisInstant = new DateTime();
-		return thisInstant.isAfter(confirmation.getCareerWorkshopConfirmationEvent().getEndDate());
-	}
+    private boolean isConfirmationPeriodExpired(CareerWorkshopConfirmation confirmation) {
+        DateTime thisInstant = new DateTime();
+        return thisInstant.isAfter(confirmation.getCareerWorkshopConfirmationEvent().getEndDate());
+    }
 
-	public ActionForward declineConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward declineConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		return prepare(actionMapping, actionForm, request, response);
+        return prepare(actionMapping, actionForm, request, response);
 
-	}
+    }
 
-	private Student getLoggedStudent(final HttpServletRequest request) {
-		return getLoggedPerson(request).getStudent();
-	}
+    private Student getLoggedStudent(final HttpServletRequest request) {
+        return getLoggedPerson(request).getStudent();
+    }
 
-	@Service
-	private CareerWorkshopApplication retrieveThisWorkshopApplication(Student student, CareerWorkshopApplicationEvent event) {
-		for (CareerWorkshopApplication application : student.getCareerWorkshopApplications()) {
-			if (application.getCareerWorkshopApplicationEvent() == event) {
-				return application;
-			}
-		}
-		return new CareerWorkshopApplication(student, event);
-	}
+    @Service
+    private CareerWorkshopApplication retrieveThisWorkshopApplication(Student student, CareerWorkshopApplicationEvent event) {
+        for (CareerWorkshopApplication application : student.getCareerWorkshopApplications()) {
+            if (application.getCareerWorkshopApplicationEvent() == event) {
+                return application;
+            }
+        }
+        return new CareerWorkshopApplication(student, event);
+    }
 
-	@Service
-	private CareerWorkshopConfirmation retrieveThisWorskhopApplicationConfirmation(Student student,
-			CareerWorkshopConfirmationEvent confirmationEvent, CareerWorkshopApplication application) {
-		for (CareerWorkshopConfirmation confirmation : student.getCareerWorkshopConfirmations()) {
-			if (confirmation.getCareerWorkshopConfirmationEvent() == confirmationEvent) {
-				return confirmation;
-			}
-		}
-		return new CareerWorkshopConfirmation(student, confirmationEvent, application);
-	}
+    @Service
+    private CareerWorkshopConfirmation retrieveThisWorskhopApplicationConfirmation(Student student,
+            CareerWorkshopConfirmationEvent confirmationEvent, CareerWorkshopApplication application) {
+        for (CareerWorkshopConfirmation confirmation : student.getCareerWorkshopConfirmations()) {
+            if (confirmation.getCareerWorkshopConfirmationEvent() == confirmationEvent) {
+                return confirmation;
+            }
+        }
+        return new CareerWorkshopConfirmation(student, confirmationEvent, application);
+    }
 
 }

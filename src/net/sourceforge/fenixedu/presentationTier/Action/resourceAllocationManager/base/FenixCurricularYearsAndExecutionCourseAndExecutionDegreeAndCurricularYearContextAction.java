@@ -10,17 +10,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public abstract class FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction extends
-		FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+        FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setCurricularYearsContext(request);
+        ContextUtils.setCurricularYearsContext(request);
 
-		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-		return actionForward;
-	}
+        return actionForward;
+    }
 
 }

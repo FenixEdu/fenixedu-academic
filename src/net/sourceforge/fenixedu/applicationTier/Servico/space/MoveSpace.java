@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MoveSpace extends FenixService {
 
-	@Service
-	public static void run(MoveSpaceBean bean) {
-		if (bean != null && bean.getSpace() != null) {
-			Space space = bean.getSpace();
-			space.setNewPossibleParentSpace(bean.getSelectedParentSpace());
-		}
-	}
+    @Service
+    public static void run(MoveSpaceBean bean) {
+        if (bean != null && bean.getSpace() != null) {
+            Space space = bean.getSpace();
+            space.setNewPossibleParentSpace(bean.getSelectedParentSpace());
+        }
+    }
 }

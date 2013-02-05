@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
  */
 public class AddTeacherToTeacherServiceDistribution extends FenixService {
 
-	public void run(Integer tsdId, final Integer teacherId) throws FenixServiceException {
+    public void run(Integer tsdId, final Integer teacherId) throws FenixServiceException {
 
-		TeacherServiceDistribution rootTSD = rootDomainObject.readTeacherServiceDistributionByOID(tsdId).getRootTSD();
-		Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+        TeacherServiceDistribution rootTSD = rootDomainObject.readTeacherServiceDistributionByOID(tsdId).getRootTSD();
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 
-		if (rootTSD.getTSDTeacherByTeacher(teacher) == null) {
-			rootTSD.addTSDTeachers(new TSDRealTeacher(teacher));
-		}
-	}
+        if (rootTSD.getTSDTeacherByTeacher(teacher) == null) {
+            rootTSD.addTSDTeachers(new TSDRealTeacher(teacher));
+        }
+    }
 }

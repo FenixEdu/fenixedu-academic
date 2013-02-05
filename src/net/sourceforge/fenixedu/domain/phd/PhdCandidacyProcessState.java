@@ -19,157 +19,157 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 
-	private PhdCandidacyProcessState() {
-		super();
-	}
+    private PhdCandidacyProcessState() {
+        super();
+    }
 
-	protected PhdCandidacyProcessState(final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type,
-			final Person person, final String remarks, final DateTime stateDate) {
-		this();
-		init(process, type, person, remarks, stateDate);
+    protected PhdCandidacyProcessState(final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type,
+            final Person person, final String remarks, final DateTime stateDate) {
+        this();
+        init(process, type, person, remarks, stateDate);
 
-		updateSituationOnPHDCandidacy();
-	}
+        updateSituationOnPHDCandidacy();
+    }
 
-	public void updateSituationOnPHDCandidacy() {
-		PhdProgramCandidacyProcess process = getProcess();
+    public void updateSituationOnPHDCandidacy() {
+        PhdProgramCandidacyProcess process = getProcess();
 
-		if (this.getStateDate() == null) {
-			throw new DomainException("state.date.null");
-		}
+        if (this.getStateDate() == null) {
+            throw new DomainException("state.date.null");
+        }
 
-		PHDProgramCandidacy candidacy = process.getCandidacy();
-		CandidacySituation situation = null;
+        PHDProgramCandidacy candidacy = process.getCandidacy();
+        CandidacySituation situation = null;
 
-		switch (this.getType()) {
-		case PRE_CANDIDATE:
-			situation = new PreCandidacySituation(candidacy);
-			break;
-		case STAND_BY_WITH_MISSING_INFORMATION:
-		case STAND_BY_WITH_COMPLETE_INFORMATION:
-			situation = new StandByCandidacySituation(candidacy);
-			break;
-		case CONCLUDED:
-			situation = new AdmittedCandidacySituation(candidacy);
-			break;
-		case REJECTED:
-			situation = new NotAdmittedCandidacySituation(candidacy);
-			break;
-		default:
-		}
+        switch (this.getType()) {
+        case PRE_CANDIDATE:
+            situation = new PreCandidacySituation(candidacy);
+            break;
+        case STAND_BY_WITH_MISSING_INFORMATION:
+        case STAND_BY_WITH_COMPLETE_INFORMATION:
+            situation = new StandByCandidacySituation(candidacy);
+            break;
+        case CONCLUDED:
+            situation = new AdmittedCandidacySituation(candidacy);
+            break;
+        case REJECTED:
+            situation = new NotAdmittedCandidacySituation(candidacy);
+            break;
+        default:
+        }
 
-		if (situation != null) {
-			situation.setSituationDate(this.getStateDate());
-		}
-	}
+        if (situation != null) {
+            situation.setSituationDate(this.getStateDate());
+        }
+    }
 
-	protected void init(final Person person, final String remarks, DateTime stateDate) {
-		throw new RuntimeException("invoke other init");
-	}
+    protected void init(final Person person, final String remarks, DateTime stateDate) {
+        throw new RuntimeException("invoke other init");
+    }
 
-	protected void init(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type, Person person, String remarks,
-			final DateTime stateDate) {
-		check(process, type);
-		setProcess(process);
-		super.init(person, remarks, stateDate, type);
+    protected void init(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type, Person person, String remarks,
+            final DateTime stateDate) {
+        check(process, type);
+        setProcess(process);
+        super.init(person, remarks, stateDate, type);
 
-		setType(type);
-	}
+        setType(type);
+    }
 
-	private void check(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type) {
-		check(process, "error.PhdCandidacyProcessState.invalid.process");
-		check(type, "error.PhdCandidacyProcessState.invalid.type");
-		checkType(process, type);
-	}
+    private void check(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type) {
+        check(process, "error.PhdCandidacyProcessState.invalid.process");
+        check(type, "error.PhdCandidacyProcessState.invalid.type");
+        checkType(process, type);
+    }
 
-	private void checkType(final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type) {
-		final PhdProgramCandidacyProcessState currentType = process.getActiveState();
-		if (currentType != null && currentType.equals(type)) {
-			throw new DomainException("error.PhdCandidacyProcessState.equals.previous.state", type.getLocalizedName());
-		}
-	}
+    private void checkType(final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type) {
+        final PhdProgramCandidacyProcessState currentType = process.getActiveState();
+        if (currentType != null && currentType.equals(type)) {
+            throw new DomainException("error.PhdCandidacyProcessState.equals.previous.state", type.getLocalizedName());
+        }
+    }
 
-	@Override
-	protected void disconnect() {
-		removeProcess();
-		super.disconnect();
-	}
+    @Override
+    protected void disconnect() {
+        removeProcess();
+        super.disconnect();
+    }
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	static public PhdCandidacyProcessState create(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type) {
-		final PhdCandidacyProcessState result = new PhdCandidacyProcessState();
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    static public PhdCandidacyProcessState create(PhdProgramCandidacyProcess process, PhdProgramCandidacyProcessState type) {
+        final PhdCandidacyProcessState result = new PhdCandidacyProcessState();
 
-		result.check(process, type);
-		result.setProcess(process);
-		result.setType(type);
+        result.check(process, type);
+        result.setProcess(process);
+        result.setType(type);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public boolean isLast() {
-		return getProcess().getMostRecentState() == this;
-	}
+    @Override
+    public boolean isLast() {
+        return getProcess().getMostRecentState() == this;
+    }
 
-	public static PhdCandidacyProcessState createStateWithInferredStateDate(final PhdProgramCandidacyProcess process,
-			final PhdProgramCandidacyProcessState type, final Person person, final String remarks) {
+    public static PhdCandidacyProcessState createStateWithInferredStateDate(final PhdProgramCandidacyProcess process,
+            final PhdProgramCandidacyProcessState type, final Person person, final String remarks) {
 
-		DateTime stateDate = null;
+        DateTime stateDate = null;
 
-		PhdCandidacyProcessState mostRecentState = process.getMostRecentState();
+        PhdCandidacyProcessState mostRecentState = process.getMostRecentState();
 
-		switch (type) {
-		case PRE_CANDIDATE:
-		case STAND_BY_WITH_MISSING_INFORMATION:
-		case STAND_BY_WITH_COMPLETE_INFORMATION:
-		case PENDING_FOR_COORDINATOR_OPINION:
-		case WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION:
-			if (mostRecentState != null) {
-				stateDate = mostRecentState.getStateDate().plusMinutes(1);
-			} else {
-				if (process.getCandidacyDate() == null) {
-					throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.candidacyDate.required");
-				}
+        switch (type) {
+        case PRE_CANDIDATE:
+        case STAND_BY_WITH_MISSING_INFORMATION:
+        case STAND_BY_WITH_COMPLETE_INFORMATION:
+        case PENDING_FOR_COORDINATOR_OPINION:
+        case WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION:
+            if (mostRecentState != null) {
+                stateDate = mostRecentState.getStateDate().plusMinutes(1);
+            } else {
+                if (process.getCandidacyDate() == null) {
+                    throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.candidacyDate.required");
+                }
 
-				stateDate = process.getCandidacyDate().toDateTimeAtStartOfDay();
-			}
+                stateDate = process.getCandidacyDate().toDateTimeAtStartOfDay();
+            }
 
-			break;
-		case RATIFIED_BY_SCIENTIFIC_COUNCIL:
-			if (process.getWhenRatified() == null) {
-				throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.whenRatified.required");
-			}
+            break;
+        case RATIFIED_BY_SCIENTIFIC_COUNCIL:
+            if (process.getWhenRatified() == null) {
+                throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.whenRatified.required");
+            }
 
-			stateDate = process.getWhenRatified().toDateTimeAtStartOfDay();
-			break;
-		case CONCLUDED:
-			if (process.getWhenStartedStudies() == null) {
-				throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.whenStartedStudies.required");
-			}
+            stateDate = process.getWhenRatified().toDateTimeAtStartOfDay();
+            break;
+        case CONCLUDED:
+            if (process.getWhenStartedStudies() == null) {
+                throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.whenStartedStudies.required");
+            }
 
-			stateDate = process.getWhenStartedStudies().toDateTimeAtStartOfDay();
-			break;
-		case REJECTED:
-			stateDate = mostRecentState.getStateDate().plusMinutes(1);
-			break;
-		default:
-			throw new DomainException("I cant handle this");
-		}
+            stateDate = process.getWhenStartedStudies().toDateTimeAtStartOfDay();
+            break;
+        case REJECTED:
+            stateDate = mostRecentState.getStateDate().plusMinutes(1);
+            break;
+        default:
+            throw new DomainException("I cant handle this");
+        }
 
-		return createStateWithGivenStateDate(process, type, person, remarks, stateDate);
-	}
+        return createStateWithGivenStateDate(process, type, person, remarks, stateDate);
+    }
 
-	public static PhdCandidacyProcessState createStateWithGivenStateDate(final PhdProgramCandidacyProcess process,
-			final PhdProgramCandidacyProcessState type, final Person person, final String remarks, final DateTime stateDate) {
-		List<PhdProgramCandidacyProcessState> nextPossibleStates = PhdProgramCandidacyProcessState.getPossibleNextStates(process);
+    public static PhdCandidacyProcessState createStateWithGivenStateDate(final PhdProgramCandidacyProcess process,
+            final PhdProgramCandidacyProcessState type, final Person person, final String remarks, final DateTime stateDate) {
+        List<PhdProgramCandidacyProcessState> nextPossibleStates = PhdProgramCandidacyProcessState.getPossibleNextStates(process);
 
-		if (!nextPossibleStates.contains(type)) {
-			String description = buildExpectedStatesDescription(nextPossibleStates);
+        if (!nextPossibleStates.contains(type)) {
+            String description = buildExpectedStatesDescription(nextPossibleStates);
 
-			throw new PhdDomainOperationException("error.phd.candidacy.PhdProgramCandidacyProcess.invalid.state",
-					type.getLocalizedName(), description);
-		}
+            throw new PhdDomainOperationException("error.phd.candidacy.PhdProgramCandidacyProcess.invalid.state",
+                    type.getLocalizedName(), description);
+        }
 
-		return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);
-	}
+        return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);
+    }
 }

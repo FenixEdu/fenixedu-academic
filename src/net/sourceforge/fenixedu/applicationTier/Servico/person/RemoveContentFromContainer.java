@@ -7,12 +7,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveContentFromContainer extends FenixService {
 
-	@Service
-	public static void run(Container container, Content content) {
-		content.getParentNode(container).delete();
-		if (!content.hasAnyParents()) {
-			content.delete();
-		}
-	}
+    @Service
+    public static void run(Container container, Content content) {
+        content.getParentNode(container).delete();
+        if (!content.hasAnyParents()) {
+            content.delete();
+        }
+    }
 
 }

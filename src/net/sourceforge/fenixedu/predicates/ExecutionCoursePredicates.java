@@ -13,36 +13,36 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ExecutionCoursePredicates {
 
-	public static final AccessControlPredicate<ExecutionCourse> executionCourseLecturingTeacherOrDegreeCoordinator =
-			new AccessControlPredicate<ExecutionCourse>() {
+    public static final AccessControlPredicate<ExecutionCourse> executionCourseLecturingTeacherOrDegreeCoordinator =
+            new AccessControlPredicate<ExecutionCourse>() {
 
-				@Override
-				public boolean evaluate(ExecutionCourse executionCourse) {
-					Person person = AccessControl.getPerson();
+                @Override
+                public boolean evaluate(ExecutionCourse executionCourse) {
+                    Person person = AccessControl.getPerson();
 
-					Teacher teacher = person.getTeacher();
+                    Teacher teacher = person.getTeacher();
 
-					if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
-						return true;
-					}
+                    if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
+                        return true;
+                    }
 
-					if (person.hasRole(RoleType.COORDINATOR)) {
-						Collection<DegreeCurricularPlan> degreeCurricularPlans =
-								executionCourse.getAssociatedDegreeCurricularPlans();
-						for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-							Collection<ExecutionDegree> coordinatedExecutionDegrees =
-									person.getCoordinatedExecutionDegrees(degreeCurricularPlan);
-							for (ExecutionDegree executionDegree : coordinatedExecutionDegrees) {
-								if (executionCourse.getExecutionYear().equals(executionCourse.getExecutionYear())) {
-									return true;
-								}
-							}
+                    if (person.hasRole(RoleType.COORDINATOR)) {
+                        Collection<DegreeCurricularPlan> degreeCurricularPlans =
+                                executionCourse.getAssociatedDegreeCurricularPlans();
+                        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+                            Collection<ExecutionDegree> coordinatedExecutionDegrees =
+                                    person.getCoordinatedExecutionDegrees(degreeCurricularPlan);
+                            for (ExecutionDegree executionDegree : coordinatedExecutionDegrees) {
+                                if (executionCourse.getExecutionYear().equals(executionCourse.getExecutionYear())) {
+                                    return true;
+                                }
+                            }
 
-						}
-					}
-					return false;
-				}
+                        }
+                    }
+                    return false;
+                }
 
-			};
+            };
 
 }

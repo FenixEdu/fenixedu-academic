@@ -24,51 +24,51 @@ import org.apache.struts.action.ActionMapping;
 
 public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispatchAction {
 
-	public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
+        new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 
-		Integer masterDegreeProofVersionID = Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
-		MasterDegreeProofVersion masterDegreeProofVersion =
-				rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
+        Integer masterDegreeProofVersionID = Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
+        MasterDegreeProofVersion masterDegreeProofVersion =
+                rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
 
-		if (masterDegreeProofVersion.getJuries().isEmpty() == false) {
-			request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
-		}
+        if (masterDegreeProofVersion.getJuries().isEmpty() == false) {
+            request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
+        }
 
-		if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
-			request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
-		}
+        if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
+            request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
+        }
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-		String proofDate = null;
-		String thesisDeliveryDate = null;
+        String proofDate = null;
+        String thesisDeliveryDate = null;
 
-		if (masterDegreeProofVersion.getProofDate() != null) {
-			proofDate = simpleDateFormat.format(masterDegreeProofVersion.getProofDate());
-			request.setAttribute(PresentationConstants.PROOF_DATE, proofDate);
-		}
+        if (masterDegreeProofVersion.getProofDate() != null) {
+            proofDate = simpleDateFormat.format(masterDegreeProofVersion.getProofDate());
+            request.setAttribute(PresentationConstants.PROOF_DATE, proofDate);
+        }
 
-		if (masterDegreeProofVersion.getThesisDeliveryDate() != null) {
-			thesisDeliveryDate = simpleDateFormat.format(masterDegreeProofVersion.getThesisDeliveryDate());
-			request.setAttribute(PresentationConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
+        if (masterDegreeProofVersion.getThesisDeliveryDate() != null) {
+            thesisDeliveryDate = simpleDateFormat.format(masterDegreeProofVersion.getThesisDeliveryDate());
+            request.setAttribute(PresentationConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
 
-		}
+        }
 
-		Date lastModification = new Date(masterDegreeProofVersion.getLastModification().getTime());
-		simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
-		String formattedLastModification = simpleDateFormat.format(lastModification);
+        Date lastModification = new Date(masterDegreeProofVersion.getLastModification().getTime());
+        simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
+        String formattedLastModification = simpleDateFormat.format(lastModification);
 
-		request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
-		request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
+        request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
+        request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
 
-		request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
-		request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
+        request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
+        request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
 }

@@ -20,27 +20,27 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType extends FenixService {
 
-	@Service
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	public static List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType)
-			throws NonExistingServiceException {
+    @Service
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public static List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType)
+            throws NonExistingServiceException {
 
-		List<Registration> registrations = Registration.readByNumberAndDegreeType(studentNumber, degreeType);
+        List<Registration> registrations = Registration.readByNumberAndDegreeType(studentNumber, degreeType);
 
-		if (registrations.isEmpty()) {
-			throw new NonExistingServiceException();
-		}
+        if (registrations.isEmpty()) {
+            throw new NonExistingServiceException();
+        }
 
-		List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+        List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 
-		for (final Registration registration : registrations) {
-			studentCurricularPlans.addAll(registration.getStudentCurricularPlans());
-		}
+        for (final Registration registration : registrations) {
+            studentCurricularPlans.addAll(registration.getStudentCurricularPlans());
+        }
 
-		if (studentCurricularPlans.isEmpty()) {
-			throw new NonExistingServiceException();
-		}
+        if (studentCurricularPlans.isEmpty()) {
+            throw new NonExistingServiceException();
+        }
 
-		return studentCurricularPlans;
-	}
+        return studentCurricularPlans;
+    }
 }

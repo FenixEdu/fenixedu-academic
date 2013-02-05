@@ -10,121 +10,121 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 
 public class CurricularCourseByExecutionSemesterBean implements Serializable, Comparable<CurricularCourseByExecutionSemesterBean> {
 
-	private CurricularCourse curricularCourse;
-	private ExecutionSemester executionSemester;
+    private CurricularCourse curricularCourse;
+    private ExecutionSemester executionSemester;
 
-	public CurricularCourseByExecutionSemesterBean() {
-	}
+    public CurricularCourseByExecutionSemesterBean() {
+    }
 
-	public CurricularCourseByExecutionSemesterBean(final CurricularCourse curricularCourse,
-			final ExecutionSemester executionSemester) {
-		setCurricularCourse(curricularCourse);
-		setExecutionSemester(executionSemester);
-	}
+    public CurricularCourseByExecutionSemesterBean(final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester) {
+        setCurricularCourse(curricularCourse);
+        setExecutionSemester(executionSemester);
+    }
 
-	public CurricularCourse getCurricularCourse() {
-		return curricularCourse;
-	}
+    public CurricularCourse getCurricularCourse() {
+        return curricularCourse;
+    }
 
-	public void setCurricularCourse(CurricularCourse curricularCourse) {
-		this.curricularCourse = curricularCourse;
-	}
+    public void setCurricularCourse(CurricularCourse curricularCourse) {
+        this.curricularCourse = curricularCourse;
+    }
 
-	public ExecutionSemester getExecutionSemester() {
-		return executionSemester;
-	}
+    public ExecutionSemester getExecutionSemester() {
+        return executionSemester;
+    }
 
-	public void setExecutionSemester(ExecutionSemester executionSemester) {
-		this.executionSemester = executionSemester;
-	}
+    public void setExecutionSemester(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return executionSemester.getExecutionYear();
-	}
+    public ExecutionYear getExecutionYear() {
+        return executionSemester.getExecutionYear();
+    }
 
-	public String getCurricularCourseName() {
-		return getCurricularCourse().getName(getExecutionSemester());
-	}
+    public String getCurricularCourseName() {
+        return getCurricularCourse().getName(getExecutionSemester());
+    }
 
-	public String getCurricularCourseNameEn() {
-		return getCurricularCourse().getNameEn(getExecutionSemester());
-	}
+    public String getCurricularCourseNameEn() {
+        return getCurricularCourse().getNameEn(getExecutionSemester());
+    }
 
-	public Double getCurricularCourseEcts() {
-		return getCurricularCourse().getEctsCredits(getExecutionSemester());
-	}
+    public Double getCurricularCourseEcts() {
+        return getCurricularCourse().getEctsCredits(getExecutionSemester());
+    }
 
-	public String getDegreeName() {
-		return getCurricularCourse().getDegree().getNameFor(getExecutionSemester()).getContent();
-	}
+    public String getDegreeName() {
+        return getCurricularCourse().getDegree().getNameFor(getExecutionSemester()).getContent();
+    }
 
-	public String getKey() {
-		return getCurricularCourse().getOID() + ":" + getExecutionSemester().getOID();
-	}
+    public String getKey() {
+        return getCurricularCourse().getOID() + ":" + getExecutionSemester().getOID();
+    }
 
-	public String getAcronym() {
-		return getCurricularCourse().getAcronym(getExecutionSemester());
-	}
+    public String getAcronym() {
+        return getCurricularCourse().getAcronym(getExecutionSemester());
+    }
 
-	public DepartmentUnit getDepartmentUnit() {
-		return getCurricularCourse().getDepartmentUnit(getExecutionSemester());
-	}
+    public DepartmentUnit getDepartmentUnit() {
+        return getCurricularCourse().getDepartmentUnit(getExecutionSemester());
+    }
 
-	public Double getWeight() {
-		return getCurricularCourse().getWeight(getExecutionSemester());
-	}
+    public Double getWeight() {
+        return getCurricularCourse().getWeight(getExecutionSemester());
+    }
 
-	public String getObjectives() {
-		return getCurricularCourse().getObjectives(getExecutionSemester());
-	}
+    public String getObjectives() {
+        return getCurricularCourse().getObjectives(getExecutionSemester());
+    }
 
-	public String getObjectivesEn() {
-		return getCurricularCourse().getObjectivesEn(getExecutionSemester());
-	}
+    public String getObjectivesEn() {
+        return getCurricularCourse().getObjectivesEn(getExecutionSemester());
+    }
 
-	public String getProgram() {
-		return getCurricularCourse().getProgram(getExecutionSemester());
-	}
+    public String getProgram() {
+        return getCurricularCourse().getProgram(getExecutionSemester());
+    }
 
-	public String getProgramEn() {
-		return getCurricularCourse().getProgramEn(getExecutionSemester());
-	}
+    public String getProgramEn() {
+        return getCurricularCourse().getProgramEn(getExecutionSemester());
+    }
 
-	public String getEvaluationMethod() {
-		return getCurricularCourse().getEvaluationMethod(getExecutionSemester());
-	}
+    public String getEvaluationMethod() {
+        return getCurricularCourse().getEvaluationMethod(getExecutionSemester());
+    }
 
-	public String getEvaluationMethodEn() {
-		return getCurricularCourse().getEvaluationMethodEn(getExecutionSemester());
-	}
+    public String getEvaluationMethodEn() {
+        return getCurricularCourse().getEvaluationMethodEn(getExecutionSemester());
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof CurricularCourseByExecutionSemesterBean) ? equals((CurricularCourseByExecutionSemesterBean) obj) : false;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof CurricularCourseByExecutionSemesterBean) ? equals((CurricularCourseByExecutionSemesterBean) obj) : false;
+    }
 
-	public boolean equals(CurricularCourseByExecutionSemesterBean obj) {
-		return getCurricularCourse() == obj.getCurricularCourse();
-	}
+    public boolean equals(CurricularCourseByExecutionSemesterBean obj) {
+        return getCurricularCourse() == obj.getCurricularCourse();
+    }
 
-	@Override
-	public int hashCode() {
-		return getCurricularCourse().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getCurricularCourse().hashCode();
+    }
 
-	@Override
-	public int compareTo(CurricularCourseByExecutionSemesterBean other) {
-		return other == null ? 1 : CurricularCourse.COMPARATOR_BY_NAME
-				.compare(getCurricularCourse(), other.getCurricularCourse());
-	}
+    @Override
+    public int compareTo(CurricularCourseByExecutionSemesterBean other) {
+        return other == null ? 1 : CurricularCourse.COMPARATOR_BY_NAME
+                .compare(getCurricularCourse(), other.getCurricularCourse());
+    }
 
-	static public CurricularCourseByExecutionSemesterBean buildFrom(final String key) {
-		if (key == null || key.isEmpty()) {
-			return null;
-		}
-		final String[] values = key.split(":");
-		final CurricularCourse course = (CurricularCourse) DomainObject.fromOID(Long.valueOf(values[0]).longValue());
-		final ExecutionSemester semester = (ExecutionSemester) DomainObject.fromOID(Long.valueOf(values[1]).longValue());
-		return new CurricularCourseByExecutionSemesterBean(course, semester);
-	}
+    static public CurricularCourseByExecutionSemesterBean buildFrom(final String key) {
+        if (key == null || key.isEmpty()) {
+            return null;
+        }
+        final String[] values = key.split(":");
+        final CurricularCourse course = (CurricularCourse) DomainObject.fromOID(Long.valueOf(values[0]).longValue());
+        final ExecutionSemester semester = (ExecutionSemester) DomainObject.fromOID(Long.valueOf(values[1]).longValue());
+        return new CurricularCourseByExecutionSemesterBean(course, semester);
+    }
 }

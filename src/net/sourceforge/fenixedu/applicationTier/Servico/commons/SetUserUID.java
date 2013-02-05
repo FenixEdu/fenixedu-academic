@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SetUserUID extends FenixService {
 
-	@Service
-	public static void run(final Person person) {
-		person.hasIstUsername();
-	}
+    @Service
+    public static void run(final Person person) {
+        person.hasIstUsername();
+    }
 
 }

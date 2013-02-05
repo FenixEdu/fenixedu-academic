@@ -25,127 +25,127 @@ import org.joda.time.YearMonthDay;
 
 public class RegistrationOperation extends CandidacyOperation {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	public RegistrationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
-		super(roleTypes, candidacy);
-	}
+    public RegistrationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
+        super(roleTypes, candidacy);
+    }
 
-	@Override
-	protected void internalExecute() {
-		final ExecutionDegree executionDegree = getExecutionDegree();
-		final Registration registration = createRegistration();
-		enrolStudentInCurricularCourses(executionDegree, registration);
-		associateShiftsFor(registration);
-		assignMeasurementTestShift(registration);
-	}
+    @Override
+    protected void internalExecute() {
+        final ExecutionDegree executionDegree = getExecutionDegree();
+        final Registration registration = createRegistration();
+        enrolStudentInCurricularCourses(executionDegree, registration);
+        associateShiftsFor(registration);
+        assignMeasurementTestShift(registration);
+    }
 
-	private void assignMeasurementTestShift(Registration registration) {
-		final MeasurementTest test =
-				MeasurementTest.readBy(getStudentCandidacy().getEntryPhase(), getExecutionYear(), registration.getCampus());
+    private void assignMeasurementTestShift(Registration registration) {
+        final MeasurementTest test =
+                MeasurementTest.readBy(getStudentCandidacy().getEntryPhase(), getExecutionYear(), registration.getCampus());
 
-		if (test != null) {
-			test.assignToRoom(registration);
-		}
-	}
+        if (test != null) {
+            test.assignToRoom(registration);
+        }
+    }
 
-	protected void associateShiftsFor(final Registration registration) {
+    protected void associateShiftsFor(final Registration registration) {
 
-		if (getExecutionYear().hasShiftDistribution()) {
-			for (final ShiftDistributionEntry shiftEntry : getExecutionDegree().getNextFreeShiftDistributions()) {
-				shiftEntry.setDistributed(Boolean.TRUE);
-				shiftEntry.getShift().addStudents(registration);
-				correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
-			}
-		}
-	}
+        if (getExecutionYear().hasShiftDistribution()) {
+            for (final ShiftDistributionEntry shiftEntry : getExecutionDegree().getNextFreeShiftDistributions()) {
+                shiftEntry.setDistributed(Boolean.TRUE);
+                shiftEntry.getShift().addStudents(registration);
+                correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
+            }
+        }
+    }
 
-	private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
+    private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
 
-		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-		final ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
-		final ExecutionCourse executionCourse = shift.getExecutionCourse();
+        final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+        final ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+        final ExecutionCourse executionCourse = shift.getExecutionCourse();
 
-		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-			final Enrolment enrolment = studentCurricularPlan.findEnrolmentFor(curricularCourse, semester);
-			if (enrolment != null) {
-				final Attends attends = enrolment.getAttendsFor(semester);
-				if (attends != null && !attends.isFor(executionCourse)) {
-					attends.setDisciplinaExecucao(executionCourse);
-				}
-				break;
-			}
-		}
-	}
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+            final Enrolment enrolment = studentCurricularPlan.findEnrolmentFor(curricularCourse, semester);
+            if (enrolment != null) {
+                final Attends attends = enrolment.getAttendsFor(semester);
+                if (attends != null && !attends.isFor(executionCourse)) {
+                    attends.setDisciplinaExecucao(executionCourse);
+                }
+                break;
+            }
+        }
+    }
 
-	private ExecutionDegree getExecutionDegree() {
-		return getStudentCandidacy().getExecutionDegree();
-	}
+    private ExecutionDegree getExecutionDegree() {
+        return getStudentCandidacy().getExecutionDegree();
+    }
 
-	protected ExecutionYear getExecutionYear() {
-		return getExecutionDegree().getExecutionYear();
-	}
+    protected ExecutionYear getExecutionYear() {
+        return getExecutionDegree().getExecutionYear();
+    }
 
-	protected void enrolStudentInCurricularCourses(final ExecutionDegree executionDegree, final Registration registration) {
-		final ExecutionSemester executionSemester = getExecutionPeriod();
-		final StudentCurricularPlan studentCurricularPlan =
-				StudentCurricularPlan.createBolonhaStudentCurricularPlan(registration, executionDegree.getDegreeCurricularPlan(),
-						new YearMonthDay(), executionSemester);
+    protected void enrolStudentInCurricularCourses(final ExecutionDegree executionDegree, final Registration registration) {
+        final ExecutionSemester executionSemester = getExecutionPeriod();
+        final StudentCurricularPlan studentCurricularPlan =
+                StudentCurricularPlan.createBolonhaStudentCurricularPlan(registration, executionDegree.getDegreeCurricularPlan(),
+                        new YearMonthDay(), executionSemester);
 
-		studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionSemester, getCurrentUsername());
-	}
+        studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionSemester, getCurrentUsername());
+    }
 
-	private String getCurrentUsername() {
-		if (AccessControl.getUserView() != null) {
-			return AccessControl.getPerson().getUsername();
-		}
-		return getStudentCandidacy().getPerson().getUsername();
-	}
+    private String getCurrentUsername() {
+        if (AccessControl.getUserView() != null) {
+            return AccessControl.getPerson().getUsername();
+        }
+        return getStudentCandidacy().getPerson().getUsername();
+    }
 
-	private ExecutionSemester getExecutionPeriod() {
-		return getExecutionYear().getExecutionSemesterFor(1);
-	}
+    private ExecutionSemester getExecutionPeriod() {
+        return getExecutionYear().getExecutionSemesterFor(1);
+    }
 
-	protected Registration createRegistration() {
-		final Registration registration = new Registration(getStudentCandidacy().getPerson(), getStudentCandidacy());
+    protected Registration createRegistration() {
+        final Registration registration = new Registration(getStudentCandidacy().getPerson(), getStudentCandidacy());
 
-		getStudentCandidacy().getPrecedentDegreeInformation().setRegistration(registration);
-		getStudentCandidacy().getPrecedentDegreeInformation().getPersonalIngressionData()
-				.setStudent(getStudentCandidacy().getPerson().getStudent());
+        getStudentCandidacy().getPrecedentDegreeInformation().setRegistration(registration);
+        getStudentCandidacy().getPrecedentDegreeInformation().getPersonalIngressionData()
+                .setStudent(getStudentCandidacy().getPerson().getStudent());
 
-		registration.getStudent().setPersonalDataAuthorization(getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
-		registration.getStudent().setStudentPersonalDataStudentsAssociationAuthorization(
-				getStudentCandidacy().getStudentPersonalDataStudentsAssociationAuthorization());
+        registration.getStudent().setPersonalDataAuthorization(getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
+        registration.getStudent().setStudentPersonalDataStudentsAssociationAuthorization(
+                getStudentCandidacy().getStudentPersonalDataStudentsAssociationAuthorization());
 
-		if (getStudentCandidacy().getApplyForResidence()) {
-			registration.getStudent().setResidenceCandidacyForCurrentExecutionYear(
-					getStudentCandidacy().getNotesAboutResidenceAppliance());
-		}
+        if (getStudentCandidacy().getApplyForResidence()) {
+            registration.getStudent().setResidenceCandidacyForCurrentExecutionYear(
+                    getStudentCandidacy().getNotesAboutResidenceAppliance());
+        }
 
-		return registration;
-	}
+        return registration;
+    }
 
-	private StudentCandidacy getStudentCandidacy() {
-		return ((StudentCandidacy) getCandidacy());
-	}
+    private StudentCandidacy getStudentCandidacy() {
+        return ((StudentCandidacy) getCandidacy());
+    }
 
-	@Override
-	public CandidacyOperationType getType() {
-		return CandidacyOperationType.REGISTRATION;
-	}
+    @Override
+    public CandidacyOperationType getType() {
+        return CandidacyOperationType.REGISTRATION;
+    }
 
-	@Override
-	public boolean isInput() {
-		return false;
-	}
+    @Override
+    public boolean isInput() {
+        return false;
+    }
 
-	@Override
-	public boolean isAuthorized(Person person) {
-		if (getCandidacy().getPerson().hasRole(RoleType.PERSON)) {
-			return person.hasRole(RoleType.EMPLOYEE);
-		} else {
-			return super.isAuthorized(person);
-		}
-	}
+    @Override
+    public boolean isAuthorized(Person person) {
+        if (getCandidacy().getPerson().hasRole(RoleType.PERSON)) {
+            return person.hasRole(RoleType.EMPLOYEE);
+        } else {
+            return super.isAuthorized(person);
+        }
+    }
 
 }

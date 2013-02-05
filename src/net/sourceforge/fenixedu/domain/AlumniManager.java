@@ -10,103 +10,103 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class AlumniManager {
 
-	public Alumni checkAlumniIdentity(final String documentIdNumber, final String email) {
-		Person person = getPerson(documentIdNumber);
+    public Alumni checkAlumniIdentity(final String documentIdNumber, final String email) {
+        Person person = getPerson(documentIdNumber);
 
-		if (person == null) {
-			throw new DomainException("error.alumni.person.does.not.exist", documentIdNumber);
-		}
+        if (person == null) {
+            throw new DomainException("error.alumni.person.does.not.exist", documentIdNumber);
+        }
 
-		if (!person.hasStudent()) {
-			throw new DomainException("error.alumni.person.does.not.have.student.info", documentIdNumber);
-		}
+        if (!person.hasStudent()) {
+            throw new DomainException("error.alumni.person.does.not.have.student.info", documentIdNumber);
+        }
 
-		checkRulesToRegisterAlumni(person.getStudent().getNumber(), documentIdNumber);
+        checkRulesToRegisterAlumni(person.getStudent().getNumber(), documentIdNumber);
 
-		final Alumni alumni = getAlumni(person.getStudent().getNumber());
+        final Alumni alumni = getAlumni(person.getStudent().getNumber());
 
-		if (alumni.isRegistered()) {
-			throw new DomainException("error.alumni.already.registered");
-		}
+        if (alumni.isRegistered()) {
+            throw new DomainException("error.alumni.already.registered");
+        }
 
-		alumni.addIfNotExistsEmail(email);
-		return alumni;
-	}
+        alumni.addIfNotExistsEmail(email);
+        return alumni;
+    }
 
-	private Person getPerson(String documentIdNumber) {
-		Collection<Person> personList = Person.readByDocumentIdNumber(documentIdNumber);
-		if (personList.size() > 0) {
-			return personList.iterator().next();
-		}
-		return null;
-	}
+    private Person getPerson(String documentIdNumber) {
+        Collection<Person> personList = Person.readByDocumentIdNumber(documentIdNumber);
+        if (personList.size() > 0) {
+            return personList.iterator().next();
+        }
+        return null;
+    }
 
-	public Alumni registerAlumni(final Student student) {
-		final Alumni alumni = new Alumni(student);
-		return alumni;
-	}
+    public Alumni registerAlumni(final Student student) {
+        final Alumni alumni = new Alumni(student);
+        return alumni;
+    }
 
-	public Alumni registerAlumni(final Integer studentNumber, final String documentIdNumber, final String email) {
+    public Alumni registerAlumni(final Integer studentNumber, final String documentIdNumber, final String email) {
 
-		checkRulesToRegisterAlumni(studentNumber, documentIdNumber);
+        checkRulesToRegisterAlumni(studentNumber, documentIdNumber);
 
-		final Alumni alumni = getAlumni(studentNumber);
+        final Alumni alumni = getAlumni(studentNumber);
 
-		if (alumni.isRegistered()) {
-			throw new DomainException("error.alumni.already.registered");
-		}
+        if (alumni.isRegistered()) {
+            throw new DomainException("error.alumni.already.registered");
+        }
 
-		alumni.setUrlRequestToken(UUID.randomUUID());
+        alumni.setUrlRequestToken(UUID.randomUUID());
 
-		alumni.addIfNotExistsEmail(email);
+        alumni.addIfNotExistsEmail(email);
 
-		return alumni;
+        return alumni;
 
-	}
+    }
 
-	private void checkRulesToRegisterAlumni(final Integer studentNumber, final String documentIdNumber) {
-		Student student = Student.readStudentByNumber(studentNumber);
-		if (student == null) {
+    private void checkRulesToRegisterAlumni(final Integer studentNumber, final String documentIdNumber) {
+        Student student = Student.readStudentByNumber(studentNumber);
+        if (student == null) {
 
-			if (Person.findPersonByDocumentID(documentIdNumber).isEmpty()) {
-				throw new DomainException("error.person.document.number");
-			} else {
-				throw new DomainException("error.person.no.student");
-			}
-		}
+            if (Person.findPersonByDocumentID(documentIdNumber).isEmpty()) {
+                throw new DomainException("error.person.document.number");
+            } else {
+                throw new DomainException("error.person.no.student");
+            }
+        }
 
-		if (!student.getPerson().getDocumentIdNumber().equals(documentIdNumber.trim())) {
-			throw new DomainException("error.document.number.student.number.mismatch");
-		}
+        if (!student.getPerson().getDocumentIdNumber().equals(documentIdNumber.trim())) {
+            throw new DomainException("error.document.number.student.number.mismatch");
+        }
 
-		if (!checkAlumni(student)) {
-			if (student.hasAnyRegistrations()) {
+        if (!checkAlumni(student)) {
+            if (student.hasAnyRegistrations()) {
 
-				for (Registration registration : student.getRegistrations()) {
-					if (registration.isConcluded()) {
-						return;
-					}
-				}
+                for (Registration registration : student.getRegistrations()) {
+                    if (registration.isConcluded()) {
+                        return;
+                    }
+                }
 
-				throw new DomainException("error.no.concluded.registrations");
-			} else {
-				throw new DomainException("error.no.registrations");
-			}
-		}
-	}
+                throw new DomainException("error.no.concluded.registrations");
+            } else {
+                throw new DomainException("error.no.registrations");
+            }
+        }
+    }
 
-	private boolean checkAlumni(Student alumniStudent) {
+    private boolean checkAlumni(Student alumniStudent) {
 
-		if (alumniStudent.hasAlumni() || alumniStudent.getPerson().hasRole(RoleType.ALUMNI)) {
-			return true;
-		}
+        if (alumniStudent.hasAlumni() || alumniStudent.getPerson().hasRole(RoleType.ALUMNI)) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private Alumni getAlumni(final Integer studentNumber) {
-		final Student student = Student.readStudentByNumber(studentNumber);
-		return student.hasAlumni() ? student.getAlumni() : new Alumni(student);
-	}
+    private Alumni getAlumni(final Integer studentNumber) {
+        final Student student = Student.readStudentByNumber(studentNumber);
+        return student.hasAlumni() ? student.getAlumni() : new Alumni(student);
+    }
 
 }

@@ -15,14 +15,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "coordinator", path = "/registration", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "view-registration-curriculum", path = "view-registration-curriculum"),
-		@Forward(name = "chooseCycleForViewRegistrationCurriculum", path = "chooseCycleForViewRegistrationCurriculum") })
+        @Forward(name = "chooseCycleForViewRegistrationCurriculum", path = "chooseCycleForViewRegistrationCurriculum") })
 public class CoordinatorRegistrationDA extends RegistrationDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
 }

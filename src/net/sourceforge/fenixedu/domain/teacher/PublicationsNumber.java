@@ -17,47 +17,47 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class PublicationsNumber extends PublicationsNumber_Base {
 
-	public PublicationsNumber() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public PublicationsNumber() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public PublicationsNumber(Teacher teacher, InfoPublicationsNumber infoPublicationsNumber) {
-		this();
-		if (teacher == null) {
-			throw new DomainException("The teacher should not be null!");
-		}
+    public PublicationsNumber(Teacher teacher, InfoPublicationsNumber infoPublicationsNumber) {
+        this();
+        if (teacher == null) {
+            throw new DomainException("The teacher should not be null!");
+        }
 
-		setTeacher(teacher);
-		setBasicProperties(infoPublicationsNumber);
+        setTeacher(teacher);
+        setBasicProperties(infoPublicationsNumber);
 
-	}
+    }
 
-	public void edit(InfoPublicationsNumber infoPublicationsNumber) {
-		setBasicProperties(infoPublicationsNumber);
+    public void edit(InfoPublicationsNumber infoPublicationsNumber) {
+        setBasicProperties(infoPublicationsNumber);
 
-	}
+    }
 
-	private void setBasicProperties(InfoPublicationsNumber infoPublicationsNumber) {
-		this.setNational(infoPublicationsNumber.getNational());
-		this.setInternational(infoPublicationsNumber.getInternational());
-		this.setPublicationType(infoPublicationsNumber.getPublicationType());
+    private void setBasicProperties(InfoPublicationsNumber infoPublicationsNumber) {
+        this.setNational(infoPublicationsNumber.getNational());
+        this.setInternational(infoPublicationsNumber.getInternational());
+        this.setPublicationType(infoPublicationsNumber.getPublicationType());
 
-	}
+    }
 
-	@Deprecated
-	public java.util.Date getLastModificationDate() {
-		org.joda.time.DateTime dt = getLastModificationDateDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public java.util.Date getLastModificationDate() {
+        org.joda.time.DateTime dt = getLastModificationDateDateTime();
+        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public void setLastModificationDate(java.util.Date date) {
-		if (date == null) {
-			setLastModificationDateDateTime(null);
-		} else {
-			setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
-		}
-	}
+    @Deprecated
+    public void setLastModificationDate(java.util.Date date) {
+        if (date == null) {
+            setLastModificationDateDateTime(null);
+        } else {
+            setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+        }
+    }
 
 }

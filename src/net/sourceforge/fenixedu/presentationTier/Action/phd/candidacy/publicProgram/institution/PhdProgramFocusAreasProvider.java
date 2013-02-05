@@ -15,43 +15,43 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class PhdProgramFocusAreasProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
+    @Override
+    public Object provide(Object source, Object current) {
 
-		if (source instanceof PhdProgramCandidacyProcessBean) {
-			PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
+        if (source instanceof PhdProgramCandidacyProcessBean) {
+            PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
 
-			Set<PhdProgramFocusArea> focusAreaSet = new HashSet<PhdProgramFocusArea>();
-			InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) bean.getPhdCandidacyPeriod();
+            Set<PhdProgramFocusArea> focusAreaSet = new HashSet<PhdProgramFocusArea>();
+            InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) bean.getPhdCandidacyPeriod();
 
-			for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdPrograms()) {
-				focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreas());
-			}
+            for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdPrograms()) {
+                focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreas());
+            }
 
-			List<PhdProgramFocusArea> focusAreaList = new ArrayList<PhdProgramFocusArea>();
-			focusAreaList.addAll(focusAreaSet);
+            List<PhdProgramFocusArea> focusAreaList = new ArrayList<PhdProgramFocusArea>();
+            focusAreaList.addAll(focusAreaSet);
 
-			return focusAreaList;
+            return focusAreaList;
 
-		} else if (source instanceof PhdIndividualProgramProcessBean) {
-			PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
-			Set<PhdProgramFocusArea> focusAreaSet = new HashSet<PhdProgramFocusArea>();
+        } else if (source instanceof PhdIndividualProgramProcessBean) {
+            PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
+            Set<PhdProgramFocusArea> focusAreaSet = new HashSet<PhdProgramFocusArea>();
 
-			InstitutionPhdCandidacyPeriod phdCandidacyPeriod =
-					(InstitutionPhdCandidacyPeriod) bean.getIndividualProgramProcess().getCandidacyProcess()
-							.getPublicPhdCandidacyPeriod();
+            InstitutionPhdCandidacyPeriod phdCandidacyPeriod =
+                    (InstitutionPhdCandidacyPeriod) bean.getIndividualProgramProcess().getCandidacyProcess()
+                            .getPublicPhdCandidacyPeriod();
 
-			for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdPrograms()) {
-				focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreas());
-			}
+            for (PhdProgram phdProgram : phdCandidacyPeriod.getPhdPrograms()) {
+                focusAreaSet.addAll(phdProgram.getPhdProgramFocusAreas());
+            }
 
-			List<PhdProgramFocusArea> focusAreaList = new ArrayList<PhdProgramFocusArea>();
-			focusAreaList.addAll(focusAreaSet);
+            List<PhdProgramFocusArea> focusAreaList = new ArrayList<PhdProgramFocusArea>();
+            focusAreaList.addAll(focusAreaSet);
 
-			return focusAreaList;
-		}
+            return focusAreaList;
+        }
 
-		return Collections.EMPTY_LIST;
-	}
+        return Collections.EMPTY_LIST;
+    }
 
 }

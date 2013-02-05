@@ -23,49 +23,49 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadStudentTest extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
-			throws FenixServiceException {
-		final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-		return run(registration, distributedTest, log, path);
-	}
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
+            throws FenixServiceException {
+        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        return run(registration, distributedTest, log, path);
+    }
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log,
-			String path) throws FenixServiceException {
-		if (distributedTest == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
-		Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(registration, distributedTest);
-		for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
-			ParseSubQuestion parse = new ParseSubQuestion();
-			try {
-				parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
-			} catch (Exception e) {
-				throw new FenixServiceException(e);
-			}
-			if (studentTestQuestion.getOptionShuffle() == null && studentTestQuestion.getSubQuestionByItem().getShuffle() != null) {
-				studentTestQuestion.setOptionShuffle(studentTestQuestion.getSubQuestionByItem().getShuffleString());
-			}
-			studentTestQuestionList.add(studentTestQuestion);
-		}
-		if (log.booleanValue()) {
-			StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, "Ler Ficha de Trabalho");
-		}
-		return studentTestQuestionList;
-	}
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log,
+            String path) throws FenixServiceException {
+        if (distributedTest == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+        List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
+        Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(registration, distributedTest);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
+            ParseSubQuestion parse = new ParseSubQuestion();
+            try {
+                parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+            } catch (Exception e) {
+                throw new FenixServiceException(e);
+            }
+            if (studentTestQuestion.getOptionShuffle() == null && studentTestQuestion.getSubQuestionByItem().getShuffle() != null) {
+                studentTestQuestion.setOptionShuffle(studentTestQuestion.getSubQuestionByItem().getShuffleString());
+            }
+            studentTestQuestionList.add(studentTestQuestion);
+        }
+        if (log.booleanValue()) {
+            StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, "Ler Ficha de Trabalho");
+        }
+        return studentTestQuestionList;
+    }
 
-	private static Set<StudentTestQuestion> findStudentTestQuestions(Registration registration, DistributedTest distributedTest)
-			throws InvalidArgumentsServiceException {
-		final Set<StudentTestQuestion> studentTestQuestions =
-				StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
-		if (studentTestQuestions.size() == 0) {
-			throw new InvalidArgumentsServiceException();
-		}
-		return studentTestQuestions;
-	}
+    private static Set<StudentTestQuestion> findStudentTestQuestions(Registration registration, DistributedTest distributedTest)
+            throws InvalidArgumentsServiceException {
+        final Set<StudentTestQuestion> studentTestQuestions =
+                StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
+        if (studentTestQuestions.size() == 0) {
+            throw new InvalidArgumentsServiceException();
+        }
+        return studentTestQuestions;
+    }
 
 }

@@ -10,58 +10,58 @@ import org.joda.time.DateTime;
 
 public interface IEnrolment extends ICurriculumEntry {
 
-	static final public Comparator<IEnrolment> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<IEnrolment>() {
-		@Override
-		public int compare(IEnrolment o1, IEnrolment o2) {
-			if (o1.getApprovementDate() == null && o2.getApprovementDate() == null) {
-				return 0;
-			}
-			if (o1.getApprovementDate() == null) {
-				return -1;
-			}
-			if (o2.getApprovementDate() == null) {
-				return 1;
-			}
-			return o1.getApprovementDate().compareTo(o2.getApprovementDate());
-		}
-	};
+    static final public Comparator<IEnrolment> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<IEnrolment>() {
+        @Override
+        public int compare(IEnrolment o1, IEnrolment o2) {
+            if (o1.getApprovementDate() == null && o2.getApprovementDate() == null) {
+                return 0;
+            }
+            if (o1.getApprovementDate() == null) {
+                return -1;
+            }
+            if (o2.getApprovementDate() == null) {
+                return 1;
+            }
+            return o1.getApprovementDate().compareTo(o2.getApprovementDate());
+        }
+    };
 
-	@Override
-	Integer getIdInternal();
+    @Override
+    Integer getIdInternal();
 
-	Integer getFinalGrade();
+    Integer getFinalGrade();
 
-	String getDescription();
+    String getDescription();
 
-	Double getEctsCredits();
+    Double getEctsCredits();
 
-	Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate);
+    Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate);
 
-	boolean isAnual();
+    boolean isAnual();
 
-	String getEnrolmentTypeName();
+    String getEnrolmentTypeName();
 
-	Double getWeigth();
+    Double getWeigth();
 
-	Unit getAcademicUnit();
+    Unit getAcademicUnit();
 
-	boolean isApproved();
+    boolean isApproved();
 
-	boolean isEnroled();
+    boolean isEnroled();
 
-	boolean isExternalEnrolment();
+    boolean isExternalEnrolment();
 
-	boolean isEnrolment();
+    boolean isEnrolment();
 
-	/**
-	 * Obtains the last valid thesis for this enrolment. The returned thesis may
-	 * not be evaluated. You can used {@link Thesis#isFinalThesis()} and {@link Thesis#isFinalAndApprovedThesis()} to distinguish
-	 * between a thesis
-	 * currently in evaluation and a final thesis.
-	 * 
-	 * @return the last valid thesis for this enrolment
-	 */
-	Thesis getThesis();
+    /**
+     * Obtains the last valid thesis for this enrolment. The returned thesis may
+     * not be evaluated. You can used {@link Thesis#isFinalThesis()} and {@link Thesis#isFinalAndApprovedThesis()} to distinguish
+     * between a thesis
+     * currently in evaluation and a final thesis.
+     * 
+     * @return the last valid thesis for this enrolment
+     */
+    Thesis getThesis();
 
-	void delete();
+    void delete();
 }

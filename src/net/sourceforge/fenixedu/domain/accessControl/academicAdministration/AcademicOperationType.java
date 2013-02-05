@@ -6,142 +6,142 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum AcademicOperationType implements IPresentableEnum {
-	MANAGE_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION),
+    MANAGE_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION),
 
-	/*
-	 * Student stuff
-	 */
+    /*
+     * Student stuff
+     */
 
-	EDIT_STUDENT_PERSONAL_DATA(true, true, Scope.OFFICE),
+    EDIT_STUDENT_PERSONAL_DATA(true, true, Scope.OFFICE),
 
-	STUDENT_ENROLMENTS(true, true, Scope.OFFICE),
+    STUDENT_ENROLMENTS(true, true, Scope.OFFICE),
 
-	MANAGE_REGISTRATIONS(true, true, Scope.OFFICE),
+    MANAGE_REGISTRATIONS(true, true, Scope.OFFICE),
 
-	MANAGE_STATUTES(false, false, Scope.OFFICE),
+    MANAGE_STATUTES(false, false, Scope.OFFICE),
 
-	MANAGE_CONCLUSION(true, true, Scope.OFFICE),
+    MANAGE_CONCLUSION(true, true, Scope.OFFICE),
 
-	UPDATE_REGISTRATION_AFTER_CONCLUSION(true, true, Scope.OFFICE),
+    UPDATE_REGISTRATION_AFTER_CONCLUSION(true, true, Scope.OFFICE),
 
-	REPEAT_CONCLUSION_PROCESS(true, true, Scope.OFFICE),
+    REPEAT_CONCLUSION_PROCESS(true, true, Scope.OFFICE),
 
-	ENROLMENT_WITHOUT_RULES(true, true, Scope.OFFICE),
+    ENROLMENT_WITHOUT_RULES(true, true, Scope.OFFICE),
 
-	MOVE_CURRICULUM_LINES_WITHOUT_RULES(true, true, Scope.OFFICE),
+    MOVE_CURRICULUM_LINES_WITHOUT_RULES(true, true, Scope.OFFICE),
 
-	REPORT_STUDENTS_UTL_CANDIDATES(true, true, Scope.ADMINISTRATION),
+    REPORT_STUDENTS_UTL_CANDIDATES(true, true, Scope.ADMINISTRATION),
 
-	MANAGE_REGISTERED_DEGREE_CANDIDACIES(true, true, Scope.ADMINISTRATION),
+    MANAGE_REGISTERED_DEGREE_CANDIDACIES(true, true, Scope.ADMINISTRATION),
 
-	/*
-	 * Mark Sheets
-	 */
+    /*
+     * Mark Sheets
+     */
 
-	MANAGE_MARKSHEETS(true, true, Scope.ADMINISTRATION),
+    MANAGE_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
-	RECTIFICATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
+    RECTIFICATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
-	DISSERTATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
+    DISSERTATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
-	REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION(true, true, Scope.OFFICE),
+    REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION(true, true, Scope.OFFICE),
 
-	CREATE_REGISTRATION(true, true, Scope.OFFICE),
+    CREATE_REGISTRATION(true, true, Scope.OFFICE),
 
-	STUDENT_LISTINGS(true, true, Scope.ADMINISTRATION),
+    STUDENT_LISTINGS(true, true, Scope.ADMINISTRATION),
 
-	SERVICE_REQUESTS(true, true, Scope.OFFICE),
+    SERVICE_REQUESTS(true, true, Scope.OFFICE),
 
-	SERVICE_REQUESTS_RECTORAL_SENDING(true, true, Scope.OFFICE),
+    SERVICE_REQUESTS_RECTORAL_SENDING(true, true, Scope.OFFICE),
 
-	MANAGE_EXECUTION_COURSES(true, true, Scope.ADMINISTRATION),
+    MANAGE_EXECUTION_COURSES(true, true, Scope.ADMINISTRATION),
 
-	MANAGE_DEGREE_CURRICULAR_PLANS(true, true, Scope.ADMINISTRATION),
+    MANAGE_DEGREE_CURRICULAR_PLANS(true, true, Scope.ADMINISTRATION),
 
-	MANAGE_EVENT_REPORTS(true, false, Scope.ADMINISTRATION),
+    MANAGE_EVENT_REPORTS(true, false, Scope.ADMINISTRATION),
 
-	// Student Section
+    // Student Section
 
-	MANAGE_STUDENT_PAYMENTS(true, false, Scope.OFFICE),
+    MANAGE_STUDENT_PAYMENTS(true, false, Scope.OFFICE),
 
-	MANAGE_ACCOUNTING_EVENTS(true, true, Scope.OFFICE),
+    MANAGE_ACCOUNTING_EVENTS(true, true, Scope.OFFICE),
 
-	/* End of Payments */
+    /* End of Payments */
 
-	MANAGE_PRICES(true, false, Scope.ADMINISTRATION),
+    MANAGE_PRICES(true, false, Scope.ADMINISTRATION),
 
-	MANAGE_EXTRA_CURRICULAR_ACTIVITIES(false, false, Scope.ADMINISTRATION),
+    MANAGE_EXTRA_CURRICULAR_ACTIVITIES(false, false, Scope.ADMINISTRATION),
 
-	MANAGE_EXTERNAL_UNITS(false, false, Scope.ADMINISTRATION),
+    MANAGE_EXTERNAL_UNITS(false, false, Scope.ADMINISTRATION),
 
-	/* Candidacies Management */
+    /* Candidacies Management */
 
-	MANAGE_INDIVIDUAL_CANDIDACIES(true, true, Scope.OFFICE),
+    MANAGE_INDIVIDUAL_CANDIDACIES(true, true, Scope.OFFICE),
 
-	MANAGE_CANDIDACY_PROCESSES(true, true, Scope.OFFICE),
+    MANAGE_CANDIDACY_PROCESSES(true, true, Scope.OFFICE),
 
-	/* End of Candidacies Management */
+    /* End of Candidacies Management */
 
-	VIEW_FULL_STUDENT_CURRICULUM(true, true, Scope.OFFICE),
+    VIEW_FULL_STUDENT_CURRICULUM(true, true, Scope.OFFICE),
 
-	MANAGE_CONTRIBUTORS(true, true, Scope.ADMINISTRATION),
+    MANAGE_CONTRIBUTORS(true, true, Scope.ADMINISTRATION),
 
-	MANAGE_DOCUMENTS(true, true, Scope.OFFICE),
+    MANAGE_DOCUMENTS(true, true, Scope.OFFICE),
 
-	/* Phd Management */
+    /* Phd Management */
 
-	VIEW_PHD_CANDIDACY_ALERTS(true, true, Scope.OFFICE),
+    VIEW_PHD_CANDIDACY_ALERTS(true, true, Scope.OFFICE),
 
-	VIEW_PHD_PUBLIC_PRESENTATION_ALERTS(true, true, Scope.OFFICE),
+    VIEW_PHD_PUBLIC_PRESENTATION_ALERTS(true, true, Scope.OFFICE),
 
-	VIEW_PHD_THESIS_ALERTS(true, true, Scope.OFFICE),
+    VIEW_PHD_THESIS_ALERTS(true, true, Scope.OFFICE),
 
-	MANAGE_PHD_ENROLMENT_PERIODS(true, true, Scope.OFFICE),
+    MANAGE_PHD_ENROLMENT_PERIODS(true, true, Scope.OFFICE),
 
-	MANAGE_PHD_PROCESSES(true, true, Scope.OFFICE),
+    MANAGE_PHD_PROCESSES(true, true, Scope.OFFICE),
 
-	MANAGE_PHD_PROCESS_STATE(true, true, Scope.OFFICE);
+    MANAGE_PHD_PROCESS_STATE(true, true, Scope.OFFICE);
 
-	public static enum Scope {
-		OFFICE, ADMINISTRATION;
-	}
+    public static enum Scope {
+        OFFICE, ADMINISTRATION;
+    }
 
-	private boolean allowOffices;
+    private boolean allowOffices;
 
-	private boolean allowPrograms;
+    private boolean allowPrograms;
 
-	private Scope scope;
+    private Scope scope;
 
-	static public Comparator<AcademicOperationType> COMPARATOR_BY_LOCALIZED_NAME = new Comparator<AcademicOperationType>() {
-		@Override
-		public int compare(final AcademicOperationType p1, final AcademicOperationType p2) {
-			String operationName1 = p1.getLocalizedName();
-			String operationName2 = p2.getLocalizedName();
-			int res = operationName1.compareTo(operationName2);
-			return res;
-		}
-	};
+    static public Comparator<AcademicOperationType> COMPARATOR_BY_LOCALIZED_NAME = new Comparator<AcademicOperationType>() {
+        @Override
+        public int compare(final AcademicOperationType p1, final AcademicOperationType p2) {
+            String operationName1 = p1.getLocalizedName();
+            String operationName2 = p2.getLocalizedName();
+            int res = operationName1.compareTo(operationName2);
+            return res;
+        }
+    };
 
-	private AcademicOperationType(boolean allowOffices, boolean allowPrograms, Scope scope) {
-		this.allowOffices = allowOffices;
-		this.allowPrograms = allowPrograms;
-		this.scope = scope;
-	}
+    private AcademicOperationType(boolean allowOffices, boolean allowPrograms, Scope scope) {
+        this.allowOffices = allowOffices;
+        this.allowPrograms = allowPrograms;
+        this.scope = scope;
+    }
 
-	public boolean isOfficeAllowedAsTarget() {
-		return allowOffices;
-	}
+    public boolean isOfficeAllowedAsTarget() {
+        return allowOffices;
+    }
 
-	public boolean isProgramAllowedAsTarget() {
-		return allowPrograms;
-	}
+    public boolean isProgramAllowedAsTarget() {
+        return allowPrograms;
+    }
 
-	public boolean isOfScope(Scope scope) {
-		return this.scope.equals(scope);
-	}
+    public boolean isOfScope(Scope scope) {
+        return this.scope.equals(scope);
+    }
 
-	@Override
-	public String getLocalizedName() {
-		return BundleUtil.getEnumName(this);
-	}
+    @Override
+    public String getLocalizedName() {
+        return BundleUtil.getEnumName(this);
+    }
 }

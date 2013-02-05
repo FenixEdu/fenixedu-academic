@@ -4,6 +4,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public interface HasExecutionYear {
 
-	public ExecutionYear getExecutionYear();
+    public ExecutionYear getExecutionYear();
 
 }

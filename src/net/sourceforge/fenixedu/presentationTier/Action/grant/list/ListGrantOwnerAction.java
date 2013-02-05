@@ -32,76 +32,70 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * @author Pica
  * @author Barbosa
  */
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/listGrantOwner",
-		input = "/listGrantOwner.do?page=0&method=listGrantOwners",
-		attribute = "listGrantOwnerForm",
-		formBean = "listGrantOwnerForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "facultyAdmOffice", path = "/listGrantOwner", input = "/listGrantOwner.do?page=0&method=listGrantOwners",
+        attribute = "listGrantOwnerForm", formBean = "listGrantOwnerForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "list-grant-owner", path = "/facultyAdmOffice/grant/list/listGrantOwner.jsp", tileProperties = @Tile(
-				title = "private.teachingstaffandresearcher.listings.bybaggins")),
-		@Forward(name = "show-grant-owner", path = "/facultyAdmOffice/grant/list/showGrantOwner.jsp", tileProperties = @Tile(
-				title = "private.teachingstaffandresearcher.listings.bybaggins")) })
+        @Forward(name = "list-grant-owner", path = "/facultyAdmOffice/grant/list/listGrantOwner.jsp", tileProperties = @Tile(
+                title = "private.teachingstaffandresearcher.listings.bybaggins")),
+        @Forward(name = "show-grant-owner", path = "/facultyAdmOffice/grant/list/showGrantOwner.jsp", tileProperties = @Tile(
+                title = "private.teachingstaffandresearcher.listings.bybaggins")) })
 public class ListGrantOwnerAction extends FenixDispatchAction {
 
-	private static final String ORDER_PARAMETER = "orderBy";
-	private static final String DEFAULT_ORDER_GETTER = "grantOwnerNumber";
-	private static final String ORDER_MARKER = "=";
+    private static final String ORDER_PARAMETER = "orderBy";
+    private static final String DEFAULT_ORDER_GETTER = "grantOwnerNumber";
+    private static final String ORDER_MARKER = "=";
 
-	public ActionForward listGrantOwners(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward listGrantOwners(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final String orderParameter = request.getParameter(ORDER_PARAMETER);
-		final String orderGetter =
-				StringUtils.isEmpty(orderParameter) ? DEFAULT_ORDER_GETTER : orderParameter.substring(0,
-						orderParameter.indexOf(ORDER_MARKER));
+        final String orderParameter = request.getParameter(ORDER_PARAMETER);
+        final String orderGetter =
+                StringUtils.isEmpty(orderParameter) ? DEFAULT_ORDER_GETTER : orderParameter.substring(0,
+                        orderParameter.indexOf(ORDER_MARKER));
 
-		final List<InfoListGrantOwnerByOrder> grantOwners = getInfoListGrantOwnerByOrder();
-		Collections.sort(grantOwners, new BeanComparator(orderGetter));
-		request.setAttribute("listGrantOwners", grantOwners);
+        final List<InfoListGrantOwnerByOrder> grantOwners = getInfoListGrantOwnerByOrder();
+        Collections.sort(grantOwners, new BeanComparator(orderGetter));
+        request.setAttribute("listGrantOwners", grantOwners);
 
-		final CollectionPager<InfoListGrantOwnerByOrder> pager = new CollectionPager<InfoListGrantOwnerByOrder>(grantOwners, 100);
-		request.setAttribute("collectionPager", pager);
-		request.setAttribute("numberOfPages", Integer.valueOf(pager.getNumberOfPages()));
+        final CollectionPager<InfoListGrantOwnerByOrder> pager = new CollectionPager<InfoListGrantOwnerByOrder>(grantOwners, 100);
+        request.setAttribute("collectionPager", pager);
+        request.setAttribute("numberOfPages", Integer.valueOf(pager.getNumberOfPages()));
 
-		final String pageParameter = request.getParameter("pageNumber");
-		final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
-		request.setAttribute("pageNumber", page);
-		request.setAttribute("resultPage", pager.getPage(page));
+        final String pageParameter = request.getParameter("pageNumber");
+        final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
+        request.setAttribute("pageNumber", page);
+        request.setAttribute("resultPage", pager.getPage(page));
 
-		return mapping.findForward("list-grant-owner");
-	}
+        return mapping.findForward("list-grant-owner");
+    }
 
-	private List<InfoListGrantOwnerByOrder> getInfoListGrantOwnerByOrder() {
-		final List<InfoListGrantOwnerByOrder> result = new ArrayList<InfoListGrantOwnerByOrder>();
+    private List<InfoListGrantOwnerByOrder> getInfoListGrantOwnerByOrder() {
+        final List<InfoListGrantOwnerByOrder> result = new ArrayList<InfoListGrantOwnerByOrder>();
 
-		for (final GrantOwner grantOwner : rootDomainObject.getGrantOwnersSet()) {
-			if (grantOwner.hasPerson()) {
-				result.add(new InfoListGrantOwnerByOrder(grantOwner));
-			}
-		}
+        for (final GrantOwner grantOwner : rootDomainObject.getGrantOwnersSet()) {
+            if (grantOwner.hasPerson()) {
+                result.add(new InfoListGrantOwnerByOrder(grantOwner));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Integer oid = Integer.valueOf(request.getParameter("grantOwnerId"));
+    public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Integer oid = Integer.valueOf(request.getParameter("grantOwnerId"));
 
-		if (oid != null) {
-			final InfoListGrantOwnerComplete info = new InfoListGrantOwnerComplete(rootDomainObject.readGrantOwnerByOID(oid));
-			if (info != null) {
-				request.setAttribute("infoGrantOwner", info.getInfoGrantOwner());
-				request.setAttribute("infoQualificationList", info.getInfoQualifications());
-				request.setAttribute("infoListGrantContractList", info.getInfoListGrantContracts());
-			}
-		} else {
-			return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
-		}
+        if (oid != null) {
+            final InfoListGrantOwnerComplete info = new InfoListGrantOwnerComplete(rootDomainObject.readGrantOwnerByOID(oid));
+            if (info != null) {
+                request.setAttribute("infoGrantOwner", info.getInfoGrantOwner());
+                request.setAttribute("infoQualificationList", info.getInfoQualifications());
+                request.setAttribute("infoListGrantContractList", info.getInfoListGrantContracts());
+            }
+        } else {
+            return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
+        }
 
-		return mapping.findForward("show-grant-owner");
-	}
+        return mapping.findForward("show-grant-owner");
+    }
 }

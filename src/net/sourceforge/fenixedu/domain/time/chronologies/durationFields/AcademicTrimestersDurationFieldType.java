@@ -8,25 +8,25 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicTrimestersDurationFieldType extends DurationFieldType {
 
-	public static final AcademicTrimestersDurationFieldType ACADEMIC_TRIMESTERS_TYPE;
-	static {
-		ACADEMIC_TRIMESTERS_TYPE = new AcademicTrimestersDurationFieldType("academicTrimesters");
-	}
+    public static final AcademicTrimestersDurationFieldType ACADEMIC_TRIMESTERS_TYPE;
+    static {
+        ACADEMIC_TRIMESTERS_TYPE = new AcademicTrimestersDurationFieldType("academicTrimesters");
+    }
 
-	protected AcademicTrimestersDurationFieldType(String name) {
-		super(name);
-	}
+    protected AcademicTrimestersDurationFieldType(String name) {
+        super(name);
+    }
 
-	public static DurationFieldType academicTrimesters() {
-		return ACADEMIC_TRIMESTERS_TYPE;
-	}
+    public static DurationFieldType academicTrimesters() {
+        return ACADEMIC_TRIMESTERS_TYPE;
+    }
 
-	@Override
-	public DurationField getField(Chronology chronology) {
-		if (chronology instanceof AcademicChronology) {
-			return ((AcademicChronology) chronology).academicTrimesters();
-		}
-		return null;
-	}
+    @Override
+    public DurationField getField(Chronology chronology) {
+        if (chronology instanceof AcademicChronology) {
+            return ((AcademicChronology) chronology).academicTrimesters();
+        }
+        return null;
+    }
 
 }

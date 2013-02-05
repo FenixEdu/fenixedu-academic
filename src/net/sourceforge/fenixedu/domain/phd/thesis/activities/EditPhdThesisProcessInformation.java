@@ -6,15 +6,15 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 
 public class EditPhdThesisProcessInformation extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-		// no precondition to check
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+        // no precondition to check
 
-	}
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-		return process.edit(userView, (PhdThesisProcessBean) object);
-	}
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+        return process.edit(userView, (PhdThesisProcessBean) object);
+    }
 
 }

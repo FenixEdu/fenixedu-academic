@@ -24,25 +24,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateLesson extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
-			InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay beginDate, YearMonthDay endDate)
-			throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
+            InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay beginDate, YearMonthDay endDate)
+            throws FenixServiceException {
 
-		final ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
-						.getIdInternal());
+        final ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                        .getIdInternal());
 
-		final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 
-		AllocatableSpace room = null;
-		if (infoRoomOccupation != null) {
-			room =
-					infoRoomOccupation.getInfoRoom() != null ? AllocatableSpace
-							.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;
-		}
+        AllocatableSpace room = null;
+        if (infoRoomOccupation != null) {
+            room =
+                    infoRoomOccupation.getInfoRoom() != null ? AllocatableSpace
+                            .findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;
+        }
 
-		new Lesson(weekDay, begin, end, shift, frequency, executionSemester, beginDate, endDate, room);
-	}
+        new Lesson(weekDay, begin, end, shift, frequency, executionSemester, beginDate, endDate, room);
+    }
 }

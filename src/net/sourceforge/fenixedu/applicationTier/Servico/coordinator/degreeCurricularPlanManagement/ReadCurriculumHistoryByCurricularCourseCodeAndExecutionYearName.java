@@ -30,90 +30,90 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends FenixService {
 
-	@Checked("RolePredicates.COORDINATOR_PREDICATE")
-	@Service
-	public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
-			throws FenixServiceException {
-		InfoCurriculum infoCurriculum = null;
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
+            throws FenixServiceException {
+        InfoCurriculum infoCurriculum = null;
 
-		if (curricularCourseCode == null) {
-			throw new FenixServiceException("nullCurricularCourse");
-		}
-		if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
-			throw new FenixServiceException("nullExecutionYearName");
-		}
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-		if (curricularCourse == null) {
-			throw new NonExistingServiceException("noCurricularCourse");
-		}
+        if (curricularCourseCode == null) {
+            throw new FenixServiceException("nullCurricularCourse");
+        }
+        if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
+            throw new FenixServiceException("nullExecutionYearName");
+        }
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException("noCurricularCourse");
+        }
 
-		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(stringExecutionYear);
-		if (executionYear == null) {
-			throw new NonExistingServiceException("noExecutionYear");
-		}
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(stringExecutionYear);
+        if (executionYear == null) {
+            throw new NonExistingServiceException("noExecutionYear");
+        }
 
-		Curriculum curriculumExecutionYear = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
-		if (curriculumExecutionYear != null) {
-			List allCurricularCourseScopes = new ArrayList();
-			List allExecutionCourses = new ArrayList();
-			List executionPeriods = executionYear.getExecutionPeriods();
-			Iterator iterExecutionPeriods = executionPeriods.iterator();
-			while (iterExecutionPeriods.hasNext()) {
-				ExecutionSemester executionSemester = (ExecutionSemester) iterExecutionPeriods.next();
-				Set<CurricularCourseScope> curricularCourseScopes =
-						curricularCourse.findCurricularCourseScopesIntersectingPeriod(executionSemester.getBeginDate(),
-								executionSemester.getEndDate());
-				if (curricularCourseScopes != null) {
-					List disjunctionCurricularCourseScopes =
-							(List) CollectionUtils.disjunction(allCurricularCourseScopes, curricularCourseScopes);
-					List intersectionCurricularCourseScopes =
-							(List) CollectionUtils.intersection(allCurricularCourseScopes, curricularCourseScopes);
+        Curriculum curriculumExecutionYear = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
+        if (curriculumExecutionYear != null) {
+            List allCurricularCourseScopes = new ArrayList();
+            List allExecutionCourses = new ArrayList();
+            List executionPeriods = executionYear.getExecutionPeriods();
+            Iterator iterExecutionPeriods = executionPeriods.iterator();
+            while (iterExecutionPeriods.hasNext()) {
+                ExecutionSemester executionSemester = (ExecutionSemester) iterExecutionPeriods.next();
+                Set<CurricularCourseScope> curricularCourseScopes =
+                        curricularCourse.findCurricularCourseScopesIntersectingPeriod(executionSemester.getBeginDate(),
+                                executionSemester.getEndDate());
+                if (curricularCourseScopes != null) {
+                    List disjunctionCurricularCourseScopes =
+                            (List) CollectionUtils.disjunction(allCurricularCourseScopes, curricularCourseScopes);
+                    List intersectionCurricularCourseScopes =
+                            (List) CollectionUtils.intersection(allCurricularCourseScopes, curricularCourseScopes);
 
-					allCurricularCourseScopes =
-							(List) CollectionUtils.union(disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
-				}
-				List associatedExecutionCourses = new ArrayList();
-				List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-				for (ExecutionCourse executionCourse : executionCourses) {
-					if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
-						associatedExecutionCourses.add(executionCourse);
-					}
-				}
+                    allCurricularCourseScopes =
+                            (List) CollectionUtils.union(disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
+                }
+                List associatedExecutionCourses = new ArrayList();
+                List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                for (ExecutionCourse executionCourse : executionCourses) {
+                    if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
+                        associatedExecutionCourses.add(executionCourse);
+                    }
+                }
 
-				if (associatedExecutionCourses != null) {
-					allExecutionCourses.addAll(associatedExecutionCourses);
-				}
+                if (associatedExecutionCourses != null) {
+                    allExecutionCourses.addAll(associatedExecutionCourses);
+                }
 
-			}
+            }
 
-			infoCurriculum = createInfoCurriculum(curriculumExecutionYear, allCurricularCourseScopes, allExecutionCourses);
-		}
-		return infoCurriculum;
-	}
+            infoCurriculum = createInfoCurriculum(curriculumExecutionYear, allCurricularCourseScopes, allExecutionCourses);
+        }
+        return infoCurriculum;
+    }
 
-	private static InfoCurriculum createInfoCurriculum(Curriculum curriculum, List allCurricularCourseScopes,
-			List allExecutionCourses) {
+    private static InfoCurriculum createInfoCurriculum(Curriculum curriculum, List allCurricularCourseScopes,
+            List allExecutionCourses) {
 
-		InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
+        InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
 
-		List scopes = new ArrayList();
-		CollectionUtils.collect(allCurricularCourseScopes, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
+        List scopes = new ArrayList();
+        CollectionUtils.collect(allCurricularCourseScopes, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 
-				return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
-			}
-		}, scopes);
-		infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
+                return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
+            }
+        }, scopes);
+        infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
-		List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-		Iterator iterExecutionCourses = allExecutionCourses.iterator();
-		while (iterExecutionCourses.hasNext()) {
-			ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
-			infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-		}
-		infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
-		return infoCurriculum;
-	}
+        List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
+        Iterator iterExecutionCourses = allExecutionCourses.iterator();
+        while (iterExecutionCourses.hasNext()) {
+            ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
+            infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+        }
+        infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
+        return infoCurriculum;
+    }
 }

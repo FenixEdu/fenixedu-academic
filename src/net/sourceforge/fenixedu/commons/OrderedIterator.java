@@ -16,43 +16,43 @@ import java.util.List;
  */
 public class OrderedIterator<T> implements Iterator {
 
-	private Iterator<T> iterator;
+    private Iterator<T> iterator;
 
-	private List<T> buildBackingList(Iterator<T> iterator) {
-		List<T> backingList = new ArrayList<T>();
-		while (iterator.hasNext()) {
-			backingList.add(iterator.next());
-		}
+    private List<T> buildBackingList(Iterator<T> iterator) {
+        List<T> backingList = new ArrayList<T>();
+        while (iterator.hasNext()) {
+            backingList.add(iterator.next());
+        }
 
-		return backingList;
-	}
+        return backingList;
+    }
 
-	public OrderedIterator(Iterator<T> iterator, Comparator<T> comparator) {
-		super();
-		List<T> backingList = this.buildBackingList(iterator);
-		Collections.sort(backingList, comparator);
-		this.iterator = backingList.iterator();
-	}
+    public OrderedIterator(Iterator<T> iterator, Comparator<T> comparator) {
+        super();
+        List<T> backingList = this.buildBackingList(iterator);
+        Collections.sort(backingList, comparator);
+        this.iterator = backingList.iterator();
+    }
 
-	public OrderedIterator(Iterator<T> iterator) {
-		super();
-		List backingList = this.buildBackingList(iterator);
-		Collections.sort(backingList);
-		this.iterator = backingList.iterator();
-	}
+    public OrderedIterator(Iterator<T> iterator) {
+        super();
+        List backingList = this.buildBackingList(iterator);
+        Collections.sort(backingList);
+        this.iterator = backingList.iterator();
+    }
 
-	@Override
-	public boolean hasNext() {
-		return this.iterator.hasNext();
-	}
+    @Override
+    public boolean hasNext() {
+        return this.iterator.hasNext();
+    }
 
-	@Override
-	public T next() {
-		return this.iterator.next();
-	}
+    @Override
+    public T next() {
+        return this.iterator.next();
+    }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 }

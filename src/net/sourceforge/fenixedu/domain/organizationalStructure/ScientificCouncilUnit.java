@@ -16,77 +16,77 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
-	private static final String COORDINATION_COMMITTEE_NAME = "Comissão Executiva";
-	private static final String COORDINATION_COMMITTEE_MEMBER_NAME = "Membro";
+    private static final String COORDINATION_COMMITTEE_NAME = "Comissão Executiva";
+    private static final String COORDINATION_COMMITTEE_MEMBER_NAME = "Membro";
 
-	protected ScientificCouncilUnit() {
-		super();
-		super.setType(PartyTypeEnum.SCIENTIFIC_COUNCIL);
-	}
+    protected ScientificCouncilUnit() {
+        super();
+        super.setType(PartyTypeEnum.SCIENTIFIC_COUNCIL);
+    }
 
-	@Override
-	public void setType(PartyTypeEnum partyTypeEnum) {
-		throw new DomainException("unit.impossible.set.type");
-	}
+    @Override
+    public void setType(PartyTypeEnum partyTypeEnum) {
+        throw new DomainException("unit.impossible.set.type");
+    }
 
-	@Override
-	protected List<IGroup> getDefaultGroups() {
-		List<IGroup> groups = super.getDefaultGroups();
+    @Override
+    protected List<IGroup> getDefaultGroups() {
+        List<IGroup> groups = super.getDefaultGroups();
 
-		groups.add(new ScientificCouncilMembersGroup());
-		groups.add(new WebSiteManagersGroup(getSite()));
+        groups.add(new ScientificCouncilMembersGroup());
+        groups.add(new WebSiteManagersGroup(getSite()));
 
-		Function function = getCoordinationCommitteeMembersFunction();
-		if (function != null) {
-			groups.add(new PersonsInFunctionGroup(function));
-		}
+        Function function = getCoordinationCommitteeMembersFunction();
+        if (function != null) {
+            groups.add(new PersonsInFunctionGroup(function));
+        }
 
-		return groups;
-	}
+        return groups;
+    }
 
-	private Function getCoordinationCommitteeMembersFunction() {
-		Unit subUnit = getSubUnitWithName(COORDINATION_COMMITTEE_NAME);
+    private Function getCoordinationCommitteeMembersFunction() {
+        Unit subUnit = getSubUnitWithName(COORDINATION_COMMITTEE_NAME);
 
-		if (subUnit == null) {
-			return null;
-		} else {
-			return getFunctionWithName(subUnit, COORDINATION_COMMITTEE_MEMBER_NAME);
-		}
-	}
+        if (subUnit == null) {
+            return null;
+        } else {
+            return getFunctionWithName(subUnit, COORDINATION_COMMITTEE_MEMBER_NAME);
+        }
+    }
 
-	private Unit getSubUnitWithName(String name) {
-		for (Unit sub : getSubUnits()) {
-			if (sub.getName().equals(name)) {
-				return sub;
-			}
-		}
+    private Unit getSubUnitWithName(String name) {
+        for (Unit sub : getSubUnits()) {
+            if (sub.getName().equals(name)) {
+                return sub;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private Function getFunctionWithName(Unit unit, String name) {
-		for (Function function : unit.getFunctions()) {
-			if (function.getName().equals(name)) {
-				return function;
-			}
-		}
+    private Function getFunctionWithName(Unit unit, String name) {
+        for (Function function : unit.getFunctions()) {
+            if (function.getName().equals(name)) {
+                return function;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public Collection<Person> getPossibleGroupMembers() {
-		return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersonsSet();
-	}
+    @Override
+    public Collection<Person> getPossibleGroupMembers() {
+        return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersonsSet();
+    }
 
-	@Override
-	protected ScientificCouncilSite createSite() {
-		return new ScientificCouncilSite(this);
-	}
+    @Override
+    protected ScientificCouncilSite createSite() {
+        return new ScientificCouncilSite(this);
+    }
 
-	public static ScientificCouncilUnit getScientificCouncilUnit() {
-		final Set<Party> parties = PartyType.getPartiesSet(PartyTypeEnum.SCIENTIFIC_COUNCIL);
-		return parties.isEmpty() ? null : (ScientificCouncilUnit) parties.iterator().next();
-	}
+    public static ScientificCouncilUnit getScientificCouncilUnit() {
+        final Set<Party> parties = PartyType.getPartiesSet(PartyTypeEnum.SCIENTIFIC_COUNCIL);
+        return parties.isEmpty() ? null : (ScientificCouncilUnit) parties.iterator().next();
+    }
 
 }

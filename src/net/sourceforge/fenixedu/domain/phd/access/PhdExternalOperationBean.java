@@ -7,60 +7,60 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 public class PhdExternalOperationBean implements Serializable {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	private PhdParticipant participant;
-	private PhdProgramDocumentUploadBean documentBean;
+    private PhdParticipant participant;
+    private PhdProgramDocumentUploadBean documentBean;
 
-	private String email;
-	private String password;
+    private String email;
+    private String password;
 
-	private PhdProcessAccessType accessType;
+    private PhdProcessAccessType accessType;
 
-	public PhdExternalOperationBean(PhdParticipant participant, PhdProcessAccessType accessType) {
-		setParticipant(participant);
-		setAccessType(accessType);
-	}
+    public PhdExternalOperationBean(PhdParticipant participant, PhdProcessAccessType accessType) {
+        setParticipant(participant);
+        setAccessType(accessType);
+    }
 
-	public PhdParticipant getParticipant() {
-		return participant;
-	}
+    public PhdParticipant getParticipant() {
+        return participant;
+    }
 
-	public void setParticipant(PhdParticipant participant) {
-		this.participant = participant;
-	}
+    public void setParticipant(PhdParticipant participant) {
+        this.participant = participant;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public PhdProgramDocumentUploadBean getDocumentBean() {
-		return documentBean;
-	}
+    public PhdProgramDocumentUploadBean getDocumentBean() {
+        return documentBean;
+    }
 
-	public void setDocumentBean(PhdProgramDocumentUploadBean documentBean) {
-		this.documentBean = documentBean;
-	}
+    public void setDocumentBean(PhdProgramDocumentUploadBean documentBean) {
+        this.documentBean = documentBean;
+    }
 
-	public PhdProcessAccessType getAccessType() {
-		return accessType;
-	}
+    public PhdProcessAccessType getAccessType() {
+        return accessType;
+    }
 
-	public PhdExternalOperationBean setAccessType(final PhdProcessAccessType accessType) {
-		this.accessType = accessType;
-		return this;
-	}
+    public PhdExternalOperationBean setAccessType(final PhdProcessAccessType accessType) {
+        this.accessType = accessType;
+        return this;
+    }
 
 }

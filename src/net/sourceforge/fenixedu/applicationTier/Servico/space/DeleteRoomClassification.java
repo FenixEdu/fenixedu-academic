@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteRoomClassification extends FenixService {
 
-	@Service
-	public static void run(final RoomClassification roomClassification) {
-		roomClassification.delete();
-	}
+    @Service
+    public static void run(final RoomClassification roomClassification) {
+        roomClassification.delete();
+    }
 
 }

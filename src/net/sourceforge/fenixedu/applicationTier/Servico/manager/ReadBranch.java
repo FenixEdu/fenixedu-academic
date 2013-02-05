@@ -10,15 +10,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadBranch extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static InfoBranch run(Integer idInternal) throws FenixServiceException {
-		Branch branch = rootDomainObject.readBranchByOID(idInternal);
-		if (branch == null) {
-			throw new NonExistingServiceException();
-		}
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static InfoBranch run(Integer idInternal) throws FenixServiceException {
+        Branch branch = rootDomainObject.readBranchByOID(idInternal);
+        if (branch == null) {
+            throw new NonExistingServiceException();
+        }
 
-		return InfoBranch.newInfoFromDomain(branch);
-	}
+        return InfoBranch.newInfoFromDomain(branch);
+    }
 
 }

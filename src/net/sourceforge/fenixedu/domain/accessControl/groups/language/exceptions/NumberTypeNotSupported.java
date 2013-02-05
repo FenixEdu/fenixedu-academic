@@ -8,23 +8,23 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions
  */
 public class NumberTypeNotSupported extends GroupDynamicExpressionException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String MESSAGE = "accessControl.group.expression.operator.number.invalidType";
+    private static final String MESSAGE = "accessControl.group.expression.operator.number.invalidType";
 
-	private String type;
+    private String type;
 
-	public NumberTypeNotSupported(String type) {
-		super(MESSAGE, type);
+    public NumberTypeNotSupported(String type) {
+        super(MESSAGE, type);
 
-		this.type = type;
-	}
+        this.type = type;
+    }
 
-	/**
-	 * @return the given type
-	 */
-	public String getType() {
-		return this.type;
-	}
+    /**
+     * @return the given type
+     */
+    public String getType() {
+        return this.type;
+    }
 
 }

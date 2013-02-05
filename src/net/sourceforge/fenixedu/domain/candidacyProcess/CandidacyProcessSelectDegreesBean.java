@@ -18,40 +18,40 @@ import com.google.common.collect.Collections2;
 
 public class CandidacyProcessSelectDegreesBean implements Serializable {
 
-	private static final long serialVersionUID = -3289144446453054775L;
+    private static final long serialVersionUID = -3289144446453054775L;
 
-	private List<Degree> degrees = new ArrayList<Degree>();
+    private List<Degree> degrees = new ArrayList<Degree>();
 
-	public CandidacyProcessSelectDegreesBean() {
-	}
+    public CandidacyProcessSelectDegreesBean() {
+    }
 
-	public List<Degree> getDegrees() {
-		return degrees;
-	}
+    public List<Degree> getDegrees() {
+        return degrees;
+    }
 
-	public void setDegrees(List<Degree> degrees) {
-		this.degrees = degrees;
-	}
+    public void setDegrees(List<Degree> degrees) {
+        this.degrees = degrees;
+    }
 
-	public Collection<Degree> getFirstCycleDegrees() {
-		return filterDegrees(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-	}
+    public Collection<Degree> getFirstCycleDegrees() {
+        return filterDegrees(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+    }
 
-	public Collection<Degree> getSecondCycleDegrees() {
-		return filterDegrees(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
-				DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-	}
+    public Collection<Degree> getSecondCycleDegrees() {
+        return filterDegrees(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
+                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+    }
 
-	protected Collection<Degree> filterDegrees(Collection<Degree> degrees) {
-		final Set<AcademicProgram> programs =
-				AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-						AcademicOperationType.MANAGE_CANDIDACY_PROCESSES);
-		return Collections2.filter(degrees, new Predicate<Degree>() {
-			@Override
-			public boolean apply(Degree degree) {
-				return programs.contains(degree);
-			}
-		});
-	}
+    protected Collection<Degree> filterDegrees(Collection<Degree> degrees) {
+        final Set<AcademicProgram> programs =
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_CANDIDACY_PROCESSES);
+        return Collections2.filter(degrees, new Predicate<Degree>() {
+            @Override
+            public boolean apply(Degree degree) {
+                return programs.contains(degree);
+            }
+        });
+    }
 
 }

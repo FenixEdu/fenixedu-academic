@@ -14,11 +14,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public enum InquiryResponseState implements IPresentableEnum {
 
-	COMPLETE, PARTIALLY_FILLED, INCOMPLETE, EMPTY;
+    COMPLETE, PARTIALLY_FILLED, INCOMPLETE, EMPTY;
 
-	@Override
-	public String getLocalizedName() {
-		final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-		return bundle.getString(this.getClass().getName() + "." + name());
-	}
+    @Override
+    public String getLocalizedName() {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        return bundle.getString(this.getClass().getName() + "." + name());
+    }
 }

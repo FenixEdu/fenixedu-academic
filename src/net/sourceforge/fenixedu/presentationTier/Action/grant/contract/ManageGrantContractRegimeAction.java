@@ -30,62 +30,56 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/manageGrantContractRegime",
-		input = "/manageGrantContractRegime.do?page=0&method=prepareManageGrantContractRegime",
-		attribute = "voidForm",
-		formBean = "voidForm",
-		scope = "request",
-		parameter = "method")
-@Forwards(value = { @Forward(
-		name = "manage-grant-contract-regime",
-		path = "/facultyAdmOffice/grant/contract/manageGrantContractRegime.jsp",
-		tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantContractRegime",
+        input = "/manageGrantContractRegime.do?page=0&method=prepareManageGrantContractRegime", attribute = "voidForm",
+        formBean = "voidForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-contract-regime",
+        path = "/facultyAdmOffice/grant/contract/manageGrantContractRegime.jsp", tileProperties = @Tile(
+                title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 
-	public ActionForward prepareManageGrantContractRegime(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantContractRegime(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Integer idContract = null;
-		try {
-			if (request.getAttribute("idContract") != null) {
-				idContract = (Integer) request.getAttribute("idContract");
-			} else {
-				idContract = new Integer(request.getParameter("idContract"));
-			}
-		} catch (Exception e) {
-			request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
-			request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-regime", null);
-		}
+        Integer idContract = null;
+        try {
+            if (request.getAttribute("idContract") != null) {
+                idContract = (Integer) request.getAttribute("idContract");
+            } else {
+                idContract = new Integer(request.getParameter("idContract"));
+            }
+        } catch (Exception e) {
+            request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
+            request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
+            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-regime", null);
+        }
 
-		// Read Contract
-		Object[] args = { idContract };
-		IUserView userView = UserView.getUser();
-		InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
+        // Read Contract
+        Object[] args = { idContract };
+        IUserView userView = UserView.getUser();
+        InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
 
-		request.setAttribute("idContract", idContract);
-		request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
+        request.setAttribute("idContract", idContract);
+        request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-		List infoGrantActiveContractRegimeList =
-				ReadGrantContractRegimeByContractAndState.run(idContract, InfoGrantContractRegime.getActiveState());
-		List infoGrantNotActiveContractRegimeList =
-				ReadGrantContractRegimeByContractAndState.run(idContract, InfoGrantContractRegime.getInactiveState());
+        List infoGrantActiveContractRegimeList =
+                ReadGrantContractRegimeByContractAndState.run(idContract, InfoGrantContractRegime.getActiveState());
+        List infoGrantNotActiveContractRegimeList =
+                ReadGrantContractRegimeByContractAndState.run(idContract, InfoGrantContractRegime.getInactiveState());
 
-		// If they exist put them on request
-		if (infoGrantActiveContractRegimeList != null && !infoGrantActiveContractRegimeList.isEmpty()) {
-			request.setAttribute("infoGrantActiveContractRegimeList", infoGrantActiveContractRegimeList);
-		}
-		if (infoGrantNotActiveContractRegimeList != null && !infoGrantNotActiveContractRegimeList.isEmpty()) {
-			request.setAttribute("infoGrantNotActiveContractRegimeList", infoGrantNotActiveContractRegimeList);
-		}
+        // If they exist put them on request
+        if (infoGrantActiveContractRegimeList != null && !infoGrantActiveContractRegimeList.isEmpty()) {
+            request.setAttribute("infoGrantActiveContractRegimeList", infoGrantActiveContractRegimeList);
+        }
+        if (infoGrantNotActiveContractRegimeList != null && !infoGrantNotActiveContractRegimeList.isEmpty()) {
+            request.setAttribute("infoGrantNotActiveContractRegimeList", infoGrantNotActiveContractRegimeList);
+        }
 
-		// Presenting adittional information
-		request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
-		request.setAttribute("grantContractNumber", infoGrantContract.getContractNumber());
+        // Presenting adittional information
+        request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
+        request.setAttribute("grantContractNumber", infoGrantContract.getContractNumber());
 
-		return mapping.findForward("manage-grant-contract-regime");
+        return mapping.findForward("manage-grant-contract-regime");
 
-	}
+    }
 }

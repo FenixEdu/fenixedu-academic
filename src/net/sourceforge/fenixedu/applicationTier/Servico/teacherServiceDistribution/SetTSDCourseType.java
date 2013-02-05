@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourseType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class SetTSDCourseType extends FenixService {
-	public void run(Integer competenceCourseId, Integer tsdId, Integer executionPeriodId, String courseTSDProcessPhaseTypeString) {
-		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+    public void run(Integer competenceCourseId, Integer tsdId, Integer executionPeriodId, String courseTSDProcessPhaseTypeString) {
+        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
+        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-		TSDCourseType tsdCourseType = TSDCourseType.valueOf(courseTSDProcessPhaseTypeString);
+        TSDCourseType tsdCourseType = TSDCourseType.valueOf(courseTSDProcessPhaseTypeString);
 
-		tsd.setTSDCourseType(competenceCourse, executionSemester, tsdCourseType);
-	}
+        tsd.setTSDCourseType(competenceCourse, executionSemester, tsdCourseType);
+    }
 }

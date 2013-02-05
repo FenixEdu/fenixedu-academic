@@ -11,17 +11,17 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecuri
 
 public class SearchPartyByNif extends SearchParties {
 
-	@Override
-	protected Collection search(String value, int size) {
-		List<Party> result = new ArrayList<Party>();
-		List<PartySocialSecurityNumber> partySocialSecurityNumbers =
-				RootDomainObject.getInstance().getPartySocialSecurityNumbers();
-		for (PartySocialSecurityNumber partySocialSecurityNumber : partySocialSecurityNumbers) {
-			if (partySocialSecurityNumber.getSocialSecurityNumber().startsWith(value)) {
-				result.add(partySocialSecurityNumber.getParty());
-			}
-		}
+    @Override
+    protected Collection search(String value, int size) {
+        List<Party> result = new ArrayList<Party>();
+        List<PartySocialSecurityNumber> partySocialSecurityNumbers =
+                RootDomainObject.getInstance().getPartySocialSecurityNumbers();
+        for (PartySocialSecurityNumber partySocialSecurityNumber : partySocialSecurityNumbers) {
+            if (partySocialSecurityNumber.getSocialSecurityNumber().startsWith(value)) {
+                result.add(partySocialSecurityNumber.getParty());
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

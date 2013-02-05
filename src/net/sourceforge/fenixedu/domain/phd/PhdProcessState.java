@@ -17,93 +17,93 @@ import pt.ist.fenixWebFramework.services.Service;
 
 abstract public class PhdProcessState extends PhdProcessState_Base {
 
-	static final public Comparator<PhdProcessState> COMPARATOR_BY_DATE = new Comparator<PhdProcessState>() {
-		@Override
-		public int compare(PhdProcessState o1, PhdProcessState o2) {
-			int result = o1.getWhenCreated().compareTo(o2.getWhenCreated());
-			return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
-		}
-	};
+    static final public Comparator<PhdProcessState> COMPARATOR_BY_DATE = new Comparator<PhdProcessState>() {
+        @Override
+        public int compare(PhdProcessState o1, PhdProcessState o2) {
+            int result = o1.getWhenCreated().compareTo(o2.getWhenCreated());
+            return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+        }
+    };
 
-	protected PhdProcessState() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setWhenCreated(new DateTime());
-	}
+    protected PhdProcessState() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setWhenCreated(new DateTime());
+    }
 
-	protected void init(final Person person, final String remarks, final DateTime stateDate, final PhdProcessStateType type) {
-		check(person, "error.PhdProcessState.invalid.person");
-		check(stateDate, "error.PhdProcessState.invalid.stateDate");
+    protected void init(final Person person, final String remarks, final DateTime stateDate, final PhdProcessStateType type) {
+        check(person, "error.PhdProcessState.invalid.person");
+        check(stateDate, "error.PhdProcessState.invalid.stateDate");
 
-		checkStateDate(stateDate, type);
+        checkStateDate(stateDate, type);
 
-		setPerson(person);
-		setRemarks(remarks);
-		setStateDate(stateDate);
-	}
+        setPerson(person);
+        setRemarks(remarks);
+        setStateDate(stateDate);
+    }
 
-	private void checkStateDate(DateTime stateDate, final PhdProcessStateType type) {
-		Collection<? extends PhdProcessState> orderedStates = getProcess().getOrderedStates();
+    private void checkStateDate(DateTime stateDate, final PhdProcessStateType type) {
+        Collection<? extends PhdProcessState> orderedStates = getProcess().getOrderedStates();
 
-		for (PhdProcessState phdProcessState : orderedStates) {
-			if (phdProcessState == this) {
-				continue;
-			}
+        for (PhdProcessState phdProcessState : orderedStates) {
+            if (phdProcessState == this) {
+                continue;
+            }
 
-			if (phdProcessState.getStateDate() != null && phdProcessState.getStateDate().isAfter(stateDate)) {
-				String newStateDate = stateDate.toString("dd/MM/yyyy") + " - " + type.getLocalizedName();
-				String actualStateDate =
-						phdProcessState.getStateDate().toString("dd/MM/yyyy") + " - "
-								+ phdProcessState.getType().getLocalizedName();
+            if (phdProcessState.getStateDate() != null && phdProcessState.getStateDate().isAfter(stateDate)) {
+                String newStateDate = stateDate.toString("dd/MM/yyyy") + " - " + type.getLocalizedName();
+                String actualStateDate =
+                        phdProcessState.getStateDate().toString("dd/MM/yyyy") + " - "
+                                + phdProcessState.getType().getLocalizedName();
 
-				throw new PhdDomainOperationException("error.PhdProcessState.state.date.is.previous.of.actual.state.on.process",
-						newStateDate, actualStateDate);
-			}
-		}
-	}
+                throw new PhdDomainOperationException("error.PhdProcessState.state.date.is.previous.of.actual.state.on.process",
+                        newStateDate, actualStateDate);
+            }
+        }
+    }
 
-	public void delete() {
-		disconnect();
-		deleteDomainObject();
-	}
+    public void delete() {
+        disconnect();
+        deleteDomainObject();
+    }
 
-	protected void disconnect() {
-		removePerson();
-		removeRootDomainObject();
-	}
+    protected void disconnect() {
+        removePerson();
+        removeRootDomainObject();
+    }
 
-	abstract public PhdProcessStateType getType();
+    abstract public PhdProcessStateType getType();
 
-	abstract public boolean isLast();
+    abstract public boolean isLast();
 
-	public abstract PhdProgramProcess getProcess();
+    public abstract PhdProgramProcess getProcess();
 
-	@Service
-	public void editStateDate(PhdProcessStateBean bean) {
-		if (bean.getStateDate() == null) {
-			throw new PhdDomainOperationException("error.PhdProcessState.state.date.required");
-		}
+    @Service
+    public void editStateDate(PhdProcessStateBean bean) {
+        if (bean.getStateDate() == null) {
+            throw new PhdDomainOperationException("error.PhdProcessState.state.date.required");
+        }
 
-		setStateDate(bean.getStateDate());
-	}
+        setStateDate(bean.getStateDate());
+    }
 
-	protected static String buildExpectedStatesDescription(List<? extends PhdProcessStateType> possibleNextStates) {
+    protected static String buildExpectedStatesDescription(List<? extends PhdProcessStateType> possibleNextStates) {
 
-		if (possibleNextStates.isEmpty()) {
-			return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString(
-					"message.phd.process.state.none");
-		}
+        if (possibleNextStates.isEmpty()) {
+            return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString(
+                    "message.phd.process.state.none");
+        }
 
-		StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
-		for (PhdProcessStateType expectedState : possibleNextStates) {
-			Locale locale = Locale.getDefault();
-			builder.append(expectedState.getLocalizedName(locale)).append(", ");
-		}
+        for (PhdProcessStateType expectedState : possibleNextStates) {
+            Locale locale = Locale.getDefault();
+            builder.append(expectedState.getLocalizedName(locale)).append(", ");
+        }
 
-		builder.delete(builder.length() - 2, builder.length());
+        builder.delete(builder.length() - 2, builder.length());
 
-		return builder.toString();
-	}
+        return builder.toString();
+    }
 
 }

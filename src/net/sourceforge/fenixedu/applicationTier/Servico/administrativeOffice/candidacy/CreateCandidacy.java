@@ -18,33 +18,33 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCandidacy extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static Candidacy run(ExecutionDegree executionDegree, DegreeType degreeType, String name,
-			String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber,
-			YearMonthDay startDate) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Candidacy run(ExecutionDegree executionDegree, DegreeType degreeType, String name,
+            String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber,
+            YearMonthDay startDate) {
 
-		Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
-		if (person == null) {
-			person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
-		}
+        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
+        if (person == null) {
+            person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
+        }
 
-		person.setSocialSecurityNumber(contributorNumber);
+        person.setSocialSecurityNumber(contributorNumber);
 
-		if (!person.hasStudent()) {
-			new Student(person);
-		}
+        if (!person.hasStudent()) {
+            new Student(person);
+        }
 
-		person.addPersonRoleByRoleType(RoleType.CANDIDATE);
-		person.addPersonRoleByRoleType(RoleType.PERSON);
-		person.setIstUsername();
+        person.addPersonRoleByRoleType(RoleType.CANDIDATE);
+        person.addPersonRoleByRoleType(RoleType.PERSON);
+        person.setIstUsername();
 
-		Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
+        Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
 
-		new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
+        new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
 
-		return candidacy;
+        return candidacy;
 
-	}
+    }
 
 }

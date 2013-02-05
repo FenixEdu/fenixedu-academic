@@ -17,46 +17,45 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdDocumentRequestManagement", module = "academicAdministration")
-@Forwards({ @Forward(
-		name = "createNewDocumentRequest",
-		path = "/phd/academicAdminOffice/serviceRequests/document/createNewDocumentRequest.jsp") })
+@Forwards({ @Forward(name = "createNewDocumentRequest",
+        path = "/phd/academicAdminOffice/serviceRequests/document/createNewDocumentRequest.jsp") })
 public class PhdDocumentRequestManagementDA extends PhdAcademicServiceRequestsManagementDA {
 
-	@Override
-	protected PhdDocumentRequestCreateBean getPhdAcademicServiceRequestCreateBean() {
-		return (PhdDocumentRequestCreateBean) super.getPhdAcademicServiceRequestCreateBean();
-	}
+    @Override
+    protected PhdDocumentRequestCreateBean getPhdAcademicServiceRequestCreateBean() {
+        return (PhdDocumentRequestCreateBean) super.getPhdAcademicServiceRequestCreateBean();
+    }
 
-	@Override
-	protected PhdDocumentRequest getPhdAcademicServiceRequest(HttpServletRequest request) {
-		return (PhdDocumentRequest) super.getPhdAcademicServiceRequest(request);
-	}
+    @Override
+    protected PhdDocumentRequest getPhdAcademicServiceRequest(HttpServletRequest request) {
+        return (PhdDocumentRequest) super.getPhdAcademicServiceRequest(request);
+    }
 
-	@Override
-	public ActionForward prepareCreateNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
-		PhdDocumentRequestCreateBean phdDocumentRequestCreateBean = new PhdDocumentRequestCreateBean(process);
-		request.setAttribute("phdAcademicServiceRequestCreateBean", phdDocumentRequestCreateBean);
+    @Override
+    public ActionForward prepareCreateNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
+        PhdDocumentRequestCreateBean phdDocumentRequestCreateBean = new PhdDocumentRequestCreateBean(process);
+        request.setAttribute("phdAcademicServiceRequestCreateBean", phdDocumentRequestCreateBean);
 
-		return mapping.findForward("createNewDocumentRequest");
-	}
+        return mapping.findForward("createNewDocumentRequest");
+    }
 
-	@Override
-	public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		super.createNewRequestInvalid(mapping, form, request, response);
-		return mapping.findForward("prepareCreateNewRequest");
-	}
+    @Override
+    public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        super.createNewRequestInvalid(mapping, form, request, response);
+        return mapping.findForward("prepareCreateNewRequest");
+    }
 
-	public ActionForward createNewRequestPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("phdAcademicServiceRequestCreateBean", getPhdAcademicServiceRequestCreateBean());
+    public ActionForward createNewRequestPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("phdAcademicServiceRequestCreateBean", getPhdAcademicServiceRequestCreateBean());
 
-		RenderUtils.invalidateViewState("phd-academic-service-request-create-bean");
-		RenderUtils.invalidateViewState("phd-academic-service-request-create-bean-choose-document-type");
+        RenderUtils.invalidateViewState("phd-academic-service-request-create-bean");
+        RenderUtils.invalidateViewState("phd-academic-service-request-create-bean-choose-document-type");
 
-		return mapping.findForward("createNewDocumentRequest");
-	}
+        return mapping.findForward("createNewDocumentRequest");
+    }
 
 }

@@ -26,106 +26,106 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards({
 
 @Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp", tileProperties = @Tile(
-		title = "private.steeringcouncil.reportsfees")) })
+        title = "private.steeringcouncil.reportsfees")) })
 public class GratuityReportsDA extends FenixDispatchAction {
 
-	public static class GratuityReportParametersBean implements Serializable {
+    public static class GratuityReportParametersBean implements Serializable {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private ExecutionYear executionYear;
+        private ExecutionYear executionYear;
 
-		private LocalDate startDate;
+        private LocalDate startDate;
 
-		private LocalDate endDate;
+        private LocalDate endDate;
 
-		private Boolean detailed;
+        private Boolean detailed;
 
-		private List<DegreeType> degreeTypes;
+        private List<DegreeType> degreeTypes;
 
-		public GratuityReportParametersBean(ExecutionYear executionYear) {
-			setExecutionYear(executionYear);
-			setDetailed(false);
-			this.degreeTypes = new ArrayList<DegreeType>();
-		}
+        public GratuityReportParametersBean(ExecutionYear executionYear) {
+            setExecutionYear(executionYear);
+            setDetailed(false);
+            this.degreeTypes = new ArrayList<DegreeType>();
+        }
 
-		public ExecutionYear getExecutionYear() {
-			return this.executionYear;
-		}
+        public ExecutionYear getExecutionYear() {
+            return this.executionYear;
+        }
 
-		public void setExecutionYear(ExecutionYear executionYear) {
-			this.executionYear = executionYear;
-		}
+        public void setExecutionYear(ExecutionYear executionYear) {
+            this.executionYear = executionYear;
+        }
 
-		public LocalDate getStartDate() {
-			return startDate;
-		}
+        public LocalDate getStartDate() {
+            return startDate;
+        }
 
-		public void setStartDate(LocalDate startDate) {
-			this.startDate = startDate;
-		}
+        public void setStartDate(LocalDate startDate) {
+            this.startDate = startDate;
+        }
 
-		public LocalDate getEndDate() {
-			return endDate;
-		}
+        public LocalDate getEndDate() {
+            return endDate;
+        }
 
-		public void setEndDate(LocalDate endDate) {
-			this.endDate = endDate;
-		}
+        public void setEndDate(LocalDate endDate) {
+            this.endDate = endDate;
+        }
 
-		public Boolean getDetailed() {
-			return detailed;
-		}
+        public Boolean getDetailed() {
+            return detailed;
+        }
 
-		public void setDetailed(Boolean detailed) {
-			this.detailed = detailed;
-		}
+        public void setDetailed(Boolean detailed) {
+            this.detailed = detailed;
+        }
 
-		public List<DegreeType> getDegreeTypes() {
-			return degreeTypes;
-		}
+        public List<DegreeType> getDegreeTypes() {
+            return degreeTypes;
+        }
 
-		public void setDegreeTypes(List<DegreeType> degreeTypes) {
-			this.degreeTypes = degreeTypes;
-		}
+        public void setDegreeTypes(List<DegreeType> degreeTypes) {
+            this.degreeTypes = degreeTypes;
+        }
 
-	}
+    }
 
-	public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final GratuityReportParametersBean parametersBean =
-				getGratuityReportParameters() != null ? getGratuityReportParameters() : new GratuityReportParametersBean(
-						ExecutionYear.readCurrentExecutionYear());
+        final GratuityReportParametersBean parametersBean =
+                getGratuityReportParameters() != null ? getGratuityReportParameters() : new GratuityReportParametersBean(
+                        ExecutionYear.readCurrentExecutionYear());
 
-		request.setAttribute("reportParameters", parametersBean);
-		request.setAttribute(
-				"report",
-				new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
-						parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
+        request.setAttribute("reportParameters", parametersBean);
+        request.setAttribute(
+                "report",
+                new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
+                        parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
 
-		return mapping.findForward("showReport");
-	}
+        return mapping.findForward("showReport");
+    }
 
-	public ActionForward showReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("reportParameters", getRenderedObject());
+        request.setAttribute("reportParameters", getRenderedObject());
 
-		final GratuityReportParametersBean parametersBean =
-				getGratuityReportParameters() != null ? getGratuityReportParameters() : new GratuityReportParametersBean(
-						ExecutionYear.readCurrentExecutionYear());
+        final GratuityReportParametersBean parametersBean =
+                getGratuityReportParameters() != null ? getGratuityReportParameters() : new GratuityReportParametersBean(
+                        ExecutionYear.readCurrentExecutionYear());
 
-		request.setAttribute(
-				"report",
-				new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
-						parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
+        request.setAttribute(
+                "report",
+                new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
+                        parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
 
-		return mapping.findForward("showReport");
-	}
+        return mapping.findForward("showReport");
+    }
 
-	private GratuityReportParametersBean getGratuityReportParameters() {
-		return getRenderedObject("reportParameters");
-	}
+    private GratuityReportParametersBean getGratuityReportParameters() {
+        return getRenderedObject("reportParameters");
+    }
 
 }

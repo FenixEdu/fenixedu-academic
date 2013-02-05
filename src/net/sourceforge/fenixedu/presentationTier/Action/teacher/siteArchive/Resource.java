@@ -22,70 +22,70 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rule
  */
 public class Resource {
 
-	private String url;
-	private String name;
+    private String url;
+    private String name;
 
-	private List<Rule> rules;
+    private List<Rule> rules;
 
-	/**
-	 * Creates a new resource with the given local name and the given url.
-	 * 
-	 * @param name
-	 *            the resource local name
-	 * @param url
-	 *            the url from where the resource wil lbe retrieved
-	 */
-	public Resource(String name, String url) {
-		super();
+    /**
+     * Creates a new resource with the given local name and the given url.
+     * 
+     * @param name
+     *            the resource local name
+     * @param url
+     *            the url from where the resource wil lbe retrieved
+     */
+    public Resource(String name, String url) {
+        super();
 
-		this.url = url;
-		this.name = name;
+        this.url = url;
+        this.name = name;
 
-		this.rules = new ArrayList<Rule>();
-	}
+        this.rules = new ArrayList<Rule>();
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public String getUrl() {
-		return this.url;
-	}
+    public String getUrl() {
+        return this.url;
+    }
 
-	public List<Rule> getRules() {
-		return this.rules;
-	}
+    public List<Rule> getRules() {
+        return this.rules;
+    }
 
-	public void addRule(Rule rule) {
-		this.rules.add(rule);
-	}
+    public void addRule(Rule rule) {
+        this.rules.add(rule);
+    }
 
-	public void addAllRules(Collection<Rule> rules) {
-		this.rules.addAll(rules);
-	}
+    public void addAllRules(Collection<Rule> rules) {
+        this.rules.addAll(rules);
+    }
 
-	@Override
-	public String toString() {
-		return String.format("Resource['%s' -> '%s']", getUrl(), getName());
-	}
+    @Override
+    public String toString() {
+        return String.format("Resource['%s' -> '%s']", getUrl(), getName());
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
 
-		if (!(obj instanceof Resource)) {
-			return false;
-		}
+        if (!(obj instanceof Resource)) {
+            return false;
+        }
 
-		Resource other = (Resource) obj;
-		return getName().equals(other.getName());
-	}
+        Resource other = (Resource) obj;
+        return getName().equals(other.getName());
+    }
 
-	@Override
-	public int hashCode() {
-		return getName().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
 
 }

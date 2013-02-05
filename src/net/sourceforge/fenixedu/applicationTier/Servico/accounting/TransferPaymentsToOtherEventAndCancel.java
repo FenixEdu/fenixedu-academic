@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class TransferPaymentsToOtherEventAndCancel extends FenixService {
 
-	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
-	@Service
-	public static void run(final Person responsible, final Event sourceEvent, final Event targetEvent, final String justification) {
-		sourceEvent.transferPaymentsAndCancel(responsible, targetEvent, justification);
-	}
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    @Service
+    public static void run(final Person responsible, final Event sourceEvent, final Event targetEvent, final String justification) {
+        sourceEvent.transferPaymentsAndCancel(responsible, targetEvent, justification);
+    }
 
 }

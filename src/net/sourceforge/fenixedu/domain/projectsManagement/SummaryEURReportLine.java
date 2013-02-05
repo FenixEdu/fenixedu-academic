@@ -12,75 +12,75 @@ import java.io.Serializable;
  */
 public class SummaryEURReportLine implements Serializable, ISummaryEURReportLine {
 
-	private String projectCode;
+    private String projectCode;
 
-	private Double revenue;
+    private Double revenue;
 
-	private Double expense;
+    private Double expense;
 
-	private Double tax;
+    private Double tax;
 
-	private Double adiantamentosPorJustificar;
+    private Double adiantamentosPorJustificar;
 
-	private Double total;
+    private Double total;
 
-	@Override
-	public Double getAdiantamentosPorJustificar() {
-		return adiantamentosPorJustificar;
-	}
+    @Override
+    public Double getAdiantamentosPorJustificar() {
+        return adiantamentosPorJustificar;
+    }
 
-	@Override
-	public void setAdiantamentosPorJustificar(Double adiantamentosPorJustificar) {
-		this.adiantamentosPorJustificar = adiantamentosPorJustificar;
-	}
+    @Override
+    public void setAdiantamentosPorJustificar(Double adiantamentosPorJustificar) {
+        this.adiantamentosPorJustificar = adiantamentosPorJustificar;
+    }
 
-	@Override
-	public Double getExpense() {
-		return expense;
-	}
+    @Override
+    public Double getExpense() {
+        return expense;
+    }
 
-	@Override
-	public void setExpense(Double expense) {
-		this.expense = expense;
-	}
+    @Override
+    public void setExpense(Double expense) {
+        this.expense = expense;
+    }
 
-	@Override
-	public String getProjectCode() {
-		return projectCode;
-	}
+    @Override
+    public String getProjectCode() {
+        return projectCode;
+    }
 
-	@Override
-	public void setProjectCode(String projectCode) {
-		this.projectCode = projectCode;
-	}
+    @Override
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
+    }
 
-	@Override
-	public Double getRevenue() {
-		return revenue;
-	}
+    @Override
+    public Double getRevenue() {
+        return revenue;
+    }
 
-	@Override
-	public void setRevenue(Double revenue) {
-		this.revenue = revenue;
-	}
+    @Override
+    public void setRevenue(Double revenue) {
+        this.revenue = revenue;
+    }
 
-	@Override
-	public Double getTax() {
-		return tax;
-	}
+    @Override
+    public Double getTax() {
+        return tax;
+    }
 
-	@Override
-	public void setTax(Double tax) {
-		this.tax = tax;
-	}
+    @Override
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
 
-	@Override
-	public Double getTotal() {
-		return total;
-	}
+    @Override
+    public Double getTotal() {
+        return total;
+    }
 
-	@Override
-	public void setTotal(Double total) {
-		this.total = total;
-	}
+    @Override
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

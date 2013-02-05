@@ -12,47 +12,47 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class DepartmentEmployeesGroup extends DomainBackedGroup<Department> {
 
-	/**
-	 * Serial version id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public DepartmentEmployeesGroup(Department department) {
-		super(department);
-	}
+    public DepartmentEmployeesGroup(Department department) {
+        super(department);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> result = new HashSet<Person>();
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> result = new HashSet<Person>();
 
-		for (Employee employee : getObject().getAllCurrentActiveWorkingEmployees()) {
-			result.add(employee.getPerson());
-		}
+        for (Employee employee : getObject().getAllCurrentActiveWorkingEmployees()) {
+            result.add(employee.getPerson());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			return new DepartmentEmployeesGroup((Department) arguments[0]);
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            return new DepartmentEmployeesGroup((Department) arguments[0]);
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

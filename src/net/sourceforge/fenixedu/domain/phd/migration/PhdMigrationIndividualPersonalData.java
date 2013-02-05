@@ -22,192 +22,192 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPersonalData_Base {
 
-	private transient PhdMigrationIndividualPersonalDataBean personalBean;
+    private transient PhdMigrationIndividualPersonalDataBean personalBean;
 
-	private PhdMigrationIndividualPersonalData() {
-		super();
-	}
+    private PhdMigrationIndividualPersonalData() {
+        super();
+    }
 
-	protected PhdMigrationIndividualPersonalData(String data) {
-		setData(data);
-	}
+    protected PhdMigrationIndividualPersonalData(String data) {
+        setData(data);
+    }
 
-	public boolean hasPersonalBean() {
-		return personalBean != null;
-	}
+    public boolean hasPersonalBean() {
+        return personalBean != null;
+    }
 
-	public PhdMigrationIndividualPersonalDataBean getPersonalBean() {
-		if (hasPersonalBean()) {
-			return personalBean;
-		}
+    public PhdMigrationIndividualPersonalDataBean getPersonalBean() {
+        if (hasPersonalBean()) {
+            return personalBean;
+        }
 
-		personalBean = new PhdMigrationIndividualPersonalDataBean(getData());
-		return personalBean;
-	}
+        personalBean = new PhdMigrationIndividualPersonalDataBean(getData());
+        return personalBean;
+    }
 
-	public void setPersonalBean(PhdMigrationIndividualPersonalDataBean personalBean) {
-		this.personalBean = personalBean;
-	}
+    public void setPersonalBean(PhdMigrationIndividualPersonalDataBean personalBean) {
+        this.personalBean = personalBean;
+    }
 
-	public void parse() {
-		getPersonalBean();
-	}
+    public void parse() {
+        getPersonalBean();
+    }
 
-	public void parseAndSetNumber() {
-		final PhdMigrationIndividualPersonalDataBean personalBean = getPersonalBean();
-		setNumber(personalBean.getPhdStudentNumber());
-	}
+    public void parseAndSetNumber() {
+        final PhdMigrationIndividualPersonalDataBean personalBean = getPersonalBean();
+        setNumber(personalBean.getPhdStudentNumber());
+    }
 
-	public Person getPerson() {
-		if (getPersonalBean().hasChosenPersonManually()) {
-			return getPersonalBean().getChosenPersonManually();
-		}
-		// Get by identification number
-		final Collection<Person> personSet = Person.readByDocumentIdNumber(getPersonalBean().getIdentificationNumber());
-		final Collection<Person> personNamesSet =
-				Person.readPersonsByName(StringNormalizer.normalize(getPersonalBean().getFullName()));
+    public Person getPerson() {
+        if (getPersonalBean().hasChosenPersonManually()) {
+            return getPersonalBean().getChosenPersonManually();
+        }
+        // Get by identification number
+        final Collection<Person> personSet = Person.readByDocumentIdNumber(getPersonalBean().getIdentificationNumber());
+        final Collection<Person> personNamesSet =
+                Person.readPersonsByName(StringNormalizer.normalize(getPersonalBean().getFullName()));
 
-		if (personSet.isEmpty() && personNamesSet.isEmpty()) {
-			throw new PersonNotFoundException();
-		}
+        if (personSet.isEmpty() && personNamesSet.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
 
-		if (personSet.size() > 1) {
-			throw new MultiplePersonFoundByDocumentIdException(getPersonalBean().getIdentificationNumber());
-		}
+        if (personSet.size() > 1) {
+            throw new MultiplePersonFoundByDocumentIdException(getPersonalBean().getIdentificationNumber());
+        }
 
-		if (personSet.isEmpty()) {
-			checkPossibleCandidates(personNamesSet);
-		}
+        if (personSet.isEmpty()) {
+            checkPossibleCandidates(personNamesSet);
+        }
 
-		checkPersonByIdDocument(personSet, personNamesSet);
+        checkPersonByIdDocument(personSet, personNamesSet);
 
-		Person person = personSet.iterator().next();
-		if (!StringUtils.isEmpty(getPersonalBean().getSocialSecurityNumber())
-				&& !StringUtils.isEmpty(person.getSocialSecurityNumber())
-				&& getPersonalBean().getSocialSecurityNumber().equals(person.getSocialSecurityNumber())) {
-			return person;
-		}
+        Person person = personSet.iterator().next();
+        if (!StringUtils.isEmpty(getPersonalBean().getSocialSecurityNumber())
+                && !StringUtils.isEmpty(person.getSocialSecurityNumber())
+                && getPersonalBean().getSocialSecurityNumber().equals(person.getSocialSecurityNumber())) {
+            return person;
+        }
 
-		if (!StringUtils.isEmpty(getPersonalBean().getSocialSecurityNumber())
-				&& !StringUtils.isEmpty(person.getSocialSecurityNumber())) {
-			throw new SocialSecurityNumberMismatchException("Original: " + getPersonalBean().getSocialSecurityNumber()
-					+ " Differs from: " + person.getSocialSecurityNumber());
-		}
+        if (!StringUtils.isEmpty(getPersonalBean().getSocialSecurityNumber())
+                && !StringUtils.isEmpty(person.getSocialSecurityNumber())) {
+            throw new SocialSecurityNumberMismatchException("Original: " + getPersonalBean().getSocialSecurityNumber()
+                    + " Differs from: " + person.getSocialSecurityNumber());
+        }
 
-		if (person.getDateOfBirthYearMonthDay() == null
-				|| !person.getDateOfBirthYearMonthDay().isEqual(getPersonalBean().getDateOfBirth())) {
-			throw new BirthdayMismatchException("Original: " + getPersonalBean().getDateOfBirth() + " Differs from: "
-					+ person.getDateOfBirthYearMonthDay());
-		}
+        if (person.getDateOfBirthYearMonthDay() == null
+                || !person.getDateOfBirthYearMonthDay().isEqual(getPersonalBean().getDateOfBirth())) {
+            throw new BirthdayMismatchException("Original: " + getPersonalBean().getDateOfBirth() + " Differs from: "
+                    + person.getDateOfBirthYearMonthDay());
+        }
 
-		return person;
-	}
+        return person;
+    }
 
-	private Person checkPersonByIdDocument(final Collection<Person> personSet, final Collection<Person> personNamesSet) {
-		Person possiblePerson = personSet.iterator().next();
+    private Person checkPersonByIdDocument(final Collection<Person> personSet, final Collection<Person> personNamesSet) {
+        Person possiblePerson = personSet.iterator().next();
 
-		for (Person person : personNamesSet) {
-			if (person == possiblePerson) {
-				return possiblePerson;
-			}
-		}
+        for (Person person : personNamesSet) {
+            if (person == possiblePerson) {
+                return possiblePerson;
+            }
+        }
 
-		throw new PersonSearchByNameMismatchException(new HashSet<Person>(personNamesSet));
-	}
+        throw new PersonSearchByNameMismatchException(new HashSet<Person>(personNamesSet));
+    }
 
-	private void checkPossibleCandidates(final Collection<Person> personNamesSet) {
-		Set<Person> possiblePersonSet = new HashSet<Person>();
-		for (Person person : personNamesSet) {
+    private void checkPossibleCandidates(final Collection<Person> personNamesSet) {
+        Set<Person> possiblePersonSet = new HashSet<Person>();
+        for (Person person : personNamesSet) {
 
-			if (StringUtils.isEmpty(person.getSocialSecurityNumber())) {
-				continue;
-			}
+            if (StringUtils.isEmpty(person.getSocialSecurityNumber())) {
+                continue;
+            }
 
-			if (!person.getSocialSecurityNumber().equals(getPersonalBean().getSocialSecurityNumber())) {
-				continue;
-			}
+            if (!person.getSocialSecurityNumber().equals(getPersonalBean().getSocialSecurityNumber())) {
+                continue;
+            }
 
-			if (person.getDateOfBirthYearMonthDay() == null) {
-				continue;
-			}
+            if (person.getDateOfBirthYearMonthDay() == null) {
+                continue;
+            }
 
-			if (!person.getDateOfBirthYearMonthDay().isEqual(getPersonalBean().getDateOfBirth())) {
-				continue;
-			}
+            if (!person.getDateOfBirthYearMonthDay().isEqual(getPersonalBean().getDateOfBirth())) {
+                continue;
+            }
 
-			possiblePersonSet.add(person);
-		}
+            possiblePersonSet.add(person);
+        }
 
-		if (!possiblePersonSet.isEmpty()) {
-			throw new PossiblePersonCandidatesException(possiblePersonSet);
-		}
+        if (!possiblePersonSet.isEmpty()) {
+            throw new PossiblePersonCandidatesException(possiblePersonSet);
+        }
 
-		throw new PersonNotFoundException();
-	}
+        throw new PersonNotFoundException();
+    }
 
-	public boolean isPersonRegisteredOnFenix() {
-		try {
-			return getPerson() != null;
-		} catch (PersonNotFoundException e) {
-			return false;
-		}
-	}
+    public boolean isPersonRegisteredOnFenix() {
+        try {
+            return getPerson() != null;
+        } catch (PersonNotFoundException e) {
+            return false;
+        }
+    }
 
-	public boolean isSocialSecurityNumberEqual() {
-		return getPerson().getSocialSecurityNumber().equals(getPersonalBean().getSocialSecurityNumber());
-	}
+    public boolean isSocialSecurityNumberEqual() {
+        return getPerson().getSocialSecurityNumber().equals(getPersonalBean().getSocialSecurityNumber());
+    }
 
-	private static String readGivenName(String fullName, String familyName) {
-		try {
-			return fullName.substring(0, fullName.indexOf(familyName)).trim();
-		} catch (StringIndexOutOfBoundsException e) {
-			throw new GivenNameMismatchException();
-		}
-	}
+    private static String readGivenName(String fullName, String familyName) {
+        try {
+            return fullName.substring(0, fullName.indexOf(familyName)).trim();
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new GivenNameMismatchException();
+        }
+    }
 
-	public PersonBean getPersonBean() {
-		PersonBean bean = new PersonBean();
+    public PersonBean getPersonBean() {
+        PersonBean bean = new PersonBean();
 
-		if (getPersonalBean().hasChosenPersonManually()) {
-			bean.setPerson(getPersonalBean().getChosenPersonManually());
-			return bean;
-		}
+        if (getPersonalBean().hasChosenPersonManually()) {
+            bean.setPerson(getPersonalBean().getChosenPersonManually());
+            return bean;
+        }
 
-		if (isPersonRegisteredOnFenix()) {
-			bean.setPerson(getPerson());
-			return bean;
-		}
+        if (isPersonRegisteredOnFenix()) {
+            bean.setPerson(getPerson());
+            return bean;
+        }
 
-		final PhdMigrationIndividualPersonalDataBean personalBean = getPersonalBean();
+        final PhdMigrationIndividualPersonalDataBean personalBean = getPersonalBean();
 
-		bean.setAddress(personalBean.getAddress());
-		bean.setArea(personalBean.getArea());
-		bean.setAreaCode(personalBean.getAreaCode());
-		bean.setParishOfResidence(personalBean.getParishOfResidence());
-		bean.setDistrictOfResidence(personalBean.getDistrictOfResidence());
-		bean.setDistrictSubdivisionOfResidence(personalBean.getDistrictSubdivisionOfResidence());
+        bean.setAddress(personalBean.getAddress());
+        bean.setArea(personalBean.getArea());
+        bean.setAreaCode(personalBean.getAreaCode());
+        bean.setParishOfResidence(personalBean.getParishOfResidence());
+        bean.setDistrictOfResidence(personalBean.getDistrictOfResidence());
+        bean.setDistrictSubdivisionOfResidence(personalBean.getDistrictSubdivisionOfResidence());
 
-		bean.setPhone(personalBean.getContactNumber());
-		bean.setWorkPhone(personalBean.getOtherContactNumber());
-		bean.setProfession(personalBean.getProfession());
-		bean.setEmail(personalBean.getEmail());
+        bean.setPhone(personalBean.getContactNumber());
+        bean.setWorkPhone(personalBean.getOtherContactNumber());
+        bean.setProfession(personalBean.getProfession());
+        bean.setEmail(personalBean.getEmail());
 
-		bean.setFatherName(personalBean.getFatherName());
-		bean.setMotherName(personalBean.getMotherName());
-		bean.setIdDocumentType(IDDocumentType.OTHER);
-		bean.setDocumentIdNumber(personalBean.getIdentificationNumber());
-		bean.setSocialSecurityNumber(personalBean.getSocialSecurityNumber());
+        bean.setFatherName(personalBean.getFatherName());
+        bean.setMotherName(personalBean.getMotherName());
+        bean.setIdDocumentType(IDDocumentType.OTHER);
+        bean.setDocumentIdNumber(personalBean.getIdentificationNumber());
+        bean.setSocialSecurityNumber(personalBean.getSocialSecurityNumber());
 
-		bean.setGivenNames(readGivenName(personalBean.getFullName(), personalBean.getFamilyName()));
-		bean.setName(personalBean.getFullName());
-		bean.setFamilyNames(personalBean.getFamilyName());
+        bean.setGivenNames(readGivenName(personalBean.getFullName(), personalBean.getFamilyName()));
+        bean.setName(personalBean.getFullName());
+        bean.setFamilyNames(personalBean.getFamilyName());
 
-		bean.setDateOfBirth(new YearMonthDay(personalBean.getDateOfBirth().getYear(), personalBean.getDateOfBirth()
-				.getMonthOfYear(), personalBean.getDateOfBirth().getDayOfMonth()));
-		bean.setGender(personalBean.getGender());
-		bean.setNationality(personalBean.getNationality());
+        bean.setDateOfBirth(new YearMonthDay(personalBean.getDateOfBirth().getYear(), personalBean.getDateOfBirth()
+                .getMonthOfYear(), personalBean.getDateOfBirth().getDayOfMonth()));
+        bean.setGender(personalBean.getGender());
+        bean.setNationality(personalBean.getNationality());
 
-		return bean;
-	}
+        return bean;
+    }
 
 }

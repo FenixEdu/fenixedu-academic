@@ -18,46 +18,46 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class TeacherShiftTypeResultsBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private Professorship professorship;
-	private ShiftType shiftType;
-	private List<BlockResultsSummaryBean> blockResults = new ArrayList<BlockResultsSummaryBean>();
+    private static final long serialVersionUID = 1L;
+    private Professorship professorship;
+    private ShiftType shiftType;
+    private List<BlockResultsSummaryBean> blockResults = new ArrayList<BlockResultsSummaryBean>();
 
-	public TeacherShiftTypeResultsBean(Professorship professorship, ShiftType shiftType, ExecutionSemester executionPeriod,
-			List<InquiryResult> inquiryResults, Person person, ResultPersonCategory personCategory) {
-		setProfessorship(professorship);
-		setShiftType(shiftType);
+    public TeacherShiftTypeResultsBean(Professorship professorship, ShiftType shiftType, ExecutionSemester executionPeriod,
+            List<InquiryResult> inquiryResults, Person person, ResultPersonCategory personCategory) {
+        setProfessorship(professorship);
+        setShiftType(shiftType);
 
-		StudentTeacherInquiryTemplate inquiryTemplate =
-				StudentTeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-		setBlockResults(new ArrayList<BlockResultsSummaryBean>());
-		for (InquiryBlock inquiryBlock : inquiryTemplate.getInquiryBlocks()) {
-			getBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, person, personCategory));
-		}
-		Collections.sort(getBlockResults(), new BeanComparator("inquiryBlock.blockOrder"));
-	}
+        StudentTeacherInquiryTemplate inquiryTemplate =
+                StudentTeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
+        setBlockResults(new ArrayList<BlockResultsSummaryBean>());
+        for (InquiryBlock inquiryBlock : inquiryTemplate.getInquiryBlocks()) {
+            getBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, person, personCategory));
+        }
+        Collections.sort(getBlockResults(), new BeanComparator("inquiryBlock.blockOrder"));
+    }
 
-	public Professorship getProfessorship() {
-		return professorship;
-	}
+    public Professorship getProfessorship() {
+        return professorship;
+    }
 
-	public void setProfessorship(Professorship professorship) {
-		this.professorship = professorship;
-	}
+    public void setProfessorship(Professorship professorship) {
+        this.professorship = professorship;
+    }
 
-	public ShiftType getShiftType() {
-		return shiftType;
-	}
+    public ShiftType getShiftType() {
+        return shiftType;
+    }
 
-	public void setShiftType(ShiftType shiftType) {
-		this.shiftType = shiftType;
-	}
+    public void setShiftType(ShiftType shiftType) {
+        this.shiftType = shiftType;
+    }
 
-	public List<BlockResultsSummaryBean> getBlockResults() {
-		return blockResults;
-	}
+    public List<BlockResultsSummaryBean> getBlockResults() {
+        return blockResults;
+    }
 
-	public void setBlockResults(List<BlockResultsSummaryBean> blockResults) {
-		this.blockResults = blockResults;
-	}
+    public void setBlockResults(List<BlockResultsSummaryBean> blockResults) {
+        this.blockResults = blockResults;
+    }
 }

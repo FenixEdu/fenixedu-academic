@@ -8,35 +8,35 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public abstract class TeachersByExecutionPeriodDegreeAndPlan extends LeafGroup {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final ExecutionSemester executionPeriod;
-	private final Degree degree;
-	private final DegreeCurricularPlan degreeCurricularPlan;
+    private final ExecutionSemester executionPeriod;
+    private final Degree degree;
+    private final DegreeCurricularPlan degreeCurricularPlan;
 
-	public TeachersByExecutionPeriodDegreeAndPlan(ExecutionSemester executionPeriod, Degree degree, DegreeCurricularPlan plan) {
-		super();
-		this.degree = degree;
-		this.executionPeriod = executionPeriod;
-		this.degreeCurricularPlan = plan;
-	}
+    public TeachersByExecutionPeriodDegreeAndPlan(ExecutionSemester executionPeriod, Degree degree, DegreeCurricularPlan plan) {
+        super();
+        this.degree = degree;
+        this.executionPeriod = executionPeriod;
+        this.degreeCurricularPlan = plan;
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		return executionPeriod;
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        return executionPeriod;
+    }
 
-	public Degree getDegree() {
-		return degree;
-	}
+    public Degree getDegree() {
+        return degree;
+    }
 
-	public DegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getExecutionPeriod()), new IdOperator(getDegree()),
-				new IdOperator(getDegreeCurricularPlan()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getExecutionPeriod()), new IdOperator(getDegree()),
+                new IdOperator(getDegreeCurricularPlan()) };
+    }
 
 }

@@ -11,11 +11,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class OpenPunctualRoomsOccupationRequest extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(PunctualRoomsOccupationRequest request, Person person) {
-		if (request != null) {
-			request.openRequestAndAssociateOwnerOnlyForEmployess(new DateTime(), person);
-		}
-	}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(PunctualRoomsOccupationRequest request, Person person) {
+        if (request != null) {
+            request.openRequestAndAssociateOwnerOnlyForEmployess(new DateTime(), person);
+        }
+    }
 }

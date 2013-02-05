@@ -11,19 +11,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CourseGroupsProviderForRegistrationAcademicServiceRequest implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
-		final DegreeCurricularPlan degreeCurricularPlan = bean.getRegistration().getLastDegreeCurricularPlan();
-		final Set<CourseGroup> courseGroups = degreeCurricularPlan.getAllCoursesGroups();
-		courseGroups.removeAll(degreeCurricularPlan.getRoot().getCycleCourseGroups());
-		courseGroups.remove(degreeCurricularPlan.getRoot());
-		return courseGroups;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
+        final DegreeCurricularPlan degreeCurricularPlan = bean.getRegistration().getLastDegreeCurricularPlan();
+        final Set<CourseGroup> courseGroups = degreeCurricularPlan.getAllCoursesGroups();
+        courseGroups.removeAll(degreeCurricularPlan.getRoot().getCycleCourseGroups());
+        courseGroups.remove(degreeCurricularPlan.getRoot());
+        return courseGroups;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

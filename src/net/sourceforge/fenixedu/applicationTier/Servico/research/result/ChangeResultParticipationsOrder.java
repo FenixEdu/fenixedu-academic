@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Order
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeResultParticipationsOrder extends FenixService {
-	@Service
-	public static void run(ResultParticipation participation, OrderChange orderChange) {
-		participation.movePersonToDesiredOrder(orderChange);
-	}
+    @Service
+    public static void run(ResultParticipation participation, OrderChange orderChange) {
+        participation.movePersonToDesiredOrder(orderChange);
+    }
 }

@@ -11,30 +11,30 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastCourseGroupChangeRequestEvent extends PastCourseGroupChangeRequestEvent_Base implements IPastRequestEvent {
 
-	protected PastCourseGroupChangeRequestEvent() {
-		super();
-	}
+    protected PastCourseGroupChangeRequestEvent() {
+        super();
+    }
 
-	public PastCourseGroupChangeRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final CourseGroupChangeRequest request) {
-		this();
-		super.init(administrativeOffice, EventType.PAST_COURSE_GROUP_CHANGE_REQUEST, person, request);
-	}
+    public PastCourseGroupChangeRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final CourseGroupChangeRequest request) {
+        this();
+        super.init(administrativeOffice, EventType.PAST_COURSE_GROUP_CHANGE_REQUEST, person, request);
+    }
 
-	@Override
-	public void setPastAmount(Money amount) {
-		throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
-	}
+    @Override
+    public void setPastAmount(Money amount) {
+        throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		if (getAcademicServiceRequest().hasExecutionYear()) {
-			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-		}
-		return labelFormatter;
-	}
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        if (getAcademicServiceRequest().hasExecutionYear()) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
+        return labelFormatter;
+    }
 
 }

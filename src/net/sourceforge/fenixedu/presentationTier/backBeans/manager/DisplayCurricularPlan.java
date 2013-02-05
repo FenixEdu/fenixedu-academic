@@ -32,103 +32,103 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class DisplayCurricularPlan extends FenixBackingBean {
 
-	private Integer[] choosenDegreeCurricularPlansIDs;
+    private Integer[] choosenDegreeCurricularPlansIDs;
 
-	private Integer choosenExecutionYearID;
+    private Integer choosenExecutionYearID;
 
-	public String choose() {
-		return "success";
-	}
+    public String choose() {
+        return "success";
+    }
 
-	public List getDegreeCurricularPlans() throws FenixFilterException, FenixServiceException {
+    public List getDegreeCurricularPlans() throws FenixFilterException, FenixServiceException {
 
-		List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.DEGREE);
+        List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.DEGREE);
 
-		List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
-		for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
-			String label = degreeCurricularPlan.getInfoDegree().getNome() + " - " + degreeCurricularPlan.getName();
-			result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
-		}
+        List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
+        for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
+            String label = degreeCurricularPlan.getInfoDegree().getNome() + " - " + degreeCurricularPlan.getName();
+            result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public List getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List getExecutionYears() throws FenixFilterException, FenixServiceException {
 
-		List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
+        List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
-		List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-		for (InfoExecutionYear executionYear : executionYears) {
-			result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
-		}
+        List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
+        for (InfoExecutionYear executionYear : executionYears) {
+            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+        }
 
-		if (executionYears.size() > 0) {
-			setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
-		}
+        if (executionYears.size() > 0) {
+            setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public String getChoosenExecutionYear() throws FenixFilterException, FenixServiceException {
+    public String getChoosenExecutionYear() throws FenixFilterException, FenixServiceException {
 
-		InfoExecutionYear executionYear = ReadExecutionYearByID.run(getChoosenExecutionYearID());
+        InfoExecutionYear executionYear = ReadExecutionYearByID.run(getChoosenExecutionYearID());
 
-		return executionYear.getYear();
-	}
+        return executionYear.getYear();
+    }
 
-	public List getScopes() throws FenixFilterException, FenixServiceException {
+    public List getScopes() throws FenixFilterException, FenixServiceException {
 
-		List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
+        List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
 
-		for (Integer degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
-			Object[] args = { degreeCurricularPlanID, this.choosenExecutionYearID };
+        for (Integer degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
+            Object[] args = { degreeCurricularPlanID, this.choosenExecutionYearID };
 
-			Collection<DegreeModuleScope> degreeModuleScopes =
-					(Collection<DegreeModuleScope>) ServiceManagerServiceFactory.executeService(
-							"ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
+            Collection<DegreeModuleScope> degreeModuleScopes =
+                    (Collection<DegreeModuleScope>) ServiceManagerServiceFactory.executeService(
+                            "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
 
-			for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
-				if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-					scopes.add(InfoCurricularCourseScope
-							.newInfoFromDomain(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope)
-									.getCurricularCourseScope()));
-				}
-			}
-		}
+            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+                if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
+                    scopes.add(InfoCurricularCourseScope
+                            .newInfoFromDomain(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope)
+                                    .getCurricularCourseScope()));
+                }
+            }
+        }
 
-		sortScopes(scopes);
+        sortScopes(scopes);
 
-		CurricularCourseScopesForPrintDTO scopesForPrintDTO = new CurricularCourseScopesForPrintDTO();
-		for (InfoCurricularCourseScope scope : scopes) {
-			scopesForPrintDTO.add(scope);
-		}
+        CurricularCourseScopesForPrintDTO scopesForPrintDTO = new CurricularCourseScopesForPrintDTO();
+        for (InfoCurricularCourseScope scope : scopes) {
+            scopesForPrintDTO.add(scope);
+        }
 
-		return scopesForPrintDTO.getDegreeCurricularPlans();
-	}
+        return scopesForPrintDTO.getDegreeCurricularPlans();
+    }
 
-	private void sortScopes(List<InfoCurricularCourseScope> scopes) {
-		ComparatorChain comparatorChain = new ComparatorChain();
-		comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-		comparatorChain.addComparator(new BeanComparator("infoBranch.name"));
-		comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-		comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-		Collections.sort(scopes, comparatorChain);
-	}
+    private void sortScopes(List<InfoCurricularCourseScope> scopes) {
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+        comparatorChain.addComparator(new BeanComparator("infoBranch.name"));
+        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+        Collections.sort(scopes, comparatorChain);
+    }
 
-	public Integer getChoosenExecutionYearID() {
-		return choosenExecutionYearID;
-	}
+    public Integer getChoosenExecutionYearID() {
+        return choosenExecutionYearID;
+    }
 
-	public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
-		this.choosenExecutionYearID = choosenExecutionYearID;
-	}
+    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+        this.choosenExecutionYearID = choosenExecutionYearID;
+    }
 
-	public Integer[] getChoosenDegreeCurricularPlansIDs() {
-		return choosenDegreeCurricularPlansIDs;
-	}
+    public Integer[] getChoosenDegreeCurricularPlansIDs() {
+        return choosenDegreeCurricularPlansIDs;
+    }
 
-	public void setChoosenDegreeCurricularPlansIDs(Integer[] choosenDegreeCurricularPlansIDs) {
-		this.choosenDegreeCurricularPlansIDs = choosenDegreeCurricularPlansIDs;
-	}
+    public void setChoosenDegreeCurricularPlansIDs(Integer[] choosenDegreeCurricularPlansIDs) {
+        this.choosenDegreeCurricularPlansIDs = choosenDegreeCurricularPlansIDs;
+    }
 
 }

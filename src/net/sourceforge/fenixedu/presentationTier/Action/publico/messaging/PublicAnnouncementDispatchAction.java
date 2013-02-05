@@ -31,25 +31,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "public-view-announcement") })
 public class PublicAnnouncementDispatchAction extends AnnouncementManagement {
 
-	@Override
-	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	protected String getExtraRequestParameters(HttpServletRequest request) {
-		return "";
-	}
+    @Override
+    protected String getExtraRequestParameters(HttpServletRequest request) {
+        return "";
+    }
 
-	@Override
-	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-		return "/publicAnnouncements";
-	}
+    @Override
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+        return "/publicAnnouncements";
+    }
 
-	@Override
-	protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-		return new ArrayList<AnnouncementBoard>();
-	}
+    @Override
+    protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
+        return new ArrayList<AnnouncementBoard>();
+    }
 }

@@ -29,58 +29,52 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author zenida
  * 
  */
-@Mapping(
-		module = "student",
-		path = "/studentTimeTable",
-		input = "/studentTimeTable.do?page=0",
-		attribute = "studentTimeTableForm",
-		formBean = "studentTimeTableForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "student", path = "/studentTimeTable", input = "/studentTimeTable.do?page=0",
+        attribute = "studentTimeTableForm", formBean = "studentTimeTableForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showTimeTable", path = "df.timeTable.show"),
-		@Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp") })
+        @Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp") })
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException, FenixServiceException {
 
-		List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
-		if (registrations.size() == 1) {
-			return forwardToShowTimeTable(registrations.get(0), mapping, request);
-		} else {
-			request.setAttribute("registrations", registrations);
-			return mapping.findForward("chooseRegistration");
-		}
-	}
+        List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
+        if (registrations.size() == 1) {
+            return forwardToShowTimeTable(registrations.get(0), mapping, request);
+        } else {
+            request.setAttribute("registrations", registrations);
+            return mapping.findForward("chooseRegistration");
+        }
+    }
 
-	public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-		return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
-	}
+        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
+    }
 
-	protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
-			HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
+    protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
+            HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-		return forwardToShowTimeTable(registration, mapping, request);
-	}
+        return forwardToShowTimeTable(registration, mapping, request);
+    }
 
-	public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
-			HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
+            HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-		List<InfoLesson> infoLessons = ReadStudentTimeTable.run(registration);
+        List<InfoLesson> infoLessons = ReadStudentTimeTable.run(registration);
 
-		request.setAttribute("person", registration.getPerson());
-		request.setAttribute("infoLessons", infoLessons);
-		request.setAttribute("registrationId", registration.getIdInternal());
-		return mapping.findForward("showTimeTable");
-	}
+        request.setAttribute("person", registration.getPerson());
+        request.setAttribute("infoLessons", infoLessons);
+        request.setAttribute("registrationId", registration.getIdInternal());
+        return mapping.findForward("showTimeTable");
+    }
 
-	private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
-		Integer registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
-		if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
-			registrationId = Integer.valueOf(request.getParameter("registrationId"));
-		}
-		return rootDomainObject.readRegistrationByOID(registrationId);
-	}
+    private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
+        Integer registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
+        if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
+            registrationId = Integer.valueOf(request.getParameter("registrationId"));
+        }
+        return rootDomainObject.readRegistrationByOID(registrationId);
+    }
 }

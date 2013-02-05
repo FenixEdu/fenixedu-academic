@@ -13,43 +13,43 @@ import org.joda.time.DateTime;
 
 public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandidacyPR_Base {
 
-	protected StandaloneIndividualCandidacyPR() {
-		super();
-	}
+    protected StandaloneIndividualCandidacyPR() {
+        super();
+    }
 
-	public StandaloneIndividualCandidacyPR(DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
-		this();
-		init(EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE, EventType.STANDALONE_INDIVIDUAL_CANDIDACY, startDate, endDate,
-				serviceAgreementTemplate, fixedAmount);
-	}
+    public StandaloneIndividualCandidacyPR(DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
+        this();
+        init(EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE, EventType.STANDALONE_INDIVIDUAL_CANDIDACY, startDate, endDate,
+                serviceAgreementTemplate, fixedAmount);
+    }
 
-	@Override
-	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-		if (!event.hasAnyExemptions()) {
-			return amountToPay;
-		}
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+        if (!event.hasAnyExemptions()) {
+            return amountToPay;
+        }
 
-		for (Exemption exemption : event.getExemptions()) {
-			if (exemption.isAcademicEventExemption()) {
-				AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
-				amountToPay = amountToPay.subtract(academicEventExemption.getValue());
-			}
-		}
+        for (Exemption exemption : event.getExemptions()) {
+            if (exemption.isAcademicEventExemption()) {
+                AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
+                amountToPay = amountToPay.subtract(academicEventExemption.getValue());
+            }
+        }
 
-		if (amountToPay.isNegative()) {
-			return Money.ZERO;
-		}
+        if (amountToPay.isNegative()) {
+            return Money.ZERO;
+        }
 
-		return amountToPay;
-	}
+        return amountToPay;
+    }
 
-	@Override
-	public FixedAmountPR edit(final Money fixedAmount) {
+    @Override
+    public FixedAmountPR edit(final Money fixedAmount) {
 
-		deactivate();
-		return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-				fixedAmount);
-	}
+        deactivate();
+        return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null, getServiceAgreementTemplate(),
+                fixedAmount);
+    }
 
 }

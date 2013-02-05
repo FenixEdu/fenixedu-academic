@@ -9,23 +9,23 @@ package net.sourceforge.fenixedu.domain.projectsManagement;
  * 
  */
 public interface ISummaryPTEReportLine {
-	public abstract Double getExpense();
+    public abstract Double getExpense();
 
-	public abstract void setExpense(Double expense);
+    public abstract void setExpense(Double expense);
 
-	public abstract String getProjectCode();
+    public abstract String getProjectCode();
 
-	public abstract void setProjectCode(String projectCode);
+    public abstract void setProjectCode(String projectCode);
 
-	public abstract Double getRevenue();
+    public abstract Double getRevenue();
 
-	public abstract void setRevenue(Double revenue);
+    public abstract void setRevenue(Double revenue);
 
-	public abstract Double getTax();
+    public abstract Double getTax();
 
-	public abstract void setTax(Double tax);
+    public abstract void setTax(Double tax);
 
-	public abstract Double getTotal();
+    public abstract Double getTotal();
 
-	public abstract void setTotal(Double total);
+    public abstract void setTotal(Double total);
 }

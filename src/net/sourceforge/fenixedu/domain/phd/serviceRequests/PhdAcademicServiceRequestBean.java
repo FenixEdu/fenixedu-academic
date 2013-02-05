@@ -13,82 +13,82 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdAcademicServiceRequestBean implements Serializable, IPhdAcademicServiceRequest {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private PhdAcademicServiceRequest academicServiceRequest;
-	private AcademicServiceRequestSituationType situationType;
-	private DateTime whenNewSituationOccured = new DateTime();
-	private String justification;
+    private PhdAcademicServiceRequest academicServiceRequest;
+    private AcademicServiceRequestSituationType situationType;
+    private DateTime whenNewSituationOccured = new DateTime();
+    private String justification;
 
-	public PhdAcademicServiceRequestBean(final PhdAcademicServiceRequest request) {
-		this.academicServiceRequest = request;
-	}
+    public PhdAcademicServiceRequestBean(final PhdAcademicServiceRequest request) {
+        this.academicServiceRequest = request;
+    }
 
-	public PhdAcademicServiceRequest getAcademicServiceRequest() {
-		return academicServiceRequest;
-	}
+    public PhdAcademicServiceRequest getAcademicServiceRequest() {
+        return academicServiceRequest;
+    }
 
-	public void setAcademicServiceRequest(PhdAcademicServiceRequest academicServiceRequest) {
-		this.academicServiceRequest = academicServiceRequest;
-	}
+    public void setAcademicServiceRequest(PhdAcademicServiceRequest academicServiceRequest) {
+        this.academicServiceRequest = academicServiceRequest;
+    }
 
-	public AcademicServiceRequestSituationType getSituationType() {
-		return situationType;
-	}
+    public AcademicServiceRequestSituationType getSituationType() {
+        return situationType;
+    }
 
-	public void setSituationType(AcademicServiceRequestSituationType situationType) {
-		this.situationType = situationType;
-	}
+    public void setSituationType(AcademicServiceRequestSituationType situationType) {
+        this.situationType = situationType;
+    }
 
-	public DateTime getWhenNewSituationOccured() {
-		return whenNewSituationOccured;
-	}
+    public DateTime getWhenNewSituationOccured() {
+        return whenNewSituationOccured;
+    }
 
-	public void setWhenNewSituationOccured(DateTime whenNewSituationOccured) {
-		this.whenNewSituationOccured = whenNewSituationOccured;
-	}
+    public void setWhenNewSituationOccured(DateTime whenNewSituationOccured) {
+        this.whenNewSituationOccured = whenNewSituationOccured;
+    }
 
-	public String getJustification() {
-		return justification;
-	}
+    public String getJustification() {
+        return justification;
+    }
 
-	public void setJustification(final String justification) {
-		this.justification = justification;
-	}
+    public void setJustification(final String justification) {
+        this.justification = justification;
+    }
 
-	@Service
-	public void handleNewSituation() {
+    @Service
+    public void handleNewSituation() {
 
-		switch (getSituationType()) {
-		case PROCESSING:
-			getAcademicServiceRequest().process(getWhenNewSituationOccured().toYearMonthDay());
-			break;
-		case CANCELLED:
-			getAcademicServiceRequest().cancel(getJustification());
-			break;
-		case REJECTED:
-			getAcademicServiceRequest().reject(getJustification());
-			break;
-		case RECEIVED_FROM_EXTERNAL_ENTITY:
-			getAcademicServiceRequest().receivedFromExternalEntity(getWhenNewSituationOccured().toYearMonthDay(),
-					getJustification());
-			break;
-		case CONCLUDED:
-			getAcademicServiceRequest().conclude(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
-			break;
-		case SENT_TO_EXTERNAL_ENTITY:
-			getAcademicServiceRequest().sendToExternalEntity(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
-			break;
-		case DELIVERED:
-			getAcademicServiceRequest().delivered(AccessControl.getPerson(), getWhenNewSituationOccured().toYearMonthDay());
-			break;
-		default:
-			throw new DomainException("error.PhdAcademicServiceRequestBean.unknown.situation.type");
-		}
-	}
+        switch (getSituationType()) {
+        case PROCESSING:
+            getAcademicServiceRequest().process(getWhenNewSituationOccured().toYearMonthDay());
+            break;
+        case CANCELLED:
+            getAcademicServiceRequest().cancel(getJustification());
+            break;
+        case REJECTED:
+            getAcademicServiceRequest().reject(getJustification());
+            break;
+        case RECEIVED_FROM_EXTERNAL_ENTITY:
+            getAcademicServiceRequest().receivedFromExternalEntity(getWhenNewSituationOccured().toYearMonthDay(),
+                    getJustification());
+            break;
+        case CONCLUDED:
+            getAcademicServiceRequest().conclude(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
+            break;
+        case SENT_TO_EXTERNAL_ENTITY:
+            getAcademicServiceRequest().sendToExternalEntity(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
+            break;
+        case DELIVERED:
+            getAcademicServiceRequest().delivered(AccessControl.getPerson(), getWhenNewSituationOccured().toYearMonthDay());
+            break;
+        default:
+            throw new DomainException("error.PhdAcademicServiceRequestBean.unknown.situation.type");
+        }
+    }
 
-	@Override
-	public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-		return academicServiceRequest.getPhdIndividualProgramProcess();
-	}
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+        return academicServiceRequest.getPhdIndividualProgramProcess();
+    }
 }

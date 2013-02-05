@@ -17,49 +17,49 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
  */
 public class YearAnnouncementArchiveEntry {
 
-	private Integer year;
+    private Integer year;
 
-	final private Map<Integer, MonthAnnouncementArchiveEntry> entries = new TreeMap<Integer, MonthAnnouncementArchiveEntry>();
+    final private Map<Integer, MonthAnnouncementArchiveEntry> entries = new TreeMap<Integer, MonthAnnouncementArchiveEntry>();
 
-	public Map<Integer, MonthAnnouncementArchiveEntry> getEntries() {
-		return entries;
-	}
+    public Map<Integer, MonthAnnouncementArchiveEntry> getEntries() {
+        return entries;
+    }
 
-	public YearAnnouncementArchiveEntry(Integer year) {
-		this.year = year;
-	}
+    public YearAnnouncementArchiveEntry(Integer year) {
+        this.year = year;
+    }
 
-	public void addAnnouncement(Announcement announcement) {
-		int monthOfYear =
-				announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getMonthOfYear() : announcement
-						.getCreationDate().getMonthOfYear();
-		MonthAnnouncementArchiveEntry month = entries.get(monthOfYear);
-		if (month == null) {
-			month = new MonthAnnouncementArchiveEntry(monthOfYear);
-			entries.put(monthOfYear, month);
-		}
-		month.addAnnouncement(announcement);
+    public void addAnnouncement(Announcement announcement) {
+        int monthOfYear =
+                announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getMonthOfYear() : announcement
+                        .getCreationDate().getMonthOfYear();
+        MonthAnnouncementArchiveEntry month = entries.get(monthOfYear);
+        if (month == null) {
+            month = new MonthAnnouncementArchiveEntry(monthOfYear);
+            entries.put(monthOfYear, month);
+        }
+        month.addAnnouncement(announcement);
 
-	}
+    }
 
-	public Integer getYear() {
-		return year;
-	}
+    public Integer getYear() {
+        return year;
+    }
 
-	public void setYear(int year) {
-		this.year = year;
-	}
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-	public int getMonthsCount() {
-		return this.entries.size();
-	}
+    public int getMonthsCount() {
+        return this.entries.size();
+    }
 
-	public Integer getFirstPostMonth() {
-		Integer firstMonth = null;
-		if (this.entries.size() != 0) {
-			firstMonth = this.entries.keySet().iterator().next();
-		}
+    public Integer getFirstPostMonth() {
+        Integer firstMonth = null;
+        if (this.entries.size() != 0) {
+            firstMonth = this.entries.keySet().iterator().next();
+        }
 
-		return firstMonth;
-	}
+        return firstMonth;
+    }
 }

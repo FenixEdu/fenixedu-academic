@@ -13,27 +13,27 @@ import java.util.List;
  */
 public class InfoSiteInquiryStatistics extends DataTranferObject implements ISiteComponent {
 
-	private List infoInquiryStatistics;
+    private List infoInquiryStatistics;
 
-	private InfoExecutionCourse executionCourse;
+    private InfoExecutionCourse executionCourse;
 
-	public InfoSiteInquiryStatistics() {
-	}
+    public InfoSiteInquiryStatistics() {
+    }
 
-	public List getInfoInquiryStatistics() {
-		return infoInquiryStatistics;
-	}
+    public List getInfoInquiryStatistics() {
+        return infoInquiryStatistics;
+    }
 
-	public void setInfoInquiryStatistics(List list) {
-		infoInquiryStatistics = list;
-	}
+    public void setInfoInquiryStatistics(List list) {
+        infoInquiryStatistics = list;
+    }
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
 
 }

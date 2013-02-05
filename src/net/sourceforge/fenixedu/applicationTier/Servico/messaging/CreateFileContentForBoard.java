@@ -23,39 +23,39 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateFileContentForBoard extends FileContentService {
 
-	public void run(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup,
-			Person person) throws FenixServiceException, DomainException, IOException {
+    public void run(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup,
+            Person person) throws FenixServiceException, DomainException, IOException {
 
-		if (!board.hasWriter(person)) {
-			throw new FenixServiceException("error.person.not.board.writer");
-		}
+        if (!board.hasWriter(person)) {
+            throw new FenixServiceException("error.person.not.board.writer");
+        }
 
-		if (StringUtils.isEmpty(displayName)) {
-			displayName = file.getName();
-		}
+        if (StringUtils.isEmpty(displayName)) {
+            displayName = file.getName();
+        }
 
-		final VirtualPath filePath = getVirtualPath(board);
+        final VirtualPath filePath = getVirtualPath(board);
 
-		Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName);
+        Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName);
 
-		final byte[] bs = FileUtils.readFileToByteArray(file);
-		FileContent fileContent = new FileContent(filePath, originalFilename, displayName, metaData, bs, permittedGroup);
+        final byte[] bs = FileUtils.readFileToByteArray(file);
+        FileContent fileContent = new FileContent(filePath, originalFilename, displayName, metaData, bs, permittedGroup);
 
-		board.addFile(fileContent);
-	}
+        board.addFile(fileContent);
+    }
 
-	private List<FileSetMetaData> createMetaData(String author, String title) {
-		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-		metaData.add(FileSetMetaData.createAuthorMeta(author));
-		metaData.add(FileSetMetaData.createTitleMeta(title));
-		return metaData;
-	}
+    private List<FileSetMetaData> createMetaData(String author, String title) {
+        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+        metaData.add(FileSetMetaData.createAuthorMeta(author));
+        metaData.add(FileSetMetaData.createTitleMeta(title));
+        return metaData;
+    }
 
-	private VirtualPath getVirtualPath(AnnouncementBoard board) {
+    private VirtualPath getVirtualPath(AnnouncementBoard board) {
 
-		final VirtualPath filePath = new VirtualPath();
-		filePath.addNode(0, new VirtualPathNode("B" + board.getIdInternal(), board.getName().getContent()));
-		filePath.addNode(0, new VirtualPathNode("Announcements", "Announcements"));
-		return filePath;
-	}
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(0, new VirtualPathNode("B" + board.getIdInternal(), board.getName().getContent()));
+        filePath.addNode(0, new VirtualPathNode("Announcements", "Announcements"));
+        return filePath;
+    }
 }

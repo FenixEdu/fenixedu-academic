@@ -14,44 +14,44 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class AllSecondCycleStudentsGroup extends Group {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public AllSecondCycleStudentsGroup() {
-	}
+    public AllSecondCycleStudentsGroup() {
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = new HashSet<Person>();
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = new HashSet<Person>();
 
-		for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-			if (degree.isBolonhaDegree() && degree.getDegreeType().hasCycleTypes(CycleType.SECOND_CYCLE)) {
-				for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-					if (degreeCurricularPlan.isActive()) {
-						for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-								.getStudentCurricularPlansSet()) {
-							if (studentCurricularPlan.isActive()) {
-								final CycleCurriculumGroup cycleCurriculumGroup =
-										studentCurricularPlan.getCycle(CycleType.SECOND_CYCLE);
-								if (cycleCurriculumGroup != null && !cycleCurriculumGroup.isConcluded()) {
-									final CycleCurriculumGroup firstCycleCurriculumGroup =
-											studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE);
-									if (firstCycleCurriculumGroup == null || firstCycleCurriculumGroup.isConcluded()) {
-										elements.add(studentCurricularPlan.getPerson());
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+        for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+            if (degree.isBolonhaDegree() && degree.getDegreeType().hasCycleTypes(CycleType.SECOND_CYCLE)) {
+                for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+                    if (degreeCurricularPlan.isActive()) {
+                        for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
+                                .getStudentCurricularPlansSet()) {
+                            if (studentCurricularPlan.isActive()) {
+                                final CycleCurriculumGroup cycleCurriculumGroup =
+                                        studentCurricularPlan.getCycle(CycleType.SECOND_CYCLE);
+                                if (cycleCurriculumGroup != null && !cycleCurriculumGroup.isConcluded()) {
+                                    final CycleCurriculumGroup firstCycleCurriculumGroup =
+                                            studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE);
+                                    if (firstCycleCurriculumGroup == null || firstCycleCurriculumGroup.isConcluded()) {
+                                        elements.add(studentCurricularPlan.getPerson());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-		return elements;
-	}
+        return elements;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
 
 }

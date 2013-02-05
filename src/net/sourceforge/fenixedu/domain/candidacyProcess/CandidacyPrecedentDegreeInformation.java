@@ -10,57 +10,57 @@ import org.joda.time.LocalDate;
 @Deprecated
 abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrecedentDegreeInformation_Base {
 
-	protected CandidacyPrecedentDegreeInformation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected CandidacyPrecedentDegreeInformation() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public boolean hasInstitution() {
-		return getInstitution() != null;
-	}
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
 
-	public boolean isInternal() {
-		return false;
-	}
+    public boolean isInternal() {
+        return false;
+    }
 
-	public boolean isExternal() {
-		return false;
-	}
+    public boolean isExternal() {
+        return false;
+    }
 
-	abstract public String getDegreeDesignation();
+    abstract public String getDegreeDesignation();
 
-	abstract protected Integer getConclusionYear();
+    abstract protected Integer getConclusionYear();
 
-	abstract public LocalDate getConclusionDate();
+    abstract public LocalDate getConclusionDate();
 
-	public boolean hasConclusionDate() {
-		return getConclusionDate() != null;
-	}
+    public boolean hasConclusionDate() {
+        return getConclusionDate() != null;
+    }
 
-	abstract public Unit getInstitution();
+    abstract public Unit getInstitution();
 
-	abstract public String getConclusionGrade();
+    abstract public String getConclusionGrade();
 
-	public String getDegreeAndInstitutionName() {
-		return getDegreeDesignation() + " / " + getInstitution().getName();
-	}
+    public String getDegreeAndInstitutionName() {
+        return getDegreeDesignation() + " / " + getInstitution().getName();
+    }
 
-	abstract public Integer getNumberOfEnroledCurricularCourses();
+    abstract public Integer getNumberOfEnroledCurricularCourses();
 
-	abstract public Integer getNumberOfApprovedCurricularCourses();
+    abstract public Integer getNumberOfApprovedCurricularCourses();
 
-	abstract public BigDecimal getGradeSum();
+    abstract public BigDecimal getGradeSum();
 
-	abstract public BigDecimal getApprovedEcts();
+    abstract public BigDecimal getApprovedEcts();
 
-	abstract public BigDecimal getEnroledEcts();
+    abstract public BigDecimal getEnroledEcts();
 
-	protected boolean hasSchoolLevel() {
-		return getSchoolLevel() != null;
-	}
+    protected boolean hasSchoolLevel() {
+        return getSchoolLevel() != null;
+    }
 
-	protected boolean hasOtherSchoolLevel() {
-		return getOtherSchoolLevel() != null && !getOtherSchoolLevel().isEmpty();
-	}
+    protected boolean hasOtherSchoolLevel() {
+        return getOtherSchoolLevel() != null && !getOtherSchoolLevel().isEmpty();
+    }
 
 }

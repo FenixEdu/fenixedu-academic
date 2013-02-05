@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.Site;
 
 public class DeleteSection extends FenixService {
 
-	public Boolean run(Site site, final Section section) {
-		if (section != null) {
-			section.delete();
-			return Boolean.TRUE;
-		} else {
-			return Boolean.FALSE;
-		}
-	}
+    public Boolean run(Site site, final Section section) {
+        if (section != null) {
+            section.delete();
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
+    }
 
 }

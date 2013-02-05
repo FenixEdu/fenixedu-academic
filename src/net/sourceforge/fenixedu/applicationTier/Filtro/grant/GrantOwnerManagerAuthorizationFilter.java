@@ -13,17 +13,17 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class GrantOwnerManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
-	public GrantOwnerManagerAuthorizationFilter() {
-	}
+    public GrantOwnerManagerAuthorizationFilter() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.GRANT_OWNER_MANAGER;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.GRANT_OWNER_MANAGER;
+    }
 
 }

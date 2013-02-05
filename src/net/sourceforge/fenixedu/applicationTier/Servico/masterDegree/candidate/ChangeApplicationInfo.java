@@ -34,58 +34,58 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeApplicationInfo extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
-	@Service
-	public static InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
-			InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
+            InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
-		final ExecutionDegree executionDegree =
-				rootDomainObject.readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
+        final ExecutionDegree executionDegree =
+                rootDomainObject.readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
 
-		Person person =
-				Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()
-						.getNumeroDocumentoIdentificacao(), newMasterDegreeCandidate.getInfoPerson()
-						.getTipoDocumentoIdentificacao());
+        Person person =
+                Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()
+                        .getNumeroDocumentoIdentificacao(), newMasterDegreeCandidate.getInfoPerson()
+                        .getTipoDocumentoIdentificacao());
 
-		MasterDegreeCandidate existingMasterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
-		if (existingMasterDegreeCandidate == null) {
-			throw new ExcepcaoInexistente("error.changeApplicationInfo.noCandidate");
-		}
+        MasterDegreeCandidate existingMasterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
+        if (existingMasterDegreeCandidate == null) {
+            throw new ExcepcaoInexistente("error.changeApplicationInfo.noCandidate");
+        }
 
-		if (isNewPerson) {
-			Country country = null;
-			if ((infoPersonEditor.getInfoPais() != null)) {
-				country = Country.readCountryByNationality(infoPersonEditor.getInfoPais().getNationality());
-			}
+        if (isNewPerson) {
+            Country country = null;
+            if ((infoPersonEditor.getInfoPais() != null)) {
+                country = Country.readCountryByNationality(infoPersonEditor.getInfoPais().getNationality());
+            }
 
-			person = existingMasterDegreeCandidate.getPerson();
-			person.edit(infoPersonEditor, country);
+            person = existingMasterDegreeCandidate.getPerson();
+            person.edit(infoPersonEditor, country);
 
-		} else {
-			userView.getPerson().setDefaultMobilePhoneNumber(infoPersonEditor.getTelemovel());
-			userView.getPerson().setDefaultWebAddressUrl(infoPersonEditor.getEnderecoWeb());
-			userView.getPerson().setDefaultEmailAddressValue(infoPersonEditor.getEmail());
-		}
+        } else {
+            userView.getPerson().setDefaultMobilePhoneNumber(infoPersonEditor.getTelemovel());
+            userView.getPerson().setDefaultWebAddressUrl(infoPersonEditor.getEnderecoWeb());
+            userView.getPerson().setDefaultEmailAddressValue(infoPersonEditor.getEmail());
+        }
 
-		// Change Candidate Information
-		existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
-		existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
-		existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate.getMajorDegreeSchool());
-		existingMasterDegreeCandidate.setMajorDegreeYear(newMasterDegreeCandidate.getMajorDegreeYear());
-		existingMasterDegreeCandidate.setSpecializationArea(newMasterDegreeCandidate.getSpecializationArea());
+        // Change Candidate Information
+        existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
+        existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
+        existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate.getMajorDegreeSchool());
+        existingMasterDegreeCandidate.setMajorDegreeYear(newMasterDegreeCandidate.getMajorDegreeYear());
+        existingMasterDegreeCandidate.setSpecializationArea(newMasterDegreeCandidate.getSpecializationArea());
 
-		CandidateSituation oldCandidateSituation = existingMasterDegreeCandidate.getActiveCandidateSituation();
-		oldCandidateSituation.setValidation(new State(State.INACTIVE));
+        CandidateSituation oldCandidateSituation = existingMasterDegreeCandidate.getActiveCandidateSituation();
+        oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
-		CandidateSituation activeCandidateSituation = new CandidateSituation();
-		activeCandidateSituation.setDateYearMonthDay(new YearMonthDay());
-		activeCandidateSituation.setSituation(SituationName.PENDENT_COM_DADOS_OBJ);
-		activeCandidateSituation.setValidation(new State(State.ACTIVE));
-		activeCandidateSituation.setMasterDegreeCandidate(existingMasterDegreeCandidate);
-		existingMasterDegreeCandidate.getSituations().add(activeCandidateSituation);
+        CandidateSituation activeCandidateSituation = new CandidateSituation();
+        activeCandidateSituation.setDateYearMonthDay(new YearMonthDay());
+        activeCandidateSituation.setSituation(SituationName.PENDENT_COM_DADOS_OBJ);
+        activeCandidateSituation.setValidation(new State(State.ACTIVE));
+        activeCandidateSituation.setMasterDegreeCandidate(existingMasterDegreeCandidate);
+        existingMasterDegreeCandidate.getSituations().add(activeCandidateSituation);
 
-		return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(existingMasterDegreeCandidate);
+        return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(existingMasterDegreeCandidate);
 
-	}
+    }
 
 }

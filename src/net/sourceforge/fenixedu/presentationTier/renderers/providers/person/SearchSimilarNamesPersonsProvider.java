@@ -19,26 +19,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class SearchSimilarNamesPersonsProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ChoosePersonBean choosePersonBean = (ChoosePersonBean) source;
-		Set<Person> result = new HashSet<Person>(Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber()));
-		result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
-				Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ChoosePersonBean choosePersonBean = (ChoosePersonBean) source;
+        Set<Person> result = new HashSet<Person>(Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber()));
+        result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
+                Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));
 
-		if (choosePersonBean.getStudentNumber() != null) {
-			Student student = Student.readStudentByNumber(choosePersonBean.getStudentNumber());
+        if (choosePersonBean.getStudentNumber() != null) {
+            Student student = Student.readStudentByNumber(choosePersonBean.getStudentNumber());
 
-			if (student != null) {
-				result.add(student.getPerson());
-			}
-		}
+            if (student != null) {
+                result.add(student.getPerson());
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

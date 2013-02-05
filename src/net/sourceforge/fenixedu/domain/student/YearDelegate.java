@@ -22,187 +22,187 @@ import org.apache.commons.lang.StringUtils;
 
 public class YearDelegate extends YearDelegate_Base {
 
-	public YearDelegate() {
-		super();
-	}
+    public YearDelegate() {
+        super();
+    }
 
-	public YearDelegate(Registration registration, PersonFunction delegateFunction) {
-		this();
-		setRegistration(registration);
-		setDelegateFunction(delegateFunction);
-	}
+    public YearDelegate(Registration registration, PersonFunction delegateFunction) {
+        this();
+        setRegistration(registration);
+        setDelegateFunction(delegateFunction);
+    }
 
-	public CurricularYear getCurricularYear() {
-		return getDelegateFunction().getCurricularYear();
-	}
+    public CurricularYear getCurricularYear() {
+        return getDelegateFunction().getCurricularYear();
+    }
 
-	public Collection<ExecutionCourse> getDelegatedExecutionCourses(final ExecutionSemester executionSemester) {
-		return getDegree().getExecutionCourses(getCurricularYear(), executionSemester);
-	}
+    public Collection<ExecutionCourse> getDelegatedExecutionCourses(final ExecutionSemester executionSemester) {
+        return getDegree().getExecutionCourses(getCurricularYear(), executionSemester);
+    }
 
-	public boolean hasInquiriesToAnswer(final ExecutionSemester executionSemester) {
-		if (getInquiryDelegateAnswersSet().isEmpty()) {
-			return true;
-		}
+    public boolean hasInquiriesToAnswer(final ExecutionSemester executionSemester) {
+        if (getInquiryDelegateAnswersSet().isEmpty()) {
+            return true;
+        }
 
-		final ExecutionDegree executionDegree =
-				ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(
-						this.getRegistration().getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(),
-						executionSemester.getExecutionYear());
-		for (ExecutionCourse executionCourse : getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
-			if (hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
-				return true;
-			}
-		}
-		return false;
-	}
+        final ExecutionDegree executionDegree =
+                ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(
+                        this.getRegistration().getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(),
+                        executionSemester.getExecutionYear());
+        for (ExecutionCourse executionCourse : getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
+            if (hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
-		List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
-		for (InquiryResult inquiryResult : inquiryResults) {
-			if (inquiryResult.getResultClassification() != null
-					&& (inquiryResult.getExecutionDegree() == executionDegree || inquiryResult.getExecutionDegree() == null)) {
-				if (inquiryResult.getResultClassification().isMandatoryComment()
-						&& !inquiryResult.getInquiryQuestion().isResultQuestion(executionCourse.getExecutionPeriod())) {
-					InquiryResultComment inquiryResultComment =
-							inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.DELEGATE);
-					if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    public boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+        List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
+        for (InquiryResult inquiryResult : inquiryResults) {
+            if (inquiryResult.getResultClassification() != null
+                    && (inquiryResult.getExecutionDegree() == executionDegree || inquiryResult.getExecutionDegree() == null)) {
+                if (inquiryResult.getResultClassification().isMandatoryComment()
+                        && !inquiryResult.getInquiryQuestion().isResultQuestion(executionCourse.getExecutionPeriod())) {
+                    InquiryResultComment inquiryResultComment =
+                            inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.DELEGATE);
+                    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
-			ExecutionDegree executionDegree) {
+    public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
+            ExecutionDegree executionDegree) {
 
-		final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-		for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-			if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyInquiryResults()
-					&& executionCourse.hasAnyEnrolment(executionDegree)) {
-				result.add(executionCourse);
-			}
-		}
+        final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+        for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
+            if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyInquiryResults()
+                    && executionCourse.hasAnyEnrolment(executionDegree)) {
+                result.add(executionCourse);
+            }
+        }
 
-		addIfNecessaryExecutionCoursesFromOtherYears(executionSemester, executionDegree, result);
-		return result;
-	}
+        addIfNecessaryExecutionCoursesFromOtherYears(executionSemester, executionDegree, result);
+        return result;
+    }
 
-	private void addIfNecessaryExecutionCoursesFromOtherYears(final ExecutionSemester executionSemester,
-			ExecutionDegree executionDegree, final Set<ExecutionCourse> result) {
-		final Degree degree = getRegistration().getDegree();
-		//final CycleType currentCycleType = getRegistration().getCurrentCycleType(); //TODO to pass EC to degree and master delegates
-		final FunctionType functionType = getFunctionType(degree);
-		final Student student = getRegistration().getStudent();
-		final PersonFunction degreeDelegateFunction =
-				degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionSemester.getExecutionYear(),
-						functionType);
+    private void addIfNecessaryExecutionCoursesFromOtherYears(final ExecutionSemester executionSemester,
+            ExecutionDegree executionDegree, final Set<ExecutionCourse> result) {
+        final Degree degree = getRegistration().getDegree();
+        //final CycleType currentCycleType = getRegistration().getCurrentCycleType(); //TODO to pass EC to degree and master delegates
+        final FunctionType functionType = getFunctionType(degree);
+        final Student student = getRegistration().getStudent();
+        final PersonFunction degreeDelegateFunction =
+                degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionSemester.getExecutionYear(),
+                        functionType);
 
-		if (degreeDelegateFunction != null) {
-			addExecutionCoursesForOtherYears(executionSemester, executionDegree, degree, student, result);
-		}
-	}
+        if (degreeDelegateFunction != null) {
+            addExecutionCoursesForOtherYears(executionSemester, executionDegree, degree, student, result);
+        }
+    }
 
-	private void addExecutionCoursesForOtherYears(ExecutionSemester executionPeriod, ExecutionDegree executionDegree,
-			Degree degree, Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
-		List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
-		for (Student forStudent : degree.getAllActiveYearDelegates()) {
-			if (forStudent != student) {
-				YearDelegate otherYearDelegate = null;
-				for (Delegate delegate : forStudent.getDelegates()) {
-					if (delegate instanceof YearDelegate) {
-						if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
-							if (otherYearDelegate == null
-									|| delegate.getDelegateFunction().getEndDate()
-											.isAfter(otherYearDelegate.getDelegateFunction().getEndDate())) {
-								otherYearDelegate = (YearDelegate) delegate;
-							}
-						}
-					}
-				}
-				if (otherYearDelegate != null) {
-					otherYearDelegates.add(otherYearDelegate);
-				}
-			}
-		}
-		for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
-			YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
-			if (yearDelegateForYear == null) {
-				executionCoursesToInquiries.addAll(getExecutionCoursesToInquiries(executionPeriod, executionDegree, iter));
-			}
-		}
-	}
+    private void addExecutionCoursesForOtherYears(ExecutionSemester executionPeriod, ExecutionDegree executionDegree,
+            Degree degree, Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
+        List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
+        for (Student forStudent : degree.getAllActiveYearDelegates()) {
+            if (forStudent != student) {
+                YearDelegate otherYearDelegate = null;
+                for (Delegate delegate : forStudent.getDelegates()) {
+                    if (delegate instanceof YearDelegate) {
+                        if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
+                            if (otherYearDelegate == null
+                                    || delegate.getDelegateFunction().getEndDate()
+                                            .isAfter(otherYearDelegate.getDelegateFunction().getEndDate())) {
+                                otherYearDelegate = (YearDelegate) delegate;
+                            }
+                        }
+                    }
+                }
+                if (otherYearDelegate != null) {
+                    otherYearDelegates.add(otherYearDelegate);
+                }
+            }
+        }
+        for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
+            YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
+            if (yearDelegateForYear == null) {
+                executionCoursesToInquiries.addAll(getExecutionCoursesToInquiries(executionPeriod, executionDegree, iter));
+            }
+        }
+    }
 
-	private YearDelegate getYearDelegate(List<YearDelegate> otherYearDelegates, int year) {
-		for (YearDelegate yearDelegate : otherYearDelegates) {
-			if (yearDelegate.getCurricularYear().getYear() == year) {
-				return yearDelegate;
-			}
-		}
-		return null;
-	}
+    private YearDelegate getYearDelegate(List<YearDelegate> otherYearDelegates, int year) {
+        for (YearDelegate yearDelegate : otherYearDelegates) {
+            if (yearDelegate.getCurricularYear().getYear() == year) {
+                return yearDelegate;
+            }
+        }
+        return null;
+    }
 
-	private FunctionType getFunctionType(Degree degree) {
-		switch (degree.getDegreeType()) {
-		case BOLONHA_DEGREE:
-			return FunctionType.DELEGATE_OF_DEGREE;
-		case BOLONHA_MASTER_DEGREE:
-			return FunctionType.DELEGATE_OF_MASTER_DEGREE;
-		case BOLONHA_INTEGRATED_MASTER_DEGREE:
-			//	    degree.getDegreeType().getYears(CycleType.FIRST_CYCLE); //TODO pass to degree delegate
-			//	    degree.getDegreeType().getYears(CycleType.SECOND_CYCLE); //TODO pass to master degree delegate
-			return FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE;
-		default:
-			return null;
-		}
-	}
+    private FunctionType getFunctionType(Degree degree) {
+        switch (degree.getDegreeType()) {
+        case BOLONHA_DEGREE:
+            return FunctionType.DELEGATE_OF_DEGREE;
+        case BOLONHA_MASTER_DEGREE:
+            return FunctionType.DELEGATE_OF_MASTER_DEGREE;
+        case BOLONHA_INTEGRATED_MASTER_DEGREE:
+            //	    degree.getDegreeType().getYears(CycleType.FIRST_CYCLE); //TODO pass to degree delegate
+            //	    degree.getDegreeType().getYears(CycleType.SECOND_CYCLE); //TODO pass to master degree delegate
+            return FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE;
+        default:
+            return null;
+        }
+    }
 
-	private List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
-			final ExecutionDegree executionDegree, Integer curricularYear) {
-		final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-		for (ExecutionCourse executionCourse : getDegree().getExecutionCourses(curricularYear, executionSemester)) {
-			if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyEnrolment(executionDegree)) {
-				result.add(executionCourse);
-			}
-		}
-		return result;
-	}
+    private List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
+            final ExecutionDegree executionDegree, Integer curricularYear) {
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (ExecutionCourse executionCourse : getDegree().getExecutionCourses(curricularYear, executionSemester)) {
+            if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyEnrolment(executionDegree)) {
+                result.add(executionCourse);
+            }
+        }
+        return result;
+    }
 
-	public Collection<ExecutionCourse> getAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
-		final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-		for (YearDelegateCourseInquiry yearDelegateCourseInquiry : getYearDelegateCourseInquiries()) {
-			final ExecutionCourse executionCourse = yearDelegateCourseInquiry.getExecutionCourse();
-			if (executionCourse.getExecutionPeriod() == executionSemester) {
-				result.add(executionCourse);
-			}
-		}
-		return result;
-	}
+    public Collection<ExecutionCourse> getAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
+        final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+        for (YearDelegateCourseInquiry yearDelegateCourseInquiry : getYearDelegateCourseInquiries()) {
+            final ExecutionCourse executionCourse = yearDelegateCourseInquiry.getExecutionCourse();
+            if (executionCourse.getExecutionPeriod() == executionSemester) {
+                result.add(executionCourse);
+            }
+        }
+        return result;
+    }
 
-	public Collection<ExecutionCourse> getNotAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
-		final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-		final Collection<ExecutionCourse> answeredInquiriesExecutionCourses =
-				getAnsweredInquiriesExecutionCourses(executionSemester);
-		for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-			if (executionCourse.isAvailableForInquiry() && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
-				result.add(executionCourse);
-			}
-		}
-		return result;
-	}
+    public Collection<ExecutionCourse> getNotAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
+        final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+        final Collection<ExecutionCourse> answeredInquiriesExecutionCourses =
+                getAnsweredInquiriesExecutionCourses(executionSemester);
+        for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
+            if (executionCourse.isAvailableForInquiry() && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
+                result.add(executionCourse);
+            }
+        }
+        return result;
+    }
 
-	public Person getPerson() {
-		return getRegistration().getPerson();
-	}
+    public Person getPerson() {
+        return getRegistration().getPerson();
+    }
 
-	public boolean isAfter(YearDelegate yearDelegate) {
-		return getDelegateFunction().getEndDate().isAfter(yearDelegate.getDelegateFunction().getEndDate());
-	}
+    public boolean isAfter(YearDelegate yearDelegate) {
+        return getDelegateFunction().getEndDate().isAfter(yearDelegate.getDelegateFunction().getEndDate());
+    }
 
-	@Override
-	public Degree getDegree() {
-		return super.getDegree();
-	}
+    @Override
+    public Degree getDegree() {
+        return super.getDegree();
+    }
 }

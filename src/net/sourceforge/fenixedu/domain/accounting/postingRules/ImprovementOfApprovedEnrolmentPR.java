@@ -29,115 +29,115 @@ import org.joda.time.YearMonthDay;
 
 public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrolmentPR_Base {
 
-	protected ImprovementOfApprovedEnrolmentPR() {
-		super();
-	}
+    protected ImprovementOfApprovedEnrolmentPR() {
+        super();
+    }
 
-	public ImprovementOfApprovedEnrolmentPR(DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty) {
-		super.init(EntryType.IMPROVEMENT_OF_APPROVED_ENROLMENT_FEE, EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT, startDate,
-				endDate, serviceAgreementTemplate);
-		checkParameters(fixedAmount, fixedAmountPenalty);
-		super.setFixedAmount(fixedAmount);
-		super.setFixedAmountPenalty(fixedAmountPenalty);
-	}
+    public ImprovementOfApprovedEnrolmentPR(DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount, Money fixedAmountPenalty) {
+        super.init(EntryType.IMPROVEMENT_OF_APPROVED_ENROLMENT_FEE, EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT, startDate,
+                endDate, serviceAgreementTemplate);
+        checkParameters(fixedAmount, fixedAmountPenalty);
+        super.setFixedAmount(fixedAmount);
+        super.setFixedAmountPenalty(fixedAmountPenalty);
+    }
 
-	private void checkParameters(Money fixedAmount, Money fixedAmountPenalty) {
-		if (fixedAmount == null) {
-			throw new DomainException("error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.fixedAmount.cannot.be.null");
-		}
-		if (fixedAmountPenalty == null) {
-			throw new DomainException(
-					"error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.fixedAmountPenalty.cannot.be.null");
-		}
-	}
+    private void checkParameters(Money fixedAmount, Money fixedAmountPenalty) {
+        if (fixedAmount == null) {
+            throw new DomainException("error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.fixedAmount.cannot.be.null");
+        }
+        if (fixedAmountPenalty == null) {
+            throw new DomainException(
+                    "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.fixedAmountPenalty.cannot.be.null");
+        }
+    }
 
-	@Override
-	public void setFixedAmountPenalty(Money fixedAmountPenalty) {
-		throw new DomainException(
-				"error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.cannot.modify.fixedAmountPenalty");
-	}
+    @Override
+    public void setFixedAmountPenalty(Money fixedAmountPenalty) {
+        throw new DomainException(
+                "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.cannot.modify.fixedAmountPenalty");
+    }
 
-	public ImprovementOfApprovedEnrolmentPR edit(final Money fixedAmount, final Money fixedAmountPenalty,
-			final YearMonthDay whenToApplyFixedAmountPenalty) {
-		deactivate();
-		return new ImprovementOfApprovedEnrolmentPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
-				fixedAmountPenalty);
-	}
+    public ImprovementOfApprovedEnrolmentPR edit(final Money fixedAmount, final Money fixedAmountPenalty,
+            final YearMonthDay whenToApplyFixedAmountPenalty) {
+        deactivate();
+        return new ImprovementOfApprovedEnrolmentPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
+                fixedAmountPenalty);
+    }
 
-	@Override
-	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-		final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
-				(ImprovementOfApprovedEnrolmentEvent) event;
-		final boolean hasPenalty = hasPenalty(event, when);
+    @Override
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
+                (ImprovementOfApprovedEnrolmentEvent) event;
+        final boolean hasPenalty = hasPenalty(event, when);
 
-		Money result = Money.ZERO;
-		for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsCount(); i++) {
-			result = result.add(hasPenalty ? getFixedAmountPenalty() : getFixedAmount());
-		}
+        Money result = Money.ZERO;
+        for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsCount(); i++) {
+            result = result.add(hasPenalty ? getFixedAmountPenalty() : getFixedAmount());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-		return amountToPay;
-	}
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+        return amountToPay;
+    }
 
-	private boolean hasPenalty(final Event event, final DateTime when) {
-		if (event.hasAnyPenaltyExemptionsFor(ImprovementOfApprovedEnrolmentPenaltyExemption.class)) {
-			return false;
-		} else {
-			return !getEnrolmentPeriodInImprovementOfApprovedEnrolment(event).containsDate(when);
-		}
-	}
+    private boolean hasPenalty(final Event event, final DateTime when) {
+        if (event.hasAnyPenaltyExemptionsFor(ImprovementOfApprovedEnrolmentPenaltyExemption.class)) {
+            return false;
+        } else {
+            return !getEnrolmentPeriodInImprovementOfApprovedEnrolment(event).containsDate(when);
+        }
+    }
 
-	private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(Event event) {
-		final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
-				(ImprovementOfApprovedEnrolmentEvent) event;
-		final EnrolmentEvaluation enrolmentEvaluation =
-				improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().get(0);
-		final DegreeCurricularPlan degreeCurricularPlan = enrolmentEvaluation.getDegreeCurricularPlan();
+    private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(Event event) {
+        final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
+                (ImprovementOfApprovedEnrolmentEvent) event;
+        final EnrolmentEvaluation enrolmentEvaluation =
+                improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().get(0);
+        final DegreeCurricularPlan degreeCurricularPlan = enrolmentEvaluation.getDegreeCurricularPlan();
 
-		final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment =
-				enrolmentEvaluation.getExecutionPeriod().getEnrolmentPeriod(
-						EnrolmentPeriodInImprovementOfApprovedEnrolment.class, degreeCurricularPlan);
-		if (enrolmentPeriodInImprovementOfApprovedEnrolment == null) {
-			throw new DomainException(
-					"error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.enrolmentPeriodInImprovementOfApprovedEnrolment.must.not.be.null");
-		}
+        final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment =
+                enrolmentEvaluation.getExecutionPeriod().getEnrolmentPeriod(
+                        EnrolmentPeriodInImprovementOfApprovedEnrolment.class, degreeCurricularPlan);
+        if (enrolmentPeriodInImprovementOfApprovedEnrolment == null) {
+            throw new DomainException(
+                    "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.enrolmentPeriodInImprovementOfApprovedEnrolment.must.not.be.null");
+        }
 
-		return (EnrolmentPeriodInImprovementOfApprovedEnrolment) enrolmentPeriodInImprovementOfApprovedEnrolment;
-	}
+        return (EnrolmentPeriodInImprovementOfApprovedEnrolment) enrolmentPeriodInImprovementOfApprovedEnrolment;
+    }
 
-	@Override
-	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-		final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-		return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
-				event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
-	}
+    @Override
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+        final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
+        return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
+                event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
+    }
 
-	@Override
-	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-		if (entryDTOs.size() != 1) {
-			throw new DomainException(
-					"error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.invalid.number.of.entryDTOs");
-		}
+    @Override
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+        if (entryDTOs.size() != 1) {
+            throw new DomainException(
+                    "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.invalid.number.of.entryDTOs");
+        }
 
-		final EntryDTO entryDTO = entryDTOs.iterator().next();
-		checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
+        final EntryDTO entryDTO = entryDTOs.iterator().next();
+        checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
-		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
-				entryDTO.getAmountToPay(), transactionDetail));
-	}
+        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
+                entryDTO.getAmountToPay(), transactionDetail));
+    }
 
-	private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
-		if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
-			throw new DomainExceptionWithLabelFormatter(
-					"error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.amount.being.payed.must.match.amount.to.pay",
-					event.getDescriptionForEntryType(getEntryType()));
-		}
-	}
+    private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
+        if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.amount.being.payed.must.match.amount.to.pay",
+                    event.getDescriptionForEntryType(getEntryType()));
+        }
+    }
 
 }

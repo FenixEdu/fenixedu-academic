@@ -10,19 +10,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddCandidateYearDelegateElections extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException {
 
-		try {
-			if (!yearDelegateElection.getCandidates().contains(student)) {
-				yearDelegateElection.addCandidates(student);
-			} else {
-				throw new FenixServiceException("error.student.elections.candidacy.studentAlreadyCandidated");
-			}
-		} catch (DomainException ex) {
-			throw new FenixServiceException(ex.getMessage(), ex.getArgs());
-		}
-	}
+        try {
+            if (!yearDelegateElection.getCandidates().contains(student)) {
+                yearDelegateElection.addCandidates(student);
+            } else {
+                throw new FenixServiceException("error.student.elections.candidacy.studentAlreadyCandidated");
+            }
+        } catch (DomainException ex) {
+            throw new FenixServiceException(ex.getMessage(), ex.getArgs());
+        }
+    }
 
 }

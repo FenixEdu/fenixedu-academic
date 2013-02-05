@@ -18,38 +18,38 @@ import org.apache.struts.action.ActionMapping;
  * 
  */
 public abstract class FenixDateAndTimeContextDispatchAction extends
-		FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+        FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String date = (String) request.getAttribute(PresentationConstants.DATE);
-		if (date == null) {
-			date = request.getParameter(PresentationConstants.DATE);
-		}
-		if (date != null) {
-			request.setAttribute(PresentationConstants.DATE, date);
-		}
+        String date = (String) request.getAttribute(PresentationConstants.DATE);
+        if (date == null) {
+            date = request.getParameter(PresentationConstants.DATE);
+        }
+        if (date != null) {
+            request.setAttribute(PresentationConstants.DATE, date);
+        }
 
-		String startTime = (String) request.getAttribute(PresentationConstants.START_TIME);
-		if (startTime == null) {
-			startTime = request.getParameter(PresentationConstants.START_TIME);
-		}
-		if (startTime != null) {
-			request.setAttribute(PresentationConstants.START_TIME, startTime);
-		}
+        String startTime = (String) request.getAttribute(PresentationConstants.START_TIME);
+        if (startTime == null) {
+            startTime = request.getParameter(PresentationConstants.START_TIME);
+        }
+        if (startTime != null) {
+            request.setAttribute(PresentationConstants.START_TIME, startTime);
+        }
 
-		String endTime = (String) request.getAttribute(PresentationConstants.END_TIME);
-		if (endTime == null) {
-			endTime = request.getParameter(PresentationConstants.END_TIME);
-		}
-		if (endTime != null) {
-			request.setAttribute(PresentationConstants.END_TIME, endTime);
-		}
+        String endTime = (String) request.getAttribute(PresentationConstants.END_TIME);
+        if (endTime == null) {
+            endTime = request.getParameter(PresentationConstants.END_TIME);
+        }
+        if (endTime != null) {
+            request.setAttribute(PresentationConstants.END_TIME, endTime);
+        }
 
-		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-		return actionForward;
-	}
+        return actionForward;
+    }
 
 }

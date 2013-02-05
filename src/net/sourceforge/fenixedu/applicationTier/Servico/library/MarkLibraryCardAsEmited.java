@@ -10,9 +10,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MarkLibraryCardAsEmited extends FenixService {
 
-	@Checked("RolePredicates.LIBRARY_PREDICATE")
-	@Service
-	public static void run(LibraryCard libraryCard) {
-		libraryCard.setCardEmitionDate(new DateTime());
-	}
+    @Checked("RolePredicates.LIBRARY_PREDICATE")
+    @Service
+    public static void run(LibraryCard libraryCard) {
+        libraryCard.setCardEmitionDate(new DateTime());
+    }
 }

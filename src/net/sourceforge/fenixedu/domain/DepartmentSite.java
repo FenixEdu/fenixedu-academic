@@ -15,58 +15,58 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
 
-	public DepartmentSite(DepartmentUnit unit) {
-		super();
+    public DepartmentSite(DepartmentUnit unit) {
+        super();
 
-		if (unit.hasSite()) {
-			throw new DomainException("site.department.unit.already.has.site");
-		}
+        if (unit.hasSite()) {
+            throw new DomainException("site.department.unit.already.has.site");
+        }
 
-		setUnit(unit);
-	}
+        setUnit(unit);
+    }
 
-	public DepartmentSite(Department department) {
-		this(department.getDepartmentUnit());
-	}
+    public DepartmentSite(Department department) {
+        this(department.getDepartmentUnit());
+    }
 
-	public Department getDepartment() {
-		return getUnit().getDepartment();
-	}
+    public Department getDepartment() {
+        return getUnit().getDepartment();
+    }
 
-	@Override
-	public IGroup getOwner() {
-		return new GroupUnion(new RoleGroup(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)),
-				new FixedSetGroup(getManagers()));
-	}
+    @Override
+    public IGroup getOwner() {
+        return new GroupUnion(new RoleGroup(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)),
+                new FixedSetGroup(getManagers()));
+    }
 
-	@Override
-	public List<IGroup> getContextualPermissionGroups() {
-		List<IGroup> groups = super.getContextualPermissionGroups();
+    @Override
+    public List<IGroup> getContextualPermissionGroups() {
+        List<IGroup> groups = super.getContextualPermissionGroups();
 
-		groups.add(new DepartmentEmployeesGroup(getDepartment()));
+        groups.add(new DepartmentEmployeesGroup(getDepartment()));
 
-		return groups;
-	}
+        return groups;
+    }
 
-	/**
-	 * The department already has the an internacionalized name.
-	 * 
-	 * @see Department#getNameI18n()
-	 */
-	@Override
-	public MultiLanguageString getUnitNameWithAcronym() {
-		return getDepartment().getNameI18n();
-	}
+    /**
+     * The department already has the an internacionalized name.
+     * 
+     * @see Department#getNameI18n()
+     */
+    @Override
+    public MultiLanguageString getUnitNameWithAcronym() {
+        return getDepartment().getNameI18n();
+    }
 
-	@Override
-	public MultiLanguageString getName() {
-		return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
-	}
+    @Override
+    public MultiLanguageString getName() {
+        return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
+    }
 
-	@Override
-	public void setNormalizedName(final MultiLanguageString normalizedName) {
-		// unable to optimize because we cannot track changes to name correctly.
-		// don't call super.setNormalizedName() !
-	}
+    @Override
+    public void setNormalizedName(final MultiLanguageString normalizedName) {
+        // unable to optimize because we cannot track changes to name correctly.
+        // don't call super.setNormalizedName() !
+    }
 
 }

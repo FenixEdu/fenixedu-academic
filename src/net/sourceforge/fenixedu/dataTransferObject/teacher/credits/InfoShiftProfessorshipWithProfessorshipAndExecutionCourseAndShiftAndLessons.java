@@ -15,26 +15,26 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
  */
 public class InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons extends InfoShiftProfessorship {
 
-	@Override
-	public void copyFromDomain(ShiftProfessorship shifProfessorship) {
-		super.copyFromDomain(shifProfessorship);
-		if (shifProfessorship != null) {
-			final Professorship professorship = shifProfessorship.getProfessorship();
-			setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
+    @Override
+    public void copyFromDomain(ShiftProfessorship shifProfessorship) {
+        super.copyFromDomain(shifProfessorship);
+        if (shifProfessorship != null) {
+            final Professorship professorship = shifProfessorship.getProfessorship();
+            setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
 
-			final Shift shift = shifProfessorship.getShift();
-			setInfoShift(InfoShift.newInfoFromDomain(shift));
-		}
-	}
+            final Shift shift = shifProfessorship.getShift();
+            setInfoShift(InfoShift.newInfoFromDomain(shift));
+        }
+    }
 
-	public static InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons newInfoFromDomain(
-			ShiftProfessorship shifProfessorship) {
-		InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons infoShiftProfessorship = null;
-		if (shifProfessorship != null) {
-			infoShiftProfessorship = new InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons();
-			infoShiftProfessorship.copyFromDomain(shifProfessorship);
-		}
-		return infoShiftProfessorship;
-	}
+    public static InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons newInfoFromDomain(
+            ShiftProfessorship shifProfessorship) {
+        InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons infoShiftProfessorship = null;
+        if (shifProfessorship != null) {
+            infoShiftProfessorship = new InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons();
+            infoShiftProfessorship.copyFromDomain(shifProfessorship);
+        }
+        return infoShiftProfessorship;
+    }
 
 }

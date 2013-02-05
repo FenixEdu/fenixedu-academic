@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class ExecutionYearsProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
-		return ExecutionYear.readNotClosedExecutionYears();
-	}
+    @Override
+    public Object provide(Object source, Object current) {
+        return ExecutionYear.readNotClosedExecutionYears();
+    }
 
 }

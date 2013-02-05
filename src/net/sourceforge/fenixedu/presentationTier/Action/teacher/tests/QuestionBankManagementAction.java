@@ -62,648 +62,630 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 
-@Mapping(
-		module = "teacher",
-		path = "/tests/questionBank",
-		input = "/tests/questionBank.do?method=manageQuestionBank?view=tree",
-		attribute = "testForm",
-		formBean = "testForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "teacher", path = "/tests/questionBank", input = "/tests/questionBank.do?method=manageQuestionBank?view=tree",
+        attribute = "testForm", formBean = "testForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "associateParent", path = "/teacher/tests/questionBank/associateParent.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "editPreCondition", path = "/teacher/tests/questionBank/editPreCondition.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(
-				name = "manageLinearQuestionBank",
-				path = "/teacher/tests/questionBank/manageLinearQuestionBank.jsp",
-				tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(
-				name = "manageTreeQuestionBank",
-				path = "/teacher/tests/questionBank/manageTreeQuestionBank.jsp",
-				tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "deleteQuestion", path = "/teacher/tests/questionBank/deleteQuestion.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(
-				name = "createQuestionGroup",
-				path = "/teacher/tests/questionBank/createQuestionGroup.jsp",
-				tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "editCorrector", path = "/teacher/tests/questionBank/editCorrector.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(
-				name = "createAtomicQuestion",
-				path = "/teacher/tests/questionBank/createAtomicQuestion.jsp",
-				tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "editTestElement", path = "/teacher/tests/questionBank/editTestElement.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "editValidator", path = "/teacher/tests/questionBank/editValidator.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(
-				name = "managePermissionUnits",
-				path = "/teacher/tests/questionBank/managePermissionUnits.jsp",
-				tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(
-				name = "disassociateParent",
-				path = "/teacher/tests/questionBank/disassociateParent.jsp",
-				tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
+        @Forward(name = "associateParent", path = "/teacher/tests/questionBank/associateParent.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "editPreCondition", path = "/teacher/tests/questionBank/editPreCondition.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "manageLinearQuestionBank", path = "/teacher/tests/questionBank/manageLinearQuestionBank.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "manageTreeQuestionBank", path = "/teacher/tests/questionBank/manageTreeQuestionBank.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "deleteQuestion", path = "/teacher/tests/questionBank/deleteQuestion.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "createQuestionGroup", path = "/teacher/tests/questionBank/createQuestionGroup.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "editCorrector", path = "/teacher/tests/questionBank/editCorrector.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "createAtomicQuestion", path = "/teacher/tests/questionBank/createAtomicQuestion.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "editTestElement", path = "/teacher/tests/questionBank/editTestElement.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "editValidator", path = "/teacher/tests/questionBank/editValidator.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "managePermissionUnits", path = "/teacher/tests/questionBank/managePermissionUnits.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "disassociateParent", path = "/teacher/tests/questionBank/disassociateParent.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
 public class QuestionBankManagementAction extends FenixDispatchAction {
-	private static HashMap<String, String> questionBankViewModes = new HashMap<String, String>();
+    private static HashMap<String, String> questionBankViewModes = new HashMap<String, String>();
 
-	static {
-		questionBankViewModes.put("tree", "manageTreeQuestionBank");
-		questionBankViewModes.put("linear", "manageLinearQuestionBank");
-		questionBankViewModes.put(null, "manageTreeQuestionBank");
-	}
+    static {
+        questionBankViewModes.put("tree", "manageTreeQuestionBank");
+        questionBankViewModes.put("linear", "manageLinearQuestionBank");
+        questionBankViewModes.put(null, "manageTreeQuestionBank");
+    }
 
-	public ActionForward manageQuestionBank(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer questionBankId = getCodeFromRequest(request, "oid");
+    public ActionForward manageQuestionBank(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer questionBankId = getCodeFromRequest(request, "oid");
 
-		NewQuestionBank questionBank;
+        NewQuestionBank questionBank;
 
-		if (questionBankId == null) {
-			questionBank = this.getOwnedQuestionBank(request);
-		} else {
-			questionBank = (NewQuestionBank) rootDomainObject.readNewTestElementByOID(questionBankId);
-		}
+        if (questionBankId == null) {
+            questionBank = this.getOwnedQuestionBank(request);
+        } else {
+            questionBank = (NewQuestionBank) rootDomainObject.readNewTestElementByOID(questionBankId);
+        }
 
-		request.setAttribute("questionBank", questionBank);
+        request.setAttribute("questionBank", questionBank);
 
-		List<NewPermissionUnit> permissionUnits = getUserView(request).getPerson().getPermissionUnits();
-		Set<NewQuestionBank> questionBanks = new HashSet<NewQuestionBank>();
-		questionBanks.add(getOwnedQuestionBank(request));
-		for (NewPermissionUnit permissionUnit : permissionUnits) {
-			questionBanks.add((NewQuestionBank) permissionUnit.getQuestion());
-		}
+        List<NewPermissionUnit> permissionUnits = getUserView(request).getPerson().getPermissionUnits();
+        Set<NewQuestionBank> questionBanks = new HashSet<NewQuestionBank>();
+        questionBanks.add(getOwnedQuestionBank(request));
+        for (NewPermissionUnit permissionUnit : permissionUnits) {
+            questionBanks.add((NewQuestionBank) permissionUnit.getQuestion());
+        }
 
-		request.setAttribute("questionBanks", new ArrayList<NewQuestionBank>(questionBanks));
-		request.setAttribute("isOwnBank", getOwnedQuestionBank(request).equals(questionBank));
+        request.setAttribute("questionBanks", new ArrayList<NewQuestionBank>(questionBanks));
+        request.setAttribute("isOwnBank", getOwnedQuestionBank(request).equals(questionBank));
 
-		return mapping.findForward(questionBankViewModes.get(request.getParameter("view")));
-	}
+        return mapping.findForward(questionBankViewModes.get(request.getParameter("view")));
+    }
 
-	private NewQuestionBank getOwnedQuestionBank(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-		IUserView userView = getUserView(request);
+    private NewQuestionBank getOwnedQuestionBank(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+        IUserView userView = getUserView(request);
 
-		Person person = userView.getPerson();
+        Person person = userView.getPerson();
 
-		NewQuestionBank questionBank = person.getQuestionBank();
+        NewQuestionBank questionBank = person.getQuestionBank();
 
-		if (questionBank == null) {
-			questionBank = CreateQuestionBank.run(person);
-		}
+        if (questionBank == null) {
+            questionBank = CreateQuestionBank.run(person);
+        }
 
-		return questionBank;
-	}
+        return questionBank;
+    }
 
-	public ActionForward editTestElement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testElementId = getCodeFromRequest(request, "oid");
+    public ActionForward editTestElement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testElementId = getCodeFromRequest(request, "oid");
 
-		NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
+        NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
 
-		if (testElement instanceof NewQuestionBank) {
-			return this.manageQuestionBank(mapping, form, request, response);
-		}
+        if (testElement instanceof NewQuestionBank) {
+            return this.manageQuestionBank(mapping, form, request, response);
+        }
 
-		request.setAttribute("testElement", testElement);
+        request.setAttribute("testElement", testElement);
 
-		return mapping.findForward("editTestElement");
-	}
+        return mapping.findForward("editTestElement");
+    }
 
-	public ActionForward selectForModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		return this.editTestElement(mapping, form, request, response);
-	}
+    public ActionForward selectForModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward prepareAssociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		Integer questionId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareAssociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        Integer questionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		GroupElementBean groupElementBean = new GroupElementBean(question);
+        GroupElementBean groupElementBean = new GroupElementBean(question);
 
-		request.setAttribute("bean", groupElementBean);
+        request.setAttribute("bean", groupElementBean);
 
-		return mapping.findForward("associateParent");
-	}
+        return mapping.findForward("associateParent");
+    }
 
-	public ActionForward prepareDisassociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		Integer questionId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareDisassociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        Integer questionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		GroupElementBean groupElementBean = new GroupElementBean(question);
+        GroupElementBean groupElementBean = new GroupElementBean(question);
 
-		request.setAttribute("bean", groupElementBean);
+        request.setAttribute("bean", groupElementBean);
 
-		return mapping.findForward("disassociateParent");
-	}
+        return mapping.findForward("disassociateParent");
+    }
 
-	public ActionForward associateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("associateParent");
+    public ActionForward associateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("associateParent");
 
-		AssociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
+        AssociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
 
-		request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
+        request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
 
-		return editTestElement(mapping, form, request, response);
-	}
+        return editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward disassociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("disassociateParent");
+    public ActionForward disassociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("disassociateParent");
 
-		DisassociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
+        DisassociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
 
-		request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
+        request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
 
-		return editTestElement(mapping, form, request, response);
-	}
+        return editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward prepareEditCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Integer atomicQuestionId = getCodeFromRequest(request, "oid");
+        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
-		PredicateBean bean = new PredicateBean(atomicQuestion);
+        PredicateBean bean = new PredicateBean(atomicQuestion);
 
-		for (NewCorrector corrector : atomicQuestion.getCorrectors()) {
-			bean.getPredicates().add(corrector.getPredicate());
-		}
+        for (NewCorrector corrector : atomicQuestion.getCorrectors()) {
+            bean.getPredicates().add(corrector.getPredicate());
+        }
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editCorrector");
-	}
+        return mapping.findForward("editCorrector");
+    }
 
-	public ActionForward prepareEditValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Integer atomicQuestionId = getCodeFromRequest(request, "oid");
+        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
-		PredicateBean bean = new PredicateBean(atomicQuestion);
+        PredicateBean bean = new PredicateBean(atomicQuestion);
 
-		if (atomicQuestion.getValidator() != null) {
-			bean.getPredicates().add(atomicQuestion.getValidator());
-		}
+        if (atomicQuestion.getValidator() != null) {
+            bean.getPredicates().add(atomicQuestion.getValidator());
+        }
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editValidator");
-	}
+        return mapping.findForward("editValidator");
+    }
 
-	public ActionForward prepareEditPreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditPreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Integer questionId = getCodeFromRequest(request, "oid");
+        Integer questionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		PredicateBean bean = new PredicateBean(question);
+        PredicateBean bean = new PredicateBean(question);
 
-		if (question.getPreCondition() != null) {
-			bean.getPredicates().add(question.getPreCondition());
-		}
+        if (question.getPreCondition() != null) {
+            bean.getPredicates().add(question.getPreCondition());
+        }
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editPreCondition");
-	}
+        return mapping.findForward("editPreCondition");
+    }
 
-	public ActionForward prepareCreateAtomicPredicate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PredicateBean bean = (PredicateBean) getMetaObject("createAtomicPredicate");
+    public ActionForward prepareCreateAtomicPredicate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PredicateBean bean = (PredicateBean) getMetaObject("createAtomicPredicate");
 
-		RenderUtils.invalidateViewState("createAtomicPredicate");
+        RenderUtils.invalidateViewState("createAtomicPredicate");
 
-		if (bean == null) {
-			bean = (PredicateBean) getMetaObject("chooseAtomicPredicateType");
-			RenderUtils.invalidateViewState("chooseAtomicPredicateType");
-		}
+        if (bean == null) {
+            bean = (PredicateBean) getMetaObject("chooseAtomicPredicateType");
+            RenderUtils.invalidateViewState("chooseAtomicPredicateType");
+        }
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward(request.getParameter("returnTo"));
-	}
+        return mapping.findForward(request.getParameter("returnTo"));
+    }
 
-	public ActionForward createAtomicPredicate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createAtomicPredicate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		PredicateBean bean = (PredicateBean) getMetaObject("createAtomicPredicate");
+        PredicateBean bean = (PredicateBean) getMetaObject("createAtomicPredicate");
 
-		bean.addPredicate();
+        bean.addPredicate();
 
-		bean = new PredicateBean(bean);
+        bean = new PredicateBean(bean);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		RenderUtils.invalidateViewState("fillInDetails");
+        RenderUtils.invalidateViewState("fillInDetails");
 
-		return mapping.findForward(request.getParameter("returnTo"));
-	}
+        return mapping.findForward(request.getParameter("returnTo"));
+    }
 
-	public ActionForward createGrade(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		NewQuestion question = (NewQuestion) getMetaObject("create-grade");
+    public ActionForward createGrade(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        NewQuestion question = (NewQuestion) getMetaObject("create-grade");
 
-		request.setAttribute("oid", question.getIdInternal());
+        request.setAttribute("oid", question.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward managePredicates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		PredicateBean bean = (PredicateBean) getMetaObject("predicateList");
+    public ActionForward managePredicates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        PredicateBean bean = (PredicateBean) getMetaObject("predicateList");
 
-		Action action = bean.getAction();
+        Action action = bean.getAction();
 
-		if (action != null) {
-			switch (action) {
-			case DELETE:
-				bean.getPredicates().removeAll(bean.getSelectedPredicates());
+        if (action != null) {
+            switch (action) {
+            case DELETE:
+                bean.getPredicates().removeAll(bean.getSelectedPredicates());
 
-				bean = new PredicateBean(bean);
-				break;
-			default:
-				break;
-			}
-		}
+                bean = new PredicateBean(bean);
+                break;
+            default:
+                break;
+            }
+        }
 
-		request.setAttribute("bean", bean);
-		RenderUtils.invalidateViewState("predicateList");
+        request.setAttribute("bean", bean);
+        RenderUtils.invalidateViewState("predicateList");
 
-		return mapping.findForward(request.getParameter("returnTo"));
-	}
+        return mapping.findForward(request.getParameter("returnTo"));
+    }
 
-	public ActionForward chooseCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
+    public ActionForward chooseCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		ChooseCorrector.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate(), bean.getPercentage());
+        ChooseCorrector.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate(), bean.getPercentage());
 
-		bean = new PredicateBean(bean);
+        bean = new PredicateBean(bean);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		RenderUtils.invalidateViewState("choosePredicate");
+        RenderUtils.invalidateViewState("choosePredicate");
 
-		return mapping.findForward("editCorrector");
-	}
+        return mapping.findForward("editCorrector");
+    }
 
-	public ActionForward chooseValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
+    public ActionForward chooseValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		ChooseValidator.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate());
+        ChooseValidator.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate());
 
-		bean = new PredicateBean(bean);
+        bean = new PredicateBean(bean);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		RenderUtils.invalidateViewState("choosePredicate");
+        RenderUtils.invalidateViewState("choosePredicate");
 
-		return mapping.findForward("editValidator");
-	}
+        return mapping.findForward("editValidator");
+    }
 
-	public ActionForward choosePreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
+    public ActionForward choosePreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		ChoosePreCondition.run(bean.getQuestion(), bean.getChoosenPredicate());
+        ChoosePreCondition.run(bean.getQuestion(), bean.getChoosenPredicate());
 
-		bean = new PredicateBean(bean);
+        bean = new PredicateBean(bean);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		RenderUtils.invalidateViewState("choosePredicate");
+        RenderUtils.invalidateViewState("choosePredicate");
 
-		return mapping.findForward("editPreCondition");
-	}
+        return mapping.findForward("editPreCondition");
+    }
 
-	public ActionForward invalidChoosePredicate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward invalidChoosePredicate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
+        PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward(request.getParameter("returnTo"));
-	}
+        return mapping.findForward(request.getParameter("returnTo"));
+    }
 
-	public ActionForward composePredicates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		PredicateBean bean = (PredicateBean) getMetaObject("predicateList");
+    public ActionForward composePredicates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        PredicateBean bean = (PredicateBean) getMetaObject("predicateList");
 
-		CompositePredicate compositePredicate;
-		try {
-			compositePredicate = (CompositePredicate) bean.getCompositePredicateType().getImplementingClass().newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException("could.not.instantiate", e);
-		}
+        CompositePredicate compositePredicate;
+        try {
+            compositePredicate = (CompositePredicate) bean.getCompositePredicateType().getImplementingClass().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("could.not.instantiate", e);
+        }
 
-		for (Predicate predicate : bean.getSelectedPredicates()) {
-			compositePredicate.getPredicates().add(predicate);
-		}
+        for (Predicate predicate : bean.getSelectedPredicates()) {
+            compositePredicate.getPredicates().add(predicate);
+        }
 
-		bean.getPredicates().add(compositePredicate);
+        bean.getPredicates().add(compositePredicate);
 
-		bean = new PredicateBean(bean);
+        bean = new PredicateBean(bean);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		RenderUtils.invalidateViewState("predicateList");
+        RenderUtils.invalidateViewState("predicateList");
 
-		return mapping.findForward(request.getParameter("returnTo"));
-	}
+        return mapping.findForward(request.getParameter("returnTo"));
+    }
 
-	public ActionForward prepareManagePermissionUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		Integer questionId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareManagePermissionUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        Integer questionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		request.setAttribute("question", question);
+        request.setAttribute("question", question);
 
-		return mapping.findForward("managePermissionUnits");
-	}
+        return mapping.findForward("managePermissionUnits");
+    }
 
-	public ActionForward prepareCreateQuestionGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		Integer questionGroupId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareCreateQuestionGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        Integer questionGroupId = getCodeFromRequest(request, "oid");
 
-		NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
+        NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
 
-		request.setAttribute("questionGroup", questionGroup);
+        request.setAttribute("questionGroup", questionGroup);
 
-		return mapping.findForward("createQuestionGroup");
-	}
+        return mapping.findForward("createQuestionGroup");
+    }
 
-	public ActionForward createQuestionGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		NewQuestionGroup questionGroup = (NewQuestionGroup) getMetaObject("createQuestionGroup");
+    public ActionForward createQuestionGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        NewQuestionGroup questionGroup = (NewQuestionGroup) getMetaObject("createQuestionGroup");
 
-		request.setAttribute("oid", questionGroup.getIdInternal());
+        request.setAttribute("oid", questionGroup.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward prepareCreateAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer questionGroupId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareCreateAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer questionGroupId = getCodeFromRequest(request, "oid");
 
-		NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
+        NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
 
-		request.setAttribute("questionGroup", questionGroup);
-		request.setAttribute("atomicQuestionTypeBean", new AtomicQuestionBean(questionGroup));
+        request.setAttribute("questionGroup", questionGroup);
+        request.setAttribute("atomicQuestionTypeBean", new AtomicQuestionBean(questionGroup));
 
-		return mapping.findForward("createAtomicQuestion");
-	}
+        return mapping.findForward("createAtomicQuestion");
+    }
 
-	public ActionForward createAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		AtomicQuestionBean atomicQuestionTypeBean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
+    public ActionForward createAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        AtomicQuestionBean atomicQuestionTypeBean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
 
-		NewQuestion atomicQuestion =
-				CreateAtomicQuestion.run(atomicQuestionTypeBean.getParentQuestionGroup(),
-						atomicQuestionTypeBean.getQuestionType());
+        NewQuestion atomicQuestion =
+                CreateAtomicQuestion.run(atomicQuestionTypeBean.getParentQuestionGroup(),
+                        atomicQuestionTypeBean.getQuestionType());
 
-		request.setAttribute("oid", atomicQuestion.getIdInternal());
+        request.setAttribute("oid", atomicQuestion.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward invalidCreateAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		AtomicQuestionBean bean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
+    public ActionForward invalidCreateAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        AtomicQuestionBean bean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
 
-		request.setAttribute("questionGroup", bean.getParentQuestionGroup());
-		request.setAttribute("atomicQuestionTypeBean", bean);
+        request.setAttribute("questionGroup", bean.getParentQuestionGroup());
+        request.setAttribute("atomicQuestionTypeBean", bean);
 
-		return mapping.findForward("createAtomicQuestion");
-	}
+        return mapping.findForward("createAtomicQuestion");
+    }
 
-	public ActionForward createChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer multipleChoiceQuestionId = getCodeFromRequest(request, "oid");
+    public ActionForward createChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer multipleChoiceQuestionId = getCodeFromRequest(request, "oid");
 
-		NewMultipleChoiceQuestion multipleChoiceQuestion =
-				(NewMultipleChoiceQuestion) rootDomainObject.readNewTestElementByOID(multipleChoiceQuestionId);
+        NewMultipleChoiceQuestion multipleChoiceQuestion =
+                (NewMultipleChoiceQuestion) rootDomainObject.readNewTestElementByOID(multipleChoiceQuestionId);
 
-		NewChoice choice = CreateChoice.run(multipleChoiceQuestion);
+        NewChoice choice = CreateChoice.run(multipleChoiceQuestion);
 
-		request.setAttribute("oid", multipleChoiceQuestionId);
+        request.setAttribute("oid", multipleChoiceQuestionId);
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward deleteCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer correctorId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer correctorId = getCodeFromRequest(request, "oid");
 
-		NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
+        NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
 
-		NewAtomicQuestion atomicQuestion = corrector.getAtomicQuestion();
+        NewAtomicQuestion atomicQuestion = corrector.getAtomicQuestion();
 
-		DeleteCorrector.run(corrector);
+        DeleteCorrector.run(corrector);
 
-		request.setAttribute("oid", atomicQuestion.getIdInternal());
+        request.setAttribute("oid", atomicQuestion.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward deleteCorrectors(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		String[] correctorOids = request.getParameterValues("correctorOids");
+    public ActionForward deleteCorrectors(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        String[] correctorOids = request.getParameterValues("correctorOids");
 
-		if (correctorOids != null) {
-			for (String correctorOid : correctorOids) {
-				request.setAttribute("oid", Integer.parseInt(correctorOid));
+        if (correctorOids != null) {
+            for (String correctorOid : correctorOids) {
+                request.setAttribute("oid", Integer.parseInt(correctorOid));
 
-				this.deleteCorrector(mapping, form, request, response);
-			}
+                this.deleteCorrector(mapping, form, request, response);
+            }
 
-		}
+        }
 
-		PredicateBean bean = (PredicateBean) getMetaObject("delete-correctors");
+        PredicateBean bean = (PredicateBean) getMetaObject("delete-correctors");
 
-		RenderUtils.invalidateViewState("delete-correctors");
+        RenderUtils.invalidateViewState("delete-correctors");
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editCorrector");
-	}
+        return mapping.findForward("editCorrector");
+    }
 
-	public ActionForward deleteValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer atomicQuestionId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
-		DeleteValidator.run(atomicQuestion);
+        DeleteValidator.run(atomicQuestion);
 
-		request.setAttribute("oid", atomicQuestion.getIdInternal());
+        request.setAttribute("oid", atomicQuestion.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward deletePreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer questionId = getCodeFromRequest(request, "oid");
+    public ActionForward deletePreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer questionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		DeletePreCondition.run(question);
+        DeletePreCondition.run(question);
 
-		request.setAttribute("oid", question.getIdInternal());
+        request.setAttribute("oid", question.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward deletePermissionUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer permissionUnitId = getCodeFromRequest(request, "oid");
+    public ActionForward deletePermissionUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer permissionUnitId = getCodeFromRequest(request, "oid");
 
-		NewPermissionUnit permissionUnit = rootDomainObject.readNewPermissionUnitByOID(permissionUnitId);
+        NewPermissionUnit permissionUnit = rootDomainObject.readNewPermissionUnitByOID(permissionUnitId);
 
-		request.setAttribute("question", permissionUnit.getQuestion());
+        request.setAttribute("question", permissionUnit.getQuestion());
 
-		DeletePermissionUnit.run(permissionUnit);
+        DeletePermissionUnit.run(permissionUnit);
 
-		return mapping.findForward("managePermissionUnits");
-	}
+        return mapping.findForward("managePermissionUnits");
+    }
 
-	public ActionForward deleteChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer choiceId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer choiceId = getCodeFromRequest(request, "oid");
 
-		NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
+        NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
 
-		request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
+        request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
 
-		DeleteChoice.run(choice);
+        DeleteChoice.run(choice);
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward deleteGrade(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer atomicQuestionId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteGrade(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
 
-		DeleteGrade.run(question);
+        DeleteGrade.run(question);
 
-		request.setAttribute("oid", question.getIdInternal());
+        request.setAttribute("oid", question.getIdInternal());
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward prepareDeleteQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer questionId = getCodeFromRequest(request, "oid");
-		request.setAttribute("questionGroupId", questionId);
-		request.setAttribute("parentQuestionGroupId", getCodeFromRequest(request, "parentQuestionGroupOid"));
+    public ActionForward prepareDeleteQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer questionId = getCodeFromRequest(request, "oid");
+        request.setAttribute("questionGroupId", questionId);
+        request.setAttribute("parentQuestionGroupId", getCodeFromRequest(request, "parentQuestionGroupOid"));
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
-		request.setAttribute("question", question);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        request.setAttribute("question", question);
 
-		return mapping.findForward("deleteQuestion");
-	}
+        return mapping.findForward("deleteQuestion");
+    }
 
-	public ActionForward deleteQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer questionId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer questionId = getCodeFromRequest(request, "oid");
 
-		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		NewQuestionBank questionBank = question.getQuestionBank();
+        NewQuestionBank questionBank = question.getQuestionBank();
 
-		List<NewQuestionGroup> parentQuestionGroups = question.getParentQuestionGroups();
+        List<NewQuestionGroup> parentQuestionGroups = question.getParentQuestionGroups();
 
-		DeleteQuestion.run(question);
+        DeleteQuestion.run(question);
 
-		Integer parentQuestionGroupId = getCodeFromRequest(request, "parentQuestionGroupOid");
+        Integer parentQuestionGroupId = getCodeFromRequest(request, "parentQuestionGroupOid");
 
-		if (parentQuestionGroupId != null) {
-			request.setAttribute("oid", parentQuestionGroupId);
-		} else if (parentQuestionGroups.size() == 1) {
-			request.setAttribute("oid", parentQuestionGroups.get(0).getIdInternal());
-			return editTestElement(mapping, form, request, response);
-		} else {
-			request.setAttribute("oid", questionBank.getIdInternal());
-		}
+        if (parentQuestionGroupId != null) {
+            request.setAttribute("oid", parentQuestionGroupId);
+        } else if (parentQuestionGroups.size() == 1) {
+            request.setAttribute("oid", parentQuestionGroups.get(0).getIdInternal());
+            return editTestElement(mapping, form, request, response);
+        } else {
+            request.setAttribute("oid", questionBank.getIdInternal());
+        }
 
-		return this.editTestElement(mapping, form, request, response);
-	}
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward switchChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer choiceId = getCodeFromRequest(request, "oid");
-		NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
+    public ActionForward switchChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer choiceId = getCodeFromRequest(request, "oid");
+        NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
 
-		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
+        Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		SwitchPosition.run(choice, relativePosition);
+        SwitchPosition.run(choice, relativePosition);
 
-		request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
-		return this.editTestElement(mapping, form, request, response);
-	}
+        request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	public ActionForward switchCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer correctorId = getCodeFromRequest(request, "oid");
-		NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
+    public ActionForward switchCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer correctorId = getCodeFromRequest(request, "oid");
+        NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
 
-		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
+        Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		SwitchPosition.run(corrector, relativePosition);
+        SwitchPosition.run(corrector, relativePosition);
 
-		request.setAttribute("oid", corrector.getAtomicQuestion().getIdInternal());
-		return this.editTestElement(mapping, form, request, response);
-	}
+        request.setAttribute("oid", corrector.getAtomicQuestion().getIdInternal());
+        return this.editTestElement(mapping, form, request, response);
+    }
 
-	private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
-		Integer code = null;
-		Object objectCode = request.getAttribute(codeString);
+    private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
+        Integer code = null;
+        Object objectCode = request.getAttribute(codeString);
 
-		if (objectCode != null) {
-			if (objectCode instanceof String) {
-				code = new Integer((String) objectCode);
-			} else if (objectCode instanceof Integer) {
-				code = (Integer) objectCode;
-			}
-		} else {
-			String thisCodeString = request.getParameter(codeString);
-			if (thisCodeString != null) {
-				code = new Integer(thisCodeString);
-			}
-		}
+        if (objectCode != null) {
+            if (objectCode instanceof String) {
+                code = new Integer((String) objectCode);
+            } else if (objectCode instanceof Integer) {
+                code = (Integer) objectCode;
+            }
+        } else {
+            String thisCodeString = request.getParameter(codeString);
+            if (thisCodeString != null) {
+                code = new Integer(thisCodeString);
+            }
+        }
 
-		return code;
-	}
+        return code;
+    }
 
-	private Object getMetaObject(String key) {
-		IViewState viewState = RenderUtils.getViewState(key);
+    private Object getMetaObject(String key) {
+        IViewState viewState = RenderUtils.getViewState(key);
 
-		if (viewState == null) {
-			return null;
-		}
+        if (viewState == null) {
+            return null;
+        }
 
-		return viewState.getMetaObject().getObject();
-	}
+        return viewState.getMetaObject().getObject();
+    }
 
-	private void createMessage(HttpServletRequest request, String name, String key) {
-		ActionMessages messages = getMessages(request);
-		messages.add(name, new ActionMessage(key, true));
-		saveMessages(request, messages);
-	}
+    private void createMessage(HttpServletRequest request, String name, String key) {
+        ActionMessages messages = getMessages(request);
+        messages.add(name, new ActionMessage(key, true));
+        saveMessages(request, messages);
+    }
 }

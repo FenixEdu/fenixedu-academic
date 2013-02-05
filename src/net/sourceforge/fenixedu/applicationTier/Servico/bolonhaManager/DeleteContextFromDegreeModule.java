@@ -10,15 +10,15 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class DeleteContextFromDegreeModule extends FenixService {
 
-	public void run(final Integer degreeModuleID, final Integer contextID) throws FenixServiceException {
-		final DegreeModule degreeModule = rootDomainObject.readDegreeModuleByOID(degreeModuleID);
-		if (degreeModule == null) {
-			throw new FenixServiceException("error.noDegreeModule");
-		}
-		final Context context = rootDomainObject.readContextByOID(contextID);
-		if (context == null) {
-			throw new FenixServiceException("error.noCourseGroup");
-		}
-		degreeModule.deleteContext(context);
-	}
+    public void run(final Integer degreeModuleID, final Integer contextID) throws FenixServiceException {
+        final DegreeModule degreeModule = rootDomainObject.readDegreeModuleByOID(degreeModuleID);
+        if (degreeModule == null) {
+            throw new FenixServiceException("error.noDegreeModule");
+        }
+        final Context context = rootDomainObject.readContextByOID(contextID);
+        if (context == null) {
+            throw new FenixServiceException("error.noCourseGroup");
+        }
+        degreeModule.deleteContext(context);
+    }
 }

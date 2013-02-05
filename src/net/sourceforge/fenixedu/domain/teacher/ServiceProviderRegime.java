@@ -15,39 +15,39 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * 
  */
 public class ServiceProviderRegime extends ServiceProviderRegime_Base {
-	public ServiceProviderRegime() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
+    public ServiceProviderRegime() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
 
-	}
+    }
 
-	public ServiceProviderRegime(Teacher teacher, InfoServiceProviderRegime infoServiceProviderRegime) {
-		this();
-		if (teacher == null) {
-			throw new DomainException("The teacher should not be null!");
-		}
-		this.setTeacher(teacher);
-		this.setProviderRegimeType(infoServiceProviderRegime.getProviderRegimeType());
-	}
+    public ServiceProviderRegime(Teacher teacher, InfoServiceProviderRegime infoServiceProviderRegime) {
+        this();
+        if (teacher == null) {
+            throw new DomainException("The teacher should not be null!");
+        }
+        this.setTeacher(teacher);
+        this.setProviderRegimeType(infoServiceProviderRegime.getProviderRegimeType());
+    }
 
-	public void edit(InfoServiceProviderRegime infoServiceProviderRegime) {
+    public void edit(InfoServiceProviderRegime infoServiceProviderRegime) {
 
-		this.setProviderRegimeType(infoServiceProviderRegime.getProviderRegimeType());
-	}
+        this.setProviderRegimeType(infoServiceProviderRegime.getProviderRegimeType());
+    }
 
-	@Deprecated
-	public java.util.Date getLastModificationDate() {
-		org.joda.time.DateTime dt = getLastModificationDateDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public java.util.Date getLastModificationDate() {
+        org.joda.time.DateTime dt = getLastModificationDateDateTime();
+        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public void setLastModificationDate(java.util.Date date) {
-		if (date == null) {
-			setLastModificationDateDateTime(null);
-		} else {
-			setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
-		}
-	}
+    @Deprecated
+    public void setLastModificationDate(java.util.Date date) {
+        if (date == null) {
+            setLastModificationDateDateTime(null);
+        } else {
+            setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+        }
+    }
 
 }

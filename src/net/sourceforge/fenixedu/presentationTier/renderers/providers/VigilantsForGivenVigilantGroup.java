@@ -19,37 +19,37 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class VigilantsForGivenVigilantGroup implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		VigilantGroupBean bean = (VigilantGroupBean) source;
-		VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
-		List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
+        VigilantGroupBean bean = (VigilantGroupBean) source;
+        VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
+        List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 
-		if (source instanceof ConvokeBean) {
-			ConvokeBean convokeBean = (ConvokeBean) bean;
-			vigilants.addAll(convokeBean.getVigilantsSugestion());
-			WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
-			if (evaluation != null && evaluation.getVigilancies().size() > 0) {
-				for (Vigilancy convoke : evaluation.getVigilancies()) {
-					vigilants.remove(convoke.getVigilantWrapper());
-				}
-			}
-		} else {
-			vigilants.addAll(vigilantGroup.getVigilantWrappers());
-			ComparatorChain chain = new ComparatorChain();
-			chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
-			chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
-			Collections.sort(vigilants, chain);
-		}
+        if (source instanceof ConvokeBean) {
+            ConvokeBean convokeBean = (ConvokeBean) bean;
+            vigilants.addAll(convokeBean.getVigilantsSugestion());
+            WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
+            if (evaluation != null && evaluation.getVigilancies().size() > 0) {
+                for (Vigilancy convoke : evaluation.getVigilancies()) {
+                    vigilants.remove(convoke.getVigilantWrapper());
+                }
+            }
+        } else {
+            vigilants.addAll(vigilantGroup.getVigilantWrappers());
+            ComparatorChain chain = new ComparatorChain();
+            chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+            chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
+            Collections.sort(vigilants, chain);
+        }
 
-		return vigilants;
+        return vigilants;
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
 }

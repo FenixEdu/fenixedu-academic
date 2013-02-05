@@ -13,11 +13,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EnrolBolonhaStudent {
 
-	@Service
-	public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-			final List<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
-			final CurricularRuleLevel curricularRuleLevel) {
-		return studentCurricularPlan.enrol(executionSemester, new HashSet<IDegreeModuleToEvaluate>(degreeModulesToEnrol),
-				curriculumModulesToRemove, curricularRuleLevel);
-	}
+    @Service
+    public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final List<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
+            final CurricularRuleLevel curricularRuleLevel) {
+        return studentCurricularPlan.enrol(executionSemester, new HashSet<IDegreeModuleToEvaluate>(degreeModulesToEnrol),
+                curriculumModulesToRemove, curricularRuleLevel);
+    }
 }

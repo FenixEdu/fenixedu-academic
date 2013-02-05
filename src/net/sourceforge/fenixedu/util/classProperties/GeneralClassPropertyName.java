@@ -7,24 +7,24 @@ import net.sourceforge.fenixedu.util.FenixUtil;
  */
 
 public class GeneralClassPropertyName extends FenixUtil {
-	protected String name;
+    protected String name;
 
-	public GeneralClassPropertyName(String name) {
-		this.name = name;
-	}
+    public GeneralClassPropertyName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return Returns the name.
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }

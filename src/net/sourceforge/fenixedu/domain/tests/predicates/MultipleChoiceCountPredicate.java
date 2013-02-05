@@ -8,41 +8,41 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class MultipleChoiceCountPredicate extends AtomicPredicate implements Predicate {
-	private final int count;
+    private final int count;
 
-	public MultipleChoiceCountPredicate(int count) {
-		super();
+    public MultipleChoiceCountPredicate(int count) {
+        super();
 
-		this.count = count;
-	}
+        this.count = count;
+    }
 
-	public MultipleChoiceCountPredicate(PredicateBean predicateBean) {
-		this(predicateBean.getCount());
-	}
+    public MultipleChoiceCountPredicate(PredicateBean predicateBean) {
+        this(predicateBean.getCount());
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount() {
+        return count;
+    }
 
-	@Override
-	public boolean evaluate(NewQuestion question, Person person) {
-		NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) question;
+    @Override
+    public boolean evaluate(NewQuestion question, Person person) {
+        NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) question;
 
-		if (!multipleChoiceQuestion.isAnswered(person)) {
-			return false;
-		}
+        if (!multipleChoiceQuestion.isAnswered(person)) {
+            return false;
+        }
 
-		return multipleChoiceQuestion.getMultipleChoiceAnswer(person).size() == count;
-	}
+        return multipleChoiceQuestion.getMultipleChoiceAnswer(person).size() == count;
+    }
 
-	@Override
-	public boolean uses(Object object) {
-		return false;
-	}
+    @Override
+    public boolean uses(Object object) {
+        return false;
+    }
 
-	@Override
-	public Predicate transform(HashMap<Object, Object> transformMap) {
-		return new MultipleChoiceCountPredicate(getCount());
-	}
+    @Override
+    public Predicate transform(HashMap<Object, Object> transformMap) {
+        return new MultipleChoiceCountPredicate(getCount());
+    }
 
 }

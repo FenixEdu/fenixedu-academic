@@ -12,21 +12,21 @@ import org.apache.struts.action.ActionMapping;
 
 public class AlumniViewCurriculum extends CurriculumDispatchAction {
 
-	public ActionForward checkValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward checkValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		if (getLoggedPerson(request).getStudent().hasAlumni()) {
+        if (getLoggedPerson(request).getStudent().hasAlumni()) {
 
-			if (getLoggedPerson(request).getStudent().getAlumni().hasAnyPendingIdentityRequests()) {
-				return mapping.findForward("alumni.view.curriculum.validate.identity");
-			}
-			return super.prepare(mapping, form, request, response);
-		} else {
-			if (getLoggedPerson(request).hasRole(RoleType.ALUMNI)) {
-				return super.prepare(mapping, form, request, response);
-			} else {
-				return mapping.findForward("alumni.view.curriculum.not.authorized");
-			}
-		}
-	}
+            if (getLoggedPerson(request).getStudent().getAlumni().hasAnyPendingIdentityRequests()) {
+                return mapping.findForward("alumni.view.curriculum.validate.identity");
+            }
+            return super.prepare(mapping, form, request, response);
+        } else {
+            if (getLoggedPerson(request).hasRole(RoleType.ALUMNI)) {
+                return super.prepare(mapping, form, request, response);
+            } else {
+                return mapping.findForward("alumni.view.curriculum.not.authorized");
+            }
+        }
+    }
 }

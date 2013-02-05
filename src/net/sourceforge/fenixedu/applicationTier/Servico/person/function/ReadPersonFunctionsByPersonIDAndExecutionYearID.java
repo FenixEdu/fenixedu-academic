@@ -22,24 +22,24 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends FenixService {
 
-	@Checked("RolePredicates.PERSON_PREDICATE")
-	@Service
-	public static List<PersonFunction> run(Integer personID, Integer executionYearID) throws FenixServiceException {
-		Person person = (Person) rootDomainObject.readPartyByOID(personID);
+    @Checked("RolePredicates.PERSON_PREDICATE")
+    @Service
+    public static List<PersonFunction> run(Integer personID, Integer executionYearID) throws FenixServiceException {
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
-		List<PersonFunction> personFunctions = null;
+        List<PersonFunction> personFunctions = null;
 
-		if (executionYearID != null) {
-			ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-			Date beginDate = executionYear.getBeginDate();
-			Date endDate = executionYear.getEndDate();
-			personFunctions =
-					person.getPersonFuntions(YearMonthDay.fromDateFields(beginDate), YearMonthDay.fromDateFields(endDate));
+        if (executionYearID != null) {
+            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+            Date beginDate = executionYear.getBeginDate();
+            Date endDate = executionYear.getEndDate();
+            personFunctions =
+                    person.getPersonFuntions(YearMonthDay.fromDateFields(beginDate), YearMonthDay.fromDateFields(endDate));
 
-		} else {
-			personFunctions = new ArrayList<PersonFunction>(person.getPersonFunctions());
-		}
+        } else {
+            personFunctions = new ArrayList<PersonFunction>(person.getPersonFunctions());
+        }
 
-		return personFunctions;
-	}
+        return personFunctions;
+    }
 }

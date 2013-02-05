@@ -27,171 +27,171 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
-	protected Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
-		return (request.getParameter(parameter) != null) ? Boolean.valueOf(request.getParameter(parameter)) : (Boolean) request
-				.getAttribute(parameter);
-	}
+    protected Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
+        return (request.getParameter(parameter) != null) ? Boolean.valueOf(request.getParameter(parameter)) : (Boolean) request
+                .getAttribute(parameter);
+    }
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		// inEnglish
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		if (inEnglish == null) {
-			inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
-		}
-		request.setAttribute("inEnglish", inEnglish);
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        // inEnglish
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        if (inEnglish == null) {
+            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+        }
+        request.setAttribute("inEnglish", inEnglish);
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public ActionForward showTheses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		SortedSet<ExecutionYear> years = new TreeSet<ExecutionYear>();
-		Map<String, Collection<Thesis>> theses = new HashMap<String, Collection<Thesis>>();
+    public ActionForward showTheses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        SortedSet<ExecutionYear> years = new TreeSet<ExecutionYear>();
+        Map<String, Collection<Thesis>> theses = new HashMap<String, Collection<Thesis>>();
 
-		ThesisFilterBean bean = getFilterBean(request);
+        ThesisFilterBean bean = getFilterBean(request);
 
-		ExecutionYear year = bean.getYear();
-		ThesisState state = bean.getState();
+        ExecutionYear year = bean.getYear();
+        ThesisState state = bean.getState();
 
-		Collection<Degree> degrees = bean.getDegreeOptions();
+        Collection<Degree> degrees = bean.getDegreeOptions();
 
-		Degree degree = bean.getDegree();
-		if (degree != null) {
-			degrees = Collections.singleton(degree);
-		}
+        Degree degree = bean.getDegree();
+        if (degree != null) {
+            degrees = Collections.singleton(degree);
+        }
 
-		collectTheses(request, years, theses, year, state, degrees);
+        collectTheses(request, years, theses, year, state, degrees);
 
-		request.setAttribute("filter", bean);
-		request.setAttribute("years", years);
-		request.setAttribute("theses", theses);
+        request.setAttribute("filter", bean);
+        request.setAttribute("years", years);
+        request.setAttribute("theses", theses);
 
-		return mapping.findForward("showTheses");
-	}
+        return mapping.findForward("showTheses");
+    }
 
-	protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
-		ThesisFilterBean bean = getRenderedObject("filter");
+    protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
+        ThesisFilterBean bean = getRenderedObject("filter");
 
-		if (bean == null) {
-			bean = new ThesisFilterBean();
+        if (bean == null) {
+            bean = new ThesisFilterBean();
 
-			ThesisState state = getCustomState(request);
+            ThesisState state = getCustomState(request);
 
-			bean.setState(state == null ? ThesisState.EVALUATED : state);
-			bean.setDegree(getCustomDegree(request));
-			bean.setYear(getCustomExecutionYear(request));
-		}
+            bean.setState(state == null ? ThesisState.EVALUATED : state);
+            bean.setDegree(getCustomDegree(request));
+            bean.setYear(getCustomExecutionYear(request));
+        }
 
-		return bean;
-	}
+        return bean;
+    }
 
-	private ThesisState getCustomState(HttpServletRequest request) {
-		String state = request.getParameter("thesisState");
+    private ThesisState getCustomState(HttpServletRequest request) {
+        String state = request.getParameter("thesisState");
 
-		if (state == null) {
-			return null;
-		}
+        if (state == null) {
+            return null;
+        }
 
-		return ThesisState.valueOf(state);
-	}
+        return ThesisState.valueOf(state);
+    }
 
-	private Degree getCustomDegree(HttpServletRequest request) {
-		Integer id = getIdInternal(request, "degreeID");
+    private Degree getCustomDegree(HttpServletRequest request) {
+        Integer id = getIdInternal(request, "degreeID");
 
-		if (id == null) {
-			return null;
-		}
+        if (id == null) {
+            return null;
+        }
 
-		return RootDomainObject.getInstance().readDegreeByOID(id);
-	}
+        return RootDomainObject.getInstance().readDegreeByOID(id);
+    }
 
-	private ExecutionYear getCustomExecutionYear(HttpServletRequest request) {
-		Integer id = getIdInternal(request, "executionYearID");
+    private ExecutionYear getCustomExecutionYear(HttpServletRequest request) {
+        Integer id = getIdInternal(request, "executionYearID");
 
-		if (id == null) {
-			return null;
-		}
+        if (id == null) {
+            return null;
+        }
 
-		return RootDomainObject.getInstance().readExecutionYearByOID(id);
-	}
+        return RootDomainObject.getInstance().readExecutionYearByOID(id);
+    }
 
-	protected void collectTheses(HttpServletRequest request, SortedSet<ExecutionYear> years,
-			Map<String, Collection<Thesis>> theses, ExecutionYear year, ThesisState state, Collection<Degree> degrees)
-			throws Exception {
-		for (Degree degree : degrees) {
-			for (final Thesis thesis : degree.getThesisSet()) {
-				if (state != null && thesis.getState() != state) {
-					continue;
-				}
+    protected void collectTheses(HttpServletRequest request, SortedSet<ExecutionYear> years,
+            Map<String, Collection<Thesis>> theses, ExecutionYear year, ThesisState state, Collection<Degree> degrees)
+            throws Exception {
+        for (Degree degree : degrees) {
+            for (final Thesis thesis : degree.getThesisSet()) {
+                if (state != null && thesis.getState() != state) {
+                    continue;
+                }
 
-				final Enrolment enrolment = thesis.getEnrolment();
-				if (enrolment != null) {
-					final ExecutionYear executionYear = enrolment.getExecutionYear();
+                final Enrolment enrolment = thesis.getEnrolment();
+                if (enrolment != null) {
+                    final ExecutionYear executionYear = enrolment.getExecutionYear();
 
-					if (year != null && executionYear != year) {
-						continue;
-					}
+                    if (year != null && executionYear != year) {
+                        continue;
+                    }
 
-					if (thesis.isFinalThesis() && !thesis.isFinalAndApprovedThesis()) {
-						continue;
-					}
+                    if (thesis.isFinalThesis() && !thesis.isFinalAndApprovedThesis()) {
+                        continue;
+                    }
 
-					prepareMap(thesis, years, theses).add(thesis);
-				}
-			}
-		}
-	}
+                    prepareMap(thesis, years, theses).add(thesis);
+                }
+            }
+        }
+    }
 
-	protected Collection<Thesis> prepareMap(Thesis thesis, SortedSet<ExecutionYear> years, Map<String, Collection<Thesis>> theses) {
-		ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
-		years.add(executionYear);
+    protected Collection<Thesis> prepareMap(Thesis thesis, SortedSet<ExecutionYear> years, Map<String, Collection<Thesis>> theses) {
+        ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
+        years.add(executionYear);
 
-		Collection<Thesis> collection = theses.get(executionYear.getYear());
-		if (collection == null) {
-			collection = new TreeSet<Thesis>(new ThesisByNameComparator());
-			theses.put(executionYear.getYear(), collection);
-		}
+        Collection<Thesis> collection = theses.get(executionYear.getYear());
+        if (collection == null) {
+            collection = new TreeSet<Thesis>(new ThesisByNameComparator());
+            theses.put(executionYear.getYear(), collection);
+        }
 
-		return collection;
-	}
+        return collection;
+    }
 
-	public ActionForward showThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Integer thesisId = getIntegerFromRequest(request, "thesisID");
+    public ActionForward showThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Integer thesisId = getIntegerFromRequest(request, "thesisID");
 
-		Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
-		request.setAttribute("thesis", thesis);
+        Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
+        request.setAttribute("thesis", thesis);
 
-		return mapping.findForward("showThesisDetails");
-	}
+        return mapping.findForward("showThesisDetails");
+    }
 
-	public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Integer thesisId = getIntegerFromRequest(request, "thesisID");
+    public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Integer thesisId = getIntegerFromRequest(request, "thesisID");
 
-		ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(thesisId);
-		request.setAttribute("result", result);
+        ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(thesisId);
+        request.setAttribute("result", result);
 
-		return mapping.findForward("showResult");
-	}
+        return mapping.findForward("showResult");
+    }
 
-	private static class ThesisByNameComparator implements Comparator<Thesis> {
+    private static class ThesisByNameComparator implements Comparator<Thesis> {
 
-		@Override
-		public int compare(Thesis o1, Thesis o2) {
-			String title1 = o1.getFinalFullTitle().getContent().trim();
-			String title2 = o2.getFinalFullTitle().getContent().trim();
+        @Override
+        public int compare(Thesis o1, Thesis o2) {
+            String title1 = o1.getFinalFullTitle().getContent().trim();
+            String title2 = o2.getFinalFullTitle().getContent().trim();
 
-			int c = title1.compareTo(title2);
-			if (c != 0) {
-				return c;
-			} else {
-				return o1.getIdInternal().compareTo(o2.getIdInternal());
-			}
-		}
+            int c = title1.compareTo(title2);
+            if (c != 0) {
+                return c;
+            } else {
+                return o1.getIdInternal().compareTo(o2.getIdInternal());
+            }
+        }
 
-	}
+    }
 
 }

@@ -17,112 +17,112 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
  */
 public class InfoProjectMemberBudget extends DataTranferObject {
 
-	private String projectCode;
+    private String projectCode;
 
-	private String institutionCode;
+    private String institutionCode;
 
-	private String institutionName;
+    private String institutionName;
 
-	private String type;
+    private String type;
 
-	private String overheads;
+    private String overheads;
 
-	private String transferences;
+    private String transferences;
 
-	private Integer financingPercentage;
+    private Integer financingPercentage;
 
-	private List rubricBudget;
+    private List rubricBudget;
 
-	public Integer getFinancingPercentage() {
-		return financingPercentage;
-	}
+    public Integer getFinancingPercentage() {
+        return financingPercentage;
+    }
 
-	public void setFinancingPercentage(Integer financingPercentage) {
-		this.financingPercentage = financingPercentage;
-	}
+    public void setFinancingPercentage(Integer financingPercentage) {
+        this.financingPercentage = financingPercentage;
+    }
 
-	public String getInstitutionCode() {
-		return institutionCode;
-	}
+    public String getInstitutionCode() {
+        return institutionCode;
+    }
 
-	public void setInstitutionCode(String institutionCode) {
-		this.institutionCode = institutionCode;
-	}
+    public void setInstitutionCode(String institutionCode) {
+        this.institutionCode = institutionCode;
+    }
 
-	public String getInstitutionName() {
-		return institutionName;
-	}
+    public String getInstitutionName() {
+        return institutionName;
+    }
 
-	public void setInstitutionName(String institutionName) {
-		this.institutionName = institutionName;
-	}
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
 
-	public String getOverheads() {
-		return overheads;
-	}
+    public String getOverheads() {
+        return overheads;
+    }
 
-	public void setOverheads(String overheads) {
-		this.overheads = overheads;
-	}
+    public void setOverheads(String overheads) {
+        this.overheads = overheads;
+    }
 
-	public String getProjectCode() {
-		return projectCode;
-	}
+    public String getProjectCode() {
+        return projectCode;
+    }
 
-	public void setProjectCode(String projectCode) {
-		this.projectCode = projectCode;
-	}
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
+    }
 
-	public List getRubricBudget() {
-		return rubricBudget;
-	}
+    public List getRubricBudget() {
+        return rubricBudget;
+    }
 
-	public void setRubricBudget(List rubricBudget) {
-		this.rubricBudget = rubricBudget;
-	}
+    public void setRubricBudget(List rubricBudget) {
+        this.rubricBudget = rubricBudget;
+    }
 
-	public String getTransferences() {
-		return transferences;
-	}
+    public String getTransferences() {
+        return transferences;
+    }
 
-	public void setTransferences(String transferences) {
-		this.transferences = transferences;
-	}
+    public void setTransferences(String transferences) {
+        this.transferences = transferences;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void copyFromDomain(IProjectMemberBudget projectMemberBudget) {
-		if (projectMemberBudget != null) {
-			setProjectCode(projectMemberBudget.getProjectCode());
-			setInstitutionCode(projectMemberBudget.getInstitutionCode());
-			setInstitutionName(projectMemberBudget.getInstitutionName());
-			setType(projectMemberBudget.getType());
-			setOverheads(projectMemberBudget.getOverheads());
-			setTransferences(projectMemberBudget.getTransferences());
-			setFinancingPercentage(projectMemberBudget.getFinancingPercentage());
+    public void copyFromDomain(IProjectMemberBudget projectMemberBudget) {
+        if (projectMemberBudget != null) {
+            setProjectCode(projectMemberBudget.getProjectCode());
+            setInstitutionCode(projectMemberBudget.getInstitutionCode());
+            setInstitutionName(projectMemberBudget.getInstitutionName());
+            setType(projectMemberBudget.getType());
+            setOverheads(projectMemberBudget.getOverheads());
+            setTransferences(projectMemberBudget.getTransferences());
+            setFinancingPercentage(projectMemberBudget.getFinancingPercentage());
 
-			if (projectMemberBudget.getRubricBudget() != null) {
-				setRubricBudget(new ArrayList());
-				for (int i = 0; i < projectMemberBudget.getRubricBudget().size(); i++) {
-					getRubricBudget().add(InfoRubric.newInfoFromDomain((IRubric) projectMemberBudget.getRubricBudget().get(i)));
-				}
-			}
-		}
-	}
+            if (projectMemberBudget.getRubricBudget() != null) {
+                setRubricBudget(new ArrayList());
+                for (int i = 0; i < projectMemberBudget.getRubricBudget().size(); i++) {
+                    getRubricBudget().add(InfoRubric.newInfoFromDomain((IRubric) projectMemberBudget.getRubricBudget().get(i)));
+                }
+            }
+        }
+    }
 
-	public static InfoProjectMemberBudget newInfoFromDomain(IProjectMemberBudget projectMemberBudget) {
-		InfoProjectMemberBudget infoProjectMemberBudget = null;
-		if (projectMemberBudget != null) {
-			infoProjectMemberBudget = new InfoProjectMemberBudget();
-			infoProjectMemberBudget.copyFromDomain(projectMemberBudget);
-		}
-		return infoProjectMemberBudget;
-	}
+    public static InfoProjectMemberBudget newInfoFromDomain(IProjectMemberBudget projectMemberBudget) {
+        InfoProjectMemberBudget infoProjectMemberBudget = null;
+        if (projectMemberBudget != null) {
+            infoProjectMemberBudget = new InfoProjectMemberBudget();
+            infoProjectMemberBudget.copyFromDomain(projectMemberBudget);
+        }
+        return infoProjectMemberBudget;
+    }
 
 }

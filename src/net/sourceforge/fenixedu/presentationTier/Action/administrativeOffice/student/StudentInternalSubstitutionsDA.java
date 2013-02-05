@@ -28,80 +28,78 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/studentInternalSubstitutions", module = "academicAdministration", formBean = "studentDismissalForm")
 @Forwards({
 
-		@Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
-		@Forward(
-				name = "chooseDismissalEnrolments",
-				path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEnrolments.jsp"),
-		@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEquivalents.jsp"),
-		@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateInternalSubstitution.jsp"),
-		@Forward(
-				name = "chooseNotNeedToEnrol",
-				path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionNotNeedToEnrol.jsp")
+        @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
+        @Forward(name = "chooseDismissalEnrolments",
+                path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEnrolments.jsp"),
+        @Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEquivalents.jsp"),
+        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateInternalSubstitution.jsp"),
+        @Forward(name = "chooseNotNeedToEnrol",
+                path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionNotNeedToEnrol.jsp")
 
 })
 public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
 
-	/**
-	 * Can not add enrolments from previous external cycle. If credits is not
-	 * correct, then admin office employee must remove credits (Equivalence,
-	 * Substitution or Credits) from current registration ant then enrolment
-	 * could be used as source of another credits (except internal
-	 * substitution).
-	 * 
-	 */
-	@Override
-	protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
+    /**
+     * Can not add enrolments from previous external cycle. If credits is not
+     * correct, then admin office employee must remove credits (Equivalence,
+     * Substitution or Credits) from current registration ant then enrolment
+     * could be used as source of another credits (except internal
+     * substitution).
+     * 
+     */
+    @Override
+    protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 
-		final List<SelectedEnrolment> enrolments = new ArrayList<SelectedEnrolment>();
-		addEnrolmentsToDismissalFromStudentCurricularPlan(dismissalBean, enrolments);
+        final List<SelectedEnrolment> enrolments = new ArrayList<SelectedEnrolment>();
+        addEnrolmentsToDismissalFromStudentCurricularPlan(dismissalBean, enrolments);
 
-		Collections.sort(enrolments, new Comparator<SelectedEnrolment>() {
-			@Override
-			public int compare(SelectedEnrolment o1, SelectedEnrolment o2) {
-				return Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID.compare(o1.getEnrolment(), o2.getEnrolment());
-			}
-		});
+        Collections.sort(enrolments, new Comparator<SelectedEnrolment>() {
+            @Override
+            public int compare(SelectedEnrolment o1, SelectedEnrolment o2) {
+                return Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID.compare(o1.getEnrolment(), o2.getEnrolment());
+            }
+        });
 
-		return enrolments;
-	}
+        return enrolments;
+    }
 
-	private void addEnrolmentsToDismissalFromStudentCurricularPlan(final DismissalBean bean,
-			final List<SelectedEnrolment> enrolments) {
+    private void addEnrolmentsToDismissalFromStudentCurricularPlan(final DismissalBean bean,
+            final List<SelectedEnrolment> enrolments) {
 
-		for (final Enrolment enrolment : bean.getStudentCurricularPlan().getDismissalApprovedEnrolments()) {
-			if (isParentAcceptable(enrolment.getCurriculumGroup())) {
-				enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
-			}
-		}
-	}
+        for (final Enrolment enrolment : bean.getStudentCurricularPlan().getDismissalApprovedEnrolments()) {
+            if (isParentAcceptable(enrolment.getCurriculumGroup())) {
+                enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
+            }
+        }
+    }
 
-	private boolean isParentAcceptable(final CurriculumGroup curriculumGroup) {
-		return !curriculumGroup.isNoCourseGroupCurriculumGroup()
-				|| !(curriculumGroup instanceof InternalCreditsSourceCurriculumGroup);
-	}
+    private boolean isParentAcceptable(final CurriculumGroup curriculumGroup) {
+        return !curriculumGroup.isNoCourseGroupCurriculumGroup()
+                || !(curriculumGroup instanceof InternalCreditsSourceCurriculumGroup);
+    }
 
-	@Override
-	protected DismissalBean createDismissalBean() {
-		return new InternalSubstitutionDismissalBean();
-	}
+    @Override
+    protected DismissalBean createDismissalBean() {
+        return new InternalSubstitutionDismissalBean();
+    }
 
-	@Override
-	public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Override
+    public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DismissalBean dismissalBean = getRenderedObject("dismissalBean");
-		if (!dismissalBean.hasAnySelectedIEnrolments()) {
-			addActionMessage(request, "error.StudentInternalSubstitutionsDA.must.select.ienrolments");
-			request.setAttribute("dismissalBean", dismissalBean);
-			return mapping.findForward("chooseDismissalEnrolments");
-		}
+        final DismissalBean dismissalBean = getRenderedObject("dismissalBean");
+        if (!dismissalBean.hasAnySelectedIEnrolments()) {
+            addActionMessage(request, "error.StudentInternalSubstitutionsDA.must.select.ienrolments");
+            request.setAttribute("dismissalBean", dismissalBean);
+            return mapping.findForward("chooseDismissalEnrolments");
+        }
 
-		return super.chooseEquivalents(mapping, form, request, response);
-	}
+        return super.chooseEquivalents(mapping, form, request, response);
+    }
 
-	@Override
-	protected void executeCreateDismissalService(DismissalBean dismissalBean) {
-		CreateNewInternalSubstitution.create(dismissalBean);
-	}
+    @Override
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
+        CreateNewInternalSubstitution.create(dismissalBean);
+    }
 
 }

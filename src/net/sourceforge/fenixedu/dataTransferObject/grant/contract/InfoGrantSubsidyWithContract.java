@@ -10,21 +10,21 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
  * @author Barbosa
  */
 public class InfoGrantSubsidyWithContract extends InfoGrantSubsidy {
-	@Override
-	public void copyFromDomain(GrantSubsidy grantSubsidy) {
-		super.copyFromDomain(grantSubsidy);
-		if (grantSubsidy != null) {
-			setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantSubsidy.getGrantContract()));
-		}
-	}
+    @Override
+    public void copyFromDomain(GrantSubsidy grantSubsidy) {
+        super.copyFromDomain(grantSubsidy);
+        if (grantSubsidy != null) {
+            setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantSubsidy.getGrantContract()));
+        }
+    }
 
-	public static InfoGrantSubsidy newInfoFromDomain(GrantSubsidy grantSubsidy) {
-		InfoGrantSubsidyWithContract infoGrantSubsidy = null;
-		if (grantSubsidy != null) {
-			infoGrantSubsidy = new InfoGrantSubsidyWithContract();
-			infoGrantSubsidy.copyFromDomain(grantSubsidy);
-		}
-		return infoGrantSubsidy;
-	}
+    public static InfoGrantSubsidy newInfoFromDomain(GrantSubsidy grantSubsidy) {
+        InfoGrantSubsidyWithContract infoGrantSubsidy = null;
+        if (grantSubsidy != null) {
+            infoGrantSubsidy = new InfoGrantSubsidyWithContract();
+            infoGrantSubsidy.copyFromDomain(grantSubsidy);
+        }
+        return infoGrantSubsidy;
+    }
 
 }

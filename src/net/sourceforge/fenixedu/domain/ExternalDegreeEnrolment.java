@@ -17,62 +17,62 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 
-	public ExternalDegreeEnrolment() {
-		super();
-	}
+    public ExternalDegreeEnrolment() {
+        super();
+    }
 
-	public ExternalDegreeEnrolment(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,
-			final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
-			final EnrollmentCondition enrolmentCondition, final String createdBy) {
+    public ExternalDegreeEnrolment(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,
+            final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
+            final EnrollmentCondition enrolmentCondition, final String createdBy) {
 
-		this();
-		checkParameters(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
-				createdBy);
-		checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
-		initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
-				createdBy);
-		createCurriculumLineLog(EnrolmentAction.ENROL);
-	}
+        this();
+        checkParameters(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
+                createdBy);
+        checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
+        initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
+                createdBy);
+        createCurriculumLineLog(EnrolmentAction.ENROL);
+    }
 
-	private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,
-			final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
-			final EnrollmentCondition enrolmentCondition, final String createdBy) {
+    private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,
+            final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
+            final EnrollmentCondition enrolmentCondition, final String createdBy) {
 
-		if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
-				|| enrolmentCondition == null || createdBy == null) {
-			throw new DomainException("error.ExternalDegreeEnrolment.invalid.parameters");
-		}
-	}
+        if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
+                || enrolmentCondition == null || createdBy == null) {
+            throw new DomainException("error.ExternalDegreeEnrolment.invalid.parameters");
+        }
+    }
 
-	@Override
-	public MultiLanguageString getName() {
-		final MultiLanguageString multiLanguageString = new MultiLanguageString();
+    @Override
+    public MultiLanguageString getName() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
 
-		if (!StringUtils.isEmpty(this.getDegreeModule().getName())) {
-			multiLanguageString.setContent(Language.pt, getDegreeModule().getName() + " ("
-					+ getDegreeCurricularPlanOfDegreeModule().getName() + ")");
-		}
-		if (!StringUtils.isEmpty(this.getDegreeModule().getNameEn())) {
-			multiLanguageString.setContent(Language.en, getDegreeModule().getNameEn() + " ("
-					+ getDegreeCurricularPlanOfDegreeModule().getName() + ")");
-		}
-		return multiLanguageString;
-	}
+        if (!StringUtils.isEmpty(this.getDegreeModule().getName())) {
+            multiLanguageString.setContent(Language.pt, getDegreeModule().getName() + " ("
+                    + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+        }
+        if (!StringUtils.isEmpty(this.getDegreeModule().getNameEn())) {
+            multiLanguageString.setContent(Language.en, getDegreeModule().getNameEn() + " ("
+                    + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+        }
+        return multiLanguageString;
+    }
 
-	@Override
-	final public StringBuilder print(String tabs) {
-		final StringBuilder builder = new StringBuilder();
-		builder.append(tabs);
-		builder.append("[E ").append(getDegreeModule().getName()).append(" (");
-		builder.append(getDegreeCurricularPlanOfDegreeModule().getName()).append(") ]\n");
-		return builder;
-	}
+    @Override
+    final public StringBuilder print(String tabs) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(tabs);
+        builder.append("[E ").append(getDegreeModule().getName()).append(" (");
+        builder.append(getDegreeCurricularPlanOfDegreeModule().getName()).append(") ]\n");
+        return builder;
+    }
 
-	@Override
-	public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
-		if (isValid(executionSemester) && isEnroled()) {
-			return Collections.<IDegreeModuleToEvaluate> singleton(new ExternalDegreeEnrolmentWrapper(this, executionSemester));
-		}
-		return Collections.emptySet();
-	}
+    @Override
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+        if (isValid(executionSemester) && isEnroled()) {
+            return Collections.<IDegreeModuleToEvaluate> singleton(new ExternalDegreeEnrolmentWrapper(this, executionSemester));
+        }
+        return Collections.emptySet();
+    }
 }

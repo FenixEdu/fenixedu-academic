@@ -37,105 +37,105 @@ import org.apache.struts.action.ActionMapping;
  */
 public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
-	public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DegreeType degreeType = DegreeType.MASTER_DEGREE;
+        DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-		List result = null;
-		try {
-			result = ReadAllMasterDegrees.run(degreeType);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O Degree de Mestrado", e);
-		}
+        List result = null;
+        try {
+            result = ReadAllMasterDegrees.run(degreeType);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("O Degree de Mestrado", e);
+        }
 
-		request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+        request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
 
-		return mapping.findForward("DisplayMasterDegreeList");
-	}
+        return mapping.findForward("DisplayMasterDegreeList");
+    }
 
-	public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		// Get the Chosen Master Degree
-		Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-		if (masterDegreeID == null) {
-			masterDegreeID = (Integer) request.getAttribute("degreeID");
-		}
+        // Get the Chosen Master Degree
+        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        if (masterDegreeID == null) {
+            masterDegreeID = (Integer) request.getAttribute("degreeID");
+        }
 
-		List result = null;
+        List result = null;
 
-		try {
+        try {
 
-			result = ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
+            result = ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
 
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O plano curricular ", e);
-		}
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("O plano curricular ", e);
+        }
 
-		request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+        request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
-		return mapping.findForward("MasterDegreeReady");
-	}
+        return mapping.findForward("MasterDegreeReady");
+    }
 
-	public ActionForward prepareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return getStudentsFromDCP(mapping, form, request, response);
-	}
+    public ActionForward prepareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return getStudentsFromDCP(mapping, form, request, response);
+    }
 
-	/**
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return The Registration's from a Degree Curricular Plan
-	 * @throws Exception
-	 */
-	public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    /**
+     * 
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return The Registration's from a Degree Curricular Plan
+     * @throws Exception
+     */
+    public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		// Get the Selected Degree Curricular Plan
-		Integer degreeCurricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+        // Get the Selected Degree Curricular Plan
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("curricularPlanID"));
 
-		List result = null;
+        List result = null;
 
-		try {
-			Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
-			result = (List) ServiceManagerServiceFactory.executeService("ReadStudentsFromDegreeCurricularPlan", args);
-		} catch (NotAuthorizedException e) {
-			return mapping.findForward("NotAuthorized");
-		} catch (NonExistingServiceException e) {
-			Integer degreeID = new Integer(request.getParameter("degreeID"));
-			request.setAttribute("degreeID", degreeID);
+        try {
+            Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
+            result = (List) ServiceManagerServiceFactory.executeService("ReadStudentsFromDegreeCurricularPlan", args);
+        } catch (NotAuthorizedException e) {
+            return mapping.findForward("NotAuthorized");
+        } catch (NonExistingServiceException e) {
+            Integer degreeID = new Integer(request.getParameter("degreeID"));
+            request.setAttribute("degreeID", degreeID);
 
-			ActionErrors errors = new ActionErrors();
-			errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
-			saveErrors(request, errors);
+            ActionErrors errors = new ActionErrors();
+            errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
+            saveErrors(request, errors);
 
-			return mapping.findForward("NoStudents");
-		}
-		BeanComparator numberComparator = new BeanComparator("infoStudent.number");
-		Collections.sort(result, numberComparator);
+            return mapping.findForward("NoStudents");
+        }
+        BeanComparator numberComparator = new BeanComparator("infoStudent.number");
+        Collections.sort(result, numberComparator);
 
-		request.setAttribute(PresentationConstants.STUDENT_LIST, result);
+        request.setAttribute(PresentationConstants.STUDENT_LIST, result);
 
-		InfoExecutionDegree infoExecutionDegree = null;
-		try {
+        InfoExecutionDegree infoExecutionDegree = null;
+        try {
 
-			infoExecutionDegree = ReadActiveExecutionDegreebyDegreeCurricularPlanID.run(degreeCurricularPlanID);
-		} catch (NonExistingServiceException e) {
+            infoExecutionDegree = ReadActiveExecutionDegreebyDegreeCurricularPlanID.run(degreeCurricularPlanID);
+        } catch (NonExistingServiceException e) {
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if (infoExecutionDegree != null) {
-			request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-		}
+        if (infoExecutionDegree != null) {
+            request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+        }
 
-		return mapping.findForward("CurricularPlanReady");
-	}
+        return mapping.findForward("CurricularPlanReady");
+    }
 }

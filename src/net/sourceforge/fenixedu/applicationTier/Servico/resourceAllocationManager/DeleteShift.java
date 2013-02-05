@@ -13,10 +13,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteShift extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(InfoShift infoShift) throws FenixServiceException {
-		rootDomainObject.readShiftByOID(infoShift.getIdInternal()).delete();
-	}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoShift infoShift) throws FenixServiceException {
+        rootDomainObject.readShiftByOID(infoShift.getIdInternal()).delete();
+    }
 
 }

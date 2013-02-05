@@ -29,24 +29,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "show-form", path = "view-external-activities") })
 public class ReadExternalActivitiesAction extends FenixAction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-	 * ActionMapping, org.apache.struts.action.ActionForm,
-	 * javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    /*
+     * (non-Javadoc)
+     * 
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		SiteView siteView = ReadExternalActivities.run(userView.getUtilizador());
+        SiteView siteView = ReadExternalActivities.run(userView.getUtilizador());
 
-		request.setAttribute("siteView", siteView);
+        request.setAttribute("siteView", siteView);
 
-		return mapping.findForward("show-form");
-	}
+        return mapping.findForward("show-form");
+    }
 }

@@ -15,28 +15,28 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class MoneyInputRenderer extends NumberInputRenderer {
 
-	@Override
-	protected Converter getConverter() {
-		return new MoneyConverter();
-	}
+    @Override
+    protected Converter getConverter() {
+        return new MoneyConverter();
+    }
 
-	@Override
-	public HtmlComponent render(Object targetObject, Class type) {
-		final Money money = ((Money) targetObject);
-		return super.render(money != null ? money.getAmount() : null, type);
-	}
+    @Override
+    public HtmlComponent render(Object targetObject, Class type) {
+        final Money money = ((Money) targetObject);
+        return super.render(money != null ? money.getAmount() : null, type);
+    }
 
-	private class MoneyConverter extends Converter {
+    private class MoneyConverter extends Converter {
 
-		@Override
-		public Object convert(Class type, Object value) {
-			final String numberText = ((String) value).trim();
-			try {
-				return numberText.length() == 0 ? null : new Money(numberText);
-			} catch (NumberFormatException e) {
-				throw new ConversionException("renderers.converter.money", e, true, value);
-			}
-		}
+        @Override
+        public Object convert(Class type, Object value) {
+            final String numberText = ((String) value).trim();
+            try {
+                return numberText.length() == 0 ? null : new Money(numberText);
+            } catch (NumberFormatException e) {
+                throw new ConversionException("renderers.converter.money", e, true, value);
+            }
+        }
 
-	}
+    }
 }

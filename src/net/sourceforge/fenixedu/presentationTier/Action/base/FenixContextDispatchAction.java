@@ -23,80 +23,80 @@ import org.apache.struts.util.LabelValueBean;
 
 public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setContextSelectionBean(request, getRenderedObject());
+        ContextUtils.setContextSelectionBean(request, getRenderedObject());
 
-		ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
 
-		ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+        ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
 
-		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-		return actionForward;
-	}
+        return actionForward;
+    }
 
-	public static Integer getFromRequest(String parameter, HttpServletRequest request) {
-		if (request.getParameter(parameter) != null) {
-			try {
-				return Integer.valueOf(request.getParameter(parameter));
-			} catch (NumberFormatException e) {
-				return null;
-			}
-		} else if (request.getAttribute(parameter) != null) {
-			if (request.getAttribute(parameter) instanceof String) {
-				try {
-					return Integer.valueOf((String) request.getAttribute(parameter));
-				} catch (NumberFormatException e) {
-					return null;
-				}
-			} else if (request.getAttribute(parameter) instanceof Integer) {
-				return (Integer) request.getAttribute(parameter);
-			}
-		}
-		return null;
-	}
+    public static Integer getFromRequest(String parameter, HttpServletRequest request) {
+        if (request.getParameter(parameter) != null) {
+            try {
+                return Integer.valueOf(request.getParameter(parameter));
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        } else if (request.getAttribute(parameter) != null) {
+            if (request.getAttribute(parameter) instanceof String) {
+                try {
+                    return Integer.valueOf((String) request.getAttribute(parameter));
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            } else if (request.getAttribute(parameter) instanceof Integer) {
+                return (Integer) request.getAttribute(parameter);
+            }
+        }
+        return null;
+    }
 
-	public static Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
-		return (request.getParameter(parameter) != null) ? Boolean.valueOf(request.getParameter(parameter)) : (Boolean) request
-				.getAttribute(parameter);
-	}
+    public static Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
+        return (request.getParameter(parameter) != null) ? Boolean.valueOf(request.getParameter(parameter)) : (Boolean) request
+                .getAttribute(parameter);
+    }
 
-	protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId)
-			throws FenixActionException {
-		List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-		try {
+    protected List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId)
+            throws FenixActionException {
+        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
+        try {
 
-			infoExecutionDegreeList = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
-		} catch (Exception e) {
-			throw new FenixActionException(e);
-		}
+            infoExecutionDegreeList = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
+        } catch (Exception e) {
+            throw new FenixActionException(e);
+        }
 
-		List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-		for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
+        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
 
-			try {
-				List<InfoExecutionPeriod> infoExecutionPeriodsList =
-						ReadNotClosedPublicExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear());
+            try {
+                List<InfoExecutionPeriod> infoExecutionPeriodsList =
+                        ReadNotClosedPublicExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear());
 
-				for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
-					result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
-							+ infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
-							.toString()));
-				}
-			} catch (Exception e) {
-				throw new FenixActionException(e);
-			}
-		}
+                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
+                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
+                            + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
+                            .toString()));
+                }
+            } catch (Exception e) {
+                throw new FenixActionException(e);
+            }
+        }
 
-		ComparatorChain comparatorChain = new ComparatorChain();
-		comparatorChain.addComparator(new BeanComparator("value"));
-		Collections.sort(result, comparatorChain);
-		Collections.reverse(result);
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("value"));
+        Collections.sort(result, comparatorChain);
+        Collections.reverse(result);
 
-		return result;
-	}
+        return result;
+    }
 
 }

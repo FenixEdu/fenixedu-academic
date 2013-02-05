@@ -16,18 +16,18 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
  */
 public class DeleteCareer extends FenixService {
 
-	public void run(Integer careerId) {
-		Career career = rootDomainObject.readCareerByOID(careerId);
+    public void run(Integer careerId) {
+        Career career = rootDomainObject.readCareerByOID(careerId);
 
-		if (career instanceof TeachingCareer) {
-			TeachingCareer teachingCareer = (TeachingCareer) career;
-			teachingCareer.delete();
+        if (career instanceof TeachingCareer) {
+            TeachingCareer teachingCareer = (TeachingCareer) career;
+            teachingCareer.delete();
 
-		} else if (career instanceof ProfessionalCareer) {
-			ProfessionalCareer professionalCareer = (ProfessionalCareer) career;
-			professionalCareer.delete();
-		}
+        } else if (career instanceof ProfessionalCareer) {
+            ProfessionalCareer professionalCareer = (ProfessionalCareer) career;
+            professionalCareer.delete();
+        }
 
-	}
+    }
 
 }

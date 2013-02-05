@@ -26,29 +26,29 @@ import org.apache.struts.config.ExceptionConfig;
  */
 public class FenixTransactionExceptionHandler extends FenixExceptionHandler {
 
-	@Override
-	public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    @Override
+    public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
+            HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-		super.execute(ex, ae, mapping, formInstance, request, response);
+        super.execute(ex, ae, mapping, formInstance, request, response);
 
-		ActionForward forward = null;
-		ActionError error = null;
-		String property = null;
+        ActionForward forward = null;
+        ActionError error = null;
+        String property = null;
 
-		// Figure out the error
-		if (ex instanceof FenixActionException) {
-			error = ((FenixActionException) ex).getError();
-			property = ((FenixActionException) ex).getProperty();
-		} else {
-			error = new ActionError(ae.getKey(), ex.getMessage());
-			property = error.getKey();
-		}
-		// Store the exception
-		request.setAttribute(Globals.EXCEPTION_KEY, ex);
-		super.storeException(request, property, error, forward, ae.getScope());
+        // Figure out the error
+        if (ex instanceof FenixActionException) {
+            error = ((FenixActionException) ex).getError();
+            property = ((FenixActionException) ex).getProperty();
+        } else {
+            error = new ActionError(ae.getKey(), ex.getMessage());
+            property = error.getKey();
+        }
+        // Store the exception
+        request.setAttribute(Globals.EXCEPTION_KEY, ex);
+        super.storeException(request, property, error, forward, ae.getScope());
 
-		return mapping.findForward("beginTransaction");
-	}
+        return mapping.findForward("beginTransaction");
+    }
 
 }

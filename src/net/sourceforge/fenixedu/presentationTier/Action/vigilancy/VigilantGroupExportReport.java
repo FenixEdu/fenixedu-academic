@@ -25,92 +25,92 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 @Mapping(module = "examCoordination", path = "/vigilancy/exportReport", scope = "request", parameter = "method")
 public class VigilantGroupExportReport extends VigilantGroupManagement {
 
-	public ActionForward exportGroupReportAsXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward exportGroupReportAsXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String vigilantGroupId = request.getParameter("oid");
-		VigilantGroup group =
-				(VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
+        String vigilantGroupId = request.getParameter("oid");
+        VigilantGroup group =
+                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
 
-		response.setContentType("text/plain");
-		response.setHeader("Content-disposition", "attachment; filename=\"" + group.getName() + ".xls\"");
+        response.setContentType("text/plain");
+        response.setHeader("Content-disposition", "attachment; filename=\"" + group.getName() + ".xls\"");
 
-		List<WrittenEvaluationVigilancyView> beans = getStatsViewForVigilantGroup(group);
-		Boolean withNames = Boolean.valueOf(request.getParameter("showVigilants"));
-		final Spreadsheet spreadsheet = getSpreadsheet(withNames);
+        List<WrittenEvaluationVigilancyView> beans = getStatsViewForVigilantGroup(group);
+        Boolean withNames = Boolean.valueOf(request.getParameter("showVigilants"));
+        final Spreadsheet spreadsheet = getSpreadsheet(withNames);
 
-		for (final WrittenEvaluationVigilancyView view : getStatsViewForVigilantGroup(group)) {
+        for (final WrittenEvaluationVigilancyView view : getStatsViewForVigilantGroup(group)) {
 
-			WrittenEvaluation evaluation = view.getWrittenEvaluation();
+            WrittenEvaluation evaluation = view.getWrittenEvaluation();
 
-			final Row row = spreadsheet.addRow();
+            final Row row = spreadsheet.addRow();
 
-			row.setCell(evaluation.getDayDateYearMonthDay() + " " + evaluation.getBeginningDateHourMinuteSecond() + " "
-					+ evaluation.getName());
-			row.setCell(String.valueOf(view.getTotalVigilancies()));
-			row.setCell(String.valueOf(view.getVigilanciesFromTeachers()));
-			if (withNames) {
-				row.setCell(getVigilantListAsString(view.getTeachersVigilants()));
-			}
-			row.setCell(String.valueOf(view.getVigilanciesFromOthers()));
-			if (withNames) {
-				row.setCell(getVigilantListAsString(view.getOtherVigilants()));
-			}
-			row.setCell(String.valueOf(view.getNumberOfCancelledConvokes()));
-			if (withNames) {
-				row.setCell(getVigilantListAsString(view.getCancelledConvokes()));
-			}
-			row.setCell(String.valueOf(view.getNumberOfConfirmedConvokes()));
-			if (withNames) {
-				row.setCell(getVigilantListAsString(view.getConfirmedConvokes()));
-			}
-			row.setCell(String.valueOf(view.getNumberOfAttendedConvokes()));
-			if (withNames) {
-				row.setCell(getVigilantListAsString(view.getAttendedConvokes()));
-			}
-		}
+            row.setCell(evaluation.getDayDateYearMonthDay() + " " + evaluation.getBeginningDateHourMinuteSecond() + " "
+                    + evaluation.getName());
+            row.setCell(String.valueOf(view.getTotalVigilancies()));
+            row.setCell(String.valueOf(view.getVigilanciesFromTeachers()));
+            if (withNames) {
+                row.setCell(getVigilantListAsString(view.getTeachersVigilants()));
+            }
+            row.setCell(String.valueOf(view.getVigilanciesFromOthers()));
+            if (withNames) {
+                row.setCell(getVigilantListAsString(view.getOtherVigilants()));
+            }
+            row.setCell(String.valueOf(view.getNumberOfCancelledConvokes()));
+            if (withNames) {
+                row.setCell(getVigilantListAsString(view.getCancelledConvokes()));
+            }
+            row.setCell(String.valueOf(view.getNumberOfConfirmedConvokes()));
+            if (withNames) {
+                row.setCell(getVigilantListAsString(view.getConfirmedConvokes()));
+            }
+            row.setCell(String.valueOf(view.getNumberOfAttendedConvokes()));
+            if (withNames) {
+                row.setCell(getVigilantListAsString(view.getAttendedConvokes()));
+            }
+        }
 
-		final OutputStream outputStream = response.getOutputStream();
-		spreadsheet.exportToXLSSheet(outputStream);
-		outputStream.close();
-		return null;
-	}
+        final OutputStream outputStream = response.getOutputStream();
+        spreadsheet.exportToXLSSheet(outputStream);
+        outputStream.close();
+        return null;
+    }
 
-	private String getVigilantListAsString(List<VigilantWrapper> vigilants) {
-		String vigilantList = "";
-		for (VigilantWrapper vigilant : vigilants) {
-			vigilantList += vigilant.getPerson().getFirstAndLastName() + " (" + vigilant.getPerson().getIstUsername() + ")\n";
-		}
-		return vigilantList;
-	}
+    private String getVigilantListAsString(List<VigilantWrapper> vigilants) {
+        String vigilantList = "";
+        for (VigilantWrapper vigilant : vigilants) {
+            vigilantList += vigilant.getPerson().getFirstAndLastName() + " (" + vigilant.getPerson().getIstUsername() + ")\n";
+        }
+        return vigilantList;
+    }
 
-	private Spreadsheet getSpreadsheet(Boolean withNames) {
-		final ResourceBundle enumResourceBundle =
-				ResourceBundle.getBundle("resources.VigilancyResources", new Locale("pt", "PT"));
-		final Spreadsheet spreadsheet = new Spreadsheet("Report");
-		spreadsheet.setHeader(enumResourceBundle.getString("label.vigilancy.writtenEvaluation.header"));
-		spreadsheet.setHeader(enumResourceBundle.getString("label.totalVigilancies"));
-		spreadsheet.setHeader(enumResourceBundle.getString("label.vigilanciesFromTeachers"));
-		if (withNames) {
-			spreadsheet.setHeader(enumResourceBundle.getString("label.teachersVigilants"));
-		}
-		spreadsheet.setHeader(enumResourceBundle.getString("label.vigilanciesFromOthers"));
-		if (withNames) {
-			spreadsheet.setHeader(enumResourceBundle.getString("label.otherVigilants"));
-		}
-		spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfCancelledConvokes"));
-		if (withNames) {
-			spreadsheet.setHeader(enumResourceBundle.getString("label.cancelledConvokes"));
-		}
-		spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfConfirmedConvokes"));
-		if (withNames) {
-			spreadsheet.setHeader(enumResourceBundle.getString("label.confirmedConvokes"));
-		}
-		spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfAttendedConvokes"));
-		if (withNames) {
-			spreadsheet.setHeader(enumResourceBundle.getString("label.attendedConvokes"));
-		}
+    private Spreadsheet getSpreadsheet(Boolean withNames) {
+        final ResourceBundle enumResourceBundle =
+                ResourceBundle.getBundle("resources.VigilancyResources", new Locale("pt", "PT"));
+        final Spreadsheet spreadsheet = new Spreadsheet("Report");
+        spreadsheet.setHeader(enumResourceBundle.getString("label.vigilancy.writtenEvaluation.header"));
+        spreadsheet.setHeader(enumResourceBundle.getString("label.totalVigilancies"));
+        spreadsheet.setHeader(enumResourceBundle.getString("label.vigilanciesFromTeachers"));
+        if (withNames) {
+            spreadsheet.setHeader(enumResourceBundle.getString("label.teachersVigilants"));
+        }
+        spreadsheet.setHeader(enumResourceBundle.getString("label.vigilanciesFromOthers"));
+        if (withNames) {
+            spreadsheet.setHeader(enumResourceBundle.getString("label.otherVigilants"));
+        }
+        spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfCancelledConvokes"));
+        if (withNames) {
+            spreadsheet.setHeader(enumResourceBundle.getString("label.cancelledConvokes"));
+        }
+        spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfConfirmedConvokes"));
+        if (withNames) {
+            spreadsheet.setHeader(enumResourceBundle.getString("label.confirmedConvokes"));
+        }
+        spreadsheet.setHeader(enumResourceBundle.getString("label.numberOfAttendedConvokes"));
+        if (withNames) {
+            spreadsheet.setHeader(enumResourceBundle.getString("label.attendedConvokes"));
+        }
 
-		return spreadsheet;
-	}
+        return spreadsheet;
+    }
 }

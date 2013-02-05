@@ -30,38 +30,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author lmac1
  */
 
-@Mapping(
-		module = "manager",
-		path = "/dissociateExecutionCourse",
-		input = "/readCurricularCourse.do",
-		attribute = "curricularCourseForm",
-		formBean = "curricularCourseForm",
-		scope = "request")
+@Mapping(module = "manager", path = "/dissociateExecutionCourse", input = "/readCurricularCourse.do",
+        attribute = "curricularCourseForm", formBean = "curricularCourseForm", scope = "request")
 @Forwards(value = { @Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
-		key = "resources.Action.exceptions.NonExistingActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+        key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class DissociateExecutionCourseAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
-		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+        IUserView userView = UserView.getUser();
+        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-		try {
-			DissociateExecutionCourse.run(executionCourseId, curricularCourseId);
+        try {
+            DissociateExecutionCourse.run(executionCourseId, curricularCourseId);
 
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(e.getMessage(), "");
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		return mapping.findForward("readCurricularCourse");
-	}
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException(e.getMessage(), "");
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+        return mapping.findForward("readCurricularCourse");
+    }
 
 }

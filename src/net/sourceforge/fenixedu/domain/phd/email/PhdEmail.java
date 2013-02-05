@@ -16,66 +16,66 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class PhdEmail extends PhdEmail_Base {
 
-	protected PhdEmail() {
-		super();
-	}
+    protected PhdEmail() {
+        super();
+    }
 
-	protected void init(final String subject, final String body, String additionalTo, String additionalBcc) {
-		super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
-	}
+    protected void init(final String subject, final String body, String additionalTo, String additionalBcc) {
+        super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+    }
 
-	protected void init(final String subject, final String body, String additionalTo, String additionalBcc, Person creator,
-			DateTime whenCreated) {
-		super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
-		setAdditionalTo(additionalTo);
-		setAdditionalBcc(additionalBcc);
-		setPerson(creator);
-		setWhenCreated(whenCreated);
-	}
+    protected void init(final String subject, final String body, String additionalTo, String additionalBcc, Person creator,
+            DateTime whenCreated) {
+        super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+        setAdditionalTo(additionalTo);
+        setAdditionalBcc(additionalBcc);
+        setPerson(creator);
+        setWhenCreated(whenCreated);
+    }
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	@Override
-	protected boolean isToDiscard() {
-		return !isToFire();
-	}
+    @Override
+    protected boolean isToDiscard() {
+        return !isToFire();
+    }
 
-	@Override
-	protected boolean isToFire() {
-		return getActive() && getFireDate() == null;
-	}
+    @Override
+    protected boolean isToFire() {
+        return getActive() && getFireDate() == null;
+    }
 
-	@Override
-	protected void generateMessage() {
-		new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(Language.pt), getBody().getContent(
-				Language.pt), getBccs());
-	}
+    @Override
+    protected void generateMessage() {
+        new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(Language.pt), getBody().getContent(
+                Language.pt), getBccs());
+    }
 
-	@Override
-	public boolean isToSendMail() {
-		return true;
-	}
+    @Override
+    public boolean isToSendMail() {
+        return true;
+    }
 
-	@Service
-	public void cancel() {
-		discard();
-	}
+    @Service
+    public void cancel() {
+        discard();
+    }
 
-	@Override
-	@Service
-	public void fire() {
-		super.fire();
-	}
+    @Override
+    @Service
+    public void fire() {
+        super.fire();
+    }
 
-	protected abstract Collection<? extends ReplyTo> getReplyTos();
+    protected abstract Collection<? extends ReplyTo> getReplyTos();
 
-	protected abstract Sender getSender();
+    protected abstract Sender getSender();
 
-	protected abstract Collection<Recipient> getRecipients();
+    protected abstract Collection<Recipient> getRecipients();
 
-	protected abstract String getBccs();
+    protected abstract String getBccs();
 
 }

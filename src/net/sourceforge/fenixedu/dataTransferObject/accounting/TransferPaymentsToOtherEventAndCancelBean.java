@@ -6,51 +6,51 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 
 public class TransferPaymentsToOtherEventAndCancelBean implements Serializable {
-	private static final long serialVersionUID = -2180918685540833101L;
+    private static final long serialVersionUID = -2180918685540833101L;
 
-	private Event sourceEvent;
+    private Event sourceEvent;
 
-	private Event targetEvent;
+    private Event targetEvent;
 
-	private Person responsible;
+    private Person responsible;
 
-	private String cancelJustification;
+    private String cancelJustification;
 
-	public TransferPaymentsToOtherEventAndCancelBean(final Event sourceEvent, final Person responsible) {
-		setSourceEvent(sourceEvent);
-		setResponsible(responsible);
-	}
+    public TransferPaymentsToOtherEventAndCancelBean(final Event sourceEvent, final Person responsible) {
+        setSourceEvent(sourceEvent);
+        setResponsible(responsible);
+    }
 
-	public Event getTargetEvent() {
-		return this.targetEvent;
-	}
+    public Event getTargetEvent() {
+        return this.targetEvent;
+    }
 
-	public void setTargetEvent(Event event) {
-		this.targetEvent = event;
-	}
+    public void setTargetEvent(Event event) {
+        this.targetEvent = event;
+    }
 
-	public Event getSourceEvent() {
-		return this.sourceEvent;
-	}
+    public Event getSourceEvent() {
+        return this.sourceEvent;
+    }
 
-	public void setSourceEvent(Event event) {
-		this.sourceEvent = event;
-	}
+    public void setSourceEvent(Event event) {
+        this.sourceEvent = event;
+    }
 
-	public Person getResponsible() {
-		return responsible;
-	}
+    public Person getResponsible() {
+        return responsible;
+    }
 
-	public void setResponsible(Person responsible) {
-		this.responsible = responsible;
-	}
+    public void setResponsible(Person responsible) {
+        this.responsible = responsible;
+    }
 
-	public String getCancelJustification() {
-		return cancelJustification;
-	}
+    public String getCancelJustification() {
+        return cancelJustification;
+    }
 
-	public void setCancelJustification(String cancelJustification) {
-		this.cancelJustification = cancelJustification;
-	}
+    public void setCancelJustification(String cancelJustification) {
+        this.cancelJustification = cancelJustification;
+    }
 
 }

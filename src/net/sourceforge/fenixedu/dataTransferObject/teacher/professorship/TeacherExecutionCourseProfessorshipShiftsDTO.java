@@ -14,55 +14,55 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
  * @author jpvl
  */
 public class TeacherExecutionCourseProfessorshipShiftsDTO extends DataTranferObject {
-	private InfoExecutionCourse infoExecutionCourse;
+    private InfoExecutionCourse infoExecutionCourse;
 
-	private List infoShiftPercentageList;
+    private List infoShiftPercentageList;
 
-	private InfoTeacher infoTeacher;
+    private InfoTeacher infoTeacher;
 
-	/**
-	 * @return Returns the infoExecutionCourse.
-	 */
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return this.infoExecutionCourse;
-	}
+    /**
+     * @return Returns the infoExecutionCourse.
+     */
+    public InfoExecutionCourse getInfoExecutionCourse() {
+        return this.infoExecutionCourse;
+    }
 
-	/**
-	 * @return Returns the infoShiftPercentage.
-	 */
-	public List getInfoShiftPercentageList() {
-		return this.infoShiftPercentageList;
-	}
+    /**
+     * @return Returns the infoShiftPercentage.
+     */
+    public List getInfoShiftPercentageList() {
+        return this.infoShiftPercentageList;
+    }
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return this.infoTeacher;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return this.infoTeacher;
+    }
 
-	/**
-	 * @param infoExecutionCourse
-	 *            The infoExecutionCourse to set.
-	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-		this.infoExecutionCourse = infoExecutionCourse;
-	}
+    /**
+     * @param infoExecutionCourse
+     *            The infoExecutionCourse to set.
+     */
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+        this.infoExecutionCourse = infoExecutionCourse;
+    }
 
-	/**
-	 * @param infoShiftPercentage
-	 *            The infoShiftPercentage to set.
-	 */
-	public void setInfoShiftPercentageList(List infoShiftPercentage) {
-		this.infoShiftPercentageList = infoShiftPercentage;
-	}
+    /**
+     * @param infoShiftPercentage
+     *            The infoShiftPercentage to set.
+     */
+    public void setInfoShiftPercentageList(List infoShiftPercentage) {
+        this.infoShiftPercentageList = infoShiftPercentage;
+    }
 
-	/**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
 }

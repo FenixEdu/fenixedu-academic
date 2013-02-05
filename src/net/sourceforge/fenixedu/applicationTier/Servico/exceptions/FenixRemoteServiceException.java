@@ -10,54 +10,54 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class FenixRemoteServiceException extends FenixServiceException {
 
-	private String causeClassName;
+    private String causeClassName;
 
-	private String causePackageName;
+    private String causePackageName;
 
-	public FenixRemoteServiceException() {
-		super();
-	}
+    public FenixRemoteServiceException() {
+        super();
+    }
 
-	public FenixRemoteServiceException(String message) {
-		super(message);
-	}
+    public FenixRemoteServiceException(String message) {
+        super(message);
+    }
 
-	public FenixRemoteServiceException(Throwable cause) {
-		super(cause);
-	}
+    public FenixRemoteServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	public FenixRemoteServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public FenixRemoteServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * @return Returns the causeClassName.
-	 */
-	public String getCauseClassName() {
-		return causeClassName;
-	}
+    /**
+     * @return Returns the causeClassName.
+     */
+    public String getCauseClassName() {
+        return causeClassName;
+    }
 
-	/**
-	 * @param causeClassName
-	 *            The causeClassName to set.
-	 */
-	public void setCauseClassName(String causeClassName) {
-		this.causeClassName = causeClassName;
-	}
+    /**
+     * @param causeClassName
+     *            The causeClassName to set.
+     */
+    public void setCauseClassName(String causeClassName) {
+        this.causeClassName = causeClassName;
+    }
 
-	/**
-	 * @return Returns the causePackage.
-	 */
-	public String getCausePackageName() {
-		return causePackageName;
-	}
+    /**
+     * @return Returns the causePackage.
+     */
+    public String getCausePackageName() {
+        return causePackageName;
+    }
 
-	/**
-	 * @param causePackage
-	 *            The causePackage to set.
-	 */
-	public void setCausePackageName(String causePackageName) {
-		this.causePackageName = causePackageName;
-	}
+    /**
+     * @param causePackage
+     *            The causePackage to set.
+     */
+    public void setCausePackageName(String causePackageName) {
+        this.causePackageName = causePackageName;
+    }
 
 }

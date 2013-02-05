@@ -26,258 +26,255 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdministration")
 @Forwards({
-		@Forward(name = "prepareCreateNewRequest", path = "/phd/academicAdminOffice/serviceRequests/prepareCreateNewRequest.jsp"),
-		@Forward(
-				name = "viewPhdAcademicServiceRequestsHistoric",
-				path = "/phd/academicAdminOffice/serviceRequests/viewPhdAcademicServiceRequestsHistoric.jsp"),
-		@Forward(name = "viewRequest", path = "/phd/academicAdminOffice/serviceRequests/viewRequest.jsp"),
-		@Forward(name = "prepareProcessNewState", path = "/phd/academicAdminOffice/serviceRequests/prepareProcessNewState.jsp"),
-		@Forward(
-				name = "processReceiveNewStateOnRectorate",
-				path = "/phd/academicAdminOffice/serviceRequests/document/diploma/rectorate/processReceiveNewState.jsp"),
-		@Forward(
-				name = "editDocumentDisplacement",
-				path = "/phd/academicAdminOffice/serviceRequests/editDocumentDisplacement.jsp") })
+        @Forward(name = "prepareCreateNewRequest", path = "/phd/academicAdminOffice/serviceRequests/prepareCreateNewRequest.jsp"),
+        @Forward(name = "viewPhdAcademicServiceRequestsHistoric",
+                path = "/phd/academicAdminOffice/serviceRequests/viewPhdAcademicServiceRequestsHistoric.jsp"),
+        @Forward(name = "viewRequest", path = "/phd/academicAdminOffice/serviceRequests/viewRequest.jsp"),
+        @Forward(name = "prepareProcessNewState", path = "/phd/academicAdminOffice/serviceRequests/prepareProcessNewState.jsp"),
+        @Forward(name = "processReceiveNewStateOnRectorate",
+                path = "/phd/academicAdminOffice/serviceRequests/document/diploma/rectorate/processReceiveNewState.jsp"),
+        @Forward(name = "editDocumentDisplacement",
+                path = "/phd/academicAdminOffice/serviceRequests/editDocumentDisplacement.jsp") })
 public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		request.setAttribute("phdAcademicServiceRequest", getPhdAcademicServiceRequest(request));
-		request.setAttribute("phdIndividualProgramProcess", getPhdIndividualProgramProcess(request));
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("phdAcademicServiceRequest", getPhdAcademicServiceRequest(request));
+        request.setAttribute("phdIndividualProgramProcess", getPhdIndividualProgramProcess(request));
 
-		if (getPhdAcademicServiceRequest(request) != null) {
-			request.setAttribute("phdIndividualProgramProcess", getPhdAcademicServiceRequest(request)
-					.getPhdIndividualProgramProcess());
-		}
+        if (getPhdAcademicServiceRequest(request) != null) {
+            request.setAttribute("phdIndividualProgramProcess", getPhdAcademicServiceRequest(request)
+                    .getPhdIndividualProgramProcess());
+        }
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		return mapping.findForward("viewPhdAcademicServiceRequestsHistoric");
-	}
+        return mapping.findForward("viewPhdAcademicServiceRequestsHistoric");
+    }
 
-	public ActionForward viewAcademicServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		if ("true".equals(request.getParameter("fromHistory"))) {
-			request.setAttribute("fromHistory", "true");
-		}
+    public ActionForward viewAcademicServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        if ("true".equals(request.getParameter("fromHistory"))) {
+            request.setAttribute("fromHistory", "true");
+        }
 
-		return mapping.findForward("viewRequest");
-	}
+        return mapping.findForward("viewRequest");
+    }
 
-	public ActionForward prepareCreateNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
-		PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = new PhdAcademicServiceRequestCreateBean(process);
+    public ActionForward prepareCreateNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
+        PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = new PhdAcademicServiceRequestCreateBean(process);
 
-		request.setAttribute("phdAcademicServiceRequestCreateBean", academicServiceRequestCreateBean);
+        request.setAttribute("phdAcademicServiceRequestCreateBean", academicServiceRequestCreateBean);
 
-		return mapping.findForward("prepareCreateNewRequest");
-	}
+        return mapping.findForward("prepareCreateNewRequest");
+    }
 
-	public ActionForward createNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
-		try {
-			academicServiceRequestCreateBean.createNewRequest();
-		} catch (PhdDomainOperationException exception) {
-			addErrorMessage(request, exception.getMessage(), new String[0]);
-			return prepareCreateNewRequest(mapping, form, request, response);
-		}
+    public ActionForward createNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
+        try {
+            academicServiceRequestCreateBean.createNewRequest();
+        } catch (PhdDomainOperationException exception) {
+            addErrorMessage(request, exception.getMessage(), new String[0]);
+            return prepareCreateNewRequest(mapping, form, request, response);
+        }
 
-		ActionForward forward = viewPhdIndividualProgramProcess(request, academicServiceRequestCreateBean);
-		return forward;
-	}
+        ActionForward forward = viewPhdIndividualProgramProcess(request, academicServiceRequestCreateBean);
+        return forward;
+    }
 
-	public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
-		request.setAttribute("phdAcademicServiceRequestCreateBean", academicServiceRequestCreateBean);
+    public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
+        request.setAttribute("phdAcademicServiceRequestCreateBean", academicServiceRequestCreateBean);
 
-		return mapping.findForward("prepareCreateNewRequest");
-	}
+        return mapping.findForward("prepareCreateNewRequest");
+    }
 
-	/* PROCESS */
-	public ActionForward prepareProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.PROCESSING);
-	}
+    /* PROCESS */
+    public ActionForward prepareProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.PROCESSING);
+    }
 
-	public ActionForward process(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return handleNewSituation(mapping, form, request, response);
-	}
+    public ActionForward process(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return handleNewSituation(mapping, form, request, response);
+    }
 
-	/* CANCEL */
-	public ActionForward prepareCancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CANCELLED);
-	}
+    /* CANCEL */
+    public ActionForward prepareCancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CANCELLED);
+    }
 
-	public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return handleNewSituation(mapping, form, request, response);
-	}
+    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return handleNewSituation(mapping, form, request, response);
+    }
 
-	/* REJECT */
-	public ActionForward prepareReject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.REJECTED);
-	}
+    /* REJECT */
+    public ActionForward prepareReject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.REJECTED);
+    }
 
-	public ActionForward reject(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return handleNewSituation(mapping, form, request, response);
-	}
+    public ActionForward reject(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return handleNewSituation(mapping, form, request, response);
+    }
 
-	/* CONCLUDE */
-	public ActionForward prepareConclude(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CONCLUDED);
-	}
+    /* CONCLUDE */
+    public ActionForward prepareConclude(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CONCLUDED);
+    }
 
-	public ActionForward conclude(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return handleNewSituation(mapping, form, request, response);
-	}
+    public ActionForward conclude(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return handleNewSituation(mapping, form, request, response);
+    }
 
-	/* RECEIVE */
-	public ActionForward prepareReceive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return prepareProcessNewState(mapping, form, request, response,
-				AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
-	}
+    /* RECEIVE */
+    public ActionForward prepareReceive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return prepareProcessNewState(mapping, form, request, response,
+                AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
+    }
 
-	public ActionForward receive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return handleNewSituation(mapping, form, request, response);
-	}
+    public ActionForward receive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return handleNewSituation(mapping, form, request, response);
+    }
 
-	public ActionForward receiveInRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		handleNewSituation(mapping, form, request, response);
+    public ActionForward receiveInRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        handleNewSituation(mapping, form, request, response);
 
-		String batchOid = request.getParameter("batchOid");
-		return redirect("/rectorateDocumentSubmission.do?method=viewBatch&batchOid=" + batchOid, request);
-	}
+        String batchOid = request.getParameter("batchOid");
+        return redirect("/rectorateDocumentSubmission.do?method=viewBatch&batchOid=" + batchOid, request);
+    }
 
-	public ActionForward prepareReceiveOnRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		prepareProcessNewState(mapping, form, request, response,
-				AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
+    public ActionForward prepareReceiveOnRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        prepareProcessNewState(mapping, form, request, response,
+                AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
 
-		request.setAttribute("batchOid", request.getParameter("batchOid"));
+        request.setAttribute("batchOid", request.getParameter("batchOid"));
 
-		return mapping.findForward("processReceiveNewStateOnRectorate");
-	}
+        return mapping.findForward("processReceiveNewStateOnRectorate");
+    }
 
-	/* DELIVER */
-	public ActionForward prepareDeliver(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.DELIVERED);
-	}
+    /* DELIVER */
+    public ActionForward prepareDeliver(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.DELIVERED);
+    }
 
-	public ActionForward deliver(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return handleNewSituation(mapping, form, request, response);
-	}
+    public ActionForward deliver(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return handleNewSituation(mapping, form, request, response);
+    }
 
-	/* DOWNLOAD DOCUMENT */
-	public ActionForward downloadLastGeneratedDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
+    /* DOWNLOAD DOCUMENT */
+    public ActionForward downloadLastGeneratedDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
 
-		writeFile(response, academicServiceRequest.getLastGeneratedDocument().getFilename(), academicServiceRequest
-				.getLastGeneratedDocument().getMimeType(), academicServiceRequest.getLastGeneratedDocument().getContents());
+        writeFile(response, academicServiceRequest.getLastGeneratedDocument().getFilename(), academicServiceRequest
+                .getLastGeneratedDocument().getMimeType(), academicServiceRequest.getLastGeneratedDocument().getContents());
 
-		return null;
-	}
+        return null;
+    }
 
-	protected ActionForward prepareProcessNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response, AcademicServiceRequestSituationType situationType) {
-		PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
-		PhdAcademicServiceRequestBean academicServiceRequestBean = new PhdAcademicServiceRequestBean(academicServiceRequest);
+    protected ActionForward prepareProcessNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response, AcademicServiceRequestSituationType situationType) {
+        PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
+        PhdAcademicServiceRequestBean academicServiceRequestBean = new PhdAcademicServiceRequestBean(academicServiceRequest);
 
-		academicServiceRequestBean.setSituationType(situationType);
-		request.setAttribute("phdAcademicServiceRequestBean", academicServiceRequestBean);
+        academicServiceRequestBean.setSituationType(situationType);
+        request.setAttribute("phdAcademicServiceRequestBean", academicServiceRequestBean);
 
-		return mapping.findForward("prepareProcessNewState");
-	}
+        return mapping.findForward("prepareProcessNewState");
+    }
 
-	protected ActionForward handleNewSituation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdAcademicServiceRequestBean academicServiceRequestBean = getPhdAcademicServiceRequestBean();
-		try {
-			academicServiceRequestBean.handleNewSituation();
-		} catch (DomainException e) {
-			addActionMessage("academicAdminOfficeErrors", request, e.getKey(), e.getArgs());
-			request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
+    protected ActionForward handleNewSituation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdAcademicServiceRequestBean academicServiceRequestBean = getPhdAcademicServiceRequestBean();
+        try {
+            academicServiceRequestBean.handleNewSituation();
+        } catch (DomainException e) {
+            addActionMessage("academicAdminOfficeErrors", request, e.getKey(), e.getArgs());
+            request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
 
-			return mapping.findForward("prepareProcessNewState");
-		}
+            return mapping.findForward("prepareProcessNewState");
+        }
 
-		return viewPhdIndividualProgramProcess(request, academicServiceRequestBean);
-	}
+        return viewPhdIndividualProgramProcess(request, academicServiceRequestBean);
+    }
 
-	public ActionForward processNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward processNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
-		return mapping.findForward("prepareProcessNewState");
-	}
+        request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
+        return mapping.findForward("prepareProcessNewState");
+    }
 
-	public ActionForward prepareEditDocumentDisplacement(final ActionMapping mapping, final ActionForm form,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
+    public ActionForward prepareEditDocumentDisplacement(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
 
-		PhdAcademicServiceRequestDisplacementBean bean = new PhdAcademicServiceRequestDisplacementBean(academicServiceRequest);
-		request.setAttribute("phdAcademicServiceRequest", academicServiceRequest);
-		request.setAttribute("bean", bean);
+        PhdAcademicServiceRequestDisplacementBean bean = new PhdAcademicServiceRequestDisplacementBean(academicServiceRequest);
+        request.setAttribute("phdAcademicServiceRequest", academicServiceRequest);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editDocumentDisplacement");
-	}
+        return mapping.findForward("editDocumentDisplacement");
+    }
 
-	public ActionForward editDocumentDisplacement(final ActionMapping mapping, final ActionForm form,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
-		PhdAcademicServiceRequestDisplacementBean bean = getRenderedObject("bean");
+    public ActionForward editDocumentDisplacement(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
+        PhdAcademicServiceRequestDisplacementBean bean = getRenderedObject("bean");
 
-		academicServiceRequest.editDisplacement(bean);
+        academicServiceRequest.editDisplacement(bean);
 
-		return viewAcademicServiceRequest(mapping, form, request, response);
-	}
+        return viewAcademicServiceRequest(mapping, form, request, response);
+    }
 
-	public ActionForward editDocumentDisplacementInvalid(final ActionMapping mapping, final ActionForm form,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
-		PhdAcademicServiceRequestDisplacementBean bean = getRenderedObject("bean");
+    public ActionForward editDocumentDisplacementInvalid(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
+        PhdAcademicServiceRequestDisplacementBean bean = getRenderedObject("bean");
 
-		request.setAttribute("phdAcademicServiceRequest", academicServiceRequest);
-		request.setAttribute("bean", bean);
+        request.setAttribute("phdAcademicServiceRequest", academicServiceRequest);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editDocumentDisplacement");
-	}
+        return mapping.findForward("editDocumentDisplacement");
+    }
 
-	protected PhdAcademicServiceRequestBean getPhdAcademicServiceRequestBean() {
-		return (PhdAcademicServiceRequestBean) getObjectFromViewState("phd-academic-service-request-bean");
-	}
+    protected PhdAcademicServiceRequestBean getPhdAcademicServiceRequestBean() {
+        return (PhdAcademicServiceRequestBean) getObjectFromViewState("phd-academic-service-request-bean");
+    }
 
-	protected PhdIndividualProgramProcess getPhdIndividualProgramProcess(final HttpServletRequest request) {
-		return (PhdIndividualProgramProcess) getDomainObject(request, "phdIndividualProgramProcessId");
-	}
+    protected PhdIndividualProgramProcess getPhdIndividualProgramProcess(final HttpServletRequest request) {
+        return (PhdIndividualProgramProcess) getDomainObject(request, "phdIndividualProgramProcessId");
+    }
 
-	protected PhdAcademicServiceRequestCreateBean getPhdAcademicServiceRequestCreateBean() {
-		return (PhdAcademicServiceRequestCreateBean) getObjectFromViewState("phd-academic-service-request-create-bean");
-	}
+    protected PhdAcademicServiceRequestCreateBean getPhdAcademicServiceRequestCreateBean() {
+        return (PhdAcademicServiceRequestCreateBean) getObjectFromViewState("phd-academic-service-request-create-bean");
+    }
 
-	protected PhdAcademicServiceRequest getPhdAcademicServiceRequest(final HttpServletRequest request) {
-		return (PhdAcademicServiceRequest) getDomainObject(request, "phdAcademicServiceRequestId");
-	}
+    protected PhdAcademicServiceRequest getPhdAcademicServiceRequest(final HttpServletRequest request) {
+        return (PhdAcademicServiceRequest) getDomainObject(request, "phdAcademicServiceRequestId");
+    }
 
-	private ActionForward viewPhdIndividualProgramProcess(HttpServletRequest request,
-			IPhdAcademicServiceRequest phdAcademicServiceRequest) {
-		ActionForward forward =
-				redirect("/phdIndividualProgramProcess.do?method=viewProcess&processId="
-						+ phdAcademicServiceRequest.getPhdIndividualProgramProcess().getExternalId(), request);
-		return forward;
-	}
+    private ActionForward viewPhdIndividualProgramProcess(HttpServletRequest request,
+            IPhdAcademicServiceRequest phdAcademicServiceRequest) {
+        ActionForward forward =
+                redirect("/phdIndividualProgramProcess.do?method=viewProcess&processId="
+                        + phdAcademicServiceRequest.getPhdIndividualProgramProcess().getExternalId(), request);
+        return forward;
+    }
 
 }

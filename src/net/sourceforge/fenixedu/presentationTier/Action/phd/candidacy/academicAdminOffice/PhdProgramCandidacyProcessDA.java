@@ -94,576 +94,576 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Process process = getProcess(request);
-		if (process != null) {
-			request.setAttribute("processId", process.getExternalId());
-			request.setAttribute("process", process);
-		}
+        final Process process = getProcess(request);
+        if (process != null) {
+            request.setAttribute("processId", process.getExternalId());
+            request.setAttribute("process", process);
+        }
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	// Create Candidacy Steps
+    // Create Candidacy Steps
 
-	public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
-		bean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
-		bean.setPersonBean(new PersonBean());
-		bean.setChoosePersonBean(new ChoosePersonBean());
+        final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
+        bean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
+        bean.setPersonBean(new PersonBean());
+        bean.setChoosePersonBean(new ChoosePersonBean());
 
-		request.setAttribute("createCandidacyBean", bean);
-		request.setAttribute("persons", Collections.emptyList());
+        request.setAttribute("createCandidacyBean", bean);
+        request.setAttribute("persons", Collections.emptyList());
 
-		return mapping.findForward("searchPerson");
-	}
+        return mapping.findForward("searchPerson");
+    }
 
-	public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final PhdProgramCandidacyProcessBean bean = getCreateCandidacyProcessBean();
-		request.setAttribute("createCandidacyBean", bean);
+        final PhdProgramCandidacyProcessBean bean = getCreateCandidacyProcessBean();
+        request.setAttribute("createCandidacyBean", bean);
 
-		final ChoosePersonBean choosePersonBean = getCreateCandidacyProcessBean().getChoosePersonBean();
-		if (!choosePersonBean.hasPerson()) {
-			if (choosePersonBean.isFirstTimeSearch()) {
-				final Collection<Person> persons = Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber());
-				choosePersonBean.setFirstTimeSearch(false);
-				if (showSimilarPersons(choosePersonBean, persons)) {
-					RenderUtils.invalidateViewState();
-					return mapping.findForward("searchPerson");
-				}
-			}
-			bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
-					choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
+        final ChoosePersonBean choosePersonBean = getCreateCandidacyProcessBean().getChoosePersonBean();
+        if (!choosePersonBean.hasPerson()) {
+            if (choosePersonBean.isFirstTimeSearch()) {
+                final Collection<Person> persons = Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber());
+                choosePersonBean.setFirstTimeSearch(false);
+                if (showSimilarPersons(choosePersonBean, persons)) {
+                    RenderUtils.invalidateViewState();
+                    return mapping.findForward("searchPerson");
+                }
+            }
+            bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
+                    choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
 
-			return mapping.findForward("createCandidacy");
+            return mapping.findForward("createCandidacy");
 
-		} else {
-			bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-			setIsEmployeeAttributeAndMessage(request, bean.getChoosePersonBean().getPerson());
-			return mapping.findForward("createCandidacy");
-		}
+        } else {
+            bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
+            setIsEmployeeAttributeAndMessage(request, bean.getChoosePersonBean().getPerson());
+            return mapping.findForward("createCandidacy");
+        }
 
-	}
+    }
 
-	protected boolean showSimilarPersons(final ChoosePersonBean choosePersonBean, final Collection<Person> persons) {
-		if (!persons.isEmpty()) {
-			return true;
-		}
-		return !Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
-				Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
-	}
+    protected boolean showSimilarPersons(final ChoosePersonBean choosePersonBean, final Collection<Person> persons) {
+        if (!persons.isEmpty()) {
+            return true;
+        }
+        return !Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
+                Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
+    }
 
-	public ActionForward createCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-		setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
+        request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+        setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
 
-		return mapping.findForward("createCandidacy");
-	}
+        return mapping.findForward("createCandidacy");
+    }
 
-	public ActionForward createCandidacyPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-		setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
+    public ActionForward createCandidacyPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+        setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
 
-		RenderUtils.invalidateViewState();
+        RenderUtils.invalidateViewState();
 
-		return mapping.findForward("createCandidacy");
-	}
+        return mapping.findForward("createCandidacy");
+    }
 
-	public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson(),
-					getCreateCandidacyProcessBean().getPersonBean().getCountryOfResidence(), getCreateCandidacyProcessBean()
-							.getPersonBean().getAreaCode(), getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
+            if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson(),
+                    getCreateCandidacyProcessBean().getPersonBean().getCountryOfResidence(), getCreateCandidacyProcessBean()
+                            .getPersonBean().getAreaCode(), getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
 
-				setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
-				request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-				return mapping.findForward("createCandidacy");
+                setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
+                request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+                return mapping.findForward("createCandidacy");
 
-			}
+            }
 
-			CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
+            CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
-			request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-			return mapping.findForward("createCandidacy");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
+            request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+            return mapping.findForward("createCandidacy");
+        }
 
-		return mapping.findForward("manageProcesses");
+        return mapping.findForward("manageProcesses");
 
-	}
+    }
 
-	private PhdProgramCandidacyProcessBean getCreateCandidacyProcessBean() {
-		return getRenderedObject("createCandidacyBean");
-	}
-
-	public ActionForward cancelCreateCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("manageProcesses");
-	}
-
-	// End of Create Candidacy Steps
+    private PhdProgramCandidacyProcessBean getCreateCandidacyProcessBean() {
+        return getRenderedObject("createCandidacyBean");
+    }
+
+    public ActionForward cancelCreateCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("manageProcesses");
+    }
+
+    // End of Create Candidacy Steps
 
-	@Override
-	public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Override
+    public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		prepareDocumentsToUpload(request);
-		return mapping.findForward("manageCandidacyDocuments");
-	}
+        prepareDocumentsToUpload(request);
+        return mapping.findForward("manageCandidacyDocuments");
+    }
 
-	private void prepareDocumentsToUpload(HttpServletRequest request) {
-		request.setAttribute("documentsToUpload", Arrays.asList(new PhdProgramDocumentUploadBean(),
-				new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean(),
-				new PhdProgramDocumentUploadBean()));
-	}
+    private void prepareDocumentsToUpload(HttpServletRequest request) {
+        request.setAttribute("documentsToUpload", Arrays.asList(new PhdProgramDocumentUploadBean(),
+                new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean(),
+                new PhdProgramDocumentUploadBean()));
+    }
 
-	public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("documentsToUpload", getDocumentsToUpload());
-		return mapping.findForward("manageCandidacyDocuments");
-	}
+        request.setAttribute("documentsToUpload", getDocumentsToUpload());
+        return mapping.findForward("manageCandidacyDocuments");
+    }
 
-	public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		if (!hasAnyDocumentToUpload()) {
-			request.setAttribute("documentsToUpload", getDocumentsToUpload());
+        if (!hasAnyDocumentToUpload()) {
+            request.setAttribute("documentsToUpload", getDocumentsToUpload());
 
-			addErrorMessage(request, "message.no.documents.to.upload");
+            addErrorMessage(request, "message.no.documents.to.upload");
 
-			return mapping.findForward("manageCandidacyDocuments");
-		}
+            return mapping.findForward("manageCandidacyDocuments");
+        }
 
-		final ActionForward result =
-				executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadDocuments.class,
-						getDocumentsToUpload(), request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
-						"message.documents.uploaded.with.success");
+        final ActionForward result =
+                executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadDocuments.class,
+                        getDocumentsToUpload(), request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
+                        "message.documents.uploaded.with.success");
 
-		RenderUtils.invalidateViewState("documentsToUpload");
+        RenderUtils.invalidateViewState("documentsToUpload");
 
-		prepareDocumentsToUpload(request);
+        prepareDocumentsToUpload(request);
 
-		return result;
+        return result;
 
-	}
+    }
 
-	protected boolean hasAnyDocumentToUpload() {
-		for (final PhdProgramDocumentUploadBean each : getDocumentsToUpload()) {
-			if (each.hasAnyInformation()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    protected boolean hasAnyDocumentToUpload() {
+        for (final PhdProgramDocumentUploadBean each : getDocumentsToUpload()) {
+            if (each.hasAnyInformation()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
-		return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
-	}
+    protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
+        return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
+    }
 
-	public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		final PhdProgramCandidacyProcess process = getProcess(request);
-		final PhdProgramCandidacyProcessStateBean bean =
-				new PhdProgramCandidacyProcessStateBean(process.getIndividualProgramProcess());
-		bean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
-		request.setAttribute("stateBean", bean);
-		return mapping.findForward("requestCandidacyReview");
-	}
+    public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdProgramCandidacyProcess process = getProcess(request);
+        final PhdProgramCandidacyProcessStateBean bean =
+                new PhdProgramCandidacyProcessStateBean(process.getIndividualProgramProcess());
+        bean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
+        request.setAttribute("stateBean", bean);
+        return mapping.findForward("requestCandidacyReview");
+    }
 
-	public ActionForward prepareRequestCandidacyReviewPostback(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("stateBean", getRenderedObject("stateBean"));
+    public ActionForward prepareRequestCandidacyReviewPostback(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("stateBean", getRenderedObject("stateBean"));
 
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("requestCandidacyReview");
-	}
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("requestCandidacyReview");
+    }
 
-	public ActionForward requestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward requestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			final PhdProgramCandidacyProcess process = getProcess(request);
-			ExecuteProcessActivity.run(process,
-					net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
-					getRenderedObject("stateBean"));
-			return viewIndividualProgramProcess(request, process);
+        try {
+            final PhdProgramCandidacyProcess process = getProcess(request);
+            ExecuteProcessActivity.run(process,
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
+                    getRenderedObject("stateBean"));
+            return viewIndividualProgramProcess(request, process);
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			request.setAttribute("stateBean", getRenderedObject("stateBean"));
-			return mapping.findForward("requestCandidacyReview");
-		}
-	}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            request.setAttribute("stateBean", getRenderedObject("stateBean"));
+            return mapping.findForward("requestCandidacyReview");
+        }
+    }
 
-	public ActionForward deleteDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward deleteDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		prepareDocumentsToUpload(request);
+        prepareDocumentsToUpload(request);
 
-		return executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteDocument.class,
-				getDocument(request), request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
-				"message.document.deleted.successfuly");
-	}
+        return executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteDocument.class,
+                getDocument(request), request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
+                "message.document.deleted.successfuly");
+    }
 
-	public ActionForward prepareRatifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareRatifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("ratifyCandidacyBean", new RatifyCandidacyBean(getProcess(request)));
+        request.setAttribute("ratifyCandidacyBean", new RatifyCandidacyBean(getProcess(request)));
 
-		return mapping.findForward("ratifyCandidacy");
-	}
+        return mapping.findForward("ratifyCandidacy");
+    }
 
-	public ActionForward prepareRatifyCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareRatifyCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("ratifyCandidacyBean", getRenderedObject("ratifyCandidacyBean"));
+        request.setAttribute("ratifyCandidacyBean", getRenderedObject("ratifyCandidacyBean"));
 
-		return mapping.findForward("ratifyCandidacy");
-	}
+        return mapping.findForward("ratifyCandidacy");
+    }
 
-	public ActionForward ratifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward ratifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final RatifyCandidacyBean bean = getRenderedObject("ratifyCandidacyBean");
-		try {
-			ExecuteProcessActivity.run(getProcess(request),
-					net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class, bean);
-			addSuccessMessage(request, "message.candidacy.ratified.successfuly");
+        final RatifyCandidacyBean bean = getRenderedObject("ratifyCandidacyBean");
+        try {
+            ExecuteProcessActivity.run(getProcess(request),
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class, bean);
+            addSuccessMessage(request, "message.candidacy.ratified.successfuly");
 
-			request.setAttribute("processId", getProcess(request).getIndividualProgramProcess().getExternalId());
+            request.setAttribute("processId", getProcess(request).getIndividualProgramProcess().getExternalId());
 
-			return mapping.findForward("viewProcess");
+            return mapping.findForward("viewProcess");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
 
-			request.setAttribute("ratifyCandidacyBean", bean);
+            request.setAttribute("ratifyCandidacyBean", bean);
 
-			return mapping.findForward("ratifyCandidacy");
-		}
-	}
+            return mapping.findForward("ratifyCandidacy");
+        }
+    }
 
-	// Notification Management
+    // Notification Management
 
-	public ActionForward manageNotifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward manageNotifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		return mapping.findForward("manageNotifications");
-	}
+        return mapping.findForward("manageNotifications");
+    }
 
-	public ActionForward prepareCreateNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("notificationBean", new PhdNotificationBean(getProcess(request)));
+        request.setAttribute("notificationBean", new PhdNotificationBean(getProcess(request)));
 
-		return mapping.findForward("createNotification");
-	}
+        return mapping.findForward("createNotification");
+    }
 
-	public ActionForward prepareCreateNotificationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateNotificationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("notificationBean", getRenderedObject("notificationBean"));
+        request.setAttribute("notificationBean", getRenderedObject("notificationBean"));
 
-		return mapping.findForward("createNotification");
-	}
+        return mapping.findForward("createNotification");
+    }
 
-	public ActionForward createNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdNotificationBean bean = getRenderedObject("notificationBean");
+        final PhdNotificationBean bean = getRenderedObject("notificationBean");
 
-		final ActionForward result =
-				executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddNotification.class, bean, request,
-						mapping, "createNotification", "manageNotifications", "message.notification.created.with.success");
+        final ActionForward result =
+                executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddNotification.class, bean, request,
+                        mapping, "createNotification", "manageNotifications", "message.notification.created.with.success");
 
-		request.setAttribute("notificationBean", bean);
+        request.setAttribute("notificationBean", bean);
 
-		return result;
-	}
+        return result;
+    }
 
-	private PhdNotification getNotification(HttpServletRequest request) {
-		return getDomainObject(request, "notificationId");
-	}
+    private PhdNotification getNotification(HttpServletRequest request) {
+        return getDomainObject(request, "notificationId");
+    }
 
-	public ActionForward printNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws JRException, IOException {
+    public ActionForward printNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws JRException, IOException {
 
-		final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
-		writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-				ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
+                ReportsUtils.exportToProcessedPdfAsByteArray(report));
 
-		return null;
+        return null;
 
-	}
+    }
 
-	private Language getLanguage(HttpServletRequest request) {
-		return Language.valueOf(request.getParameter("language"));
-	}
+    private Language getLanguage(HttpServletRequest request) {
+        return Language.valueOf(request.getParameter("language"));
+    }
 
-	public ActionForward markNotificationAsSent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward markNotificationAsSent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		getNotification(request).markAsSent();
+        getNotification(request).markAsSent();
 
-		return manageNotifications(mapping, form, request, response);
+        return manageNotifications(mapping, form, request, response);
 
-	}
+    }
 
-	public ActionForward printCandidacyDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws IOException, JRException {
+    public ActionForward printCandidacyDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, JRException {
 
-		final PhdCandidacyDeclarationDocument report =
-				new PhdCandidacyDeclarationDocument(getProcess(request), getLanguage(request));
-		writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-				ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        final PhdCandidacyDeclarationDocument report =
+                new PhdCandidacyDeclarationDocument(getProcess(request), getLanguage(request));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
+                ReportsUtils.exportToProcessedPdfAsByteArray(report));
 
-		return null;
+        return null;
 
-	}
+    }
 
-	// End of Notification Management
+    // End of Notification Management
 
-	// Begin RegistrationFormalization
+    // Begin RegistrationFormalization
 
-	public ActionForward prepareRegistrationFormalization(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareRegistrationFormalization(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		checkCandidacyPreConditions(request);
-		final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(getProcess(request));
-		request.setAttribute("registrationFormalizationBean", bean);
-		return mapping.findForward("registrationFormalization");
-	}
+        checkCandidacyPreConditions(request);
+        final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(getProcess(request));
+        request.setAttribute("registrationFormalizationBean", bean);
+        return mapping.findForward("registrationFormalization");
+    }
 
-	private void checkCandidacyPreConditions(final HttpServletRequest request) {
-		final PhdProgramCandidacyProcess process = getProcess(request);
-		final Person person = process.getPerson();
+    private void checkCandidacyPreConditions(final HttpServletRequest request) {
+        final PhdProgramCandidacyProcess process = getProcess(request);
+        final Person person = process.getPerson();
 
-		request.setAttribute("idDocument", process.hasAnyDocuments(PhdIndividualProgramDocumentType.ID_DOCUMENT));
-		request.setAttribute("personalPhoto", process.getPerson().hasPersonalPhoto());
-		request.setAttribute("healthBulletin", process.hasAnyDocuments(PhdIndividualProgramDocumentType.HEALTH_BULLETIN));
-		request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsCount() == process
-				.getDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
+        request.setAttribute("idDocument", process.hasAnyDocuments(PhdIndividualProgramDocumentType.ID_DOCUMENT));
+        request.setAttribute("personalPhoto", process.getPerson().hasPersonalPhoto());
+        request.setAttribute("healthBulletin", process.hasAnyDocuments(PhdIndividualProgramDocumentType.HEALTH_BULLETIN));
+        request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsCount() == process
+                .getDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
 
-		if (!process.hasStudyPlan()) {
-			addWarningMessage(request,
-					"error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
-		} else if (process.isStudyPlanExempted()) {
-			addWarningMessage(request, "message.phd.candidacy.registration.formalization.study.plan.is.exempted");
-		}
-	}
+        if (!process.hasStudyPlan()) {
+            addWarningMessage(request,
+                    "error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
+        } else if (process.isStudyPlanExempted()) {
+            addWarningMessage(request, "message.phd.candidacy.registration.formalization.study.plan.is.exempted");
+        }
+    }
 
-	public ActionForward registrationFormalizationInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		checkCandidacyPreConditions(request);
-		request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
-		return mapping.findForward("registrationFormalization");
-	}
+    public ActionForward registrationFormalizationInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        checkCandidacyPreConditions(request);
+        request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
+        return mapping.findForward("registrationFormalization");
+    }
 
-	public ActionForward registrationFormalization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward registrationFormalization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			final RegistrationFormalizationBean bean = getRenderedObject("registrationFormalizationBean");
+            final RegistrationFormalizationBean bean = getRenderedObject("registrationFormalizationBean");
 
-			if (!bean.hasRegistration() && mustSelectFirstAnyRegistratiom(request)) {
-				bean.setSelectRegistration(true);
-				return registrationFormalizationInvalid(mapping, actionForm, request, response);
-			}
+            if (!bean.hasRegistration() && mustSelectFirstAnyRegistratiom(request)) {
+                bean.setSelectRegistration(true);
+                return registrationFormalizationInvalid(mapping, actionForm, request, response);
+            }
 
-			ExecuteProcessActivity.run(getProcess(request),
-					net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class, bean);
+            ExecuteProcessActivity.run(getProcess(request),
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class, bean);
 
-			// TODO: message and warning due to insurance, enrolment debts, etc
-			// etc
-			// addSuccessMessage(request,
-			// "message.candidacy.ratified.successfuly");
+            // TODO: message and warning due to insurance, enrolment debts, etc
+            // etc
+            // addSuccessMessage(request,
+            // "message.candidacy.ratified.successfuly");
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return registrationFormalizationInvalid(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return registrationFormalizationInvalid(mapping, actionForm, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	// End of RegistrationFormalization
+    // End of RegistrationFormalization
 
-	private boolean mustSelectFirstAnyRegistratiom(HttpServletRequest request) {
-		final PhdProgramCandidacyProcess process = getProcess(request);
+    private boolean mustSelectFirstAnyRegistratiom(HttpServletRequest request) {
+        final PhdProgramCandidacyProcess process = getProcess(request);
 
-		return process.hasStudyPlan() && process.hasPhdProgram()
-				&& process.hasActiveRegistrationFor(process.getPhdProgramLastActiveDegreeCurricularPlan());
-	}
+        return process.hasStudyPlan() && process.hasPhdProgram()
+                && process.hasActiveRegistrationFor(process.getPhdProgramLastActiveDegreeCurricularPlan());
+    }
 
-	static public class PhdRegistrationFormalizationRegistrations implements DataProvider {
+    static public class PhdRegistrationFormalizationRegistrations implements DataProvider {
 
-		@Override
-		public Converter getConverter() {
-			return new DomainObjectKeyConverter();
-		}
+        @Override
+        public Converter getConverter() {
+            return new DomainObjectKeyConverter();
+        }
 
-		@Override
-		public Object provide(Object source, Object currentValue) {
-			final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) source;
-			return bean.getAvailableRegistrationsToAssociate();
-		}
-	}
+        @Override
+        public Object provide(Object source, Object currentValue) {
+            final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) source;
+            return bean.getAvailableRegistrationsToAssociate();
+        }
+    }
 
-	public ActionForward prepareAssociateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareAssociateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdProgramCandidacyProcess process = getProcess(request);
-		final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(process);
-		bean.setWhenStartedStudies(process.getWhenStartedStudies());
+        final PhdProgramCandidacyProcess process = getProcess(request);
+        final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(process);
+        bean.setWhenStartedStudies(process.getWhenStartedStudies());
 
-		request.setAttribute("registrationFormalizationBean", bean);
-		return mapping.findForward("associateRegistration");
-	}
+        request.setAttribute("registrationFormalizationBean", bean);
+        return mapping.findForward("associateRegistration");
+    }
 
-	public ActionForward associateRegistrationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
-		return mapping.findForward("associateRegistration");
-	}
+    public ActionForward associateRegistrationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
+        return mapping.findForward("associateRegistration");
+    }
 
-	public ActionForward associateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward associateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request),
-					net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration.class,
-					getRenderedObject("registrationFormalizationBean"));
-			addSuccessMessage(request, "message.registration.associated.successfuly");
+        try {
+            ExecuteProcessActivity.run(getProcess(request),
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration.class,
+                    getRenderedObject("registrationFormalizationBean"));
+            addSuccessMessage(request, "message.registration.associated.successfuly");
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return associateRegistrationInvalid(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return associateRegistrationInvalid(mapping, actionForm, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(getProcess(request));
-		request.setAttribute("processBean", bean);
+    public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(getProcess(request));
+        request.setAttribute("processBean", bean);
 
-		return mapping.findForward("manageStates");
-	}
+        return mapping.findForward("manageStates");
+    }
 
-	public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		try {
-			PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
-			ExecuteProcessActivity.run(getProcess(request),
-					net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState.class, bean);
-		} catch (PhdDomainOperationException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-		}
+    public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+            ExecuteProcessActivity.run(getProcess(request),
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState.class, bean);
+        } catch (PhdDomainOperationException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+        }
 
-		RenderUtils.invalidateViewState();
+        RenderUtils.invalidateViewState();
 
-		return manageStates(mapping, form, request, response);
-	}
+        return manageStates(mapping, form, request, response);
+    }
 
-	public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+    public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
 
-		request.setAttribute("thesisProcessBean", bean);
+        request.setAttribute("thesisProcessBean", bean);
 
-		return mapping.findForward("manageStates");
-	}
+        return mapping.findForward("manageStates");
+    }
 
-	public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
-		try {
-			ExecuteProcessActivity.run(getProcess(request),
-					net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState.class, bean);
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-		}
+    public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+        try {
+            ExecuteProcessActivity.run(getProcess(request),
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState.class, bean);
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+        }
 
-		RenderUtils.invalidateViewState();
+        RenderUtils.invalidateViewState();
 
-		return manageStates(mapping, form, request, response);
-	}
+        return manageStates(mapping, form, request, response);
+    }
 
-	public ActionForward prepareEditProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(getProcess(request));
-		request.setAttribute("processBean", bean);
+    public ActionForward prepareEditProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(getProcess(request));
+        request.setAttribute("processBean", bean);
 
-		return mapping.findForward("editProcessAttributes");
-	}
+        return mapping.findForward("editProcessAttributes");
+    }
 
-	public ActionForward editProcessAttributesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("processBean", getRenderedObject("processBean"));
+    public ActionForward editProcessAttributesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("processBean", getRenderedObject("processBean"));
 
-		return mapping.findForward("editProcessAttributes");
-	}
+        return mapping.findForward("editProcessAttributes");
+    }
 
-	public ActionForward editProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
-		ExecuteProcessActivity.run(getProcess(request),
-				net.sourceforge.fenixedu.domain.phd.candidacy.activities.EditProcessAttributes.class, bean);
+    public ActionForward editProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+        ExecuteProcessActivity.run(getProcess(request),
+                net.sourceforge.fenixedu.domain.phd.candidacy.activities.EditProcessAttributes.class, bean);
 
-		return viewIndividualProgramProcess(mapping, form, request, response);
-	}
+        return viewIndividualProgramProcess(mapping, form, request, response);
+    }
 
-	/* EDIT PHD STATES */
+    /* EDIT PHD STATES */
 
-	public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProcessState state = getDomainObject(request, "stateId");
-		PhdProcessStateBean bean = new PhdProcessStateBean(state);
+    public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProcessState state = getDomainObject(request, "stateId");
+        PhdProcessStateBean bean = new PhdProcessStateBean(state);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editPhdProcessState");
-	}
+        return mapping.findForward("editPhdProcessState");
+    }
 
-	public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProcessStateBean bean = getRenderedObject("bean");
-		bean.getState().editStateDate(bean);
+    public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProcessStateBean bean = getRenderedObject("bean");
+        bean.getState().editStateDate(bean);
 
-		return manageStates(mapping, form, request, response);
-	}
+        return manageStates(mapping, form, request, response);
+    }
 
-	public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProcessStateBean bean = getRenderedObject("bean");
-		request.setAttribute("bean", bean);
+    public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProcessStateBean bean = getRenderedObject("bean");
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editPhdProcessState");
-	}
+        return mapping.findForward("editPhdProcessState");
+    }
 
-	public ActionForward viewLogs(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-			final HttpServletResponse response) {
+    public ActionForward viewLogs(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
 
-		return mapping.findForward("viewLogs");
-	}
+        return mapping.findForward("viewLogs");
+    }
 
-	/* EDIT PHD STATES */
+    /* EDIT PHD STATES */
 
 }

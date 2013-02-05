@@ -10,10 +10,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SetPersonRoles extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(final Person person, final Set<Role> roles) {
-		person.indicatePrivledges(roles);
-	}
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(final Person person, final Set<Role> roles) {
+        person.indicatePrivledges(roles);
+    }
 
 }

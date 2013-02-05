@@ -13,42 +13,42 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 public class ExternalTeachersForCurrentYear extends Group {
 
-	@Override
-	public Set<Person> getElements() {
-		final Set<Person> result = new HashSet<Person>();
-		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-			for (final TeacherAuthorization teacherAuthorization : executionSemester.getAuthorizationSet()) {
-				if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-					final Teacher teacher = teacherAuthorization.getTeacher();
-					result.add(teacher.getPerson());
-				}
-			}
-		}
-		return result;
-	}
+    @Override
+    public Set<Person> getElements() {
+        final Set<Person> result = new HashSet<Person>();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+            for (final TeacherAuthorization teacherAuthorization : executionSemester.getAuthorizationSet()) {
+                if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+                    final Teacher teacher = teacherAuthorization.getTeacher();
+                    result.add(teacher.getPerson());
+                }
+            }
+        }
+        return result;
+    }
 
-	@Override
-	public boolean isMember(final Person person) {
-		if (person != null) {
-			for (final TeacherAuthorization teacherAuthorization : person.getTeacherAuthorizationsAuthorizedSet()) {
-				if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-					final ExternalTeacherAuthorization externalTeacherAuthorization =
-							(ExternalTeacherAuthorization) teacherAuthorization;
-					final ExecutionSemester executionSemester = externalTeacherAuthorization.getExecutionSemester();
-					final ExecutionYear executionYear = executionSemester.getExecutionYear();
-					if (executionYear.isCurrent()) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isMember(final Person person) {
+        if (person != null) {
+            for (final TeacherAuthorization teacherAuthorization : person.getTeacherAuthorizationsAuthorizedSet()) {
+                if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+                    final ExternalTeacherAuthorization externalTeacherAuthorization =
+                            (ExternalTeacherAuthorization) teacherAuthorization;
+                    final ExecutionSemester executionSemester = externalTeacherAuthorization.getExecutionSemester();
+                    final ExecutionYear executionYear = executionSemester.getExecutionYear();
+                    if (executionYear.isCurrent()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
 
 }

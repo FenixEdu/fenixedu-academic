@@ -44,111 +44,101 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-@Mapping(
-		module = "masterDegreeAdministrativeOffice",
-		path = "/editReimbursementGuideSituation",
-		input = "/editReimbursementGuideSituation.do?page=0&method=prepare",
-		attribute = "editReimbursementGuideSituationForm",
-		formBean = "editReimbursementGuideSituationForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/editReimbursementGuideSituation",
+        input = "/editReimbursementGuideSituation.do?page=0&method=prepare", attribute = "editReimbursementGuideSituationForm",
+        formBean = "editReimbursementGuideSituationForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste66")),
-		@Forward(name = "start", path = "df.page.editReimbursementGuideSituation", tileProperties = @Tile(title = "teste67")),
-		@Forward(name = "success", path = "df.page.editReimbursementGuideSituation_Success", tileProperties = @Tile(
-				title = "teste68")) })
+        @Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste66")),
+        @Forward(name = "start", path = "df.page.editReimbursementGuideSituation", tileProperties = @Tile(title = "teste67")),
+        @Forward(name = "success", path = "df.page.editReimbursementGuideSituation_Success", tileProperties = @Tile(
+                title = "teste68")) })
 @Exceptions(value = {
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
-				key = "resources.Action.exceptions.FenixActionException",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request"),
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class,
-				key = "resources.Action.exceptions.InvalidSituationActionException",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request"),
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException.class,
-				key = "resources.Action.exceptions.NoEntryChosenActionException",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request") })
+        @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
+                key = "resources.Action.exceptions.FenixActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class,
+                key = "resources.Action.exceptions.InvalidSituationActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException.class,
+                key = "resources.Action.exceptions.NoEntryChosenActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditReimbursementGuideSituationDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
+        DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
-		Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
+        Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
 
-		InfoReimbursementGuide infoReimbursementGuide = null;
+        InfoReimbursementGuide infoReimbursementGuide = null;
 
-		try {
-			infoReimbursementGuide = ViewReimbursementGuide.run(reimbursementGuideId);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-		}
+        try {
+            infoReimbursementGuide = ViewReimbursementGuide.run(reimbursementGuideId);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+        }
 
-		editReimbursementGuideSituationForm.set("officialDateDay", Data.OPTION_DEFAULT);
-		editReimbursementGuideSituationForm.set("officialDateMonth", Data.OPTION_DEFAULT);
-		editReimbursementGuideSituationForm.set("officialDateYear", Data.OPTION_DEFAULT);
+        editReimbursementGuideSituationForm.set("officialDateDay", Data.OPTION_DEFAULT);
+        editReimbursementGuideSituationForm.set("officialDateMonth", Data.OPTION_DEFAULT);
+        editReimbursementGuideSituationForm.set("officialDateYear", Data.OPTION_DEFAULT);
 
-		request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-		request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
-		request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
-		request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
-		request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE_STATES_LIST, ReimbursementGuideState.values());
+        request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+        request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+        request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+        request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
+        request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE_STATES_LIST, ReimbursementGuideState.values());
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		IUserView userView = UserView.getUser();
-		DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        IUserView userView = UserView.getUser();
+        DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
-		String remarks = (String) editReimbursementGuideSituationForm.get("remarks");
-		Integer reimbursementGuideID = (Integer) editReimbursementGuideSituationForm.get("id");
-		String situation = (String) editReimbursementGuideSituationForm.get("situation");
-		Integer officialDateDay = (Integer) editReimbursementGuideSituationForm.get("officialDateDay");
-		Integer officialDateMonth = (Integer) editReimbursementGuideSituationForm.get("officialDateMonth");
-		Integer officialDateYear = (Integer) editReimbursementGuideSituationForm.get("officialDateYear");
+        String remarks = (String) editReimbursementGuideSituationForm.get("remarks");
+        Integer reimbursementGuideID = (Integer) editReimbursementGuideSituationForm.get("id");
+        String situation = (String) editReimbursementGuideSituationForm.get("situation");
+        Integer officialDateDay = (Integer) editReimbursementGuideSituationForm.get("officialDateDay");
+        Integer officialDateMonth = (Integer) editReimbursementGuideSituationForm.get("officialDateMonth");
+        Integer officialDateYear = (Integer) editReimbursementGuideSituationForm.get("officialDateYear");
 
-		Date officialDate = null;
+        Date officialDate = null;
 
-		if ((officialDateDay.intValue() > 0) && (officialDateMonth.intValue() > 0) && (officialDateYear.intValue() > 0)) {
-			Calendar officialDateCalendar =
-					new GregorianCalendar(officialDateYear.intValue(), officialDateMonth.intValue(), officialDateDay.intValue());
-			officialDate = officialDateCalendar.getTime();
-		}
+        if ((officialDateDay.intValue() > 0) && (officialDateMonth.intValue() > 0) && (officialDateYear.intValue() > 0)) {
+            Calendar officialDateCalendar =
+                    new GregorianCalendar(officialDateYear.intValue(), officialDateMonth.intValue(), officialDateDay.intValue());
+            officialDate = officialDateCalendar.getTime();
+        }
 
-		try {
+        try {
 
-			EditReimbursementGuide.run(reimbursementGuideID, situation, officialDate, remarks, userView);
+            EditReimbursementGuide.run(reimbursementGuideID, situation, officialDate, remarks, userView);
 
-			request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
+            request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 
-		} catch (InvalidGuideSituationServiceException e) {
-			throw new InvalidGuideSituationActionException(mapping.findForward("error"));
-		} catch (InvalidReimbursementValueServiceException e) {
-			throw new InvalidGuideSituationActionException(mapping.findForward("error"));
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
-		}
+        } catch (InvalidGuideSituationServiceException e) {
+            throw new InvalidGuideSituationActionException(mapping.findForward("error"));
+        } catch (InvalidReimbursementValueServiceException e) {
+            throw new InvalidGuideSituationActionException(mapping.findForward("error"));
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
+        }
 
-		return mapping.findForward("success");
-	}
+        return mapping.findForward("success");
+    }
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
+    }
 
 }

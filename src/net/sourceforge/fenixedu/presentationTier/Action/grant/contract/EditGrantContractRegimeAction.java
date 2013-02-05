@@ -36,263 +36,256 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/editGrantContractRegime",
-		input = "/editGrantContractRegime.do?page=0&method=prepareEditGrantContractRegime",
-		attribute = "editGrantContractRegimeForm",
-		formBean = "editGrantContractRegimeForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "facultyAdmOffice", path = "/editGrantContractRegime",
+        input = "/editGrantContractRegime.do?page=0&method=prepareEditGrantContractRegime",
+        attribute = "editGrantContractRegimeForm", formBean = "editGrantContractRegimeForm", scope = "request",
+        parameter = "method")
 @Forwards(value = {
-		@Forward(
-				name = "manage-grant-contract-regime",
-				path = "/manageGrantContractRegime.do?method=prepareManageGrantContractRegime"),
-		@Forward(
-				name = "edit-grant-contract-regime",
-				path = "/facultyAdmOffice/grant/contract/editGrantContractRegime.jsp",
-				tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
+        @Forward(name = "manage-grant-contract-regime",
+                path = "/manageGrantContractRegime.do?method=prepareManageGrantContractRegime"),
+        @Forward(name = "edit-grant-contract-regime", path = "/facultyAdmOffice/grant/contract/editGrantContractRegime.jsp",
+                tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class EditGrantContractRegimeAction extends FenixDispatchAction {
-	/*
-	 * Fills the form with the correspondent data
-	 */
-	public ActionForward prepareEditGrantContractRegime(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    /*
+     * Fills the form with the correspondent data
+     */
+    public ActionForward prepareEditGrantContractRegime(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Integer idGrantContractRegime = null;
-		Integer idContract = null;
-		Integer loaddb = null;
-		try {
-			if (verifyParameterInRequest(request, "loaddb")) {
-				loaddb = new Integer(request.getParameter("loaddb"));
-			}
-			if (!verifyParameterInRequest(request, "grantContractRegimeId")) {
-				// Check if is a new contract regime
-				idContract = new Integer(request.getParameter("idContract"));
-			} else {
-				idGrantContractRegime = new Integer(request.getParameter("grantContractRegimeId"));
-			}
-		} catch (Exception e)// Probably a validation error
-		{
-			request.setAttribute("contractNumber", request.getParameter("contractNumber"));
-			request.setAttribute("idContract", request.getParameter("idContract"));
-			if (verifyParameterInRequest(request, "idContractRegime")) {
-				request.setAttribute("grantContractRegimeId", new Integer(request.getParameter("grantContractRegimeId")));
-			}
-			return mapping.findForward("edit-grant-contract-regime");
-		}
+        Integer idGrantContractRegime = null;
+        Integer idContract = null;
+        Integer loaddb = null;
+        try {
+            if (verifyParameterInRequest(request, "loaddb")) {
+                loaddb = new Integer(request.getParameter("loaddb"));
+            }
+            if (!verifyParameterInRequest(request, "grantContractRegimeId")) {
+                // Check if is a new contract regime
+                idContract = new Integer(request.getParameter("idContract"));
+            } else {
+                idGrantContractRegime = new Integer(request.getParameter("grantContractRegimeId"));
+            }
+        } catch (Exception e)// Probably a validation error
+        {
+            request.setAttribute("contractNumber", request.getParameter("contractNumber"));
+            request.setAttribute("idContract", request.getParameter("idContract"));
+            if (verifyParameterInRequest(request, "idContractRegime")) {
+                request.setAttribute("grantContractRegimeId", new Integer(request.getParameter("grantContractRegimeId")));
+            }
+            return mapping.findForward("edit-grant-contract-regime");
+        }
 
-		if (loaddb != null) {
-			IUserView userView = UserView.getUser();
-			DynaValidatorForm grantContractRegimeForm = (DynaValidatorForm) form;
-			try {
-				InfoGrantContract infoGrantContract = null;
+        if (loaddb != null) {
+            IUserView userView = UserView.getUser();
+            DynaValidatorForm grantContractRegimeForm = (DynaValidatorForm) form;
+            try {
+                InfoGrantContract infoGrantContract = null;
 
-				if (idContract != null) // if is a new Contract Regime
-				{
-					// Read the contract regime
-					Object[] args3 = { idContract };
-					infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args3);
+                if (idContract != null) // if is a new Contract Regime
+                {
+                    // Read the contract regime
+                    Object[] args3 = { idContract };
+                    infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args3);
 
-					if (infoGrantContract != null) {
-						request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-					}
-					grantContractRegimeForm.set("state", new Integer(-1));
-					if (infoGrantContract.getGrantCostCenterInfo() != null) {
-						grantContractRegimeForm.set("grantCostCenterId", infoGrantContract.getGrantCostCenterInfo()
-								.getIdInternal());
-						grantContractRegimeForm
-								.set("keyCostCenterNumber", infoGrantContract.getGrantCostCenterInfo().getNumber());
-						grantContractRegimeForm.set("designation", infoGrantContract.getGrantCostCenterInfo().getDesignation());
-					}
-				} else {
-					// Read the subsidy
-					Object[] args = { idGrantContractRegime };
-					InfoGrantContractRegime infoGrantContractRegime =
-							(InfoGrantContractRegime) ServiceUtils.executeService("ReadGrantContractRegime", args);
+                    if (infoGrantContract != null) {
+                        request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
+                    }
+                    grantContractRegimeForm.set("state", new Integer(-1));
+                    if (infoGrantContract.getGrantCostCenterInfo() != null) {
+                        grantContractRegimeForm.set("grantCostCenterId", infoGrantContract.getGrantCostCenterInfo()
+                                .getIdInternal());
+                        grantContractRegimeForm
+                                .set("keyCostCenterNumber", infoGrantContract.getGrantCostCenterInfo().getNumber());
+                        grantContractRegimeForm.set("designation", infoGrantContract.getGrantCostCenterInfo().getDesignation());
+                    }
+                } else {
+                    // Read the subsidy
+                    Object[] args = { idGrantContractRegime };
+                    InfoGrantContractRegime infoGrantContractRegime =
+                            (InfoGrantContractRegime) ServiceUtils.executeService("ReadGrantContractRegime", args);
 
-					idContract = infoGrantContractRegime.getInfoGrantContract().getIdInternal();
+                    idContract = infoGrantContractRegime.getInfoGrantContract().getIdInternal();
 
-					// Populate the form
-					if (infoGrantContractRegime != null) {
-						setFormGrantContractRegime(grantContractRegimeForm, infoGrantContractRegime);
-						request.setAttribute("grantContractRegimeId", infoGrantContractRegime.getIdInternal());
-						request.setAttribute("contractNumber", infoGrantContractRegime.getInfoGrantContract().getContractNumber()
-								.toString());
-					}
-				}
+                    // Populate the form
+                    if (infoGrantContractRegime != null) {
+                        setFormGrantContractRegime(grantContractRegimeForm, infoGrantContractRegime);
+                        request.setAttribute("grantContractRegimeId", infoGrantContractRegime.getIdInternal());
+                        request.setAttribute("contractNumber", infoGrantContractRegime.getInfoGrantContract().getContractNumber()
+                                .toString());
+                    }
+                }
 
-				grantContractRegimeForm.set("idContract", idContract);
-				request.setAttribute("idContract", idContract);
+                grantContractRegimeForm.set("idContract", idContract);
+                request.setAttribute("idContract", idContract);
 
-			} catch (FenixServiceException e) {
-				return setError(request, mapping, "errors.grant.contact.regime.read", "manage-grant-contract-regime", null);
-			}
-		} else {
-			request.setAttribute("grantContractRegimeId", request.getParameter("grantContractRegimeId"));
-			request.setAttribute("idContract", request.getParameter("idContract"));
-		}
-		return mapping.findForward("edit-grant-contract-regime");
+            } catch (FenixServiceException e) {
+                return setError(request, mapping, "errors.grant.contact.regime.read", "manage-grant-contract-regime", null);
+            }
+        } else {
+            request.setAttribute("grantContractRegimeId", request.getParameter("grantContractRegimeId"));
+            request.setAttribute("idContract", request.getParameter("idContract"));
+        }
+        return mapping.findForward("edit-grant-contract-regime");
 
-	}
+    }
 
-	/*
-	 * Edit a contract regime
-	 */
-	public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		try {
-			InfoGrantContractRegime infoGrantContractRegime = populateInfoFromForm((DynaValidatorForm) form);
+    /*
+     * Edit a contract regime
+     */
+    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        try {
+            InfoGrantContractRegime infoGrantContractRegime = populateInfoFromForm((DynaValidatorForm) form);
 
-			if (infoGrantContractRegime.getDateBeginContract().after(infoGrantContractRegime.getDateEndContract())) {
-				return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
-			}
+            if (infoGrantContractRegime.getDateBeginContract().after(infoGrantContractRegime.getDateEndContract())) {
+                return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
+            }
 
-			IUserView userView = UserView.getUser();
+            IUserView userView = UserView.getUser();
 
-			// Verify the teacher
-			if (infoGrantContractRegime.getInfoTeacher() != null) {
-				InfoTeacher infoTeacher = null;
+            // Verify the teacher
+            if (infoGrantContractRegime.getInfoTeacher() != null) {
+                InfoTeacher infoTeacher = null;
 
-				infoTeacher = ReadTeacherById.run(infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
-				if (infoTeacher == null) {
-					return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
-							infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
-				}
-				infoGrantContractRegime.setInfoTeacher(infoTeacher);
-			}
+                infoTeacher = ReadTeacherById.run(infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
+                if (infoTeacher == null) {
+                    return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
+                            infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
+                }
+                infoGrantContractRegime.setInfoTeacher(infoTeacher);
+            }
 
-			if (infoGrantContractRegime.getState().equals(Integer.valueOf(-1))) {
-				// If is a new Regime
-				infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); // Active
-			}
-			// Verify the cost center
-			if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
-				if (infoGrantContractRegime.getGrantCostCenterInfo().getNumber().length() != 0) {
-					InfoGrantCostCenter infoGrantCostCenter = null;
+            if (infoGrantContractRegime.getState().equals(Integer.valueOf(-1))) {
+                // If is a new Regime
+                infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); // Active
+            }
+            // Verify the cost center
+            if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
+                if (infoGrantContractRegime.getGrantCostCenterInfo().getNumber().length() != 0) {
+                    InfoGrantCostCenter infoGrantCostCenter = null;
 
-					infoGrantCostCenter =
-							ReadCostCenterByNumber.run(infoGrantContractRegime.getGrantCostCenterInfo().getNumber());
-					if (infoGrantCostCenter == null) {
-						return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
-								infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
-					}
+                    infoGrantCostCenter =
+                            ReadCostCenterByNumber.run(infoGrantContractRegime.getGrantCostCenterInfo().getNumber());
+                    if (infoGrantCostCenter == null) {
+                        return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
+                                infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
+                    }
 
-					infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
-				}
-			} else {
-				infoGrantContractRegime.setGrantCostCenterInfo(null);
-			}
+                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
+                }
+            } else {
+                infoGrantContractRegime.setGrantCostCenterInfo(null);
+            }
 
-			if (infoGrantContractRegime.getState().equals(Integer.valueOf(-1))) {
-				// If is a new Regime
-				infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); // Active
-			}
+            if (infoGrantContractRegime.getState().equals(Integer.valueOf(-1))) {
+                // If is a new Regime
+                infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); // Active
+            }
 
-			Object[] args = { infoGrantContractRegime };
-			ServiceUtils.executeService("EditGrantContractRegime", args);
-			return mapping.findForward("manage-grant-contract-regime");
+            Object[] args = { infoGrantContractRegime };
+            ServiceUtils.executeService("EditGrantContractRegime", args);
+            return mapping.findForward("manage-grant-contract-regime");
 
-		} catch (FenixServiceException e) {
-			return setError(request, mapping, "errors.grant.contract.regime.edit", null, null);
-		}
-	}
+        } catch (FenixServiceException e) {
+            return setError(request, mapping, "errors.grant.contract.regime.edit", null, null);
+        }
+    }
 
-	/*
-	 * Populates form from InfoSubsidy
-	 */
-	private void setFormGrantContractRegime(DynaValidatorForm form, InfoGrantContractRegime infoGrantContractRegime)
-			throws Exception {
-		// Grant Contract Regime
+    /*
+     * Populates form from InfoSubsidy
+     */
+    private void setFormGrantContractRegime(DynaValidatorForm form, InfoGrantContractRegime infoGrantContractRegime)
+            throws Exception {
+        // Grant Contract Regime
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		form.set("grantContractRegimeId", infoGrantContractRegime.getIdInternal());
-		if (infoGrantContractRegime.getDateBeginContract() != null) {
-			form.set("dateBeginContract", sdf.format(infoGrantContractRegime.getDateBeginContract()));
-		}
-		if (infoGrantContractRegime.getDateEndContract() != null) {
-			form.set("dateEndContract", sdf.format(infoGrantContractRegime.getDateEndContract()));
-		}
-		if (infoGrantContractRegime.getDateSendDispatchCC() != null) {
-			form.set("dateSendDispatchCC", sdf.format(infoGrantContractRegime.getDateSendDispatchCC()));
-		}
-		if (infoGrantContractRegime.getDateDispatchCC() != null) {
-			form.set("dateDispatchCC", sdf.format(infoGrantContractRegime.getDateDispatchCC()));
-		}
-		if (infoGrantContractRegime.getDateSendDispatchCD() != null) {
-			form.set("dateSendDispatchCD", sdf.format(infoGrantContractRegime.getDateSendDispatchCD()));
-		}
-		if (infoGrantContractRegime.getDateDispatchCD() != null) {
-			form.set("dateDispatchCD", sdf.format(infoGrantContractRegime.getDateDispatchCD()));
-		}
-		if (infoGrantContractRegime.getInfoTeacher() != null) {
-			form.set("grantContractRegimeTeacherIstId", infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
-		}
-		if (infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo() != null) {
-			form.set("grantCostCenterId", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getIdInternal());
-			form.set("keyCostCenterNumber", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getNumber()
-					.toString());
-			form.set("designation", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getDesignation()
-					.toString());
-		}
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        form.set("grantContractRegimeId", infoGrantContractRegime.getIdInternal());
+        if (infoGrantContractRegime.getDateBeginContract() != null) {
+            form.set("dateBeginContract", sdf.format(infoGrantContractRegime.getDateBeginContract()));
+        }
+        if (infoGrantContractRegime.getDateEndContract() != null) {
+            form.set("dateEndContract", sdf.format(infoGrantContractRegime.getDateEndContract()));
+        }
+        if (infoGrantContractRegime.getDateSendDispatchCC() != null) {
+            form.set("dateSendDispatchCC", sdf.format(infoGrantContractRegime.getDateSendDispatchCC()));
+        }
+        if (infoGrantContractRegime.getDateDispatchCC() != null) {
+            form.set("dateDispatchCC", sdf.format(infoGrantContractRegime.getDateDispatchCC()));
+        }
+        if (infoGrantContractRegime.getDateSendDispatchCD() != null) {
+            form.set("dateSendDispatchCD", sdf.format(infoGrantContractRegime.getDateSendDispatchCD()));
+        }
+        if (infoGrantContractRegime.getDateDispatchCD() != null) {
+            form.set("dateDispatchCD", sdf.format(infoGrantContractRegime.getDateDispatchCD()));
+        }
+        if (infoGrantContractRegime.getInfoTeacher() != null) {
+            form.set("grantContractRegimeTeacherIstId", infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
+        }
+        if (infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo() != null) {
+            form.set("grantCostCenterId", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getIdInternal());
+            form.set("keyCostCenterNumber", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getNumber()
+                    .toString());
+            form.set("designation", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getDesignation()
+                    .toString());
+        }
 
-		if (infoGrantContractRegime.getState() != null) {
-			form.set("state", infoGrantContractRegime.getState());
-		} else {
-			form.set("state", new Integer(-1));
-		}
-		form.set("contractNumber", infoGrantContractRegime.getInfoGrantContract().getContractNumber().toString());
+        if (infoGrantContractRegime.getState() != null) {
+            form.set("state", infoGrantContractRegime.getState());
+        } else {
+            form.set("state", new Integer(-1));
+        }
+        form.set("contractNumber", infoGrantContractRegime.getInfoGrantContract().getContractNumber().toString());
 
-	}
+    }
 
-	/*
-	 * Populates Info from Form
-	 */
-	private InfoGrantContractRegime populateInfoFromForm(DynaValidatorForm editGrantContractRegimeForm) throws Exception {
-		InfoGrantContractRegime infoGrantContractRegime = new InfoGrantContractRegime();
+    /*
+     * Populates Info from Form
+     */
+    private InfoGrantContractRegime populateInfoFromForm(DynaValidatorForm editGrantContractRegimeForm) throws Exception {
+        InfoGrantContractRegime infoGrantContractRegime = new InfoGrantContractRegime();
 
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "grantContractRegimeId")) {
-			infoGrantContractRegime.setIdInternal((Integer) editGrantContractRegimeForm.get("grantContractRegimeId"));
-		}
-		infoGrantContractRegime.setState((Integer) editGrantContractRegimeForm.get("state"));
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "grantContractRegimeId")) {
+            infoGrantContractRegime.setIdInternal((Integer) editGrantContractRegimeForm.get("grantContractRegimeId"));
+        }
+        infoGrantContractRegime.setState((Integer) editGrantContractRegimeForm.get("state"));
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateBeginContract")) {
-			infoGrantContractRegime
-					.setDateBeginContract(sdf.parse((String) editGrantContractRegimeForm.get("dateBeginContract")));
-		}
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateEndContract")) {
-			infoGrantContractRegime.setDateEndContract(sdf.parse((String) editGrantContractRegimeForm.get("dateEndContract")));
-		}
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateSendDispatchCC")) {
-			infoGrantContractRegime.setDateSendDispatchCC(sdf.parse((String) editGrantContractRegimeForm
-					.get("dateSendDispatchCC")));
-		}
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateDispatchCC")) {
-			infoGrantContractRegime.setDateDispatchCC(sdf.parse((String) editGrantContractRegimeForm.get("dateDispatchCC")));
-		}
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateSendDispatchCD")) {
-			infoGrantContractRegime.setDateSendDispatchCD(sdf.parse((String) editGrantContractRegimeForm
-					.get("dateSendDispatchCD")));
-		}
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateDispatchCD")) {
-			infoGrantContractRegime.setDateDispatchCD(sdf.parse((String) editGrantContractRegimeForm.get("dateDispatchCD")));
-		}
-		InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
-		infoGrantCostCenter.setNumber((String) editGrantContractRegimeForm.get("keyCostCenterNumber"));
-		infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateBeginContract")) {
+            infoGrantContractRegime
+                    .setDateBeginContract(sdf.parse((String) editGrantContractRegimeForm.get("dateBeginContract")));
+        }
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateEndContract")) {
+            infoGrantContractRegime.setDateEndContract(sdf.parse((String) editGrantContractRegimeForm.get("dateEndContract")));
+        }
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateSendDispatchCC")) {
+            infoGrantContractRegime.setDateSendDispatchCC(sdf.parse((String) editGrantContractRegimeForm
+                    .get("dateSendDispatchCC")));
+        }
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateDispatchCC")) {
+            infoGrantContractRegime.setDateDispatchCC(sdf.parse((String) editGrantContractRegimeForm.get("dateDispatchCC")));
+        }
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateSendDispatchCD")) {
+            infoGrantContractRegime.setDateSendDispatchCD(sdf.parse((String) editGrantContractRegimeForm
+                    .get("dateSendDispatchCD")));
+        }
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "dateDispatchCD")) {
+            infoGrantContractRegime.setDateDispatchCD(sdf.parse((String) editGrantContractRegimeForm.get("dateDispatchCD")));
+        }
+        InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
+        infoGrantCostCenter.setNumber((String) editGrantContractRegimeForm.get("keyCostCenterNumber"));
+        infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
 
-		InfoGrantContract infoGrantContract = new InfoGrantContract();
-		infoGrantContract.setIdInternal((Integer) editGrantContractRegimeForm.get("idContract"));
-		infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
+        InfoGrantContract infoGrantContract = new InfoGrantContract();
+        infoGrantContract.setIdInternal((Integer) editGrantContractRegimeForm.get("idContract"));
+        infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
 
-		if (verifyStringParameterInForm(editGrantContractRegimeForm, "grantContractRegimeTeacherIstId")) {
-			InfoTeacher infoTeacher =
-					InfoTeacher.newInfoFromDomain(Teacher.readByIstId((String) editGrantContractRegimeForm
-							.get("grantContractRegimeTeacherIstId")));
-			infoGrantContractRegime.setInfoTeacher(infoTeacher);
-		}
+        if (verifyStringParameterInForm(editGrantContractRegimeForm, "grantContractRegimeTeacherIstId")) {
+            InfoTeacher infoTeacher =
+                    InfoTeacher.newInfoFromDomain(Teacher.readByIstId((String) editGrantContractRegimeForm
+                            .get("grantContractRegimeTeacherIstId")));
+            infoGrantContractRegime.setInfoTeacher(infoTeacher);
+        }
 
-		return infoGrantContractRegime;
-	}
+        return infoGrantContractRegime;
+    }
 }

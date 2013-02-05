@@ -23,12 +23,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "listForuns", path = "forunsManagement.listForuns") })
 public class ForunsManagementDA extends FenixDispatchAction {
 
-	public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		Person person = AccessControl.getPerson();
-		Collection<Forum> foruns = person.getForuns(ExecutionSemester.readActualExecutionSemester());
-		request.setAttribute("foruns", foruns);
-		return mapping.findForward("listForuns");
-	}
+    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        Person person = AccessControl.getPerson();
+        Collection<Forum> foruns = person.getForuns(ExecutionSemester.readActualExecutionSemester());
+        request.setAttribute("foruns", foruns);
+        return mapping.findForward("listForuns");
+    }
 
 }

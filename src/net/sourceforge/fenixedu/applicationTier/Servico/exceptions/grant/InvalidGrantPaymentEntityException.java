@@ -13,27 +13,27 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 public class InvalidGrantPaymentEntityException extends FenixServiceException {
 
-	public InvalidGrantPaymentEntityException() {
-	}
+    public InvalidGrantPaymentEntityException() {
+    }
 
-	public InvalidGrantPaymentEntityException(String message) {
-		super(message);
-	}
+    public InvalidGrantPaymentEntityException(String message) {
+        super(message);
+    }
 
-	public InvalidGrantPaymentEntityException(Throwable cause) {
-		super(cause);
-	}
+    public InvalidGrantPaymentEntityException(Throwable cause) {
+        super(cause);
+    }
 
-	public InvalidGrantPaymentEntityException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public InvalidGrantPaymentEntityException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InvalidGrantPaymentEntityException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InvalidGrantPaymentEntityException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

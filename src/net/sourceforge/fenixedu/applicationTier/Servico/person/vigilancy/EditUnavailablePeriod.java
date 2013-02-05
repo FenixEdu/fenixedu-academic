@@ -9,11 +9,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditUnavailablePeriod extends FenixService {
 
-	@Service
-	public static void run(UnavailablePeriod unavailablePeriod, DateTime begin, DateTime end, String justification) {
+    @Service
+    public static void run(UnavailablePeriod unavailablePeriod, DateTime begin, DateTime end, String justification) {
 
-		unavailablePeriod.edit(begin, end, justification);
+        unavailablePeriod.edit(begin, end, justification);
 
-	}
+    }
 
 }

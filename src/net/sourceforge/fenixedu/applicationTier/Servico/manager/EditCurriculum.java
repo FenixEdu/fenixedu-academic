@@ -20,49 +20,49 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCurriculum extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
-		CurricularCourse curricularCourse =
-				(CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurriculum.getInfoCurricularCourse()
-						.getIdInternal());
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
+        CurricularCourse curricularCourse =
+                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurriculum.getInfoCurricularCourse()
+                        .getIdInternal());
 
-		if (curricularCourse == null) {
-			throw new NonExistingServiceException();
-		}
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException();
+        }
 
-		Person person = Person.readPersonByUsername(username);
-		if (person == null) {
-			throw new NonExistingServiceException();
-		}
+        Person person = Person.readPersonByUsername(username);
+        if (person == null) {
+            throw new NonExistingServiceException();
+        }
 
-		ExecutionYear executionYear = infoCurriculum.getExecutionYear();
+        ExecutionYear executionYear = infoCurriculum.getExecutionYear();
 
-		Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getBeginDate());
+        Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getBeginDate());
 
-		if (curriculum == null) {
-			curriculum = new Curriculum();
+        if (curriculum == null) {
+            curriculum = new Curriculum();
 
-			curriculum.setLastModificationDate(executionYear.getBeginDate());
-			curriculum.setCurricularCourse(curricularCourse);
-		}
+            curriculum.setLastModificationDate(executionYear.getBeginDate());
+            curriculum.setCurricularCourse(curricularCourse);
+        }
 
-		if (!curriculum.getLastModificationDate().before(executionYear.getBeginDate())
-				&& !curriculum.getLastModificationDate().after(executionYear.getEndDate())) {
+        if (!curriculum.getLastModificationDate().before(executionYear.getBeginDate())
+                && !curriculum.getLastModificationDate().after(executionYear.getEndDate())) {
 
-			curriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum.getOperacionalObjectives(),
-					infoCurriculum.getProgram(), infoCurriculum.getGeneralObjectivesEn(),
-					infoCurriculum.getOperacionalObjectivesEn(), infoCurriculum.getProgramEn());
+            curriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum.getOperacionalObjectives(),
+                    infoCurriculum.getProgram(), infoCurriculum.getGeneralObjectivesEn(),
+                    infoCurriculum.getOperacionalObjectivesEn(), infoCurriculum.getProgramEn());
 
-		} else {
-			Curriculum newCurriculum = new Curriculum();
-			newCurriculum.setCurricularCourse(curricularCourse);
+        } else {
+            Curriculum newCurriculum = new Curriculum();
+            newCurriculum.setCurricularCourse(curricularCourse);
 
-			newCurriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum.getOperacionalObjectives(),
-					infoCurriculum.getProgram(), infoCurriculum.getGeneralObjectivesEn(),
-					infoCurriculum.getOperacionalObjectivesEn(), infoCurriculum.getProgramEn());
-		}
+            newCurriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum.getOperacionalObjectives(),
+                    infoCurriculum.getProgram(), infoCurriculum.getGeneralObjectivesEn(),
+                    infoCurriculum.getOperacionalObjectivesEn(), infoCurriculum.getProgramEn());
+        }
 
-		curriculum.setLastModificationDate(executionYear.getBeginDate());
-	}
+        curriculum.setLastModificationDate(executionYear.getBeginDate());
+    }
 }

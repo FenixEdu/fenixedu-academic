@@ -8,31 +8,31 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class FileAsPictureRenderer extends StringRenderer {
 
-	private String classes;
+    private String classes;
 
-	@Override
-	public String getClasses() {
-		return classes;
-	}
+    @Override
+    public String getClasses() {
+        return classes;
+    }
 
-	@Override
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    @Override
+    public void setClasses(String classes) {
+        this.classes = classes;
+    }
 
-	@Override
-	public HtmlComponent render(Object object, Class type) {
-		File file = (File) object;
+    @Override
+    public HtmlComponent render(Object object, Class type) {
+        File file = (File) object;
 
-		HtmlImage image = new HtmlImage();
+        HtmlImage image = new HtmlImage();
 
-		image.setSource(FileManagerFactory.getFactoryInstance().getFileManager()
-				.formatDownloadUrl(file.getExternalStorageIdentification(), file.getFilename()));
-		image.setTitle(file.getDisplayName());
+        image.setSource(FileManagerFactory.getFactoryInstance().getFileManager()
+                .formatDownloadUrl(file.getExternalStorageIdentification(), file.getFilename()));
+        image.setTitle(file.getDisplayName());
 
-		image.setClasses(classes);
+        image.setClasses(classes);
 
-		return image;
-	}
+        return image;
+    }
 
 }

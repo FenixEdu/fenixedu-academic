@@ -12,36 +12,36 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
  *         Created at 3:33:02 PM, Mar 11, 2005
  */
 public class InfoExternalDegreeBranchInfo {
-	private String name;
-	private String code;
+    private String name;
+    private String code;
 
-	/**
-	 * @return Returns the code.
-	 */
-	public String getCode() {
-		return this.code;
-	}
+    /**
+     * @return Returns the code.
+     */
+    public String getCode() {
+        return this.code;
+    }
 
-	/**
-	 * @param code
-	 *            The code to set.
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
+    /**
+     * @param code
+     *            The code to set.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName() {
-		return this.name;
-	}
+    /**
+     * @return Returns the name.
+     */
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }

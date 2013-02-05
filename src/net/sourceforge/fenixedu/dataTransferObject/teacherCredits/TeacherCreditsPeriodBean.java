@@ -11,90 +11,90 @@ import org.joda.time.DateTime;
 
 public class TeacherCreditsPeriodBean implements Serializable {
 
-	private DateTime beginForTeacher;
-	private DateTime endForTeacher;
+    private DateTime beginForTeacher;
+    private DateTime endForTeacher;
 
-	private DateTime beginForDepartmentAdmOffice;
-	private DateTime endForDepartmentAdmOffice;
+    private DateTime beginForDepartmentAdmOffice;
+    private DateTime endForDepartmentAdmOffice;
 
-	private ExecutionSemester executionPeriodReference;
+    private ExecutionSemester executionPeriodReference;
 
-	private boolean teacher;
+    private boolean teacher;
 
-	public TeacherCreditsPeriodBean(ExecutionSemester executionSemester) {
-		setExecutionPeriod(executionSemester);
-		refreshDates();
-	}
+    public TeacherCreditsPeriodBean(ExecutionSemester executionSemester) {
+        setExecutionPeriod(executionSemester);
+        refreshDates();
+    }
 
-	public TeacherCreditsPeriodBean(ExecutionSemester executionSemester, boolean teacher) {
-		setExecutionPeriod(executionSemester);
-		setTeacher(teacher);
-		refreshDates();
-	}
+    public TeacherCreditsPeriodBean(ExecutionSemester executionSemester, boolean teacher) {
+        setExecutionPeriod(executionSemester);
+        setTeacher(teacher);
+        refreshDates();
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		return executionPeriodReference;
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        return executionPeriodReference;
+    }
 
-	public void setExecutionPeriod(ExecutionSemester executionSemester) {
-		executionPeriodReference = executionSemester;
-	}
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        executionPeriodReference = executionSemester;
+    }
 
-	public DateTime getBeginForTeacher() {
-		return beginForTeacher;
-	}
+    public DateTime getBeginForTeacher() {
+        return beginForTeacher;
+    }
 
-	public void setBeginForTeacher(DateTime begin) {
-		this.beginForTeacher = begin;
-	}
+    public void setBeginForTeacher(DateTime begin) {
+        this.beginForTeacher = begin;
+    }
 
-	public DateTime getEndForTeacher() {
-		return endForTeacher;
-	}
+    public DateTime getEndForTeacher() {
+        return endForTeacher;
+    }
 
-	public void setEndForTeacher(DateTime end) {
-		this.endForTeacher = end;
-	}
+    public void setEndForTeacher(DateTime end) {
+        this.endForTeacher = end;
+    }
 
-	public DateTime getBeginForDepartmentAdmOffice() {
-		return beginForDepartmentAdmOffice;
-	}
+    public DateTime getBeginForDepartmentAdmOffice() {
+        return beginForDepartmentAdmOffice;
+    }
 
-	public void setBeginForDepartmentAdmOffice(DateTime beginForDepartmentAdmOffice) {
-		this.beginForDepartmentAdmOffice = beginForDepartmentAdmOffice;
-	}
+    public void setBeginForDepartmentAdmOffice(DateTime beginForDepartmentAdmOffice) {
+        this.beginForDepartmentAdmOffice = beginForDepartmentAdmOffice;
+    }
 
-	public DateTime getEndForDepartmentAdmOffice() {
-		return endForDepartmentAdmOffice;
-	}
+    public DateTime getEndForDepartmentAdmOffice() {
+        return endForDepartmentAdmOffice;
+    }
 
-	public void setEndForDepartmentAdmOffice(DateTime endForDepartmentAdmOffice) {
-		this.endForDepartmentAdmOffice = endForDepartmentAdmOffice;
-	}
+    public void setEndForDepartmentAdmOffice(DateTime endForDepartmentAdmOffice) {
+        this.endForDepartmentAdmOffice = endForDepartmentAdmOffice;
+    }
 
-	public void refreshDates() {
+    public void refreshDates() {
 
-		ExecutionSemester executionSemester = getExecutionPeriod();
+        ExecutionSemester executionSemester = getExecutionPeriod();
 
-		TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice =
-				executionSemester.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
-		setBeginForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getBegin() : null);
-		setEndForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getEnd() : null);
+        TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice =
+                executionSemester.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
+        setBeginForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getBegin() : null);
+        setEndForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getEnd() : null);
 
-		TeacherCreditsFillingForTeacherCE teacherCE = executionSemester.getTeacherCreditsFillingForTeacherPeriod();
-		setBeginForTeacher(teacherCE != null ? teacherCE.getBegin() : null);
-		setEndForTeacher(teacherCE != null ? teacherCE.getEnd() : null);
-	}
+        TeacherCreditsFillingForTeacherCE teacherCE = executionSemester.getTeacherCreditsFillingForTeacherPeriod();
+        setBeginForTeacher(teacherCE != null ? teacherCE.getBegin() : null);
+        setEndForTeacher(teacherCE != null ? teacherCE.getEnd() : null);
+    }
 
-	public boolean isTeacher() {
-		return teacher;
-	}
+    public boolean isTeacher() {
+        return teacher;
+    }
 
-	public void setTeacher(boolean teacher) {
-		this.teacher = teacher;
-	}
+    public void setTeacher(boolean teacher) {
+        this.teacher = teacher;
+    }
 
-	public AnnualCreditsState getAnnualCreditsState() {
-		return AnnualCreditsState.getAnnualCreditsState(getExecutionPeriod().getExecutionYear());
-	}
+    public AnnualCreditsState getAnnualCreditsState() {
+        return AnnualCreditsState.getAnnualCreditsState(getExecutionPeriod().getExecutionYear());
+    }
 }

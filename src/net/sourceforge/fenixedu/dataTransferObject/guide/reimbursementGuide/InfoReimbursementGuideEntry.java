@@ -21,95 +21,95 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 
 public class InfoReimbursementGuideEntry extends InfoObject {
 
-	protected Double value;
+    protected Double value;
 
-	protected String justification;
+    protected String justification;
 
-	protected InfoGuideEntry infoGuideEntry;
+    protected InfoGuideEntry infoGuideEntry;
 
-	protected InfoReimbursementGuide infoReimbursementGuide;
+    protected InfoReimbursementGuide infoReimbursementGuide;
 
-	public InfoReimbursementGuideEntry() {
-	}
+    public InfoReimbursementGuideEntry() {
+    }
 
-	/**
-	 * @return Returns the infoGuideEntry.
-	 */
-	public InfoGuideEntry getInfoGuideEntry() {
-		return infoGuideEntry;
-	}
+    /**
+     * @return Returns the infoGuideEntry.
+     */
+    public InfoGuideEntry getInfoGuideEntry() {
+        return infoGuideEntry;
+    }
 
-	/**
-	 * @param infoGuideEntry
-	 *            The infoGuideEntry to set.
-	 */
-	public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
-		this.infoGuideEntry = infoGuideEntry;
-	}
+    /**
+     * @param infoGuideEntry
+     *            The infoGuideEntry to set.
+     */
+    public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
+        this.infoGuideEntry = infoGuideEntry;
+    }
 
-	/**
-	 * @return Returns the infoReimbursementGuide.
-	 */
-	public InfoReimbursementGuide getInfoReimbursementGuide() {
-		return infoReimbursementGuide;
-	}
+    /**
+     * @return Returns the infoReimbursementGuide.
+     */
+    public InfoReimbursementGuide getInfoReimbursementGuide() {
+        return infoReimbursementGuide;
+    }
 
-	/**
-	 * @param infoReimbursementGuide
-	 *            The infoReimbursementGuide to set.
-	 */
-	public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
-		this.infoReimbursementGuide = infoReimbursementGuide;
-	}
+    /**
+     * @param infoReimbursementGuide
+     *            The infoReimbursementGuide to set.
+     */
+    public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
+        this.infoReimbursementGuide = infoReimbursementGuide;
+    }
 
-	/**
-	 * @return Returns the justification.
-	 */
-	public String getJustification() {
-		return justification;
-	}
+    /**
+     * @return Returns the justification.
+     */
+    public String getJustification() {
+        return justification;
+    }
 
-	/**
-	 * @param justification
-	 *            The justification to set.
-	 */
-	public void setJustification(String justification) {
-		this.justification = justification;
-	}
+    /**
+     * @param justification
+     *            The justification to set.
+     */
+    public void setJustification(String justification) {
+        this.justification = justification;
+    }
 
-	/**
-	 * @return Returns the value.
-	 */
-	public Double getValue() {
-		return value;
-	}
+    /**
+     * @return Returns the value.
+     */
+    public Double getValue() {
+        return value;
+    }
 
-	/**
-	 * @param value
-	 *            The value to set.
-	 */
-	public void setValue(Double value) {
-		this.value = value;
-	}
+    /**
+     * @param value
+     *            The value to set.
+     */
+    public void setValue(Double value) {
+        this.value = value;
+    }
 
-	public void copyFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
-		super.copyFromDomain(reimbursementGuideEntry);
-		if (reimbursementGuideEntry != null) {
-			setInfoGuideEntry(InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry.getGuideEntry()));
-			// setInfoReimbursementGuide(null); to avoid circularity
-			setJustification(reimbursementGuideEntry.getJustification());
-			setValue(reimbursementGuideEntry.getValue());
-		}
-	}
+    public void copyFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
+        super.copyFromDomain(reimbursementGuideEntry);
+        if (reimbursementGuideEntry != null) {
+            setInfoGuideEntry(InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry.getGuideEntry()));
+            // setInfoReimbursementGuide(null); to avoid circularity
+            setJustification(reimbursementGuideEntry.getJustification());
+            setValue(reimbursementGuideEntry.getValue());
+        }
+    }
 
-	public static InfoReimbursementGuideEntry newInfoFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
-		InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
-		if (reimbursementGuideEntry != null) {
-			infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-			infoReimbursementGuideEntry.copyFromDomain(reimbursementGuideEntry);
-		}
+    public static InfoReimbursementGuideEntry newInfoFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
+        InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
+        if (reimbursementGuideEntry != null) {
+            infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
+            infoReimbursementGuideEntry.copyFromDomain(reimbursementGuideEntry);
+        }
 
-		return infoReimbursementGuideEntry;
-	}
+        return infoReimbursementGuideEntry;
+    }
 
 }

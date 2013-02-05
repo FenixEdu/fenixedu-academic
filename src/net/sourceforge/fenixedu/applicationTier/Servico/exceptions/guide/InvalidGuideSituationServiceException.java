@@ -19,44 +19,44 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
  */
 public class InvalidGuideSituationServiceException extends InvalidArgumentsServiceException {
 
-	/**
+    /**
      *  
      */
-	public InvalidGuideSituationServiceException() {
+    public InvalidGuideSituationServiceException() {
 
-	}
+    }
 
-	/**
-	 * @param s
-	 */
-	public InvalidGuideSituationServiceException(String s) {
-		super(s);
+    /**
+     * @param s
+     */
+    public InvalidGuideSituationServiceException(String s) {
+        super(s);
 
-	}
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidGuideSituationServiceException(Throwable cause) {
-		super(cause);
+    /**
+     * @param cause
+     */
+    public InvalidGuideSituationServiceException(Throwable cause) {
+        super(cause);
 
-	}
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidGuideSituationServiceException(String message, Throwable cause) {
-		super(message, cause);
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidGuideSituationServiceException(String message, Throwable cause) {
+        super(message, cause);
 
-	}
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InvalidGuideSituationServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InvalidGuideSituationServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

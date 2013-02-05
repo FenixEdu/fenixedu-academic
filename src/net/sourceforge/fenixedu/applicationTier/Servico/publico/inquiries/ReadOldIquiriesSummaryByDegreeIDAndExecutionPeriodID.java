@@ -24,35 +24,35 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends FenixService {
 
-	@Service
-	public static List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException {
-		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+    @Service
+    public static List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException {
+        Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-		if (degree == null) {
-			throw new FenixServiceException("nullDegreeId");
-		}
-		if (executionSemester == null) {
-			throw new FenixServiceException("nullExecutionPeriodId");
-		}
+        if (degree == null) {
+            throw new FenixServiceException("nullDegreeId");
+        }
+        if (executionSemester == null) {
+            throw new FenixServiceException("nullExecutionPeriodId");
+        }
 
-		List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionSemester);
+        List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionSemester);
 
-		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
+        CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 
-			@Override
-			public Object transform(Object oldInquiriesSummary) {
-				InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
-				try {
-					iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
+            @Override
+            public Object transform(Object oldInquiriesSummary) {
+                InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
+                try {
+                    iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
 
-				} catch (Exception ex) {
-				}
+                } catch (Exception ex) {
+                }
 
-				return iois;
-			}
-		});
+                return iois;
+            }
+        });
 
-		return oldInquiriesSummaryList;
-	}
+        return oldInquiriesSummaryList;
+    }
 }

@@ -42,157 +42,157 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  */
 public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
-	private static final String CLASS_NAME_PARAM = "className";
+    private static final String CLASS_NAME_PARAM = "className";
 
-	public ActionForward createClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward createClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		request.removeAttribute(PresentationConstants.EXECUTION_COURSE_KEY);
-		request.removeAttribute(PresentationConstants.LESSON_LIST_ATT);
-		String className = getClassName(form);
+        request.removeAttribute(PresentationConstants.EXECUTION_COURSE_KEY);
+        request.removeAttribute(PresentationConstants.LESSON_LIST_ATT);
+        String className = getClassName(form);
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		if (className != null && !className.equals("")) {
+        if (className != null && !className.equals("")) {
 
-			InfoClass classView = getInfoTurma(userView, className, request);
+            InfoClass classView = getInfoTurma(userView, className, request);
 
-			if (classView == null) {
-				InfoCurricularYear infoCurricularYear =
-						(InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-				Integer curricularYear = infoCurricularYear.getYear();
-				InfoExecutionDegree infoExecutionDegree =
-						(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-				InfoExecutionPeriod infoExecutionPeriod =
-						(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+            if (classView == null) {
+                InfoCurricularYear infoCurricularYear =
+                        (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+                Integer curricularYear = infoCurricularYear.getYear();
+                InfoExecutionDegree infoExecutionDegree =
+                        (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+                InfoExecutionPeriod infoExecutionPeriod =
+                        (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-				InfoClass infoClass = null;
+                InfoClass infoClass = null;
 
-				try {
-					infoClass = (InfoClass) CriarTurma.run(className, curricularYear, infoExecutionDegree, infoExecutionPeriod);
-					request.setAttribute(PresentationConstants.CLASS_VIEW, infoClass);
-				} catch (ExistingServiceException e) {
-					throw new ExistingActionException("A SchoolClass", e);
-				}
-				return viewClass(mapping, form, request, response);
-			}
+                try {
+                    infoClass = (InfoClass) CriarTurma.run(className, curricularYear, infoExecutionDegree, infoExecutionPeriod);
+                    request.setAttribute(PresentationConstants.CLASS_VIEW, infoClass);
+                } catch (ExistingServiceException e) {
+                    throw new ExistingActionException("A SchoolClass", e);
+                }
+                return viewClass(mapping, form, request, response);
+            }
 
-			addErrorMessage(request, "existingClass", "errors.existClass", className);
-			return mapping.getInputForward();
+            addErrorMessage(request, "existingClass", "errors.existClass", className);
+            return mapping.getInputForward();
 
-		}
-		return mapping.getInputForward();
+        }
+        return mapping.getInputForward();
 
-	}
+    }
 
-	public ActionForward editClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward editClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String className = getClassName(form);
+        String className = getClassName(form);
 
-		IUserView userView = UserView.getUser();
-		boolean change = request.getParameter("change") != null;
+        IUserView userView = UserView.getUser();
+        boolean change = request.getParameter("change") != null;
 
-		if (change) {
+        if (change) {
 
-			InfoClass oldClassView = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
+            InfoClass oldClassView = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
-			if (oldClassView == null) {
-				addErrorMessage(request, "errors.unknownClass", "errors.unknownClass", className);
-				return mapping.getInputForward();
+            if (oldClassView == null) {
+                addErrorMessage(request, "errors.unknownClass", "errors.unknownClass", className);
+                return mapping.getInputForward();
 
-			}
-			InfoClass newClassView = null;
+            }
+            InfoClass newClassView = null;
 
-			// try {
+            // try {
 
-			// newClassView = (InfoClass) EditarTurma.run(oldClassView,
-			// newClassView);
-			throw new RuntimeException("Obsolete service invocation was invoked!");
-			// } catch (ExistingServiceException ex) {
-			// throw new ExistingActionException("A SchoolClass", ex);
-			// } catch (NotAuthorizedException e) {
-			// throw e;
-			// } catch (FenixServiceException e) {
-			// addErrorMessage(request, "existingClass", "errors.existClass",
-			// className);
-			// return mapping.getInputForward();
-			// }
-			//
+            // newClassView = (InfoClass) EditarTurma.run(oldClassView,
+            // newClassView);
+            throw new RuntimeException("Obsolete service invocation was invoked!");
+            // } catch (ExistingServiceException ex) {
+            // throw new ExistingActionException("A SchoolClass", ex);
+            // } catch (NotAuthorizedException e) {
+            // throw e;
+            // } catch (FenixServiceException e) {
+            // addErrorMessage(request, "existingClass", "errors.existClass",
+            // className);
+            // return mapping.getInputForward();
+            // }
+            //
 
-		} else {
-			/** starting editing */
-			request.setAttribute(PresentationConstants.CLASS_VIEW, getInfoTurma(userView, className, request));
-		}
+        } else {
+            /** starting editing */
+            request.setAttribute(PresentationConstants.CLASS_VIEW, getInfoTurma(userView, className, request));
+        }
 
-		setLessonListToSession(request, userView, className);
+        setLessonListToSession(request, userView, className);
 
-		return mapping.getInputForward();
-	}
+        return mapping.getInputForward();
+    }
 
-	public ActionForward viewClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward viewClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		// String className = getClassName(form);
-		IUserView userView = UserView.getUser();
-		// InfoClass classView = getInfoTurma(userView, className, request);
-		InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
-		setLessonListToSession(request, userView, infoClass.getNome());
+        // String className = getClassName(form);
+        IUserView userView = UserView.getUser();
+        // InfoClass classView = getInfoTurma(userView, className, request);
+        InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
+        setLessonListToSession(request, userView, infoClass.getNome());
 
-		return mapping.getInputForward();
-	}
+        return mapping.getInputForward();
+    }
 
-	public ActionForward deleteClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward deleteClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
+        InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
-		ApagarTurma.run(infoClass);
+        ApagarTurma.run(infoClass);
 
-		request.removeAttribute(PresentationConstants.CLASS_VIEW);
+        request.removeAttribute(PresentationConstants.CLASS_VIEW);
 
-		return mapping.findForward("listClasses");
-	}
+        return mapping.findForward("listClasses");
+    }
 
-	private String getClassName(ActionForm form) {
-		DynaValidatorForm classForm = (DynaValidatorForm) form;
+    private String getClassName(ActionForm form) {
+        DynaValidatorForm classForm = (DynaValidatorForm) form;
 
-		return (String) classForm.get(CLASS_NAME_PARAM);
+        return (String) classForm.get(CLASS_NAME_PARAM);
 
-	}
+    }
 
-	private InfoClass getInfoTurma(IUserView userView, String className, HttpServletRequest request) throws Exception {
-		/* :FIXME: put this 2 variables into parameters */
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-		InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+    private InfoClass getInfoTurma(IUserView userView, String className, HttpServletRequest request) throws Exception {
+        /* :FIXME: put this 2 variables into parameters */
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-		InfoClass classView = LerTurma.run(className, infoExecutionDegree, infoExecutionPeriod);
-		return classView;
-	}
+        InfoClass classView = LerTurma.run(className, infoExecutionDegree, infoExecutionPeriod);
+        return classView;
+    }
 
-	private void setLessonListToSession(HttpServletRequest request, IUserView userView, String className) throws Exception {
+    private void setLessonListToSession(HttpServletRequest request, IUserView userView, String className) throws Exception {
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-		InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-		InfoClass infoClass = null;
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-		for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
-			if (schoolClass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())
-					&& schoolClass.getNome().equals(className)) {
-				infoClass = InfoClass.newInfoFromDomain(schoolClass);
-				break;
-			}
-		}
+        InfoClass infoClass = null;
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
+            if (schoolClass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())
+                    && schoolClass.getNome().equals(className)) {
+                infoClass = InfoClass.newInfoFromDomain(schoolClass);
+                break;
+            }
+        }
 
-		List lessonList = LerAulasDeTurma.run(infoClass);
+        List lessonList = LerAulasDeTurma.run(infoClass);
 
-		request.setAttribute(PresentationConstants.LESSON_LIST_ATT, lessonList);
+        request.setAttribute(PresentationConstants.LESSON_LIST_ATT, lessonList);
 
-	}
+    }
 
 }

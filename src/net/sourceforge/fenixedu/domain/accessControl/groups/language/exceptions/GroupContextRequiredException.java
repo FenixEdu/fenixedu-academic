@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionG
  */
 public class GroupContextRequiredException extends GroupDynamicExpressionException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExpressionGroup group;
+    private ExpressionGroup group;
 
-	public GroupContextRequiredException(ExpressionGroup group) {
-		super("accessControl.group.expression.context.notDefined");
+    public GroupContextRequiredException(ExpressionGroup group) {
+        super("accessControl.group.expression.context.notDefined");
 
-		this.group = group;
-	}
+        this.group = group;
+    }
 
-	public ExpressionGroup getGroup() {
-		return this.group;
-	}
+    public ExpressionGroup getGroup() {
+        return this.group;
+    }
 
 }

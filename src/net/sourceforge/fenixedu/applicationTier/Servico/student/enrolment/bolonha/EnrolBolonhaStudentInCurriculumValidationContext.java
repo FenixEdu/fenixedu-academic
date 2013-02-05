@@ -16,23 +16,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EnrolBolonhaStudentInCurriculumValidationContext {
 
-	@Service
-	public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-			final List<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
-			final CurricularRuleLevel curricularRuleLevel) {
+    @Service
+    public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final List<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
+            final CurricularRuleLevel curricularRuleLevel) {
 
-		for (CurriculumModule module : curriculumModulesToRemove) {
-			if (!module.isEnrolment()) {
-				continue;
-			}
+        for (CurriculumModule module : curriculumModulesToRemove) {
+            if (!module.isEnrolment()) {
+                continue;
+            }
 
-			Enrolment enrolment = (Enrolment) module;
+            Enrolment enrolment = (Enrolment) module;
 
-			enrolment.getCourseLoadRequestsSet().retainAll(new HashSet<CourseLoadRequest>());
-			enrolment.getProgramCertificateRequestsSet().retainAll(new HashSet<ProgramCertificateRequest>());
-		}
+            enrolment.getCourseLoadRequestsSet().retainAll(new HashSet<CourseLoadRequest>());
+            enrolment.getProgramCertificateRequestsSet().retainAll(new HashSet<ProgramCertificateRequest>());
+        }
 
-		return EnrolBolonhaStudent.run(studentCurricularPlan, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
-				curricularRuleLevel);
-	}
+        return EnrolBolonhaStudent.run(studentCurricularPlan, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
+                curricularRuleLevel);
+    }
 }

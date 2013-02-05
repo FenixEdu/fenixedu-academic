@@ -10,9 +10,9 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 public enum AdviseType {
 
-	FINAL_WORK_DEGREE, PROJECT, INTERNSHIP, MASTER, PHD;
+    FINAL_WORK_DEGREE, PROJECT, INTERNSHIP, MASTER, PHD;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 }

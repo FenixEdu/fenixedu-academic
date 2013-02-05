@@ -20,26 +20,26 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
  */
 public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
 
-	@Override
-	protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
-		final Person person = id.getPerson();
-		final Teacher teacher = person == null ? null : person.getTeacher();
+    @Override
+    protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
 
-		final InfoCareer infoCareer = (InfoCareer) infoOject;
+        final InfoCareer infoCareer = (InfoCareer) infoOject;
 
-		boolean isNew = infoCareer.getIdInternal() == null || infoCareer.getIdInternal().intValue() == 0;
-		if (isNew) {
-			return true;
-		}
+        boolean isNew = infoCareer.getIdInternal() == null || infoCareer.getIdInternal().intValue() == 0;
+        if (isNew) {
+            return true;
+        }
 
-		final Career career = rootDomainObject.readCareerByOID(infoCareer.getIdInternal());
+        final Career career = rootDomainObject.readCareerByOID(infoCareer.getIdInternal());
 
-		return career.getTeacher() == teacher;
-	}
+        return career.getTeacher() == teacher;
+    }
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.TEACHER;
+    }
 
 }

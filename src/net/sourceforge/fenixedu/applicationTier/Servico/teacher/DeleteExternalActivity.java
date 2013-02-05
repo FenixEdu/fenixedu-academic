@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  */
 public class DeleteExternalActivity extends FenixService {
 
-	public void run(Integer externalActivityId) {
-		ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
-		externalActivity.delete();
-	}
+    public void run(Integer externalActivityId) {
+        ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
+        externalActivity.delete();
+    }
 
 }

@@ -20,88 +20,88 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public abstract class Node extends Node_Base implements MenuEntry, Comparable<Node> {
 
-	protected Node() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected Node() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected void init(Container parent, Content child, Boolean isAscending) {
-		if (!parent.isChildAccepted(child)) {
-			throw new DomainException("contents.child.not.accepted", child.getName().getContent(), parent.getName().getContent());
-		}
+    protected void init(Container parent, Content child, Boolean isAscending) {
+        if (!parent.isChildAccepted(child)) {
+            throw new DomainException("contents.child.not.accepted", child.getName().getContent(), parent.getName().getContent());
+        }
 
-		if (!child.isParentAccepted(parent)) {
-			throw new DomainException("contents.child.not.accepted", child.getName().getContent(), parent.getName().getContent());
-		}
+        if (!child.isParentAccepted(parent)) {
+            throw new DomainException("contents.child.not.accepted", child.getName().getContent(), parent.getName().getContent());
+        }
 
-		setParent(parent);
-		setChild(child);
-		setContentId(parent.getContentId() + ":" + child.getContentId());
-		setAscending(isAscending);
-	}
+        setParent(parent);
+        setChild(child);
+        setContentId(parent.getContentId() + ":" + child.getContentId());
+        setAscending(isAscending);
+    }
 
-	@Override
-	public boolean isNodeVisible() {
-		return super.getVisible() && getChild().isAvailable();
-	}
+    @Override
+    public boolean isNodeVisible() {
+        return super.getVisible() && getChild().isAvailable();
+    }
 
-	/**
-	 * Deletes this node removing the associating between the container in {@link #getParent()} and the content in
-	 * {@link #getChild()}.
-	 * 
-	 * <p>
-	 * Sibling nodes are reordered if needed.
-	 */
-	public void delete() {
-		final Content child = getChild();
-		if (child != null) {
-			child.logDeleteNode();
-		}
+    /**
+     * Deletes this node removing the associating between the container in {@link #getParent()} and the content in
+     * {@link #getChild()}.
+     * 
+     * <p>
+     * Sibling nodes are reordered if needed.
+     */
+    public void delete() {
+        final Content child = getChild();
+        if (child != null) {
+            child.logDeleteNode();
+        }
 
-		removeRootDomainObject();
-		removeParent();
-		removeChild();
+        removeRootDomainObject();
+        removeParent();
+        removeChild();
 
-		deleteDomainObject();
-	}
+        deleteDomainObject();
+    }
 
-	@Override
-	public String getEntryId() {
-		return getChild().getContentId();
-	}
+    @Override
+    public String getEntryId() {
+        return getChild().getContentId();
+    }
 
-	@Override
-	public MultiLanguageString getName() {
-		return getChild().getName();
-	}
+    @Override
+    public MultiLanguageString getName() {
+        return getChild().getName();
+    }
 
-	@Override
-	public String getPath() {
-		return getChild().getPath();
-	}
+    @Override
+    public String getPath() {
+        return getChild().getPath();
+    }
 
-	@Override
-	public MultiLanguageString getTitle() {
-		return getChild().getTitle();
-	}
+    @Override
+    public MultiLanguageString getTitle() {
+        return getChild().getTitle();
+    }
 
-	@Override
-	public boolean isAvailable(FunctionalityContext context) {
-		return getChild().isAvailable(context);
-	}
+    @Override
+    public boolean isAvailable(FunctionalityContext context) {
+        return getChild().isAvailable(context);
+    }
 
-	@Override
-	public boolean isAvailable() {
-		return getChild().isAvailable();
-	}
+    @Override
+    public boolean isAvailable() {
+        return getChild().isAvailable();
+    }
 
-	@Override
-	public Collection<MenuEntry> getChildren() {
-		return getChild().getMenu();
-	}
+    @Override
+    public Collection<MenuEntry> getChildren() {
+        return getChild().getMenu();
+    }
 
-	@Override
-	public Content getReferingContent() {
-		return getChild();
-	}
+    @Override
+    public Content getReferingContent() {
+        return getChild();
+    }
 }

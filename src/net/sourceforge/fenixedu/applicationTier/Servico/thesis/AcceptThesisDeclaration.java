@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 
 public class AcceptThesisDeclaration extends FenixService {
 
-	public void run(Thesis thesis, ThesisVisibilityType visibility, DateTime availableAfter) {
-		thesis.acceptDeclaration(visibility, availableAfter);
-	}
+    public void run(Thesis thesis, ThesisVisibilityType visibility, DateTime availableAfter) {
+        thesis.acceptDeclaration(visibility, availableAfter);
+    }
 }

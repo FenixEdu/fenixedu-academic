@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeStatusOfFinalDegreeWorkProposals {
 
-	@Service
-	public static void run(Set<Proposal> proposals, FinalDegreeWorkProposalStatus status) {
-		for (Proposal proposal : proposals) {
-			proposal.setStatus(status);
-		}
-	}
+    @Service
+    public static void run(Set<Proposal> proposals, FinalDegreeWorkProposalStatus status) {
+        for (Proposal proposal : proposals) {
+            proposal.setStatus(status);
+        }
+    }
 
 }

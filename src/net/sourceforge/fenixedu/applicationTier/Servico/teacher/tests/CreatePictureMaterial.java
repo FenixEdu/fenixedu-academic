@@ -22,28 +22,28 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreatePictureMaterial extends FenixService {
 
-	@Service
-	public static NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
-			String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {
+    @Service
+    public static NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
+            String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {
 
-		final VirtualPath filePath = getVirtualPath();
+        final VirtualPath filePath = getVirtualPath();
 
-		final Collection<FileSetMetaData> metadata = Collections.emptySet();
-		final PictureMaterialFile pictureMaterialFile =
-				new PictureMaterialFile(filePath, originalFilename, displayName, metadata,
-						FileUtils.readFileToByteArray(mainFile), null);
+        final Collection<FileSetMetaData> metadata = Collections.emptySet();
+        final PictureMaterialFile pictureMaterialFile =
+                new PictureMaterialFile(filePath, originalFilename, displayName, metadata,
+                        FileUtils.readFileToByteArray(mainFile), null);
 
-		return new NewPictureMaterial(testElement, inline, pictureMaterialFile);
+        return new NewPictureMaterial(testElement, inline, pictureMaterialFile);
 
-	}
+    }
 
-	private static VirtualPath getVirtualPath() {
-		final VirtualPath filePath = new VirtualPath();
-		filePath.addNode(new VirtualPathNode("tests", "Online tests"));
-		filePath.addNode(new VirtualPathNode("materials", "Presentation materials"));
-		filePath.addNode(new VirtualPathNode("pictures", "Pictures"));
+    private static VirtualPath getVirtualPath() {
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(new VirtualPathNode("tests", "Online tests"));
+        filePath.addNode(new VirtualPathNode("materials", "Presentation materials"));
+        filePath.addNode(new VirtualPathNode("pictures", "Pictures"));
 
-		return filePath;
-	}
+        return filePath;
+    }
 
 }

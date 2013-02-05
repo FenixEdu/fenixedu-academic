@@ -24,19 +24,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "success", path = "/delegate/index.jsp") })
 public class ReadDelegateDegreeDispatchAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-			final HttpServletResponse response) throws FenixActionException {
-		final Person person = getLoggedPerson(request);
-		if (person.hasStudent()) {
-			final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
-			if (lastActiveRegistration != null) {
-				final Degree degree = lastActiveRegistration.getDegree();
-				final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
-				final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-				request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
-			}
-		}
-		return mapping.findForward("success");
-	}
+    @Override
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws FenixActionException {
+        final Person person = getLoggedPerson(request);
+        if (person.hasStudent()) {
+            final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
+            if (lastActiveRegistration != null) {
+                final Degree degree = lastActiveRegistration.getDegree();
+                final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
+                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
+            }
+        }
+        return mapping.findForward("success");
+    }
 }

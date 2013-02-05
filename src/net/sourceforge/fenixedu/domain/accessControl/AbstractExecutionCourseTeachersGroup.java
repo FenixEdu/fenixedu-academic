@@ -12,51 +12,51 @@ import org.apache.commons.collections.Transformer;
 
 public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCourseGroup {
 
-	protected static final long serialVersionUID = -4575035849468586468L;
+    protected static final long serialVersionUID = -4575035849468586468L;
 
-	protected class ProfessorshipPersonTransformer implements Transformer {
+    protected class ProfessorshipPersonTransformer implements Transformer {
 
-		@Override
-		public Object transform(Object arg0) {
-			Professorship professorship = (Professorship) arg0;
+        @Override
+        public Object transform(Object arg0) {
+            Professorship professorship = (Professorship) arg0;
 
-			return professorship.getPerson();
-		}
-	}
+            return professorship.getPerson();
+        }
+    }
 
-	public AbstractExecutionCourseTeachersGroup(ExecutionCourse executionCourse) {
-		super(executionCourse);
-	}
+    public AbstractExecutionCourseTeachersGroup(ExecutionCourse executionCourse) {
+        super(executionCourse);
+    }
 
-	@Override
-	public int getElementsCount() {
-		return hasExecutionCourse() ? this.getExecutionCourse().getProfessorshipsCount() : 0;
-	}
+    @Override
+    public int getElementsCount() {
+        return hasExecutionCourse() ? this.getExecutionCourse().getProfessorshipsCount() : 0;
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		final Set<Person> elements = super.buildSet();
-		if (hasExecutionCourse()) {
-			final Collection<Professorship> professorships = getProfessorships();
-			final Collection<Person> persons = CollectionUtils.collect(professorships, new ProfessorshipPersonTransformer());
-			elements.addAll(persons);
-		}
+    @Override
+    public Set<Person> getElements() {
+        final Set<Person> elements = super.buildSet();
+        if (hasExecutionCourse()) {
+            final Collection<Professorship> professorships = getProfessorships();
+            final Collection<Person> persons = CollectionUtils.collect(professorships, new ProfessorshipPersonTransformer());
+            elements.addAll(persons);
+        }
 
-		return super.freezeSet(elements);
-	}
+        return super.freezeSet(elements);
+    }
 
-	public abstract Collection<Professorship> getProfessorships();
+    public abstract Collection<Professorship> getProfessorships();
 
-	@Override
-	public boolean isMember(Person person) {
-		if (person != null && hasExecutionCourse()) {
-			for (final Professorship professorship : getProfessorships()) {
-				if (professorship.getPerson() == person) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isMember(Person person) {
+        if (person != null && hasExecutionCourse()) {
+            for (final Professorship professorship : getProfessorships()) {
+                if (professorship.getPerson() == person) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

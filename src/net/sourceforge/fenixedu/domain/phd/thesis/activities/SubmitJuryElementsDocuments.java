@@ -15,77 +15,77 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
 public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-		if (process.isAllowedToManageProcess(userView)) {
-			return;
-		}
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+        if (process.isAllowedToManageProcess(userView)) {
+            return;
+        }
 
-		if (process.isJuryValidated()) {
-			throw new PreConditionNotValidException();
-		}
+        if (process.isJuryValidated()) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION)) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION)) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (userView.getPerson() != null
-				&& process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
-			return;
-		}
+        if (userView.getPerson() != null
+                && process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
+            return;
+        }
 
-		throw new PreConditionNotValidException();
-	}
+        throw new PreConditionNotValidException();
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-		boolean anyDocumentSubmitted = false;
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+        final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+        boolean anyDocumentSubmitted = false;
 
-		process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
+        process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
 
-		for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
-			if (each.hasAnyInformation()) {
+        for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
+            if (each.hasAnyInformation()) {
 
-				process.addDocument(each, userView.getPerson());
+                process.addDocument(each, userView.getPerson());
 
-				if (bean.getGenerateAlert()) {
-					alertIfNecessary(bean, process, each, userView.getPerson());
-				}
+                if (bean.getGenerateAlert()) {
+                    alertIfNecessary(bean, process, each, userView.getPerson());
+                }
 
-				anyDocumentSubmitted = true;
-			}
-		}
+                anyDocumentSubmitted = true;
+            }
+        }
 
-		if (anyDocumentSubmitted) {
-			if (!process.hasState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
-				process.createState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, userView.getPerson(),
-						bean.getRemarks());
-			}
-		}
+        if (anyDocumentSubmitted) {
+            if (!process.hasState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
+                process.createState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, userView.getPerson(),
+                        bean.getRemarks());
+            }
+        }
 
-		return process;
-	}
+        return process;
+    }
 
-	private void alertIfNecessary(PhdThesisProcessBean bean, PhdThesisProcess process, PhdProgramDocumentUploadBean each,
-			Person person) {
+    private void alertIfNecessary(PhdThesisProcessBean bean, PhdThesisProcess process, PhdProgramDocumentUploadBean each,
+            Person person) {
 
-		switch (each.getType()) {
-		case JURY_PRESIDENT_ELEMENT:
+        switch (each.getType()) {
+        case JURY_PRESIDENT_ELEMENT:
 
-			if (bean.getGenerateAlert()) {
-				AlertService.alertCoordinators(process.getIndividualProgramProcess(),
-						"message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
-			}
-			break;
+            if (bean.getGenerateAlert()) {
+                AlertService.alertCoordinators(process.getIndividualProgramProcess(),
+                        "message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
+            }
+            break;
 
-		case JURY_ELEMENTS:
-			if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)) {
-				AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
-						AcademicOperationType.VIEW_PHD_THESIS_ALERTS, "message.phd.alert.jury.elements.submitted.subject",
-						"message.phd.alert.jury.elements.submitted.body");
-			}
-			break;
-		}
-	}
+        case JURY_ELEMENTS:
+            if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)) {
+                AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+                        AcademicOperationType.VIEW_PHD_THESIS_ALERTS, "message.phd.alert.jury.elements.submitted.subject",
+                        "message.phd.alert.jury.elements.submitted.body");
+            }
+            break;
+        }
+    }
 }

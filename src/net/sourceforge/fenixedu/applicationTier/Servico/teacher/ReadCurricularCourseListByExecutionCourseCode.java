@@ -29,51 +29,51 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {
 
-	public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
-		List infoCurricularCourseList = new ArrayList();
-		ExecutionCourseSite site = null;
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        List infoCurricularCourseList = new ArrayList();
+        ExecutionCourseSite site = null;
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-		if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
-			for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-				CurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
+        if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
+            for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
+                CurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
 
-				InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-				infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse.getScopes(),
-						new Transformer() {
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+                infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse.getScopes(),
+                        new Transformer() {
 
-							@Override
-							public Object transform(Object arg0) {
-								CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
-								return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
-							}
-						}));
+                            @Override
+                            public Object transform(Object arg0) {
+                                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
+                                return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
+                            }
+                        }));
 
-				Iterator iterador = infoCurricularCourse.getInfoScopes().listIterator();
-				while (iterador.hasNext()) {
-					InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterador.next();
+                Iterator iterador = infoCurricularCourse.getInfoScopes().listIterator();
+                while (iterador.hasNext()) {
+                    InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterador.next();
 
-					if (infoCurricularCourseScope.getInfoCurricularSemester().getSemester()
-							.equals(executionCourse.getExecutionPeriod().getSemester())) {
-						if (!infoCurricularCourseList.contains(infoCurricularCourse)) {
-							infoCurricularCourseList.add(infoCurricularCourse);
-						}
-					}
-				}
-			}
-		}
+                    if (infoCurricularCourseScope.getInfoCurricularSemester().getSemester()
+                            .equals(executionCourse.getExecutionPeriod().getSemester())) {
+                        if (!infoCurricularCourseList.contains(infoCurricularCourse)) {
+                            infoCurricularCourseList.add(infoCurricularCourse);
+                        }
+                    }
+                }
+            }
+        }
 
-		site = executionCourse.getSite();
+        site = executionCourse.getSite();
 
-		InfoSiteAssociatedCurricularCourses infoSiteAssociatedCurricularCourses = new InfoSiteAssociatedCurricularCourses();
-		infoSiteAssociatedCurricularCourses.setAssociatedCurricularCourses(infoCurricularCourseList);
+        InfoSiteAssociatedCurricularCourses infoSiteAssociatedCurricularCourses = new InfoSiteAssociatedCurricularCourses();
+        infoSiteAssociatedCurricularCourses.setAssociatedCurricularCourses(infoCurricularCourseList);
 
-		TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+        TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
+        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
 
-		TeacherAdministrationSiteView siteView =
-				new TeacherAdministrationSiteView(commonComponent, infoSiteAssociatedCurricularCourses);
-		return siteView;
-	}
+        TeacherAdministrationSiteView siteView =
+                new TeacherAdministrationSiteView(commonComponent, infoSiteAssociatedCurricularCourses);
+        return siteView;
+    }
 }

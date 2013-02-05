@@ -22,86 +22,81 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-@Mapping(
-		module = "scientificCouncil",
-		path = "/showFullTeacherCreditsSheet",
-		attribute = "teacherCreditsSheetForm",
-		formBean = "teacherCreditsSheetForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "scientificCouncil", path = "/showFullTeacherCreditsSheet", attribute = "teacherCreditsSheetForm",
+        formBean = "teacherCreditsSheetForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-teacher-credits", path = "/scientificCouncil/credits/showTeacherCredits.jsp"),
-		@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
-	public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
-			ParseException {
+    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+            ParseException {
 
-		InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
-		Teacher teacher = infoTeacherCredits.getTeacher();
-		ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
+        InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
+        Teacher teacher = infoTeacherCredits.getTeacher();
+        ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
 
-		if (teacher == null) {
-			request.setAttribute("teacherNotFound", "teacherNotFound");
-			return mapping.findForward("teacher-not-found");
-		}
-		if (teacher.hasTeacherCredits(executionSemester)
-				&& teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isCloseState()) {
-			request.setAttribute("simulateCalc", "true");
-		}
-		getAllTeacherCredits(request, executionSemester, teacher);
-		return mapping.findForward("show-teacher-credits");
-	}
+        if (teacher == null) {
+            request.setAttribute("teacherNotFound", "teacherNotFound");
+            return mapping.findForward("teacher-not-found");
+        }
+        if (teacher.hasTeacherCredits(executionSemester)
+                && teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isCloseState()) {
+            request.setAttribute("simulateCalc", "true");
+        }
+        getAllTeacherCredits(request, executionSemester, teacher);
+        return mapping.findForward("show-teacher-credits");
+    }
 
-	public ActionForward simulateCalcTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws ParseException {
-		InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
-		Teacher teacher = infoTeacherCredits.getTeacher();
-		ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
-		getRequestAllTeacherCredits(request, executionSemester, teacher);
-		CreditLineDTO creditLineDTO = simulateCalcCreditLine(teacher, executionSemester);
-		request.setAttribute("simulateCalc", "false");
-		request.setAttribute("creditLineDTO", creditLineDTO);
-		return mapping.findForward("show-teacher-credits");
-	}
+    public ActionForward simulateCalcTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws ParseException {
+        InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
+        Teacher teacher = infoTeacherCredits.getTeacher();
+        ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
+        getRequestAllTeacherCredits(request, executionSemester, teacher);
+        CreditLineDTO creditLineDTO = simulateCalcCreditLine(teacher, executionSemester);
+        request.setAttribute("simulateCalc", "false");
+        request.setAttribute("creditLineDTO", creditLineDTO);
+        return mapping.findForward("show-teacher-credits");
+    }
 
-	public ActionForward editTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
-			ParseException {
-		InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
-		Teacher teacher = infoTeacherCredits.getTeacher();
-		ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
-		teacher.getTeacherCredits(executionSemester).editTeacherCredits(executionSemester);
-		getAllTeacherCredits(request, executionSemester, teacher);
-		request.setAttribute("simulateCalc", "true");
-		return mapping.findForward("show-teacher-credits");
-	}
+    public ActionForward editTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+            ParseException {
+        InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
+        Teacher teacher = infoTeacherCredits.getTeacher();
+        ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
+        teacher.getTeacherCredits(executionSemester).editTeacherCredits(executionSemester);
+        getAllTeacherCredits(request, executionSemester, teacher);
+        request.setAttribute("simulateCalc", "true");
+        return mapping.findForward("show-teacher-credits");
+    }
 
-	private ExecutionSemester getExecutionSemesterFromRequestOrForm(HttpServletRequest request, DynaActionForm teacherCreditsForm) {
-		ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
-		if (executionSemester != null) {
-			return executionSemester;
-		}
-		return rootDomainObject.readExecutionSemesterByOID(getIntegerFromRequest(request, "executionPeriodId"));
-	}
+    private ExecutionSemester getExecutionSemesterFromRequestOrForm(HttpServletRequest request, DynaActionForm teacherCreditsForm) {
+        ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+        if (executionSemester != null) {
+            return executionSemester;
+        }
+        return rootDomainObject.readExecutionSemesterByOID(getIntegerFromRequest(request, "executionPeriodId"));
+    }
 
-	private class InfoTeacherCredits {
-		private final Teacher teacher;
-		private final ExecutionSemester executionSemester;
+    private class InfoTeacherCredits {
+        private final Teacher teacher;
+        private final ExecutionSemester executionSemester;
 
-		public InfoTeacherCredits(ActionForm form, HttpServletRequest request) {
-			DynaActionForm teacherCreditsForm = (DynaActionForm) form;
-			executionSemester = getExecutionSemesterFromRequestOrForm(request, teacherCreditsForm);
-			teacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
-		}
+        public InfoTeacherCredits(ActionForm form, HttpServletRequest request) {
+            DynaActionForm teacherCreditsForm = (DynaActionForm) form;
+            executionSemester = getExecutionSemesterFromRequestOrForm(request, teacherCreditsForm);
+            teacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
+        }
 
-		public Teacher getTeacher() {
-			return teacher;
-		}
+        public Teacher getTeacher() {
+            return teacher;
+        }
 
-		public ExecutionSemester getExecutionSemester() {
-			return executionSemester;
-		}
-	}
+        public ExecutionSemester getExecutionSemester() {
+            return executionSemester;
+        }
+    }
 }

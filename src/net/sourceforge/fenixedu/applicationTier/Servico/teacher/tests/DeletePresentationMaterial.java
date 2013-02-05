@@ -11,25 +11,25 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePresentationMaterial extends FenixService {
-	@Service
-	public static void run(NewMathMlMaterial mathMlMaterial) throws FenixServiceException {
-		mathMlMaterial.delete();
-	}
+    @Service
+    public static void run(NewMathMlMaterial mathMlMaterial) throws FenixServiceException {
+        mathMlMaterial.delete();
+    }
 
-	@Service
-	public static void run(NewStringMaterial stringMaterial) throws FenixServiceException {
-		stringMaterial.delete();
-	}
+    @Service
+    public static void run(NewStringMaterial stringMaterial) throws FenixServiceException {
+        stringMaterial.delete();
+    }
 
-	@Service
-	public static void run(NewPictureMaterial pictureMaterial) throws FenixServiceException {
+    @Service
+    public static void run(NewPictureMaterial pictureMaterial) throws FenixServiceException {
 
-		PictureMaterialFile pictureMaterialFile = pictureMaterial.getPictureMaterialFile();
+        PictureMaterialFile pictureMaterialFile = pictureMaterial.getPictureMaterialFile();
 
-		if (pictureMaterialFile.getPictureMaterialsCount() == 1) {
-			new DeleteFileRequest(AccessControl.getPerson(), pictureMaterialFile.getExternalStorageIdentification());
-		}
+        if (pictureMaterialFile.getPictureMaterialsCount() == 1) {
+            new DeleteFileRequest(AccessControl.getPerson(), pictureMaterialFile.getExternalStorageIdentification());
+        }
 
-		pictureMaterial.delete();
-	}
+        pictureMaterial.delete();
+    }
 }

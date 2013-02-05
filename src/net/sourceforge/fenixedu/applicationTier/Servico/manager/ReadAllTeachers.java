@@ -12,15 +12,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllTeachers extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static List<InfoTeacher> run() throws FenixServiceException {
-		final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<InfoTeacher> run() throws FenixServiceException {
+        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-		for (final Teacher teacher : rootDomainObject.getTeachers()) {
-			result.add(InfoTeacher.newInfoFromDomain(teacher));
-		}
-		return result;
-	}
+        for (final Teacher teacher : rootDomainObject.getTeachers()) {
+            result.add(InfoTeacher.newInfoFromDomain(teacher));
+        }
+        return result;
+    }
 
 }

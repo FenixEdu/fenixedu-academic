@@ -16,6 +16,6 @@ package net.sourceforge.fenixedu.commons;
  */
 public interface Closure<T> {
 
-	public void execute(T object);
+    public void execute(T object);
 
 }

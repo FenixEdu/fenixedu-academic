@@ -17,20 +17,20 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
  */
 public class SituationTypesForCandidacySelection implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		Collection<CandidacySituationType> result = new ArrayList<CandidacySituationType>();
-		result.add(CandidacySituationType.ADMITTED);
-		result.add(CandidacySituationType.SUBSTITUTE);
-		result.add(CandidacySituationType.NOT_ADMITTED);
+        Collection<CandidacySituationType> result = new ArrayList<CandidacySituationType>();
+        result.add(CandidacySituationType.ADMITTED);
+        result.add(CandidacySituationType.SUBSTITUTE);
+        result.add(CandidacySituationType.NOT_ADMITTED);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

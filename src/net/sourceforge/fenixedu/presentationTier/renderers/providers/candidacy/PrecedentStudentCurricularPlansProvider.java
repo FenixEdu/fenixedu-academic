@@ -7,16 +7,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PrecedentStudentCurricularPlansProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean =
-				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
-		return bean.getPrecedentStudentCurricularPlans();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean =
+                (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
+        return bean.getPrecedentStudentCurricularPlans();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

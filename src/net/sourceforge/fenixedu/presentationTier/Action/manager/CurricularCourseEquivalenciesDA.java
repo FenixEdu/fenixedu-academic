@@ -37,150 +37,150 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final IUserView userView = UserView.getUser();
-		final DynaActionForm actionForm = (DynaActionForm) form;
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final IUserView userView = UserView.getUser();
+        final DynaActionForm actionForm = (DynaActionForm) form;
 
-		setInfoDegrees(request, userView);
+        setInfoDegrees(request, userView);
 
-		final String degreeIDString = (String) actionForm.get("degreeID");
-		if (isValidObjectID(degreeIDString)) {
-			setInfoDegreeCurricularPlans(request, userView, Integer.valueOf(degreeIDString), "infoDegreeCurricularPlans");
+        final String degreeIDString = (String) actionForm.get("degreeID");
+        if (isValidObjectID(degreeIDString)) {
+            setInfoDegreeCurricularPlans(request, userView, Integer.valueOf(degreeIDString), "infoDegreeCurricularPlans");
 
-			final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
-			if (isValidObjectID(degreeCurricularPlanIDString)) {
-				DegreeCurricularPlan degreeCurricularPlan =
-						rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(degreeCurricularPlanIDString));
-				List<CurricularCourseEquivalence> equivalences =
-						new ArrayList<CurricularCourseEquivalence>(degreeCurricularPlan.getCurricularCourseEquivalencesSet());
-				sortInfoCurricularCourseEquivalences(equivalences);
-				request.setAttribute("curricularCourseEquivalences", equivalences);
-			}
-		}
+            final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
+            if (isValidObjectID(degreeCurricularPlanIDString)) {
+                DegreeCurricularPlan degreeCurricularPlan =
+                        rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(degreeCurricularPlanIDString));
+                List<CurricularCourseEquivalence> equivalences =
+                        new ArrayList<CurricularCourseEquivalence>(degreeCurricularPlan.getCurricularCourseEquivalencesSet());
+                sortInfoCurricularCourseEquivalences(equivalences);
+                request.setAttribute("curricularCourseEquivalences", equivalences);
+            }
+        }
 
-		return mapping.findForward("showEquivalencies");
-	}
+        return mapping.findForward("showEquivalencies");
+    }
 
-	public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final IUserView userView = UserView.getUser();
-		final DynaActionForm actionForm = (DynaActionForm) form;
+    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = UserView.getUser();
+        final DynaActionForm actionForm = (DynaActionForm) form;
 
-		final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
-		if (isValidObjectID(degreeCurricularPlanIDString)) {
-			setInfoDegrees(request, userView);
+        final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
+        if (isValidObjectID(degreeCurricularPlanIDString)) {
+            setInfoDegrees(request, userView);
 
-			final String degreeIDString = (String) actionForm.get("degreeID");
-			if (isValidObjectID(degreeIDString)) {
-				setInfoDegreeCurricularPlans(request, userView, Integer.valueOf(degreeIDString), "infoDegreeCurricularPlans");
-			}
+            final String degreeIDString = (String) actionForm.get("degreeID");
+            if (isValidObjectID(degreeIDString)) {
+                setInfoDegreeCurricularPlans(request, userView, Integer.valueOf(degreeIDString), "infoDegreeCurricularPlans");
+            }
 
-			setInfoCurricularCourses(request, userView, Integer.valueOf(degreeCurricularPlanIDString), "infoCurricularCourses");
+            setInfoCurricularCourses(request, userView, Integer.valueOf(degreeCurricularPlanIDString), "infoCurricularCourses");
 
-			final String oldDegreeIDString = (String) actionForm.get("oldDegreeID");
-			if (isValidObjectID(oldDegreeIDString)) {
-				setInfoDegreeCurricularPlans(request, userView, Integer.valueOf(oldDegreeIDString),
-						"oldInfoDegreeCurricularPlans");
-			}
+            final String oldDegreeIDString = (String) actionForm.get("oldDegreeID");
+            if (isValidObjectID(oldDegreeIDString)) {
+                setInfoDegreeCurricularPlans(request, userView, Integer.valueOf(oldDegreeIDString),
+                        "oldInfoDegreeCurricularPlans");
+            }
 
-			final String oldDegreeCurricularPlanIDString = (String) actionForm.get("oldDegreeCurricularPlanID");
-			if (isValidObjectID(oldDegreeCurricularPlanIDString)) {
-				setInfoCurricularCourses(request, userView, Integer.valueOf(oldDegreeCurricularPlanIDString),
-						"oldInfoCurricularCourses");
-			}
+            final String oldDegreeCurricularPlanIDString = (String) actionForm.get("oldDegreeCurricularPlanID");
+            if (isValidObjectID(oldDegreeCurricularPlanIDString)) {
+                setInfoCurricularCourses(request, userView, Integer.valueOf(oldDegreeCurricularPlanIDString),
+                        "oldInfoCurricularCourses");
+            }
 
-			return mapping.findForward("showCreateEquivalencyForm");
-		} else {
-			return prepare(mapping, form, request, response);
-		}
-	}
+            return mapping.findForward("showCreateEquivalencyForm");
+        } else {
+            return prepare(mapping, form, request, response);
+        }
+    }
 
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final DynaActionForm actionForm = (DynaActionForm) form;
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final DynaActionForm actionForm = (DynaActionForm) form;
 
-		final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
-		final String curricularCourseIDString = (String) actionForm.get("curricularCourseID");
-		final String oldCurricularCourseIDString = (String) actionForm.get("oldCurricularCourseID");
-		if (isValidObjectID(degreeCurricularPlanIDString) && isValidObjectID(curricularCourseIDString)
-				&& isValidObjectID(oldCurricularCourseIDString)) {
+        final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
+        final String curricularCourseIDString = (String) actionForm.get("curricularCourseID");
+        final String oldCurricularCourseIDString = (String) actionForm.get("oldCurricularCourseID");
+        if (isValidObjectID(degreeCurricularPlanIDString) && isValidObjectID(curricularCourseIDString)
+                && isValidObjectID(oldCurricularCourseIDString)) {
 
-			try {
-				CreateCurricularCourseEquivalency.run(Integer.valueOf(degreeCurricularPlanIDString),
-						Integer.valueOf(curricularCourseIDString), Integer.valueOf(oldCurricularCourseIDString));
-			} catch (DomainException e) {
-				addActionMessage(request, e.getMessage());
-			}
-		}
+            try {
+                CreateCurricularCourseEquivalency.run(Integer.valueOf(degreeCurricularPlanIDString),
+                        Integer.valueOf(curricularCourseIDString), Integer.valueOf(oldCurricularCourseIDString));
+            } catch (DomainException e) {
+                addActionMessage(request, e.getMessage());
+            }
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final DynaActionForm actionForm = (DynaActionForm) form;
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final DynaActionForm actionForm = (DynaActionForm) form;
 
-		final String curricularCourseEquivalencyIDString = (String) actionForm.get("curricularCourseEquivalencyID");
-		if (isValidObjectID(curricularCourseEquivalencyIDString)) {
-			try {
-				DeleteCurricularCourseEquivalency.run(Integer.valueOf(curricularCourseEquivalencyIDString));
-			} catch (DomainException e) {
-				addActionMessage(request, e.getMessage());
-			}
-		}
+        final String curricularCourseEquivalencyIDString = (String) actionForm.get("curricularCourseEquivalencyID");
+        if (isValidObjectID(curricularCourseEquivalencyIDString)) {
+            try {
+                DeleteCurricularCourseEquivalency.run(Integer.valueOf(curricularCourseEquivalencyIDString));
+            } catch (DomainException e) {
+                addActionMessage(request, e.getMessage());
+            }
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	private void setInfoDegrees(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
-			FenixServiceException {
+    private void setInfoDegrees(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
+            FenixServiceException {
 
-		final SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
+        final SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
 
-		degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
-		degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-		degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
-		degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 
-		request.setAttribute("infoDegrees", degrees);
-	}
+        request.setAttribute("infoDegrees", degrees);
+    }
 
-	private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID,
-			final String attributeName) throws FenixFilterException, FenixServiceException {
+    private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID,
+            final String attributeName) throws FenixFilterException, FenixServiceException {
 
-		final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeID);
-		sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
-		request.setAttribute(attributeName, infoDegreeCurricularPlans);
-	}
+        final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeID);
+        sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
+        request.setAttribute(attributeName, infoDegreeCurricularPlans);
+    }
 
-	private void setInfoCurricularCourses(final HttpServletRequest request, final IUserView userView,
-			final Integer degreeCurricularPlanID, final String attribute) throws FenixFilterException, FenixServiceException {
+    private void setInfoCurricularCourses(final HttpServletRequest request, final IUserView userView,
+            final Integer degreeCurricularPlanID, final String attribute) throws FenixFilterException, FenixServiceException {
 
-		final List<InfoCurricularCourse> infoCurricularCourses =
-				ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
-		sortInfoCurricularCourses(infoCurricularCourses);
-		request.setAttribute(attribute, infoCurricularCourses);
-	}
+        final List<InfoCurricularCourse> infoCurricularCourses =
+                ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
+        sortInfoCurricularCourses(infoCurricularCourses);
+        request.setAttribute(attribute, infoCurricularCourses);
+    }
 
-	private boolean isValidObjectID(final String objectIDString) {
-		return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
-	}
+    private boolean isValidObjectID(final String objectIDString) {
+        return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
+    }
 
-	private void sortInfoDegreeCurricularPlans(final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans) {
-		Collections.sort(infoDegreeCurricularPlans, new BeanComparator("name"));
-	}
+    private void sortInfoDegreeCurricularPlans(final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans) {
+        Collections.sort(infoDegreeCurricularPlans, new BeanComparator("name"));
+    }
 
-	private void sortInfoCurricularCourseEquivalences(final List<CurricularCourseEquivalence> equivalences) {
-		final ComparatorChain chain = new ComparatorChain();
-		chain.addComparator(CurricularCourseEquivalence.COMPARATOR_BY_EQUIVALENT_COURSE_NAME);
-		chain.addComparator(CurricularCourseEquivalence.COMPARATOR_BY_EQUIVALENT_COURSE_CODE);
-		Collections.sort(equivalences, chain);
-	}
+    private void sortInfoCurricularCourseEquivalences(final List<CurricularCourseEquivalence> equivalences) {
+        final ComparatorChain chain = new ComparatorChain();
+        chain.addComparator(CurricularCourseEquivalence.COMPARATOR_BY_EQUIVALENT_COURSE_NAME);
+        chain.addComparator(CurricularCourseEquivalence.COMPARATOR_BY_EQUIVALENT_COURSE_CODE);
+        Collections.sort(equivalences, chain);
+    }
 
-	private void sortInfoCurricularCourses(final List<InfoCurricularCourse> infoCurricularCourses) {
-		Collections.sort(infoCurricularCourses, InfoCurricularCourse.COMPARATOR_BY_NAME_AND_ID);
-	}
+    private void sortInfoCurricularCourses(final List<InfoCurricularCourse> infoCurricularCourses) {
+        Collections.sort(infoCurricularCourses, InfoCurricularCourse.COMPARATOR_BY_NAME_AND_ID);
+    }
 
 }

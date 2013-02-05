@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class SecondCycleNextCandidacyProcesses extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
 
-		SecondCycleCandidacyProcess process = bean.getCandidacyProcess();
+        SecondCycleCandidacyProcess process = bean.getCandidacyProcess();
 
-		return process.getNextSecondCyleCandidacyProcesses();
-	}
+        return process.getNextSecondCyleCandidacyProcesses();
+    }
 
 }

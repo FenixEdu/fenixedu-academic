@@ -16,30 +16,30 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class AlterStudentEnrolmentEvaluation extends FenixService {
 
-	@Service
-	public static void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
-			InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView) throws FenixServiceException {
+    @Service
+    public static void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView) throws FenixServiceException {
 
-		Person person = userView.getPerson();
-		if (person == null) {
-			throw new NonExistingServiceException();
-		}
+        Person person = userView.getPerson();
+        if (person == null) {
+            throw new NonExistingServiceException();
+        }
 
-		Teacher teacher = Teacher.readByIstId(teacherId);
-		if (teacher == null) {
-			throw new NonExistingServiceException();
-		}
+        Teacher teacher = Teacher.readByIstId(teacherId);
+        if (teacher == null) {
+            throw new NonExistingServiceException();
+        }
 
-		EnrolmentEvaluation enrolmentEvaluationCopy = rootDomainObject.readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
-		if (enrolmentEvaluationCopy == null) {
-			throw new NonExistingServiceException();
-		}
+        EnrolmentEvaluation enrolmentEvaluationCopy = rootDomainObject.readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
+        if (enrolmentEvaluationCopy == null) {
+            throw new NonExistingServiceException();
+        }
 
-		enrolmentEvaluationCopy.alterStudentEnrolmentEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(), person,
-				teacher.getPerson(), infoEnrolmentEvaluation.getEnrolmentEvaluationType(),
-				infoEnrolmentEvaluation.getGradeAvailableDate(), infoEnrolmentEvaluation.getExamDate(),
-				infoEnrolmentEvaluation.getObservation());
+        enrolmentEvaluationCopy.alterStudentEnrolmentEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(), person,
+                teacher.getPerson(), infoEnrolmentEvaluation.getEnrolmentEvaluationType(),
+                infoEnrolmentEvaluation.getGradeAvailableDate(), infoEnrolmentEvaluation.getExamDate(),
+                infoEnrolmentEvaluation.getObservation());
 
-	}
+    }
 
 }

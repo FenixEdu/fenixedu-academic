@@ -8,58 +8,58 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificateRequest_Base {
 
-	public ExtraCurricularCertificateRequest() {
-		super();
-	}
+    public ExtraCurricularCertificateRequest() {
+        super();
+    }
 
-	public ExtraCurricularCertificateRequest(final DocumentRequestCreateBean bean) {
-		this();
-		super.init(bean);
-		checkParameters(bean);
-		super.getEnrolments().addAll(bean.getEnrolments());
-	}
+    public ExtraCurricularCertificateRequest(final DocumentRequestCreateBean bean) {
+        this();
+        super.init(bean);
+        checkParameters(bean);
+        super.getEnrolments().addAll(bean.getEnrolments());
+    }
 
-	@Override
-	protected void checkParameters(final DocumentRequestCreateBean bean) {
-		if (bean.getEnrolments() == null || bean.getEnrolments().isEmpty()) {
-			throw new DomainException("error.ExtraCurricularCertificateRequest.no.enrolments");
-		}
-	}
+    @Override
+    protected void checkParameters(final DocumentRequestCreateBean bean) {
+        if (bean.getEnrolments() == null || bean.getEnrolments().isEmpty()) {
+            throw new DomainException("error.ExtraCurricularCertificateRequest.no.enrolments");
+        }
+    }
 
-	@Override
-	public Integer getNumberOfUnits() {
-		return super.getEnrolmentsCount();
-	}
+    @Override
+    public Integer getNumberOfUnits() {
+        return super.getEnrolmentsCount();
+    }
 
-	@Override
-	public DocumentRequestType getDocumentRequestType() {
-		return DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE;
-	}
+    @Override
+    public DocumentRequestType getDocumentRequestType() {
+        return DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE;
+    }
 
-	@Override
-	public String getDocumentTemplateKey() {
-		return getClass().getName();
-	}
+    @Override
+    public String getDocumentTemplateKey() {
+        return getClass().getName();
+    }
 
-	@Override
-	public EventType getEventType() {
-		return (RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) ? null : EventType.EXTRA_CURRICULAR_APPROVEMENT_CERTIFICATE_REQUEST;
-	}
+    @Override
+    public EventType getEventType() {
+        return (RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) ? null : EventType.EXTRA_CURRICULAR_APPROVEMENT_CERTIFICATE_REQUEST;
+    }
 
-	@Override
-	public boolean isAvailableForTransitedRegistrations() {
-		return true;
-	}
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+        return true;
+    }
 
-	@Override
-	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-		super.internalChangeState(academicServiceRequestBean);
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.internalChangeState(academicServiceRequestBean);
 
-		if (academicServiceRequestBean.isToCancelOrReject()) {
-			for (; hasAnyEnrolments();) {
-				removeEnrolments(getEnrolments().get(0));
-			}
-		}
-	}
+        if (academicServiceRequestBean.isToCancelOrReject()) {
+            for (; hasAnyEnrolments();) {
+                removeEnrolments(getEnrolments().get(0));
+            }
+        }
+    }
 
 }

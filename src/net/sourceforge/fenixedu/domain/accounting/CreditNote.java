@@ -23,243 +23,243 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class CreditNote extends CreditNote_Base {
 
-	public static Comparator<CreditNote> COMPARATOR_BY_NUMBER = new Comparator<CreditNote>() {
-		@Override
-		public int compare(CreditNote leftCreditNote, CreditNote rightCreditNote) {
-			int comparationResult = leftCreditNote.getNumber().compareTo(rightCreditNote.getNumber());
-			return (comparationResult == 0) ? leftCreditNote.getIdInternal().compareTo(rightCreditNote.getIdInternal()) : comparationResult;
-		}
-	};
+    public static Comparator<CreditNote> COMPARATOR_BY_NUMBER = new Comparator<CreditNote>() {
+        @Override
+        public int compare(CreditNote leftCreditNote, CreditNote rightCreditNote) {
+            int comparationResult = leftCreditNote.getNumber().compareTo(rightCreditNote.getNumber());
+            return (comparationResult == 0) ? leftCreditNote.getIdInternal().compareTo(rightCreditNote.getIdInternal()) : comparationResult;
+        }
+    };
 
-	private CreditNote() {
-		super();
-		final Integer year = new DateTime().getYear();
-		super.setNumber(generateCreditNoteNumber(year));
-		super.setRootDomainObject(RootDomainObject.getInstance());
-		super.setWhenCreated(new DateTime());
-		super.setYear(year);
-	}
+    private CreditNote() {
+        super();
+        final Integer year = new DateTime().getYear();
+        super.setNumber(generateCreditNoteNumber(year));
+        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setWhenCreated(new DateTime());
+        super.setYear(year);
+    }
 
-	private CreditNote(final Receipt receipt, final Person responsible) {
-		this();
-		init(receipt, responsible);
-	}
+    private CreditNote(final Receipt receipt, final Person responsible) {
+        this();
+        init(receipt, responsible);
+    }
 
-	private void init(Receipt receipt, Person responsible) {
-		checkParameters(receipt, responsible);
-		checkRulesToCreate(receipt);
-		super.setReceipt(receipt);
-		internalChangeState(responsible, CreditNoteState.EMITTED);
-	}
+    private void init(Receipt receipt, Person responsible) {
+        checkParameters(receipt, responsible);
+        checkRulesToCreate(receipt);
+        super.setReceipt(receipt);
+        internalChangeState(responsible, CreditNoteState.EMITTED);
+    }
 
-	private void checkRulesToCreate(Receipt receipt) {
-		if (receipt.isAnnulled()) {
-			throw new DomainException("error.accounting.CreditNote.cannot.be.created.for.annulled.receipts");
-		}
+    private void checkRulesToCreate(Receipt receipt) {
+        if (receipt.isAnnulled()) {
+            throw new DomainException("error.accounting.CreditNote.cannot.be.created.for.annulled.receipts");
+        }
 
-	}
+    }
 
-	private void checkParameters(Receipt receipt, Person responsible) {
-		if (receipt == null) {
-			throw new DomainException("error.accounting.CreditNote.receipt.cannot.be.null");
-		}
+    private void checkParameters(Receipt receipt, Person responsible) {
+        if (receipt == null) {
+            throw new DomainException("error.accounting.CreditNote.receipt.cannot.be.null");
+        }
 
-		if (responsible == null) {
-			throw new DomainException("error.accounting.CreditNote.responsible.cannot.be.null");
-		}
-	}
+        if (responsible == null) {
+            throw new DomainException("error.accounting.CreditNote.responsible.cannot.be.null");
+        }
+    }
 
-	private Integer generateCreditNoteNumber(final Integer year) {
-		final List<CreditNote> creditNotes = getCreditNotesForYear(year);
-		return creditNotes.isEmpty() ? Integer.valueOf(1) : Collections.max(creditNotes, CreditNote.COMPARATOR_BY_NUMBER)
-				.getNumber() + 1;
-	}
+    private Integer generateCreditNoteNumber(final Integer year) {
+        final List<CreditNote> creditNotes = getCreditNotesForYear(year);
+        return creditNotes.isEmpty() ? Integer.valueOf(1) : Collections.max(creditNotes, CreditNote.COMPARATOR_BY_NUMBER)
+                .getNumber() + 1;
+    }
 
-	private List<CreditNote> getCreditNotesForYear(final Integer year) {
-		final List<CreditNote> result = new ArrayList<CreditNote>();
-		for (final CreditNote creditNote : RootDomainObject.getInstance().getCreditNotes()) {
-			if (creditNote.getYear().equals(year)) {
-				result.add(creditNote);
-			}
-		}
+    private List<CreditNote> getCreditNotesForYear(final Integer year) {
+        final List<CreditNote> result = new ArrayList<CreditNote>();
+        for (final CreditNote creditNote : RootDomainObject.getInstance().getCreditNotes()) {
+            if (creditNote.getYear().equals(year)) {
+                result.add(creditNote);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public void setReceipt(Receipt receipt) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.receipt");
-	}
+    @Override
+    public void setReceipt(Receipt receipt) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.receipt");
+    }
 
-	@Override
-	public void setResponsible(Person responsible) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.responsible");
-	}
+    @Override
+    public void setResponsible(Person responsible) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.responsible");
+    }
 
-	@Override
-	public void setNumber(Integer number) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.number");
-	}
+    @Override
+    public void setNumber(Integer number) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.number");
+    }
 
-	@Override
-	public void setYear(Integer year) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.year");
-	}
+    @Override
+    public void setYear(Integer year) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.year");
+    }
 
-	@Override
-	public void setWhenCreated(DateTime whenCreated) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.whenCreated");
-	}
+    @Override
+    public void setWhenCreated(DateTime whenCreated) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.whenCreated");
+    }
 
-	@Override
-	public void addCreditNoteEntries(CreditNoteEntry creditNoteEntry) {
-		throw new DomainException("error.accounting.CreditNote.cannot.add.creditNoteEntry");
-	}
+    @Override
+    public void addCreditNoteEntries(CreditNoteEntry creditNoteEntry) {
+        throw new DomainException("error.accounting.CreditNote.cannot.add.creditNoteEntry");
+    }
 
-	@Override
-	public List<CreditNoteEntry> getCreditNoteEntries() {
-		return Collections.unmodifiableList(super.getCreditNoteEntries());
-	}
+    @Override
+    public List<CreditNoteEntry> getCreditNoteEntries() {
+        return Collections.unmodifiableList(super.getCreditNoteEntries());
+    }
 
-	@Override
-	public Set<CreditNoteEntry> getCreditNoteEntriesSet() {
-		return Collections.unmodifiableSet(super.getCreditNoteEntriesSet());
-	}
+    @Override
+    public Set<CreditNoteEntry> getCreditNoteEntriesSet() {
+        return Collections.unmodifiableSet(super.getCreditNoteEntriesSet());
+    }
 
-	@Override
-	public Iterator<CreditNoteEntry> getCreditNoteEntriesIterator() {
-		return getCreditNoteEntriesSet().iterator();
-	}
+    @Override
+    public Iterator<CreditNoteEntry> getCreditNoteEntriesIterator() {
+        return getCreditNoteEntriesSet().iterator();
+    }
 
-	@Override
-	public void removeCreditNoteEntries(CreditNoteEntry creditNoteEntry) {
-		throw new DomainException("error.accounting.CreditNote.cannot.remove.creditNoteEntry");
-	}
+    @Override
+    public void removeCreditNoteEntries(CreditNoteEntry creditNoteEntry) {
+        throw new DomainException("error.accounting.CreditNote.cannot.remove.creditNoteEntry");
+    }
 
-	@Override
-	public void setWhenUpdated(DateTime whenUpdated) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.whenUpdated");
-	}
+    @Override
+    public void setWhenUpdated(DateTime whenUpdated) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.whenUpdated");
+    }
 
-	@Override
-	public void setState(CreditNoteState state) {
-		throw new DomainException("error.accounting.CreditNote.cannot.modify.state");
-	}
+    @Override
+    public void setState(CreditNoteState state) {
+        throw new DomainException("error.accounting.CreditNote.cannot.modify.state");
+    }
 
-	private void internalChangeState(final Person responsible, CreditNoteState state) {
-		super.setWhenUpdated(new DateTime());
+    private void internalChangeState(final Person responsible, CreditNoteState state) {
+        super.setWhenUpdated(new DateTime());
 
-		if (getState() != null && getState() != CreditNoteState.EMITTED) {
-			throw new DomainException("error.accounting.CreditNote.only.emitted.credit.notes.can.be.changed");
-		}
+        if (getState() != null && getState() != CreditNoteState.EMITTED) {
+            throw new DomainException("error.accounting.CreditNote.only.emitted.credit.notes.can.be.changed");
+        }
 
-		super.setState(state);
-		super.setResponsible(responsible);
-	}
+        super.setState(state);
+        super.setResponsible(responsible);
+    }
 
-	public void confirm(final Person responsible, final PaymentMode paymentMode) {
-		internalChangeState(responsible, CreditNoteState.PAYED);
+    public void confirm(final Person responsible, final PaymentMode paymentMode) {
+        internalChangeState(responsible, CreditNoteState.PAYED);
 
-		for (final CreditNoteEntry creditNoteEntry : getCreditNoteEntriesSet()) {
-			creditNoteEntry.createAdjustmentAccountingEntry(responsible.getUser(), paymentMode);
-		}
+        for (final CreditNoteEntry creditNoteEntry : getCreditNoteEntriesSet()) {
+            creditNoteEntry.createAdjustmentAccountingEntry(responsible.getUser(), paymentMode);
+        }
 
-	}
+    }
 
-	public void annul(final Person responsible) {
-		internalChangeState(responsible, CreditNoteState.ANNULLED);
-	}
+    public void annul(final Person responsible) {
+        internalChangeState(responsible, CreditNoteState.ANNULLED);
+    }
 
-	public void changeState(final Person responsible, final PaymentMode paymentMode, final CreditNoteState state) {
+    public void changeState(final Person responsible, final PaymentMode paymentMode, final CreditNoteState state) {
 
-		if (getState() == state) {
-			return;
-		}
+        if (getState() == state) {
+            return;
+        }
 
-		if (state == CreditNoteState.ANNULLED) {
-			annul(responsible);
-		} else if (state == CreditNoteState.PAYED) {
-			confirm(responsible, paymentMode);
-		} else {
-			throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.CreditNote.cannot.change.to.given.state");
-		}
+        if (state == CreditNoteState.ANNULLED) {
+            annul(responsible);
+        } else if (state == CreditNoteState.PAYED) {
+            confirm(responsible, paymentMode);
+        } else {
+            throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.CreditNote.cannot.change.to.given.state");
+        }
 
-	}
+    }
 
-	public static CreditNote create(Receipt receipt, Person responsible, List<CreditNoteEntryDTO> entryDTOs) {
-		final CreditNote creditNote = new CreditNote(receipt, responsible);
+    public static CreditNote create(Receipt receipt, Person responsible, List<CreditNoteEntryDTO> entryDTOs) {
+        final CreditNote creditNote = new CreditNote(receipt, responsible);
 
-		if (entryDTOs == null || entryDTOs.isEmpty()) {
-			throw new DomainException("error.accounting.CreditNote.cannot.be.created.without.entries");
-		}
+        if (entryDTOs == null || entryDTOs.isEmpty()) {
+            throw new DomainException("error.accounting.CreditNote.cannot.be.created.without.entries");
+        }
 
-		for (final CreditNoteEntryDTO entryDTO : entryDTOs) {
-			if (!entryDTO.getEntry().canApplyReimbursement(entryDTO.getAmountToPay().negate())) {
-				throw new DomainExceptionWithLabelFormatter(
-						"error.accounting.CreditNoteEntry.amount.to.reimburse.exceeds.entry.amount", entryDTO.getEntry()
-								.getDescription());
-			}
+        for (final CreditNoteEntryDTO entryDTO : entryDTOs) {
+            if (!entryDTO.getEntry().canApplyReimbursement(entryDTO.getAmountToPay().negate())) {
+                throw new DomainExceptionWithLabelFormatter(
+                        "error.accounting.CreditNoteEntry.amount.to.reimburse.exceeds.entry.amount", entryDTO.getEntry()
+                                .getDescription());
+            }
 
-			new CreditNoteEntry(creditNote, entryDTO.getEntry(), entryDTO.getAmountToPay());
+            new CreditNoteEntry(creditNote, entryDTO.getEntry(), entryDTO.getAmountToPay());
 
-		}
+        }
 
-		checkIfEmittedCreditNotesExceedEventsMaxReimbursableAmounts(receipt);
+        checkIfEmittedCreditNotesExceedEventsMaxReimbursableAmounts(receipt);
 
-		return creditNote;
-	}
+        return creditNote;
+    }
 
-	private static void checkIfEmittedCreditNotesExceedEventsMaxReimbursableAmounts(Receipt receipt) {
-		for (final Entry<Event, Money> each : calculateAmountsToReimburseByEvent(receipt).entrySet()) {
-			if (!each.getKey().canApplyReimbursement(each.getValue())) {
-				throw new DomainExceptionWithLabelFormatter(
-						"error.accounting.CreditNote.the.sum.credit.notes.in.emitted.state.exceeds.event.reimbursable.amount",
-						each.getKey().getDescription(), new LabelFormatter(each.getKey().getReimbursableAmount().toPlainString()));
-			}
-		}
+    private static void checkIfEmittedCreditNotesExceedEventsMaxReimbursableAmounts(Receipt receipt) {
+        for (final Entry<Event, Money> each : calculateAmountsToReimburseByEvent(receipt).entrySet()) {
+            if (!each.getKey().canApplyReimbursement(each.getValue())) {
+                throw new DomainExceptionWithLabelFormatter(
+                        "error.accounting.CreditNote.the.sum.credit.notes.in.emitted.state.exceeds.event.reimbursable.amount",
+                        each.getKey().getDescription(), new LabelFormatter(each.getKey().getReimbursableAmount().toPlainString()));
+            }
+        }
 
-	}
+    }
 
-	private static Map<Event, Money> calculateAmountsToReimburseByEvent(Receipt receipt) {
-		final Map<Event, Money> amountToReimburseByEvent = new HashMap<Event, Money>();
-		for (final CreditNote creditNote : receipt.getEmittedCreditNotes()) {
-			for (final CreditNoteEntry creditNoteEntry : creditNote.getCreditNoteEntries()) {
-				final Event event = creditNoteEntry.getAccountingEntry().getAccountingTransaction().getEvent();
-				final Money amountToReimburse = creditNoteEntry.getAmount();
-				if (amountToReimburseByEvent.containsKey(event)) {
-					amountToReimburseByEvent.put(event, amountToReimburseByEvent.get(event).add(amountToReimburse));
-				} else {
-					amountToReimburseByEvent.put(event, amountToReimburse);
-				}
-			}
-		}
-		return amountToReimburseByEvent;
-	}
+    private static Map<Event, Money> calculateAmountsToReimburseByEvent(Receipt receipt) {
+        final Map<Event, Money> amountToReimburseByEvent = new HashMap<Event, Money>();
+        for (final CreditNote creditNote : receipt.getEmittedCreditNotes()) {
+            for (final CreditNoteEntry creditNoteEntry : creditNote.getCreditNoteEntries()) {
+                final Event event = creditNoteEntry.getAccountingEntry().getAccountingTransaction().getEvent();
+                final Money amountToReimburse = creditNoteEntry.getAmount();
+                if (amountToReimburseByEvent.containsKey(event)) {
+                    amountToReimburseByEvent.put(event, amountToReimburseByEvent.get(event).add(amountToReimburse));
+                } else {
+                    amountToReimburseByEvent.put(event, amountToReimburse);
+                }
+            }
+        }
+        return amountToReimburseByEvent;
+    }
 
-	public boolean isEmitted() {
-		return getState() == CreditNoteState.EMITTED;
-	}
+    public boolean isEmitted() {
+        return getState() == CreditNoteState.EMITTED;
+    }
 
-	public boolean isAnnulled() {
-		return getState() == CreditNoteState.ANNULLED;
-	}
+    public boolean isAnnulled() {
+        return getState() == CreditNoteState.ANNULLED;
+    }
 
-	public boolean isPayed() {
-		return getState() == CreditNoteState.PAYED;
-	}
+    public boolean isPayed() {
+        return getState() == CreditNoteState.PAYED;
+    }
 
-	public boolean isAllowedToChangeState() {
-		return isEmitted();
-	}
+    public boolean isAllowedToChangeState() {
+        return isEmitted();
+    }
 
-	public Money getTotalAmount() {
-		Money totalAmount = Money.ZERO;
+    public Money getTotalAmount() {
+        Money totalAmount = Money.ZERO;
 
-		for (final CreditNoteEntry creditNoteEntry : getCreditNoteEntriesSet()) {
-			totalAmount = totalAmount.add(creditNoteEntry.getAmount());
-		}
+        for (final CreditNoteEntry creditNoteEntry : getCreditNoteEntriesSet()) {
+            totalAmount = totalAmount.add(creditNoteEntry.getAmount());
+        }
 
-		return totalAmount;
-	}
+        return totalAmount;
+    }
 
 }

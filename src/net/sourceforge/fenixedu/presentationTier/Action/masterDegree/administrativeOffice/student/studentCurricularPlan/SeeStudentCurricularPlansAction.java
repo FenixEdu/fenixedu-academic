@@ -28,48 +28,46 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/seeStudentCurricularPlans", scope = "request", validate = false)
-@Forwards(value = { @Forward(
-		name = "viewStudentCurricularPlans",
-		path = "df.page.viewStudentCurricularPlans",
-		tileProperties = @Tile(title = "teste")) })
+@Forwards(value = { @Forward(name = "viewStudentCurricularPlans", path = "df.page.viewStudentCurricularPlans",
+        tileProperties = @Tile(title = "teste")) })
 public class SeeStudentCurricularPlansAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		String studentId1 = this.getFromRequest("studentId", request);
-		Integer studentId2 = null;
+        String studentId1 = this.getFromRequest("studentId", request);
+        Integer studentId2 = null;
 
-		try {
-			studentId2 = new Integer(studentId1);
-		} catch (NumberFormatException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            studentId2 = new Integer(studentId1);
+        } catch (NumberFormatException e) {
+            throw new FenixActionException(e);
+        }
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		List studentCurricularPlansList = null;
-		try {
-			studentCurricularPlansList = ReadPosGradStudentCurricularPlans.run(studentId2);
-			if (studentCurricularPlansList != null && !studentCurricularPlansList.isEmpty()) {
-				Collections.sort(studentCurricularPlansList);
-			}
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        List studentCurricularPlansList = null;
+        try {
+            studentCurricularPlansList = ReadPosGradStudentCurricularPlans.run(studentId2);
+            if (studentCurricularPlansList != null && !studentCurricularPlansList.isEmpty()) {
+                Collections.sort(studentCurricularPlansList);
+            }
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute("studentCurricularPlansList", studentCurricularPlansList);
-		request.setAttribute("student", ((InfoStudentCurricularPlan) studentCurricularPlansList.get(0)).getInfoStudent());
+        request.setAttribute("studentCurricularPlansList", studentCurricularPlansList);
+        request.setAttribute("student", ((InfoStudentCurricularPlan) studentCurricularPlansList.get(0)).getInfoStudent());
 
-		return mapping.findForward("viewStudentCurricularPlans");
-	}
+        return mapping.findForward("viewStudentCurricularPlans");
+    }
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
+    }
 }

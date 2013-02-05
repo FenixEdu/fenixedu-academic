@@ -7,5 +7,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "person/functionalities", path = "/groupLanguage", scope = "session")
 @Forwards(value = { @Forward(name = "show", path = "/manager/functionalities/group-language.jsp") })
 public class GroupLanguageActionForPersonFunctionalities extends
-		net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.GroupLanguageAction {
+        net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.GroupLanguageAction {
 }

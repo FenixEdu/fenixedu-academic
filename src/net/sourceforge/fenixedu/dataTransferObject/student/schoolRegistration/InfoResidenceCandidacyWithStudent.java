@@ -13,21 +13,21 @@ import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
  */
 public class InfoResidenceCandidacyWithStudent extends InfoResidenceCandidacy {
 
-	@Override
-	public void copyFromDomain(ResidenceCandidacies residenceCandidacy) {
-		super.copyFromDomain(residenceCandidacy);
-		if (residenceCandidacy != null) {
-			setInfoStudent(InfoStudent.newInfoFromDomain(residenceCandidacy.getStudentDataByExecutionYear().getStudent()
-					.getRegistrations().get(0)));
-		}
-	}
+    @Override
+    public void copyFromDomain(ResidenceCandidacies residenceCandidacy) {
+        super.copyFromDomain(residenceCandidacy);
+        if (residenceCandidacy != null) {
+            setInfoStudent(InfoStudent.newInfoFromDomain(residenceCandidacy.getStudentDataByExecutionYear().getStudent()
+                    .getRegistrations().get(0)));
+        }
+    }
 
-	public static InfoResidenceCandidacy newInfoFromDomain(ResidenceCandidacies residenceCandidacy) {
-		InfoResidenceCandidacyWithStudent infoResidenceCandidacy = null;
-		if (residenceCandidacy != null) {
-			infoResidenceCandidacy = new InfoResidenceCandidacyWithStudent();
-			infoResidenceCandidacy.copyFromDomain(residenceCandidacy);
-		}
-		return infoResidenceCandidacy;
-	}
+    public static InfoResidenceCandidacy newInfoFromDomain(ResidenceCandidacies residenceCandidacy) {
+        InfoResidenceCandidacyWithStudent infoResidenceCandidacy = null;
+        if (residenceCandidacy != null) {
+            infoResidenceCandidacy = new InfoResidenceCandidacyWithStudent();
+            infoResidenceCandidacy.copyFromDomain(residenceCandidacy);
+        }
+        return infoResidenceCandidacy;
+    }
 }

@@ -20,26 +20,26 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurricularCourseScopesByExecutionCourseID extends FenixService {
 
-	@Service
-	public static List<InfoCurricularCourse> run(Integer executionCourseID) throws FenixServiceException {
+    @Service
+    public static List<InfoCurricularCourse> run(Integer executionCourseID) throws FenixServiceException {
 
-		final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-			final Set<CurricularCourseScope> curricularCourseScopes =
-					curricularCourse.findCurricularCourseScopesIntersectingExecutionCourse(executionCourse);
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+            final Set<CurricularCourseScope> curricularCourseScopes =
+                    curricularCourse.findCurricularCourseScopesIntersectingExecutionCourse(executionCourse);
 
-			final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-			infoCurricularCourse.setInfoScopes(new ArrayList());
+            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+            infoCurricularCourse.setInfoScopes(new ArrayList());
 
-			for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-				infoCurricularCourse.getInfoScopes().add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-			}
-			infoCurricularCourses.add(infoCurricularCourse);
-		}
+            for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+                infoCurricularCourse.getInfoScopes().add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+            }
+            infoCurricularCourses.add(infoCurricularCourse);
+        }
 
-		return infoCurricularCourses;
-	}
+        return infoCurricularCourses;
+    }
 }

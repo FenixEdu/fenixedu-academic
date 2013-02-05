@@ -11,26 +11,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "student",
-		path = "/bolonhaTransitionManagement",
-		attribute = "bolonhaTransitionManagementForm",
-		formBean = "bolonhaTransitionManagementForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "student", path = "/bolonhaTransitionManagement", attribute = "bolonhaTransitionManagementForm",
+        formBean = "bolonhaTransitionManagementForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showStudentCurricularPlan", path = "/student/transition/bolonha/showStudentCurricularPlan.jsp"),
-		@Forward(name = "chooseRegistration", path = "/student/transition/bolonha/chooseRegistration.jsp") })
+        @Forward(name = "showStudentCurricularPlan", path = "/student/transition/bolonha/showStudentCurricularPlan.jsp"),
+        @Forward(name = "chooseRegistration", path = "/student/transition/bolonha/chooseRegistration.jsp") })
 public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionManagementDA {
 
-	@Override
-	protected List<Registration> getRegistrations(final HttpServletRequest request) {
-		return getStudent(request).getTransitionRegistrations();
+    @Override
+    protected List<Registration> getRegistrations(final HttpServletRequest request) {
+        return getStudent(request).getTransitionRegistrations();
 
-	}
+    }
 
-	private Student getStudent(final HttpServletRequest request) {
-		return getLoggedPerson(request).getStudent();
-	}
+    private Student getStudent(final HttpServletRequest request) {
+        return getLoggedPerson(request).getStudent();
+    }
 
 }

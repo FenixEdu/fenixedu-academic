@@ -14,9 +14,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDomainExecutionPeriodByOID extends FenixService {
 
-	@Service
-	public static ExecutionSemester run(final Integer executionPeriodID) {
-		return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-	}
+    @Service
+    public static ExecutionSemester run(final Integer executionPeriodID) {
+        return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+    }
 
 }

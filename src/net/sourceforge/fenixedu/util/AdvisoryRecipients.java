@@ -10,51 +10,51 @@ package net.sourceforge.fenixedu.util;
  */
 public class AdvisoryRecipients extends FenixUtil {
 
-	public static final int STUDENTS = 1;
+    public static final int STUDENTS = 1;
 
-	public static final int TEACHERS = 2;
+    public static final int TEACHERS = 2;
 
-	public static final int EMPLOYEES = 3;
+    public static final int EMPLOYEES = 3;
 
-	private Integer recipients;
+    private Integer recipients;
 
-	/**
+    /**
      *  
      */
-	public AdvisoryRecipients() {
-		super();
-		recipients = null;
-	}
+    public AdvisoryRecipients() {
+        super();
+        recipients = null;
+    }
 
-	public AdvisoryRecipients(Integer recipients) {
-		super();
-		this.recipients = recipients;
-	}
+    public AdvisoryRecipients(Integer recipients) {
+        super();
+        this.recipients = recipients;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getRecipients() {
-		return recipients;
-	}
+    /**
+     * @return
+     */
+    public Integer getRecipients() {
+        return recipients;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setRecipients(Integer integer) {
-		recipients = integer;
-	}
+    /**
+     * @param integer
+     */
+    public void setRecipients(Integer integer) {
+        recipients = integer;
+    }
 
-	/**
-	 * @param i
-	 * @return
-	 */
-	public boolean equals(int i) {
-		if (recipients != null && recipients.intValue() == i) {
-			return true;
-		}
+    /**
+     * @param i
+     * @return
+     */
+    public boolean equals(int i) {
+        if (recipients != null && recipients.intValue() == i) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }

@@ -10,48 +10,48 @@ import org.apache.struts.action.ActionForm;
 
 public class ExecutionCourseManagementForm extends ActionForm {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String[] curricularCoursesToTransferIds;
-	private String[] shiftsToTransferIds;
+    private String[] curricularCoursesToTransferIds;
+    private String[] shiftsToTransferIds;
 
-	public ExecutionCourseManagementForm() {
-	}
+    public ExecutionCourseManagementForm() {
+    }
 
-	public String[] getCurricularCoursesToTransferIds() {
-		return curricularCoursesToTransferIds;
-	}
+    public String[] getCurricularCoursesToTransferIds() {
+        return curricularCoursesToTransferIds;
+    }
 
-	public void setCurricularCoursesToTransferIds(String[] curricularCoursesToTransferIds) {
-		this.curricularCoursesToTransferIds = curricularCoursesToTransferIds;
-	}
+    public void setCurricularCoursesToTransferIds(String[] curricularCoursesToTransferIds) {
+        this.curricularCoursesToTransferIds = curricularCoursesToTransferIds;
+    }
 
-	public String[] getShiftsToTransferIds() {
-		return shiftsToTransferIds;
-	}
+    public String[] getShiftsToTransferIds() {
+        return shiftsToTransferIds;
+    }
 
-	public void setShiftsToTransferIds(String[] shiftsToTransferIds) {
-		this.shiftsToTransferIds = shiftsToTransferIds;
-	}
+    public void setShiftsToTransferIds(String[] shiftsToTransferIds) {
+        this.shiftsToTransferIds = shiftsToTransferIds;
+    }
 
-	public List<CurricularCourse> readCurricularCoursesToTransfer() {
-		List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+    public List<CurricularCourse> readCurricularCoursesToTransfer() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
-		for (String id : curricularCoursesToTransferIds) {
-			result.add((CurricularCourse) CurricularCourse.fromExternalId(id));
-		}
+        for (String id : curricularCoursesToTransferIds) {
+            result.add((CurricularCourse) CurricularCourse.fromExternalId(id));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public List<Shift> readShifts() {
-		List<Shift> result = new ArrayList<Shift>();
+    public List<Shift> readShifts() {
+        List<Shift> result = new ArrayList<Shift>();
 
-		for (String id : shiftsToTransferIds) {
-			result.add((Shift) Shift.fromExternalId(id));
-		}
+        for (String id : shiftsToTransferIds) {
+            result.add((Shift) Shift.fromExternalId(id));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

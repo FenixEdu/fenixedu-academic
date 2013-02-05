@@ -24,33 +24,33 @@ import org.apache.struts.action.ActionMessages;
  * 
  */
 public class UnitAnnouncementBoardsManagement extends
-		net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.UnitAnnouncementBoardsManagement {
+        net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.announcements.UnitAnnouncementBoardsManagement {
 
-	@Override
-	public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		request.setAttribute("returnMethod", "prepareEditAnnouncementBoard");
-		return super.addAnnouncement(mapping, form, request, response);
-	}
+    @Override
+    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("returnMethod", "prepareEditAnnouncementBoard");
+        return super.addAnnouncement(mapping, form, request, response);
+    }
 
-	@Override
-	public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
-			ActionMessages actionMessages = new ActionMessages();
-			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.delete.board"));
-			saveErrors(request, actionMessages);
-			return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
-		}
+        if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.delete.board"));
+            saveErrors(request, actionMessages);
+            return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
+        }
 
-		try {
-			DeleteAnnouncementBoard.run(this.getRequestedAnnouncementBoard(request));
-		} catch (DomainException e) {
-			addActionMessage(request, e.getKey());
-			return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
-		}
+        try {
+            DeleteAnnouncementBoard.run(this.getRequestedAnnouncementBoard(request));
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey());
+            return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
+        }
 
-		return this.start(mapping, actionForm, request, response);
-	}
+        return this.start(mapping, actionForm, request, response);
+    }
 }

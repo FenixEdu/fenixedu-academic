@@ -8,13 +8,13 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 public class AcademicCurriculumsViewAuthorization extends Filtro {
 
-	public final static AcademicCurriculumsViewAuthorization instance = new AcademicCurriculumsViewAuthorization();
+    public final static AcademicCurriculumsViewAuthorization instance = new AcademicCurriculumsViewAuthorization();
 
-	@Override
-	final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-		if (!AcademicPredicates.MANAGE_MARKSHEETS.evaluate(getRemoteUser(request).getPerson())) {
-			throw new NotAuthorizedFilterException();
-		}
-	}
+    @Override
+    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+        if (!AcademicPredicates.MANAGE_MARKSHEETS.evaluate(getRemoteUser(request).getPerson())) {
+            throw new NotAuthorizedFilterException();
+        }
+    }
 
 }

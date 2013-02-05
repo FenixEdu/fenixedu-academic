@@ -14,40 +14,40 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.StudentIsInSe
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityForStudentsInSecondCurricularYearForPartialRegime extends
-		GratuityForStudentsInSecondCurricularYearForPartialRegime_Base {
+        GratuityForStudentsInSecondCurricularYearForPartialRegime_Base {
 
-	protected GratuityForStudentsInSecondCurricularYearForPartialRegime() {
-		super();
-	}
+    protected GratuityForStudentsInSecondCurricularYearForPartialRegime() {
+        super();
+    }
 
-	public GratuityForStudentsInSecondCurricularYearForPartialRegime(final ExecutionYear executionYear,
-			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
-		this();
-		super.init(executionYear, serviceAgreementTemplate, defaultPlan);
-	}
+    public GratuityForStudentsInSecondCurricularYearForPartialRegime(final ExecutionYear executionYear,
+            final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+        this();
+        super.init(executionYear, serviceAgreementTemplate, defaultPlan);
+    }
 
-	public GratuityForStudentsInSecondCurricularYearForPartialRegime(final ExecutionYear executionYear,
-			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
-		this(executionYear, serviceAgreementTemplate, false);
-	}
+    public GratuityForStudentsInSecondCurricularYearForPartialRegime(final ExecutionYear executionYear,
+            final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
+        this(executionYear, serviceAgreementTemplate, false);
+    }
 
-	@Override
-	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-		return Arrays.asList(PaymentPlanRuleFactory.create(StudentIsInSecondCurricularYearPaymentPlanRule.class),
+    @Override
+    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+        return Arrays.asList(PaymentPlanRuleFactory.create(StudentIsInSecondCurricularYearPaymentPlanRule.class),
 
-		PaymentPlanRuleFactory.create(IsPartialRegimePaymentPlanRule.class),
+        PaymentPlanRuleFactory.create(IsPartialRegimePaymentPlanRule.class),
 
-		PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class)
+        PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class)
 
-		);
-	}
+        );
+    }
 
-	@Override
-	protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
-		Set<Class<? extends GratuityPaymentPlan>> plans = new HashSet<Class<? extends GratuityPaymentPlan>>();
-		plans.add(FullGratuityPaymentPlanForPartialRegime.class);
+    @Override
+    protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
+        Set<Class<? extends GratuityPaymentPlan>> plans = new HashSet<Class<? extends GratuityPaymentPlan>>();
+        plans.add(FullGratuityPaymentPlanForPartialRegime.class);
 
-		return plans;
-	}
+        return plans;
+    }
 
 }

@@ -14,44 +14,44 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesForExecutionYear implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		final DegreeByExecutionYearBean chooseDegreeBean = (DegreeByExecutionYearBean) source;
+        final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        final DegreeByExecutionYearBean chooseDegreeBean = (DegreeByExecutionYearBean) source;
 
-		for (final Degree degree : chooseDegreeBean.getAdministratedDegrees()) {
-			if (matchesExecutionYear(degree, chooseDegreeBean.getExecutionYear())
-					&& matchesDegreeType(degree, chooseDegreeBean.getDegreeType())) {
-				result.add(degree);
-			}
-		}
+        for (final Degree degree : chooseDegreeBean.getAdministratedDegrees()) {
+            if (matchesExecutionYear(degree, chooseDegreeBean.getExecutionYear())
+                    && matchesDegreeType(degree, chooseDegreeBean.getDegreeType())) {
+                result.add(degree);
+            }
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	private boolean matchesDegreeType(Degree degree, DegreeType degreeType) {
-		return degreeType == null || degree.getDegreeType() == degreeType;
-	}
+    private boolean matchesDegreeType(Degree degree, DegreeType degreeType) {
+        return degreeType == null || degree.getDegreeType() == degreeType;
+    }
 
-	private boolean matchesExecutionYear(Degree degree, ExecutionYear executionYear) {
-		if (executionYear == null) {
-			return true;
-		}
+    private boolean matchesExecutionYear(Degree degree, ExecutionYear executionYear) {
+        if (executionYear == null) {
+            return true;
+        }
 
-		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-			if (executionDegree.getDegree() == degree) {
-				return true;
-			}
-		}
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+            if (executionDegree.getDegree() == degree) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

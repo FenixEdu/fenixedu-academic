@@ -17,15 +17,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SearchExternalPersonsByName extends FenixService {
 
-	@Service
-	public static List run(String name) throws FenixServiceException {
-		List infoExternalPersons = new ArrayList();
-		List<ExternalContract> externalPersons = ExternalContract.readByPersonName(name);
+    @Service
+    public static List run(String name) throws FenixServiceException {
+        List infoExternalPersons = new ArrayList();
+        List<ExternalContract> externalPersons = ExternalContract.readByPersonName(name);
 
-		for (ExternalContract externalPerson : externalPersons) {
-			infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
-		}
+        for (ExternalContract externalPerson : externalPersons) {
+            infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+        }
 
-		return infoExternalPersons;
-	}
+        return infoExternalPersons;
+    }
 }

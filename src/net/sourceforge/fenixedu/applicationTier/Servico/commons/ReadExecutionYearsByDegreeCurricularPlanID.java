@@ -27,21 +27,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionYearsByDegreeCurricularPlanID extends FenixService {
 
-	@Service
-	public static List run(Integer degreeCurricularPlanID) {
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+    @Service
+    public static List run(Integer degreeCurricularPlanID) {
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-		List<ExecutionYear> executionYears =
-				(List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan.getExecutionDegrees(), new Transformer() {
+        List<ExecutionYear> executionYears =
+                (List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan.getExecutionDegrees(), new Transformer() {
 
-					@Override
-					public Object transform(Object arg0) {
-						ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-						return InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
-					}
+                    @Override
+                    public Object transform(Object arg0) {
+                        ExecutionDegree executionDegree = (ExecutionDegree) arg0;
+                        return InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
+                    }
 
-				});
+                });
 
-		return executionYears;
-	}
+        return executionYears;
+    }
 }

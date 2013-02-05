@@ -13,74 +13,74 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateProjectEventAssociation extends FenixService {
 
-	/**
-	 * Service responsible for creating an association between a project and an
-	 * event
-	 * 
-	 * @param bean
-	 *            - Bean responsible for carrying the information from the
-	 *            presentation to the services layer
-	 * @param projectId
-	 *            - the identifier of the Project for whom the association is
-	 *            being created
-	 * @return the newly created ProjectEventAssociation
-	 * @throws ExcepcaoPersistencia
-	 * @throws FenixServiceException
-	 *             - In case the project doesn't exist.
-	 */
-	@Checked("ResultPredicates.author")
-	@Service
-	public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId)
-			throws FenixServiceException {
-		ProjectEventAssociation association = null;
-		final Project project = rootDomainObject.readProjectByOID(projectId);
-		if (project == null) {
-			throw new FenixServiceException();
-		}
+    /**
+     * Service responsible for creating an association between a project and an
+     * event
+     * 
+     * @param bean
+     *            - Bean responsible for carrying the information from the
+     *            presentation to the services layer
+     * @param projectId
+     *            - the identifier of the Project for whom the association is
+     *            being created
+     * @return the newly created ProjectEventAssociation
+     * @throws ExcepcaoPersistencia
+     * @throws FenixServiceException
+     *             - In case the project doesn't exist.
+     */
+    @Checked("ResultPredicates.author")
+    @Service
+    public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId)
+            throws FenixServiceException {
+        ProjectEventAssociation association = null;
+        final Project project = rootDomainObject.readProjectByOID(projectId);
+        if (project == null) {
+            throw new FenixServiceException();
+        }
 
-		association = new ProjectEventAssociation();
-		association.setProject(project);
-		association.setEventEdition(bean.getEvent());
-		association.setRole(bean.getRole());
-		return association;
-	}
+        association = new ProjectEventAssociation();
+        association.setProject(project);
+        association.setEventEdition(bean.getEvent());
+        association.setRole(bean.getRole());
+        return association;
+    }
 
-	/**
-	 * Service responsible for creating an association between a project and an
-	 * event
-	 * 
-	 * @param bean
-	 *            - Bean responsible for carrying the information from the
-	 *            presentation to the services layer
-	 * @param projectId
-	 *            - the identifier of the Project for whom the association is
-	 *            being created
-	 * @return the newly created ProjectEventAssociation
-	 * @throws ExcepcaoPersistencia
-	 * @throws FenixServiceException
-	 *             - In case the project doesn't exist.
-	 */
-	@Checked("ResultPredicates.author")
-	@Service
-	public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId)
-			throws FenixServiceException {
-		final ProjectEventAssociation association;
+    /**
+     * Service responsible for creating an association between a project and an
+     * event
+     * 
+     * @param bean
+     *            - Bean responsible for carrying the information from the
+     *            presentation to the services layer
+     * @param projectId
+     *            - the identifier of the Project for whom the association is
+     *            being created
+     * @return the newly created ProjectEventAssociation
+     * @throws ExcepcaoPersistencia
+     * @throws FenixServiceException
+     *             - In case the project doesn't exist.
+     */
+    @Checked("ResultPredicates.author")
+    @Service
+    public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId)
+            throws FenixServiceException {
+        final ProjectEventAssociation association;
 
-		final Project project = rootDomainObject.readProjectByOID(projectId);
-		if (project == null) {
-			throw new FenixServiceException();
-		}
+        final Project project = rootDomainObject.readProjectByOID(projectId);
+        if (project == null) {
+            throw new FenixServiceException();
+        }
 
-		final EventEdition event = new EventEdition(bean.getEventName());
+        final EventEdition event = new EventEdition(bean.getEventName());
 
-		// Insert this line when inner enums are supported by the domain factory
-		// participation = new ProjectParticipation(project,
-		// externalPerson.getPerson(), bean.getRole());
-		association = new ProjectEventAssociation();
-		association.setProject(project);
-		association.setEventEdition(event);
-		association.setRole(bean.getRole());
+        // Insert this line when inner enums are supported by the domain factory
+        // participation = new ProjectParticipation(project,
+        // externalPerson.getPerson(), bean.getRole());
+        association = new ProjectEventAssociation();
+        association.setProject(project);
+        association.setEventEdition(event);
+        association.setRole(bean.getRole());
 
-		return association;
-	}
+        return association;
+    }
 }

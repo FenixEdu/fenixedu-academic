@@ -11,10 +11,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDegreeByOID extends FenixService {
 
-	@Service
-	public static InfoDegree run(Integer degreeId) {
-		Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-		return InfoDegree.newInfoFromDomain(degree);
-	}
+    @Service
+    public static InfoDegree run(Integer degreeId) {
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        return InfoDegree.newInfoFromDomain(degree);
+    }
 
 }

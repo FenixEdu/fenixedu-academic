@@ -28,108 +28,108 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "person", path = "/loadTesting", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "loadTesting", path = "/person/loadTesting.jsp"),
-		@Forward(name = "manageFakeEnrollments", path = "/person/manageFakeEnrollments.jsp"),
-		@Forward(name = "viewAFewRandomFakeShifts", path = "/person/viewAFewRandomFakeShifts.jsp"),
-		@Forward(name = "viewFakeShift", path = "/person/viewFakeShift.jsp"),
-		@Forward(name = "manageFakeShifts", path = "/person/manageFakeShifts.jsp") })
+        @Forward(name = "manageFakeEnrollments", path = "/person/manageFakeEnrollments.jsp"),
+        @Forward(name = "viewAFewRandomFakeShifts", path = "/person/viewAFewRandomFakeShifts.jsp"),
+        @Forward(name = "viewFakeShift", path = "/person/viewFakeShift.jsp"),
+        @Forward(name = "manageFakeShifts", path = "/person/manageFakeShifts.jsp") })
 public class LoadTestingAction extends FenixDispatchAction {
 
-	public ActionForward loadTesting(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward loadTesting(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		ArrayList<Degree> allDegreesShuffled = new ArrayList<Degree>(Degree.readBolonhaDegrees());
-		Collections.shuffle(allDegreesShuffled);
+        ArrayList<Degree> allDegreesShuffled = new ArrayList<Degree>(Degree.readBolonhaDegrees());
+        Collections.shuffle(allDegreesShuffled);
 
-		Degree randomDegree = allDegreesShuffled.get(0);
+        Degree randomDegree = allDegreesShuffled.get(0);
 
-		ExecutionSemester lastSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
+        ExecutionSemester lastSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
 
-		request.setAttribute("degreeID", randomDegree.getIdInternal());
-		request.setAttribute("degreeOID", randomDegree.getExternalId());
-		request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().get(0).getIdInternal());
-		request.setAttribute("executionPeriodOID", lastSemester.getIdInternal());
+        request.setAttribute("degreeID", randomDegree.getIdInternal());
+        request.setAttribute("degreeOID", randomDegree.getExternalId());
+        request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().get(0).getIdInternal());
+        request.setAttribute("executionPeriodOID", lastSemester.getIdInternal());
 
-		return mapping.findForward("loadTesting");
-	}
+        return mapping.findForward("loadTesting");
+    }
 
-	public ActionForward manageFakeEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("manageFakeEnrollments");
-	}
+    public ActionForward manageFakeEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("manageFakeEnrollments");
+    }
 
-	public ActionForward viewAFewRandomFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("fakeShifts", FakeShift.readAFewRandomFakeShifts());
-		return mapping.findForward("viewAFewRandomFakeShifts");
-	}
+    public ActionForward viewAFewRandomFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("fakeShifts", FakeShift.readAFewRandomFakeShifts());
+        return mapping.findForward("viewAFewRandomFakeShifts");
+    }
 
-	public ActionForward viewFakeShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("fakeShift", AbstractDomainObject.fromExternalId(request.getParameter("fakeShift")));
-		return mapping.findForward("viewFakeShift");
-	}
+    public ActionForward viewFakeShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("fakeShift", AbstractDomainObject.fromExternalId(request.getParameter("fakeShift")));
+        return mapping.findForward("viewFakeShift");
+    }
 
-	public ActionForward manageFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("fakeShifts", RootDomainObject.getInstance().getFakeShifts());
-		return mapping.findForward("manageFakeShifts");
-	}
+    public ActionForward manageFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("fakeShifts", RootDomainObject.getInstance().getFakeShifts());
+        return mapping.findForward("manageFakeShifts");
+    }
 
-	@Service
-	public ActionForward createFakeEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		Person person = AccessControl.getPerson();
-		person.addFakeEnrollment(new FakeEnrollment(person, person.getName()));
-		return mapping.findForward("manageFakeEnrollments");
-	}
+    @Service
+    public ActionForward createFakeEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        Person person = AccessControl.getPerson();
+        person.addFakeEnrollment(new FakeEnrollment(person, person.getName()));
+        return mapping.findForward("manageFakeEnrollments");
+    }
 
-	@Service
-	public ActionForward resetFakeEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		Person person = AccessControl.getPerson();
-		for (FakeEnrollment fakeEnrollment : person.getFakeEnrollment()) {
-			fakeEnrollment.delete();
-		}
-		return mapping.findForward("manageFakeEnrollments");
-	}
+    @Service
+    public ActionForward resetFakeEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        Person person = AccessControl.getPerson();
+        for (FakeEnrollment fakeEnrollment : person.getFakeEnrollment()) {
+            fakeEnrollment.delete();
+        }
+        return mapping.findForward("manageFakeEnrollments");
+    }
 
-	@Service
-	public ActionForward createFakeShiftEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
-		try {
-			fakeShift.enroll();
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getMessage());
-		}
+    @Service
+    public ActionForward createFakeShiftEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
+        try {
+            fakeShift.enroll();
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getMessage());
+        }
 
-		request.setAttribute("fakeShift", fakeShift);
-		return mapping.findForward("viewFakeShift");
-	}
+        request.setAttribute("fakeShift", fakeShift);
+        return mapping.findForward("viewFakeShift");
+    }
 
-	@Service
-	public ActionForward resetFakeShiftEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
-		fakeShift.resetCurrentUserEnrollments();
+    @Service
+    public ActionForward resetFakeShiftEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
+        fakeShift.resetCurrentUserEnrollments();
 
-		request.setAttribute("fakeShift", fakeShift);
-		return mapping.findForward("viewFakeShift");
-	}
+        request.setAttribute("fakeShift", fakeShift);
+        return mapping.findForward("viewFakeShift");
+    }
 
-	@Service
-	public ActionForward importFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		FakeShift.importFromLastSemesterShifts();
-		request.setAttribute("fakeShifts", RootDomainObject.getInstance().getFakeShifts());
-		return mapping.findForward("manageFakeShifts");
-	}
+    @Service
+    public ActionForward importFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FakeShift.importFromLastSemesterShifts();
+        request.setAttribute("fakeShifts", RootDomainObject.getInstance().getFakeShifts());
+        return mapping.findForward("manageFakeShifts");
+    }
 
-	@Service
-	public ActionForward deleteFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		FakeShift.deleteAllFakeShifts();
-		request.setAttribute("fakeShifts", RootDomainObject.getInstance().getFakeShifts());
-		return mapping.findForward("manageFakeShifts");
-	}
+    @Service
+    public ActionForward deleteFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        FakeShift.deleteAllFakeShifts();
+        request.setAttribute("fakeShifts", RootDomainObject.getInstance().getFakeShifts());
+        return mapping.findForward("manageFakeShifts");
+    }
 }

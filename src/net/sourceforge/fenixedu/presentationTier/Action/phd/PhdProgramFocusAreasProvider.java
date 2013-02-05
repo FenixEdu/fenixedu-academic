@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class PhdProgramFocusAreasProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
-		return RootDomainObject.getInstance().getPhdProgramFocusAreas();
-	}
+    @Override
+    public Object provide(Object source, Object current) {
+        return RootDomainObject.getInstance().getPhdProgramFocusAreas();
+    }
 }

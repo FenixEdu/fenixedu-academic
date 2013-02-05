@@ -14,49 +14,49 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class AcademicGroupTagLib extends TagSupport {
 
-	private static final long serialVersionUID = -8050082985849930419L;
+    private static final long serialVersionUID = -8050082985849930419L;
 
-	private String operation;
+    private String operation;
 
-	private AcademicProgram program;
+    private AcademicProgram program;
 
-	private AdministrativeOffice office;
+    private AdministrativeOffice office;
 
-	@Override
-	public int doStartTag() throws JspException {
-		Set<AcademicProgram> programs =
-				program != null ? Collections.singleton(program) : Collections.<AcademicProgram> emptySet();
-		Set<AdministrativeOffice> offices =
-				office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
-		AcademicAuthorizationGroup group =
-				new AcademicAuthorizationGroup(AcademicOperationType.valueOf(operation), programs, offices);
-		if (group.allows(AccessControl.getUserView())) {
-			return EVAL_BODY_INCLUDE;
-		}
-		return SKIP_BODY;
-	}
+    @Override
+    public int doStartTag() throws JspException {
+        Set<AcademicProgram> programs =
+                program != null ? Collections.singleton(program) : Collections.<AcademicProgram> emptySet();
+        Set<AdministrativeOffice> offices =
+                office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
+        AcademicAuthorizationGroup group =
+                new AcademicAuthorizationGroup(AcademicOperationType.valueOf(operation), programs, offices);
+        if (group.allows(AccessControl.getUserView())) {
+            return EVAL_BODY_INCLUDE;
+        }
+        return SKIP_BODY;
+    }
 
-	public String getOperation() {
-		return operation;
-	}
+    public String getOperation() {
+        return operation;
+    }
 
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
 
-	public AcademicProgram getProgram() {
-		return program;
-	}
+    public AcademicProgram getProgram() {
+        return program;
+    }
 
-	public void setProgram(AcademicProgram program) {
-		this.program = program;
-	}
+    public void setProgram(AcademicProgram program) {
+        this.program = program;
+    }
 
-	public AdministrativeOffice getOffice() {
-		return office;
-	}
+    public AdministrativeOffice getOffice() {
+        return office;
+    }
 
-	public void setOffice(AdministrativeOffice office) {
-		this.office = office;
-	}
+    public void setOffice(AdministrativeOffice office) {
+        this.office = office;
+    }
 }

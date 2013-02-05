@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDomainProfessorshipByOID extends FenixService {
 
-	@Service
-	public static Professorship run(Integer professorshipID) {
-		return rootDomainObject.readProfessorshipByOID(professorshipID);
-	}
+    @Service
+    public static Professorship run(Integer professorshipID) {
+        return rootDomainObject.readProfessorshipByOID(professorshipID);
+    }
 
 }

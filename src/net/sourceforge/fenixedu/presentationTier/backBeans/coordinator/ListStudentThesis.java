@@ -16,37 +16,37 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
  */
 public class ListStudentThesis {
 
-	private Integer degreeCurricularPlanID;
+    private Integer degreeCurricularPlanID;
 
-	public ListStudentThesis() {
-	}
+    public ListStudentThesis() {
+    }
 
-	public Integer getDegreeCurricularPlanID() {
-		return degreeCurricularPlanID;
-	}
+    public Integer getDegreeCurricularPlanID() {
+        return degreeCurricularPlanID;
+    }
 
-	public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-		this.degreeCurricularPlanID = degreeCurricularPlanID;
+    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+        this.degreeCurricularPlanID = degreeCurricularPlanID;
 
-		((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).setAttribute(
-				"degreeCurricularPlanID", degreeCurricularPlanID);
+        ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).setAttribute(
+                "degreeCurricularPlanID", degreeCurricularPlanID);
 
-	}
+    }
 
-	public List getMasterDegreeThesisDataVersions() {
+    public List getMasterDegreeThesisDataVersions() {
 
-		try {
-			return ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan.run(degreeCurricularPlanID);
-		} catch (IllegalDataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FenixServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            return ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan.run(degreeCurricularPlanID);
+        } catch (IllegalDataAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FenixServiceException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
 }

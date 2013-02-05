@@ -82,266 +82,266 @@ import org.joda.time.DateTime;
 
 public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base {
 
-	public static Comparator<PrecedentDegreeInformation> COMPARATOR_BY_EXECUTION_YEAR =
-			new Comparator<PrecedentDegreeInformation>() {
-				@Override
-				public int compare(PrecedentDegreeInformation info1, PrecedentDegreeInformation info2) {
-					return info1.getExecutionYear().getYear().compareTo(info2.getExecutionYear().getYear());
-				}
-			};
+    public static Comparator<PrecedentDegreeInformation> COMPARATOR_BY_EXECUTION_YEAR =
+            new Comparator<PrecedentDegreeInformation>() {
+                @Override
+                public int compare(PrecedentDegreeInformation info1, PrecedentDegreeInformation info2) {
+                    return info1.getExecutionYear().getYear().compareTo(info2.getExecutionYear().getYear());
+                }
+            };
 
-	public PrecedentDegreeInformation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setLastModifiedDate(new DateTime());
-	}
+    public PrecedentDegreeInformation() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setLastModifiedDate(new DateTime());
+    }
 
-	public void edit(PersonalIngressionData personalIngressionData, Registration registration,
-			PrecedentDegreeInformationBean precedentDegreeInformationBean, StudentCandidacy studentCandidacy) {
-		setPersonalIngressionData(personalIngressionData);
-		setRegistration(registration);
-		setStudentCandidacy(studentCandidacy);
-		Unit institution = precedentDegreeInformationBean.getInstitution();
-		if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
-			institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getInstitutionName());
-			if (institution == null) {
-				institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getInstitutionName());
-			}
-		}
-		setInstitution(institution);
-		setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
-		setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
-		setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
-		setCountry(precedentDegreeInformationBean.getCountry());
-		setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
-		setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
+    public void edit(PersonalIngressionData personalIngressionData, Registration registration,
+            PrecedentDegreeInformationBean precedentDegreeInformationBean, StudentCandidacy studentCandidacy) {
+        setPersonalIngressionData(personalIngressionData);
+        setRegistration(registration);
+        setStudentCandidacy(studentCandidacy);
+        Unit institution = precedentDegreeInformationBean.getInstitution();
+        if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
+            institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getInstitutionName());
+            if (institution == null) {
+                institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getInstitutionName());
+            }
+        }
+        setInstitution(institution);
+        setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
+        setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
+        setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
+        setCountry(precedentDegreeInformationBean.getCountry());
+        setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
+        setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
 
-		checkAndUpdatePrecedentInformation(precedentDegreeInformationBean);
-		setLastModifiedDate(new DateTime());
-	}
+        checkAndUpdatePrecedentInformation(precedentDegreeInformationBean);
+        setLastModifiedDate(new DateTime());
+    }
 
-	public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
+    public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
-		Unit institution = precedentDegreeInformationBean.getInstitution();
-		if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
-			institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getInstitutionName());
-			if (institution == null) {
-				institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getInstitutionName());
-			}
-		}
+        Unit institution = precedentDegreeInformationBean.getInstitution();
+        if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
+            institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getInstitutionName());
+            if (institution == null) {
+                institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getInstitutionName());
+            }
+        }
 
-		this.setInstitution(institution);
+        this.setInstitution(institution);
 
-		this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
-		this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
-		this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
-		this.setCountry(precedentDegreeInformationBean.getCountry());
-		this.setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
-		this.setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
-		setLastModifiedDate(new DateTime());
-	}
+        this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
+        this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
+        this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
+        this.setCountry(precedentDegreeInformationBean.getCountry());
+        this.setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
+        this.setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
+        setLastModifiedDate(new DateTime());
+    }
 
-	public String getInstitutionName() {
-		return hasInstitution() ? getInstitution().getName() : null;
-	}
+    public String getInstitutionName() {
+        return hasInstitution() ? getInstitution().getName() : null;
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return getPersonalIngressionData().getExecutionYear();
-	}
+    public ExecutionYear getExecutionYear() {
+        return getPersonalIngressionData().getExecutionYear();
+    }
 
-	public void edit(final PersonalInformationBean bean, boolean isStudentEditing) {
-		setConclusionGrade(bean.getConclusionGrade());
-		setConclusionYear(bean.getConclusionYear());
-		setCountry(bean.getCountryWhereFinishedPreviousCompleteDegree());
-		Unit institution = bean.getInstitution();
-		if (institution == null && !StringUtils.isEmpty(bean.getInstitutionName())) {
-			institution = UnitUtils.readExternalInstitutionUnitByName(bean.getInstitutionName());
-			if (institution == null) {
-				institution = Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
-			}
-		}
-		setInstitution(institution);
-		setDegreeDesignation(bean.getDegreeDesignation());
-		setSchoolLevel(bean.getSchoolLevel());
-		setOtherSchoolLevel(bean.getOtherSchoolLevel());
+    public void edit(final PersonalInformationBean bean, boolean isStudentEditing) {
+        setConclusionGrade(bean.getConclusionGrade());
+        setConclusionYear(bean.getConclusionYear());
+        setCountry(bean.getCountryWhereFinishedPreviousCompleteDegree());
+        Unit institution = bean.getInstitution();
+        if (institution == null && !StringUtils.isEmpty(bean.getInstitutionName())) {
+            institution = UnitUtils.readExternalInstitutionUnitByName(bean.getInstitutionName());
+            if (institution == null) {
+                institution = Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
+            }
+        }
+        setInstitution(institution);
+        setDegreeDesignation(bean.getDegreeDesignation());
+        setSchoolLevel(bean.getSchoolLevel());
+        setOtherSchoolLevel(bean.getOtherSchoolLevel());
 
-		if (!isStudentEditing) {
-			checkAndUpdatePrecedentInformation(bean);
-		}
-		setLastModifiedDate(new DateTime());
-	}
+        if (!isStudentEditing) {
+            checkAndUpdatePrecedentInformation(bean);
+        }
+        setLastModifiedDate(new DateTime());
+    }
 
-	private void checkAndUpdatePrecedentInformation(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
-		if (precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
-			Unit precedentInstitution = precedentDegreeInformationBean.getPrecedentInstitution();
-			if (precedentInstitution == null
-					&& !StringUtils.isEmpty(precedentDegreeInformationBean.getPrecedentInstitutionName())) {
-				precedentInstitution =
-						UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getPrecedentInstitutionName());
-				if (precedentInstitution == null) {
-					precedentInstitution =
-							Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
-									.getPrecedentInstitutionName());
-				}
-			}
-			setPrecedentInstitution(precedentInstitution);
-			setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
-			setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
-			setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean
-					.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
-			setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
-		}
-	}
+    private void checkAndUpdatePrecedentInformation(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
+        if (precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
+            Unit precedentInstitution = precedentDegreeInformationBean.getPrecedentInstitution();
+            if (precedentInstitution == null
+                    && !StringUtils.isEmpty(precedentDegreeInformationBean.getPrecedentInstitutionName())) {
+                precedentInstitution =
+                        UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getPrecedentInstitutionName());
+                if (precedentInstitution == null) {
+                    precedentInstitution =
+                            Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
+                                    .getPrecedentInstitutionName());
+                }
+            }
+            setPrecedentInstitution(precedentInstitution);
+            setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
+            setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
+            setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean
+                    .getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
+            setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
+        }
+    }
 
-	private void checkAndUpdatePrecedentInformation(PersonalInformationBean personalInformationBean) {
-		if (personalInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
-			Unit precedentInstitution = personalInformationBean.getPrecedentInstitution();
-			if (precedentInstitution == null && !StringUtils.isEmpty(personalInformationBean.getPrecedentInstitutionName())) {
-				precedentInstitution =
-						UnitUtils.readExternalInstitutionUnitByName(personalInformationBean.getPrecedentInstitutionName());
-				if (precedentInstitution == null) {
-					precedentInstitution =
-							Unit.createNewNoOfficialExternalInstitution(personalInformationBean.getPrecedentInstitutionName());
-				}
-			}
-			setPrecedentInstitution(precedentInstitution);
-			setPrecedentDegreeDesignation(personalInformationBean.getPrecedentDegreeDesignation());
-			setPrecedentSchoolLevel(personalInformationBean.getPrecedentSchoolLevel());
-			if (personalInformationBean.getPrecedentSchoolLevel().equals(SchoolLevelType.OTHER)) {
-				setOtherPrecedentSchoolLevel(personalInformationBean.getOtherPrecedentSchoolLevel());
-			} else {
-				setOtherPrecedentSchoolLevel(null);
-			}
-			setNumberOfEnrolmentsInPreviousDegrees(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
-			setMobilityProgramDuration(personalInformationBean.getMobilityProgramDuration());
-		}
-	}
+    private void checkAndUpdatePrecedentInformation(PersonalInformationBean personalInformationBean) {
+        if (personalInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
+            Unit precedentInstitution = personalInformationBean.getPrecedentInstitution();
+            if (precedentInstitution == null && !StringUtils.isEmpty(personalInformationBean.getPrecedentInstitutionName())) {
+                precedentInstitution =
+                        UnitUtils.readExternalInstitutionUnitByName(personalInformationBean.getPrecedentInstitutionName());
+                if (precedentInstitution == null) {
+                    precedentInstitution =
+                            Unit.createNewNoOfficialExternalInstitution(personalInformationBean.getPrecedentInstitutionName());
+                }
+            }
+            setPrecedentInstitution(precedentInstitution);
+            setPrecedentDegreeDesignation(personalInformationBean.getPrecedentDegreeDesignation());
+            setPrecedentSchoolLevel(personalInformationBean.getPrecedentSchoolLevel());
+            if (personalInformationBean.getPrecedentSchoolLevel().equals(SchoolLevelType.OTHER)) {
+                setOtherPrecedentSchoolLevel(personalInformationBean.getOtherPrecedentSchoolLevel());
+            } else {
+                setOtherPrecedentSchoolLevel(null);
+            }
+            setNumberOfEnrolmentsInPreviousDegrees(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
+            setMobilityProgramDuration(personalInformationBean.getMobilityProgramDuration());
+        }
+    }
 
-	public String getDegreeAndInstitutionName() {
-		return getDegreeDesignation() + " / " + getInstitution().getName();
-	}
+    public String getDegreeAndInstitutionName() {
+        return getDegreeDesignation() + " / " + getInstitution().getName();
+    }
 
-	public void delete() {
-		removeCountry();
-		removeInstitution();
-		removeSourceInstitution();
+    public void delete() {
+        removeCountry();
+        removeInstitution();
+        removeSourceInstitution();
 
-		removeStudent();
-		removeRegistration();
-		removePhdIndividualProgramProcess();
+        removeStudent();
+        removeRegistration();
+        removePhdIndividualProgramProcess();
 
-		removeStudentCandidacy();
-		removeIndividualCandidacy();
+        removeStudentCandidacy();
+        removeIndividualCandidacy();
 
-		removePrecedentCountry();
-		removePrecedentInstitution();
+        removePrecedentCountry();
+        removePrecedentInstitution();
 
-		removePersonalIngressionData();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+        removePersonalIngressionData();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	@Override
-	public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
-		super.setPersonalIngressionData(personalIngressionData);
+    @Override
+    public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
+        super.setPersonalIngressionData(personalIngressionData);
 
-		if (personalIngressionData != null && hasRegistration()
-				&& registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
-			throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-		}
+        if (personalIngressionData != null && hasRegistration()
+                && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
+            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+        }
 
-		if (hasPhdIndividualProgramProcess()
-				&& phdProcessHasRepeatedPDI(getPhdIndividualProgramProcess(), personalIngressionData.getExecutionYear())) {
-			throw new DomainException("A Phd Process cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-		}
-	}
+        if (hasPhdIndividualProgramProcess()
+                && phdProcessHasRepeatedPDI(getPhdIndividualProgramProcess(), personalIngressionData.getExecutionYear())) {
+            throw new DomainException("A Phd Process cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+        }
+    }
 
-	@Override
-	public void setRegistration(Registration registration) {
-		super.setRegistration(registration);
+    @Override
+    public void setRegistration(Registration registration) {
+        super.setRegistration(registration);
 
-		if (registration != null && hasPersonalIngressionData()
-				&& registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
-			throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-		}
-	}
+        if (registration != null && hasPersonalIngressionData()
+                && registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
+            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+        }
+    }
 
-	@Override
-	public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
-		super.setPhdIndividualProgramProcess(phdIndividualProgramProcess);
+    @Override
+    public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
+        super.setPhdIndividualProgramProcess(phdIndividualProgramProcess);
 
-		if (phdIndividualProgramProcess != null && hasPersonalIngressionData()
-				&& phdProcessHasRepeatedPDI(phdIndividualProgramProcess, getPersonalIngressionData().getExecutionYear())) {
-			throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-		}
-	}
+        if (phdIndividualProgramProcess != null && hasPersonalIngressionData()
+                && phdProcessHasRepeatedPDI(phdIndividualProgramProcess, getPersonalIngressionData().getExecutionYear())) {
+            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+        }
+    }
 
-	private static boolean registrationHasRepeatedPDI(Registration registration, ExecutionYear executionYear) {
-		PrecedentDegreeInformation existingPdi = null;
-		for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformations()) {
-			if (pdi.getExecutionYear().equals(executionYear)) {
-				if (existingPdi == null) {
-					existingPdi = pdi;
-				} else {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    private static boolean registrationHasRepeatedPDI(Registration registration, ExecutionYear executionYear) {
+        PrecedentDegreeInformation existingPdi = null;
+        for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformations()) {
+            if (pdi.getExecutionYear().equals(executionYear)) {
+                if (existingPdi == null) {
+                    existingPdi = pdi;
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	private static boolean phdProcessHasRepeatedPDI(PhdIndividualProgramProcess phdProcess, ExecutionYear executionYear) {
-		PrecedentDegreeInformation existingPdi = null;
-		for (PrecedentDegreeInformation pdi : phdProcess.getPrecedentDegreeInformations()) {
-			if (pdi.getExecutionYear().equals(executionYear)) {
-				if (existingPdi == null) {
-					existingPdi = pdi;
-				} else {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    private static boolean phdProcessHasRepeatedPDI(PhdIndividualProgramProcess phdProcess, ExecutionYear executionYear) {
+        PrecedentDegreeInformation existingPdi = null;
+        for (PrecedentDegreeInformation pdi : phdProcess.getPrecedentDegreeInformations()) {
+            if (pdi.getExecutionYear().equals(executionYear)) {
+                if (existingPdi == null) {
+                    existingPdi = pdi;
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	@ConsistencyPredicate
-	public boolean checkHasAllRegistrationOrPhdInformation() {
-		return (checkHasAllRegistrationInformation() && !checkHasAllPhdInformation())
-				|| (!checkHasAllRegistrationInformation() && checkHasAllPhdInformation())
-				|| (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
-	}
+    @ConsistencyPredicate
+    public boolean checkHasAllRegistrationOrPhdInformation() {
+        return (checkHasAllRegistrationInformation() && !checkHasAllPhdInformation())
+                || (!checkHasAllRegistrationInformation() && checkHasAllPhdInformation())
+                || (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
+    }
 
-	private boolean checkHasAllRegistrationInformation() {
-		return hasPersonalIngressionData() && hasRegistration();
-	}
+    private boolean checkHasAllRegistrationInformation() {
+        return hasPersonalIngressionData() && hasRegistration();
+    }
 
-	private boolean checkHasAllPhdInformation() {
-		return hasPersonalIngressionData() && hasPhdIndividualProgramProcess();
-	}
+    private boolean checkHasAllPhdInformation() {
+        return hasPersonalIngressionData() && hasPhdIndividualProgramProcess();
+    }
 
-	private boolean hasNoPersonalInformation() {
-		return !hasPersonalIngressionData() && !hasRegistration() && !hasPhdIndividualProgramProcess();
-	}
+    private boolean hasNoPersonalInformation() {
+        return !hasPersonalIngressionData() && !hasRegistration() && !hasPhdIndividualProgramProcess();
+    }
 
-	private boolean hasAtLeastOneCandidacy() {
-		return hasStudentCandidacy() || hasIndividualCandidacy();
-	}
+    private boolean hasAtLeastOneCandidacy() {
+        return hasStudentCandidacy() || hasIndividualCandidacy();
+    }
 
-	public boolean isCandidacyInternal() {
-		return getCandidacyInternal() != null && getCandidacyInternal();
-	}
+    public boolean isCandidacyInternal() {
+        return getCandidacyInternal() != null && getCandidacyInternal();
+    }
 
-	public boolean isCandidacyExternal() {
-		return !isCandidacyInternal();
-	}
+    public boolean isCandidacyExternal() {
+        return !isCandidacyInternal();
+    }
 
-	@Override
-	public net.sourceforge.fenixedu.domain.organizationalStructure.Unit getPrecedentInstitution() {
-		if (isCandidacyInternal()) {
-			return RootDomainObject.getInstance().getInstitutionUnit();
-		}
+    @Override
+    public net.sourceforge.fenixedu.domain.organizationalStructure.Unit getPrecedentInstitution() {
+        if (isCandidacyInternal()) {
+            return RootDomainObject.getInstance().getInstitutionUnit();
+        }
 
-		return super.getPrecedentInstitution();
+        return super.getPrecedentInstitution();
 
-	}
+    }
 }

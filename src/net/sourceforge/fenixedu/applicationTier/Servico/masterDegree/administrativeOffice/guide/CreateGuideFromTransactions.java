@@ -37,114 +37,114 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGuideFromTransactions extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List transactionsIDs)
-			throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List transactionsIDs)
+            throws FenixServiceException {
 
-		GuideSituation guideSituation = null;
+        GuideSituation guideSituation = null;
 
-		// Check the Guide Situation
-		if (situationOfGuide.equals(GuideState.ANNULLED)) {
-			throw new InvalidSituationServiceException();
-		}
+        // Check the Guide Situation
+        if (situationOfGuide.equals(GuideState.ANNULLED)) {
+            throw new InvalidSituationServiceException();
+        }
 
-		// Get the Guide Number
-		Integer guideNumber = Guide.generateGuideNumber();
+        // Get the Guide Number
+        Integer guideNumber = Guide.generateGuideNumber();
 
-		infoGuide.setNumber(guideNumber);
+        infoGuide.setNumber(guideNumber);
 
-		// Create the new Guide Situation
-		InfoGuideSituation infoGuideSituation = new InfoGuideSituation();
-		infoGuideSituation.setState(new State(State.ACTIVE));
-		infoGuideSituation.setRemarks(remarks);
-		infoGuideSituation.setInfoGuide(infoGuide);
+        // Create the new Guide Situation
+        InfoGuideSituation infoGuideSituation = new InfoGuideSituation();
+        infoGuideSituation.setState(new State(State.ACTIVE));
+        infoGuideSituation.setRemarks(remarks);
+        infoGuideSituation.setInfoGuide(infoGuide);
 
-		Calendar calendar = Calendar.getInstance();
-		infoGuideSituation.setSituation(situationOfGuide);
+        Calendar calendar = Calendar.getInstance();
+        infoGuideSituation.setSituation(situationOfGuide);
 
-		Guide guide = new Guide();
-		guide.setCreationDate(infoGuide.getCreationDate());
-		guide.setGuideRequester(infoGuide.getGuideRequester());
-		guide.setNumber(infoGuide.getNumber());
-		guide.setPaymentDate(infoGuide.getPaymentDate());
-		guide.setPaymentType(infoGuide.getPaymentType());
-		guide.setRemarks(infoGuide.getRemarks());
-		guide.setTotal(infoGuide.getTotal());
-		guide.setVersion(infoGuide.getVersion());
-		guide.setYear(infoGuide.getYear());
+        Guide guide = new Guide();
+        guide.setCreationDate(infoGuide.getCreationDate());
+        guide.setGuideRequester(infoGuide.getGuideRequester());
+        guide.setNumber(infoGuide.getNumber());
+        guide.setPaymentDate(infoGuide.getPaymentDate());
+        guide.setPaymentType(infoGuide.getPaymentType());
+        guide.setRemarks(infoGuide.getRemarks());
+        guide.setTotal(infoGuide.getTotal());
+        guide.setVersion(infoGuide.getVersion());
+        guide.setYear(infoGuide.getYear());
 
-		if (situationOfGuide.equals(GuideState.PAYED)) {
-			guide.setPaymentType(PaymentType.SIBS);
-			guide.setPaymentDate(calendar.getTime());
-		}
+        if (situationOfGuide.equals(GuideState.PAYED)) {
+            guide.setPaymentType(PaymentType.SIBS);
+            guide.setPaymentDate(calendar.getTime());
+        }
 
-		// Get the Execution Degree
-		ExecutionDegree executionDegree =
-				rootDomainObject.readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+        // Get the Execution Degree
+        ExecutionDegree executionDegree =
+                rootDomainObject.readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
 
-		Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
-		Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
+        Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
+        Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
 
-		guide.setExecutionDegree(executionDegree);
-		guide.setContributorParty(contributor);
-		guide.setPerson(person);
+        guide.setExecutionDegree(executionDegree);
+        guide.setContributorParty(contributor);
+        guide.setPerson(person);
 
-		// Write the new Guide
+        // Write the new Guide
 
-		// Write the new Entries of the Guide
-		Iterator iterator = transactionsIDs.iterator();
-		PaymentTransaction transaction = null;
-		Integer transactionId = null;
-		GuideEntry guideEntry = null;
-		double guideTotal = 0;
+        // Write the new Entries of the Guide
+        Iterator iterator = transactionsIDs.iterator();
+        PaymentTransaction transaction = null;
+        Integer transactionId = null;
+        GuideEntry guideEntry = null;
+        double guideTotal = 0;
 
-		while (iterator.hasNext()) {
-			transactionId = (Integer) iterator.next();
-			transaction = (PaymentTransaction) rootDomainObject.readTransactionByOID(transactionId);
-			if (transaction == null) {
-				throw new ExcepcaoInexistente();
-			}
+        while (iterator.hasNext()) {
+            transactionId = (Integer) iterator.next();
+            transaction = (PaymentTransaction) rootDomainObject.readTransactionByOID(transactionId);
+            if (transaction == null) {
+                throw new ExcepcaoInexistente();
+            }
 
-			guideEntry = new GuideEntry();
+            guideEntry = new GuideEntry();
 
-			if (transaction instanceof GratuityTransaction) {
-				guideEntry.setDocumentType(DocumentType.GRATUITY);
-			} else if (transaction instanceof InsuranceTransaction) {
-				guideEntry.setDocumentType(DocumentType.INSURANCE);
-			}
+            if (transaction instanceof GratuityTransaction) {
+                guideEntry.setDocumentType(DocumentType.GRATUITY);
+            } else if (transaction instanceof InsuranceTransaction) {
+                guideEntry.setDocumentType(DocumentType.INSURANCE);
+            }
 
-			guideEntry.setPrice(transaction.getValue());
-			guideEntry.setQuantity(Integer.valueOf(1));
-			guideTotal += transaction.getValue().doubleValue();
+            guideEntry.setPrice(transaction.getValue());
+            guideEntry.setQuantity(Integer.valueOf(1));
+            guideTotal += transaction.getValue().doubleValue();
 
-			guideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
-			guideEntry.setDescription("");
+            guideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
+            guideEntry.setDescription("");
 
-			guideEntry.setGuide(guide);
+            guideEntry.setGuide(guide);
 
-			transaction.setGuideEntry(guideEntry);
+            transaction.setGuideEntry(guideEntry);
 
-			guide.setCreationDate(transaction.getTransactionDate());
-			guide.setPaymentDate(transaction.getTransactionDate());
-			infoGuideSituation.setDate(transaction.getTransactionDate());
+            guide.setCreationDate(transaction.getTransactionDate());
+            guide.setPaymentDate(transaction.getTransactionDate());
+            infoGuideSituation.setDate(transaction.getTransactionDate());
 
-		}
+        }
 
-		// Guide Total Price
-		guide.setTotal(NumberUtils.formatNumber(new Double(guideTotal), 2));
+        // Guide Total Price
+        guide.setTotal(NumberUtils.formatNumber(new Double(guideTotal), 2));
 
-		// Write the New Guide Situation
-		guideSituation =
-				new GuideSituation(infoGuideSituation.getSituation(), infoGuideSituation.getRemarks(),
-						infoGuideSituation.getDate(), guide, infoGuideSituation.getState());
+        // Write the New Guide Situation
+        guideSituation =
+                new GuideSituation(infoGuideSituation.getSituation(), infoGuideSituation.getRemarks(),
+                        infoGuideSituation.getDate(), guide, infoGuideSituation.getState());
 
-		guide.getGuideSituations().add(guideSituation);
+        guide.getGuideSituations().add(guideSituation);
 
-		InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
-		result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
+        InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
+        result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
 
-		return result;
-	}
+        return result;
+    }
 
 }

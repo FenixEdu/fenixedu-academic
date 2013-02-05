@@ -11,28 +11,28 @@ import java.io.Serializable;
  */
 public class QuestionChoice implements Serializable {
 
-	private String value;
+    private String value;
 
-	private String label;
+    private String label;
 
-	private boolean showLabel;
+    private boolean showLabel;
 
-	public QuestionChoice(String value, String label, boolean showLabel) {
-		this.value = value;
-		this.label = label;
-		this.showLabel = showLabel;
-	}
+    public QuestionChoice(String value, String label, boolean showLabel) {
+        this.value = value;
+        this.label = label;
+        this.showLabel = showLabel;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public boolean isShowLabel() {
-		return showLabel;
-	}
+    public boolean isShowLabel() {
+        return showLabel;
+    }
 
 }

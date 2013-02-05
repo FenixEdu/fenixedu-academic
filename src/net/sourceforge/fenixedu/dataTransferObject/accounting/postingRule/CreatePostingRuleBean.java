@@ -11,61 +11,61 @@ import org.joda.time.DateTime;
 
 abstract public class CreatePostingRuleBean implements Serializable, PaymentsBean {
 
-	static private final long serialVersionUID = -7035156267101347173L;
+    static private final long serialVersionUID = -7035156267101347173L;
 
-	private ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+    private ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-	private DateTime startDate;
+    private DateTime startDate;
 
-	private ServiceAgreementTemplate serviceAgreementTemplate;
+    private ServiceAgreementTemplate serviceAgreementTemplate;
 
-	private Class<? extends PostingRule> rule;
+    private Class<? extends PostingRule> rule;
 
-	public CreatePostingRuleBean(final ServiceAgreementTemplate serviceAgreementTemplate) {
-		this(new DateTime(), serviceAgreementTemplate);
-	}
+    public CreatePostingRuleBean(final ServiceAgreementTemplate serviceAgreementTemplate) {
+        this(new DateTime(), serviceAgreementTemplate);
+    }
 
-	public CreatePostingRuleBean(final DateTime startDate, final ServiceAgreementTemplate serviceAgreementTemplate) {
-		this();
-		setStartDate(startDate);
-		setServiceAgreementTemplate(serviceAgreementTemplate);
-	}
+    public CreatePostingRuleBean(final DateTime startDate, final ServiceAgreementTemplate serviceAgreementTemplate) {
+        this();
+        setStartDate(startDate);
+        setServiceAgreementTemplate(serviceAgreementTemplate);
+    }
 
-	@Override
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    @Override
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	protected CreatePostingRuleBean() {
-		this.startDate = new DateTime();
-	}
+    protected CreatePostingRuleBean() {
+        this.startDate = new DateTime();
+    }
 
-	public DateTime getStartDate() {
-		return startDate;
-	}
+    public DateTime getStartDate() {
+        return startDate;
+    }
 
-	public void setStartDate(DateTime startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(DateTime startDate) {
+        this.startDate = startDate;
+    }
 
-	public ServiceAgreementTemplate getServiceAgreementTemplate() {
-		return this.serviceAgreementTemplate;
-	}
+    public ServiceAgreementTemplate getServiceAgreementTemplate() {
+        return this.serviceAgreementTemplate;
+    }
 
-	public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
-		this.serviceAgreementTemplate = serviceAgreementTemplate;
-	}
+    public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
+        this.serviceAgreementTemplate = serviceAgreementTemplate;
+    }
 
-	public Class<? extends PostingRule> getRule() {
-		return rule;
-	}
+    public Class<? extends PostingRule> getRule() {
+        return rule;
+    }
 
-	public void setRule(Class<? extends PostingRule> rule) {
-		this.rule = rule;
-	}
+    public void setRule(Class<? extends PostingRule> rule) {
+        this.rule = rule;
+    }
 
 }

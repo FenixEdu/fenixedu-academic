@@ -21,32 +21,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/userPermissionCheck", scope = "request", parameter = "method")
 public class UserPermissionCheck extends ExternalInterfaceDispatchAction {
 
-	private static final String NOT_AUTHORIZED_CODE = "NOT_AUTHORIZED";
+    private static final String NOT_AUTHORIZED_CODE = "NOT_AUTHORIZED";
 
-	private static final String UNEXPECTED_ERROR_CODE = "UNEXPECTED_ERROR";
+    private static final String UNEXPECTED_ERROR_CODE = "UNEXPECTED_ERROR";
 
-	private static final String SUCCESS_CODE = "SUCCESS";
+    private static final String SUCCESS_CODE = "SUCCESS";
 
-	public ActionForward canUserAccessFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward canUserAccessFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		if (!HostAccessControl.isAllowed(this, request)) {
-			writeResponse(response, NOT_AUTHORIZED_CODE, "");
-		} else {
-			String dspaceBitstreamIdentification = request.getParameter("dspaceBitstreamIdentification");
-			String username = request.getParameter("username");
+        if (!HostAccessControl.isAllowed(this, request)) {
+            writeResponse(response, NOT_AUTHORIZED_CODE, "");
+        } else {
+            String dspaceBitstreamIdentification = request.getParameter("dspaceBitstreamIdentification");
+            String username = request.getParameter("username");
 
-			try {
-				Boolean result = CheckIfUserCanAccessFile.run(username, dspaceBitstreamIdentification);
+            try {
+                Boolean result = CheckIfUserCanAccessFile.run(username, dspaceBitstreamIdentification);
 
-				writeResponse(response, SUCCESS_CODE, result.toString());
+                writeResponse(response, SUCCESS_CODE, result.toString());
 
-			} catch (Exception e) {
-				writeResponse(response, UNEXPECTED_ERROR_CODE, "");
-			}
-		}
+            } catch (Exception e) {
+                writeResponse(response, UNEXPECTED_ERROR_CODE, "");
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

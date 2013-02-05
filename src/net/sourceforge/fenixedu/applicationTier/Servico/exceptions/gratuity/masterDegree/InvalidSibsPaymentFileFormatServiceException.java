@@ -12,41 +12,41 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class InvalidSibsPaymentFileFormatServiceException extends FenixServiceException {
 
-	/**
+    /**
      *  
      */
-	public InvalidSibsPaymentFileFormatServiceException() {
-		super();
-	}
+    public InvalidSibsPaymentFileFormatServiceException() {
+        super();
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public InvalidSibsPaymentFileFormatServiceException(String message) {
-		super(message);
-	}
+    /**
+     * @param errorType
+     */
+    public InvalidSibsPaymentFileFormatServiceException(String message) {
+        super(message);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidSibsPaymentFileFormatServiceException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public InvalidSibsPaymentFileFormatServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidSibsPaymentFileFormatServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidSibsPaymentFileFormatServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InvalidSibsFileFormatServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InvalidSibsFileFormatServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

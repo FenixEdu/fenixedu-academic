@@ -6,17 +6,17 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class PossiblePersonCandidatesException extends ParseException {
 
-	public PossiblePersonCandidatesException(Set<Person> possibleCandidates) {
-		super(getPersonNames(possibleCandidates));
-	}
+    public PossiblePersonCandidatesException(Set<Person> possibleCandidates) {
+        super(getPersonNames(possibleCandidates));
+    }
 
-	static private String getPersonNames(Set<Person> possibleCandidates) {
-		StringBuilder builder = new StringBuilder();
+    static private String getPersonNames(Set<Person> possibleCandidates) {
+        StringBuilder builder = new StringBuilder();
 
-		for (Person person : possibleCandidates) {
-			builder.append(person.getName() + " ;");
-		}
+        for (Person person : possibleCandidates) {
+            builder.append(person.getName() + " ;");
+        }
 
-		return builder.toString();
-	}
+        return builder.toString();
+    }
 }

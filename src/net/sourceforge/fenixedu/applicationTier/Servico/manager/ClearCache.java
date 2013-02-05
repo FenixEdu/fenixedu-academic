@@ -13,9 +13,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ClearCache extends FenixService {
 
-	@Service
-	public static Boolean run() {
-		return Boolean.TRUE;
-	}
+    @Service
+    public static Boolean run() {
+        return Boolean.TRUE;
+    }
 
 }

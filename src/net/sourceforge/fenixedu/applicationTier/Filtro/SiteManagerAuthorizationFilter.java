@@ -8,23 +8,23 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class SiteManagerAuthorizationFilter extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		Site site = getSite(request, response);
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        Site site = getSite(request, response);
 
-		IGroup owner = site.getOwner();
+        IGroup owner = site.getOwner();
 
-		if (owner == null) {
-			throw new NotAuthorizedFilterException();
-		}
+        if (owner == null) {
+            throw new NotAuthorizedFilterException();
+        }
 
-		if (!owner.allows(getRemoteUser(request))) {
-			throw new NotAuthorizedFilterException();
-		}
-	}
+        if (!owner.allows(getRemoteUser(request))) {
+            throw new NotAuthorizedFilterException();
+        }
+    }
 
-	protected Site getSite(ServiceRequest request, ServiceResponse response) {
-		return (Site) request.getServiceParameters().getParameter(0);
-	}
+    protected Site getSite(ServiceRequest request, ServiceResponse response) {
+        return (Site) request.getServiceParameters().getParameter(0);
+    }
 
 }

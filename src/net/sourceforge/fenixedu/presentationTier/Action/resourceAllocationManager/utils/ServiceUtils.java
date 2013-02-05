@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
  */
 public abstract class ServiceUtils {
 
-	public static Object executeService(String serviceName, Object[] serviceArgs) throws FenixServiceException,
-			FenixFilterException {
-		if (serviceArgs == null) {
-			serviceArgs = new Object[0];
-		}
-		return ServiceManagerServiceFactory.executeService(serviceName, serviceArgs);
-	}
+    public static Object executeService(String serviceName, Object[] serviceArgs) throws FenixServiceException,
+            FenixFilterException {
+        if (serviceArgs == null) {
+            serviceArgs = new Object[0];
+        }
+        return ServiceManagerServiceFactory.executeService(serviceName, serviceArgs);
+    }
 }

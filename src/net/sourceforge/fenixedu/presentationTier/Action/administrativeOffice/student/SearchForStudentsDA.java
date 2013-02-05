@@ -20,31 +20,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/students", module = "academicAdministration")
 @Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
-		@Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp") })
+        @Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp") })
 public class SearchForStudentsDA extends FenixDispatchAction {
 
-	public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		StudentsSearchBean studentsSearchBean = getRenderedObject();
+        StudentsSearchBean studentsSearchBean = getRenderedObject();
 
-		if (studentsSearchBean == null) { // 1st time
-			studentsSearchBean = new StudentsSearchBean();
-		} else {
+        if (studentsSearchBean == null) { // 1st time
+            studentsSearchBean = new StudentsSearchBean();
+        } else {
 
-			final Set<Student> students = studentsSearchBean.search();
+            final Set<Student> students = studentsSearchBean.search();
 
-			if (students.size() == 1) {
-				Student student = students.iterator().next();
-				request.setAttribute("student", student);
-				request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
-				return mapping.findForward("viewStudentDetails");
-			}
-			request.setAttribute("students", students);
-		}
+            if (students.size() == 1) {
+                Student student = students.iterator().next();
+                request.setAttribute("student", student);
+                request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
+                return mapping.findForward("viewStudentDetails");
+            }
+            request.setAttribute("students", students);
+        }
 
-		request.setAttribute("studentsSearchBean", studentsSearchBean);
-		return mapping.findForward("search");
-	}
+        request.setAttribute("studentsSearchBean", studentsSearchBean);
+        return mapping.findForward("search");
+    }
 
 }

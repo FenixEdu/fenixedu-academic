@@ -35,365 +35,365 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class PredicateRenderer extends OutputRenderer {
 
-	private static final HashMap<Class, Class<? extends Layout>> dispatchMap = new HashMap<Class, Class<? extends Layout>>();
-
-	static {
-		dispatchMap.put(OutcomeByCorrectorPredicate.class, OutcomeByCorrectorRenderer.class);
-		dispatchMap.put(OutcomeByNoCorrectorPredicate.class, OutcomeByNoCorrectorRenderer.class);
-		dispatchMap.put(GivenUpQuestionPredicate.class, GivenUpQuestionRenderer.class);
-		dispatchMap.put(AnsweredQuestionPredicate.class, AnsweredQuestionRenderer.class);
-		dispatchMap.put(AndPredicate.class, AndRenderer.class);
-		dispatchMap.put(OrPredicate.class, OrRenderer.class);
-		dispatchMap.put(NotPredicate.class, NotRenderer.class);
-		dispatchMap.put(MultipleChoiceAnswerPredicate.class, MultipleChoiceAnswerRenderer.class);
-		dispatchMap.put(MultipleChoiceCountPredicate.class, MultipleChoiceCountRenderer.class);
-		dispatchMap.put(StringSizeEqualsPredicate.class, StringSizeEqualsRenderer.class);
-		dispatchMap.put(StringSizeMoreThanPredicate.class, StringSizeMoreThanRenderer.class);
-		dispatchMap.put(StringSizeLessThanPredicate.class, StringSizeLessThanRenderer.class);
-		dispatchMap.put(NumericEqualsPredicate.class, NumericEqualsRenderer.class);
-		dispatchMap.put(NumericGreaterThanPredicate.class, NumericGreaterThanRenderer.class);
-		dispatchMap.put(NumericLessThanPredicate.class, NumericLessThanRenderer.class);
-		dispatchMap.put(NumericGreaterThanOrEqualPredicate.class, NumericGreaterThanOrEqualRenderer.class);
-		dispatchMap.put(NumericLessThanOrEqualPredicate.class, NumericLessThanOrEqualRenderer.class);
-	}
-
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		Class<? extends Layout> dispatchClass = dispatchMap.get(object.getClass());
-		try {
-			Constructor<? extends Layout> dispatchConstructor =
-					dispatchClass.getConstructor(new Class[] { PredicateRenderer.class });
-			Layout newInstance = dispatchConstructor.newInstance(new Object[] { this });
-
-			return newInstance;
-		} catch (InstantiationException e) {
-			throw new RuntimeException("could.not.init.class", e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException("could.not.init.class", e);
-		} catch (SecurityException e) {
-			throw new RuntimeException("could.not.init.class", e);
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException("could.not.init.class", e);
-		} catch (IllegalArgumentException e) {
-			throw new RuntimeException("could.not.init.class", e);
-		} catch (InvocationTargetException e) {
-			throw new RuntimeException("could.not.init.class", e);
-		}
-	}
-
-	private abstract class CompositeRenderer extends Layout {
-
-		public CompositeRenderer() {
-			super();
-		}
-
-		private HtmlComponent createComponent(Object object, Class type, String separator) {
-			CompositePredicate compositePredicate = (CompositePredicate) object;
-			HtmlInlineContainer container = new HtmlInlineContainer();
-
-			Iterator<Predicate> predicateIterator = compositePredicate.getPredicates().iterator();
-
-			while (predicateIterator.hasNext()) {
-				Predicate nextPredicate = predicateIterator.next();
-				HtmlComponent renderedPredicate = renderValue(nextPredicate, null, "values");
-
-				container.addChild(new HtmlText("("));
-				container.addChild(renderedPredicate);
-				container.addChild(new HtmlText(")"));
-
-				if (predicateIterator.hasNext()) {
-					container.addChild(new HtmlText(separator));
-				}
-			}
-
-			return container;
-		}
-
-	}
-
-	private class AndRenderer extends CompositeRenderer {
-
-		public AndRenderer() {
-			super();
-		}
-
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			return super.createComponent(object, type, "e");
-		}
-
-	}
-
-	private class OrRenderer extends CompositeRenderer {
-
-		public OrRenderer() {
-			super();
-		}
-
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			return super.createComponent(object, type, "ou");
-		}
+    private static final HashMap<Class, Class<? extends Layout>> dispatchMap = new HashMap<Class, Class<? extends Layout>>();
+
+    static {
+        dispatchMap.put(OutcomeByCorrectorPredicate.class, OutcomeByCorrectorRenderer.class);
+        dispatchMap.put(OutcomeByNoCorrectorPredicate.class, OutcomeByNoCorrectorRenderer.class);
+        dispatchMap.put(GivenUpQuestionPredicate.class, GivenUpQuestionRenderer.class);
+        dispatchMap.put(AnsweredQuestionPredicate.class, AnsweredQuestionRenderer.class);
+        dispatchMap.put(AndPredicate.class, AndRenderer.class);
+        dispatchMap.put(OrPredicate.class, OrRenderer.class);
+        dispatchMap.put(NotPredicate.class, NotRenderer.class);
+        dispatchMap.put(MultipleChoiceAnswerPredicate.class, MultipleChoiceAnswerRenderer.class);
+        dispatchMap.put(MultipleChoiceCountPredicate.class, MultipleChoiceCountRenderer.class);
+        dispatchMap.put(StringSizeEqualsPredicate.class, StringSizeEqualsRenderer.class);
+        dispatchMap.put(StringSizeMoreThanPredicate.class, StringSizeMoreThanRenderer.class);
+        dispatchMap.put(StringSizeLessThanPredicate.class, StringSizeLessThanRenderer.class);
+        dispatchMap.put(NumericEqualsPredicate.class, NumericEqualsRenderer.class);
+        dispatchMap.put(NumericGreaterThanPredicate.class, NumericGreaterThanRenderer.class);
+        dispatchMap.put(NumericLessThanPredicate.class, NumericLessThanRenderer.class);
+        dispatchMap.put(NumericGreaterThanOrEqualPredicate.class, NumericGreaterThanOrEqualRenderer.class);
+        dispatchMap.put(NumericLessThanOrEqualPredicate.class, NumericLessThanOrEqualRenderer.class);
+    }
+
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        Class<? extends Layout> dispatchClass = dispatchMap.get(object.getClass());
+        try {
+            Constructor<? extends Layout> dispatchConstructor =
+                    dispatchClass.getConstructor(new Class[] { PredicateRenderer.class });
+            Layout newInstance = dispatchConstructor.newInstance(new Object[] { this });
+
+            return newInstance;
+        } catch (InstantiationException e) {
+            throw new RuntimeException("could.not.init.class", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("could.not.init.class", e);
+        } catch (SecurityException e) {
+            throw new RuntimeException("could.not.init.class", e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("could.not.init.class", e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("could.not.init.class", e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("could.not.init.class", e);
+        }
+    }
+
+    private abstract class CompositeRenderer extends Layout {
+
+        public CompositeRenderer() {
+            super();
+        }
+
+        private HtmlComponent createComponent(Object object, Class type, String separator) {
+            CompositePredicate compositePredicate = (CompositePredicate) object;
+            HtmlInlineContainer container = new HtmlInlineContainer();
+
+            Iterator<Predicate> predicateIterator = compositePredicate.getPredicates().iterator();
+
+            while (predicateIterator.hasNext()) {
+                Predicate nextPredicate = predicateIterator.next();
+                HtmlComponent renderedPredicate = renderValue(nextPredicate, null, "values");
+
+                container.addChild(new HtmlText("("));
+                container.addChild(renderedPredicate);
+                container.addChild(new HtmlText(")"));
+
+                if (predicateIterator.hasNext()) {
+                    container.addChild(new HtmlText(separator));
+                }
+            }
+
+            return container;
+        }
+
+    }
+
+    private class AndRenderer extends CompositeRenderer {
+
+        public AndRenderer() {
+            super();
+        }
+
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            return super.createComponent(object, type, "e");
+        }
+
+    }
+
+    private class OrRenderer extends CompositeRenderer {
+
+        public OrRenderer() {
+            super();
+        }
+
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            return super.createComponent(object, type, "ou");
+        }
 
-	}
+    }
 
-	private class NotRenderer extends Layout {
+    private class NotRenderer extends Layout {
 
-		public NotRenderer() {
-			super();
-		}
+        public NotRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			NotPredicate notPredicate = (NotPredicate) object;
-			HtmlInlineContainer container = new HtmlInlineContainer();
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            NotPredicate notPredicate = (NotPredicate) object;
+            HtmlInlineContainer container = new HtmlInlineContainer();
 
-			container.addChild(new HtmlText("não"));
-			container.addChild(renderValue(notPredicate.getPredicates().get(0), null, "values"));
+            container.addChild(new HtmlText("não"));
+            container.addChild(renderValue(notPredicate.getPredicates().get(0), null, "values"));
 
-			return container;
-		}
+            return container;
+        }
 
-	}
+    }
 
-	private class MultipleChoiceAnswerRenderer extends Layout {
+    private class MultipleChoiceAnswerRenderer extends Layout {
 
-		public MultipleChoiceAnswerRenderer() {
-			super();
-		}
+        public MultipleChoiceAnswerRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			MultipleChoiceAnswerPredicate predicate = (MultipleChoiceAnswerPredicate) object;
-			return new HtmlText("Resposta " + predicate.getChoice().getPosition());
-		}
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            MultipleChoiceAnswerPredicate predicate = (MultipleChoiceAnswerPredicate) object;
+            return new HtmlText("Resposta " + predicate.getChoice().getPosition());
+        }
 
-	}
+    }
 
-	private class MultipleChoiceCountRenderer extends Layout {
+    private class MultipleChoiceCountRenderer extends Layout {
 
-		public MultipleChoiceCountRenderer() {
-			super();
-		}
+        public MultipleChoiceCountRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			MultipleChoiceCountPredicate predicate = (MultipleChoiceCountPredicate) object;
-			return new HtmlText(predicate.getCount() + " respostas");
-		}
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            MultipleChoiceCountPredicate predicate = (MultipleChoiceCountPredicate) object;
+            return new HtmlText(predicate.getCount() + " respostas");
+        }
 
-	}
+    }
 
-	private class OutcomeByCorrectorRenderer extends Layout {
+    private class OutcomeByCorrectorRenderer extends Layout {
 
-		public OutcomeByCorrectorRenderer() {
-			super();
-		}
+        public OutcomeByCorrectorRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			OutcomeByCorrectorPredicate predicate = (OutcomeByCorrectorPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            OutcomeByCorrectorPredicate predicate = (OutcomeByCorrectorPredicate) object;
 
-			NewCorrector corrector = predicate.getCorrector();
-			HtmlComponent rendererCorrector = renderValue(corrector, corrector.getClass(), null, "values");
+            NewCorrector corrector = predicate.getCorrector();
+            HtmlComponent rendererCorrector = renderValue(corrector, corrector.getClass(), null, "values");
 
-			HtmlInlineContainer container = new HtmlInlineContainer();
-			container
-					.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "OUTCOME_BY_CORRECTOR") + ":"));
-			container.addChild(rendererCorrector);
+            HtmlInlineContainer container = new HtmlInlineContainer();
+            container
+                    .addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "OUTCOME_BY_CORRECTOR") + ":"));
+            container.addChild(rendererCorrector);
 
-			return container;
-		}
+            return container;
+        }
 
-	}
+    }
 
-	private class OutcomeByNoCorrectorRenderer extends Layout {
+    private class OutcomeByNoCorrectorRenderer extends Layout {
 
-		public OutcomeByNoCorrectorRenderer() {
-			super();
-		}
+        public OutcomeByNoCorrectorRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			OutcomeByNoCorrectorPredicate predicate = (OutcomeByNoCorrectorPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            OutcomeByNoCorrectorPredicate predicate = (OutcomeByNoCorrectorPredicate) object;
 
-			NewAtomicQuestion atomicQuestion = predicate.getAtomicQuestion();
-			HtmlComponent rendererAtomicQuestion = renderValue(atomicQuestion, atomicQuestion.getClass(), null, "sub-question");
+            NewAtomicQuestion atomicQuestion = predicate.getAtomicQuestion();
+            HtmlComponent rendererAtomicQuestion = renderValue(atomicQuestion, atomicQuestion.getClass(), null, "sub-question");
 
-			HtmlInlineContainer container = new HtmlInlineContainer();
-			container.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "OUTCOME_BY_NO_CORRECTOR")
-					+ ":"));
-			container.addChild(rendererAtomicQuestion);
+            HtmlInlineContainer container = new HtmlInlineContainer();
+            container.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "OUTCOME_BY_NO_CORRECTOR")
+                    + ":"));
+            container.addChild(rendererAtomicQuestion);
 
-			return container;
-		}
+            return container;
+        }
 
-	}
+    }
 
-	private class GivenUpQuestionRenderer extends Layout {
+    private class GivenUpQuestionRenderer extends Layout {
 
-		public GivenUpQuestionRenderer() {
-			super();
-		}
+        public GivenUpQuestionRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			GivenUpQuestionPredicate predicate = (GivenUpQuestionPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            GivenUpQuestionPredicate predicate = (GivenUpQuestionPredicate) object;
 
-			NewAtomicQuestion atomicQuestion = predicate.getAtomicQuestion();
-			HtmlComponent rendererAtomicQuestion = renderValue(atomicQuestion, atomicQuestion.getClass(), null, "sub-question");
+            NewAtomicQuestion atomicQuestion = predicate.getAtomicQuestion();
+            HtmlComponent rendererAtomicQuestion = renderValue(atomicQuestion, atomicQuestion.getClass(), null, "sub-question");
 
-			HtmlInlineContainer container = new HtmlInlineContainer();
-			container.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "GIVEN_UP_QUESTION") + ":"));
-			container.addChild(rendererAtomicQuestion);
+            HtmlInlineContainer container = new HtmlInlineContainer();
+            container.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "GIVEN_UP_QUESTION") + ":"));
+            container.addChild(rendererAtomicQuestion);
 
-			return container;
-		}
+            return container;
+        }
 
-	}
+    }
 
-	private class AnsweredQuestionRenderer extends Layout {
+    private class AnsweredQuestionRenderer extends Layout {
 
-		public AnsweredQuestionRenderer() {
-			super();
-		}
+        public AnsweredQuestionRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			AnsweredQuestionPredicate predicate = (AnsweredQuestionPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            AnsweredQuestionPredicate predicate = (AnsweredQuestionPredicate) object;
 
-			NewAtomicQuestion atomicQuestion = predicate.getAtomicQuestion();
-			HtmlComponent rendererAtomicQuestion = renderValue(atomicQuestion, atomicQuestion.getClass(), null, "sub-question");
+            NewAtomicQuestion atomicQuestion = predicate.getAtomicQuestion();
+            HtmlComponent rendererAtomicQuestion = renderValue(atomicQuestion, atomicQuestion.getClass(), null, "sub-question");
 
-			HtmlInlineContainer container = new HtmlInlineContainer();
-			container.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "ANSWERED_QUESTION") + ":"));
-			container.addChild(rendererAtomicQuestion);
+            HtmlInlineContainer container = new HtmlInlineContainer();
+            container.addChild(new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "ANSWERED_QUESTION") + ":"));
+            container.addChild(rendererAtomicQuestion);
 
-			return container;
-		}
+            return container;
+        }
 
-	}
+    }
 
-	private class StringSizeEqualsRenderer extends Layout {
+    private class StringSizeEqualsRenderer extends Layout {
 
-		public StringSizeEqualsRenderer() {
-			super();
-		}
+        public StringSizeEqualsRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			StringSizeEqualsPredicate predicate = (StringSizeEqualsPredicate) object;
-			return new HtmlText("Tamanho de resposta igual a " + predicate.getSize());
-		}
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            StringSizeEqualsPredicate predicate = (StringSizeEqualsPredicate) object;
+            return new HtmlText("Tamanho de resposta igual a " + predicate.getSize());
+        }
 
-	}
+    }
 
-	private class StringSizeMoreThanRenderer extends Layout {
+    private class StringSizeMoreThanRenderer extends Layout {
 
-		public StringSizeMoreThanRenderer() {
-			super();
-		}
+        public StringSizeMoreThanRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			StringSizeMoreThanPredicate predicate = (StringSizeMoreThanPredicate) object;
-			return new HtmlText("Tamanho de resposta maior que " + predicate.getSize());
-		}
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            StringSizeMoreThanPredicate predicate = (StringSizeMoreThanPredicate) object;
+            return new HtmlText("Tamanho de resposta maior que " + predicate.getSize());
+        }
 
-	}
+    }
 
-	private class StringSizeLessThanRenderer extends Layout {
+    private class StringSizeLessThanRenderer extends Layout {
 
-		public StringSizeLessThanRenderer() {
-			super();
-		}
+        public StringSizeLessThanRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			StringSizeLessThanPredicate predicate = (StringSizeLessThanPredicate) object;
-			return new HtmlText("Tamanho de resposta menor que " + predicate.getSize());
-		}
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            StringSizeLessThanPredicate predicate = (StringSizeLessThanPredicate) object;
+            return new HtmlText("Tamanho de resposta menor que " + predicate.getSize());
+        }
 
-	}
+    }
 
-	private class NumericEqualsRenderer extends Layout {
+    private class NumericEqualsRenderer extends Layout {
 
-		public NumericEqualsRenderer() {
-			super();
-		}
+        public NumericEqualsRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			NumericEqualsPredicate predicate = (NumericEqualsPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            NumericEqualsPredicate predicate = (NumericEqualsPredicate) object;
 
-			return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_EQUALS") + " "
-					+ predicate.getValue());
-		}
+            return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_EQUALS") + " "
+                    + predicate.getValue());
+        }
 
-	}
+    }
 
-	private class NumericGreaterThanRenderer extends Layout {
+    private class NumericGreaterThanRenderer extends Layout {
 
-		public NumericGreaterThanRenderer() {
-			super();
-		}
+        public NumericGreaterThanRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			NumericGreaterThanPredicate predicate = (NumericGreaterThanPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            NumericGreaterThanPredicate predicate = (NumericGreaterThanPredicate) object;
 
-			return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_GREATER_THAN") + " "
-					+ predicate.getValue());
-		}
+            return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_GREATER_THAN") + " "
+                    + predicate.getValue());
+        }
 
-	}
+    }
 
-	private class NumericLessThanRenderer extends Layout {
+    private class NumericLessThanRenderer extends Layout {
 
-		public NumericLessThanRenderer() {
-			super();
-		}
+        public NumericLessThanRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			NumericLessThanPredicate predicate = (NumericLessThanPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            NumericLessThanPredicate predicate = (NumericLessThanPredicate) object;
 
-			return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_LESS_THAN") + " "
-					+ predicate.getValue());
-		}
+            return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_LESS_THAN") + " "
+                    + predicate.getValue());
+        }
 
-	}
+    }
 
-	private class NumericGreaterThanOrEqualRenderer extends Layout {
+    private class NumericGreaterThanOrEqualRenderer extends Layout {
 
-		public NumericGreaterThanOrEqualRenderer() {
-			super();
-		}
+        public NumericGreaterThanOrEqualRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			NumericGreaterThanOrEqualPredicate predicate = (NumericGreaterThanOrEqualPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            NumericGreaterThanOrEqualPredicate predicate = (NumericGreaterThanOrEqualPredicate) object;
 
-			return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_GREATER_THAN_OR_EQUAL") + " "
-					+ predicate.getValue());
-		}
+            return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_GREATER_THAN_OR_EQUAL") + " "
+                    + predicate.getValue());
+        }
 
-	}
+    }
 
-	private class NumericLessThanOrEqualRenderer extends Layout {
+    private class NumericLessThanOrEqualRenderer extends Layout {
 
-		public NumericLessThanOrEqualRenderer() {
-			super();
-		}
+        public NumericLessThanOrEqualRenderer() {
+            super();
+        }
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			NumericLessThanOrEqualPredicate predicate = (NumericLessThanOrEqualPredicate) object;
+        @Override
+        public HtmlComponent createComponent(Object object, Class type) {
+            NumericLessThanOrEqualPredicate predicate = (NumericLessThanOrEqualPredicate) object;
 
-			return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_LESS_THAN_OR_EQUAL") + " "
-					+ predicate.getValue());
-		}
+            return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", "NUMERIC_LESS_THAN_OR_EQUAL") + " "
+                    + predicate.getValue());
+        }
 
-	}
+    }
 
 }

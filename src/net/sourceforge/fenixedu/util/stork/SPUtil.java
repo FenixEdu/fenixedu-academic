@@ -8,139 +8,139 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeTy
 
 public class SPUtil {
 
-	private static SPUtil instance;
+    private static SPUtil instance;
 
-	private Properties properties;
+    private Properties properties;
 
-	private List<Attribute> attributes;
+    private List<Attribute> attributes;
 
-	public static SPUtil getInstance() {
-		// if (instance == null) {
-		// instance = new SPUtil();
-		// }
+    public static SPUtil getInstance() {
+        // if (instance == null) {
+        // instance = new SPUtil();
+        // }
 
-		return new SPUtil();
-	}
+        return new SPUtil();
+    }
 
-	private SPUtil() {
-		this.attributes = new ArrayList<Attribute>();
+    private SPUtil() {
+        this.attributes = new ArrayList<Attribute>();
 
-		try {
-			this.properties = new Properties();
-			properties.load(SPUtil.class.getClassLoader().getResourceAsStream("/sp.properties"));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+        try {
+            this.properties = new Properties();
+            properties.load(SPUtil.class.getClassLoader().getResourceAsStream("/sp.properties"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		loadAttributes();
-	}
+        loadAttributes();
+    }
 
-	private void loadAttributes() {
-		for (int i = 1; i <= getNumberOfAttributes(); i++) {
-			String name = this.properties.getProperty(f("attribute%s.name", i));
-			Boolean mandatory = Boolean.valueOf(this.properties.getProperty(f("attribute%s.type", i)));
-			String value = this.properties.getProperty(f("%s.value", name));
-			this.attributes.add(new Attribute(i, StorkAttributeType.getTypeFromStorkName(name), mandatory, value));
-		}
+    private void loadAttributes() {
+        for (int i = 1; i <= getNumberOfAttributes(); i++) {
+            String name = this.properties.getProperty(f("attribute%s.name", i));
+            Boolean mandatory = Boolean.valueOf(this.properties.getProperty(f("attribute%s.type", i)));
+            String value = this.properties.getProperty(f("%s.value", name));
+            this.attributes.add(new Attribute(i, StorkAttributeType.getTypeFromStorkName(name), mandatory, value));
+        }
 
-	}
+    }
 
-	public String getId() {
-		return this.properties.getProperty("sp.id");
-	}
+    public String getId() {
+        return this.properties.getProperty("sp.id");
+    }
 
-	public String getUrl() {
-		return this.properties.getProperty("sp.url");
-	}
+    public String getUrl() {
+        return this.properties.getProperty("sp.url");
+    }
 
-	public String getQaLevel() {
-		return this.properties.getProperty("sp.qaalevel");
-	}
+    public String getQaLevel() {
+        return this.properties.getProperty("sp.qaalevel");
+    }
 
-	public String getSpepsCountryUrl() {
-		return this.properties.getProperty("speps.country.url");
-	}
+    public String getSpepsCountryUrl() {
+        return this.properties.getProperty("speps.country.url");
+    }
 
-	public String getSpepsAuthUrl() {
-		return this.properties.getProperty("speps.auth.url");
-	}
+    public String getSpepsAuthUrl() {
+        return this.properties.getProperty("speps.auth.url");
+    }
 
-	public Integer getNumberOfAttributes() {
-		return Integer.valueOf(this.properties.getProperty("attribute.number"));
-	}
+    public Integer getNumberOfAttributes() {
+        return Integer.valueOf(this.properties.getProperty("attribute.number"));
+    }
 
-	public String getSpInvokeUrl() {
-		return this.properties.getProperty("sp.invoke.url");
-	}
+    public String getSpInvokeUrl() {
+        return this.properties.getProperty("sp.invoke.url");
+    }
 
-	public String getSPReturnFromPepsUrl() {
-		return this.properties.getProperty("sp.return.from.peps.url");
-	}
+    public String getSPReturnFromPepsUrl() {
+        return this.properties.getProperty("sp.return.from.peps.url");
+    }
 
-	public String getSPReturnFromPepsUrlEncoded() {
-		return java.net.URLEncoder.encode(getSPReturnFromPepsUrl());
-	}
+    public String getSPReturnFromPepsUrlEncoded() {
+        return java.net.URLEncoder.encode(getSPReturnFromPepsUrl());
+    }
 
-	public String getSPReturnFromPepsToAccessApplicationUrl() {
-		return this.properties.getProperty("sp.return.from.peps.to.access.application.url");
-	}
+    public String getSPReturnFromPepsToAccessApplicationUrl() {
+        return this.properties.getProperty("sp.return.from.peps.to.access.application.url");
+    }
 
-	public String getSPReturnFromPepsToAccessApplicationUrlEncoded() {
-		return java.net.URLEncoder.encode(getSPReturnFromPepsToAccessApplicationUrl());
-	}
+    public String getSPReturnFromPepsToAccessApplicationUrlEncoded() {
+        return java.net.URLEncoder.encode(getSPReturnFromPepsToAccessApplicationUrl());
+    }
 
-	public String getSPReturnFromPepsToBindApplicationWithStork() {
-		return this.properties.getProperty("sp.return.from.peps.to.bind.application.with.stork");
-	}
+    public String getSPReturnFromPepsToBindApplicationWithStork() {
+        return this.properties.getProperty("sp.return.from.peps.to.bind.application.with.stork");
+    }
 
-	public List<Attribute> getAttributes() {
-		return this.attributes;
-	}
+    public List<Attribute> getAttributes() {
+        return this.attributes;
+    }
 
-	public Attribute getAttributeByName(String name) {
-		for (Attribute attr : this.attributes) {
-			if (name.equals(attr.getType().getStorkName())) {
-				return attr;
-			}
-		}
+    public Attribute getAttributeByName(String name) {
+        for (Attribute attr : this.attributes) {
+            if (name.equals(attr.getType().getStorkName())) {
+                return attr;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public Attribute getAttributeById(Integer id) {
-		for (Attribute attr : this.attributes) {
-			if (id.equals(attr.getId())) {
-				return attr;
-			}
-		}
+    public Attribute getAttributeById(Integer id) {
+        for (Attribute attr : this.attributes) {
+            if (id.equals(attr.getId())) {
+                return attr;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private static String f(String format, Object... args) {
-		return String.format(format, args);
-	}
+    private static String f(String format, Object... args) {
+        return String.format(format, args);
+    }
 
-	public String getAttributesList() {
-		StringBuilder sb = new StringBuilder();
+    public String getAttributesList() {
+        StringBuilder sb = new StringBuilder();
 
-		for (Attribute attribute : this.getAttributes()) {
-			if (attribute.isValueAssigned()) {
-				sb.append(f("%s:%s:%s;", attribute.getType().getStorkName(), attribute.getMandatory().toString(),
-						attribute.getValue()));
-			} else {
-				sb.append(f("%s:%s;", attribute.getType().getStorkName(), attribute.getMandatory().toString()));
-			}
-		}
+        for (Attribute attribute : this.getAttributes()) {
+            if (attribute.isValueAssigned()) {
+                sb.append(f("%s:%s:%s;", attribute.getType().getStorkName(), attribute.getMandatory().toString(),
+                        attribute.getValue()));
+            } else {
+                sb.append(f("%s:%s;", attribute.getType().getStorkName(), attribute.getMandatory().toString()));
+            }
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	public String getMemcachedHostname() {
-		return this.properties.getProperty("memcached.hostname");
-	}
+    public String getMemcachedHostname() {
+        return this.properties.getProperty("memcached.hostname");
+    }
 
-	public Integer getMemcachedPort() {
-		return new Integer(this.properties.getProperty("memcached.port"));
-	}
+    public Integer getMemcachedPort() {
+        return new Integer(this.properties.getProperty("memcached.port"));
+    }
 }

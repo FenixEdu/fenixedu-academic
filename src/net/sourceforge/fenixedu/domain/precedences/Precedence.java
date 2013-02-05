@@ -15,71 +15,71 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Precedence extends Precedence_Base {
 
-	public Precedence() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public Precedence() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public Precedence(CurricularCourse curricularCourseToAddPrecedence, String className,
-			CurricularCourse precedentCurricularCourse, Integer number) {
-		this();
-		setCurricularCourse(curricularCourseToAddPrecedence);
+    public Precedence(CurricularCourse curricularCourseToAddPrecedence, String className,
+            CurricularCourse precedentCurricularCourse, Integer number) {
+        this();
+        setCurricularCourse(curricularCourseToAddPrecedence);
 
-		Class[] parameters = { Integer.class, Precedence.class, CurricularCourse.class };
-		Object[] arguments = { number, this, precedentCurricularCourse };
+        Class[] parameters = { Integer.class, Precedence.class, CurricularCourse.class };
+        Object[] arguments = { number, this, precedentCurricularCourse };
 
-		Constructor constructor;
-		try {
-			constructor = Class.forName(className).getConstructor(parameters);
-			constructor.newInstance(arguments);
-		} catch (Exception e) {
-			throw new DomainException("error.manager.impossible.insertPrecedence");
-		}
+        Constructor constructor;
+        try {
+            constructor = Class.forName(className).getConstructor(parameters);
+            constructor.newInstance(arguments);
+        } catch (Exception e) {
+            throw new DomainException("error.manager.impossible.insertPrecedence");
+        }
 
-	}
+    }
 
-	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-		List restrictions = getRestrictions();
+    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+        List restrictions = getRestrictions();
 
-		int size = restrictions.size();
+        int size = restrictions.size();
 
-		CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.get(0)).evaluate(precedenceContext);
+        CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.get(0)).evaluate(precedenceContext);
 
-		for (int i = 1; i < size; i++) {
-			Restriction restriction = (Restriction) restrictions.get(i);
-			evaluate = evaluate.and(restriction.evaluate(precedenceContext));
-		}
+        for (int i = 1; i < size; i++) {
+            Restriction restriction = (Restriction) restrictions.get(i);
+            evaluate = evaluate.and(restriction.evaluate(precedenceContext));
+        }
 
-		return evaluate;
-	}
+        return evaluate;
+    }
 
-	public void delete() {
+    public void delete() {
 
-		Iterator<Restriction> restrictionIterator = getRestrictionsIterator();
+        Iterator<Restriction> restrictionIterator = getRestrictionsIterator();
 
-		while (restrictionIterator.hasNext()) {
-			Restriction restriction = restrictionIterator.next();
+        while (restrictionIterator.hasNext()) {
+            Restriction restriction = restrictionIterator.next();
 
-			restrictionIterator.remove();
-			restriction.delete();
-		}
+            restrictionIterator.remove();
+            restriction.delete();
+        }
 
-		removeCurricularCourse();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+        removeCurricularCourse();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
-	public void mergePrecedences(Precedence sourcePrecedence) {
+    public void mergePrecedences(Precedence sourcePrecedence) {
 
-		Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
+        Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
 
-		while (restrictionsIterator.hasNext()) {
-			Restriction restriction = restrictionsIterator.next();
+        while (restrictionsIterator.hasNext()) {
+            Restriction restriction = restrictionsIterator.next();
 
-			restrictionsIterator.remove();
-			restriction.setPrecedence(this);
-		}
+            restrictionsIterator.remove();
+            restriction.setPrecedence(this);
+        }
 
-		sourcePrecedence.delete();
-	}
+        sourcePrecedence.delete();
+    }
 }

@@ -13,37 +13,37 @@ package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
 
 public class InterceptingRoomsActionException extends FenixActionException {
 
-	public static String key = "error.exception.intercepting.rooms";
+    public static String key = "error.exception.intercepting.rooms";
 
-	public InterceptingRoomsActionException(Throwable cause) {
-		super(key, cause);
-	}
+    public InterceptingRoomsActionException(Throwable cause) {
+        super(key, cause);
+    }
 
-	public InterceptingRoomsActionException(Object value, Throwable cause) {
-		super(key, value, cause);
-	}
+    public InterceptingRoomsActionException(Object value, Throwable cause) {
+        super(key, value, cause);
+    }
 
-	public InterceptingRoomsActionException(Object[] values, Throwable cause) {
-		super(key, values, cause);
-	}
+    public InterceptingRoomsActionException(Object[] values, Throwable cause) {
+        super(key, values, cause);
+    }
 
-	/**
-	 * @return String
-	 */
-	public static String getKey() {
-		return key;
-	}
+    /**
+     * @return String
+     */
+    public static String getKey() {
+        return key;
+    }
 
-	/**
-	 * Sets the key.
-	 * 
-	 * @param key
-	 *            The key to set
-	 */
-	public static void setKey(String key) {
-		InterceptingRoomsActionException.key = key;
-	}
+    /**
+     * Sets the key.
+     * 
+     * @param key
+     *            The key to set
+     */
+    public static void setKey(String key) {
+        InterceptingRoomsActionException.key = key;
+    }
 
-	// TODO find a way of internationalizing the message passed as argument to
-	// the exception error message of the resource bundle
+    // TODO find a way of internationalizing the message passed as argument to
+    // the exception error message of the resource bundle
 }

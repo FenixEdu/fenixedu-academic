@@ -19,28 +19,28 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadMasterDegrees extends FenixService {
 
-	@Service
-	public static List run(String executionYearString) throws FenixServiceException {
-		final ExecutionYear executionYear;
-		if (executionYearString != null) {
-			executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-		} else {
-			executionYear = ExecutionYear.readCurrentExecutionYear();
-		}
+    @Service
+    public static List run(String executionYearString) throws FenixServiceException {
+        final ExecutionYear executionYear;
+        if (executionYearString != null) {
+            executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
+        } else {
+            executionYear = ExecutionYear.readCurrentExecutionYear();
+        }
 
-		// Read the degrees
-		final List result = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
-		if (result == null || result.size() == 0) {
-			throw new NonExistingServiceException();
-		}
+        // Read the degrees
+        final List result = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
+        if (result == null || result.size() == 0) {
+            throw new NonExistingServiceException();
+        }
 
-		final List degrees = new ArrayList(result.size());
-		for (final Iterator iterator = result.iterator(); iterator.hasNext();) {
-			final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
-			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-			degrees.add(infoExecutionDegree);
-		}
+        final List degrees = new ArrayList(result.size());
+        for (final Iterator iterator = result.iterator(); iterator.hasNext();) {
+            final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            degrees.add(infoExecutionDegree);
+        }
 
-		return degrees;
-	}
+        return degrees;
+    }
 }

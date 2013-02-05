@@ -16,51 +16,51 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDTeachersFromTSDProcesses extends FenixService {
-	public List<TSDTeacherDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
-		List<TSDTeacherDTOEntry> tsdTeacherDTOEntryList = new ArrayList<TSDTeacherDTOEntry>();
-		Map<Teacher, TSDTeacherDTOEntry> teacherDTOMap = new HashMap<Teacher, TSDTeacherDTOEntry>();
+    public List<TSDTeacherDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
+        List<TSDTeacherDTOEntry> tsdTeacherDTOEntryList = new ArrayList<TSDTeacherDTOEntry>();
+        Map<Teacher, TSDTeacherDTOEntry> teacherDTOMap = new HashMap<Teacher, TSDTeacherDTOEntry>();
 
-		for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
-			TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
-			TeacherServiceDistribution tsd = null;
+        for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
+            TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+            TeacherServiceDistribution tsd = null;
 
-			tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
+            tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
 
-			List<ExecutionSemester> executionPeriodList =
-					getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
+            List<ExecutionSemester> executionPeriodList =
+                    getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
 
-			List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>(tsd.getTSDTeachers());
-			for (TSDTeacher tsdTeacher : tsdTeacherList) {
-				if (tsdTeacher instanceof TSDRealTeacher && teacherDTOMap.containsKey(((TSDRealTeacher) tsdTeacher).getTeacher())) {
-					TSDTeacherDTOEntry tsdTeacherDTOEntry = teacherDTOMap.get(((TSDRealTeacher) tsdTeacher).getTeacher());
-					tsdTeacherDTOEntry.addExecutionPeriodList(executionPeriodList);
-					tsdTeacherDTOEntry.addTSDTeacher(tsdTeacher);
-				} else {
-					TSDTeacherDTOEntry tsdTeacherDTOEntry = new TSDTeacherDTOEntry(tsdTeacher, executionPeriodList);
-					tsdTeacherDTOEntryList.add(tsdTeacherDTOEntry);
+            List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>(tsd.getTSDTeachers());
+            for (TSDTeacher tsdTeacher : tsdTeacherList) {
+                if (tsdTeacher instanceof TSDRealTeacher && teacherDTOMap.containsKey(((TSDRealTeacher) tsdTeacher).getTeacher())) {
+                    TSDTeacherDTOEntry tsdTeacherDTOEntry = teacherDTOMap.get(((TSDRealTeacher) tsdTeacher).getTeacher());
+                    tsdTeacherDTOEntry.addExecutionPeriodList(executionPeriodList);
+                    tsdTeacherDTOEntry.addTSDTeacher(tsdTeacher);
+                } else {
+                    TSDTeacherDTOEntry tsdTeacherDTOEntry = new TSDTeacherDTOEntry(tsdTeacher, executionPeriodList);
+                    tsdTeacherDTOEntryList.add(tsdTeacherDTOEntry);
 
-					if (tsdTeacher instanceof TSDRealTeacher) {
-						teacherDTOMap.put(((TSDRealTeacher) tsdTeacher).getTeacher(), tsdTeacherDTOEntry);
-					}
-				}
-			}
-		}
+                    if (tsdTeacher instanceof TSDRealTeacher) {
+                        teacherDTOMap.put(((TSDRealTeacher) tsdTeacher).getTeacher(), tsdTeacherDTOEntry);
+                    }
+                }
+            }
+        }
 
-		return tsdTeacherDTOEntryList;
-	}
+        return tsdTeacherDTOEntryList;
+    }
 
-	private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
-		List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
+    private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
+        List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-		if (executionSemester != null) {
-			executionPeriodList.add(executionSemester);
-		} else {
-			executionPeriodList.addAll(tsd.getTSDProcessPhase().getTSDProcess().getExecutionPeriods());
-		}
+        if (executionSemester != null) {
+            executionPeriodList.add(executionSemester);
+        } else {
+            executionPeriodList.addAll(tsd.getTSDProcessPhase().getTSDProcess().getExecutionPeriods());
+        }
 
-		return executionPeriodList;
-	}
+        return executionPeriodList;
+    }
 
 }

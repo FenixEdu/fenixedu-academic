@@ -7,5 +7,5 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public enum OperationType {
-	ADD, REMOVE, CHANGERESPONSIBLE_TRUE, CHANGERESPONSIBLE_FALSE
+    ADD, REMOVE, CHANGERESPONSIBLE_TRUE, CHANGERESPONSIBLE_FALSE
 }

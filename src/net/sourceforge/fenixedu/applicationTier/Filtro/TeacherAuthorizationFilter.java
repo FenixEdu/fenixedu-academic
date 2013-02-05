@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author jpvl
  */
 public class TeacherAuthorizationFilter extends AuthorizationByRoleFilter {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.TEACHER;
+    }
 }

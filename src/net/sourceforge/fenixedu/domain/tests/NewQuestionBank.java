@@ -4,26 +4,26 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class NewQuestionBank extends NewQuestionBank_Base {
 
-	public NewQuestionBank() {
-		super();
-	}
+    public NewQuestionBank() {
+        super();
+    }
 
-	public NewQuestionBank(Party owner) {
-		this();
+    public NewQuestionBank(Party owner) {
+        this();
 
-		this.setOwner(owner);
-	}
+        this.setOwner(owner);
+    }
 
-	@Override
-	public NewQuestionBank getQuestionBank() {
-		return this;
-	}
+    @Override
+    public NewQuestionBank getQuestionBank() {
+        return this;
+    }
 
-	@Override
-	public void delete() {
-		this.removeOwner();
+    @Override
+    public void delete() {
+        this.removeOwner();
 
-		super.delete();
-	}
+        super.delete();
+    }
 
 }

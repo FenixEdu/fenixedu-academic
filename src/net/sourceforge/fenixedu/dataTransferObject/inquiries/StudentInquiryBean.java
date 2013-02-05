@@ -39,296 +39,296 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentInquiryBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private DateTime startedWhen;
-	private Set<InquiryBlockDTO> curricularCourseBlocks;
-	private StudentInquiryRegistry inquiryRegistry;
-	Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries =
-			new TreeMap<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>>(new BeanComparator("name"));
+    private DateTime startedWhen;
+    private Set<InquiryBlockDTO> curricularCourseBlocks;
+    private StudentInquiryRegistry inquiryRegistry;
+    Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries =
+            new TreeMap<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>>(new BeanComparator("name"));
 
-	public StudentInquiryBean(StudentTeacherInquiryTemplate studentTeacherInquiryTemplate, StudentInquiryRegistry inquiryRegistry) {
-		setInquiryRegistry(inquiryRegistry);
-		setStartedWhen(new DateTime());
-		final ExecutionCourse executionCourse = getInquiryRegistry().getExecutionCourse();
-		final Set<ShiftType> shiftTypes = executionCourse.getShiftTypes();
+    public StudentInquiryBean(StudentTeacherInquiryTemplate studentTeacherInquiryTemplate, StudentInquiryRegistry inquiryRegistry) {
+        setInquiryRegistry(inquiryRegistry);
+        setStartedWhen(new DateTime());
+        final ExecutionCourse executionCourse = getInquiryRegistry().getExecutionCourse();
+        final Set<ShiftType> shiftTypes = executionCourse.getShiftTypes();
 
-		fillTeachersInquiriesWithTeachers(executionCourse, shiftTypes, studentTeacherInquiryTemplate);
-	}
+        fillTeachersInquiriesWithTeachers(executionCourse, shiftTypes, studentTeacherInquiryTemplate);
+    }
 
-	private void fillTeachersInquiriesWithTeachers(final ExecutionCourse executionCourse, final Set<ShiftType> shiftTypes,
-			StudentInquiryTemplate studentTeacherInquiryTemplate) {
-		Map<Person, Map<ShiftType, StudentTeacherInquiryBean>> teachersShifts =
-				new HashMap<Person, Map<ShiftType, StudentTeacherInquiryBean>>();
-		Map<ShiftType, Double> allTeachingServicesShiftType = null;
-		Set<ShiftType> nonAssociatedTeachersShiftTypes = null;
-		for (final Professorship professorship : executionCourse.getProfessorships()) {
+    private void fillTeachersInquiriesWithTeachers(final ExecutionCourse executionCourse, final Set<ShiftType> shiftTypes,
+            StudentInquiryTemplate studentTeacherInquiryTemplate) {
+        Map<Person, Map<ShiftType, StudentTeacherInquiryBean>> teachersShifts =
+                new HashMap<Person, Map<ShiftType, StudentTeacherInquiryBean>>();
+        Map<ShiftType, Double> allTeachingServicesShiftType = null;
+        Set<ShiftType> nonAssociatedTeachersShiftTypes = null;
+        for (final Professorship professorship : executionCourse.getProfessorships()) {
 
-			final Person person = professorship.getPerson();
-			if (!teachersShifts.containsKey(person)) {
-				teachersShifts.put(person, new HashMap<ShiftType, StudentTeacherInquiryBean>());
-			}
+            final Person person = professorship.getPerson();
+            if (!teachersShifts.containsKey(person)) {
+                teachersShifts.put(person, new HashMap<ShiftType, StudentTeacherInquiryBean>());
+            }
 
-			final Map<ShiftType, StudentTeacherInquiryBean> teacherShift = teachersShifts.get(person);
-			final AffiliatedTeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
+            final Map<ShiftType, StudentTeacherInquiryBean> teacherShift = teachersShifts.get(person);
+            final AffiliatedTeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
 
-			//	    Teacher teacher = person.getTeacher();
-			//	    boolean mandatoryTeachingService = false;
-			//	    if (teacher != null && teacher.isTeacherProfessorCategory(executionCourse.getExecutionPeriod())) {
-			//		mandatoryTeachingService = true;
-			//	    }
+            //	    Teacher teacher = person.getTeacher();
+            //	    boolean mandatoryTeachingService = false;
+            //	    if (teacher != null && teacher.isTeacherProfessorCategory(executionCourse.getExecutionPeriod())) {
+            //		mandatoryTeachingService = true;
+            //	    }
 
-			Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
-			for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-				for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
-					Double percentage = shiftTypesPercentageMap.get(shiftType);
-					if (percentage == null) {
-						percentage = degreeTeachingService.getPercentage();
-					} else {
-						percentage += degreeTeachingService.getPercentage();
-					}
-					shiftTypesPercentageMap.put(shiftType, percentage);
-				}
-			}
-			for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
-				for (ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
-					Double percentage = shiftTypesPercentageMap.get(shiftType);
-					if (percentage == null) {
-						percentage = nonRegularTeachingService.getPercentage();
-					} else {
-						percentage += nonRegularTeachingService.getPercentage();
-					}
-					shiftTypesPercentageMap.put(shiftType, percentage);
-				}
-			}
+            Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
+            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+                for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+                    Double percentage = shiftTypesPercentageMap.get(shiftType);
+                    if (percentage == null) {
+                        percentage = degreeTeachingService.getPercentage();
+                    } else {
+                        percentage += degreeTeachingService.getPercentage();
+                    }
+                    shiftTypesPercentageMap.put(shiftType, percentage);
+                }
+            }
+            for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
+                for (ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
+                    Double percentage = shiftTypesPercentageMap.get(shiftType);
+                    if (percentage == null) {
+                        percentage = nonRegularTeachingService.getPercentage();
+                    } else {
+                        percentage += nonRegularTeachingService.getPercentage();
+                    }
+                    shiftTypesPercentageMap.put(shiftType, percentage);
+                }
+            }
 
-			for (ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
-				Double percentage = shiftTypesPercentageMap.get(shiftType);
-				if (percentage >= 20) {
-					if (!teacherShift.containsKey(shiftType)) {
-						teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
-								studentTeacherInquiryTemplate));
-					}
-				}
-			}
+            for (ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
+                Double percentage = shiftTypesPercentageMap.get(shiftType);
+                if (percentage >= 20) {
+                    if (!teacherShift.containsKey(shiftType)) {
+                        teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
+                                studentTeacherInquiryTemplate));
+                    }
+                }
+            }
 
-			if (shiftTypesPercentageMap.isEmpty() /* && !mandatoryTeachingService */) {
-				if (allTeachingServicesShiftType == null) {
-					allTeachingServicesShiftType = getAllDegreeTeachingServices(executionCourse);
-				}
-				if (nonAssociatedTeachersShiftTypes == null) {
-					nonAssociatedTeachersShiftTypes = getNonAssociatedTeachersShiftTypes(executionCourse);
-				}
-				for (final ShiftType shiftType : shiftTypes) {
-					Double shiftTypePercentage = allTeachingServicesShiftType.get(shiftType);
-					if (shiftTypePercentage == null || shiftTypePercentage < 100.0
-							|| nonAssociatedTeachersShiftTypes.contains(shiftType)) {
-						teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
-								studentTeacherInquiryTemplate));
-					}
-				}
-			}
-		}
-		for (Entry<Person, Map<ShiftType, StudentTeacherInquiryBean>> entry : teachersShifts.entrySet()) {
-			ArrayList<StudentTeacherInquiryBean> studentTeachers =
-					new ArrayList<StudentTeacherInquiryBean>(entry.getValue().values());
-			Collections.sort(studentTeachers, new BeanComparator("shiftType"));
-			if (!studentTeachers.isEmpty()) {
-				getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
-			}
-		}
-	}
+            if (shiftTypesPercentageMap.isEmpty() /* && !mandatoryTeachingService */) {
+                if (allTeachingServicesShiftType == null) {
+                    allTeachingServicesShiftType = getAllDegreeTeachingServices(executionCourse);
+                }
+                if (nonAssociatedTeachersShiftTypes == null) {
+                    nonAssociatedTeachersShiftTypes = getNonAssociatedTeachersShiftTypes(executionCourse);
+                }
+                for (final ShiftType shiftType : shiftTypes) {
+                    Double shiftTypePercentage = allTeachingServicesShiftType.get(shiftType);
+                    if (shiftTypePercentage == null || shiftTypePercentage < 100.0
+                            || nonAssociatedTeachersShiftTypes.contains(shiftType)) {
+                        teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
+                                studentTeacherInquiryTemplate));
+                    }
+                }
+            }
+        }
+        for (Entry<Person, Map<ShiftType, StudentTeacherInquiryBean>> entry : teachersShifts.entrySet()) {
+            ArrayList<StudentTeacherInquiryBean> studentTeachers =
+                    new ArrayList<StudentTeacherInquiryBean>(entry.getValue().values());
+            Collections.sort(studentTeachers, new BeanComparator("shiftType"));
+            if (!studentTeachers.isEmpty()) {
+                getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
+            }
+        }
+    }
 
-	private Set<ShiftType> getNonAssociatedTeachersShiftTypes(ExecutionCourse executionCourse) {
-		Set<ShiftType> nonAssociatedTeachersShiftTypes = new HashSet<ShiftType>();
-		for (Shift shift : executionCourse.getAssociatedShifts()) {
-			if (shift.getDegreeTeachingServices().isEmpty() && shift.getNonRegularTeachingServices().isEmpty()) {
-				nonAssociatedTeachersShiftTypes.addAll(shift.getTypes());
-			}
-		}
-		return nonAssociatedTeachersShiftTypes;
-	}
+    private Set<ShiftType> getNonAssociatedTeachersShiftTypes(ExecutionCourse executionCourse) {
+        Set<ShiftType> nonAssociatedTeachersShiftTypes = new HashSet<ShiftType>();
+        for (Shift shift : executionCourse.getAssociatedShifts()) {
+            if (shift.getDegreeTeachingServices().isEmpty() && shift.getNonRegularTeachingServices().isEmpty()) {
+                nonAssociatedTeachersShiftTypes.addAll(shift.getTypes());
+            }
+        }
+        return nonAssociatedTeachersShiftTypes;
+    }
 
-	private Map<ShiftType, Double> getAllDegreeTeachingServices(ExecutionCourse executionCourse) {
-		Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
-		for (Professorship professorship : executionCourse.getProfessorships()) {
-			for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-				for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
-					Double percentage = shiftTypesPercentageMap.get(shiftType);
-					if (percentage == null) {
-						percentage = degreeTeachingService.getPercentage();
-					} else {
-						percentage += degreeTeachingService.getPercentage();
-					}
-					shiftTypesPercentageMap.put(shiftType, percentage);
-				}
-			}
-			for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
-				for (ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
-					Double percentage = shiftTypesPercentageMap.get(shiftType);
-					if (percentage == null) {
-						percentage = nonRegularTeachingService.getPercentage();
-					} else {
-						percentage += nonRegularTeachingService.getPercentage();
-					}
-					shiftTypesPercentageMap.put(shiftType, percentage);
-				}
-			}
-		}
-		return shiftTypesPercentageMap;
-	}
+    private Map<ShiftType, Double> getAllDegreeTeachingServices(ExecutionCourse executionCourse) {
+        Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
+        for (Professorship professorship : executionCourse.getProfessorships()) {
+            for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+                for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+                    Double percentage = shiftTypesPercentageMap.get(shiftType);
+                    if (percentage == null) {
+                        percentage = degreeTeachingService.getPercentage();
+                    } else {
+                        percentage += degreeTeachingService.getPercentage();
+                    }
+                    shiftTypesPercentageMap.put(shiftType, percentage);
+                }
+            }
+            for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
+                for (ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
+                    Double percentage = shiftTypesPercentageMap.get(shiftType);
+                    if (percentage == null) {
+                        percentage = nonRegularTeachingService.getPercentage();
+                    } else {
+                        percentage += nonRegularTeachingService.getPercentage();
+                    }
+                    shiftTypesPercentageMap.put(shiftType, percentage);
+                }
+            }
+        }
+        return shiftTypesPercentageMap;
+    }
 
-	public List<AffiliatedTeacherDTO> getOrderedTeachers() {
-		List<AffiliatedTeacherDTO> finalResult = new ArrayList<AffiliatedTeacherDTO>();
-		Set<AffiliatedTeacherDTO> theoricalShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
-		Set<AffiliatedTeacherDTO> praticalShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
-		Set<AffiliatedTeacherDTO> laboratoryShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
-		Set<AffiliatedTeacherDTO> otherShiftTypes = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
-		for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
-			if (containsShiftType(teacherDTO, ShiftType.TEORICA)) {
-				theoricalShiftType.add(teacherDTO);
-			} else if (containsShiftType(teacherDTO, ShiftType.PRATICA)) {
-				praticalShiftType.add(teacherDTO);
-			} else if (containsShiftType(teacherDTO, ShiftType.LABORATORIAL)) {
-				laboratoryShiftType.add(teacherDTO);
-			} else {
-				otherShiftTypes.add(teacherDTO);
-			}
-		}
-		finalResult.addAll(theoricalShiftType);
-		finalResult.addAll(praticalShiftType);
-		finalResult.addAll(laboratoryShiftType);
-		finalResult.addAll(otherShiftTypes);
-		return finalResult;
-	}
+    public List<AffiliatedTeacherDTO> getOrderedTeachers() {
+        List<AffiliatedTeacherDTO> finalResult = new ArrayList<AffiliatedTeacherDTO>();
+        Set<AffiliatedTeacherDTO> theoricalShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+        Set<AffiliatedTeacherDTO> praticalShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+        Set<AffiliatedTeacherDTO> laboratoryShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+        Set<AffiliatedTeacherDTO> otherShiftTypes = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+        for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
+            if (containsShiftType(teacherDTO, ShiftType.TEORICA)) {
+                theoricalShiftType.add(teacherDTO);
+            } else if (containsShiftType(teacherDTO, ShiftType.PRATICA)) {
+                praticalShiftType.add(teacherDTO);
+            } else if (containsShiftType(teacherDTO, ShiftType.LABORATORIAL)) {
+                laboratoryShiftType.add(teacherDTO);
+            } else {
+                otherShiftTypes.add(teacherDTO);
+            }
+        }
+        finalResult.addAll(theoricalShiftType);
+        finalResult.addAll(praticalShiftType);
+        finalResult.addAll(laboratoryShiftType);
+        finalResult.addAll(otherShiftTypes);
+        return finalResult;
+    }
 
-	private boolean containsShiftType(AffiliatedTeacherDTO teacherDTO, ShiftType shiftType) {
-		for (StudentTeacherInquiryBean studentTeacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
-			if (studentTeacherInquiryBean.getShiftType() == shiftType) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean containsShiftType(AffiliatedTeacherDTO teacherDTO, ShiftType shiftType) {
+        for (StudentTeacherInquiryBean studentTeacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
+            if (studentTeacherInquiryBean.getShiftType() == shiftType) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public String validateCurricularInquiry() {
-		String validationResult = null;
-		for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
-			validationResult = inquiryBlockDTO.validate(getCurricularCourseBlocks());
-			if (!Boolean.valueOf(validationResult)) {
-				return validationResult;
-			}
-		}
-		return Boolean.toString(true);
-	}
+    public String validateCurricularInquiry() {
+        String validationResult = null;
+        for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
+            validationResult = inquiryBlockDTO.validate(getCurricularCourseBlocks());
+            if (!Boolean.valueOf(validationResult)) {
+                return validationResult;
+            }
+        }
+        return Boolean.toString(true);
+    }
 
-	public Set getTeachers() {
-		return getTeachersInquiries().entrySet();
-	}
+    public Set getTeachers() {
+        return getTeachersInquiries().entrySet();
+    }
 
-	public Set<InquiryBlockDTO> getCurricularCourseBlocks() {
-		return curricularCourseBlocks;
-	}
+    public Set<InquiryBlockDTO> getCurricularCourseBlocks() {
+        return curricularCourseBlocks;
+    }
 
-	public void setCurricularCourseBlocks(Set<InquiryBlockDTO> curricularCourseBlocks) {
-		this.curricularCourseBlocks = curricularCourseBlocks;
-	}
+    public void setCurricularCourseBlocks(Set<InquiryBlockDTO> curricularCourseBlocks) {
+        this.curricularCourseBlocks = curricularCourseBlocks;
+    }
 
-	public StudentInquiryRegistry getInquiryRegistry() {
-		return inquiryRegistry;
-	}
+    public StudentInquiryRegistry getInquiryRegistry() {
+        return inquiryRegistry;
+    }
 
-	public void setInquiryRegistry(StudentInquiryRegistry inquiryRegistry) {
-		this.inquiryRegistry = inquiryRegistry;
-	}
+    public void setInquiryRegistry(StudentInquiryRegistry inquiryRegistry) {
+        this.inquiryRegistry = inquiryRegistry;
+    }
 
-	public Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> getTeachersInquiries() {
-		return teachersInquiries;
-	}
+    public Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> getTeachersInquiries() {
+        return teachersInquiries;
+    }
 
-	public void setTeachersInquiries(Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries) {
-		this.teachersInquiries = teachersInquiries;
-	}
+    public void setTeachersInquiries(Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries) {
+        this.teachersInquiries = teachersInquiries;
+    }
 
-	public DateTime getStartedWhen() {
-		return startedWhen;
-	}
+    public DateTime getStartedWhen() {
+        return startedWhen;
+    }
 
-	public void setStartedWhen(DateTime startedWhen) {
-		this.startedWhen = startedWhen;
-	}
+    public void setStartedWhen(DateTime startedWhen) {
+        this.startedWhen = startedWhen;
+    }
 
-	@Service
-	public void setAnsweredInquiry() {
-		if (getInquiryRegistry().getState() == InquiriesRegistryState.ANSWERED) {
-			return;
-		}
-		InquiryCourseAnswer inquiryCourseAnswer = new InquiryCourseAnswer();
-		DateTime endTime = new DateTime();
-		inquiryCourseAnswer.setAnswerDuration(endTime.getMillis() - getStartedWhen().getMillis());
-		inquiryCourseAnswer.setAttendenceClassesPercentage(getInquiryRegistry().getAttendenceClassesPercentage());
+    @Service
+    public void setAnsweredInquiry() {
+        if (getInquiryRegistry().getState() == InquiriesRegistryState.ANSWERED) {
+            return;
+        }
+        InquiryCourseAnswer inquiryCourseAnswer = new InquiryCourseAnswer();
+        DateTime endTime = new DateTime();
+        inquiryCourseAnswer.setAnswerDuration(endTime.getMillis() - getStartedWhen().getMillis());
+        inquiryCourseAnswer.setAttendenceClassesPercentage(getInquiryRegistry().getAttendenceClassesPercentage());
 
-		inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getRegistration()
-				.getEntryGrade()));
-		inquiryCourseAnswer.setExecutionCourse(getInquiryRegistry().getExecutionCourse());
-		inquiryCourseAnswer.setExecutionDegreeStudent(getInquiryRegistry().getRegistration().getLastStudentCurricularPlan()
-				.getDegreeCurricularPlan().getMostRecentExecutionDegree());
-		ExecutionDegree executionDegreeCourse =
-				ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(getInquiryRegistry().getCurricularCourse()
-						.getDegreeCurricularPlan(), getInquiryRegistry().getExecutionPeriod().getExecutionYear());
-		inquiryCourseAnswer.setExecutionDegreeCourse(executionDegreeCourse);
-		inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
+        inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getRegistration()
+                .getEntryGrade()));
+        inquiryCourseAnswer.setExecutionCourse(getInquiryRegistry().getExecutionCourse());
+        inquiryCourseAnswer.setExecutionDegreeStudent(getInquiryRegistry().getRegistration().getLastStudentCurricularPlan()
+                .getDegreeCurricularPlan().getMostRecentExecutionDegree());
+        ExecutionDegree executionDegreeCourse =
+                ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(getInquiryRegistry().getCurricularCourse()
+                        .getDegreeCurricularPlan(), getInquiryRegistry().getExecutionPeriod().getExecutionYear());
+        inquiryCourseAnswer.setExecutionDegreeCourse(executionDegreeCourse);
+        inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 
-		inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
-		inquiryCourseAnswer.setResponseDateTime(endTime);
-		inquiryCourseAnswer.setStudentType(getInquiryRegistry().getRegistration().getRegistrationAgreement());
-		inquiryCourseAnswer.setStudyDaysSpentInExamsSeason(getInquiryRegistry().getStudyDaysSpentInExamsSeason());
-		for (Shift enrolledShift : getInquiryRegistry().getRegistration().getShiftsFor(getInquiryRegistry().getExecutionCourse())) {
-			inquiryCourseAnswer.addEnrolledShifts(enrolledShift);
-		}
-		final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod =
-				getInquiryRegistry().getRegistration().getStudent()
-						.getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
-		inquiryCourseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod
-				.getWeeklyHoursSpentInClassesSeason());
-		inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());
+        inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
+        inquiryCourseAnswer.setResponseDateTime(endTime);
+        inquiryCourseAnswer.setStudentType(getInquiryRegistry().getRegistration().getRegistrationAgreement());
+        inquiryCourseAnswer.setStudyDaysSpentInExamsSeason(getInquiryRegistry().getStudyDaysSpentInExamsSeason());
+        for (Shift enrolledShift : getInquiryRegistry().getRegistration().getShiftsFor(getInquiryRegistry().getExecutionCourse())) {
+            inquiryCourseAnswer.addEnrolledShifts(enrolledShift);
+        }
+        final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod =
+                getInquiryRegistry().getRegistration().getStudent()
+                        .getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
+        inquiryCourseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod
+                .getWeeklyHoursSpentInClassesSeason());
+        inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());
 
-		inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
-		inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
-		for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
-			for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
-				for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-					if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
-						QuestionAnswer questionAnswer =
-								new QuestionAnswer(inquiryCourseAnswer, questionDTO.getInquiryQuestion(),
-										questionDTO.getFinalValue());
-					}
-				}
-			}
-		}
+        inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
+        inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
+        for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
+            for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
+                for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+                    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+                        QuestionAnswer questionAnswer =
+                                new QuestionAnswer(inquiryCourseAnswer, questionDTO.getInquiryQuestion(),
+                                        questionDTO.getFinalValue());
+                    }
+                }
+            }
+        }
 
-		for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
-			for (StudentTeacherInquiryBean teacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
-				if (teacherInquiryBean.isFilled() && teacherInquiryBean.isInquiryFilledIn()) {
-					InquiryStudentTeacherAnswer inquiryTeacherAnswer = new InquiryStudentTeacherAnswer();
+        for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
+            for (StudentTeacherInquiryBean teacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
+                if (teacherInquiryBean.isFilled() && teacherInquiryBean.isInquiryFilledIn()) {
+                    InquiryStudentTeacherAnswer inquiryTeacherAnswer = new InquiryStudentTeacherAnswer();
 
-					inquiryTeacherAnswer.setProfessorship(teacherInquiryBean.getExecutionCourse().getProfessorship(
-							teacherDTO.getTeacher()));
+                    inquiryTeacherAnswer.setProfessorship(teacherInquiryBean.getExecutionCourse().getProfessorship(
+                            teacherDTO.getTeacher()));
 
-					inquiryTeacherAnswer.setShiftType(teacherInquiryBean.getShiftType());
-					inquiryTeacherAnswer.setInquiryCourseAnswer(inquiryCourseAnswer);
-					for (InquiryBlockDTO inquiryBlockDTO : teacherInquiryBean.getTeacherInquiryBlocks()) {
-						for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
-							for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-								QuestionAnswer questionAnswer =
-										new QuestionAnswer(inquiryTeacherAnswer, questionDTO.getInquiryQuestion(),
-												questionDTO.getFinalValue());
-							}
-						}
-					}
-				}
-			}
-		}
-		getInquiryRegistry().setState(InquiriesRegistryState.ANSWERED);
-	}
+                    inquiryTeacherAnswer.setShiftType(teacherInquiryBean.getShiftType());
+                    inquiryTeacherAnswer.setInquiryCourseAnswer(inquiryCourseAnswer);
+                    for (InquiryBlockDTO inquiryBlockDTO : teacherInquiryBean.getTeacherInquiryBlocks()) {
+                        for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
+                            for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+                                QuestionAnswer questionAnswer =
+                                        new QuestionAnswer(inquiryTeacherAnswer, questionDTO.getInquiryQuestion(),
+                                                questionDTO.getFinalValue());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        getInquiryRegistry().setState(InquiriesRegistryState.ANSWERED);
+    }
 }

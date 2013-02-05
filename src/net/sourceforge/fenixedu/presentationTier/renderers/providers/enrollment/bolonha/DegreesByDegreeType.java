@@ -11,29 +11,29 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesByDegreeType implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
-		List<Degree> result = null;
-		if (optionalEnrollmentBean.hasDegreeType()) {
-			result = Degree.readAllByDegreeType(optionalEnrollmentBean.getDegreeType());
-			Collections.sort(result, Degree.COMPARATOR_BY_NAME);
-		} else {
-			result = Collections.EMPTY_LIST;
-		}
+        final BolonhaStudentOptionalEnrollmentBean optionalEnrollmentBean = (BolonhaStudentOptionalEnrollmentBean) source;
+        List<Degree> result = null;
+        if (optionalEnrollmentBean.hasDegreeType()) {
+            result = Degree.readAllByDegreeType(optionalEnrollmentBean.getDegreeType());
+            Collections.sort(result, Degree.COMPARATOR_BY_NAME);
+        } else {
+            result = Collections.EMPTY_LIST;
+        }
 
-		final Degree currentSelectedDegree = (Degree) currentValue;
-		if (!result.contains(currentSelectedDegree)) {
-			optionalEnrollmentBean.setDegree(null);
-		}
+        final Degree currentSelectedDegree = (Degree) currentValue;
+        if (!result.contains(currentSelectedDegree)) {
+            optionalEnrollmentBean.setDegree(null);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

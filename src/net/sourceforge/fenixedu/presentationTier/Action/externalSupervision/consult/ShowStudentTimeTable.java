@@ -24,27 +24,27 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewTimetable", module = "externalSupervision", formBean = "studentTimeTableForm")
 @Forwards({ @Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp"),
-		@Forward(name = "showTimeTable", path = "/externalSupervision/consult/showTimetable.jsp") })
+        @Forward(name = "showTimeTable", path = "/externalSupervision/consult/showTimetable.jsp") })
 public class ShowStudentTimeTable extends ViewStudentTimeTable {
 
-	public ActionForward prepareForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward prepareForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-		final String personId = request.getParameter("personId");
-		Person person = AbstractDomainObject.fromExternalId(personId);
-		final Student student = person.getStudent();
+        final String personId = request.getParameter("personId");
+        Person person = AbstractDomainObject.fromExternalId(personId);
+        final Student student = person.getStudent();
 
-		request.setAttribute("student", student);
+        request.setAttribute("student", student);
 
-		List<Registration> registrations = person.getStudent().getActiveRegistrations();
-		if (registrations.size() == 0) {
-			return forwardToShowTimeTableForSupervisor(person.getStudent().getLastRegistration(), mapping, request);
-		} else if (registrations.size() == 1) {
-			return forwardToShowTimeTableForSupervisor(registrations.get(0), mapping, request);
-		} else {
-			request.setAttribute("registrations", registrations);
-			return mapping.findForward("chooseRegistration");
-		}
-	}
+        List<Registration> registrations = person.getStudent().getActiveRegistrations();
+        if (registrations.size() == 0) {
+            return forwardToShowTimeTableForSupervisor(person.getStudent().getLastRegistration(), mapping, request);
+        } else if (registrations.size() == 1) {
+            return forwardToShowTimeTableForSupervisor(registrations.get(0), mapping, request);
+        } else {
+            request.setAttribute("registrations", registrations);
+            return mapping.findForward("chooseRegistration");
+        }
+    }
 
 }

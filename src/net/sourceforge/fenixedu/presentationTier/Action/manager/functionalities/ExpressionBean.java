@@ -14,41 +14,41 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ExpressionBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String expression;
+    private String expression;
 
-	public ExpressionBean() {
-		super();
-	}
+    public ExpressionBean() {
+        super();
+    }
 
-	public ExpressionBean(final String expression) {
-		setExpression(expression);
-	}
+    public ExpressionBean(final String expression) {
+        setExpression(expression);
+    }
 
-	public ExpressionBean(final Group group) {
-		this(group == null ? null : group.getExpression());
-	}
+    public ExpressionBean(final Group group) {
+        this(group == null ? null : group.getExpression());
+    }
 
-	public ExpressionBean(final Content content) {
-		this(content == null ? null : content.getPermittedGroup());
-	}
+    public ExpressionBean(final Content content) {
+        this(content == null ? null : content.getPermittedGroup());
+    }
 
-	public String getExpression() {
-		return this.expression;
-	}
+    public String getExpression() {
+        return this.expression;
+    }
 
-	public void setExpression(String expression) {
-		if (expression == null) {
-			this.expression = null;
-		} else {
-			// replace \r\n or \r newlines
-			this.expression = expression.replaceAll("\\r\\n?", "\n");
-		}
-	}
+    public void setExpression(String expression) {
+        if (expression == null) {
+            this.expression = null;
+        } else {
+            // replace \r\n or \r newlines
+            this.expression = expression.replaceAll("\\r\\n?", "\n");
+        }
+    }
 
-	public boolean isEmpty() {
-		return StringUtils.isBlank(this.expression);
-	}
+    public boolean isEmpty() {
+        return StringUtils.isBlank(this.expression);
+    }
 
 }

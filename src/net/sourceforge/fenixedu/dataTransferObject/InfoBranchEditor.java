@@ -4,108 +4,108 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 public class InfoBranchEditor extends InfoBranch {
 
-	private String name;
+    private String name;
 
-	private String nameEn;
+    private String nameEn;
 
-	private String code;
+    private String code;
 
-	private Integer specializationCredits;
+    private Integer specializationCredits;
 
-	private Integer secondaryCredits;
+    private Integer secondaryCredits;
 
-	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
-	private BranchType branchType;
+    private BranchType branchType;
 
-	private String acronym;
+    private String acronym;
 
-	private Integer idInternal;
+    private Integer idInternal;
 
-	public InfoBranchEditor() {
-		super(null);
-	}
+    public InfoBranchEditor() {
+        super(null);
+    }
 
-	@Override
-	public String getAcronym() {
-		return acronym;
-	}
+    @Override
+    public String getAcronym() {
+        return acronym;
+    }
 
-	public void setAcronym(String acronym) {
-		this.acronym = acronym;
-	}
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
+    }
 
-	@Override
-	public BranchType getBranchType() {
-		return branchType;
-	}
+    @Override
+    public BranchType getBranchType() {
+        return branchType;
+    }
 
-	public void setBranchType(BranchType branchType) {
-		this.branchType = branchType;
-	}
+    public void setBranchType(BranchType branchType) {
+        this.branchType = branchType;
+    }
 
-	@Override
-	public String getCode() {
-		return code;
-	}
+    @Override
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-		return infoDegreeCurricularPlan;
-	}
+    @Override
+    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+        return infoDegreeCurricularPlan;
+    }
 
-	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-	}
+    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+        this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String getNameEn() {
-		return nameEn;
-	}
+    @Override
+    public String getNameEn() {
+        return nameEn;
+    }
 
-	public void setNameEn(String nameEn) {
-		this.nameEn = nameEn;
-	}
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
 
-	@Override
-	public Integer getSecondaryCredits() {
-		return secondaryCredits;
-	}
+    @Override
+    public Integer getSecondaryCredits() {
+        return secondaryCredits;
+    }
 
-	public void setSecondaryCredits(Integer secondaryCredits) {
-		this.secondaryCredits = secondaryCredits;
-	}
+    public void setSecondaryCredits(Integer secondaryCredits) {
+        this.secondaryCredits = secondaryCredits;
+    }
 
-	@Override
-	public Integer getSpecializationCredits() {
-		return specializationCredits;
-	}
+    @Override
+    public Integer getSpecializationCredits() {
+        return specializationCredits;
+    }
 
-	public void setSpecializationCredits(Integer specializationCredits) {
-		this.specializationCredits = specializationCredits;
-	}
+    public void setSpecializationCredits(Integer specializationCredits) {
+        this.specializationCredits = specializationCredits;
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return idInternal;
-	}
+    @Override
+    public Integer getIdInternal() {
+        return idInternal;
+    }
 
-	@Override
-	public void setIdInternal(Integer idInternal) {
-		this.idInternal = idInternal;
-	}
+    @Override
+    public void setIdInternal(Integer idInternal) {
+        this.idInternal = idInternal;
+    }
 
 }

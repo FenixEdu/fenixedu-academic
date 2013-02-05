@@ -17,84 +17,84 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseView {
 
-	public static final Comparator<ExecutionCourseView> COMPARATOR_BY_NAME = new Comparator<ExecutionCourseView>() {
+    public static final Comparator<ExecutionCourseView> COMPARATOR_BY_NAME = new Comparator<ExecutionCourseView>() {
 
-		@Override
-		public int compare(ExecutionCourseView o1, ExecutionCourseView o2) {
-			return o1.getExecutionCourseName().compareTo(o2.getExecutionCourseName());
-		}
+        @Override
+        public int compare(ExecutionCourseView o1, ExecutionCourseView o2) {
+            return o1.getExecutionCourseName().compareTo(o2.getExecutionCourseName());
+        }
 
-	};
+    };
 
-	private final ExecutionCourse executionCourse;
+    private final ExecutionCourse executionCourse;
 
-	public ExecutionCourseView(final ExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
+    public ExecutionCourseView(final ExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
 
-	private Integer curricularYear;
+    private Integer curricularYear;
 
-	private String anotation;
+    private String anotation;
 
-	private String degreeCurricularPlanAnotation;
+    private String degreeCurricularPlanAnotation;
 
-	public String getAnotation() {
-		return anotation;
-	}
+    public String getAnotation() {
+        return anotation;
+    }
 
-	public void setAnotation(String anotation) {
-		this.anotation = anotation;
-	}
+    public void setAnotation(String anotation) {
+        this.anotation = anotation;
+    }
 
-	public Integer getCurricularYear() {
-		return curricularYear;
-	}
+    public Integer getCurricularYear() {
+        return curricularYear;
+    }
 
-	public void setCurricularYear(Integer curricularYear) {
-		this.curricularYear = curricularYear;
-	}
+    public void setCurricularYear(Integer curricularYear) {
+        this.curricularYear = curricularYear;
+    }
 
-	public String getDegreeCurricularPlanAnotation() {
-		return degreeCurricularPlanAnotation;
-	}
+    public String getDegreeCurricularPlanAnotation() {
+        return degreeCurricularPlanAnotation;
+    }
 
-	public void setDegreeCurricularPlanAnotation(String degreeCurricularPlanAnotation) {
-		this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
-	}
+    public void setDegreeCurricularPlanAnotation(String degreeCurricularPlanAnotation) {
+        this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
+    }
 
-	public ExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public ExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public String getExecutionCourseName() {
-		return getExecutionCourse().getNome();
-	}
+    public String getExecutionCourseName() {
+        return getExecutionCourse().getNome();
+    }
 
-	public Integer getExecutionCourseOID() {
-		return getExecutionCourse().getIdInternal();
-	}
+    public Integer getExecutionCourseOID() {
+        return getExecutionCourse().getIdInternal();
+    }
 
-	public Integer getSemester() {
-		return getExecutionCourse().getExecutionPeriod().getSemester();
-	}
+    public Integer getSemester() {
+        return getExecutionCourse().getExecutionPeriod().getSemester();
+    }
 
-	public Integer getExecutionPeriodOID() {
-		return getExecutionCourse().getExecutionPeriod().getIdInternal();
-	}
+    public Integer getExecutionPeriodOID() {
+        return getExecutionCourse().getExecutionPeriod().getIdInternal();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof ExecutionCourseView) {
-			final ExecutionCourseView executionCourseView = (ExecutionCourseView) obj;
-			final Integer curricularYear = executionCourseView.getCurricularYear();
-			return getExecutionCourse() == executionCourseView.getExecutionCourse() && getCurricularYear().equals(curricularYear);
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ExecutionCourseView) {
+            final ExecutionCourseView executionCourseView = (ExecutionCourseView) obj;
+            final Integer curricularYear = executionCourseView.getCurricularYear();
+            return getExecutionCourse() == executionCourseView.getExecutionCourse() && getCurricularYear().equals(curricularYear);
+        }
+        return false;
+    }
 
-	@Override
-	public int hashCode() {
-		return getExecutionCourse().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getExecutionCourse().hashCode();
+    }
 
 }

@@ -15,21 +15,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurricularCourseDegreeExecutionSemesterProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
 
-		final Collection<ExecutionSemester> result = new TreeSet<ExecutionSemester>(new ReverseComparator());
+        final Collection<ExecutionSemester> result = new TreeSet<ExecutionSemester>(new ReverseComparator());
 
-		for (final ExecutionYear executionYear : bean.getCurricularCourse().getDegreeCurricularPlan().getExecutionYears()) {
-			result.addAll(executionYear.getExecutionPeriods());
-		}
+        for (final ExecutionYear executionYear : bean.getCurricularCourse().getDegreeCurricularPlan().getExecutionYears()) {
+            result.addAll(executionYear.getExecutionPeriods());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

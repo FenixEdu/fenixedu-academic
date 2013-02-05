@@ -9,15 +9,15 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PhdDocumentRequestTypeProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(new DocumentRequestType[] { DocumentRequestType.DIPLOMA_REQUEST,
-				DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, DocumentRequestType.PHD_FINALIZATION_CERTIFICATE });
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(new DocumentRequestType[] { DocumentRequestType.DIPLOMA_REQUEST,
+                DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, DocumentRequestType.PHD_FINALIZATION_CERTIFICATE });
+    }
 
 }

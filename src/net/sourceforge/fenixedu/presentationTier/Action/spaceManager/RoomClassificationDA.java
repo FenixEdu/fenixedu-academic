@@ -23,58 +23,56 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/roomClassification", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "ViewRoomClassifications",
-		path = "/spaceManager/roomClassification.jsp",
-		tileProperties = @Tile(title = "private.spacemanagement.roomclassification")) })
+@Forwards(value = { @Forward(name = "ViewRoomClassifications", path = "/spaceManager/roomClassification.jsp",
+        tileProperties = @Tile(title = "private.spacemanagement.roomclassification")) })
 public class RoomClassificationDA extends FenixDispatchAction {
 
-	public ActionForward viewRoomClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewRoomClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final SortedSet<RoomClassification> sortedRoomClassifications =
-				RoomClassification.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());
-		request.setAttribute("roomClassifications", sortedRoomClassifications);
-		request.setAttribute("roomClassificationCreator", new RoomClassification.RoomClassificationFactoryCreator());
-		return mapping.findForward("ViewRoomClassifications");
-	}
+        final SortedSet<RoomClassification> sortedRoomClassifications =
+                RoomClassification.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());
+        request.setAttribute("roomClassifications", sortedRoomClassifications);
+        request.setAttribute("roomClassificationCreator", new RoomClassification.RoomClassificationFactoryCreator());
+        return mapping.findForward("ViewRoomClassifications");
+    }
 
-	public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		try {
-			executeFactoryMethod();
-		} catch (DomainException e) {
-			addActionMessage(request, e.getKey(), e.getArgs());
-		}
-		return viewRoomClassifications(mapping, form, request, response);
-	}
+    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        try {
+            executeFactoryMethod();
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+        return viewRoomClassifications(mapping, form, request, response);
+    }
 
-	public ActionForward prepareRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final RoomClassification roomClassification = retrieveRoomClassification(request);
-		final RoomClassificationFactoryEditor roomClassificationFactoryEditor =
-				new RoomClassificationFactoryEditor(roomClassification);
-		request.setAttribute("roomClassificationEditor", roomClassificationFactoryEditor);
-		return viewRoomClassifications(mapping, form, request, response);
-	}
+    public ActionForward prepareRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final RoomClassification roomClassification = retrieveRoomClassification(request);
+        final RoomClassificationFactoryEditor roomClassificationFactoryEditor =
+                new RoomClassificationFactoryEditor(roomClassification);
+        request.setAttribute("roomClassificationEditor", roomClassificationFactoryEditor);
+        return viewRoomClassifications(mapping, form, request, response);
+    }
 
-	public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final RoomClassification roomClassification = retrieveRoomClassification(request);
+        final RoomClassification roomClassification = retrieveRoomClassification(request);
 
-		try {
-			DeleteRoomClassification.run(roomClassification);
-		} catch (DomainException e) {
-			addActionMessage(request, e.getKey(), e.getArgs());
-		}
-		return viewRoomClassifications(mapping, form, request, response);
-	}
+        try {
+            DeleteRoomClassification.run(roomClassification);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+        return viewRoomClassifications(mapping, form, request, response);
+    }
 
-	private RoomClassification retrieveRoomClassification(HttpServletRequest request) {
-		final String roomClassificationIDString = request.getParameter("roomClassificationID");
-		final Integer roomClassificationID = Integer.valueOf(roomClassificationIDString);
-		return rootDomainObject.readRoomClassificationByOID(roomClassificationID);
-	}
+    private RoomClassification retrieveRoomClassification(HttpServletRequest request) {
+        final String roomClassificationIDString = request.getParameter("roomClassificationID");
+        final Integer roomClassificationID = Integer.valueOf(roomClassificationIDString);
+        return rootDomainObject.readRoomClassificationByOID(roomClassificationID);
+    }
 
 }

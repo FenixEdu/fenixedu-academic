@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TeacherProfessionalCategoryProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		List<ProfessionalCategory> result = new ArrayList<ProfessionalCategory>();
-		for (ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategories()) {
-			if (professionalCategory.getCategoryType().equals(CategoryType.TEACHER)) {
-				result.add(professionalCategory);
-			}
-		}
-		return result;
-	}
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        List<ProfessionalCategory> result = new ArrayList<ProfessionalCategory>();
+        for (ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategories()) {
+            if (professionalCategory.getCategoryType().equals(CategoryType.TEACHER)) {
+                result.add(professionalCategory);
+            }
+        }
+        return result;
+    }
 
 }

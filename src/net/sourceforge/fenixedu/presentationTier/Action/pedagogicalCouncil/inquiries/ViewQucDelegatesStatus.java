@@ -38,178 +38,176 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(path = "/qucDelegatesStatus", module = "pedagogicalCouncil")
-@Forwards({ @Forward(
-		name = "viewQucDelegatesState",
-		path = "/pedagogicalCouncil/inquiries/viewQucDelegatesStatus.jsp",
-		tileProperties = @Tile(title = "private.pedagogiccouncil.control.delegatesstatusresponse")) })
+@Forwards({ @Forward(name = "viewQucDelegatesState", path = "/pedagogicalCouncil/inquiries/viewQucDelegatesStatus.jsp",
+        tileProperties = @Tile(title = "private.pedagogiccouncil.control.delegatesstatusresponse")) })
 public class ViewQucDelegatesStatus extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final DelegateInquiryTemplate delegateInquiryTemplate =
-				DelegateInquiryTemplate.getTemplateByExecutionPeriod(ExecutionSemester.readActualExecutionSemester()
-						.getPreviousExecutionPeriod());
-		if (delegateInquiryTemplate != null) {
-			request.setAttribute("delegateInquiryOID", delegateInquiryTemplate.getExternalId());
-		}
-		return mapping.findForward("viewQucDelegatesState");
-	}
+        final DelegateInquiryTemplate delegateInquiryTemplate =
+                DelegateInquiryTemplate.getTemplateByExecutionPeriod(ExecutionSemester.readActualExecutionSemester()
+                        .getPreviousExecutionPeriod());
+        if (delegateInquiryTemplate != null) {
+            request.setAttribute("delegateInquiryOID", delegateInquiryTemplate.getExternalId());
+        }
+        return mapping.findForward("viewQucDelegatesState");
+    }
 
-	public ActionForward dowloadReport(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward dowloadReport(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final DelegateInquiryTemplate delegateInquiryTemplate =
-				AbstractDomainObject.fromExternalId(getFromRequest(request, "delegateInquiryOID").toString());
+        final DelegateInquiryTemplate delegateInquiryTemplate =
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "delegateInquiryOID").toString());
 
-		Map<Degree, List<DelegateBean>> delegatesMap = new HashMap<Degree, List<DelegateBean>>();
-		final ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
-		final List<Degree> degreeList =
-				Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-						DegreeType.BOLONHA_MASTER_DEGREE);
+        Map<Degree, List<DelegateBean>> delegatesMap = new HashMap<Degree, List<DelegateBean>>();
+        final ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
+        final List<Degree> degreeList =
+                Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+                        DegreeType.BOLONHA_MASTER_DEGREE);
 
-		for (Degree degree : degreeList) {
-			Map<Integer, YearDelegate> yearDelegateByYear = new HashMap<Integer, YearDelegate>();
-			for (Student student : degree.getAllDelegatesByExecutionYearAndFunctionType(executionPeriod.getExecutionYear(),
-					FunctionType.DELEGATE_OF_YEAR)) {
-				YearDelegate yearDelegate = getYearDelegate(student, executionPeriod);
-				YearDelegate yearDelegateMap = yearDelegateByYear.get(yearDelegate.getCurricularYear().getYear());
-				if (yearDelegateMap == null) {
-					yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
-				} else {
-					if (yearDelegate.isAfter(yearDelegateMap)) {
-						yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
-					}
-				}
-			}
-			for (YearDelegate yearDelegate : yearDelegateByYear.values()) {
-				DelegateBean delegateBean = getCoursesToComment(degree, yearDelegate, executionPeriod);
-				if (delegateBean != null) {
-					List<DelegateBean> delegatesList = delegatesMap.get(degree);
-					if (delegatesList == null) {
-						delegatesList = new ArrayList<DelegateBean>();
-						delegatesMap.put(degree, delegatesList);
-					}
-					delegatesList.add(delegateBean);
-				}
-			}
-		}
+        for (Degree degree : degreeList) {
+            Map<Integer, YearDelegate> yearDelegateByYear = new HashMap<Integer, YearDelegate>();
+            for (Student student : degree.getAllDelegatesByExecutionYearAndFunctionType(executionPeriod.getExecutionYear(),
+                    FunctionType.DELEGATE_OF_YEAR)) {
+                YearDelegate yearDelegate = getYearDelegate(student, executionPeriod);
+                YearDelegate yearDelegateMap = yearDelegateByYear.get(yearDelegate.getCurricularYear().getYear());
+                if (yearDelegateMap == null) {
+                    yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
+                } else {
+                    if (yearDelegate.isAfter(yearDelegateMap)) {
+                        yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
+                    }
+                }
+            }
+            for (YearDelegate yearDelegate : yearDelegateByYear.values()) {
+                DelegateBean delegateBean = getCoursesToComment(degree, yearDelegate, executionPeriod);
+                if (delegateBean != null) {
+                    List<DelegateBean> delegatesList = delegatesMap.get(degree);
+                    if (delegatesList == null) {
+                        delegatesList = new ArrayList<DelegateBean>();
+                        delegatesMap.put(degree, delegatesList);
+                    }
+                    delegatesList.add(delegateBean);
+                }
+            }
+        }
 
-		Spreadsheet spreadsheet = createReport(delegatesMap);
-		StringBuilder filename = new StringBuilder("Delegados_em_falta_");
-		filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
+        Spreadsheet spreadsheet = createReport(delegatesMap);
+        StringBuilder filename = new StringBuilder("Delegados_em_falta_");
+        filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
 
-		OutputStream outputStream = response.getOutputStream();
-		spreadsheet.exportToXLSSheet(outputStream);
-		outputStream.flush();
-		outputStream.close();
-		return null;
-	}
+        OutputStream outputStream = response.getOutputStream();
+        spreadsheet.exportToXLSSheet(outputStream);
+        outputStream.flush();
+        outputStream.close();
+        return null;
+    }
 
-	private Spreadsheet createReport(Map<Degree, List<DelegateBean>> delegatesMap) throws IOException {
-		Spreadsheet spreadsheet = new Spreadsheet("Delegados em falta");
-		spreadsheet.setHeader("Curso");
-		spreadsheet.setHeader("Delegado");
-		spreadsheet.setHeader("Tipo Delegado");
-		spreadsheet.setHeader("Ano");
-		spreadsheet.setHeader("Telefone");
-		spreadsheet.setHeader("Email");
-		spreadsheet.setHeader("Disciplinas");
+    private Spreadsheet createReport(Map<Degree, List<DelegateBean>> delegatesMap) throws IOException {
+        Spreadsheet spreadsheet = new Spreadsheet("Delegados em falta");
+        spreadsheet.setHeader("Curso");
+        spreadsheet.setHeader("Delegado");
+        spreadsheet.setHeader("Tipo Delegado");
+        spreadsheet.setHeader("Ano");
+        spreadsheet.setHeader("Telefone");
+        spreadsheet.setHeader("Email");
+        spreadsheet.setHeader("Disciplinas");
 
-		for (Degree degree : delegatesMap.keySet()) {
-			for (DelegateBean delegateBean : delegatesMap.get(degree)) {
-				Row row = spreadsheet.addRow();
-				row.setCell(degree.getDegreeType().getLocalizedName() + " - " + degree.getNameI18N().toString());
-				row.setCell(delegateBean.getYearDelegate().getPerson().getName());
-				row.setCell(delegateBean.getYearDelegate().getCurricularYear().getYear());
-				row.setCell(delegateBean.getYearDelegate().getPerson().getDefaultMobilePhoneNumber());
-				row.setCell(delegateBean.getYearDelegate().getPerson().getDefaultEmailAddressValue());
-				StringBuilder sb = new StringBuilder();
-				for (ExecutionCourse executionCourse : delegateBean.getOrderedCoursesToComment()) {
-					sb.append(executionCourse.getName()).append(", ");
-				}
-				row.setCell(sb.toString());
-			}
-		}
+        for (Degree degree : delegatesMap.keySet()) {
+            for (DelegateBean delegateBean : delegatesMap.get(degree)) {
+                Row row = spreadsheet.addRow();
+                row.setCell(degree.getDegreeType().getLocalizedName() + " - " + degree.getNameI18N().toString());
+                row.setCell(delegateBean.getYearDelegate().getPerson().getName());
+                row.setCell(delegateBean.getYearDelegate().getCurricularYear().getYear());
+                row.setCell(delegateBean.getYearDelegate().getPerson().getDefaultMobilePhoneNumber());
+                row.setCell(delegateBean.getYearDelegate().getPerson().getDefaultEmailAddressValue());
+                StringBuilder sb = new StringBuilder();
+                for (ExecutionCourse executionCourse : delegateBean.getOrderedCoursesToComment()) {
+                    sb.append(executionCourse.getName()).append(", ");
+                }
+                row.setCell(sb.toString());
+            }
+        }
 
-		return spreadsheet;
-	}
+        return spreadsheet;
+    }
 
-	public DelegateBean getCoursesToComment(final Degree degree, final YearDelegate yearDelegate,
-			final ExecutionSemester executionSemester) {
-		List<ExecutionCourse> coursesToComment = new ArrayList<ExecutionCourse>();
-		final ExecutionDegree executionDegree =
-				ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate.getRegistration()
-						.getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(),
-						executionSemester.getExecutionYear());
-		for (ExecutionCourse executionCourse : yearDelegate.getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
-			if (yearDelegate.hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
-				coursesToComment.add(executionCourse);
-			}
-		}
-		if (!coursesToComment.isEmpty()) {
-			return new DelegateBean(degree, yearDelegate, coursesToComment);
-		}
-		return null;
-	}
+    public DelegateBean getCoursesToComment(final Degree degree, final YearDelegate yearDelegate,
+            final ExecutionSemester executionSemester) {
+        List<ExecutionCourse> coursesToComment = new ArrayList<ExecutionCourse>();
+        final ExecutionDegree executionDegree =
+                ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate.getRegistration()
+                        .getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(),
+                        executionSemester.getExecutionYear());
+        for (ExecutionCourse executionCourse : yearDelegate.getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
+            if (yearDelegate.hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
+                coursesToComment.add(executionCourse);
+            }
+        }
+        if (!coursesToComment.isEmpty()) {
+            return new DelegateBean(degree, yearDelegate, coursesToComment);
+        }
+        return null;
+    }
 
-	private YearDelegate getYearDelegate(Student student, ExecutionSemester executionPeriod) {
-		YearDelegate yearDelegate = null;
-		for (Delegate delegate : student.getDelegates()) {
-			if (delegate instanceof YearDelegate) {
-				if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
-					if (yearDelegate == null
-							|| delegate.getDelegateFunction().getEndDate()
-									.isAfter(yearDelegate.getDelegateFunction().getEndDate())) {
-						yearDelegate = (YearDelegate) delegate;
-					}
-				}
-			}
-		}
-		return yearDelegate;
-	}
+    private YearDelegate getYearDelegate(Student student, ExecutionSemester executionPeriod) {
+        YearDelegate yearDelegate = null;
+        for (Delegate delegate : student.getDelegates()) {
+            if (delegate instanceof YearDelegate) {
+                if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
+                    if (yearDelegate == null
+                            || delegate.getDelegateFunction().getEndDate()
+                                    .isAfter(yearDelegate.getDelegateFunction().getEndDate())) {
+                        yearDelegate = (YearDelegate) delegate;
+                    }
+                }
+            }
+        }
+        return yearDelegate;
+    }
 
-	class DelegateBean {
-		private Degree degree;
-		private YearDelegate yearDelegate;
-		private List<ExecutionCourse> coursesToComment;
+    class DelegateBean {
+        private Degree degree;
+        private YearDelegate yearDelegate;
+        private List<ExecutionCourse> coursesToComment;
 
-		public DelegateBean(Degree degree, YearDelegate yearDelegate, List<ExecutionCourse> coursesToComment) {
-			setDegree(degree);
-			setYearDelegate(yearDelegate);
-			setCoursesToComment(coursesToComment);
-		}
+        public DelegateBean(Degree degree, YearDelegate yearDelegate, List<ExecutionCourse> coursesToComment) {
+            setDegree(degree);
+            setYearDelegate(yearDelegate);
+            setCoursesToComment(coursesToComment);
+        }
 
-		public List<ExecutionCourse> getOrderedCoursesToComment() {
-			Collections.sort(getCoursesToComment(), new BeanComparator("name"));
-			return getCoursesToComment();
-		}
+        public List<ExecutionCourse> getOrderedCoursesToComment() {
+            Collections.sort(getCoursesToComment(), new BeanComparator("name"));
+            return getCoursesToComment();
+        }
 
-		public Degree getDegree() {
-			return degree;
-		}
+        public Degree getDegree() {
+            return degree;
+        }
 
-		public void setDegree(Degree degree) {
-			this.degree = degree;
-		}
+        public void setDegree(Degree degree) {
+            this.degree = degree;
+        }
 
-		public YearDelegate getYearDelegate() {
-			return yearDelegate;
-		}
+        public YearDelegate getYearDelegate() {
+            return yearDelegate;
+        }
 
-		public void setYearDelegate(YearDelegate yearDelegate) {
-			this.yearDelegate = yearDelegate;
-		}
+        public void setYearDelegate(YearDelegate yearDelegate) {
+            this.yearDelegate = yearDelegate;
+        }
 
-		public List<ExecutionCourse> getCoursesToComment() {
-			return coursesToComment;
-		}
+        public List<ExecutionCourse> getCoursesToComment() {
+            return coursesToComment;
+        }
 
-		public void setCoursesToComment(List<ExecutionCourse> coursesToComment) {
-			this.coursesToComment = coursesToComment;
-		}
-	}
+        public void setCoursesToComment(List<ExecutionCourse> coursesToComment) {
+            this.coursesToComment = coursesToComment;
+        }
+    }
 }

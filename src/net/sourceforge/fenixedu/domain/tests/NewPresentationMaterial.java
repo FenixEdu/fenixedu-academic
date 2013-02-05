@@ -5,75 +5,75 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class NewPresentationMaterial extends NewPresentationMaterial_Base implements Positionable {
 
-	public NewPresentationMaterial() {
-		super();
+    public NewPresentationMaterial() {
+        super();
 
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public NewPresentationMaterial(NewTestElement testElement, Boolean inline) {
-		this();
+    public NewPresentationMaterial(NewTestElement testElement, Boolean inline) {
+        this();
 
-		this.init(testElement, inline);
-	}
+        this.init(testElement, inline);
+    }
 
-	protected void init(NewTestElement testElement, Boolean inline) {
-		this.setTestElement(testElement);
-		this.setInline(inline);
-		this.setPosition(this.getNewPosition());
-	}
+    protected void init(NewTestElement testElement, Boolean inline) {
+        this.setTestElement(testElement);
+        this.setInline(inline);
+        this.setPosition(this.getNewPosition());
+    }
 
-	private Integer getNewPosition() {
-		return this.getTestElement().getPresentationMaterialsCount();
-	}
+    private Integer getNewPosition() {
+        return this.getTestElement().getPresentationMaterialsCount();
+    }
 
-	public void delete() {
-		NewTestElement testElement = this.getTestElement();
-		this.removeTestElement();
+    public void delete() {
+        NewTestElement testElement = this.getTestElement();
+        this.removeTestElement();
 
-		testElement.resortPresentationMaterials();
+        testElement.resortPresentationMaterials();
 
-		this.removeRootDomainObject();
+        this.removeRootDomainObject();
 
-		this.deleteDomainObject();
-	}
+        this.deleteDomainObject();
+    }
 
-	@Override
-	public boolean isFirst() {
-		return this.getPosition() == 1;
-	}
+    @Override
+    public boolean isFirst() {
+        return this.getPosition() == 1;
+    }
 
-	@Override
-	public boolean isLast() {
-		return this.getPosition() == this.getTestElement().getPresentationMaterialsCount();
-	}
+    @Override
+    public boolean isLast() {
+        return this.getPosition() == this.getTestElement().getPresentationMaterialsCount();
+    }
 
-	@Override
-	public void switchPosition(Integer relativePosition) {
-		int currentPosition = this.getPosition();
-		int newPosition = currentPosition + relativePosition;
-		NewTestElement testElement = this.getTestElement();
+    @Override
+    public void switchPosition(Integer relativePosition) {
+        int currentPosition = this.getPosition();
+        int newPosition = currentPosition + relativePosition;
+        NewTestElement testElement = this.getTestElement();
 
-		if (relativePosition < 0 && this.isFirst()) {
-			throw new DomainException("could.not.sort.up");
-		}
+        if (relativePosition < 0 && this.isFirst()) {
+            throw new DomainException("could.not.sort.up");
+        }
 
-		if (relativePosition > 0 && this.isLast()) {
-			throw new DomainException("could.not.sort.down");
-		}
+        if (relativePosition > 0 && this.isLast()) {
+            throw new DomainException("could.not.sort.down");
+        }
 
-		for (NewPresentationMaterial presentationMaterial : testElement.getPresentationMaterials()) {
-			if (presentationMaterial.getPosition() == newPosition) {
-				presentationMaterial.setPosition(currentPosition);
-				break;
-			}
-		}
+        for (NewPresentationMaterial presentationMaterial : testElement.getPresentationMaterials()) {
+            if (presentationMaterial.getPosition() == newPosition) {
+                presentationMaterial.setPosition(currentPosition);
+                break;
+            }
+        }
 
-		this.setPosition(newPosition);
-	}
+        this.setPosition(newPosition);
+    }
 
-	public abstract NewPresentationMaterialType getPresentationMaterialType();
+    public abstract NewPresentationMaterialType getPresentationMaterialType();
 
-	public abstract NewPresentationMaterial copy();
+    public abstract NewPresentationMaterial copy();
 
 }

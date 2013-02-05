@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteGenericEvent extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(GenericEvent genericEvent) {
-		if (genericEvent != null) {
-			genericEvent.delete();
-		}
-	}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(GenericEvent genericEvent) {
+        if (genericEvent != null) {
+            genericEvent.delete();
+        }
+    }
 }

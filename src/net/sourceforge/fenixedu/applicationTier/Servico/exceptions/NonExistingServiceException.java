@@ -6,28 +6,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class NonExistingServiceException extends FenixServiceException {
 
-	public NonExistingServiceException() {
-	}
+    public NonExistingServiceException() {
+    }
 
-	public NonExistingServiceException(String message) {
-		super(message);
-	}
+    public NonExistingServiceException(String message) {
+        super(message);
+    }
 
-	public NonExistingServiceException(Throwable cause) {
-		super(cause);
-	}
+    public NonExistingServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	public NonExistingServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public NonExistingServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[NonExistingServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[NonExistingServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

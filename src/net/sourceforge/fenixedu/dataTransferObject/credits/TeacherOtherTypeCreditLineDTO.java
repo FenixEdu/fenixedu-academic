@@ -13,55 +13,55 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
  * @author jpvl
  */
 public class TeacherOtherTypeCreditLineDTO extends DataTranferObject {
-	private InfoExecutionPeriod infoExecutionPeriod;
+    private InfoExecutionPeriod infoExecutionPeriod;
 
-	private InfoTeacher infoTeacher;
+    private InfoTeacher infoTeacher;
 
-	private List creditLines;
+    private List creditLines;
 
-	/**
-	 * @return Returns the creditLines.
-	 */
-	public List getCreditLines() {
-		return creditLines;
-	}
+    /**
+     * @return Returns the creditLines.
+     */
+    public List getCreditLines() {
+        return creditLines;
+    }
 
-	/**
-	 * @param creditLines
-	 *            The creditLines to set.
-	 */
-	public void setCreditLines(List creditLines) {
-		this.creditLines = creditLines;
-	}
+    /**
+     * @param creditLines
+     *            The creditLines to set.
+     */
+    public void setCreditLines(List creditLines) {
+        this.creditLines = creditLines;
+    }
 
-	/**
-	 * @return Returns the infoExecutionPeriod.
-	 */
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return infoExecutionPeriod;
-	}
+    /**
+     * @return Returns the infoExecutionPeriod.
+     */
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return infoExecutionPeriod;
+    }
 
-	/**
-	 * @param infoExecutionPeriod
-	 *            The infoExecutionPeriod to set.
-	 */
-	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-		this.infoExecutionPeriod = infoExecutionPeriod;
-	}
+    /**
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set.
+     */
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	/**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
 }

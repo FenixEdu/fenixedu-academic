@@ -20,44 +20,44 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MergeExternalUnits extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
 
-		if (fromUnit != null && destinationUnit != null) {
+        if (fromUnit != null && destinationUnit != null) {
 
-			String fromUnitName = fromUnit.getName();
-			Integer fromUnitID = fromUnit.getIdInternal();
+            String fromUnitName = fromUnit.getName();
+            Integer fromUnitID = fromUnit.getIdInternal();
 
-			Unit.mergeExternalUnits(fromUnit, destinationUnit);
+            Unit.mergeExternalUnits(fromUnit, destinationUnit);
 
-			if (sendMail != null && sendMail.booleanValue()) {
+            if (sendMail != null && sendMail.booleanValue()) {
 
-				String emails = PropertiesManager.getProperty("merge.units.emails");
-				if (!StringUtils.isEmpty(emails)) {
+                String emails = PropertiesManager.getProperty("merge.units.emails");
+                if (!StringUtils.isEmpty(emails)) {
 
-					Set<String> resultEmails = new HashSet<String>();
-					String[] splitedEmails = emails.split(",");
-					for (String email : splitedEmails) {
-						resultEmails.add(email.trim());
-					}
+                    Set<String> resultEmails = new HashSet<String>();
+                    String[] splitedEmails = emails.split(",");
+                    for (String email : splitedEmails) {
+                        resultEmails.add(email.trim());
+                    }
 
-					// Foi efectuado um merge de unidades externas por {0}[{1}]
-					// : Unidade Origem -> {2} [{3}] Unidade Destino -> {4}[{5}]
-					final Person person = AccessControl.getPerson();
-					final String subject =
-							BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
-									"mergeExternalUnits.email.subject");
-					final String body =
-							BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExternalUnits.email.body",
-									new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID.toString(),
-											destinationUnit.getName(), destinationUnit.getIdInternal().toString() });
+                    // Foi efectuado um merge de unidades externas por {0}[{1}]
+                    // : Unidade Origem -> {2} [{3}] Unidade Destino -> {4}[{5}]
+                    final Person person = AccessControl.getPerson();
+                    final String subject =
+                            BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
+                                    "mergeExternalUnits.email.subject");
+                    final String body =
+                            BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExternalUnits.email.body",
+                                    new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID.toString(),
+                                            destinationUnit.getName(), destinationUnit.getIdInternal().toString() });
 
-					SystemSender systemSender = rootDomainObject.getSystemSender();
-					new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
-							resultEmails);
-				}
-			}
-		}
-	}
+                    SystemSender systemSender = rootDomainObject.getSystemSender();
+                    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
+                            resultEmails);
+                }
+            }
+        }
+    }
 }

@@ -22,53 +22,53 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class MergeJournalIssuesDA extends MergeResearchActivityDA {
 
-	public static final Comparator<JournalIssue> COMPARE_BY_VOLUME_AND_NUMBER = new ComparatorChain();
-	static {
-		((ComparatorChain) COMPARE_BY_VOLUME_AND_NUMBER).addComparator(new BeanComparator("volume"));
-		((ComparatorChain) COMPARE_BY_VOLUME_AND_NUMBER).addComparator(new BeanComparator("number"));
-	}
+    public static final Comparator<JournalIssue> COMPARE_BY_VOLUME_AND_NUMBER = new ComparatorChain();
+    static {
+        ((ComparatorChain) COMPARE_BY_VOLUME_AND_NUMBER).addComparator(new BeanComparator("volume"));
+        ((ComparatorChain) COMPARE_BY_VOLUME_AND_NUMBER).addComparator(new BeanComparator("number"));
+    }
 
-	public ActionForward chooseJournalIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		MergeJournalIssuePageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
-		JournalIssue journalIssue = (JournalIssue) researchActivityPageContainerBean.getSelected();
-		researchActivityPageContainerBean.setSelected(null);
+    public ActionForward chooseJournalIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        MergeJournalIssuePageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
+        JournalIssue journalIssue = (JournalIssue) researchActivityPageContainerBean.getSelected();
+        researchActivityPageContainerBean.setSelected(null);
 
-		copyProperties(journalIssue, researchActivityPageContainerBean);
+        copyProperties(journalIssue, researchActivityPageContainerBean);
 
-		RenderUtils.invalidateViewState();
-		request.setAttribute("mergeList", researchActivityPageContainerBean);
-		return mapping.findForward("show-research-activity-merge-list");
-	}
+        RenderUtils.invalidateViewState();
+        request.setAttribute("mergeList", researchActivityPageContainerBean);
+        return mapping.findForward("show-research-activity-merge-list");
+    }
 
-	private void copyProperties(JournalIssue journalIssue, MergeJournalIssuePageContainerBean researchActivityPageContainerBean) {
-		researchActivityPageContainerBean.setVolume(journalIssue.getVolume());
-		researchActivityPageContainerBean.setYear(journalIssue.getYear());
-		researchActivityPageContainerBean.setNumber(journalIssue.getNumber());
-		researchActivityPageContainerBean.setMonth(journalIssue.getMonth());
-		researchActivityPageContainerBean.setUrl(journalIssue.getUrl());
-		researchActivityPageContainerBean.setSpecialIssue(journalIssue.getSpecialIssue());
-		researchActivityPageContainerBean.setSpecialIssueComment(journalIssue.getSpecialIssueComment());
-	}
+    private void copyProperties(JournalIssue journalIssue, MergeJournalIssuePageContainerBean researchActivityPageContainerBean) {
+        researchActivityPageContainerBean.setVolume(journalIssue.getVolume());
+        researchActivityPageContainerBean.setYear(journalIssue.getYear());
+        researchActivityPageContainerBean.setNumber(journalIssue.getNumber());
+        researchActivityPageContainerBean.setMonth(journalIssue.getMonth());
+        researchActivityPageContainerBean.setUrl(journalIssue.getUrl());
+        researchActivityPageContainerBean.setSpecialIssue(journalIssue.getSpecialIssue());
+        researchActivityPageContainerBean.setSpecialIssueComment(journalIssue.getSpecialIssueComment());
+    }
 
-	@Override
-	protected MergeResearchActivityPageContainerBean getNewBean() {
-		return null;
-	}
+    @Override
+    protected MergeResearchActivityPageContainerBean getNewBean() {
+        return null;
+    }
 
-	@Override
-	protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
-		MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean =
-				(MergeJournalIssuePageContainerBean) researchActivityPageContainerBean;
-		List<JournalIssue> journalIssues =
-				new ArrayList<JournalIssue>(mergeJournalIssuePageContainerBean.getScientificJournal().getJournalIssues());
-		Collections.sort(journalIssues, COMPARE_BY_VOLUME_AND_NUMBER);
-		return journalIssues;
-	}
+    @Override
+    protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
+        MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean =
+                (MergeJournalIssuePageContainerBean) researchActivityPageContainerBean;
+        List<JournalIssue> journalIssues =
+                new ArrayList<JournalIssue>(mergeJournalIssuePageContainerBean.getScientificJournal().getJournalIssues());
+        Collections.sort(journalIssues, COMPARE_BY_VOLUME_AND_NUMBER);
+        return journalIssues;
+    }
 
-	@Override
-	protected String getServiceName() {
-		return "MergeJournalIssues";
-	}
+    @Override
+    protected String getServiceName() {
+        return "MergeJournalIssues";
+    }
 
 }

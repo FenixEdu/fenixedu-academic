@@ -9,17 +9,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadSite extends FenixService {
 
-	@Service
-	public static InfoSite run(InfoExecutionCourse infoExecutionCourse) {
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-		final ExecutionCourseSite site = executionCourse.getSite();
-		if (site != null) {
-			final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
-			infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-			return infoSite;
-		} else {
-			return null;
-		}
-	}
+    @Service
+    public static InfoSite run(InfoExecutionCourse infoExecutionCourse) {
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final ExecutionCourseSite site = executionCourse.getSite();
+        if (site != null) {
+            final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            return infoSite;
+        } else {
+            return null;
+        }
+    }
 
 }

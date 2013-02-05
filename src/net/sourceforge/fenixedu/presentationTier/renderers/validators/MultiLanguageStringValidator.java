@@ -12,54 +12,54 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MultiLanguageStringValidator extends HtmlValidator {
 
-	public MultiLanguageStringValidator() {
-		super();
-	}
+    public MultiLanguageStringValidator() {
+        super();
+    }
 
-	public MultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
-		super(htmlChainValidator);
-	}
+    public MultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
+        super(htmlChainValidator);
+    }
 
-	@Override
-	public void performValidation() {
-		HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
+    @Override
+    public void performValidation() {
+        HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
 
-		Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
+        Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
 
-		boolean hasRepeatedLanguage = false;
-		boolean hasNullLanguage = false;
+        boolean hasRepeatedLanguage = false;
+        boolean hasNullLanguage = false;
 
-		List<Language> languages = new ArrayList<Language>();
+        List<Language> languages = new ArrayList<Language>();
 
-		for (LanguageBean bean : beans) {
-			// only consider fields not empty
-			if (bean.value != null && bean.value.trim().length() > 0) {
-				if (bean.language == null) {
-					hasNullLanguage = true;
-				} else if (languages.contains(bean.language)) {
-					hasRepeatedLanguage = true;
-				} else {
-					languages.add(bean.language);
-				}
-			}
-		}
+        for (LanguageBean bean : beans) {
+            // only consider fields not empty
+            if (bean.value != null && bean.value.trim().length() > 0) {
+                if (bean.language == null) {
+                    hasNullLanguage = true;
+                } else if (languages.contains(bean.language)) {
+                    hasRepeatedLanguage = true;
+                } else {
+                    languages.add(bean.language);
+                }
+            }
+        }
 
-		if (hasRepeatedLanguage) {
-			invalidate("renderers.validator.language.repeated");
-			return;
-		}
+        if (hasRepeatedLanguage) {
+            invalidate("renderers.validator.language.repeated");
+            return;
+        }
 
-		if (hasNullLanguage) {
-			invalidate("renderers.validator.language.null");
-			return;
-		}
+        if (hasNullLanguage) {
+            invalidate("renderers.validator.language.null");
+            return;
+        }
 
-		setValid(true);
-	}
+        setValid(true);
+    }
 
-	private void invalidate(String message) {
-		setValid(false);
-		setMessage(message);
-	}
+    private void invalidate(String message) {
+        setValid(false);
+        setMessage(message);
+    }
 
 }

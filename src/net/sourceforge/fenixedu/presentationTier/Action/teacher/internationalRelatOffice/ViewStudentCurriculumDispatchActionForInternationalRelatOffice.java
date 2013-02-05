@@ -5,9 +5,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "internationalRelatOffice", path = "/viewStudentCurriculum", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "prepareViewStudentCurriculumChooseStudent",
-		path = "df.page.prepareViewStudentCurriculumChooseStudent") })
+@Forwards(value = { @Forward(name = "prepareViewStudentCurriculumChooseStudent",
+        path = "df.page.prepareViewStudentCurriculumChooseStudent") })
 public class ViewStudentCurriculumDispatchActionForInternationalRelatOffice extends
-		net.sourceforge.fenixedu.presentationTier.Action.teacher.ViewStudentCurriculumDispatchAction {
+        net.sourceforge.fenixedu.presentationTier.Action.teacher.ViewStudentCurriculumDispatchAction {
 }

@@ -8,17 +8,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditAdHocEvaluation extends FenixService {
 
-	@Service
-	public static void run(Integer executionCourseID, Integer adHocEvaluationID, String name, String description,
-			GradeScale gradeScale) throws FenixServiceException {
+    @Service
+    public static void run(Integer executionCourseID, Integer adHocEvaluationID, String name, String description,
+            GradeScale gradeScale) throws FenixServiceException {
 
-		AdHocEvaluation adHocEvaluation = (AdHocEvaluation) rootDomainObject.readEvaluationByOID(adHocEvaluationID);
+        AdHocEvaluation adHocEvaluation = (AdHocEvaluation) rootDomainObject.readEvaluationByOID(adHocEvaluationID);
 
-		if (adHocEvaluation == null) {
-			throw new FenixServiceException("error.noEvaluation");
-		}
+        if (adHocEvaluation == null) {
+            throw new FenixServiceException("error.noEvaluation");
+        }
 
-		adHocEvaluation.edit(name, description, gradeScale);
-	}
+        adHocEvaluation.edit(name, description, gradeScale);
+    }
 
 }

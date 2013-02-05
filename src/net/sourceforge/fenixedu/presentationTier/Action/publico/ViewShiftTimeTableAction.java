@@ -31,39 +31,39 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewShiftTimeTableAction extends FenixContextAction {
 
-	/**
-	 * Constructor for ViewClassTimeTableAction.
-	 */
+    /**
+     * Constructor for ViewClassTimeTableAction.
+     */
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		String shiftName = request.getParameter("shiftName");
+        String shiftName = request.getParameter("shiftName");
 
-		if (shiftName == null) {
-			return mapping.getInputForward();
-		}
-		final InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-		Shift shift = null;
-		for (final Shift shift2 : executionCourse.getAssociatedShifts()) {
-			if (shift2.getNome().equals(shiftName)) {
-				shift = shift2;
-			}
-		}
+        if (shiftName == null) {
+            return mapping.getInputForward();
+        }
+        final InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        Shift shift = null;
+        for (final Shift shift2 : executionCourse.getAssociatedShifts()) {
+            if (shift2.getNome().equals(shiftName)) {
+                shift = shift2;
+            }
+        }
 
-		List lessons = LerAulasDeTurno.run(new ShiftKey(shiftName, infoExecutionCourse));
+        List lessons = LerAulasDeTurno.run(new ShiftKey(shiftName, infoExecutionCourse));
 
-		List infoCurricularCourses = (List) ReadCurricularCourseListOfExecutionCourse.run(infoExecutionCourse);
+        List infoCurricularCourses = (List) ReadCurricularCourseListOfExecutionCourse.run(infoExecutionCourse);
 
-		if (infoCurricularCourses != null && !infoCurricularCourses.isEmpty()) {
-			request.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);
-		}
+        if (infoCurricularCourses != null && !infoCurricularCourses.isEmpty()) {
+            request.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);
+        }
 
-		request.setAttribute("shift", InfoShift.newInfoFromDomain(shift));
-		request.setAttribute("lessonList", lessons);
+        request.setAttribute("shift", InfoShift.newInfoFromDomain(shift));
+        request.setAttribute("lessonList", lessons);
 
-		return mapping.findForward("Sucess");
-	}
+        return mapping.findForward("Sucess");
+    }
 }

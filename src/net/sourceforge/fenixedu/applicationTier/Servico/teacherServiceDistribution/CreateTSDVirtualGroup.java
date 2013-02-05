@@ -12,22 +12,22 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCour
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class CreateTSDVirtualGroup extends FenixService {
-	public TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
-			String[] degreeCurricularPlansIdArray) {
+    public TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
+            String[] degreeCurricularPlansIdArray) {
 
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(periodId);
+        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(periodId);
 
-		List<DegreeCurricularPlan> degreeCurricularPlansList = new ArrayList<DegreeCurricularPlan>();
-		for (String planId : degreeCurricularPlansIdArray) {
-			degreeCurricularPlansList.add(rootDomainObject.readDegreeCurricularPlanByOID(Integer.parseInt(planId)));
-		}
+        List<DegreeCurricularPlan> degreeCurricularPlansList = new ArrayList<DegreeCurricularPlan>();
+        for (String planId : degreeCurricularPlansIdArray) {
+            degreeCurricularPlansList.add(rootDomainObject.readDegreeCurricularPlanByOID(Integer.parseInt(planId)));
+        }
 
-		List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();
-		for (String typeStr : shiftTypesArray) {
-			lecturedShiftTypes.add(ShiftType.valueOf(typeStr));
-		}
+        List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();
+        for (String typeStr : shiftTypesArray) {
+            lecturedShiftTypes.add(ShiftType.valueOf(typeStr));
+        }
 
-		return new TSDVirtualCourseGroup(tsd, courseName, executionSemester, lecturedShiftTypes, degreeCurricularPlansList);
-	}
+        return new TSDVirtualCourseGroup(tsd, courseName, executionSemester, lecturedShiftTypes, degreeCurricularPlansList);
+    }
 }

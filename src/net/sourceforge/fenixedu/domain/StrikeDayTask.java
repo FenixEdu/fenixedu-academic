@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 public class StrikeDayTask extends StrikeDayTask_Base {
 
-	public StrikeDayTask() {
-		super();
-	}
+    public StrikeDayTask() {
+        super();
+    }
 
-	@Override
-	public void runTask() {
-		// TODO Auto-generated method stub
+    @Override
+    public void runTask() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }

@@ -12,39 +12,39 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDCoursesFromTSDProcesses extends FenixService {
-	public List<TSDCourseDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
-		List<TSDCourseDTOEntry> tsdCourseDTOEntryList = new ArrayList<TSDCourseDTOEntry>();
+    public List<TSDCourseDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
+        List<TSDCourseDTOEntry> tsdCourseDTOEntryList = new ArrayList<TSDCourseDTOEntry>();
 
-		for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
-			TeacherServiceDistribution tsd = null;
+        for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
+            TeacherServiceDistribution tsd = null;
 
-			tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
+            tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
 
-			List<ExecutionSemester> executionPeriodList =
-					getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
+            List<ExecutionSemester> executionPeriodList =
+                    getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
 
-			List<TSDCourse> tsdCourseList =
-					new ArrayList<TSDCourse>(tsd.getActiveTSDCourseByExecutionPeriods(executionPeriodList));
+            List<TSDCourse> tsdCourseList =
+                    new ArrayList<TSDCourse>(tsd.getActiveTSDCourseByExecutionPeriods(executionPeriodList));
 
-			for (TSDCourse tsdCourse : tsdCourseList) {
-				tsdCourseDTOEntryList.add(new TSDCourseDTOEntry(tsdCourse, executionPeriodList));
-			}
-		}
+            for (TSDCourse tsdCourse : tsdCourseList) {
+                tsdCourseDTOEntryList.add(new TSDCourseDTOEntry(tsdCourse, executionPeriodList));
+            }
+        }
 
-		return tsdCourseDTOEntryList;
-	}
+        return tsdCourseDTOEntryList;
+    }
 
-	private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
-		List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
+    private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
+        List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-		if (executionSemester != null) {
-			executionPeriodList.add(executionSemester);
-		} else {
-			executionPeriodList.addAll(tsd.getTSDProcessPhase().getTSDProcess().getExecutionPeriods());
-		}
+        if (executionSemester != null) {
+            executionPeriodList.add(executionSemester);
+        } else {
+            executionPeriodList.addAll(tsd.getTSDProcessPhase().getTSDProcess().getExecutionPeriods());
+        }
 
-		return executionPeriodList;
-	}
+        return executionPeriodList;
+    }
 }

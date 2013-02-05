@@ -10,14 +10,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCompetenceCourse extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static InfoCompetenceCourse run(Integer competenceCourseID) throws NotExistingServiceException {
-		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
-		if (competenceCourse == null) {
-			throw new NotExistingServiceException("Invalid CompetenceCourse ID");
-		}
-		return InfoCompetenceCourseWithCurricularCourses.newInfoFromDomain(competenceCourse);
-	}
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static InfoCompetenceCourse run(Integer competenceCourseID) throws NotExistingServiceException {
+        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
+        if (competenceCourse == null) {
+            throw new NotExistingServiceException("Invalid CompetenceCourse ID");
+        }
+        return InfoCompetenceCourseWithCurricularCourses.newInfoFromDomain(competenceCourse);
+    }
 
 }

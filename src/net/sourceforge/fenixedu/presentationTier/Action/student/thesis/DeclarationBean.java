@@ -9,35 +9,35 @@ import org.joda.time.DateTime;
 
 public class DeclarationBean implements Serializable {
 
-	/**
-	 * Serial version is.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version is.
+     */
+    private static final long serialVersionUID = 1L;
 
-	private ThesisVisibilityType visibility;
-	private DateTime availableAfter;
+    private ThesisVisibilityType visibility;
+    private DateTime availableAfter;
 
-	public DeclarationBean(Thesis thesis) {
-		super();
+    public DeclarationBean(Thesis thesis) {
+        super();
 
-		setVisibility(thesis.getVisibility());
-		setAvailableAfter(thesis.getDocumentsAvailableAfter());
-	}
+        setVisibility(thesis.getVisibility());
+        setAvailableAfter(thesis.getDocumentsAvailableAfter());
+    }
 
-	public ThesisVisibilityType getVisibility() {
-		return this.visibility;
-	}
+    public ThesisVisibilityType getVisibility() {
+        return this.visibility;
+    }
 
-	public void setVisibility(ThesisVisibilityType visibility) {
-		this.visibility = visibility;
-	}
+    public void setVisibility(ThesisVisibilityType visibility) {
+        this.visibility = visibility;
+    }
 
-	public DateTime getAvailableAfter() {
-		return this.availableAfter;
-	}
+    public DateTime getAvailableAfter() {
+        return this.availableAfter;
+    }
 
-	public void setAvailableAfter(DateTime availableAfter) {
-		this.availableAfter = availableAfter;
-	}
+    public void setAvailableAfter(DateTime availableAfter) {
+        this.availableAfter = availableAfter;
+    }
 
 }

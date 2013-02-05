@@ -48,376 +48,370 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "publico",
-		path = "/showDegreeSite",
-		input = "/showDegrees.do?method=nonMaster",
-		attribute = "viewDegreeEvaluationForm",
-		formBean = "viewDegreeEvaluationForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "publico", path = "/showDegreeSite", input = "/showDegrees.do?method=nonMaster",
+        attribute = "viewDegreeEvaluationForm", formBean = "viewDegreeEvaluationForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showDescriptionEnglish", path = "showDescriptionEnglish"),
-		@Forward(name = "showProfessionalStatus", path = "showProfessionalStatus"),
-		@Forward(name = "viewDegreeEvaluation", path = "viewDegreeEvaluation"),
-		@Forward(name = "showDescription", path = "showDescription"),
-		@Forward(name = "showCurricularPlans", path = "showCurricularPlans"),
-		@Forward(name = "showAccessRequirementsEnglish", path = "showAccessRequirementsEnglish"),
-		@Forward(name = "showAccessRequirements", path = "showAccessRequirements"),
-		@Forward(name = "showCurricularPlansEnglish", path = "showCurricularPlansEnglish") })
+        @Forward(name = "showProfessionalStatus", path = "showProfessionalStatus"),
+        @Forward(name = "viewDegreeEvaluation", path = "viewDegreeEvaluation"),
+        @Forward(name = "showDescription", path = "showDescription"),
+        @Forward(name = "showCurricularPlans", path = "showCurricularPlans"),
+        @Forward(name = "showAccessRequirementsEnglish", path = "showAccessRequirementsEnglish"),
+        @Forward(name = "showAccessRequirements", path = "showAccessRequirements"),
+        @Forward(name = "showCurricularPlansEnglish", path = "showCurricularPlansEnglish") })
 public class ShowDegreeSiteAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ContextUtils.setExecutionPeriodContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ContextUtils.setExecutionPeriodContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public static int ANNOUNCEMENTS_NUMBER = 3;
+    public static int ANNOUNCEMENTS_NUMBER = 3;
 
-	public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		prepareInfo(request);
+    public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        prepareInfo(request);
 
-		return mapping.findForward("showDescription");
-	}
+        return mapping.findForward("showDescription");
+    }
 
-	private void prepareInfo(HttpServletRequest request) throws FenixActionException {
-		// inEnglish
-		Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
-		if (inEnglish == null) {
-			inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
-		}
-		request.setAttribute("inEnglish", inEnglish);
+    private void prepareInfo(HttpServletRequest request) throws FenixActionException {
+        // inEnglish
+        Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
+        if (inEnglish == null) {
+            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+        }
+        request.setAttribute("inEnglish", inEnglish);
 
-		// degree
-		Degree degree = getDegree(request);
-		if (degree == null) {
-			throw new FenixActionException();
-		}
-		request.setAttribute("degreeID", degree.getIdInternal());
-		request.setAttribute("degree", degree);
+        // degree
+        Degree degree = getDegree(request);
+        if (degree == null) {
+            throw new FenixActionException();
+        }
+        request.setAttribute("degreeID", degree.getIdInternal());
+        request.setAttribute("degree", degree);
 
-		Unit unit = degree.getUnit();
-		if (unit != null) {
-			AnnouncementBoard board = null;
-			for (AnnouncementBoard unitBoard : unit.getBoards()) {
-				if (unitBoard.isPublicToRead()) {
-					board = unitBoard;
-					break;
-				}
-			}
+        Unit unit = degree.getUnit();
+        if (unit != null) {
+            AnnouncementBoard board = null;
+            for (AnnouncementBoard unitBoard : unit.getBoards()) {
+                if (unitBoard.isPublicToRead()) {
+                    board = unitBoard;
+                    break;
+                }
+            }
 
-			if (board != null) {
-				List<Announcement> announcements = board.getActiveAnnouncements();
-				announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
-				request.setAttribute("announcements", announcements);
-			}
-		}
+            if (board != null) {
+                List<Announcement> announcements = board.getActiveAnnouncements();
+                announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
+                request.setAttribute("announcements", announcements);
+            }
+        }
 
-		// execution year
-		ExecutionYear executionYearToShow = getExecutionYearToShow(request, degree);
-		request.setAttribute("executionYear", executionYearToShow);
+        // execution year
+        ExecutionYear executionYearToShow = getExecutionYearToShow(request, degree);
+        request.setAttribute("executionYear", executionYearToShow);
 
-		// info
-		getInfoToShow(request, degree, executionYearToShow);
-	}
+        // info
+        getInfoToShow(request, degree, executionYearToShow);
+    }
 
-	private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree) throws FenixActionException {
-		Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
-		if (executionDegreeId != null) {
-			// coordinator call
-			request.setAttribute("executionDegreeID", executionDegreeId);
+    private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree) throws FenixActionException {
+        Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
+        if (executionDegreeId != null) {
+            // coordinator call
+            request.setAttribute("executionDegreeID", executionDegreeId);
 
-			ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-			if (executionDegree == null || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
-				throw new FenixActionException();
-			}
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+            if (executionDegree == null || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
+                throw new FenixActionException();
+            }
 
-			return executionDegree.getExecutionYear();
-		} else {
-			final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+            return executionDegree.getExecutionYear();
+        } else {
+            final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-			List<ExecutionYear> whenDegreeIsExecuted = degree.getDegreeCurricularPlansExecutionYears();
-			if (whenDegreeIsExecuted.isEmpty()) {
-				return currentExecutionYear;
-			} else {
-				final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
-				final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
+            List<ExecutionYear> whenDegreeIsExecuted = degree.getDegreeCurricularPlansExecutionYears();
+            if (whenDegreeIsExecuted.isEmpty()) {
+                return currentExecutionYear;
+            } else {
+                final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
+                final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
 
-				if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
-					return currentExecutionYear;
-				} else {
-					if (currentExecutionYear.isBefore(firstExecutionYear)) {
-						return firstExecutionYear;
-					} else {
-						return lastExecutionYear;
-					}
-				}
-			}
-		}
-	}
+                if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
+                    return currentExecutionYear;
+                } else {
+                    if (currentExecutionYear.isBefore(firstExecutionYear)) {
+                        return firstExecutionYear;
+                    } else {
+                        return lastExecutionYear;
+                    }
+                }
+            }
+        }
+    }
 
-	private void getInfoToShow(HttpServletRequest request, Degree degree, ExecutionYear executionYearToShow)
-			throws FenixActionException {
-		// degree info
-		DegreeInfo degreeInfoToShow = executionYearToShow.getDegreeInfo(degree);
-		if (degreeInfoToShow == null) {
-			degreeInfoToShow = degree.getMostRecentDegreeInfo(executionYearToShow);
-		}
-		if (degreeInfoToShow != null) {
-			request.setAttribute("degreeInfo", degreeInfoToShow);
-		}
+    private void getInfoToShow(HttpServletRequest request, Degree degree, ExecutionYear executionYearToShow)
+            throws FenixActionException {
+        // degree info
+        DegreeInfo degreeInfoToShow = executionYearToShow.getDegreeInfo(degree);
+        if (degreeInfoToShow == null) {
+            degreeInfoToShow = degree.getMostRecentDegreeInfo(executionYearToShow);
+        }
+        if (degreeInfoToShow != null) {
+            request.setAttribute("degreeInfo", degreeInfoToShow);
+        }
 
-		// campus
-		Collection<Campus> campus = degree.getCampus(executionYearToShow);
-		if (campus.isEmpty()) {
-			campus = degree.getCurrentCampus();
-		}
-		request.setAttribute("campus", campus);
+        // campus
+        Collection<Campus> campus = degree.getCampus(executionYearToShow);
+        if (campus.isEmpty()) {
+            campus = degree.getCurrentCampus();
+        }
+        request.setAttribute("campus", campus);
 
-		// responsible coordinators
-		Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYearToShow);
-		if (responsibleCoordinatorsTeachers.isEmpty()) {
-			responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
-		}
-		request.setAttribute("responsibleCoordinatorsTeachers", responsibleCoordinatorsTeachers);
+        // responsible coordinators
+        Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYearToShow);
+        if (responsibleCoordinatorsTeachers.isEmpty()) {
+            responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
+        }
+        request.setAttribute("responsibleCoordinatorsTeachers", responsibleCoordinatorsTeachers);
 
-	}
+    }
 
-	public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		prepareInfo(request);
+    public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        prepareInfo(request);
 
-		return mapping.findForward("showAccessRequirements");
-	}
+        return mapping.findForward("showAccessRequirements");
+    }
 
-	public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		prepareInfo(request);
+    public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        prepareInfo(request);
 
-		return mapping.findForward("showProfessionalStatus");
-	}
+        return mapping.findForward("showProfessionalStatus");
+    }
 
-	public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Degree degree = getDegree(request);
+    public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Degree degree = getDegree(request);
 
-		Integer degreeCurricularPlanId = FenixContextDispatchAction.getFromRequest("degreeCurricularPlanID", request);
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+        Integer degreeCurricularPlanId = FenixContextDispatchAction.getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-		Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
-		if (inEnglish == null) {
-			inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
-		}
-		request.setAttribute("inEnglish", inEnglish);
+        Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
+        if (inEnglish == null) {
+            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+        }
+        request.setAttribute("inEnglish", inEnglish);
 
-		Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
+        Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
 
-		Integer index = FenixContextDispatchAction.getFromRequest("index", request);
-		request.setAttribute("index", index);
+        Integer index = FenixContextDispatchAction.getFromRequest("index", request);
+        request.setAttribute("index", index);
 
-		final ActionErrors errors = new ActionErrors();
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-				getInfoDegreeCurricularPlan(executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request,
-						errors);
-		if (infoDegreeCurricularPlan == null) {
-			addErrorMessage(request, "impossibleDegreeSite", "error.impossibleCurricularPlan");
-		} else {
-			request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-		}
+        final ActionErrors errors = new ActionErrors();
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+                getInfoDegreeCurricularPlan(executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request,
+                        errors);
+        if (infoDegreeCurricularPlan == null) {
+            addErrorMessage(request, "impossibleDegreeSite", "error.impossibleCurricularPlan");
+        } else {
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        }
 
-		return mapping.findForward("showCurricularPlans");
-	}
+        return mapping.findForward("showCurricularPlans");
+    }
 
-	public ActionForward viewDegreeEvaluation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Degree degree = getDegree(request);
+    public ActionForward viewDegreeEvaluation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Degree degree = getDegree(request);
 
-		Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeId", executionDegreeId);
+        Integer executionDegreeId = FenixContextDispatchAction.getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeId", executionDegreeId);
 
-		Integer degreeCurricularPlanId = FenixContextDispatchAction.getFromRequest("degreeCurricularPlanID", request);
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+        Integer degreeCurricularPlanId = FenixContextDispatchAction.getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-		Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
-		request.setAttribute("inEnglish", inEnglish);
+        Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
 
-		List<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getIdInternal());
+        List<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getIdInternal());
 
-		List<InfoExecutionPeriod> infoExecutionPeriods = ReadExecutionPeriods.run();
-		List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
-		for (InfoExecutionPeriod iep : infoExecutionPeriods) {
-			boolean found = false;
+        List<InfoExecutionPeriod> infoExecutionPeriods = ReadExecutionPeriods.run();
+        List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
+        for (InfoExecutionPeriod iep : infoExecutionPeriods) {
+            boolean found = false;
 
-			for (InfoOldInquiriesSummary iois : allSummariesDegree) {
-				if (iep.equals(iois.getExecutionPeriod())) {
-					found = true;
-					break;
-				}
-			}
+            for (InfoOldInquiriesSummary iois : allSummariesDegree) {
+                if (iep.equals(iois.getExecutionPeriod())) {
+                    found = true;
+                    break;
+                }
+            }
 
-			if (!found) {
-				executionPeriodList.remove(iep);
-			}
-		}
+            if (!found) {
+                executionPeriodList.remove(iep);
+            }
+        }
 
-		Collections.sort(executionPeriodList, new Comparator() {
-			@Override
-			public int compare(Object o1, Object o2) {
-				InfoExecutionPeriod ep1 = (InfoExecutionPeriod) o1;
-				InfoExecutionPeriod ep2 = (InfoExecutionPeriod) o2;
-				return ep2.getBeginDate().compareTo(ep1.getBeginDate());
-			}
-		});
-		request.setAttribute("executionPeriodList", executionPeriodList);
+        Collections.sort(executionPeriodList, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                InfoExecutionPeriod ep1 = (InfoExecutionPeriod) o1;
+                InfoExecutionPeriod ep2 = (InfoExecutionPeriod) o2;
+                return ep2.getBeginDate().compareTo(ep1.getBeginDate());
+            }
+        });
+        request.setAttribute("executionPeriodList", executionPeriodList);
 
-		final ActionErrors errors = new ActionErrors();
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-				getInfoDegreeCurricularPlan(executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request,
-						errors);
-		if (infoDegreeCurricularPlan == null) {
-			addErrorMessage(request, "impossibleDegreeSite", "error.impossibleDegreeSite");
-			return new ActionForward(mapping.getInput());
-		}
-		request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        final ActionErrors errors = new ActionErrors();
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+                getInfoDegreeCurricularPlan(executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request,
+                        errors);
+        if (infoDegreeCurricularPlan == null) {
+            addErrorMessage(request, "impossibleDegreeSite", "error.impossibleDegreeSite");
+            return new ActionForward(mapping.getInput());
+        }
+        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 
-		// Getting the summary information
-		DynaActionForm degreeEvaluationForm = (DynaActionForm) actionForm;
-		Integer executionPeriodId = (Integer) degreeEvaluationForm.get("executionPeriodId");
+        // Getting the summary information
+        DynaActionForm degreeEvaluationForm = (DynaActionForm) actionForm;
+        Integer executionPeriodId = (Integer) degreeEvaluationForm.get("executionPeriodId");
 
-		if ((executionPeriodId != null) && (executionPeriodId.intValue() > 0)) {
-			request.setAttribute("searchExecutionPeriodId", executionPeriodId);
+        if ((executionPeriodId != null) && (executionPeriodId.intValue() > 0)) {
+            request.setAttribute("searchExecutionPeriodId", executionPeriodId);
 
-			List<InfoOldInquiriesSummary> oldInquiriesSummaries = new ArrayList<InfoOldInquiriesSummary>();
-			for (InfoOldInquiriesSummary iois : allSummariesDegree) {
-				if (iois.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
-					if ((iois.getNumberEnrollments() > 0) && (iois.getNumberApproved() >= 0) && (iois.getNumberEvaluated() > 0)) {
-						oldInquiriesSummaries.add(iois);
-					}
-				}
-			}
+            List<InfoOldInquiriesSummary> oldInquiriesSummaries = new ArrayList<InfoOldInquiriesSummary>();
+            for (InfoOldInquiriesSummary iois : allSummariesDegree) {
+                if (iois.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
+                    if ((iois.getNumberEnrollments() > 0) && (iois.getNumberApproved() >= 0) && (iois.getNumberEvaluated() > 0)) {
+                        oldInquiriesSummaries.add(iois);
+                    }
+                }
+            }
 
-			if (!oldInquiriesSummaries.isEmpty()) {
-				Collections.sort(oldInquiriesSummaries);
-				request.setAttribute("oldInquiriesSummaries", oldInquiriesSummaries);
+            if (!oldInquiriesSummaries.isEmpty()) {
+                Collections.sort(oldInquiriesSummaries);
+                request.setAttribute("oldInquiriesSummaries", oldInquiriesSummaries);
 
-				int denominatorCourses = 0, denominatorTeachers = 0;
-				double numeratorCourses = 0, numeratorTeachers = 0;
+                int denominatorCourses = 0, denominatorTeachers = 0;
+                double numeratorCourses = 0, numeratorTeachers = 0;
 
-				for (InfoOldInquiriesSummary iois : oldInquiriesSummaries) {
-					if ((iois.getNumberAnswers() != null) && (iois.getNumberAnswers() > 0)
-							&& (iois.getNumberEnrollments() != null) && (iois.getNumberEnrollments() > 0)) {
-						iois.setRepresentationQuota(Double.valueOf((iois.getNumberAnswers() / iois.getNumberEnrollments()) * 100));
-					}
+                for (InfoOldInquiriesSummary iois : oldInquiriesSummaries) {
+                    if ((iois.getNumberAnswers() != null) && (iois.getNumberAnswers() > 0)
+                            && (iois.getNumberEnrollments() != null) && (iois.getNumberEnrollments() > 0)) {
+                        iois.setRepresentationQuota(Double.valueOf((iois.getNumberAnswers() / iois.getNumberEnrollments()) * 100));
+                    }
 
-					if ((iois.getAverage2_8() != null) && (iois.getAverage2_8() >= 0) && (iois.getRepresentationQuota() > 10)) {
-						numeratorCourses += iois.getAverage2_8();
-						denominatorCourses++;
-					}
-					if ((iois.getAverage3_11() != null) && (iois.getAverage3_11() >= 0) && (iois.getRepresentationQuota() > 10)) {
-						numeratorTeachers += iois.getAverage3_11();
-						denominatorTeachers++;
-					}
-				}
+                    if ((iois.getAverage2_8() != null) && (iois.getAverage2_8() >= 0) && (iois.getRepresentationQuota() > 10)) {
+                        numeratorCourses += iois.getAverage2_8();
+                        denominatorCourses++;
+                    }
+                    if ((iois.getAverage3_11() != null) && (iois.getAverage3_11() >= 0) && (iois.getRepresentationQuota() > 10)) {
+                        numeratorTeachers += iois.getAverage3_11();
+                        denominatorTeachers++;
+                    }
+                }
 
-				if (denominatorCourses > 0) {
-					request.setAttribute("averageAppreciationCourses", Double.valueOf(numeratorCourses / denominatorCourses));
-				}
-				if (denominatorTeachers > 0) {
-					request.setAttribute("averageAppreciationTeachers", Double.valueOf(numeratorTeachers / denominatorTeachers));
-				}
-			} else {
-				request.setAttribute("emptyOldInquiriesSummaries", Boolean.TRUE);
-			}
-		}
+                if (denominatorCourses > 0) {
+                    request.setAttribute("averageAppreciationCourses", Double.valueOf(numeratorCourses / denominatorCourses));
+                }
+                if (denominatorTeachers > 0) {
+                    request.setAttribute("averageAppreciationTeachers", Double.valueOf(numeratorTeachers / denominatorTeachers));
+                }
+            } else {
+                request.setAttribute("emptyOldInquiriesSummaries", Boolean.TRUE);
+            }
+        }
 
-		return mapping.findForward("viewDegreeEvaluation");
-	}
+        return mapping.findForward("viewDegreeEvaluation");
+    }
 
-	private InfoDegreeCurricularPlan getInfoDegreeCurricularPlan(Integer executionDegreeId, Integer degreeId,
-			Integer degreeCurricularPlanId, ActionMapping mapping, HttpServletRequest request, ActionErrors errors) {
+    private InfoDegreeCurricularPlan getInfoDegreeCurricularPlan(Integer executionDegreeId, Integer degreeId,
+            Integer degreeCurricularPlanId, ActionMapping mapping, HttpServletRequest request, ActionErrors errors) {
 
-		if (executionDegreeId != null) {
-			// if came in the request a executionDegreeId that it is
-			// necessary find the corresponding degree curricular plan
-			return getByExecutionDegreeId(executionDegreeId, request);
-		}
+        if (executionDegreeId != null) {
+            // if came in the request a executionDegreeId that it is
+            // necessary find the corresponding degree curricular plan
+            return getByExecutionDegreeId(executionDegreeId, request);
+        }
 
-		return getByDegreeIdOrDegreeCurricularPlanId(degreeId, degreeCurricularPlanId, request);
-	}
+        return getByDegreeIdOrDegreeCurricularPlanId(degreeId, degreeCurricularPlanId, request);
+    }
 
-	private InfoDegreeCurricularPlan getByExecutionDegreeId(Integer executionDegreeId, HttpServletRequest request) {
-		try {
+    private InfoDegreeCurricularPlan getByExecutionDegreeId(Integer executionDegreeId, HttpServletRequest request) {
+        try {
 
-			final InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeId);
-			if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null) {
-				return null;
-			}
+            final InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeId);
+            if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null) {
+                return null;
+            }
 
-			request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
-			request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
-			return infoExecutionDegree.getInfoDegreeCurricularPlan();
-		} catch (Exception e) {
-			return null;
-		}
-	}
+            request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
+            return infoExecutionDegree.getInfoDegreeCurricularPlan();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-	private InfoDegreeCurricularPlan getByDegreeIdOrDegreeCurricularPlanId(Integer degreeId, Integer degreeCurricularPlanId,
-			HttpServletRequest request) {
-		final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlanList;
-		try {
+    private InfoDegreeCurricularPlan getByDegreeIdOrDegreeCurricularPlanId(Integer degreeId, Integer degreeCurricularPlanId,
+            HttpServletRequest request) {
+        final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlanList;
+        try {
 
-			infoDegreeCurricularPlanList = ReadDegreeCurricularPlansByDegree.run(degreeId);
-			if (infoDegreeCurricularPlanList.isEmpty()) {
-				return null;
-			}
+            infoDegreeCurricularPlanList = ReadDegreeCurricularPlansByDegree.run(degreeId);
+            if (infoDegreeCurricularPlanList.isEmpty()) {
+                return null;
+            }
 
-			// order the list by state and next by begin date
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("state"));
-			comparatorChain.addComparator(new BeanComparator("initialDate"), true);
-			Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
+            // order the list by state and next by begin date
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("state"));
+            comparatorChain.addComparator(new BeanComparator("initialDate"), true);
+            Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
 
-			request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
-		} catch (Exception e) {
-			return null;
-		}
+            request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
+        } catch (Exception e) {
+            return null;
+        }
 
-		// if came in the request a degreeCurricularPlanId that it is necessary
-		// find information about this degree curricular plan
-		if (degreeCurricularPlanId != null) {
-			for (InfoDegreeCurricularPlan infoDegreeCurricularPlanElem : infoDegreeCurricularPlanList) {
-				if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
-					request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
-					return infoDegreeCurricularPlanElem;
-				}
-			}
-		} else {
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoDegreeCurricularPlanList.get(0);
-			request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-			return infoDegreeCurricularPlan;
-		}
+        // if came in the request a degreeCurricularPlanId that it is necessary
+        // find information about this degree curricular plan
+        if (degreeCurricularPlanId != null) {
+            for (InfoDegreeCurricularPlan infoDegreeCurricularPlanElem : infoDegreeCurricularPlanList) {
+                if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
+                    request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
+                    return infoDegreeCurricularPlanElem;
+                }
+            }
+        } else {
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoDegreeCurricularPlanList.get(0);
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+            return infoDegreeCurricularPlan;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public static Degree getDegree(HttpServletRequest request) {
-		FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-		final DegreeSite site = (DegreeSite) context.getSelectedContainer();
-		Degree degree = null;
-		if (site != null) {
-			degree = site.getDegree();
-		} else {
-			Integer degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
-			degree = rootDomainObject.readDegreeByOID(degreeId);
-		}
-		if (degree != null) {
-			request.setAttribute("degreeID", degree.getIdInternal());
-			request.setAttribute("degree", degree);
-		}
-		return degree;
-	}
+    public static Degree getDegree(HttpServletRequest request) {
+        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+        final DegreeSite site = (DegreeSite) context.getSelectedContainer();
+        Degree degree = null;
+        if (site != null) {
+            degree = site.getDegree();
+        } else {
+            Integer degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
+            degree = rootDomainObject.readDegreeByOID(degreeId);
+        }
+        if (degree != null) {
+            request.setAttribute("degreeID", degree.getIdInternal());
+            request.setAttribute("degree", degree);
+        }
+        return degree;
+    }
 
 }

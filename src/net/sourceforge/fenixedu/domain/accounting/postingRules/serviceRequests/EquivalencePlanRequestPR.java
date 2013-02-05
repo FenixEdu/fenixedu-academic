@@ -24,111 +24,111 @@ import org.joda.time.DateTime;
 
 public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 
-	private EquivalencePlanRequestPR() {
-		super();
-	}
+    private EquivalencePlanRequestPR() {
+        super();
+    }
 
-	public EquivalencePlanRequestPR(final DateTime startDate, final DateTime endDate,
-			final ServiceAgreementTemplate serviceAgreementTemplate, final Money amountPerUnit, final Money maximumAmount) {
-		this();
-		super.init(EntryType.EQUIVALENCE_PLAN_REQUEST_FEE, EventType.EQUIVALENCE_PLAN_REQUEST, startDate, endDate,
-				serviceAgreementTemplate);
+    public EquivalencePlanRequestPR(final DateTime startDate, final DateTime endDate,
+            final ServiceAgreementTemplate serviceAgreementTemplate, final Money amountPerUnit, final Money maximumAmount) {
+        this();
+        super.init(EntryType.EQUIVALENCE_PLAN_REQUEST_FEE, EventType.EQUIVALENCE_PLAN_REQUEST, startDate, endDate,
+                serviceAgreementTemplate);
 
-		checkParameters(amountPerUnit, maximumAmount);
+        checkParameters(amountPerUnit, maximumAmount);
 
-		setAmountPerUnit(amountPerUnit);
-		super.setMaximumAmount(maximumAmount);
-	}
+        setAmountPerUnit(amountPerUnit);
+        super.setMaximumAmount(maximumAmount);
+    }
 
-	private void checkParameters(Money amountPerUnit, Money maximumAmount) {
-		if (amountPerUnit == null) {
-			throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.amountPerUnit.cannot.be.null");
-		}
+    private void checkParameters(Money amountPerUnit, Money maximumAmount) {
+        if (amountPerUnit == null) {
+            throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.amountPerUnit.cannot.be.null");
+        }
 
-		if (maximumAmount == null) {
-			throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.maximumAmount.cannot.be.null");
-		}
-	}
+        if (maximumAmount == null) {
+            throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.maximumAmount.cannot.be.null");
+        }
+    }
 
-	@Override
-	public void setMaximumAmount(final Money maximumAmount) {
-		throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.maximumAmount.cannot.be.modified");
-	}
+    @Override
+    public void setMaximumAmount(final Money maximumAmount) {
+        throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.maximumAmount.cannot.be.modified");
+    }
 
-	@Override
-	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-		final Money calculateAmountToPay = event.calculateAmountToPay(when);
-		return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-				.getPayedAmount(), calculateAmountToPay, event.getDescriptionForEntryType(getEntryType()), calculateAmountToPay));
-	}
+    @Override
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+        final Money calculateAmountToPay = event.calculateAmountToPay(when);
+        return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
+                .getPayedAmount(), calculateAmountToPay, event.getDescriptionForEntryType(getEntryType()), calculateAmountToPay));
+    }
 
-	@Override
-	protected Money doCalculationForAmountToPay(final Event event, final DateTime when, boolean applyDiscount) {
-		final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
+    @Override
+    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, boolean applyDiscount) {
+        final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
 
-		Money amountToPay = getAmountPerUnit();
+        Money amountToPay = getAmountPerUnit();
 
-		if (planRequest.getNumberOfEquivalences() != null && planRequest.getNumberOfEquivalences().intValue() != 0) {
-			amountToPay = amountToPay.multiply(planRequest.getNumberOfEquivalences().intValue());
-		}
+        if (planRequest.getNumberOfEquivalences() != null && planRequest.getNumberOfEquivalences().intValue() != 0) {
+            amountToPay = amountToPay.multiply(planRequest.getNumberOfEquivalences().intValue());
+        }
 
-		if (getMaximumAmount().greaterThan(Money.ZERO)) {
-			if (amountToPay.greaterThan(getMaximumAmount())) {
-				amountToPay = getMaximumAmount();
-			}
-		}
+        if (getMaximumAmount().greaterThan(Money.ZERO)) {
+            if (amountToPay.greaterThan(getMaximumAmount())) {
+                amountToPay = getMaximumAmount();
+            }
+        }
 
-		return amountToPay;
-	}
+        return amountToPay;
+    }
 
-	@Override
-	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-		final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+        final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
 
-		if (planRequest.hasAcademicEventExemption()) {
-			amountToPay = amountToPay.subtract(planRequest.getAcademicEventExemption().getValue());
-		}
+        if (planRequest.hasAcademicEventExemption()) {
+            amountToPay = amountToPay.subtract(planRequest.getAcademicEventExemption().getValue());
+        }
 
-		return amountToPay.isPositive() ? amountToPay : Money.ZERO;
-	}
+        return amountToPay.isPositive() ? amountToPay : Money.ZERO;
+    }
 
-	@Override
-	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    @Override
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
-		if (entryDTOs.size() != 1) {
-			throw new DomainException(
-					"error.accounting.postingRules.gratuity.EquivalencePlanRequestPR.invalid.number.of.entryDTOs");
-		}
+        if (entryDTOs.size() != 1) {
+            throw new DomainException(
+                    "error.accounting.postingRules.gratuity.EquivalencePlanRequestPR.invalid.number.of.entryDTOs");
+        }
 
-		checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
+        checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
-		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-				.iterator().next().getAmountToPay(), transactionDetail));
-	}
+        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
+                .iterator().next().getAmountToPay(), transactionDetail));
+    }
 
-	private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime whenRegistered) {
-		final Money totalFinalAmount = event.getPayedAmount().add(amountToPay);
+    private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime whenRegistered) {
+        final Money totalFinalAmount = event.getPayedAmount().add(amountToPay);
 
-		if (totalFinalAmount.lessThan(calculateTotalAmountToPay(event, whenRegistered))) {
-			throw new DomainExceptionWithLabelFormatter(
-					"error.accounting.postingRules.gratuity.EquivalencePlanRequestPR.amount.being.payed.must.be.equal.to.amount.in.debt",
-					event.getDescriptionForEntryType(getEntryType()));
-		}
-	}
+        if (totalFinalAmount.lessThan(calculateTotalAmountToPay(event, whenRegistered))) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.gratuity.EquivalencePlanRequestPR.amount.being.payed.must.be.equal.to.amount.in.debt",
+                    event.getDescriptionForEntryType(getEntryType()));
+        }
+    }
 
-	public EquivalencePlanRequestPR edit(final Money amountPerUnit, final Money maximumAmount) {
-		deactivate();
-		return new EquivalencePlanRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), amountPerUnit,
-				maximumAmount);
-	}
+    public EquivalencePlanRequestPR edit(final Money amountPerUnit, final Money maximumAmount) {
+        deactivate();
+        return new EquivalencePlanRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), amountPerUnit,
+                maximumAmount);
+    }
 
-	public String getMaximumAmountDescription() {
-		if (Money.ZERO.equals(this.getMaximumAmount())) {
-			return ResourceBundle.getBundle("resources.ApplicationResources").getString(
-					"label.base.amount.plus.units.with.no.maximum.value");
-		}
+    public String getMaximumAmountDescription() {
+        if (Money.ZERO.equals(this.getMaximumAmount())) {
+            return ResourceBundle.getBundle("resources.ApplicationResources").getString(
+                    "label.base.amount.plus.units.with.no.maximum.value");
+        }
 
-		return this.getMaximumAmount().getAmountAsString();
-	}
+        return this.getMaximumAmount().getAmountAsString();
+    }
 }

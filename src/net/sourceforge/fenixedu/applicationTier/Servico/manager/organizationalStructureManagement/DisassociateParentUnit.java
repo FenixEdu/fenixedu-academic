@@ -12,13 +12,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DisassociateParentUnit extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer accountabilityID) throws FenixServiceException {
-		Accountability accountability = rootDomainObject.readAccountabilityByOID(accountabilityID);
-		if (accountability == null) {
-			throw new FenixServiceException("error.inexistent.accountability");
-		}
-		accountability.delete();
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer accountabilityID) throws FenixServiceException {
+        Accountability accountability = rootDomainObject.readAccountabilityByOID(accountabilityID);
+        if (accountability == null) {
+            throw new FenixServiceException("error.inexistent.accountability");
+        }
+        accountability.delete();
+    }
 }

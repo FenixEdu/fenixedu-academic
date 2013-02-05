@@ -27,60 +27,60 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
  */
 public class InfoListGrantContract extends InfoObject {
 
-	private final GrantContract domainReference;
+    private final GrantContract domainReference;
 
-	public InfoListGrantContract(final GrantContract domainObject) {
-		domainReference = domainObject;
-	}
+    public InfoListGrantContract(final GrantContract domainObject) {
+        domainReference = domainObject;
+    }
 
-	private GrantContract getGrantContract() {
-		return domainReference;
-	}
+    private GrantContract getGrantContract() {
+        return domainReference;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj != null && getGrantContract() == ((InfoListGrantContract) obj).getGrantContract();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && getGrantContract() == ((InfoListGrantContract) obj).getGrantContract();
+    }
 
-	public InfoGrantContract getInfoGrantContract() {
-		final InfoGrantContract result = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(getGrantContract());
-		result.setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
-				.newInfoFromDomain(getGrantContract().readActualGrantOrientationTeacher()));
+    public InfoGrantContract getInfoGrantContract() {
+        final InfoGrantContract result = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(getGrantContract());
+        result.setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                .newInfoFromDomain(getGrantContract().readActualGrantOrientationTeacher()));
 
-		return result;
-	}
+        return result;
+    }
 
-	public List<InfoGrantContractRegime> getInfoGrantContractRegimes() {
-		// The actual regime is in the first position
+    public List<InfoGrantContractRegime> getInfoGrantContractRegimes() {
+        // The actual regime is in the first position
 
-		final List<InfoGrantContractRegime> result = new ArrayList<InfoGrantContractRegime>();
-		for (final GrantContractRegime grantContractRegime : getGrantContract().readGrantContractRegimeByGrantContract()) {
-			final InfoGrantContractRegime info =
-					InfoGrantContractRegimeWithTeacherAndContract.newInfoFromDomain(grantContractRegime);
-			result.add(info);
-		}
+        final List<InfoGrantContractRegime> result = new ArrayList<InfoGrantContractRegime>();
+        for (final GrantContractRegime grantContractRegime : getGrantContract().readGrantContractRegimeByGrantContract()) {
+            final InfoGrantContractRegime info =
+                    InfoGrantContractRegimeWithTeacherAndContract.newInfoFromDomain(grantContractRegime);
+            result.add(info);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public List<InfoListGrantSubsidy> getInfoListGrantSubsidys() {
-		// The actual subsidy is in the first position
+    public List<InfoListGrantSubsidy> getInfoListGrantSubsidys() {
+        // The actual subsidy is in the first position
 
-		final List<InfoListGrantSubsidy> result = new ArrayList<InfoListGrantSubsidy>();
-		for (GrantSubsidy grantSubsidy : getGrantContract().getAssociatedGrantSubsidies()) {
-			final InfoListGrantSubsidy info = new InfoListGrantSubsidy();
-			info.setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy));
+        final List<InfoListGrantSubsidy> result = new ArrayList<InfoListGrantSubsidy>();
+        for (GrantSubsidy grantSubsidy : getGrantContract().getAssociatedGrantSubsidies()) {
+            final InfoListGrantSubsidy info = new InfoListGrantSubsidy();
+            info.setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy));
 
-			final List<InfoGrantPart> infoSubsidyParts = new ArrayList<InfoGrantPart>();
-			for (final GrantPart grantPart : grantSubsidy.getAssociatedGrantParts()) {
-				infoSubsidyParts.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
-			}
-			info.setInfoGrantParts(infoSubsidyParts);
+            final List<InfoGrantPart> infoSubsidyParts = new ArrayList<InfoGrantPart>();
+            for (final GrantPart grantPart : grantSubsidy.getAssociatedGrantParts()) {
+                infoSubsidyParts.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
+            }
+            info.setInfoGrantParts(infoSubsidyParts);
 
-			result.add(info);
-		}
+            result.add(info);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

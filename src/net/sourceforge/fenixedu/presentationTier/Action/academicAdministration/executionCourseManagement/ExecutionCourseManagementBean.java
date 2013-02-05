@@ -15,127 +15,127 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExecutionCourseManagementBean implements java.io.Serializable, HasExecutionDegree {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExecutionSemester semester;
-	private String acronym;
-	private String name;
-	private EntryPhase entryPhase;
-	private String comments;
+    private ExecutionSemester semester;
+    private String acronym;
+    private String name;
+    private EntryPhase entryPhase;
+    private String comments;
 
-	private List<CurricularCourse> curricularCourseList;
+    private List<CurricularCourse> curricularCourseList;
 
-	private DegreeCurricularPlan degreeCurricularPlan;
+    private DegreeCurricularPlan degreeCurricularPlan;
 
-	private ExecutionCourse executionCourse;
+    private ExecutionCourse executionCourse;
 
-	private CurricularYear curricularYear;
+    private CurricularYear curricularYear;
 
-	public ExecutionCourseManagementBean(ExecutionSemester semester) {
-		setSemester(semester);
-		setCurricularCourseList(new ArrayList<CurricularCourse>());
-	}
+    public ExecutionCourseManagementBean(ExecutionSemester semester) {
+        setSemester(semester);
+        setCurricularCourseList(new ArrayList<CurricularCourse>());
+    }
 
-	public ExecutionCourseManagementBean(final ExecutionSemester semester, final CurricularCourse curricularCourse) {
-		setSemester(semester);
-		setCurricularCourseList(new ArrayList<CurricularCourse>());
-		getCurricularCourseList().add(curricularCourse);
-		setName(curricularCourse.getNameI18N().getContent(Language.pt));
-	}
+    public ExecutionCourseManagementBean(final ExecutionSemester semester, final CurricularCourse curricularCourse) {
+        setSemester(semester);
+        setCurricularCourseList(new ArrayList<CurricularCourse>());
+        getCurricularCourseList().add(curricularCourse);
+        setName(curricularCourse.getNameI18N().getContent(Language.pt));
+    }
 
-	public ExecutionCourseManagementBean(final ExecutionCourse executionCourse) {
-		setExecutionCourse(executionCourse);
-	}
+    public ExecutionCourseManagementBean(final ExecutionCourse executionCourse) {
+        setExecutionCourse(executionCourse);
+    }
 
-	public ExecutionCourseManagementBean(final DegreeCurricularPlan degreeCurricularPlan) {
-		setDegreeCurricularPlan(degreeCurricularPlan);
-	}
+    public ExecutionCourseManagementBean(final DegreeCurricularPlan degreeCurricularPlan) {
+        setDegreeCurricularPlan(degreeCurricularPlan);
+    }
 
-	public ExecutionCourseManagementBean() {
+    public ExecutionCourseManagementBean() {
 
-	}
+    }
 
-	public String getAcronym() {
-		return acronym;
-	}
+    public String getAcronym() {
+        return acronym;
+    }
 
-	public void setAcronym(String acronym) {
-		this.acronym = acronym;
-	}
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
+    }
 
-	public EntryPhase getEntryPhase() {
-		return entryPhase;
-	}
+    public EntryPhase getEntryPhase() {
+        return entryPhase;
+    }
 
-	public void setEntryPhase(EntryPhase entryPhase) {
-		this.entryPhase = entryPhase;
-	}
+    public void setEntryPhase(EntryPhase entryPhase) {
+        this.entryPhase = entryPhase;
+    }
 
-	public String getComments() {
-		return comments;
-	}
+    public String getComments() {
+        return comments;
+    }
 
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public ExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public ExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(ExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
 
-	public ExecutionSemester getSemester() {
-		return semester;
-	}
+    public ExecutionSemester getSemester() {
+        return semester;
+    }
 
-	public void setSemester(ExecutionSemester semester) {
-		this.semester = semester;
-	}
+    public void setSemester(ExecutionSemester semester) {
+        this.semester = semester;
+    }
 
-	public DegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
 
-	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	}
+    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
 
-	public List<CurricularCourse> getCurricularCourseList() {
-		return curricularCourseList;
-	}
+    public List<CurricularCourse> getCurricularCourseList() {
+        return curricularCourseList;
+    }
 
-	public void setCurricularCourseList(List<CurricularCourse> curricularCourseList) {
-		this.curricularCourseList = curricularCourseList;
-	}
+    public void setCurricularCourseList(List<CurricularCourse> curricularCourseList) {
+        this.curricularCourseList = curricularCourseList;
+    }
 
-	public CurricularYear getCurricularYear() {
-		return curricularYear;
-	}
+    public CurricularYear getCurricularYear() {
+        return curricularYear;
+    }
 
-	public void setCurricularYear(CurricularYear curricularYear) {
-		this.curricularYear = curricularYear;
-	}
+    public void setCurricularYear(CurricularYear curricularYear) {
+        this.curricularYear = curricularYear;
+    }
 
-	@Override
-	public ExecutionDegree getExecutionDegree() {
-		if (semester != null && degreeCurricularPlan != null) {
-			ExecutionDegree degree = degreeCurricularPlan.getExecutionDegreeByAcademicInterval(semester.getAcademicInterval());
+    @Override
+    public ExecutionDegree getExecutionDegree() {
+        if (semester != null && degreeCurricularPlan != null) {
+            ExecutionDegree degree = degreeCurricularPlan.getExecutionDegreeByAcademicInterval(semester.getAcademicInterval());
 
-			return degree;
-		}
+            return degree;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.domain.student.YearDelegate;
 
 public class InquiryDelegateAnswer extends InquiryDelegateAnswer_Base {
 
-	public InquiryDelegateAnswer(YearDelegate yearDelegate, ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
-		super();
-		setDelegate(yearDelegate);
-		setExecutionCourse(executionCourse);
-		setExecutionDegree(executionDegree);
-	}
+    public InquiryDelegateAnswer(YearDelegate yearDelegate, ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+        super();
+        setDelegate(yearDelegate);
+        setExecutionCourse(executionCourse);
+        setExecutionDegree(executionDegree);
+    }
 }

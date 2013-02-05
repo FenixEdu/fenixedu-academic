@@ -7,5 +7,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "publico", path = "/activities/editResearchActivity", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "EditResearchActivity", path = "show-participationDetails") })
 public class EditResearchActivityDispatchActionForPublico extends
-		net.sourceforge.fenixedu.presentationTier.Action.research.activity.EditResearchActivityDispatchAction {
+        net.sourceforge.fenixedu.presentationTier.Action.research.activity.EditResearchActivityDispatchAction {
 }

@@ -9,39 +9,39 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CareerWorkshopThemes {
 
-	RESUME(),
+    RESUME(),
 
-	LABOUR_MARKET_STRATEGIES(),
+    LABOUR_MARKET_STRATEGIES(),
 
-	RECRUITMENT_TECHNIQUES(),
+    RECRUITMENT_TECHNIQUES(),
 
-	CAREER_MANAGEMENT();
+    CAREER_MANAGEMENT();
 
-	private CareerWorkshopThemes() {
-	}
+    private CareerWorkshopThemes() {
+    }
 
-	public String getQualifiedName() {
-		return getClass().getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return getClass().getSimpleName() + "." + name();
+    }
 
-	public String getDescription() {
-		return getDescription(Language.getLocale());
-	}
+    public String getDescription() {
+        return getDescription(Language.getLocale());
+    }
 
-	public String getDescription(final Locale locale) {
-		return ResourceBundle.getBundle("resources.StudentResources", locale).getString(getQualifiedName());
-	}
+    public String getDescription(final Locale locale) {
+        return ResourceBundle.getBundle("resources.StudentResources", locale).getString(getQualifiedName());
+    }
 
-	static public Map<Integer, CareerWorkshopThemes> getEmptyRankings() {
-		Map<Integer, CareerWorkshopThemes> rankings = new HashMap<Integer, CareerWorkshopThemes>();
-		for (int i = 0; i < getTotalOptions(); i++) {
-			rankings.put(i, null);
-		}
-		return rankings;
-	}
+    static public Map<Integer, CareerWorkshopThemes> getEmptyRankings() {
+        Map<Integer, CareerWorkshopThemes> rankings = new HashMap<Integer, CareerWorkshopThemes>();
+        for (int i = 0; i < getTotalOptions(); i++) {
+            rankings.put(i, null);
+        }
+        return rankings;
+    }
 
-	static public int getTotalOptions() {
-		return CareerWorkshopThemes.values().length;
-	}
+    static public int getTotalOptions() {
+        return CareerWorkshopThemes.values().length;
+    }
 
 }

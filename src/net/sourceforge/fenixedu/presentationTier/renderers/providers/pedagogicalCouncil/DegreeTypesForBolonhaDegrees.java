@@ -9,26 +9,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeTypesForBolonhaDegrees implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
 
-		degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-		return degreeTypes;
-	}
+        return degreeTypes;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new Converter() {
+    @Override
+    public Converter getConverter() {
+        return new Converter() {
 
-			@Override
-			public Object convert(Class type, Object value) {
-				return DegreeType.valueOf((String) value);
-			}
+            @Override
+            public Object convert(Class type, Object value) {
+                return DegreeType.valueOf((String) value);
+            }
 
-		};
-	}
+        };
+    }
 }

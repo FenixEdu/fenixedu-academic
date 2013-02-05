@@ -8,14 +8,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class InitialContentForSection implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		Section section = (Section) source;
-		return section.getChildren(Element.class);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        Section section = (Section) source;
+        return section.getChildren(Element.class);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

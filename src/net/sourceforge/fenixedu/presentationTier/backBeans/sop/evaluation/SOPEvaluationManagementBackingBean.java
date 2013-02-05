@@ -71,1543 +71,1543 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
-	private static final MessageResources messages = MessageResources
-			.getMessageResources("resources/ResourceAllocationManagerResources");
-	private static final MessageResources enumerations = MessageResources.getMessageResources("resources/EnumerationResources");
-	private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
-
-	private String academicInterval;
-	protected HtmlInputHidden academicIntervalHidden;
-	protected boolean disableDropDown;
-	protected Integer executionDegreeID;
-	protected HtmlInputHidden executionDegreeIdHidden;
-	protected Integer curricularYearID;
-	protected HtmlInputHidden curricularYearIdHidden;
-	protected String curricularYearIDsParameterString;
-	protected Integer calendarPeriod;
-	protected HtmlInputHidden calendarPeriodHidden;
-	private Integer[] curricularYearIDs;
-	private final String chooseMessage = messages.getMessage(Language.getLocale(), "label.choose.message");
-	private HtmlInputHidden dayHidden;
-	private HtmlInputHidden monthHidden;
-	private HtmlInputHidden yearHidden;
-	private HtmlInputHidden beginHourHidden;
-	private HtmlInputHidden beginMinuteHidden;
-	private HtmlInputHidden endHourHidden;
-	private HtmlInputHidden endMinuteHidden;
-	private Integer orderCriteria;
-	private final String labelVacancies = messages.getMessage(Language.getLocale(), "label.vacancies");
-	private List<Integer> associatedExecutionCourses;
-
-	private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer, String>();
-	private Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems = new HashMap<Integer, List<SelectItem>>();
-	private Map<Integer, List<SelectItem>> curricularCourseContextSelectItems = new HashMap<Integer, List<SelectItem>>();
-	private final Map<Integer, List<WrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<WrittenEvaluation>>();;
-	private final Map<Integer, Integer> writtenEvaluationsMissingPlaces = new HashMap<Integer, Integer>();
-	private final Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
-	private final Map<Integer, Integer> executionCoursesEnroledStudents = new HashMap<Integer, Integer>();
-
-	private String comment;
-
-	// BEGIN academicInterval
-	public String getAcademicInterval() {
-		hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat();
-		if (this.academicInterval == null && this.academicIntervalHidden.getValue() != null
-				&& !this.academicIntervalHidden.getValue().equals("")) {
-			this.academicInterval = this.academicIntervalHidden.getValue().toString();
-		} else if (this.getRequestAttribute("academicInterval") != null
-				&& !this.getRequestAttribute("academicInterval").equals("")) {
-			this.academicInterval = this.getRequestAttribute("academicInterval").toString();
-		} else if (this.getRequestParameter("academicInterval") != null
-				&& !this.getRequestParameter("academicInterval").equals("")) {
-			this.academicInterval = this.getRequestParameter("academicInterval");
-			// } else if (this.academicInterval == null) {
-			// this.academicInterval = getAcademicIntervalOID();
-		}
-		return academicInterval;
-	}
-
-	private void hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat() {
-		AcademicInterval academicInterval = null;
-		if (getRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL) != null) {
-			String academicIntervalStr = (String) getRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL);
-			academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
-		} else if (getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL) != null) {
-			String academicIntervalStr = getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL);
-			if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
-				final String academicIntervalStrArg =
-						academicIntervalStr.indexOf('-') > 0 ? academicIntervalStr.replaceAll("-", "_") : academicIntervalStr;
-				academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStrArg);
-			}
-		}
-		if (academicInterval == null) {
-			academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
-		}
-		setRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
-	}
-
-	public String getAcademicIntervalEscapeFriendly() {
-		return getAcademicInterval().replaceAll("_", "-");
-	}
-
-	public void setAcademicInterval(String academicInterval) {
-		if (academicInterval != null) {
-			this.academicIntervalHidden.setValue(academicInterval);
-		}
-		this.academicInterval = academicInterval;
-	}
-
-	public HtmlInputHidden getAcademicIntervalHidden() {
-		if (this.academicIntervalHidden == null) {
-			this.academicIntervalHidden = new HtmlInputHidden();
-			this.academicIntervalHidden.setValue(this.getAcademicInterval());
-		}
-		return academicIntervalHidden;
-	}
-
-	public void setAcademicIntervalHidden(HtmlInputHidden academicIntervalHidden) {
-		if (academicIntervalHidden.getValue() != null && !((String) academicIntervalHidden.getValue()).isEmpty()) {
-			this.academicInterval = academicIntervalHidden.getValue().toString();
-		}
-		this.academicIntervalHidden = academicIntervalHidden;
-	}
-
-	public String getAcademicIntervalLabel() {
-		return getAcademicIntervalFromParameter(getAcademicInterval()).getPathName();
-	}
-
-	// END executionPeriod
-
-	// BEGIN disableDropDown
-	public boolean getDisableDropDown() {
-		if (getAcademicInterval() == null || getAcademicInterval().isEmpty()) {
-			this.disableDropDown = Boolean.TRUE;
-		} else {
-			this.disableDropDown = Boolean.FALSE;
-		}
-		return disableDropDown;
-	}
-
-	public void setDisableDropDown(boolean disableDropDown) {
-		this.disableDropDown = disableDropDown;
-	}
-
-	// END disableDropDown
-
-	// BEGIN executionDegree
-	public Integer getExecutionDegreeID() {
-		if (this.executionDegreeID == null && this.executionDegreeIdHidden.getValue() != null
-				&& !this.executionDegreeIdHidden.getValue().equals("")) {
-			this.executionDegreeID = Integer.valueOf(this.executionDegreeIdHidden.getValue().toString());
-		} else if (this.getRequestAttribute("executionDegreeID") != null
-				&& !this.getRequestAttribute("executionDegreeID").equals("")) {
-			this.executionDegreeID = Integer.valueOf(this.getRequestAttribute("executionDegreeID").toString());
-		} else if (this.getRequestParameter("executionDegreeID") != null
-				&& !this.getRequestParameter("executionDegreeID").equals("")) {
-			this.executionDegreeID = Integer.valueOf(this.getRequestParameter("executionDegreeID"));
-		}
-		return executionDegreeID;
-	}
-
-	public void setExecutionDegreeID(Integer executionDegreeID) {
-		if (executionDegreeID != null) {
-			this.executionDegreeIdHidden = new HtmlInputHidden();
-			this.executionDegreeIdHidden.setValue(executionDegreeID);
-		}
-		this.executionDegreeID = executionDegreeID;
-	}
-
-	public HtmlInputHidden getExecutionDegreeIdHidden() {
-		if (this.executionDegreeIdHidden == null) {
-			this.executionDegreeIdHidden = new HtmlInputHidden();
-			this.executionDegreeIdHidden.setValue(this.getExecutionDegreeID());
-		}
-		return executionDegreeIdHidden;
-	}
-
-	public void setExecutionDegreeIdHidden(HtmlInputHidden executionDegreeIdHidden) {
-		if (executionDegreeIdHidden != null && executionDegreeIdHidden.getValue() != null
-				&& !executionDegreeIdHidden.getValue().equals("")) {
-			this.executionDegreeID = Integer.valueOf(executionDegreeIdHidden.getValue().toString());
-		}
-		this.executionDegreeIdHidden = executionDegreeIdHidden;
-	}
-
-	public ExecutionDegree getExecutionDegree() {
-		return rootDomainObject.readExecutionDegreeByOID(this.getExecutionDegreeID());
-	}
-
-	public String getExecutionDegreeLabel() {
-		ExecutionDegree executionDegreeSelected = getExecutionDegree();
-
-		StringBuilder stringBuffer = new StringBuilder();
-		stringBuffer.append(enumerations.getMessage(Language.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
-				.getDegree().getDegreeType().toString()));
-		stringBuffer.append(" em ");
-		stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree()
-				.getNameFor(executionDegreeSelected.getAcademicInterval()).getContent());
-
-		return stringBuffer.toString();
-	}
-
-	public Integer getCurricularYearID() {
-		if (this.curricularYearID == null && this.curricularYearIdHidden.getValue() != null
-				&& !this.curricularYearIdHidden.getValue().equals("")) {
-			this.curricularYearID = Integer.valueOf(this.curricularYearIdHidden.getValue().toString());
-		} else if (this.getRequestAttribute("curricularYearID") != null
-				&& !this.getRequestAttribute("curricularYearID").equals("")) {
-			this.curricularYearID = Integer.valueOf(this.getRequestAttribute("curricularYearID").toString());
-		} else if (this.getRequestParameter("curricularYearID") != null
-				&& !this.getRequestParameter("curricularYearID").equals("")) {
-			this.curricularYearID = Integer.valueOf(this.getRequestParameter("curricularYearID"));
-		}
-		return curricularYearID;
-	}
-
-	public Integer getCalendarPeriod() {
-		if (this.calendarPeriod == null && this.getCalendarPeriodHidden().getValue() != null
-				&& !this.calendarPeriodHidden.getValue().equals("")) {
-			this.calendarPeriod = Integer.valueOf(this.getCalendarPeriodHidden().getValue().toString());
-		} else if (this.getRequestAttribute("calendarPeriod") != null && !this.getRequestAttribute("calendarPeriod").equals("")) {
-			this.calendarPeriod = Integer.valueOf(this.getRequestAttribute("calendarPeriod").toString());
-		} else if (this.getRequestParameter("calendarPeriod") != null && !this.getRequestParameter("calendarPeriod").equals("")) {
-			this.calendarPeriod = Integer.valueOf(this.getRequestParameter("calendarPeriod"));
-		}
-		return calendarPeriod;
-	}
-
-	public void setCurricularYearID(Integer curricularYearID) {
-		if (curricularYearID != null) {
-			this.curricularYearIdHidden = new HtmlInputHidden();
-			this.curricularYearIdHidden.setValue(curricularYearID);
-		}
-		this.curricularYearID = curricularYearID;
-	}
-
-	public void setCalendarPeriod(Integer calendarPeriod) {
-		if (calendarPeriod != null) {
-			this.calendarPeriodHidden = new HtmlInputHidden();
-			this.calendarPeriodHidden.setValue(calendarPeriod);
-		}
-		this.calendarPeriod = calendarPeriod;
-	}
-
-	public HtmlInputHidden getCurricularYearIdHidden() {
-		if (this.curricularYearIdHidden == null) {
-			this.curricularYearIdHidden = new HtmlInputHidden();
-			this.curricularYearIdHidden.setValue(this.getCurricularYearID());
-		}
-		return curricularYearIdHidden;
-	}
-
-	public HtmlInputHidden getCalendarPeriodHidden() {
-		if (this.calendarPeriodHidden == null) {
-			this.calendarPeriodHidden = new HtmlInputHidden();
-			this.calendarPeriodHidden.setValue(this.getCalendarPeriod());
-		}
-		return calendarPeriodHidden;
-	}
-
-	public void setCurricularYearIdHidden(HtmlInputHidden curricularYearIdHidden) {
-		if (curricularYearIdHidden != null && curricularYearIdHidden.getValue() != null
-				&& !curricularYearIdHidden.getValue().equals("")) {
-			this.curricularYearID = Integer.valueOf(curricularYearIdHidden.getValue().toString());
-		}
-		this.curricularYearIdHidden = curricularYearIdHidden;
-	}
-
-	public void setCalendarPeriodHidden(HtmlInputHidden calendarPeriodHidden) {
-		if (calendarPeriodHidden != null && calendarPeriodHidden.getValue() != null
-				&& !calendarPeriodHidden.getValue().equals("")) {
-			this.calendarPeriod = Integer.valueOf(calendarPeriodHidden.getValue().toString());
-		}
-		this.calendarPeriodHidden = calendarPeriodHidden;
-	}
-
-	public String getCurricularYear() {
-		return this.getCurricularYearItems().get(getCurricularYearID()).getLabel();
-	}
-
-	// END curricularYear
-
-	// BEGIN day, month, year, hour, minute
-	public HtmlInputHidden getDayHidden() throws FenixFilterException, FenixServiceException {
-		if (this.dayHidden == null) {
-			this.dayHidden = new HtmlInputHidden();
-			this.dayHidden.setValue(this.getDay());
-		}
-		return dayHidden;
-	}
-
-	public void setDayHidden(HtmlInputHidden dayHidden) {
-		if (dayHidden.getValue() != null) {
-			final String dayValue = dayHidden.getValue().toString();
-			if (dayValue.length() > 0) {
-				this.day = Integer.valueOf(dayValue);
-			}
-		}
-		this.dayHidden = dayHidden;
-	}
-
-	public HtmlInputHidden getMonthHidden() throws FenixFilterException, FenixServiceException {
-		if (this.monthHidden == null) {
-			this.monthHidden = new HtmlInputHidden();
-			this.monthHidden.setValue(this.getMonth());
-		}
-		return monthHidden;
-	}
-
-	public void setMonthHidden(HtmlInputHidden monthHidden) {
-		if (monthHidden.getValue() != null) {
-			final String monthValue = monthHidden.getValue().toString();
-			if (monthValue.length() > 0) {
-				this.month = Integer.valueOf(monthValue);
-			}
-		}
-		this.monthHidden = monthHidden;
-	}
-
-	public HtmlInputHidden getYearHidden() throws FenixFilterException, FenixServiceException {
-		if (this.yearHidden == null) {
-			this.yearHidden = new HtmlInputHidden();
-			this.yearHidden.setValue(this.getYear());
-		}
-		return yearHidden;
-	}
-
-	public void setYearHidden(HtmlInputHidden yearHidden) {
-		if (yearHidden.getValue() != null) {
-			final String yearValue = yearHidden.getValue().toString();
-			if (yearValue.length() > 0) {
-				this.year = Integer.valueOf(yearValue);
-			}
-		}
-		this.yearHidden = yearHidden;
-	}
-
-	public HtmlInputHidden getBeginHourHidden() throws FenixFilterException, FenixServiceException {
-		if (this.beginHourHidden == null) {
-			this.beginHourHidden = new HtmlInputHidden();
-			this.beginHourHidden.setValue(this.getBeginHour());
-		}
-		return beginHourHidden;
-	}
-
-	public void setBeginHourHidden(HtmlInputHidden beginHourHidden) {
-		if (beginHourHidden.getValue() != null) {
-			this.beginHour = Integer.valueOf(beginHourHidden.getValue().toString());
-		}
-		this.beginHourHidden = beginHourHidden;
-	}
-
-	public HtmlInputHidden getBeginMinuteHidden() throws FenixFilterException, FenixServiceException {
-		if (this.beginMinuteHidden == null) {
-			this.beginMinuteHidden = new HtmlInputHidden();
-			this.beginMinuteHidden.setValue(this.getBeginMinute());
-		}
-		return beginMinuteHidden;
-	}
-
-	public void setBeginMinuteHidden(HtmlInputHidden beginMinuteHidden) {
-		if (beginMinuteHidden.getValue() != null) {
-			this.beginMinute = Integer.valueOf(beginMinuteHidden.getValue().toString());
-		}
-		this.beginMinuteHidden = beginMinuteHidden;
-	}
-
-	public HtmlInputHidden getEndHourHidden() throws FenixFilterException, FenixServiceException {
-		if (this.endHourHidden == null) {
-			this.endHourHidden = new HtmlInputHidden();
-			this.endHourHidden.setValue(this.getEndHour());
-		}
-		return endHourHidden;
-	}
-
-	public void setEndHourHidden(HtmlInputHidden endHourHidden) {
-		if (endHourHidden.getValue() != null) {
-			this.endHour = Integer.valueOf(endHourHidden.getValue().toString());
-		}
-		this.endHourHidden = endHourHidden;
-	}
-
-	public HtmlInputHidden getEndMinuteHidden() throws FenixFilterException, FenixServiceException {
-		if (this.endMinuteHidden == null) {
-			this.endMinuteHidden = new HtmlInputHidden();
-			this.endMinuteHidden.setValue(this.getEndMinute());
-		}
-		return endMinuteHidden;
-	}
-
-	public void setEndMinuteHidden(HtmlInputHidden endMinuteHidden) {
-		if (endMinuteHidden.getValue() != null) {
-			this.endMinute = Integer.valueOf(endMinuteHidden.getValue().toString());
-		}
-		this.endMinuteHidden = endMinuteHidden;
-	}
-
-	// END day, month, year, hour, minute
-
-	// BEGIN Drop down menu logic
-	public List<SelectItem> getAcademicIntervals() throws FenixFilterException, FenixServiceException {
-		List<AcademicInterval> academicIntervals = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
-		Collections.sort(academicIntervals, AcademicInterval.COMPARATOR_BY_BEGIN_DATE);
-
-		List<SelectItem> result = new ArrayList<SelectItem>();
-		result.add(new SelectItem(0, this.chooseMessage));
-		for (AcademicInterval academicInterval : academicIntervals) {
-			String label = academicInterval.getPathName();
-			result.add(new SelectItem(academicInterval.getResumedRepresentationInStringFormat(), label));
-		}
-
-		return result;
-	}
-
-	public void enableDropDowns(ValueChangeEvent valueChangeEvent) {
-		this.setAcademicInterval(valueChangeEvent.getNewValue().toString());
-
-		if (StringUtils.isEmpty((String) valueChangeEvent.getNewValue())) {
-			this.setDisableDropDown(true);
-		} else {
-			this.setDisableDropDown(false);
-		}
-
-		this.setExecutionDegreeID(0);
-		this.setCurricularYearID(0);
-
-		return;
-	}
-
-	public List<SelectItem> getExecutionDegrees() throws FenixFilterException, FenixServiceException {
-		if (this.getDisableDropDown()) {
-			return new ArrayList<SelectItem>();
-		}
-
-		List<ExecutionDegree> degrees =
-				ExecutionDegree.filterByAcademicInterval(getAcademicIntervalFromParameter(getAcademicInterval()));
-		List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
-		for (ExecutionDegree degree : degrees) {
-			infoExecutionDegrees.add(new InfoExecutionDegree(degree));
-		}
-		Collections.sort(infoExecutionDegrees, new ComparatorByNameForInfoExecutionDegree());
-
-		List<SelectItem> result = new ArrayList<SelectItem>(infoExecutionDegrees.size());
-		result.add(new SelectItem(0, this.chooseMessage));
-		for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
-			StringBuilder label = new StringBuilder();
-			label.append(enumerations.getMessage(Language.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
-					.getInfoDegree().getDegreeType().toString()));
-			label.append(" em ");
-			label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
-			label.append(addAnotherInfoDegreeToLabel(infoExecutionDegrees, infoExecutionDegree) ? " - "
-					+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "");
-			result.add(new SelectItem(infoExecutionDegree.getIdInternal(), label.toString()));
-		}
-
-		return result;
-	}
-
-	private AcademicInterval getAcademicIntervalFromParameter(String academicInterval) {
-		if (academicInterval.contains("-")) {
-			return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval.replaceAll("-", ":"));
-		}
-		return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval);
-	}
-
-	private boolean addAnotherInfoDegreeToLabel(List<InfoExecutionDegree> infoExecutionDegrees,
-			InfoExecutionDegree infoExecutionDegree) {
-		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-
-		for (InfoExecutionDegree infoExecutionDegree2 : infoExecutionDegrees) {
-			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-					&& !(infoExecutionDegree.equals(infoExecutionDegree2))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public List<SelectItem> getCurricularYearItems() {
-		if (this.getDisableDropDown()) {
-			return new ArrayList<SelectItem>();
-		}
-
-		List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-		curricularYearItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(), "label.year.first")));
-		curricularYearItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(), "label.year.second")));
-		curricularYearItems.add(new SelectItem(3, messages.getMessage(Language.getLocale(), "label.year.third")));
-		curricularYearItems.add(new SelectItem(4, messages.getMessage(Language.getLocale(), "label.year.fourth")));
-		curricularYearItems.add(new SelectItem(5, messages.getMessage(Language.getLocale(), "label.year.fifth")));
-
-		return curricularYearItems;
-	}
-
-	public List<SelectItem> getCalendarPeriodItems() {
-		if (this.getDisableDropDown()) {
-			return new ArrayList<SelectItem>();
-		}
-
-		List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
-
-		calendarPeriodItems.add(new SelectItem(0, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.all")));
-		calendarPeriodItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(),
-				"label.calendarPeriodItem.lesson.period")));
-		calendarPeriodItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(),
-				"label.calendarPeriodItem.exam.period")));
-
-		return calendarPeriodItems;
-	}
-
-	public void setNewValueExecutionDegreeID(ValueChangeEvent valueChangeEvent) {
-		this.setExecutionDegreeID((Integer) valueChangeEvent.getNewValue());
-	}
-
-	public void setNewValueCurricularYearID(ValueChangeEvent valueChangeEvent) {
-		this.setCurricularYearID((Integer) valueChangeEvent.getNewValue());
-	}
-
-	public void setNewValueCurricularYearIDs(ValueChangeEvent valueChangeEvent) {
-		this.setCurricularYearIDs((Integer[]) valueChangeEvent.getNewValue());
-	}
-
-	public Integer[] getCurricularYearIDParameters() {
-		final String curricularYearIDsParameterString = getRequestParameter("curricularYearIDsParameterString");
-		if (curricularYearIDsParameterString != null && curricularYearIDsParameterString.length() > 0
-				&& !curricularYearIDsParameterString.equals("null")) {
-			final String[] curricularYearIDsParameterStringTokens = curricularYearIDsParameterString.split(",");
-			final Integer[] curricularYearIDParameters = new Integer[curricularYearIDsParameterStringTokens.length];
-			for (int i = 0; i < curricularYearIDParameters.length; i++) {
-				curricularYearIDParameters[i] = Integer.valueOf(curricularYearIDsParameterStringTokens[i]);
-			}
-			return curricularYearIDParameters;
-		}
-		return null;
-	}
-
-	public String getCurricularYearIDsParameterString() {
-		final Integer[] curricularYearIDs = getCurricularYearIDs();
-		if (curricularYearIDs != null && curricularYearIDs.length > 0) {
-			buildString(curricularYearIDs);
-		}
-		return curricularYearIDsParameterString;
-	}
-
-	private void buildString(final Integer[] curricularYearIDs) {
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < curricularYearIDs.length; i++) {
-			if (i > 0) {
-				stringBuilder.append(',');
-			}
-			stringBuilder.append(curricularYearIDs[i].toString());
-		}
-		this.curricularYearIDsParameterString = stringBuilder.toString();
-	}
-
-	public void setCurricularYearIDsParameterString(String curricularYearIDsParameterString) {
-		this.curricularYearIDsParameterString = curricularYearIDsParameterString;
-	}
-
-	public Integer[] getCurricularYearIDs() {
-		if (curricularYearIDs == null) {
-			curricularYearIDs = (Integer[]) getViewState().getAttribute("curricularYearIDs");
-		}
-		if (curricularYearIDs == null) {
-			curricularYearIDs = getCurricularYearIDParameters();
-		}
-		return curricularYearIDs;
-	}
-
-	public void setCurricularYearIDs(Integer[] curricularYearIDs) {
-		this.curricularYearIDs = curricularYearIDs;
-		getViewState().setAttribute("curricularYearIDs", curricularYearIDs);
-	}
-
-	public void setNewValueCalendarPeriod(ValueChangeEvent valueChangeEvent) {
-		this.setCalendarPeriod((Integer) valueChangeEvent.getNewValue());
-	}
-
-	public void setNewValueExecutionCourseID(ValueChangeEvent valueChangeEvent) {
-		this.setExecutionCourseID((Integer) valueChangeEvent.getNewValue());
-	}
-
-	public boolean getRenderContextSelection() {
-		if (this.getAcademicInterval() == null || this.getExecutionDegreeID() == null || this.getCurricularYearIDs() == null
-				|| this.getCurricularYearIDs().length <= 0 || this.getExecutionDegreeID() == 0) {
-			return false;
-		}
-		return true;
-	}
-
-	public Date[] getWrittenEvaluationsCalendarBegin() {
-		final Integer calendarPeriod = getCalendarPeriod();
-		final ExecutionDegree executionDegree = getExecutionDegree();
-
-		final int resultSize = calendarPeriod == null || executionDegree == null ? 1 : 2;
-		final Date[] result = new Date[resultSize];
-
-		if (calendarPeriod == null || executionDegree == null) {
-			result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
-		} else {
-			int semester =
-					AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
-							.getAcademicIntervalFromResumedString(getAcademicInterval()));
-
-			if (calendarPeriod.intValue() == 0) {
-				result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
-				if (semester == 1) {
-					result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
-				}
-			} else if (calendarPeriod.intValue() == 1) {
-				final OccupationPeriod occupationPeriod =
-						semester == 1 ? executionDegree.getPeriodLessonsFirstSemester() : executionDegree
-								.getPeriodLessonsSecondSemester();
-				result[0] = occupationPeriod.getStart();
-			} else if (calendarPeriod.intValue() == 2) {
-				final OccupationPeriod occupationPeriod =
-						semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
-								.getPeriodExamsSecondSemester();
-				result[0] = occupationPeriod.getStart();
-				result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
-			}
-		}
-
-		return result;
-	}
-
-	public Date[] getWrittenEvaluationsCalendarEnd() {
-		final Integer calendarPeriod = getCalendarPeriod();
-		final ExecutionDegree executionDegree = getExecutionDegree();
-
-		final int resultSize = calendarPeriod == null || executionDegree == null ? 1 : 2;
-		final Date[] result = new Date[resultSize];
-
-		if (calendarPeriod == null || executionDegree == null) {
-			result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
-		} else {
-			int semester =
-					AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
-							.getAcademicIntervalFromResumedString(getAcademicInterval()));
-
-			if (calendarPeriod.intValue() == 0) {
-				result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
-				if (semester == 1) {
-					result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
-				}
-			} else if (calendarPeriod.intValue() == 1) {
-				final OccupationPeriod occupationPeriod =
-						semester == 1 ? executionDegree.getPeriodLessonsFirstSemester() : executionDegree
-								.getPeriodLessonsSecondSemester();
-				result[0] = occupationPeriod.getLastOccupationPeriodOfNestedPeriods().getEnd();
-			} else if (calendarPeriod.intValue() == 2) {
-				final OccupationPeriod occupationPeriod =
-						semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
-								.getPeriodExamsSecondSemester();
-				result[0] = occupationPeriod.getEnd();
-				result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
-			}
-		}
-
-		return result;
-	}
-
-	public List<CalendarLink> getWrittenTestsCalendarLink() throws FenixFilterException, FenixServiceException {
-
-		List<CalendarLink> result = new ArrayList<CalendarLink>();
-		Integer[] curricularYearIDs = getCurricularYearIDs();
-
-		if (curricularYearIDs != null && getExecutionDegree() != null) {
-			List<Integer> curricularYears = Arrays.asList(getCurricularYearIDs());
-			DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
-			for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-				for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-					if (evaluation instanceof WrittenEvaluation) {
-						final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-						if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
-							final CalendarLink calendarLink =
-									new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
-							calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
-							result.add(calendarLink);
-						}
-					}
-				}
-			}
-		}
-
-		return result;
-	}
-
-	private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,
-			final WrittenEvaluation writtenEvaluation) {
-		final Map<String, String> linkParameters = new HashMap<String, String>();
-		linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
-		linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
-		linkParameters.put("academicInterval", this.academicInterval);
-		linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
-		linkParameters.put("curricularYearIDsParameterString", getCurricularYearIDsParameterString());
-		linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
-		return linkParameters;
-	}
-
-	private String constructEvaluationCalendarPresentationString(final WrittenEvaluation writtenEvaluation,
-			final ExecutionCourse executionCourse) {
-		final StringBuilder stringBuilder = new StringBuilder();
-		if (writtenEvaluation instanceof WrittenTest) {
-			stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.test"));
-		} else if (writtenEvaluation instanceof Exam) {
-			stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.exam"));
-		}
-		stringBuilder.append(" ");
-		stringBuilder.append(executionCourse.getSigla());
-		stringBuilder.append(" (");
-		stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginning().getTime()));
-		stringBuilder.append(")");
-		return stringBuilder.toString();
-	}
-
-	private List<ExecutionCourse> getExecutionCourses() throws FenixFilterException, FenixServiceException {
-		final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-		Integer[] curricularYears = getCurricularYearIDs();
-		if (curricularYears != null) {
-			for (final Integer curricularYearID : curricularYears) {
-				executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
-						getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
-						rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
-			}
-		}
-		// Integer[] curricularYears = getCurricularYearIDs();
-		// if (curricularYears != null) {
-		// for (final Integer curricularYearID : curricularYears) {
-		// final Object args[] = {
-		// this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
-		// this.getExecutionPeriodID(), curricularYearID };
-		// executionCourses.addAll((Collection<ExecutionCourse>)
-		// ServiceManagerServiceFactory.executeService(
-		// "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
-		// , args));
-		// }
-		// }
-		Collections.sort(executionCourses, new BeanComparator("sigla"));
-		return executionCourses;
-	}
-
-	public List<ExecutionCourseWrittenEvaluationAgregationBean> getExecutionCourseWrittenEvaluationAgregationBeans()
-			throws FenixFilterException, FenixServiceException {
-
-		final List<ExecutionCourseWrittenEvaluationAgregationBean> executionCourseWrittenEvaluationAgregationBean =
-				new ArrayList<ExecutionCourseWrittenEvaluationAgregationBean>();
-		final Integer[] curricularYears = getCurricularYearIDs();
-
-		if (curricularYears != null && this.getExecutionDegree() != null) {
-			final DegreeCurricularPlan degreeCurricularPlan = this.getExecutionDegree().getDegreeCurricularPlan();
-			for (final Integer curricularYearID : curricularYears) {
-				// final Object args[] = { degreeCurricularPlan.getIdInternal(),
-				// this.getExecutionPeriodID(), curricularYearID };
-				// final Collection<ExecutionCourse> executionCourses =
-				// (Collection<ExecutionCourse>) ServiceManagerServiceFactory
-				// .executeService(
-				// "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
-				// , args);
-				final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-				executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
-						getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
-						rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
-
-				for (final ExecutionCourse executionCourse : executionCourses) {
-					final Set<WrittenEvaluation> writtenEvaluations =
-							new TreeSet<WrittenEvaluation>(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
-					for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
-						if (evaluation instanceof WrittenEvaluation) {
-							final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-							for (final DegreeModuleScope scope : writtenEvaluation.getDegreeModuleScopes()) {
-								if (scope.getCurricularYear().intValue() == curricularYearID.intValue()
-										&& degreeCurricularPlan == scope.getCurricularCourse().getDegreeCurricularPlan()) {
-									writtenEvaluations.add(writtenEvaluation);
-								}
-							}
-						}
-					}
-					if (!writtenEvaluations.isEmpty()) {
-						executionCourseWrittenEvaluationAgregationBean.add(new ExecutionCourseWrittenEvaluationAgregationBean(
-								curricularYearID, executionCourse, writtenEvaluations));
-					}
-				}
-			}
-		}
-		Collections.sort(executionCourseWrittenEvaluationAgregationBean,
-				ExecutionCourseWrittenEvaluationAgregationBean.COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR);
-		return executionCourseWrittenEvaluationAgregationBean;
-	}
-
-	public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() throws FenixFilterException, FenixServiceException {
-
-		writtenEvaluations.clear();
-		writtenEvaluationsMissingPlaces.clear();
-		writtenEvaluationsRooms.clear();
-		executionCoursesEnroledStudents.clear();
-
-		List<ExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<ExecutionCourse>();
-		Integer[] curricularYearIDs = getCurricularYearIDs();
-
-		if (curricularYearIDs != null && getExecutionDegree() != null) {
-
-			DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
-			List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
-
-			for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-
-				List<WrittenEvaluation> executionCourseWrittenEvaluations = new ArrayList<WrittenEvaluation>();
-				for (WrittenEvaluation writtenEvaluation : executionCourse.getAssociatedWrittenEvaluations()) {
-					if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
-						executionCourseWrittenEvaluations.add(writtenEvaluation);
-					}
-				}
-
-				if (!executionCourseWrittenEvaluations.isEmpty()) {
-					Collections.sort(executionCourseWrittenEvaluations, WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
-					processWrittenTestAdditionalValues(executionCourse, executionCourseWrittenEvaluations);
-					writtenEvaluations.put(executionCourse.getIdInternal(), executionCourseWrittenEvaluations);
-					executionCoursesWithWrittenEvaluations.add(executionCourse);
-				}
-			}
-		}
-		return executionCoursesWithWrittenEvaluations;
-	}
-
-	private void processWrittenTestAdditionalValues(final ExecutionCourse executionCourse,
-			final List<WrittenEvaluation> associatedWrittenEvaluations) {
-		for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
-			int totalCapacity = 0;
-			final StringBuilder buffer = new StringBuilder(20);
-			for (final AllocatableSpace room : writtenTest.getAssociatedRooms()) {
-				buffer.append(room.getIdentification()).append("; ");
-				totalCapacity += room.getCapacidadeExame();
-			}
-			if (buffer.length() > 0) {
-				buffer.delete(buffer.length() - 2, buffer.length() - 1);
-			}
-			writtenEvaluationsRooms.put(writtenTest.getIdInternal(), buffer.toString());
-			int numberOfEnroledStudents = writtenTest.getCountStudentsEnroledAttendingExecutionCourses();
-			executionCoursesEnroledStudents.put(writtenTest.getIdInternal(), numberOfEnroledStudents);
-			writtenEvaluationsMissingPlaces.put(writtenTest.getIdInternal(),
-					Integer.valueOf(numberOfEnroledStudents - totalCapacity));
-		}
-	}
-
-	public List<ExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() throws FenixFilterException,
-			FenixServiceException {
-		List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-		Integer[] curricularYearIDs = getCurricularYearIDs();
-
-		if (curricularYearIDs != null && getExecutionDegree() != null) {
-			List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
-			DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
-
-			for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-				if (executionCourse.getAssociatedWrittenEvaluationsForScopeAndContext(curricularYears, degreeCurricularPlan)
-						.isEmpty()) {
-					result.add(executionCourse);
-				}
-			}
-		}
-		return result;
-	}
-
-	private static final Comparator<SelectItem> COMPARATOR_BY_LABEL = new Comparator<SelectItem>() {
-
-		@Override
-		public int compare(SelectItem o1, SelectItem o2) {
-			return o1.getLabel().compareTo(o2.getLabel());
-		}
-
-	};
-
-	public List<SelectItem> getExecutionCoursesLabels() throws FenixFilterException, FenixServiceException {
-		final List<SelectItem> result = new ArrayList<SelectItem>();
-		for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-			result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
-		}
-		Collections.sort(result, COMPARATOR_BY_LABEL);
-		result.add(0, new SelectItem(0, this.chooseMessage));
-		return result;
-	}
-
-	// END Drop down menu logic
-
-	// BEGIN Select Execution Course and Evaluation Type page logic
-	public String continueToCreateWrittenEvaluation() throws FenixFilterException, FenixServiceException {
-		if (this.getEvaluationTypeClassname() == null || this.getExecutionCourseID() == null
-				|| this.getEvaluationTypeClassname().equals("noSelection") || this.getExecutionCourseID() == 0) {
-			this.setErrorMessage("label.choose.request");
-			return "";
-		} else {
-			return "createWrittenEvaluation";
-		}
-	}
-
-	public List<SelectItem> getEvaluationTypeClassnameLabels() {
-		final List<SelectItem> result = new ArrayList<SelectItem>();
-		result.add(new SelectItem("noSelection", this.chooseMessage));
-		result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(Language.getLocale(), "label.test")));
-		result.add(new SelectItem(Exam.class.getName(), messages.getMessage(Language.getLocale(), "label.exam")));
-		return result;
-	}
-
-	public List<SelectItem> getSeasonLabels() {
-		final List<SelectItem> result = new ArrayList<SelectItem>();
-		result.add(new SelectItem("noSelection", this.chooseMessage));
-		result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(Language.getLocale(), "property.exam.1stExam")));
-		result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(Language.getLocale(), "property.exam.2stExam")));
-		result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(Language.getLocale(),
-				"property.exam.specialSeasonExam")));
-		return result;
-	}
-
-	// END Select Execution Course and Evaluation Type page logic
-
-	// BEGIN Associate OldRoom logic
-	public Integer getOrderCriteria() {
-		if (this.orderCriteria == null) {
-			orderCriteria = new Integer(0);
-		}
-		return orderCriteria;
-	}
-
-	public void setOrderCriteria(Integer orderCriteria) {
-		this.orderCriteria = orderCriteria;
-	}
-
-	public List<SelectItem> getOrderByCriteriaItems() {
-		MessageResources messageResources = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
-
-		List<SelectItem> orderByCriteriaItems = new ArrayList<SelectItem>(3);
-		orderByCriteriaItems.add(new SelectItem(0, messageResources.getMessage("label.capacity")));
-		orderByCriteriaItems.add(new SelectItem(1, messageResources.getMessage("property.room.building")));
-		orderByCriteriaItems.add(new SelectItem(2, messageResources.getMessage("label.room.type")));
-
-		return orderByCriteriaItems;
-	}
-
-	public String[] getChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
-		if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
-			List<String> associatedRooms = new ArrayList<String>();
-
-			for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
-				associatedRooms.add(room.getIdInternal() + "-" + room.getExamCapacity());
-			}
-
-			String[] selectedRooms = {};
-			this.setChosenRoomsIDs(associatedRooms.toArray(selectedRooms));
-		}
-
-		return (String[]) this.getViewState().getAttribute("chosenRoomsIDs");
-	}
-
-	public void setChosenRoomsIDs(String[] chosenRoomsIDs) {
-		this.getViewState().setAttribute("chosenRoomsIDs", chosenRoomsIDs);
-	}
-
-	public List<SelectItem> getRoomsSelectItems() throws FenixFilterException, FenixServiceException {
-
-		Calendar examDate = Calendar.getInstance();
-		examDate.set(Calendar.YEAR, getYear());
-		examDate.set(Calendar.MONTH, getMonth() - 1);
-		examDate.set(Calendar.DAY_OF_MONTH, getDay());
-		examDate.set(Calendar.SECOND, 0);
-		examDate.set(Calendar.MILLISECOND, 0);
-
-		DiaSemana dayOfWeek = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
-
-		Calendar examStartTime = Calendar.getInstance();
-		examStartTime.set(Calendar.HOUR_OF_DAY, getBeginHour());
-		examStartTime.set(Calendar.MINUTE, getBeginMinute());
-		examStartTime.set(Calendar.SECOND, 0);
-		examStartTime.set(Calendar.MILLISECOND, 0);
-
-		Calendar examEndTime = Calendar.getInstance();
-		examEndTime.set(Calendar.HOUR_OF_DAY, getEndHour());
-		examEndTime.set(Calendar.MINUTE, getEndMinute());
-		examEndTime.set(Calendar.SECOND, 0);
-		examEndTime.set(Calendar.MILLISECOND, 0);
-
-		List<InfoRoom> availableInfoRoom =
-				ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate),
-						YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime),
-						HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
-
-		if (this.getEvaluationID() != null) {
-			for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
-				InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
-				if (!availableInfoRoom.contains(associatedRoom)) {
-					availableInfoRoom.add(associatedRoom);
-				}
-			}
-		}
-
-		if (this.getOrderCriteria() == 0) {
-			final ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new ReverseComparator(new BeanComparator("capacidadeExame")));
-			comparatorChain.addComparator(new BeanComparator("nome"));
-
-			Collections.sort(availableInfoRoom, comparatorChain);
-		} else if (this.getOrderCriteria() == 1) {
-			final ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new ReverseComparator(new BeanComparator("edificio")));
-			comparatorChain.addComparator(new BeanComparator("nome"));
-
-			Collections.sort(availableInfoRoom, comparatorChain);
-		} else if (this.getOrderCriteria() == 2) {
-			final ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new ReverseComparator(new BeanComparator("tipo")));
-			comparatorChain.addComparator(new BeanComparator("nome"));
-
-			Collections.sort(availableInfoRoom, comparatorChain);
-		}
-
-		List<SelectItem> items = new ArrayList<SelectItem>(availableInfoRoom.size());
-		for (InfoRoom infoRoom : availableInfoRoom) {
-			StringBuilder label = new StringBuilder();
-			label.append(infoRoom.getNome());
-			label.append("  ( ");
-			label.append(infoRoom.getCapacidadeExame());
-			label.append(" ");
-			label.append(this.labelVacancies);
-			label.append(", ");
-			label.append(infoRoom.getEdificio());
-			label.append(", ");
-			label.append(infoRoom.getTipo());
-			label.append(" )");
-
-			final String value = getRoomWithExamCapacityString(infoRoom);
-			final SelectItem selectItem = new SelectItem(value, label.toString());
-			items.add(selectItem);
-		}
-
-		return items;
-	}
-
-	private Integer getRoomID(String roomString) {
-		return Integer.parseInt(roomString.split("-")[0]);
-	}
-
-	private String getRoomWithExamCapacityString(InfoRoom infoRoom) {
-		return infoRoom.getIdInternal() + "-" + infoRoom.getCapacidadeExame();
-	}
-
-	private String getRoomWithExamCapacityString(Room room) {
-		return room.getIdInternal() + "-" + room.getCapacidadeExame();
-	}
-
-	public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
-		StringBuilder result = new StringBuilder();
-
-		if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
-			for (String chosenRoomString : this.getChosenRoomsIDs()) {
-				Integer chosenRoomID = getRoomID(chosenRoomString);
-				AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID);
-				result.append(room.getIdentification());
-				result.append("; ");
-			}
-
-			if (result.length() > 0) {
-				result.delete(result.length() - 2, result.length() - 1);
-			}
-
-			return result.toString();
-		} else {
-			return messages.getMessage(Language.getLocale(), "label.no.associated.rooms");
-		}
-	}
-
-	public String associateRoomToWrittenEvaluation() {
-		return returnToCreateOrEdit();
-	}
-
-	// END Associate OldRoom logic
-
-	// BEGIN Create and Edit logic
-	public String createWrittenEvaluation() throws FenixFilterException, FenixServiceException {
-
-		if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
-			this.setErrorMessage("label.choose.request");
-			return "";
-		}
-
-		List<String> executionCourseIDs = new ArrayList<String>(this.getAssociatedExecutionCourses().size());
-		List<String> degreeModuleScopeIDs = new ArrayList<String>();
-		List<String> roomsIDs = new ArrayList<String>();
-
-		if (!prepareArguments(executionCourseIDs, degreeModuleScopeIDs, roomsIDs)) {
-			return "";
-		}
-
-		final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-		final Object[] args =
-				{ null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-						degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription() };
-		try {
-			ServiceUtils.executeService("CreateWrittenEvaluation", args);
-
-		} catch (Exception e) {
-			String errorMessage = e.getMessage();
-			if (e instanceof NotAuthorizedFilterException) {
-				errorMessage = "message.error.notAuthorized";
-			}
-			this.setErrorMessage(errorMessage);
-			return "";
-		}
-
-		return WrittenTest.class.getSimpleName();
-	}
-
-	public boolean prepareArguments(List<String> executionCourseIDs, List<String> degreeModuleScopeIDs, List<String> roomsIDs)
-			throws FenixFilterException, FenixServiceException {
-
-		for (Integer executionCourseID : this.associatedExecutionCourses) {
-
-			executionCourseIDs.add(executionCourseID.toString());
-
-			if (this.getCurricularCourseScopesToAssociate().get(executionCourseID).length == 0
-					&& this.getCurricularCourseContextToAssociate().get(executionCourseID).length == 0) {
-				this.setErrorMessage("error.invalidCurricularCourseScope");
-				return false;
-			}
-
-			for (Integer curricularCourseScopeId : this.getCurricularCourseScopesToAssociate().get(executionCourseID)) {
-				degreeModuleScopeIDs
-						.add(DegreeModuleScope.getKey(curricularCourseScopeId, CurricularCourseScope.class.getName()));
-			}
-			for (Integer curricularCourseContextId : this.getCurricularCourseContextToAssociate().get(executionCourseID)) {
-				degreeModuleScopeIDs.add(DegreeModuleScope.getKey(curricularCourseContextId, Context.class.getName()));
-			}
-		}
-
-		if (this.getChosenRoomsIDs() != null) {
-			for (String roomIDString : this.getChosenRoomsIDs()) {
-				Integer roomID = getRoomID(roomIDString);
-				roomsIDs.add(roomID.toString());
-			}
-		}
-		return true;
-	}
-
-	public String editWrittenEvaluation() throws FenixFilterException, FenixServiceException, IOException {
-		if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
-			this.setErrorMessage("label.choose.request");
-			return "";
-		}
-
-		List<String> executionCourseIDs = new ArrayList<String>(this.getAssociatedExecutionCourses().size());
-		List<String> degreeModuleScopeIDs = new ArrayList<String>();
-		List<String> roomsIDs = new ArrayList<String>();
-
-		if (!prepareArguments(executionCourseIDs, degreeModuleScopeIDs, roomsIDs)) {
-			return "";
-		}
-
-		final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-		final Object[] args =
-				{ null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-						degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription(), null };
-		try {
-			ServiceUtils.executeService("EditWrittenEvaluation", args);
-
-		} catch (Exception e) {
-			String errorMessage = e.getMessage();
-			if (e instanceof NotAuthorizedFilterException) {
-				errorMessage = "message.error.notAuthorized";
-			}
-			if (e instanceof DomainException) {
-				final DomainException domainException = (DomainException) e;
-				setErrorMessageArguments(domainException.getArgs());
-			}
-			this.setErrorMessage(errorMessage);
-			return "";
-		}
-
-		final String originPage = getOriginPage();
-		if (originPage != null && originPage.length() > 0) {
-			final StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append(getApplicationContext());
-			stringBuilder
-					.append("/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
-			stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
-			if (getSelectedBegin() != null && getSelectedBegin().length() > 0 && getSelectedBegin().equals("true")) {
-				stringBuilder.append("&selectedBegin=");
-				stringBuilder.append(DateFormatUtil.format("HH:mm", this.getBegin().getTime()));
-			}
-			if (getSelectedEnd() != null && getSelectedEnd().length() > 0 && getSelectedEnd().equals("true")) {
-				stringBuilder.append("&selectedEnd=");
-				stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
-			}
-			stringBuilder.append("&academicInterval=").append(academicInterval);
-			stringBuilder.append("&");
-			stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-			stringBuilder.append("=");
-			stringBuilder.append(FilterFunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
-			String url = stringBuilder.toString();
-
-			String checksum =
-					pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(url);
-			stringBuilder.append("&");
-			stringBuilder
-					.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
-			stringBuilder.append("=");
-			stringBuilder.append(checksum);
-
-			FacesContext.getCurrentInstance().getExternalContext().redirect(stringBuilder.toString());
-			return originPage;
-		} else {
-			return WrittenTest.class.getSimpleName();
-			// return this.getEvaluation().getClass().getSimpleName();
-		}
-	}
-
-	// END Create and Edit logic
-
-	// BEGIN Associate Execution Course and Scopes logic
-	public void setAssociatedExecutionCourses(List<Integer> associatedExecutionCourses) {
-		this.associatedExecutionCourses = associatedExecutionCourses;
-		this.getViewState().setAttribute("associatedExecutionCourses", associatedExecutionCourses);
-	}
-
-	public List<Integer> getAssociatedExecutionCourses() throws FenixFilterException, FenixServiceException {
-
-		if (this.getViewState().getAttribute("associatedExecutionCourses") != null) {
-			this.associatedExecutionCourses = (List<Integer>) this.getViewState().getAttribute("associatedExecutionCourses");
-		} else if (this.getEvaluationID() != null) {
-			List<Integer> result = new ArrayList<Integer>();
-			for (ExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCourses()) {
-				result.add(executionCourse.getIdInternal());
-				List<Integer> selectedScopes = new ArrayList<Integer>();
-				List<Integer> selectedContexts = new ArrayList<Integer>();
-				for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-					for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-						if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
-							if (((WrittenEvaluation) this.getEvaluation()).getDegreeModuleScopes().contains(degreeModuleScope)) {
-								if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-									selectedScopes.add(degreeModuleScope.getIdInternal());
-								} else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
-									selectedContexts.add(degreeModuleScope.getIdInternal());
-								}
-							}
-						}
-					}
-				}
-
-				Integer[] selected = {};
-				this.getCurricularCourseScopesToAssociate()
-						.put(executionCourse.getIdInternal(), selectedScopes.toArray(selected));
-				this.getCurricularCourseContextToAssociate().put(executionCourse.getIdInternal(),
-						selectedContexts.toArray(selected));
-			}
-			this.setAssociatedExecutionCourses(result);
-		} else {
-			List<Integer> result = new ArrayList<Integer>();
-			result.add(this.getExecutionCourse().getIdInternal());
-			this.setAssociatedExecutionCourses(result);
-		}
-
-		fillInAuxiliarMaps();
-		return this.associatedExecutionCourses;
-	}
-
-	private void fillInAuxiliarMaps() throws FenixFilterException, FenixServiceException {
-
-		for (Integer executionCourseID : this.associatedExecutionCourses) {
-
-			ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-			this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
-
-			List<SelectItem> items = new ArrayList<SelectItem>();
-			List<SelectItem> items2 = new ArrayList<SelectItem>();
-
-			Integer[] curricularCourseScopesToAssociate =
-					this.getCurricularCourseScopesToAssociate().get(executionCourse.getIdInternal());
-			Integer[] curricularCourseContextsToAssociate =
-					this.getCurricularCourseContextToAssociate().get(executionCourse.getIdInternal());
-
-			List<Integer> auxiliarArray = new ArrayList<Integer>();
-			List<Integer> auxiliarArray2 = new ArrayList<Integer>();
-			if (curricularCourseScopesToAssociate != null) {
-				for (Integer curricularCourseScopeToAssociate : curricularCourseScopesToAssociate) {
-					auxiliarArray.add(curricularCourseScopeToAssociate);
-				}
-			}
-			if (curricularCourseContextsToAssociate != null) {
-				for (Integer curricularCourseContextToAssociate : curricularCourseContextsToAssociate) {
-					auxiliarArray2.add(curricularCourseContextToAssociate);
-				}
-			}
-
-			for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-				for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-					if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
-
-						StringBuilder label = new StringBuilder();
-						label.append(curricularCourse.getDegreeCurricularPlan().getName());
-						label.append(" ").append(degreeModuleScope.getCurricularYear()).append(" � Ano");
-						if (!degreeModuleScope.getBranch().equals("")) {
-							label.append(" ").append(degreeModuleScope.getBranch());
-						}
-
-						if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-							items.add(new SelectItem(degreeModuleScope.getIdInternal(), label.toString()));
-						} else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
-							items2.add(new SelectItem(degreeModuleScope.getIdInternal(), label.toString()));
-						}
-					}
-				}
-			}
-
-			this.curricularCourseScopesSelectItems.put(executionCourse.getIdInternal(), items);
-			this.curricularCourseContextSelectItems.put(executionCourse.getIdInternal(), items2);
-
-			Integer[] selected = {};
-			this.getCurricularCourseScopesToAssociate().put(executionCourse.getIdInternal(), auxiliarArray.toArray(selected));
-			this.getCurricularCourseContextToAssociate().put(executionCourse.getIdInternal(), auxiliarArray2.toArray(selected));
-		}
-	}
-
-	public Map<Integer, List<SelectItem>> getCurricularCourseContextSelectItems() {
-		return curricularCourseContextSelectItems;
-	}
-
-	public void setCurricularCourseContextSelectItems(Map<Integer, List<SelectItem>> curricularCourseContextSelectItems) {
-		this.curricularCourseContextSelectItems = curricularCourseContextSelectItems;
-	}
-
-	public Map<Integer, List<SelectItem>> getCurricularCourseScopesSelectItems() {
-		return curricularCourseScopesSelectItems;
-	}
-
-	public void setCurricularCourseScopesSelectItems(Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems) {
-		this.curricularCourseScopesSelectItems = curricularCourseScopesSelectItems;
-	}
-
-	public Map<Integer, Integer[]> getCurricularCourseScopesToAssociate() {
-		if (this.getViewState().getAttribute("curricularCourseScopesToAssociate") == null) {
-			this.getViewState().setAttribute("curricularCourseScopesToAssociate", new HashMap<Integer, Integer[]>());
-		}
-		return (Map<Integer, Integer[]>) this.getViewState().getAttribute("curricularCourseScopesToAssociate");
-	}
-
-	public void setCurricularCourseScopesToAssociate(Map<Integer, Integer[]> curricularCourseScopesToAssociate) {
-		this.getViewState().setAttribute("curricularCourseScopesToAssociate", curricularCourseScopesToAssociate);
-	}
-
-	public Map<Integer, Integer[]> getCurricularCourseContextToAssociate() {
-		if (this.getViewState().getAttribute("curricularCourseContextToAssociate") == null) {
-			this.getViewState().setAttribute("curricularCourseContextToAssociate", new HashMap<Integer, Integer[]>());
-		}
-		return (Map<Integer, Integer[]>) this.getViewState().getAttribute("curricularCourseContextToAssociate");
-	}
-
-	public void setCurricularCourseContextToAssociate(Map<Integer, Integer[]> curricularCourseContextToAssociate) {
-		this.getViewState().setAttribute("curricularCourseContextToAssociate", curricularCourseContextToAssociate);
-	}
-
-	public String associateExecutionCourse() throws FenixFilterException, FenixServiceException {
-		if (this.getSelectedExecutionDegreeID() == null || this.getSelectedCurricularYearID() == null
-				|| this.getSelectedExecutionCourseID() == null || this.getSelectedExecutionDegreeID() == 0
-				|| this.getSelectedCurricularYearID() == 0 || this.getSelectedExecutionCourseID() == 0) {
-			this.setErrorMessage("label.choose.request");
-			return "";
-		} else {
-			List<Integer> list = this.getAssociatedExecutionCourses();
-			Integer integer = this.getSelectedExecutionCourseID();
-
-			if (!list.contains(integer)) {
-				list.add(integer);
-			}
-
-			ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(integer);
-			List<Integer> auxiliarArray = new ArrayList<Integer>();
-			for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-				for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-					auxiliarArray.add(degreeModuleScope.getIdInternal());
-				}
-			}
-
-			Integer[] selected = {};
-			this.getCurricularCourseScopesToAssociate().put(executionCourse.getIdInternal(), auxiliarArray.toArray(selected));
-
-			return returnToCreateOrEdit();
-		}
-	}
-
-	public void disassociateExecutionCourse() throws FenixFilterException, FenixServiceException {
-		List<Integer> associatedExecutionCourses = this.getAssociatedExecutionCourses();
-		Integer executionCourseToDisassociate = Integer.valueOf(this.getRequestParameter("executionCourseToDisassociate"));
-
-		associatedExecutionCourses.remove(executionCourseToDisassociate);
-		this.setAssociatedExecutionCourses(associatedExecutionCourses);
-
-		this.getCurricularCourseScopesToAssociate().remove(executionCourseToDisassociate);
-	}
-
-	public String returnToCreateOrEdit() {
-		if (this.getEvaluationID() == null) {
-			return "createWrittenTest";
-		} else {
-			return "editWrittenTest";
-		}
-	}
-
-	public Map<Integer, String> getAssociatedExecutionCoursesNames() {
-		return associatedExecutionCoursesNames;
-	}
-
-	public void setAssociatedExecutionCoursesNames(Map<Integer, String> associatedExecutionCoursesNames) {
-		this.associatedExecutionCoursesNames = associatedExecutionCoursesNames;
-	}
-
-	public Map<Integer, List<WrittenEvaluation>> getWrittenEvaluations() {
-		return writtenEvaluations;
-	}
-
-	public Map<Integer, Integer> getWrittenEvaluationsFreeSpace() {
-		return writtenEvaluationsMissingPlaces;
-	}
-
-	public Map<Integer, String> getWrittenEvaluationsRooms() {
-		return writtenEvaluationsRooms;
-	}
-
-	// END Associate Execution Course and Scopes logic
-
-	// BEGIN Execution Course comment logic
-	public String getComment() throws FenixFilterException, FenixServiceException {
-		if (this.comment == null && this.getExecutionCourse() != null) {
-			this.comment = getExecutionCourse().getComment();
-		}
-		return this.comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public String commentExecutionCourse() throws FenixFilterException, FenixServiceException {
-		try {
-
-			DefineExamComment.run(this.getExecutionCourse().getSigla(), this.getExecutionCourse().getExecutionPeriod()
-					.getIdInternal(), this.getComment());
-		} catch (FenixFilterException e) {
-			this.setErrorMessage(e.getMessage());
-			return "";
-		} catch (FenixServiceException e) {
-			this.setErrorMessage(e.getMessage());
-			return "";
-		}
-		return "writtenEvaluationCalendar";
-	}
-
-	// END Execution Course comment logic
-
-	// BEGIN Code to avoid bug in associating execution courses to written
-	// evaluation....
-	public Integer getSelectedExecutionDegreeID() {
-		Integer selectedExecutionDegreeID = (Integer) this.getViewState().getAttribute("selectedExecutionDegreeID");
-
-		if (selectedExecutionDegreeID == null) {
-			selectedExecutionDegreeID = Integer.valueOf((String) this.getExecutionDegreeIdHidden().getValue());
-			setSelectedExecutionDegreeID(selectedExecutionDegreeID);
-		}
-
-		return selectedExecutionDegreeID;
-	}
-
-	public void setSelectedExecutionDegreeID(Integer selectedExecutionDegreeID) {
-		this.getViewState().setAttribute("selectedExecutionDegreeID", selectedExecutionDegreeID);
-	}
-
-	public Integer getSelectedCurricularYearID() {
-		Integer selectedCurricularYearID = (Integer) this.getViewState().getAttribute("selectedCurricularYearID");
-
-		if (selectedCurricularYearID == null) {
-			Integer[] curricularYears = getCurricularYearIDs();
-			if (curricularYears != null && curricularYears.length != 0) {
-				selectedCurricularYearID = curricularYears[0];
-				setSelectedCurricularYearID(selectedCurricularYearID);
-			}
-		}
-
-		return selectedCurricularYearID;
-	}
-
-	public void setSelectedCurricularYearID(Integer selectedCurricularYearID) {
-		this.getViewState().setAttribute("selectedCurricularYearID", selectedCurricularYearID);
-	}
-
-	public Integer getSelectedExecutionCourseID() {
-		Integer selectedExecutionCourseID = (Integer) this.getViewState().getAttribute("selectedExecutionCourseID");
-
-		if (selectedExecutionCourseID == null) {
-			selectedExecutionCourseID = Integer.valueOf((String) this.getExecutionCourseIdHidden().getValue());
-			setSelectedExecutionCourseID(selectedExecutionCourseID);
-		}
-
-		return selectedExecutionCourseID;
-	}
-
-	public void setSelectedExecutionCourseID(Integer selectedExecutionCourseID) {
-		this.getViewState().setAttribute("selectedExecutionCourseID", selectedExecutionCourseID);
-	}
-
-	public void onExecutionDegreeChanged(ValueChangeEvent valueChangeEvent) {
-		setSelectedExecutionDegreeID((Integer) valueChangeEvent.getNewValue());
-	}
-
-	public void onCurricularYearChanged(ValueChangeEvent valueChangeEvent) {
-		setSelectedCurricularYearID((Integer) valueChangeEvent.getNewValue());
-	}
-
-	public void onExecutionCourseChanged(ValueChangeEvent valueChangeEvent) {
-		setSelectedExecutionCourseID((Integer) valueChangeEvent.getNewValue());
-	}
-
-	private List<ExecutionCourse> readExecutionCourses() throws FenixFilterException, FenixServiceException {
-		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());
-		final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-		executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
-				getAcademicIntervalFromParameter(getAcademicInterval()), executionDegree.getDegreeCurricularPlan(),
-				rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
-		Collections.sort(executionCourses, new BeanComparator("sigla"));
-		return executionCourses;
-	}
-
-	public List<SelectItem> getExecutionCoursesItems() throws FenixFilterException, FenixServiceException {
-		final List<SelectItem> result = new ArrayList<SelectItem>();
-		for (final ExecutionCourse executionCourse : readExecutionCourses()) {
-			result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
-		}
-		Collections.sort(result, new BeanComparator("label"));
-		result.add(0, new SelectItem(0, this.chooseMessage));
-		return result;
-	}
-
-	// END Code to avoid bug in associating execution courses to written
-	// evaluation....
-
-	// public Integer getAcademicIntervalOID() {
-	// return (academicIntervalOID == null) ? academicIntervalOID =
-	// getAndHoldIntegerParameter("academicIntervalOID")
-	// : academicIntervalOID;
-	// }
-
-	public Map<Integer, Integer> getExecutionCoursesEnroledStudents() {
-		return executionCoursesEnroledStudents;
-	}
-
-	public String getSelectedDateString() throws FenixFilterException, FenixServiceException {
-		return new LocalDate(getYear(), getMonth(), getDay()).toString("dd/MM/yyyy");
-	}
-
-	public String getSelectedBeginHourString() throws FenixFilterException, FenixServiceException {
-		return new HourMinuteSecond(getBeginHour(), getBeginMinute(), 0).toString("HH:mm");
-	}
-
-	public String getSelectedEndHourString() throws FenixFilterException, FenixServiceException {
-		return new HourMinuteSecond(getEndHour(), getEndMinute(), 0).toString("HH:mm");
-	}
+    private static final MessageResources messages = MessageResources
+            .getMessageResources("resources/ResourceAllocationManagerResources");
+    private static final MessageResources enumerations = MessageResources.getMessageResources("resources/EnumerationResources");
+    private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
+
+    private String academicInterval;
+    protected HtmlInputHidden academicIntervalHidden;
+    protected boolean disableDropDown;
+    protected Integer executionDegreeID;
+    protected HtmlInputHidden executionDegreeIdHidden;
+    protected Integer curricularYearID;
+    protected HtmlInputHidden curricularYearIdHidden;
+    protected String curricularYearIDsParameterString;
+    protected Integer calendarPeriod;
+    protected HtmlInputHidden calendarPeriodHidden;
+    private Integer[] curricularYearIDs;
+    private final String chooseMessage = messages.getMessage(Language.getLocale(), "label.choose.message");
+    private HtmlInputHidden dayHidden;
+    private HtmlInputHidden monthHidden;
+    private HtmlInputHidden yearHidden;
+    private HtmlInputHidden beginHourHidden;
+    private HtmlInputHidden beginMinuteHidden;
+    private HtmlInputHidden endHourHidden;
+    private HtmlInputHidden endMinuteHidden;
+    private Integer orderCriteria;
+    private final String labelVacancies = messages.getMessage(Language.getLocale(), "label.vacancies");
+    private List<Integer> associatedExecutionCourses;
+
+    private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer, String>();
+    private Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems = new HashMap<Integer, List<SelectItem>>();
+    private Map<Integer, List<SelectItem>> curricularCourseContextSelectItems = new HashMap<Integer, List<SelectItem>>();
+    private final Map<Integer, List<WrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<WrittenEvaluation>>();;
+    private final Map<Integer, Integer> writtenEvaluationsMissingPlaces = new HashMap<Integer, Integer>();
+    private final Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
+    private final Map<Integer, Integer> executionCoursesEnroledStudents = new HashMap<Integer, Integer>();
+
+    private String comment;
+
+    // BEGIN academicInterval
+    public String getAcademicInterval() {
+        hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat();
+        if (this.academicInterval == null && this.academicIntervalHidden.getValue() != null
+                && !this.academicIntervalHidden.getValue().equals("")) {
+            this.academicInterval = this.academicIntervalHidden.getValue().toString();
+        } else if (this.getRequestAttribute("academicInterval") != null
+                && !this.getRequestAttribute("academicInterval").equals("")) {
+            this.academicInterval = this.getRequestAttribute("academicInterval").toString();
+        } else if (this.getRequestParameter("academicInterval") != null
+                && !this.getRequestParameter("academicInterval").equals("")) {
+            this.academicInterval = this.getRequestParameter("academicInterval");
+            // } else if (this.academicInterval == null) {
+            // this.academicInterval = getAcademicIntervalOID();
+        }
+        return academicInterval;
+    }
+
+    private void hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat() {
+        AcademicInterval academicInterval = null;
+        if (getRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL) != null) {
+            String academicIntervalStr = (String) getRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL);
+            academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
+        } else if (getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL) != null) {
+            String academicIntervalStr = getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL);
+            if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
+                final String academicIntervalStrArg =
+                        academicIntervalStr.indexOf('-') > 0 ? academicIntervalStr.replaceAll("-", "_") : academicIntervalStr;
+                academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStrArg);
+            }
+        }
+        if (academicInterval == null) {
+            academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
+        }
+        setRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
+    }
+
+    public String getAcademicIntervalEscapeFriendly() {
+        return getAcademicInterval().replaceAll("_", "-");
+    }
+
+    public void setAcademicInterval(String academicInterval) {
+        if (academicInterval != null) {
+            this.academicIntervalHidden.setValue(academicInterval);
+        }
+        this.academicInterval = academicInterval;
+    }
+
+    public HtmlInputHidden getAcademicIntervalHidden() {
+        if (this.academicIntervalHidden == null) {
+            this.academicIntervalHidden = new HtmlInputHidden();
+            this.academicIntervalHidden.setValue(this.getAcademicInterval());
+        }
+        return academicIntervalHidden;
+    }
+
+    public void setAcademicIntervalHidden(HtmlInputHidden academicIntervalHidden) {
+        if (academicIntervalHidden.getValue() != null && !((String) academicIntervalHidden.getValue()).isEmpty()) {
+            this.academicInterval = academicIntervalHidden.getValue().toString();
+        }
+        this.academicIntervalHidden = academicIntervalHidden;
+    }
+
+    public String getAcademicIntervalLabel() {
+        return getAcademicIntervalFromParameter(getAcademicInterval()).getPathName();
+    }
+
+    // END executionPeriod
+
+    // BEGIN disableDropDown
+    public boolean getDisableDropDown() {
+        if (getAcademicInterval() == null || getAcademicInterval().isEmpty()) {
+            this.disableDropDown = Boolean.TRUE;
+        } else {
+            this.disableDropDown = Boolean.FALSE;
+        }
+        return disableDropDown;
+    }
+
+    public void setDisableDropDown(boolean disableDropDown) {
+        this.disableDropDown = disableDropDown;
+    }
+
+    // END disableDropDown
+
+    // BEGIN executionDegree
+    public Integer getExecutionDegreeID() {
+        if (this.executionDegreeID == null && this.executionDegreeIdHidden.getValue() != null
+                && !this.executionDegreeIdHidden.getValue().equals("")) {
+            this.executionDegreeID = Integer.valueOf(this.executionDegreeIdHidden.getValue().toString());
+        } else if (this.getRequestAttribute("executionDegreeID") != null
+                && !this.getRequestAttribute("executionDegreeID").equals("")) {
+            this.executionDegreeID = Integer.valueOf(this.getRequestAttribute("executionDegreeID").toString());
+        } else if (this.getRequestParameter("executionDegreeID") != null
+                && !this.getRequestParameter("executionDegreeID").equals("")) {
+            this.executionDegreeID = Integer.valueOf(this.getRequestParameter("executionDegreeID"));
+        }
+        return executionDegreeID;
+    }
+
+    public void setExecutionDegreeID(Integer executionDegreeID) {
+        if (executionDegreeID != null) {
+            this.executionDegreeIdHidden = new HtmlInputHidden();
+            this.executionDegreeIdHidden.setValue(executionDegreeID);
+        }
+        this.executionDegreeID = executionDegreeID;
+    }
+
+    public HtmlInputHidden getExecutionDegreeIdHidden() {
+        if (this.executionDegreeIdHidden == null) {
+            this.executionDegreeIdHidden = new HtmlInputHidden();
+            this.executionDegreeIdHidden.setValue(this.getExecutionDegreeID());
+        }
+        return executionDegreeIdHidden;
+    }
+
+    public void setExecutionDegreeIdHidden(HtmlInputHidden executionDegreeIdHidden) {
+        if (executionDegreeIdHidden != null && executionDegreeIdHidden.getValue() != null
+                && !executionDegreeIdHidden.getValue().equals("")) {
+            this.executionDegreeID = Integer.valueOf(executionDegreeIdHidden.getValue().toString());
+        }
+        this.executionDegreeIdHidden = executionDegreeIdHidden;
+    }
+
+    public ExecutionDegree getExecutionDegree() {
+        return rootDomainObject.readExecutionDegreeByOID(this.getExecutionDegreeID());
+    }
+
+    public String getExecutionDegreeLabel() {
+        ExecutionDegree executionDegreeSelected = getExecutionDegree();
+
+        StringBuilder stringBuffer = new StringBuilder();
+        stringBuffer.append(enumerations.getMessage(Language.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
+                .getDegree().getDegreeType().toString()));
+        stringBuffer.append(" em ");
+        stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree()
+                .getNameFor(executionDegreeSelected.getAcademicInterval()).getContent());
+
+        return stringBuffer.toString();
+    }
+
+    public Integer getCurricularYearID() {
+        if (this.curricularYearID == null && this.curricularYearIdHidden.getValue() != null
+                && !this.curricularYearIdHidden.getValue().equals("")) {
+            this.curricularYearID = Integer.valueOf(this.curricularYearIdHidden.getValue().toString());
+        } else if (this.getRequestAttribute("curricularYearID") != null
+                && !this.getRequestAttribute("curricularYearID").equals("")) {
+            this.curricularYearID = Integer.valueOf(this.getRequestAttribute("curricularYearID").toString());
+        } else if (this.getRequestParameter("curricularYearID") != null
+                && !this.getRequestParameter("curricularYearID").equals("")) {
+            this.curricularYearID = Integer.valueOf(this.getRequestParameter("curricularYearID"));
+        }
+        return curricularYearID;
+    }
+
+    public Integer getCalendarPeriod() {
+        if (this.calendarPeriod == null && this.getCalendarPeriodHidden().getValue() != null
+                && !this.calendarPeriodHidden.getValue().equals("")) {
+            this.calendarPeriod = Integer.valueOf(this.getCalendarPeriodHidden().getValue().toString());
+        } else if (this.getRequestAttribute("calendarPeriod") != null && !this.getRequestAttribute("calendarPeriod").equals("")) {
+            this.calendarPeriod = Integer.valueOf(this.getRequestAttribute("calendarPeriod").toString());
+        } else if (this.getRequestParameter("calendarPeriod") != null && !this.getRequestParameter("calendarPeriod").equals("")) {
+            this.calendarPeriod = Integer.valueOf(this.getRequestParameter("calendarPeriod"));
+        }
+        return calendarPeriod;
+    }
+
+    public void setCurricularYearID(Integer curricularYearID) {
+        if (curricularYearID != null) {
+            this.curricularYearIdHidden = new HtmlInputHidden();
+            this.curricularYearIdHidden.setValue(curricularYearID);
+        }
+        this.curricularYearID = curricularYearID;
+    }
+
+    public void setCalendarPeriod(Integer calendarPeriod) {
+        if (calendarPeriod != null) {
+            this.calendarPeriodHidden = new HtmlInputHidden();
+            this.calendarPeriodHidden.setValue(calendarPeriod);
+        }
+        this.calendarPeriod = calendarPeriod;
+    }
+
+    public HtmlInputHidden getCurricularYearIdHidden() {
+        if (this.curricularYearIdHidden == null) {
+            this.curricularYearIdHidden = new HtmlInputHidden();
+            this.curricularYearIdHidden.setValue(this.getCurricularYearID());
+        }
+        return curricularYearIdHidden;
+    }
+
+    public HtmlInputHidden getCalendarPeriodHidden() {
+        if (this.calendarPeriodHidden == null) {
+            this.calendarPeriodHidden = new HtmlInputHidden();
+            this.calendarPeriodHidden.setValue(this.getCalendarPeriod());
+        }
+        return calendarPeriodHidden;
+    }
+
+    public void setCurricularYearIdHidden(HtmlInputHidden curricularYearIdHidden) {
+        if (curricularYearIdHidden != null && curricularYearIdHidden.getValue() != null
+                && !curricularYearIdHidden.getValue().equals("")) {
+            this.curricularYearID = Integer.valueOf(curricularYearIdHidden.getValue().toString());
+        }
+        this.curricularYearIdHidden = curricularYearIdHidden;
+    }
+
+    public void setCalendarPeriodHidden(HtmlInputHidden calendarPeriodHidden) {
+        if (calendarPeriodHidden != null && calendarPeriodHidden.getValue() != null
+                && !calendarPeriodHidden.getValue().equals("")) {
+            this.calendarPeriod = Integer.valueOf(calendarPeriodHidden.getValue().toString());
+        }
+        this.calendarPeriodHidden = calendarPeriodHidden;
+    }
+
+    public String getCurricularYear() {
+        return this.getCurricularYearItems().get(getCurricularYearID()).getLabel();
+    }
+
+    // END curricularYear
+
+    // BEGIN day, month, year, hour, minute
+    public HtmlInputHidden getDayHidden() throws FenixFilterException, FenixServiceException {
+        if (this.dayHidden == null) {
+            this.dayHidden = new HtmlInputHidden();
+            this.dayHidden.setValue(this.getDay());
+        }
+        return dayHidden;
+    }
+
+    public void setDayHidden(HtmlInputHidden dayHidden) {
+        if (dayHidden.getValue() != null) {
+            final String dayValue = dayHidden.getValue().toString();
+            if (dayValue.length() > 0) {
+                this.day = Integer.valueOf(dayValue);
+            }
+        }
+        this.dayHidden = dayHidden;
+    }
+
+    public HtmlInputHidden getMonthHidden() throws FenixFilterException, FenixServiceException {
+        if (this.monthHidden == null) {
+            this.monthHidden = new HtmlInputHidden();
+            this.monthHidden.setValue(this.getMonth());
+        }
+        return monthHidden;
+    }
+
+    public void setMonthHidden(HtmlInputHidden monthHidden) {
+        if (monthHidden.getValue() != null) {
+            final String monthValue = monthHidden.getValue().toString();
+            if (monthValue.length() > 0) {
+                this.month = Integer.valueOf(monthValue);
+            }
+        }
+        this.monthHidden = monthHidden;
+    }
+
+    public HtmlInputHidden getYearHidden() throws FenixFilterException, FenixServiceException {
+        if (this.yearHidden == null) {
+            this.yearHidden = new HtmlInputHidden();
+            this.yearHidden.setValue(this.getYear());
+        }
+        return yearHidden;
+    }
+
+    public void setYearHidden(HtmlInputHidden yearHidden) {
+        if (yearHidden.getValue() != null) {
+            final String yearValue = yearHidden.getValue().toString();
+            if (yearValue.length() > 0) {
+                this.year = Integer.valueOf(yearValue);
+            }
+        }
+        this.yearHidden = yearHidden;
+    }
+
+    public HtmlInputHidden getBeginHourHidden() throws FenixFilterException, FenixServiceException {
+        if (this.beginHourHidden == null) {
+            this.beginHourHidden = new HtmlInputHidden();
+            this.beginHourHidden.setValue(this.getBeginHour());
+        }
+        return beginHourHidden;
+    }
+
+    public void setBeginHourHidden(HtmlInputHidden beginHourHidden) {
+        if (beginHourHidden.getValue() != null) {
+            this.beginHour = Integer.valueOf(beginHourHidden.getValue().toString());
+        }
+        this.beginHourHidden = beginHourHidden;
+    }
+
+    public HtmlInputHidden getBeginMinuteHidden() throws FenixFilterException, FenixServiceException {
+        if (this.beginMinuteHidden == null) {
+            this.beginMinuteHidden = new HtmlInputHidden();
+            this.beginMinuteHidden.setValue(this.getBeginMinute());
+        }
+        return beginMinuteHidden;
+    }
+
+    public void setBeginMinuteHidden(HtmlInputHidden beginMinuteHidden) {
+        if (beginMinuteHidden.getValue() != null) {
+            this.beginMinute = Integer.valueOf(beginMinuteHidden.getValue().toString());
+        }
+        this.beginMinuteHidden = beginMinuteHidden;
+    }
+
+    public HtmlInputHidden getEndHourHidden() throws FenixFilterException, FenixServiceException {
+        if (this.endHourHidden == null) {
+            this.endHourHidden = new HtmlInputHidden();
+            this.endHourHidden.setValue(this.getEndHour());
+        }
+        return endHourHidden;
+    }
+
+    public void setEndHourHidden(HtmlInputHidden endHourHidden) {
+        if (endHourHidden.getValue() != null) {
+            this.endHour = Integer.valueOf(endHourHidden.getValue().toString());
+        }
+        this.endHourHidden = endHourHidden;
+    }
+
+    public HtmlInputHidden getEndMinuteHidden() throws FenixFilterException, FenixServiceException {
+        if (this.endMinuteHidden == null) {
+            this.endMinuteHidden = new HtmlInputHidden();
+            this.endMinuteHidden.setValue(this.getEndMinute());
+        }
+        return endMinuteHidden;
+    }
+
+    public void setEndMinuteHidden(HtmlInputHidden endMinuteHidden) {
+        if (endMinuteHidden.getValue() != null) {
+            this.endMinute = Integer.valueOf(endMinuteHidden.getValue().toString());
+        }
+        this.endMinuteHidden = endMinuteHidden;
+    }
+
+    // END day, month, year, hour, minute
+
+    // BEGIN Drop down menu logic
+    public List<SelectItem> getAcademicIntervals() throws FenixFilterException, FenixServiceException {
+        List<AcademicInterval> academicIntervals = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
+        Collections.sort(academicIntervals, AcademicInterval.COMPARATOR_BY_BEGIN_DATE);
+
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem(0, this.chooseMessage));
+        for (AcademicInterval academicInterval : academicIntervals) {
+            String label = academicInterval.getPathName();
+            result.add(new SelectItem(academicInterval.getResumedRepresentationInStringFormat(), label));
+        }
+
+        return result;
+    }
+
+    public void enableDropDowns(ValueChangeEvent valueChangeEvent) {
+        this.setAcademicInterval(valueChangeEvent.getNewValue().toString());
+
+        if (StringUtils.isEmpty((String) valueChangeEvent.getNewValue())) {
+            this.setDisableDropDown(true);
+        } else {
+            this.setDisableDropDown(false);
+        }
+
+        this.setExecutionDegreeID(0);
+        this.setCurricularYearID(0);
+
+        return;
+    }
+
+    public List<SelectItem> getExecutionDegrees() throws FenixFilterException, FenixServiceException {
+        if (this.getDisableDropDown()) {
+            return new ArrayList<SelectItem>();
+        }
+
+        List<ExecutionDegree> degrees =
+                ExecutionDegree.filterByAcademicInterval(getAcademicIntervalFromParameter(getAcademicInterval()));
+        List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
+        for (ExecutionDegree degree : degrees) {
+            infoExecutionDegrees.add(new InfoExecutionDegree(degree));
+        }
+        Collections.sort(infoExecutionDegrees, new ComparatorByNameForInfoExecutionDegree());
+
+        List<SelectItem> result = new ArrayList<SelectItem>(infoExecutionDegrees.size());
+        result.add(new SelectItem(0, this.chooseMessage));
+        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
+            StringBuilder label = new StringBuilder();
+            label.append(enumerations.getMessage(Language.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
+                    .getInfoDegree().getDegreeType().toString()));
+            label.append(" em ");
+            label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+            label.append(addAnotherInfoDegreeToLabel(infoExecutionDegrees, infoExecutionDegree) ? " - "
+                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "");
+            result.add(new SelectItem(infoExecutionDegree.getIdInternal(), label.toString()));
+        }
+
+        return result;
+    }
+
+    private AcademicInterval getAcademicIntervalFromParameter(String academicInterval) {
+        if (academicInterval.contains("-")) {
+            return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval.replaceAll("-", ":"));
+        }
+        return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval);
+    }
+
+    private boolean addAnotherInfoDegreeToLabel(List<InfoExecutionDegree> infoExecutionDegrees,
+            InfoExecutionDegree infoExecutionDegree) {
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+
+        for (InfoExecutionDegree infoExecutionDegree2 : infoExecutionDegrees) {
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<SelectItem> getCurricularYearItems() {
+        if (this.getDisableDropDown()) {
+            return new ArrayList<SelectItem>();
+        }
+
+        List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
+        curricularYearItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(), "label.year.first")));
+        curricularYearItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(), "label.year.second")));
+        curricularYearItems.add(new SelectItem(3, messages.getMessage(Language.getLocale(), "label.year.third")));
+        curricularYearItems.add(new SelectItem(4, messages.getMessage(Language.getLocale(), "label.year.fourth")));
+        curricularYearItems.add(new SelectItem(5, messages.getMessage(Language.getLocale(), "label.year.fifth")));
+
+        return curricularYearItems;
+    }
+
+    public List<SelectItem> getCalendarPeriodItems() {
+        if (this.getDisableDropDown()) {
+            return new ArrayList<SelectItem>();
+        }
+
+        List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
+
+        calendarPeriodItems.add(new SelectItem(0, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.all")));
+        calendarPeriodItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(),
+                "label.calendarPeriodItem.lesson.period")));
+        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(),
+                "label.calendarPeriodItem.exam.period")));
+
+        return calendarPeriodItems;
+    }
+
+    public void setNewValueExecutionDegreeID(ValueChangeEvent valueChangeEvent) {
+        this.setExecutionDegreeID((Integer) valueChangeEvent.getNewValue());
+    }
+
+    public void setNewValueCurricularYearID(ValueChangeEvent valueChangeEvent) {
+        this.setCurricularYearID((Integer) valueChangeEvent.getNewValue());
+    }
+
+    public void setNewValueCurricularYearIDs(ValueChangeEvent valueChangeEvent) {
+        this.setCurricularYearIDs((Integer[]) valueChangeEvent.getNewValue());
+    }
+
+    public Integer[] getCurricularYearIDParameters() {
+        final String curricularYearIDsParameterString = getRequestParameter("curricularYearIDsParameterString");
+        if (curricularYearIDsParameterString != null && curricularYearIDsParameterString.length() > 0
+                && !curricularYearIDsParameterString.equals("null")) {
+            final String[] curricularYearIDsParameterStringTokens = curricularYearIDsParameterString.split(",");
+            final Integer[] curricularYearIDParameters = new Integer[curricularYearIDsParameterStringTokens.length];
+            for (int i = 0; i < curricularYearIDParameters.length; i++) {
+                curricularYearIDParameters[i] = Integer.valueOf(curricularYearIDsParameterStringTokens[i]);
+            }
+            return curricularYearIDParameters;
+        }
+        return null;
+    }
+
+    public String getCurricularYearIDsParameterString() {
+        final Integer[] curricularYearIDs = getCurricularYearIDs();
+        if (curricularYearIDs != null && curricularYearIDs.length > 0) {
+            buildString(curricularYearIDs);
+        }
+        return curricularYearIDsParameterString;
+    }
+
+    private void buildString(final Integer[] curricularYearIDs) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < curricularYearIDs.length; i++) {
+            if (i > 0) {
+                stringBuilder.append(',');
+            }
+            stringBuilder.append(curricularYearIDs[i].toString());
+        }
+        this.curricularYearIDsParameterString = stringBuilder.toString();
+    }
+
+    public void setCurricularYearIDsParameterString(String curricularYearIDsParameterString) {
+        this.curricularYearIDsParameterString = curricularYearIDsParameterString;
+    }
+
+    public Integer[] getCurricularYearIDs() {
+        if (curricularYearIDs == null) {
+            curricularYearIDs = (Integer[]) getViewState().getAttribute("curricularYearIDs");
+        }
+        if (curricularYearIDs == null) {
+            curricularYearIDs = getCurricularYearIDParameters();
+        }
+        return curricularYearIDs;
+    }
+
+    public void setCurricularYearIDs(Integer[] curricularYearIDs) {
+        this.curricularYearIDs = curricularYearIDs;
+        getViewState().setAttribute("curricularYearIDs", curricularYearIDs);
+    }
+
+    public void setNewValueCalendarPeriod(ValueChangeEvent valueChangeEvent) {
+        this.setCalendarPeriod((Integer) valueChangeEvent.getNewValue());
+    }
+
+    public void setNewValueExecutionCourseID(ValueChangeEvent valueChangeEvent) {
+        this.setExecutionCourseID((Integer) valueChangeEvent.getNewValue());
+    }
+
+    public boolean getRenderContextSelection() {
+        if (this.getAcademicInterval() == null || this.getExecutionDegreeID() == null || this.getCurricularYearIDs() == null
+                || this.getCurricularYearIDs().length <= 0 || this.getExecutionDegreeID() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public Date[] getWrittenEvaluationsCalendarBegin() {
+        final Integer calendarPeriod = getCalendarPeriod();
+        final ExecutionDegree executionDegree = getExecutionDegree();
+
+        final int resultSize = calendarPeriod == null || executionDegree == null ? 1 : 2;
+        final Date[] result = new Date[resultSize];
+
+        if (calendarPeriod == null || executionDegree == null) {
+            result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
+        } else {
+            int semester =
+                    AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
+                            .getAcademicIntervalFromResumedString(getAcademicInterval()));
+
+            if (calendarPeriod.intValue() == 0) {
+                result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
+                if (semester == 1) {
+                    result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
+                }
+            } else if (calendarPeriod.intValue() == 1) {
+                final OccupationPeriod occupationPeriod =
+                        semester == 1 ? executionDegree.getPeriodLessonsFirstSemester() : executionDegree
+                                .getPeriodLessonsSecondSemester();
+                result[0] = occupationPeriod.getStart();
+            } else if (calendarPeriod.intValue() == 2) {
+                final OccupationPeriod occupationPeriod =
+                        semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
+                                .getPeriodExamsSecondSemester();
+                result[0] = occupationPeriod.getStart();
+                result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
+            }
+        }
+
+        return result;
+    }
+
+    public Date[] getWrittenEvaluationsCalendarEnd() {
+        final Integer calendarPeriod = getCalendarPeriod();
+        final ExecutionDegree executionDegree = getExecutionDegree();
+
+        final int resultSize = calendarPeriod == null || executionDegree == null ? 1 : 2;
+        final Date[] result = new Date[resultSize];
+
+        if (calendarPeriod == null || executionDegree == null) {
+            result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
+        } else {
+            int semester =
+                    AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
+                            .getAcademicIntervalFromResumedString(getAcademicInterval()));
+
+            if (calendarPeriod.intValue() == 0) {
+                result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
+                if (semester == 1) {
+                    result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
+                }
+            } else if (calendarPeriod.intValue() == 1) {
+                final OccupationPeriod occupationPeriod =
+                        semester == 1 ? executionDegree.getPeriodLessonsFirstSemester() : executionDegree
+                                .getPeriodLessonsSecondSemester();
+                result[0] = occupationPeriod.getLastOccupationPeriodOfNestedPeriods().getEnd();
+            } else if (calendarPeriod.intValue() == 2) {
+                final OccupationPeriod occupationPeriod =
+                        semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
+                                .getPeriodExamsSecondSemester();
+                result[0] = occupationPeriod.getEnd();
+                result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
+            }
+        }
+
+        return result;
+    }
+
+    public List<CalendarLink> getWrittenTestsCalendarLink() throws FenixFilterException, FenixServiceException {
+
+        List<CalendarLink> result = new ArrayList<CalendarLink>();
+        Integer[] curricularYearIDs = getCurricularYearIDs();
+
+        if (curricularYearIDs != null && getExecutionDegree() != null) {
+            List<Integer> curricularYears = Arrays.asList(getCurricularYearIDs());
+            DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
+            for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+                for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                    if (evaluation instanceof WrittenEvaluation) {
+                        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+                        if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
+                            final CalendarLink calendarLink =
+                                    new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                            calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
+                            result.add(calendarLink);
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,
+            final WrittenEvaluation writtenEvaluation) {
+        final Map<String, String> linkParameters = new HashMap<String, String>();
+        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+        linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
+        linkParameters.put("academicInterval", this.academicInterval);
+        linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
+        linkParameters.put("curricularYearIDsParameterString", getCurricularYearIDsParameterString());
+        linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
+        return linkParameters;
+    }
+
+    private String constructEvaluationCalendarPresentationString(final WrittenEvaluation writtenEvaluation,
+            final ExecutionCourse executionCourse) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (writtenEvaluation instanceof WrittenTest) {
+            stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.test"));
+        } else if (writtenEvaluation instanceof Exam) {
+            stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.exam"));
+        }
+        stringBuilder.append(" ");
+        stringBuilder.append(executionCourse.getSigla());
+        stringBuilder.append(" (");
+        stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginning().getTime()));
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
+
+    private List<ExecutionCourse> getExecutionCourses() throws FenixFilterException, FenixServiceException {
+        final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+        Integer[] curricularYears = getCurricularYearIDs();
+        if (curricularYears != null) {
+            for (final Integer curricularYearID : curricularYears) {
+                executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+                        getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
+                        rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+            }
+        }
+        // Integer[] curricularYears = getCurricularYearIDs();
+        // if (curricularYears != null) {
+        // for (final Integer curricularYearID : curricularYears) {
+        // final Object args[] = {
+        // this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
+        // this.getExecutionPeriodID(), curricularYearID };
+        // executionCourses.addAll((Collection<ExecutionCourse>)
+        // ServiceManagerServiceFactory.executeService(
+        // "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
+        // , args));
+        // }
+        // }
+        Collections.sort(executionCourses, new BeanComparator("sigla"));
+        return executionCourses;
+    }
+
+    public List<ExecutionCourseWrittenEvaluationAgregationBean> getExecutionCourseWrittenEvaluationAgregationBeans()
+            throws FenixFilterException, FenixServiceException {
+
+        final List<ExecutionCourseWrittenEvaluationAgregationBean> executionCourseWrittenEvaluationAgregationBean =
+                new ArrayList<ExecutionCourseWrittenEvaluationAgregationBean>();
+        final Integer[] curricularYears = getCurricularYearIDs();
+
+        if (curricularYears != null && this.getExecutionDegree() != null) {
+            final DegreeCurricularPlan degreeCurricularPlan = this.getExecutionDegree().getDegreeCurricularPlan();
+            for (final Integer curricularYearID : curricularYears) {
+                // final Object args[] = { degreeCurricularPlan.getIdInternal(),
+                // this.getExecutionPeriodID(), curricularYearID };
+                // final Collection<ExecutionCourse> executionCourses =
+                // (Collection<ExecutionCourse>) ServiceManagerServiceFactory
+                // .executeService(
+                // "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
+                // , args);
+                final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+                executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+                        getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
+                        rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+
+                for (final ExecutionCourse executionCourse : executionCourses) {
+                    final Set<WrittenEvaluation> writtenEvaluations =
+                            new TreeSet<WrittenEvaluation>(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
+                    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
+                        if (evaluation instanceof WrittenEvaluation) {
+                            final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+                            for (final DegreeModuleScope scope : writtenEvaluation.getDegreeModuleScopes()) {
+                                if (scope.getCurricularYear().intValue() == curricularYearID.intValue()
+                                        && degreeCurricularPlan == scope.getCurricularCourse().getDegreeCurricularPlan()) {
+                                    writtenEvaluations.add(writtenEvaluation);
+                                }
+                            }
+                        }
+                    }
+                    if (!writtenEvaluations.isEmpty()) {
+                        executionCourseWrittenEvaluationAgregationBean.add(new ExecutionCourseWrittenEvaluationAgregationBean(
+                                curricularYearID, executionCourse, writtenEvaluations));
+                    }
+                }
+            }
+        }
+        Collections.sort(executionCourseWrittenEvaluationAgregationBean,
+                ExecutionCourseWrittenEvaluationAgregationBean.COMPARATOR_BY_EXECUTION_COURSE_CODE_AND_CURRICULAR_YEAR);
+        return executionCourseWrittenEvaluationAgregationBean;
+    }
+
+    public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() throws FenixFilterException, FenixServiceException {
+
+        writtenEvaluations.clear();
+        writtenEvaluationsMissingPlaces.clear();
+        writtenEvaluationsRooms.clear();
+        executionCoursesEnroledStudents.clear();
+
+        List<ExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<ExecutionCourse>();
+        Integer[] curricularYearIDs = getCurricularYearIDs();
+
+        if (curricularYearIDs != null && getExecutionDegree() != null) {
+
+            DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
+            List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
+
+            for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+
+                List<WrittenEvaluation> executionCourseWrittenEvaluations = new ArrayList<WrittenEvaluation>();
+                for (WrittenEvaluation writtenEvaluation : executionCourse.getAssociatedWrittenEvaluations()) {
+                    if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
+                        executionCourseWrittenEvaluations.add(writtenEvaluation);
+                    }
+                }
+
+                if (!executionCourseWrittenEvaluations.isEmpty()) {
+                    Collections.sort(executionCourseWrittenEvaluations, WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
+                    processWrittenTestAdditionalValues(executionCourse, executionCourseWrittenEvaluations);
+                    writtenEvaluations.put(executionCourse.getIdInternal(), executionCourseWrittenEvaluations);
+                    executionCoursesWithWrittenEvaluations.add(executionCourse);
+                }
+            }
+        }
+        return executionCoursesWithWrittenEvaluations;
+    }
+
+    private void processWrittenTestAdditionalValues(final ExecutionCourse executionCourse,
+            final List<WrittenEvaluation> associatedWrittenEvaluations) {
+        for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
+            int totalCapacity = 0;
+            final StringBuilder buffer = new StringBuilder(20);
+            for (final AllocatableSpace room : writtenTest.getAssociatedRooms()) {
+                buffer.append(room.getIdentification()).append("; ");
+                totalCapacity += room.getCapacidadeExame();
+            }
+            if (buffer.length() > 0) {
+                buffer.delete(buffer.length() - 2, buffer.length() - 1);
+            }
+            writtenEvaluationsRooms.put(writtenTest.getIdInternal(), buffer.toString());
+            int numberOfEnroledStudents = writtenTest.getCountStudentsEnroledAttendingExecutionCourses();
+            executionCoursesEnroledStudents.put(writtenTest.getIdInternal(), numberOfEnroledStudents);
+            writtenEvaluationsMissingPlaces.put(writtenTest.getIdInternal(),
+                    Integer.valueOf(numberOfEnroledStudents - totalCapacity));
+        }
+    }
+
+    public List<ExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() throws FenixFilterException,
+            FenixServiceException {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        Integer[] curricularYearIDs = getCurricularYearIDs();
+
+        if (curricularYearIDs != null && getExecutionDegree() != null) {
+            List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
+            DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
+
+            for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+                if (executionCourse.getAssociatedWrittenEvaluationsForScopeAndContext(curricularYears, degreeCurricularPlan)
+                        .isEmpty()) {
+                    result.add(executionCourse);
+                }
+            }
+        }
+        return result;
+    }
+
+    private static final Comparator<SelectItem> COMPARATOR_BY_LABEL = new Comparator<SelectItem>() {
+
+        @Override
+        public int compare(SelectItem o1, SelectItem o2) {
+            return o1.getLabel().compareTo(o2.getLabel());
+        }
+
+    };
+
+    public List<SelectItem> getExecutionCoursesLabels() throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+            result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+        }
+        Collections.sort(result, COMPARATOR_BY_LABEL);
+        result.add(0, new SelectItem(0, this.chooseMessage));
+        return result;
+    }
+
+    // END Drop down menu logic
+
+    // BEGIN Select Execution Course and Evaluation Type page logic
+    public String continueToCreateWrittenEvaluation() throws FenixFilterException, FenixServiceException {
+        if (this.getEvaluationTypeClassname() == null || this.getExecutionCourseID() == null
+                || this.getEvaluationTypeClassname().equals("noSelection") || this.getExecutionCourseID() == 0) {
+            this.setErrorMessage("label.choose.request");
+            return "";
+        } else {
+            return "createWrittenEvaluation";
+        }
+    }
+
+    public List<SelectItem> getEvaluationTypeClassnameLabels() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem("noSelection", this.chooseMessage));
+        result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(Language.getLocale(), "label.test")));
+        result.add(new SelectItem(Exam.class.getName(), messages.getMessage(Language.getLocale(), "label.exam")));
+        return result;
+    }
+
+    public List<SelectItem> getSeasonLabels() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem("noSelection", this.chooseMessage));
+        result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(Language.getLocale(), "property.exam.1stExam")));
+        result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(Language.getLocale(), "property.exam.2stExam")));
+        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(Language.getLocale(),
+                "property.exam.specialSeasonExam")));
+        return result;
+    }
+
+    // END Select Execution Course and Evaluation Type page logic
+
+    // BEGIN Associate OldRoom logic
+    public Integer getOrderCriteria() {
+        if (this.orderCriteria == null) {
+            orderCriteria = new Integer(0);
+        }
+        return orderCriteria;
+    }
+
+    public void setOrderCriteria(Integer orderCriteria) {
+        this.orderCriteria = orderCriteria;
+    }
+
+    public List<SelectItem> getOrderByCriteriaItems() {
+        MessageResources messageResources = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+
+        List<SelectItem> orderByCriteriaItems = new ArrayList<SelectItem>(3);
+        orderByCriteriaItems.add(new SelectItem(0, messageResources.getMessage("label.capacity")));
+        orderByCriteriaItems.add(new SelectItem(1, messageResources.getMessage("property.room.building")));
+        orderByCriteriaItems.add(new SelectItem(2, messageResources.getMessage("label.room.type")));
+
+        return orderByCriteriaItems;
+    }
+
+    public String[] getChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
+        if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
+            List<String> associatedRooms = new ArrayList<String>();
+
+            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+                associatedRooms.add(room.getIdInternal() + "-" + room.getExamCapacity());
+            }
+
+            String[] selectedRooms = {};
+            this.setChosenRoomsIDs(associatedRooms.toArray(selectedRooms));
+        }
+
+        return (String[]) this.getViewState().getAttribute("chosenRoomsIDs");
+    }
+
+    public void setChosenRoomsIDs(String[] chosenRoomsIDs) {
+        this.getViewState().setAttribute("chosenRoomsIDs", chosenRoomsIDs);
+    }
+
+    public List<SelectItem> getRoomsSelectItems() throws FenixFilterException, FenixServiceException {
+
+        Calendar examDate = Calendar.getInstance();
+        examDate.set(Calendar.YEAR, getYear());
+        examDate.set(Calendar.MONTH, getMonth() - 1);
+        examDate.set(Calendar.DAY_OF_MONTH, getDay());
+        examDate.set(Calendar.SECOND, 0);
+        examDate.set(Calendar.MILLISECOND, 0);
+
+        DiaSemana dayOfWeek = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
+
+        Calendar examStartTime = Calendar.getInstance();
+        examStartTime.set(Calendar.HOUR_OF_DAY, getBeginHour());
+        examStartTime.set(Calendar.MINUTE, getBeginMinute());
+        examStartTime.set(Calendar.SECOND, 0);
+        examStartTime.set(Calendar.MILLISECOND, 0);
+
+        Calendar examEndTime = Calendar.getInstance();
+        examEndTime.set(Calendar.HOUR_OF_DAY, getEndHour());
+        examEndTime.set(Calendar.MINUTE, getEndMinute());
+        examEndTime.set(Calendar.SECOND, 0);
+        examEndTime.set(Calendar.MILLISECOND, 0);
+
+        List<InfoRoom> availableInfoRoom =
+                ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate),
+                        YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime),
+                        HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
+
+        if (this.getEvaluationID() != null) {
+            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+                InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
+                if (!availableInfoRoom.contains(associatedRoom)) {
+                    availableInfoRoom.add(associatedRoom);
+                }
+            }
+        }
+
+        if (this.getOrderCriteria() == 0) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator("capacidadeExame")));
+            comparatorChain.addComparator(new BeanComparator("nome"));
+
+            Collections.sort(availableInfoRoom, comparatorChain);
+        } else if (this.getOrderCriteria() == 1) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator("edificio")));
+            comparatorChain.addComparator(new BeanComparator("nome"));
+
+            Collections.sort(availableInfoRoom, comparatorChain);
+        } else if (this.getOrderCriteria() == 2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new ReverseComparator(new BeanComparator("tipo")));
+            comparatorChain.addComparator(new BeanComparator("nome"));
+
+            Collections.sort(availableInfoRoom, comparatorChain);
+        }
+
+        List<SelectItem> items = new ArrayList<SelectItem>(availableInfoRoom.size());
+        for (InfoRoom infoRoom : availableInfoRoom) {
+            StringBuilder label = new StringBuilder();
+            label.append(infoRoom.getNome());
+            label.append("  ( ");
+            label.append(infoRoom.getCapacidadeExame());
+            label.append(" ");
+            label.append(this.labelVacancies);
+            label.append(", ");
+            label.append(infoRoom.getEdificio());
+            label.append(", ");
+            label.append(infoRoom.getTipo());
+            label.append(" )");
+
+            final String value = getRoomWithExamCapacityString(infoRoom);
+            final SelectItem selectItem = new SelectItem(value, label.toString());
+            items.add(selectItem);
+        }
+
+        return items;
+    }
+
+    private Integer getRoomID(String roomString) {
+        return Integer.parseInt(roomString.split("-")[0]);
+    }
+
+    private String getRoomWithExamCapacityString(InfoRoom infoRoom) {
+        return infoRoom.getIdInternal() + "-" + infoRoom.getCapacidadeExame();
+    }
+
+    private String getRoomWithExamCapacityString(Room room) {
+        return room.getIdInternal() + "-" + room.getCapacidadeExame();
+    }
+
+    public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
+        StringBuilder result = new StringBuilder();
+
+        if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
+            for (String chosenRoomString : this.getChosenRoomsIDs()) {
+                Integer chosenRoomID = getRoomID(chosenRoomString);
+                AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID);
+                result.append(room.getIdentification());
+                result.append("; ");
+            }
+
+            if (result.length() > 0) {
+                result.delete(result.length() - 2, result.length() - 1);
+            }
+
+            return result.toString();
+        } else {
+            return messages.getMessage(Language.getLocale(), "label.no.associated.rooms");
+        }
+    }
+
+    public String associateRoomToWrittenEvaluation() {
+        return returnToCreateOrEdit();
+    }
+
+    // END Associate OldRoom logic
+
+    // BEGIN Create and Edit logic
+    public String createWrittenEvaluation() throws FenixFilterException, FenixServiceException {
+
+        if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
+            this.setErrorMessage("label.choose.request");
+            return "";
+        }
+
+        List<String> executionCourseIDs = new ArrayList<String>(this.getAssociatedExecutionCourses().size());
+        List<String> degreeModuleScopeIDs = new ArrayList<String>();
+        List<String> roomsIDs = new ArrayList<String>();
+
+        if (!prepareArguments(executionCourseIDs, degreeModuleScopeIDs, roomsIDs)) {
+            return "";
+        }
+
+        final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
+        final Object[] args =
+                { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
+                        degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription() };
+        try {
+            ServiceUtils.executeService("CreateWrittenEvaluation", args);
+
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedFilterException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            this.setErrorMessage(errorMessage);
+            return "";
+        }
+
+        return WrittenTest.class.getSimpleName();
+    }
+
+    public boolean prepareArguments(List<String> executionCourseIDs, List<String> degreeModuleScopeIDs, List<String> roomsIDs)
+            throws FenixFilterException, FenixServiceException {
+
+        for (Integer executionCourseID : this.associatedExecutionCourses) {
+
+            executionCourseIDs.add(executionCourseID.toString());
+
+            if (this.getCurricularCourseScopesToAssociate().get(executionCourseID).length == 0
+                    && this.getCurricularCourseContextToAssociate().get(executionCourseID).length == 0) {
+                this.setErrorMessage("error.invalidCurricularCourseScope");
+                return false;
+            }
+
+            for (Integer curricularCourseScopeId : this.getCurricularCourseScopesToAssociate().get(executionCourseID)) {
+                degreeModuleScopeIDs
+                        .add(DegreeModuleScope.getKey(curricularCourseScopeId, CurricularCourseScope.class.getName()));
+            }
+            for (Integer curricularCourseContextId : this.getCurricularCourseContextToAssociate().get(executionCourseID)) {
+                degreeModuleScopeIDs.add(DegreeModuleScope.getKey(curricularCourseContextId, Context.class.getName()));
+            }
+        }
+
+        if (this.getChosenRoomsIDs() != null) {
+            for (String roomIDString : this.getChosenRoomsIDs()) {
+                Integer roomID = getRoomID(roomIDString);
+                roomsIDs.add(roomID.toString());
+            }
+        }
+        return true;
+    }
+
+    public String editWrittenEvaluation() throws FenixFilterException, FenixServiceException, IOException {
+        if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
+            this.setErrorMessage("label.choose.request");
+            return "";
+        }
+
+        List<String> executionCourseIDs = new ArrayList<String>(this.getAssociatedExecutionCourses().size());
+        List<String> degreeModuleScopeIDs = new ArrayList<String>();
+        List<String> roomsIDs = new ArrayList<String>();
+
+        if (!prepareArguments(executionCourseIDs, degreeModuleScopeIDs, roomsIDs)) {
+            return "";
+        }
+
+        final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
+        final Object[] args =
+                { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
+                        degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription(), null };
+        try {
+            ServiceUtils.executeService("EditWrittenEvaluation", args);
+
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedFilterException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            if (e instanceof DomainException) {
+                final DomainException domainException = (DomainException) e;
+                setErrorMessageArguments(domainException.getArgs());
+            }
+            this.setErrorMessage(errorMessage);
+            return "";
+        }
+
+        final String originPage = getOriginPage();
+        if (originPage != null && originPage.length() > 0) {
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(getApplicationContext());
+            stringBuilder
+                    .append("/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
+            stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
+            if (getSelectedBegin() != null && getSelectedBegin().length() > 0 && getSelectedBegin().equals("true")) {
+                stringBuilder.append("&selectedBegin=");
+                stringBuilder.append(DateFormatUtil.format("HH:mm", this.getBegin().getTime()));
+            }
+            if (getSelectedEnd() != null && getSelectedEnd().length() > 0 && getSelectedEnd().equals("true")) {
+                stringBuilder.append("&selectedEnd=");
+                stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
+            }
+            stringBuilder.append("&academicInterval=").append(academicInterval);
+            stringBuilder.append("&");
+            stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+            stringBuilder.append("=");
+            stringBuilder.append(FilterFunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
+            String url = stringBuilder.toString();
+
+            String checksum =
+                    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(url);
+            stringBuilder.append("&");
+            stringBuilder
+                    .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
+            stringBuilder.append("=");
+            stringBuilder.append(checksum);
+
+            FacesContext.getCurrentInstance().getExternalContext().redirect(stringBuilder.toString());
+            return originPage;
+        } else {
+            return WrittenTest.class.getSimpleName();
+            // return this.getEvaluation().getClass().getSimpleName();
+        }
+    }
+
+    // END Create and Edit logic
+
+    // BEGIN Associate Execution Course and Scopes logic
+    public void setAssociatedExecutionCourses(List<Integer> associatedExecutionCourses) {
+        this.associatedExecutionCourses = associatedExecutionCourses;
+        this.getViewState().setAttribute("associatedExecutionCourses", associatedExecutionCourses);
+    }
+
+    public List<Integer> getAssociatedExecutionCourses() throws FenixFilterException, FenixServiceException {
+
+        if (this.getViewState().getAttribute("associatedExecutionCourses") != null) {
+            this.associatedExecutionCourses = (List<Integer>) this.getViewState().getAttribute("associatedExecutionCourses");
+        } else if (this.getEvaluationID() != null) {
+            List<Integer> result = new ArrayList<Integer>();
+            for (ExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCourses()) {
+                result.add(executionCourse.getIdInternal());
+                List<Integer> selectedScopes = new ArrayList<Integer>();
+                List<Integer> selectedContexts = new ArrayList<Integer>();
+                for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                    for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                        if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
+                            if (((WrittenEvaluation) this.getEvaluation()).getDegreeModuleScopes().contains(degreeModuleScope)) {
+                                if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
+                                    selectedScopes.add(degreeModuleScope.getIdInternal());
+                                } else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
+                                    selectedContexts.add(degreeModuleScope.getIdInternal());
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Integer[] selected = {};
+                this.getCurricularCourseScopesToAssociate()
+                        .put(executionCourse.getIdInternal(), selectedScopes.toArray(selected));
+                this.getCurricularCourseContextToAssociate().put(executionCourse.getIdInternal(),
+                        selectedContexts.toArray(selected));
+            }
+            this.setAssociatedExecutionCourses(result);
+        } else {
+            List<Integer> result = new ArrayList<Integer>();
+            result.add(this.getExecutionCourse().getIdInternal());
+            this.setAssociatedExecutionCourses(result);
+        }
+
+        fillInAuxiliarMaps();
+        return this.associatedExecutionCourses;
+    }
+
+    private void fillInAuxiliarMaps() throws FenixFilterException, FenixServiceException {
+
+        for (Integer executionCourseID : this.associatedExecutionCourses) {
+
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
+
+            List<SelectItem> items = new ArrayList<SelectItem>();
+            List<SelectItem> items2 = new ArrayList<SelectItem>();
+
+            Integer[] curricularCourseScopesToAssociate =
+                    this.getCurricularCourseScopesToAssociate().get(executionCourse.getIdInternal());
+            Integer[] curricularCourseContextsToAssociate =
+                    this.getCurricularCourseContextToAssociate().get(executionCourse.getIdInternal());
+
+            List<Integer> auxiliarArray = new ArrayList<Integer>();
+            List<Integer> auxiliarArray2 = new ArrayList<Integer>();
+            if (curricularCourseScopesToAssociate != null) {
+                for (Integer curricularCourseScopeToAssociate : curricularCourseScopesToAssociate) {
+                    auxiliarArray.add(curricularCourseScopeToAssociate);
+                }
+            }
+            if (curricularCourseContextsToAssociate != null) {
+                for (Integer curricularCourseContextToAssociate : curricularCourseContextsToAssociate) {
+                    auxiliarArray2.add(curricularCourseContextToAssociate);
+                }
+            }
+
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                    if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
+
+                        StringBuilder label = new StringBuilder();
+                        label.append(curricularCourse.getDegreeCurricularPlan().getName());
+                        label.append(" ").append(degreeModuleScope.getCurricularYear()).append(" � Ano");
+                        if (!degreeModuleScope.getBranch().equals("")) {
+                            label.append(" ").append(degreeModuleScope.getBranch());
+                        }
+
+                        if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
+                            items.add(new SelectItem(degreeModuleScope.getIdInternal(), label.toString()));
+                        } else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
+                            items2.add(new SelectItem(degreeModuleScope.getIdInternal(), label.toString()));
+                        }
+                    }
+                }
+            }
+
+            this.curricularCourseScopesSelectItems.put(executionCourse.getIdInternal(), items);
+            this.curricularCourseContextSelectItems.put(executionCourse.getIdInternal(), items2);
+
+            Integer[] selected = {};
+            this.getCurricularCourseScopesToAssociate().put(executionCourse.getIdInternal(), auxiliarArray.toArray(selected));
+            this.getCurricularCourseContextToAssociate().put(executionCourse.getIdInternal(), auxiliarArray2.toArray(selected));
+        }
+    }
+
+    public Map<Integer, List<SelectItem>> getCurricularCourseContextSelectItems() {
+        return curricularCourseContextSelectItems;
+    }
+
+    public void setCurricularCourseContextSelectItems(Map<Integer, List<SelectItem>> curricularCourseContextSelectItems) {
+        this.curricularCourseContextSelectItems = curricularCourseContextSelectItems;
+    }
+
+    public Map<Integer, List<SelectItem>> getCurricularCourseScopesSelectItems() {
+        return curricularCourseScopesSelectItems;
+    }
+
+    public void setCurricularCourseScopesSelectItems(Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems) {
+        this.curricularCourseScopesSelectItems = curricularCourseScopesSelectItems;
+    }
+
+    public Map<Integer, Integer[]> getCurricularCourseScopesToAssociate() {
+        if (this.getViewState().getAttribute("curricularCourseScopesToAssociate") == null) {
+            this.getViewState().setAttribute("curricularCourseScopesToAssociate", new HashMap<Integer, Integer[]>());
+        }
+        return (Map<Integer, Integer[]>) this.getViewState().getAttribute("curricularCourseScopesToAssociate");
+    }
+
+    public void setCurricularCourseScopesToAssociate(Map<Integer, Integer[]> curricularCourseScopesToAssociate) {
+        this.getViewState().setAttribute("curricularCourseScopesToAssociate", curricularCourseScopesToAssociate);
+    }
+
+    public Map<Integer, Integer[]> getCurricularCourseContextToAssociate() {
+        if (this.getViewState().getAttribute("curricularCourseContextToAssociate") == null) {
+            this.getViewState().setAttribute("curricularCourseContextToAssociate", new HashMap<Integer, Integer[]>());
+        }
+        return (Map<Integer, Integer[]>) this.getViewState().getAttribute("curricularCourseContextToAssociate");
+    }
+
+    public void setCurricularCourseContextToAssociate(Map<Integer, Integer[]> curricularCourseContextToAssociate) {
+        this.getViewState().setAttribute("curricularCourseContextToAssociate", curricularCourseContextToAssociate);
+    }
+
+    public String associateExecutionCourse() throws FenixFilterException, FenixServiceException {
+        if (this.getSelectedExecutionDegreeID() == null || this.getSelectedCurricularYearID() == null
+                || this.getSelectedExecutionCourseID() == null || this.getSelectedExecutionDegreeID() == 0
+                || this.getSelectedCurricularYearID() == 0 || this.getSelectedExecutionCourseID() == 0) {
+            this.setErrorMessage("label.choose.request");
+            return "";
+        } else {
+            List<Integer> list = this.getAssociatedExecutionCourses();
+            Integer integer = this.getSelectedExecutionCourseID();
+
+            if (!list.contains(integer)) {
+                list.add(integer);
+            }
+
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(integer);
+            List<Integer> auxiliarArray = new ArrayList<Integer>();
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                    auxiliarArray.add(degreeModuleScope.getIdInternal());
+                }
+            }
+
+            Integer[] selected = {};
+            this.getCurricularCourseScopesToAssociate().put(executionCourse.getIdInternal(), auxiliarArray.toArray(selected));
+
+            return returnToCreateOrEdit();
+        }
+    }
+
+    public void disassociateExecutionCourse() throws FenixFilterException, FenixServiceException {
+        List<Integer> associatedExecutionCourses = this.getAssociatedExecutionCourses();
+        Integer executionCourseToDisassociate = Integer.valueOf(this.getRequestParameter("executionCourseToDisassociate"));
+
+        associatedExecutionCourses.remove(executionCourseToDisassociate);
+        this.setAssociatedExecutionCourses(associatedExecutionCourses);
+
+        this.getCurricularCourseScopesToAssociate().remove(executionCourseToDisassociate);
+    }
+
+    public String returnToCreateOrEdit() {
+        if (this.getEvaluationID() == null) {
+            return "createWrittenTest";
+        } else {
+            return "editWrittenTest";
+        }
+    }
+
+    public Map<Integer, String> getAssociatedExecutionCoursesNames() {
+        return associatedExecutionCoursesNames;
+    }
+
+    public void setAssociatedExecutionCoursesNames(Map<Integer, String> associatedExecutionCoursesNames) {
+        this.associatedExecutionCoursesNames = associatedExecutionCoursesNames;
+    }
+
+    public Map<Integer, List<WrittenEvaluation>> getWrittenEvaluations() {
+        return writtenEvaluations;
+    }
+
+    public Map<Integer, Integer> getWrittenEvaluationsFreeSpace() {
+        return writtenEvaluationsMissingPlaces;
+    }
+
+    public Map<Integer, String> getWrittenEvaluationsRooms() {
+        return writtenEvaluationsRooms;
+    }
+
+    // END Associate Execution Course and Scopes logic
+
+    // BEGIN Execution Course comment logic
+    public String getComment() throws FenixFilterException, FenixServiceException {
+        if (this.comment == null && this.getExecutionCourse() != null) {
+            this.comment = getExecutionCourse().getComment();
+        }
+        return this.comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String commentExecutionCourse() throws FenixFilterException, FenixServiceException {
+        try {
+
+            DefineExamComment.run(this.getExecutionCourse().getSigla(), this.getExecutionCourse().getExecutionPeriod()
+                    .getIdInternal(), this.getComment());
+        } catch (FenixFilterException e) {
+            this.setErrorMessage(e.getMessage());
+            return "";
+        } catch (FenixServiceException e) {
+            this.setErrorMessage(e.getMessage());
+            return "";
+        }
+        return "writtenEvaluationCalendar";
+    }
+
+    // END Execution Course comment logic
+
+    // BEGIN Code to avoid bug in associating execution courses to written
+    // evaluation....
+    public Integer getSelectedExecutionDegreeID() {
+        Integer selectedExecutionDegreeID = (Integer) this.getViewState().getAttribute("selectedExecutionDegreeID");
+
+        if (selectedExecutionDegreeID == null) {
+            selectedExecutionDegreeID = Integer.valueOf((String) this.getExecutionDegreeIdHidden().getValue());
+            setSelectedExecutionDegreeID(selectedExecutionDegreeID);
+        }
+
+        return selectedExecutionDegreeID;
+    }
+
+    public void setSelectedExecutionDegreeID(Integer selectedExecutionDegreeID) {
+        this.getViewState().setAttribute("selectedExecutionDegreeID", selectedExecutionDegreeID);
+    }
+
+    public Integer getSelectedCurricularYearID() {
+        Integer selectedCurricularYearID = (Integer) this.getViewState().getAttribute("selectedCurricularYearID");
+
+        if (selectedCurricularYearID == null) {
+            Integer[] curricularYears = getCurricularYearIDs();
+            if (curricularYears != null && curricularYears.length != 0) {
+                selectedCurricularYearID = curricularYears[0];
+                setSelectedCurricularYearID(selectedCurricularYearID);
+            }
+        }
+
+        return selectedCurricularYearID;
+    }
+
+    public void setSelectedCurricularYearID(Integer selectedCurricularYearID) {
+        this.getViewState().setAttribute("selectedCurricularYearID", selectedCurricularYearID);
+    }
+
+    public Integer getSelectedExecutionCourseID() {
+        Integer selectedExecutionCourseID = (Integer) this.getViewState().getAttribute("selectedExecutionCourseID");
+
+        if (selectedExecutionCourseID == null) {
+            selectedExecutionCourseID = Integer.valueOf((String) this.getExecutionCourseIdHidden().getValue());
+            setSelectedExecutionCourseID(selectedExecutionCourseID);
+        }
+
+        return selectedExecutionCourseID;
+    }
+
+    public void setSelectedExecutionCourseID(Integer selectedExecutionCourseID) {
+        this.getViewState().setAttribute("selectedExecutionCourseID", selectedExecutionCourseID);
+    }
+
+    public void onExecutionDegreeChanged(ValueChangeEvent valueChangeEvent) {
+        setSelectedExecutionDegreeID((Integer) valueChangeEvent.getNewValue());
+    }
+
+    public void onCurricularYearChanged(ValueChangeEvent valueChangeEvent) {
+        setSelectedCurricularYearID((Integer) valueChangeEvent.getNewValue());
+    }
+
+    public void onExecutionCourseChanged(ValueChangeEvent valueChangeEvent) {
+        setSelectedExecutionCourseID((Integer) valueChangeEvent.getNewValue());
+    }
+
+    private List<ExecutionCourse> readExecutionCourses() throws FenixFilterException, FenixServiceException {
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());
+        final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+        executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+                getAcademicIntervalFromParameter(getAcademicInterval()), executionDegree.getDegreeCurricularPlan(),
+                rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+        Collections.sort(executionCourses, new BeanComparator("sigla"));
+        return executionCourses;
+    }
+
+    public List<SelectItem> getExecutionCoursesItems() throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        for (final ExecutionCourse executionCourse : readExecutionCourses()) {
+            result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(0, this.chooseMessage));
+        return result;
+    }
+
+    // END Code to avoid bug in associating execution courses to written
+    // evaluation....
+
+    // public Integer getAcademicIntervalOID() {
+    // return (academicIntervalOID == null) ? academicIntervalOID =
+    // getAndHoldIntegerParameter("academicIntervalOID")
+    // : academicIntervalOID;
+    // }
+
+    public Map<Integer, Integer> getExecutionCoursesEnroledStudents() {
+        return executionCoursesEnroledStudents;
+    }
+
+    public String getSelectedDateString() throws FenixFilterException, FenixServiceException {
+        return new LocalDate(getYear(), getMonth(), getDay()).toString("dd/MM/yyyy");
+    }
+
+    public String getSelectedBeginHourString() throws FenixFilterException, FenixServiceException {
+        return new HourMinuteSecond(getBeginHour(), getBeginMinute(), 0).toString("HH:mm");
+    }
+
+    public String getSelectedEndHourString() throws FenixFilterException, FenixServiceException {
+        return new HourMinuteSecond(getEndHour(), getEndMinute(), 0).toString("HH:mm");
+    }
 }

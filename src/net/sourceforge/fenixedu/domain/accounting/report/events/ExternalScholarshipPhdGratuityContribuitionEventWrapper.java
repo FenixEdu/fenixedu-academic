@@ -8,114 +8,114 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements Wrapper {
-	private final ExternalScholarshipPhdGratuityContribuitionEvent event;
+    private final ExternalScholarshipPhdGratuityContribuitionEvent event;
 
-	public ExternalScholarshipPhdGratuityContribuitionEventWrapper(Event event) {
-		this.event = (ExternalScholarshipPhdGratuityContribuitionEvent) event;
-	}
+    public ExternalScholarshipPhdGratuityContribuitionEventWrapper(Event event) {
+        this.event = (ExternalScholarshipPhdGratuityContribuitionEvent) event;
+    }
 
-	private PhdGratuityEvent getPhdGratuityEvent() {
-		PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) this.event.getPhdGratuityExternalScholarshipExemption().getEvent();
+    private PhdGratuityEvent getPhdGratuityEvent() {
+        PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) this.event.getPhdGratuityExternalScholarshipExemption().getEvent();
 
-		return phdGratuityEvent;
-	}
+        return phdGratuityEvent;
+    }
 
-	private Student getStudent() {
-		return getPhdGratuityEvent().getPerson().getStudent();
-	}
+    private Student getStudent() {
+        return getPhdGratuityEvent().getPerson().getStudent();
+    }
 
-	@Override
-	public String getStudentNumber() {
-		Student student = getStudent();
+    @Override
+    public String getStudentNumber() {
+        Student student = getStudent();
 
-		return student.getNumber().toString();
-	}
+        return student.getNumber().toString();
+    }
 
-	@Override
-	public String getStudentName() {
-		return getStudent().getPerson().getName();
-	}
+    @Override
+    public String getStudentName() {
+        return getStudent().getPerson().getName();
+    }
 
-	@Override
-	public String getStudentEmail() {
-		return getStudent().getPerson().getDefaultEmailAddressValue();
-	}
+    @Override
+    public String getStudentEmail() {
+        return getStudent().getPerson().getDefaultEmailAddressValue();
+    }
 
-	@Override
-	public String getRegistrationStartDate() {
-		return "";
-	}
+    @Override
+    public String getRegistrationStartDate() {
+        return "";
+    }
 
-	@Override
-	public String getExecutionYear() {
-		return getForExecutionYear().getName();
-	}
+    @Override
+    public String getExecutionYear() {
+        return getForExecutionYear().getName();
+    }
 
-	@Override
-	public String getDegreeName() {
-		return "";
-	}
+    @Override
+    public String getDegreeName() {
+        return "";
+    }
 
-	@Override
-	public String getDegreeType() {
-		return "";
-	}
+    @Override
+    public String getDegreeType() {
+        return "";
+    }
 
-	@Override
-	public String getPhdProgramName() {
-		PhdGratuityEvent phdGratuityEvent = getPhdGratuityEvent();
+    @Override
+    public String getPhdProgramName() {
+        PhdGratuityEvent phdGratuityEvent = getPhdGratuityEvent();
 
-		return phdGratuityEvent.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
-	}
+        return phdGratuityEvent.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
+    }
 
-	@Override
-	public String getEnrolledECTS() {
-		return "";
-	}
+    @Override
+    public String getEnrolledECTS() {
+        return "";
+    }
 
-	@Override
-	public String getRegime() {
-		return "";
-	}
+    @Override
+    public String getRegime() {
+        return "";
+    }
 
-	@Override
-	public String getEnrolmentModel() {
-		return "";
-	}
+    @Override
+    public String getEnrolmentModel() {
+        return "";
+    }
 
-	@Override
-	public String getResidenceYear() {
-		return "";
-	}
+    @Override
+    public String getResidenceYear() {
+        return "";
+    }
 
-	@Override
-	public String getResidenceMonth() {
-		return "";
-	}
+    @Override
+    public String getResidenceMonth() {
+        return "";
+    }
 
-	@Override
-	public String getStudiesType() {
-		return Wrapper.PHD_PROGRAM_STUDIES;
-	}
+    @Override
+    public String getStudiesType() {
+        return Wrapper.PHD_PROGRAM_STUDIES;
+    }
 
-	@Override
-	public String getTotalDiscount() {
-		return "";
-	}
+    @Override
+    public String getTotalDiscount() {
+        return "";
+    }
 
-	@Override
-	public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
-		return getForExecutionYear().isAfterOrEquals(executionYear);
-	}
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+        return getForExecutionYear().isAfterOrEquals(executionYear);
+    }
 
-	@Override
-	public ExecutionYear getForExecutionYear() {
-		return ExecutionYear.readByDateTime(event.getEventStateDate());
-	}
+    @Override
+    public ExecutionYear getForExecutionYear() {
+        return ExecutionYear.readByDateTime(event.getEventStateDate());
+    }
 
-	@Override
-	public AdministrativeOffice getRelatedAcademicOffice() {
-		return getPhdGratuityEvent().getPhdIndividualProgramProcess().getAdministrativeOffice();
-	}
+    @Override
+    public AdministrativeOffice getRelatedAcademicOffice() {
+        return getPhdGratuityEvent().getPhdIndividualProgramProcess().getAdministrativeOffice();
+    }
 
 }

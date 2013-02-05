@@ -12,49 +12,49 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class GroupingGroup extends DomainBackedGroup<Grouping> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public GroupingGroup(Grouping grouping) {
-		super(grouping);
-	}
+    public GroupingGroup(Grouping grouping) {
+        super(grouping);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> persons = super.buildSet();
-		if (getObject() != null) {
-			for (Attends attend : getObject().getAttends()) {
-				persons.add(attend.getRegistration().getStudent().getPerson());
-			}
-		}
-		return super.freezeSet(persons);
-	}
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> persons = super.buildSet();
+        if (getObject() != null) {
+            for (Attends attend : getObject().getAttends()) {
+                persons.add(attend.getRegistration().getStudent().getPerson());
+            }
+        }
+        return super.freezeSet(persons);
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new GroupingGroup((Grouping) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException("accessControl.group.builder.grouping.notGrouping",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new GroupingGroup((Grouping) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.grouping.notGrouping",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

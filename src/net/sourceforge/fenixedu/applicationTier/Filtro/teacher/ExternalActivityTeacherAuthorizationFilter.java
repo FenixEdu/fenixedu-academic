@@ -18,17 +18,17 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  */
 public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
-	@Override
-	protected boolean verifyCondition(IUserView id, Integer objectId) {
-		final Person person = id.getPerson();
-		final Teacher teacher = person != null ? person.getTeacher() : null;
-		final ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(objectId);
-		return externalActivity.getTeacher() == teacher;
-	}
+    @Override
+    protected boolean verifyCondition(IUserView id, Integer objectId) {
+        final Person person = id.getPerson();
+        final Teacher teacher = person != null ? person.getTeacher() : null;
+        final ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(objectId);
+        return externalActivity.getTeacher() == teacher;
+    }
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.TEACHER;
+    }
 
 }

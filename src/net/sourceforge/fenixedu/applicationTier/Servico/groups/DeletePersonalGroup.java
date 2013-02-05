@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePersonalGroup extends FenixService {
 
-	@Service
-	public static void run(Integer groupId) throws FenixServiceException {
-		PersonalGroup personalGroup = rootDomainObject.readPersonalGroupByOID(groupId);
-		if (personalGroup == null) {
-			throw new FenixServiceException("error.noPersonalGroup");
-		}
+    @Service
+    public static void run(Integer groupId) throws FenixServiceException {
+        PersonalGroup personalGroup = rootDomainObject.readPersonalGroupByOID(groupId);
+        if (personalGroup == null) {
+            throw new FenixServiceException("error.noPersonalGroup");
+        }
 
-		personalGroup.delete();
-	}
+        personalGroup.delete();
+    }
 
 }

@@ -13,16 +13,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteFunctionality extends FenixService {
 
-	/**
-	 * @param functionality
-	 *            the functionality to delete
-	 * 
-	 * @see Functionality#delete()
-	 */
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Content functionality) {
-		functionality.delete();
-	}
+    /**
+     * @param functionality
+     *            the functionality to delete
+     * 
+     * @see Functionality#delete()
+     */
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Content functionality) {
+        functionality.delete();
+    }
 
 }

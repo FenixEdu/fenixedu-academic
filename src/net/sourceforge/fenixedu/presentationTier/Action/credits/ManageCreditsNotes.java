@@ -23,81 +23,81 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ManageCreditsNotes extends FenixDispatchAction {
 
-	protected void getNote(ActionForm actionForm, Teacher teacher, ExecutionSemester executionSemester, String noteType) {
+    protected void getNote(ActionForm actionForm, Teacher teacher, ExecutionSemester executionSemester, String noteType) {
 
-		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-		DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-		if (teacherService != null && teacherService.getTeacherServiceNotes() != null) {
-			dynaActionForm.set("managementFunctionNote", teacherService.getTeacherServiceNotes().getManagementFunctionNotes());
-			dynaActionForm.set("serviceExemptionNote", teacherService.getTeacherServiceNotes().getServiceExemptionNotes());
-			dynaActionForm
-					.set("masterDegreeTeachingNote", teacherService.getTeacherServiceNotes().getMasterDegreeTeachingNotes());
-			dynaActionForm.set("otherNote", teacherService.getTeacherServiceNotes().getOthersNotes());
-			dynaActionForm.set("functionsAccumulationNote", teacherService.getTeacherServiceNotes().getFunctionsAccumulation());
-			dynaActionForm.set("thesisNote", teacherService.getTeacherServiceNotes().getThesisNote());
-		}
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        if (teacherService != null && teacherService.getTeacherServiceNotes() != null) {
+            dynaActionForm.set("managementFunctionNote", teacherService.getTeacherServiceNotes().getManagementFunctionNotes());
+            dynaActionForm.set("serviceExemptionNote", teacherService.getTeacherServiceNotes().getServiceExemptionNotes());
+            dynaActionForm
+                    .set("masterDegreeTeachingNote", teacherService.getTeacherServiceNotes().getMasterDegreeTeachingNotes());
+            dynaActionForm.set("otherNote", teacherService.getTeacherServiceNotes().getOthersNotes());
+            dynaActionForm.set("functionsAccumulationNote", teacherService.getTeacherServiceNotes().getFunctionsAccumulation());
+            dynaActionForm.set("thesisNote", teacherService.getTeacherServiceNotes().getThesisNote());
+        }
 
-		dynaActionForm.set("noteType", noteType);
-		dynaActionForm.set("teacherId", teacher.getExternalId());
-		dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
-	}
+        dynaActionForm.set("noteType", noteType);
+        dynaActionForm.set("teacherId", teacher.getExternalId());
+        dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
+    }
 
-	protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
-			Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException,
-			FenixFilterException {
+    protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
+            Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException,
+            FenixFilterException {
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;
 
-		managementFunctionNote =
-				(!StringUtils.isEmpty(dynaActionForm.getString("managementFunctionNote"))) ? dynaActionForm
-						.getString("managementFunctionNote") : (noteType.equals("managementFunctionNote")) ? "" : null;
+        managementFunctionNote =
+                (!StringUtils.isEmpty(dynaActionForm.getString("managementFunctionNote"))) ? dynaActionForm
+                        .getString("managementFunctionNote") : (noteType.equals("managementFunctionNote")) ? "" : null;
 
-		serviceExemptionNote =
-				(!StringUtils.isEmpty(dynaActionForm.getString("serviceExemptionNote"))) ? dynaActionForm
-						.getString("serviceExemptionNote") : (noteType.equals("serviceExemptionNote")) ? "" : null;
+        serviceExemptionNote =
+                (!StringUtils.isEmpty(dynaActionForm.getString("serviceExemptionNote"))) ? dynaActionForm
+                        .getString("serviceExemptionNote") : (noteType.equals("serviceExemptionNote")) ? "" : null;
 
-		otherNote =
-				(!StringUtils.isEmpty(dynaActionForm.getString("otherNote"))) ? dynaActionForm.getString("otherNote") : (noteType
-						.equals("otherNote")) ? "" : null;
+        otherNote =
+                (!StringUtils.isEmpty(dynaActionForm.getString("otherNote"))) ? dynaActionForm.getString("otherNote") : (noteType
+                        .equals("otherNote")) ? "" : null;
 
-		masterDegreeTeachingNote =
-				(!StringUtils.isEmpty(dynaActionForm.getString("masterDegreeTeachingNote"))) ? dynaActionForm
-						.getString("masterDegreeTeachingNote") : (noteType.equals("masterDegreeTeachingNote")) ? "" : null;
+        masterDegreeTeachingNote =
+                (!StringUtils.isEmpty(dynaActionForm.getString("masterDegreeTeachingNote"))) ? dynaActionForm
+                        .getString("masterDegreeTeachingNote") : (noteType.equals("masterDegreeTeachingNote")) ? "" : null;
 
-		functionsAccumulation =
-				(!StringUtils.isEmpty(dynaActionForm.getString("functionsAccumulationNote"))) ? dynaActionForm
-						.getString("functionsAccumulationNote") : (noteType.equals("functionsAccumulationNote")) ? "" : null;
+        functionsAccumulation =
+                (!StringUtils.isEmpty(dynaActionForm.getString("functionsAccumulationNote"))) ? dynaActionForm
+                        .getString("functionsAccumulationNote") : (noteType.equals("functionsAccumulationNote")) ? "" : null;
 
-		thesisNote =
-				(!StringUtils.isEmpty(dynaActionForm.getString("thesisNote"))) ? dynaActionForm.getString("thesisNote") : (noteType
-						.equals("thesisNote")) ? "" : null;
+        thesisNote =
+                (!StringUtils.isEmpty(dynaActionForm.getString("thesisNote"))) ? dynaActionForm.getString("thesisNote") : (noteType
+                        .equals("thesisNote")) ? "" : null;
 
-		Object[] args =
-				{ teacher, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
-						functionsAccumulation, thesisNote, roleType };
+        Object[] args =
+                { teacher, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
+                        functionsAccumulation, thesisNote, roleType };
 
-		try {
-			ServiceUtils.executeService("EditTeacherServiceNotes", args);
-		} catch (DomainException domainException) {
-			ActionMessages actionMessages = new ActionMessages();
-			actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));
-			saveMessages(request, actionMessages);
-			getNote(dynaActionForm, teacher, executionSemester, noteType);
-			return mapping.findForward("show-note");
-		}
+        try {
+            ServiceUtils.executeService("EditTeacherServiceNotes", args);
+        } catch (DomainException domainException) {
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));
+            saveMessages(request, actionMessages);
+            getNote(dynaActionForm, teacher, executionSemester, noteType);
+            return mapping.findForward("show-note");
+        }
 
-		request.setAttribute("teacherId", teacher.getExternalId());
-		request.setAttribute("executionPeriodId", executionPeriodId);
+        request.setAttribute("teacherId", teacher.getExternalId());
+        request.setAttribute("executionPeriodId", executionPeriodId);
 
-		return mapping.findForward("edit-note");
-	}
+        return mapping.findForward("edit-note");
+    }
 
-	public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-		request.setAttribute("teacherId", dynaActionForm.get("teacherId"));
-		request.setAttribute("executionPeriodId", dynaActionForm.get("executionPeriodId"));
-		return mapping.findForward("edit-note");
-	}
+    public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        request.setAttribute("teacherId", dynaActionForm.get("teacherId"));
+        request.setAttribute("executionPeriodId", dynaActionForm.get("executionPeriodId"));
+        return mapping.findForward("edit-note");
+    }
 }

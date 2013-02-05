@@ -7,16 +7,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurricularCoursePathsProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		SelectedCurricularCourse selectedCurricularCourse = (SelectedCurricularCourse) source;
-		return selectedCurricularCourse.getStudentCurricularPlan().getCurricularCoursePossibleGroups(
-				selectedCurricularCourse.getCurricularCourse());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        SelectedCurricularCourse selectedCurricularCourse = (SelectedCurricularCourse) source;
+        return selectedCurricularCourse.getStudentCurricularPlan().getCurricularCoursePossibleGroups(
+                selectedCurricularCourse.getCurricularCourse());
+    }
 
 }

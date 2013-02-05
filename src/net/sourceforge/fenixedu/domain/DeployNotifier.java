@@ -14,28 +14,28 @@ import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 public class DeployNotifier extends DeployNotifier_Base {
 
-	private static transient Boolean active = null;
+    private static transient Boolean active = null;
 
-	public DeployNotifier() {
-		if (RootDomainObject.getInstance().getDeployNotifier() != null) {
-			throw new DomainException("There's already a deploy notifier");
-		}
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public DeployNotifier() {
+        if (RootDomainObject.getInstance().getDeployNotifier() != null) {
+            throw new DomainException("There's already a deploy notifier");
+        }
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public Integer getEstimateMinutesForDeploy() {
-		DateTime now = new DateTime();
-		DateTime timeStamp = getTimeStamp();
+    public Integer getEstimateMinutesForDeploy() {
+        DateTime now = new DateTime();
+        DateTime timeStamp = getTimeStamp();
 
-		return now.isBefore(timeStamp) ? new Period(now, timeStamp).get(DurationFieldType.minutes()) : Minutes.ZERO.getMinutes();
-	}
+        return now.isBefore(timeStamp) ? new Period(now, timeStamp).get(DurationFieldType.minutes()) : Minutes.ZERO.getMinutes();
+    }
 
-	public Boolean getNotifierState() throws IOException {
-		if (active == null) {
-			final Properties properties = PropertiesManager.loadProperties("/build.properties");
-			active = Boolean.valueOf(properties.getProperty("notifier.active"));
-		}
+    public Boolean getNotifierState() throws IOException {
+        if (active == null) {
+            final Properties properties = PropertiesManager.loadProperties("/build.properties");
+            active = Boolean.valueOf(properties.getProperty("notifier.active"));
+        }
 
-		return active;
-	}
+        return active;
+    }
 }

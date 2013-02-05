@@ -13,21 +13,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class MobilityProgramProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
-		Set<MobilityProgram> mobilityPrograms =
-				new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
-		for (MobilityAgreement agreement : RootDomainObject.getInstance().getMobilityAgreements()) {
-			if (agreement.getUniversityUnit() == bean.getSelectedUniversity()) {
-				mobilityPrograms.add(agreement.getMobilityProgram());
-			}
-		}
-		return mobilityPrograms;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
+        Set<MobilityProgram> mobilityPrograms =
+                new TreeSet<MobilityProgram>(MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
+        for (MobilityAgreement agreement : RootDomainObject.getInstance().getMobilityAgreements()) {
+            if (agreement.getUniversityUnit() == bean.getSelectedUniversity()) {
+                mobilityPrograms.add(agreement.getMobilityProgram());
+            }
+        }
+        return mobilityPrograms;
+    }
 }

@@ -28,190 +28,190 @@ import org.joda.time.YearMonthDay;
 
 public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy_Base {
 
-	private StandaloneIndividualCandidacy() {
-		super();
-	}
+    private StandaloneIndividualCandidacy() {
+        super();
+    }
 
-	StandaloneIndividualCandidacy(final StandaloneIndividualCandidacyProcess process,
-			final StandaloneIndividualCandidacyProcessBean bean) {
+    StandaloneIndividualCandidacy(final StandaloneIndividualCandidacyProcess process,
+            final StandaloneIndividualCandidacyProcessBean bean) {
 
-		this();
+        this();
 
-		Person person = init(bean, process);
-		addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
+        Person person = init(bean, process);
+        addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
 
-		/*
-		 * 06/04/2009 - The candidacy may not be associated with a person. In
-		 * this case we will not create an Event
-		 */
-		if (bean.getInternalPersonCandidacy()) {
-			createDebt(person);
-		}
+        /*
+         * 06/04/2009 - The candidacy may not be associated with a person. In
+         * this case we will not create an Event
+         */
+        if (bean.getInternalPersonCandidacy()) {
+            createDebt(person);
+        }
 
-	}
+    }
 
-	@Override
-	protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
-			final IndividualCandidacyProcessBean bean) {
-		if (hasValidStandaloneIndividualCandidacy(bean, process.getCandidacyExecutionInterval())) {
-			throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
-					.getCandidacyExecutionInterval().getName());
-		}
+    @Override
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+            final IndividualCandidacyProcessBean bean) {
+        if (hasValidStandaloneIndividualCandidacy(bean, process.getCandidacyExecutionInterval())) {
+            throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
+                    .getCandidacyExecutionInterval().getName());
+        }
 
-		LocalDate candidacyDate = bean.getCandidacyDate();
-		checkParameters(person, process, candidacyDate);
-	}
+        LocalDate candidacyDate = bean.getCandidacyDate();
+        checkParameters(person, process, candidacyDate);
+    }
 
-	@Override
-	protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
-		super.checkParameters(person, process, candidacyDate);
-	}
+    @Override
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
+        super.checkParameters(person, process, candidacyDate);
+    }
 
-	private <T extends CandidacyProcess> boolean hasValidIndividualCandidacy(final Class<T> clazz,
-			final ExecutionInterval executionInterval, final IndividualCandidacyProcessBean bean) {
-		T candidacyProcess = CandidacyProcess.getCandidacyProcessByExecutionInterval(clazz, executionInterval);
-		IndividualCandidacyProcess individualCandidacyProcess =
-				candidacyProcess.getChildProcessByDocumentId(bean.getPersonBean().getIdDocumentType(), bean.getPersonBean()
-						.getDocumentIdNumber());
-		return individualCandidacyProcess != null && !individualCandidacyProcess.isCandidacyCancelled();
-	}
+    private <T extends CandidacyProcess> boolean hasValidIndividualCandidacy(final Class<T> clazz,
+            final ExecutionInterval executionInterval, final IndividualCandidacyProcessBean bean) {
+        T candidacyProcess = CandidacyProcess.getCandidacyProcessByExecutionInterval(clazz, executionInterval);
+        IndividualCandidacyProcess individualCandidacyProcess =
+                candidacyProcess.getChildProcessByDocumentId(bean.getPersonBean().getIdDocumentType(), bean.getPersonBean()
+                        .getDocumentIdNumber());
+        return individualCandidacyProcess != null && !individualCandidacyProcess.isCandidacyCancelled();
+    }
 
-	public boolean hasValidStandaloneIndividualCandidacy(final IndividualCandidacyProcessBean bean,
-			final ExecutionInterval executionInterval) {
-		return hasValidIndividualCandidacy(StandaloneCandidacyProcess.class, executionInterval, bean);
-	}
+    public boolean hasValidStandaloneIndividualCandidacy(final IndividualCandidacyProcessBean bean,
+            final ExecutionInterval executionInterval) {
+        return hasValidIndividualCandidacy(StandaloneCandidacyProcess.class, executionInterval, bean);
+    }
 
-	private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses,
-			final ExecutionSemester executionSemester) {
-		checkEctsCredits(curricularCourses, executionSemester);
-		getCurricularCourses().addAll(curricularCourses);
-	}
+    private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses,
+            final ExecutionSemester executionSemester) {
+        checkEctsCredits(curricularCourses, executionSemester);
+        getCurricularCourses().addAll(curricularCourses);
+    }
 
-	private void checkEctsCredits(List<CurricularCourse> curricularCourses, ExecutionSemester executionSemester) {
-		double total = 0.0d;
-		for (final CurricularCourse curricularCourse : curricularCourses) {
-			total += curricularCourse.getEctsCredits(executionSemester);
-		}
+    private void checkEctsCredits(List<CurricularCourse> curricularCourses, ExecutionSemester executionSemester) {
+        double total = 0.0d;
+        for (final CurricularCourse curricularCourse : curricularCourses) {
+            total += curricularCourse.getEctsCredits(executionSemester);
+        }
 
-		if (!MaximumNumberOfEctsInStandaloneCurriculumGroup.allowEctsCheckingDefaultValue(total)) {
-			throw new DomainException("error.StandaloneIndividualCandidacy.ects.credits.above.maximum",
-					String.valueOf(MaximumNumberOfEctsInStandaloneCurriculumGroup.MAXIMUM_DEFAULT_VALUE));
-		}
-	}
+        if (!MaximumNumberOfEctsInStandaloneCurriculumGroup.allowEctsCheckingDefaultValue(total)) {
+            throw new DomainException("error.StandaloneIndividualCandidacy.ects.credits.above.maximum",
+                    String.valueOf(MaximumNumberOfEctsInStandaloneCurriculumGroup.MAXIMUM_DEFAULT_VALUE));
+        }
+    }
 
-	@Override
-	protected void createDebt(final Person person) {
-		new StandaloneIndividualCandidacyEvent(this, person);
-	}
+    @Override
+    protected void createDebt(final Person person) {
+        new StandaloneIndividualCandidacyEvent(this, person);
+    }
 
-	public void editCandidacyInformation(final LocalDate candidacyDate, final List<CurricularCourse> curricularCourses) {
-		super.checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
-		setCandidacyDate(candidacyDate);
-		getCurricularCourses().clear();
-		addSelectedCurricularCourses(curricularCourses, getCandidacyExecutionInterval());
-	}
+    public void editCandidacyInformation(final LocalDate candidacyDate, final List<CurricularCourse> curricularCourses) {
+        super.checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
+        setCandidacyDate(candidacyDate);
+        getCurricularCourses().clear();
+        addSelectedCurricularCourses(curricularCourses, getCandidacyExecutionInterval());
+    }
 
-	public void editCandidacyResult(final StandaloneIndividualCandidacyResultBean bean) {
-		checkParameters(bean);
+    public void editCandidacyResult(final StandaloneIndividualCandidacyResultBean bean) {
+        checkParameters(bean);
 
-		if (isCandidacyResultStateValid(bean.getState())) {
-			setState(bean.getState());
-		}
-	}
+        if (isCandidacyResultStateValid(bean.getState())) {
+            setState(bean.getState());
+        }
+    }
 
-	private void checkParameters(final StandaloneIndividualCandidacyResultBean bean) {
-		if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
-			throw new DomainException("error.StandaloneIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
-		}
-	}
+    private void checkParameters(final StandaloneIndividualCandidacyResultBean bean) {
+        if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+            throw new DomainException("error.StandaloneIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
+        }
+    }
 
-	@Override
-	public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-			final Ingression ingression) {
+    @Override
+    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+            final Ingression ingression) {
 
-		if (hasRegistration()) {
-			throw new DomainException("error.IndividualCandidacy.person.with.registration",
-					degreeCurricularPlan.getPresentationName());
-		}
+        if (hasRegistration()) {
+            throw new DomainException("error.IndividualCandidacy.person.with.registration",
+                    degreeCurricularPlan.getPresentationName());
+        }
 
-		if (!degreeCurricularPlan.isEmpty()) {
-			throw new DomainException("error.StandaloneIndividualCandidacy.dcp.must.be.empty");
-		}
+        if (!degreeCurricularPlan.isEmpty()) {
+            throw new DomainException("error.StandaloneIndividualCandidacy.dcp.must.be.empty");
+        }
 
-		if (hasActiveRegistration(degreeCurricularPlan)) {
-			final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
-			setRegistration(registration);
-			enrolInCurricularCourses(registration);
-			return registration;
-		}
+        if (hasActiveRegistration(degreeCurricularPlan)) {
+            final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
+            setRegistration(registration);
+            enrolInCurricularCourses(registration);
+            return registration;
+        }
 
-		getPersonalDetails().ensurePersonInternalization();
-		return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
-	}
+        getPersonalDetails().ensurePersonInternalization();
+        return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+    }
 
-	@Override
-	protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-			final CycleType cycleType, final Ingression ingression) {
+    @Override
+    protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final CycleType cycleType, final Ingression ingression) {
 
-		final Registration registration = new Registration(person, degreeCurricularPlan);
-		registration.setEntryPhase(EntryPhase.FIRST_PHASE);
-		registration.setIngression(ingression);
-		registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
-		registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
+        final Registration registration = new Registration(person, degreeCurricularPlan);
+        registration.setEntryPhase(EntryPhase.FIRST_PHASE);
+        registration.setIngression(ingression);
+        registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
+        registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 
-		setRegistration(registration);
+        setRegistration(registration);
 
 //	person.addPersonRoleByRoleType(RoleType.PERSON);
 //	person.addPersonRoleByRoleType(RoleType.STUDENT);
 
-		enrolInCurricularCourses(registration);
+        enrolInCurricularCourses(registration);
 
-		return registration;
-	}
+        return registration;
+    }
 
-	@Override
-	protected YearMonthDay getStartDate() {
-		final ExecutionInterval interval = getCandidacyExecutionInterval().getExecutionYear();
-		return interval.isCurrent() ? new YearMonthDay() : interval.getBeginDateYearMonthDay();
-	}
+    @Override
+    protected YearMonthDay getStartDate() {
+        final ExecutionInterval interval = getCandidacyExecutionInterval().getExecutionYear();
+        return interval.isCurrent() ? new YearMonthDay() : interval.getBeginDateYearMonthDay();
+    }
 
-	private void enrolInCurricularCourses(final Registration registration) {
-		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+    private void enrolInCurricularCourses(final Registration registration) {
+        final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
-		for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-			if (!studentCurricularPlan.isEnroledInExecutionPeriod(curricularCourse, getCandidacyExecutionInterval())) {
+        for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
+            if (!studentCurricularPlan.isEnroledInExecutionPeriod(curricularCourse, getCandidacyExecutionInterval())) {
 
-				studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(createStudentStandaloneEnrolmentBean(
-						studentCurricularPlan, curricularCourse));
+                studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(createStudentStandaloneEnrolmentBean(
+                        studentCurricularPlan, curricularCourse));
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	private StudentStandaloneEnrolmentBean createStudentStandaloneEnrolmentBean(final StudentCurricularPlan scp,
-			final CurricularCourse curricularCourse) {
+    private StudentStandaloneEnrolmentBean createStudentStandaloneEnrolmentBean(final StudentCurricularPlan scp,
+            final CurricularCourse curricularCourse) {
 
-		final StudentStandaloneEnrolmentBean bean = new StudentStandaloneEnrolmentBean(scp, getCandidacyExecutionInterval());
+        final StudentStandaloneEnrolmentBean bean = new StudentStandaloneEnrolmentBean(scp, getCandidacyExecutionInterval());
 
-		bean.setSelectedCurricularCourse(curricularCourse);
-		bean.setCurricularRuleLevel(CurricularRuleLevel.STANDALONE_ENROLMENT);
+        bean.setSelectedCurricularCourse(curricularCourse);
+        bean.setCurricularRuleLevel(CurricularRuleLevel.STANDALONE_ENROLMENT);
 
-		return bean;
-	}
+        return bean;
+    }
 
-	@Override
-	protected ExecutionSemester getCandidacyExecutionInterval() {
-		return (ExecutionSemester) super.getCandidacyExecutionInterval();
-	}
+    @Override
+    protected ExecutionSemester getCandidacyExecutionInterval() {
+        return (ExecutionSemester) super.getCandidacyExecutionInterval();
+    }
 
-	@Override
-	public String getDescription() {
-		return getCandidacyProcess().getDisplayName() + ": " + Degree.readEmptyDegree().getNameI18N();
-	}
+    @Override
+    public String getDescription() {
+        return getCandidacyProcess().getDisplayName() + ": " + Degree.readEmptyDegree().getNameI18N();
+    }
 
-	@Override
-	public boolean isStandalone() {
-		return true;
-	}
+    @Override
+    public boolean isStandalone() {
+        return true;
+    }
 
 }

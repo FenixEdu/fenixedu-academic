@@ -8,21 +8,21 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBe
 
 public class AssociateRegistration extends PhdProgramCandidacyProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+    @Override
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
 
-		if (!process.isInState(PhdProgramCandidacyProcessState.CONCLUDED)) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.isInState(PhdProgramCandidacyProcessState.CONCLUDED)) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.hasStudyPlan() || process.getIndividualProgramProcess().hasRegistration()) {
-			throw new PreConditionNotValidException();
-		}
-	}
+        if (!process.hasStudyPlan() || process.getIndividualProgramProcess().hasRegistration()) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-		return process.associateRegistration((RegistrationFormalizationBean) object);
-	}
+    @Override
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        return process.associateRegistration((RegistrationFormalizationBean) object);
+    }
 
 }

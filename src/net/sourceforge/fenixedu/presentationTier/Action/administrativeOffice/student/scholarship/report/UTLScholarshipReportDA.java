@@ -17,38 +17,37 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdministration")
-@Forwards({ @Forward(
-		name = "viewUTLScholarshipFromRegistration",
-		path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp") })
+@Forwards({ @Forward(name = "viewUTLScholarshipFromRegistration",
+        path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp") })
 public class UTLScholarshipReportDA extends FenixDispatchAction {
 
-	public ActionForward viewResultsOnRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewResultsOnRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Registration registration = getDomainObject(request, "registrationId");
+        Registration registration = getDomainObject(request, "registrationId");
 
-		UTLScholarshipReportBeanFromRegistration bean = new UTLScholarshipReportBeanFromRegistration(registration);
+        UTLScholarshipReportBeanFromRegistration bean = new UTLScholarshipReportBeanFromRegistration(registration);
 
-		request.setAttribute("utlScholarshipBean", bean);
-		request.setAttribute("registration", registration);
+        request.setAttribute("utlScholarshipBean", bean);
+        request.setAttribute("registration", registration);
 
-		return mapping.findForward("viewUTLScholarshipFromRegistration");
-	}
+        return mapping.findForward("viewUTLScholarshipFromRegistration");
+    }
 
-	public ActionForward downloadRegistrationResultsSpreadsheet(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Registration registration = getDomainObject(request, "registrationId");
+    public ActionForward downloadRegistrationResultsSpreadsheet(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Registration registration = getDomainObject(request, "registrationId");
 
-		UTLScholarshipReportBeanFromRegistration bean = new UTLScholarshipReportBeanFromRegistration(registration);
+        UTLScholarshipReportBeanFromRegistration bean = new UTLScholarshipReportBeanFromRegistration(registration);
 
-		Spreadsheet spreadsheet = bean.buildSpreadsheet();
+        Spreadsheet spreadsheet = bean.buildSpreadsheet();
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment; filename=bolsa_accao_social_utl_" + registration.getNumber()
-				+ ".xls");
-		spreadsheet.exportToXLSSheet(response.getOutputStream());
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=bolsa_accao_social_utl_" + registration.getNumber()
+                + ".xls");
+        spreadsheet.exportToXLSSheet(response.getOutputStream());
 
-		return null;
-	}
+        return null;
+    }
 
 }

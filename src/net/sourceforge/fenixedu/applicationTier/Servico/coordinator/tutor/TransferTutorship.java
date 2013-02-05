@@ -20,52 +20,52 @@ import org.joda.time.YearMonthDay;
 
 public class TransferTutorship extends TutorshipManagement {
 
-	public List<TutorshipErrorBean> run(Integer executionDegreeID, TutorshipManagementBean bean,
-			List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException {
+    public List<TutorshipErrorBean> run(Integer executionDegreeID, TutorshipManagementBean bean,
+            List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException {
 
-		final Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-		validateTeacher(teacher, executionDegree);
+        validateTeacher(teacher, executionDegree);
 
-		List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
+        List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
 
-		YearMonthDay currentDate = new YearMonthDay();
+        YearMonthDay currentDate = new YearMonthDay();
 
-		Partial tutorshipEndDateDueToTransfer =
-				new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() }, new int[] {
-						currentDate.year().get(), currentDate.monthOfYear().get() });
+        Partial tutorshipEndDateDueToTransfer =
+                new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() }, new int[] {
+                        currentDate.year().get(), currentDate.monthOfYear().get() });
 
-		for (TutorshipManagementByEntryYearBean tutorshipBean : tutorshipsToTransfer) {
+        for (TutorshipManagementByEntryYearBean tutorshipBean : tutorshipsToTransfer) {
 
-			List<Tutorship> tutorships = tutorshipBean.getStudentsList();
+            List<Tutorship> tutorships = tutorshipBean.getStudentsList();
 
-			for (Tutorship tutorship : tutorships) {
-				Registration registration = tutorship.getStudentCurricularPlan().getRegistration();
-				Integer studentNumber = registration.getNumber();
+            for (Tutorship tutorship : tutorships) {
+                Registration registration = tutorship.getStudentCurricularPlan().getRegistration();
+                Integer studentNumber = registration.getNumber();
 
-				try {
-					validateStudentRegistration(registration, executionDegree, degreeCurricularPlan, studentNumber);
+                try {
+                    validateStudentRegistration(registration, executionDegree, degreeCurricularPlan, studentNumber);
 
-					// 1� Update the old Tutorship (endDate)
+                    // 1� Update the old Tutorship (endDate)
 
-					tutorship.setEndDate(tutorshipEndDateDueToTransfer);
+                    tutorship.setEndDate(tutorshipEndDateDueToTransfer);
 
-					// 2� Create new Tutorship
+                    // 2� Create new Tutorship
 
-					createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth()
-							.getNumberOfMonth(), bean.getTutorshipEndYear());
+                    createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth()
+                            .getNumberOfMonth(), bean.getTutorshipEndYear());
 
-				} catch (FenixServiceException ex) {
-					studentsWithErrors.add(new TutorshipErrorBean(ex.getMessage(), ex.getArgs()));
+                } catch (FenixServiceException ex) {
+                    studentsWithErrors.add(new TutorshipErrorBean(ex.getMessage(), ex.getArgs()));
 
-				} catch (DomainException ex) {
-					studentsWithErrors.add(new TutorshipErrorBean(ex.getMessage(), ex.getArgs()));
-				}
-			}
-		}
+                } catch (DomainException ex) {
+                    studentsWithErrors.add(new TutorshipErrorBean(ex.getMessage(), ex.getArgs()));
+                }
+            }
+        }
 
-		return studentsWithErrors;
-	}
+        return studentsWithErrors;
+    }
 }

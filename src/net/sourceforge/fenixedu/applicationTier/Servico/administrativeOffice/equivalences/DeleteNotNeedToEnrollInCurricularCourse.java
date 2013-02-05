@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 
 public class DeleteNotNeedToEnrollInCurricularCourse extends FenixService {
 
-	public void run(Integer notNeedToEnrollInCurricularCourseID) {
-		NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse =
-				rootDomainObject.readNotNeedToEnrollInCurricularCourseByOID(notNeedToEnrollInCurricularCourseID);
-		notNeedToEnrollInCurricularCourse.delete();
-	}
+    public void run(Integer notNeedToEnrollInCurricularCourseID) {
+        NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse =
+                rootDomainObject.readNotNeedToEnrollInCurricularCourseByOID(notNeedToEnrollInCurricularCourseID);
+        notNeedToEnrollInCurricularCourse.delete();
+    }
 
 }

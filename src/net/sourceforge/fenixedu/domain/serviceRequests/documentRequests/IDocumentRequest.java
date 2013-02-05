@@ -10,33 +10,33 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.joda.time.DateTime;
 
 public interface IDocumentRequest extends IAcademicServiceRequest {
-	public DocumentRequestType getDocumentRequestType();
+    public DocumentRequestType getDocumentRequestType();
 
-	public String getDocumentTemplateKey();
+    public String getDocumentTemplateKey();
 
-	public ExecutionYear getExecutionYear();
+    public ExecutionYear getExecutionYear();
 
-	public boolean hasExecutionYear();
+    public boolean hasExecutionYear();
 
-	public boolean isDiploma();
+    public boolean isDiploma();
 
-	public boolean isCertificate();
+    public boolean isCertificate();
 
-	public AdministrativeOffice getAdministrativeOffice();
+    public AdministrativeOffice getAdministrativeOffice();
 
-	public EventType getEventType();
+    public EventType getEventType();
 
-	public DateTime getRequestDate();
+    public DateTime getRequestDate();
 
-	public DateTime getProcessingDate();
+    public DateTime getProcessingDate();
 
-	public boolean isToShowCredits();
+    public boolean isToShowCredits();
 
-	public Student getStudent();
+    public Student getStudent();
 
-	public GeneratedDocument getLastGeneratedDocument();
+    public GeneratedDocument getLastGeneratedDocument();
 
-	public byte[] generateDocument();
+    public byte[] generateDocument();
 
-	public String getReportFileName();
+    public String getReportFileName();
 }

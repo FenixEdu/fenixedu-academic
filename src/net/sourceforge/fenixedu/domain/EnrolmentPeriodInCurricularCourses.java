@@ -16,39 +16,39 @@ import org.joda.time.DateTime;
  */
 public class EnrolmentPeriodInCurricularCourses extends EnrolmentPeriodInCurricularCourses_Base {
 
-	public static final Comparator<EnrolmentPeriodInCurricularCourses> COMPARATOR_BY_START =
-			new Comparator<EnrolmentPeriodInCurricularCourses>() {
+    public static final Comparator<EnrolmentPeriodInCurricularCourses> COMPARATOR_BY_START =
+            new Comparator<EnrolmentPeriodInCurricularCourses>() {
 
-				@Override
-				public int compare(EnrolmentPeriodInCurricularCourses o1, EnrolmentPeriodInCurricularCourses o2) {
-					return o1.getStartDateDateTime().compareTo(o2.getStartDateDateTime());
-				}
+                @Override
+                public int compare(EnrolmentPeriodInCurricularCourses o1, EnrolmentPeriodInCurricularCourses o2) {
+                    return o1.getStartDateDateTime().compareTo(o2.getStartDateDateTime());
+                }
 
-			};
+            };
 
-	public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,
-			final ExecutionSemester executionSemester, final Date startDate, final Date endDate) {
-		super();
-		init(degreeCurricularPlan, executionSemester, startDate, endDate);
-	}
+    public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionSemester executionSemester, final Date startDate, final Date endDate) {
+        super();
+        init(degreeCurricularPlan, executionSemester, startDate, endDate);
+    }
 
-	public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,
-			final ExecutionSemester executionSemester, final DateTime startDate, final DateTime endDate) {
+    public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionSemester executionSemester, final DateTime startDate, final DateTime endDate) {
 
-		super();
+        super();
 
-		checkParameters(degreeCurricularPlan, executionSemester);
-		init(degreeCurricularPlan, executionSemester, startDate, endDate);
-	}
+        checkParameters(degreeCurricularPlan, executionSemester);
+        init(degreeCurricularPlan, executionSemester, startDate, endDate);
+    }
 
-	private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
+    private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
 
-		check(degreeCurricularPlan, "error.EnrolmentPeriodInCurricularCourses.invalid.degreeCurricularPlan");
-		check(executionSemester, "error.EnrolmentPeriodInCurricularCourses.invalid.executionSemester");
+        check(degreeCurricularPlan, "error.EnrolmentPeriodInCurricularCourses.invalid.degreeCurricularPlan");
+        check(executionSemester, "error.EnrolmentPeriodInCurricularCourses.invalid.executionSemester");
 
-		if (executionSemester.getEnrolmentPeriod(getClass(), degreeCurricularPlan) != null) {
-			throw new DomainException("error.EnrolmentPeriodInCurricularCourses.dcp.already.has.enrolment.period.for.semester");
-		}
-	}
+        if (executionSemester.getEnrolmentPeriod(getClass(), degreeCurricularPlan) != null) {
+            throw new DomainException("error.EnrolmentPeriodInCurricularCourses.dcp.already.has.enrolment.period.for.semester");
+        }
+    }
 
 }

@@ -15,40 +15,40 @@ import dml.DomainClass;
 
 public class CreateMetaDomainObectTypes extends FenixService {
 
-	@Service
-	public static void run() throws FenixServiceException {
-		List<DomainClass> domainClasses = new ArrayList<DomainClass>(FenixFramework.getDomainModel().getDomainClasses());
-		Set<MetaDomainObject> metaDomainObjectsSet = new HashSet<MetaDomainObject>(rootDomainObject.getMetaDomainObjectsSet());
+    @Service
+    public static void run() throws FenixServiceException {
+        List<DomainClass> domainClasses = new ArrayList<DomainClass>(FenixFramework.getDomainModel().getDomainClasses());
+        Set<MetaDomainObject> metaDomainObjectsSet = new HashSet<MetaDomainObject>(rootDomainObject.getMetaDomainObjectsSet());
 
-		for (DomainClass domainClass : domainClasses) {
-			MetaDomainObject metaDomainObject = getMetaDomainObject(metaDomainObjectsSet, domainClass.getFullName());
+        for (DomainClass domainClass : domainClasses) {
+            MetaDomainObject metaDomainObject = getMetaDomainObject(metaDomainObjectsSet, domainClass.getFullName());
 
-			if (metaDomainObject == null) {
-				try {
-					new MetaDomainObject(domainClass.getFullName());
-				} catch (ClassNotFoundException e) {
-					throw new FenixServiceException(e);
-				}
-				System.out.println("Created MetaDomainObject -> " + domainClass.getFullName());
-			} else {
-				metaDomainObjectsSet.remove(metaDomainObject);
-			}
-		}
+            if (metaDomainObject == null) {
+                try {
+                    new MetaDomainObject(domainClass.getFullName());
+                } catch (ClassNotFoundException e) {
+                    throw new FenixServiceException(e);
+                }
+                System.out.println("Created MetaDomainObject -> " + domainClass.getFullName());
+            } else {
+                metaDomainObjectsSet.remove(metaDomainObject);
+            }
+        }
 
-		for (MetaDomainObject metaDomainObject : metaDomainObjectsSet) {
-			if (metaDomainObject.canBeDeleted()) {
-				System.out.println("Deleted MetaDomainObject-> " + metaDomainObject.getType());
-				metaDomainObject.delete();
-			}
-		}
-	}
+        for (MetaDomainObject metaDomainObject : metaDomainObjectsSet) {
+            if (metaDomainObject.canBeDeleted()) {
+                System.out.println("Deleted MetaDomainObject-> " + metaDomainObject.getType());
+                metaDomainObject.delete();
+            }
+        }
+    }
 
-	private static MetaDomainObject getMetaDomainObject(Collection<MetaDomainObject> metaDomainObjects, String fullName) {
-		for (MetaDomainObject metaDomainObject : metaDomainObjects) {
-			if (metaDomainObject.getType().equals(fullName)) {
-				return metaDomainObject;
-			}
-		}
-		return null;
-	}
+    private static MetaDomainObject getMetaDomainObject(Collection<MetaDomainObject> metaDomainObjects, String fullName) {
+        for (MetaDomainObject metaDomainObject : metaDomainObjects) {
+            if (metaDomainObject.getType().equals(fullName)) {
+                return metaDomainObject;
+            }
+        }
+        return null;
+    }
 }

@@ -6,10 +6,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveIncompatiblePerson extends FenixService {
 
-	@Service
-	public static void run(VigilantWrapper vigilantWrapper) {
-		vigilantWrapper.getPerson().getIncompatibleVigilantPerson().removeIncompatibleVigilantPerson();
-		vigilantWrapper.getPerson().removeIncompatibleVigilantPerson();
-	}
+    @Service
+    public static void run(VigilantWrapper vigilantWrapper) {
+        vigilantWrapper.getPerson().getIncompatibleVigilantPerson().removeIncompatibleVigilantPerson();
+        vigilantWrapper.getPerson().removeIncompatibleVigilantPerson();
+    }
 
 }

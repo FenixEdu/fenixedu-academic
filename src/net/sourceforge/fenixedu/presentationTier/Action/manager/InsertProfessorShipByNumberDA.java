@@ -26,27 +26,27 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 
-	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("insertProfessorShip");
-	}
+    public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("insertProfessorShip");
+    }
 
-	public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-		final DynaActionForm form = (DynaValidatorForm) actionForm;
-		final Integer teacherId = Integer.valueOf(form.getString("id"));
-		final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
+        final DynaActionForm form = (DynaValidatorForm) actionForm;
+        final Integer teacherId = Integer.valueOf(form.getString("id"));
+        final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
 
-		try {
-			final Object args[] = { executionCourseId, teacherId, Boolean.FALSE, 0.0 };
-			ServiceUtils.executeService("InsertProfessorShip", args);
+        try {
+            final Object args[] = { executionCourseId, teacherId, Boolean.FALSE, 0.0 };
+            ServiceUtils.executeService("InsertProfessorShip", args);
 
-		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e.getMessage());
-		}
-		return mapping.findForward("readTeacherInCharge");
-	}
+        } catch (NonExistingServiceException ex) {
+            throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e.getMessage());
+        }
+        return mapping.findForward("readTeacherInCharge");
+    }
 }

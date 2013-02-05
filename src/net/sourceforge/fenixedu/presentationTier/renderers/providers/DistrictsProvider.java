@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DistrictsProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return RootDomainObject.getInstance().getDistricts();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return RootDomainObject.getInstance().getDistricts();
+    }
 
 }

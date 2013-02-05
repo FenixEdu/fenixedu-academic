@@ -8,17 +8,17 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 
 public class RatifyCandidacy extends PhdProgramCandidacyProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-		if (!process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+    @Override
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+        if (!process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-		process.ratify((RatifyCandidacyBean) object, userView != null ? userView.getPerson() : null);
-		return process;
-	}
+    @Override
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        process.ratify((RatifyCandidacyBean) object, userView != null ? userView.getPerson() : null);
+        return process;
+    }
 
 }

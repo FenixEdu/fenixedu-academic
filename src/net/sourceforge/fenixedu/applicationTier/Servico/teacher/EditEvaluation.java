@@ -9,12 +9,12 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class EditEvaluation extends FenixService {
 
-	public Boolean run(final ExecutionCourse executionCourse, final MultiLanguageString evaluationMethod) {
-		if (executionCourse.getEvaluationMethod() == null) {
-			executionCourse.createEvaluationMethod(evaluationMethod);
-		} else {
-			executionCourse.getEvaluationMethod().edit(evaluationMethod);
-		}
-		return true;
-	}
+    public Boolean run(final ExecutionCourse executionCourse, final MultiLanguageString evaluationMethod) {
+        if (executionCourse.getEvaluationMethod() == null) {
+            executionCourse.createEvaluationMethod(evaluationMethod);
+        } else {
+            executionCourse.getEvaluationMethod().edit(evaluationMethod);
+        }
+        return true;
+    }
 }

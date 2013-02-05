@@ -27,98 +27,98 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
-	protected PhdProgramCandidacyEvent() {
-		super();
-	}
+    protected PhdProgramCandidacyEvent() {
+        super();
+    }
 
-	public PhdProgramCandidacyEvent(AdministrativeOffice administrativeOffice, Person person,
-			PhdProgramCandidacyProcess candidacyProcess) {
-		this();
-		init(administrativeOffice, person, candidacyProcess);
-	}
+    public PhdProgramCandidacyEvent(AdministrativeOffice administrativeOffice, Person person,
+            PhdProgramCandidacyProcess candidacyProcess) {
+        this();
+        init(administrativeOffice, person, candidacyProcess);
+    }
 
-	public PhdProgramCandidacyEvent(final Person person, final PhdProgramCandidacyProcess process) {
-		this(process.getIndividualProgramProcess().getAdministrativeOffice(), person, process);
+    public PhdProgramCandidacyEvent(final Person person, final PhdProgramCandidacyProcess process) {
+        this(process.getIndividualProgramProcess().getAdministrativeOffice(), person, process);
 
-		if (process.isPublicCandidacy()) {
-			attachAvailablePaymentCode();
-		}
-	}
+        if (process.isPublicCandidacy()) {
+            attachAvailablePaymentCode();
+        }
+    }
 
-	protected void attachAvailablePaymentCode() {
-		YearMonthDay candidacyDate = getCandidacyProcess().getCandidacyDate().toDateMidnight().toYearMonthDay();
-		IndividualCandidacyPaymentCode paymentCode =
-				IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(PaymentCodeType.PHD_PROGRAM_CANDIDACY_PROCESS,
-						candidacyDate, this, getPerson());
-		if (paymentCode == null) {
-			throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
-		}
-	}
+    protected void attachAvailablePaymentCode() {
+        YearMonthDay candidacyDate = getCandidacyProcess().getCandidacyDate().toDateMidnight().toYearMonthDay();
+        IndividualCandidacyPaymentCode paymentCode =
+                IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(PaymentCodeType.PHD_PROGRAM_CANDIDACY_PROCESS,
+                        candidacyDate, this, getPerson());
+        if (paymentCode == null) {
+            throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
+        }
+    }
 
-	private void init(AdministrativeOffice administrativeOffice, Person person, PhdProgramCandidacyProcess candidacyProcess) {
-		super.init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
+    private void init(AdministrativeOffice administrativeOffice, Person person, PhdProgramCandidacyProcess candidacyProcess) {
+        super.init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
 
-		check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyEvent.candidacyProcess.cannot.be.null");
-		super.setCandidacyProcess(candidacyProcess);
-	}
+        check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyEvent.candidacyProcess.cannot.be.null");
+        super.setCandidacyProcess(candidacyProcess);
+    }
 
-	@Override
-	public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
-		throw new DomainException("error.phd.candidacy.PhdProgramCandidacyEvent.cannot.modify.candidacyProcess");
-	}
+    @Override
+    public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
+        throw new DomainException("error.phd.candidacy.PhdProgramCandidacyEvent.cannot.modify.candidacyProcess");
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getPhdProgram().getPresentationName())
-				.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getPhdProgram().getPresentationName())
+                .appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
-		return labelFormatter;
+        return labelFormatter;
 
-	}
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		return new LabelFormatter().appendLabel(AlertService.getMessageFromResource("label.phd.candidacy")).appendLabel(": ")
-				.appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        return new LabelFormatter().appendLabel(AlertService.getMessageFromResource("label.phd.candidacy")).appendLabel(": ")
+                .appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
+    }
 
-	private ExecutionYear getExecutionYear() {
-		return getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();
-	}
+    private ExecutionYear getExecutionYear() {
+        return getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();
+    }
 
-	@Override
-	protected PhdProgram getPhdProgram() {
-		return getCandidacyProcess().getIndividualProgramProcess().getPhdProgram();
-	}
+    @Override
+    protected PhdProgram getPhdProgram() {
+        return getCandidacyProcess().getIndividualProgramProcess().getPhdProgram();
+    }
 
-	@Override
-	protected void disconnect() {
-		removeCandidacyProcess();
-		super.disconnect();
-	}
+    @Override
+    protected void disconnect() {
+        removeCandidacyProcess();
+        super.disconnect();
+    }
 
-	public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
-		if (super.getAllPaymentCodes().isEmpty()) {
-			return null;
-		}
+    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+        if (super.getAllPaymentCodes().isEmpty()) {
+            return null;
+        }
 
-		return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().get(0);
-	}
+        return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().get(0);
+    }
 
-	@Override
-	public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-		return getCandidacyProcess().getIndividualProgramProcess();
-	}
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+        return getCandidacyProcess().getIndividualProgramProcess();
+    }
 
-	@Override
-	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-			SibsTransactionDetailDTO transactionDetail) {
-		return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
-				transactionDetail);
-	}
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+            SibsTransactionDetailDTO transactionDetail) {
+        return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
+                transactionDetail);
+    }
 
-	protected EntryType getEntryType() {
-		return EntryType.CANDIDACY_ENROLMENT_FEE;
-	}
+    protected EntryType getEntryType() {
+        return EntryType.CANDIDACY_ENROLMENT_FEE;
+    }
 }

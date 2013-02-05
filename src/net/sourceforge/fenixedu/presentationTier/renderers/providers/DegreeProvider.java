@@ -10,20 +10,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
+    @Override
+    public Object provide(Object source, Object current) {
 
-		final DegreesMergeBean degreesMergeBean = (DegreesMergeBean) source;
+        final DegreesMergeBean degreesMergeBean = (DegreesMergeBean) source;
 
-		List<Degree> result = Degree.readAllByDegreeCode(Degree.DEFAULT_MINISTRY_CODE);
-		Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        List<Degree> result = Degree.readAllByDegreeCode(Degree.DEFAULT_MINISTRY_CODE);
+        Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -19,19 +19,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/downloadQueuedJob", module = "")
 public class DownloadQueuedJob extends FenixDispatchAction {
 
-	public ActionForward downloadFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			final HttpServletResponse httpServletResponse) throws IOException {
-		QueueJob queueJob = getDomainObject(request, "id");
+    public ActionForward downloadFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            final HttpServletResponse httpServletResponse) throws IOException {
+        QueueJob queueJob = getDomainObject(request, "id");
 
-		if ((queueJob instanceof QueueJobWithFile) && ((QueueJobWithFile) queueJob).getFile() != null) {
-			httpServletResponse.setContentType(((QueueJobWithFile) queueJob).getContentType());
-			httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + queueJob.getFilename());
-			final OutputStream outputStream = httpServletResponse.getOutputStream();
-			outputStream.write(((QueueJobWithFile) queueJob).getFile().getContents());
-			outputStream.close();
-		}
+        if ((queueJob instanceof QueueJobWithFile) && ((QueueJobWithFile) queueJob).getFile() != null) {
+            httpServletResponse.setContentType(((QueueJobWithFile) queueJob).getContentType());
+            httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + queueJob.getFilename());
+            final OutputStream outputStream = httpServletResponse.getOutputStream();
+            outputStream.write(((QueueJobWithFile) queueJob).getFile().getContents());
+            outputStream.close();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

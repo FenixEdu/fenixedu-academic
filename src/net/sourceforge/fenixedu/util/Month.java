@@ -4,28 +4,28 @@ import org.joda.time.DateTime;
 
 public enum Month {
 
-	JANUARY(1), FEBRUARY(2), MARCH(3), APRIL(4), MAY(5), JUNE(6), JULY(7), AUGUST(8), SEPTEMBER(9), OCTOBER(10), NOVEMBER(11),
-	DECEMBER(12);
+    JANUARY(1), FEBRUARY(2), MARCH(3), APRIL(4), MAY(5), JUNE(6), JULY(7), AUGUST(8), SEPTEMBER(9), OCTOBER(10), NOVEMBER(11),
+    DECEMBER(12);
 
-	private int numberOfMonth;
+    private int numberOfMonth;
 
-	private Month(int num) {
-		numberOfMonth = num;
-	}
+    private Month(int num) {
+        numberOfMonth = num;
+    }
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public int getNumberOfMonth() {
-		return numberOfMonth;
-	}
+    public int getNumberOfMonth() {
+        return numberOfMonth;
+    }
 
-	public static Month fromDateTime(DateTime time) {
-		return Month.values()[time.getMonthOfYear() - 1];
-	}
+    public static Month fromDateTime(DateTime time) {
+        return Month.values()[time.getMonthOfYear() - 1];
+    }
 
-	public static Month fromInt(int num) {
-		return Month.values()[num - 1];
-	}
+    public static Month fromInt(int num) {
+        return Month.values()[num - 1];
+    }
 }

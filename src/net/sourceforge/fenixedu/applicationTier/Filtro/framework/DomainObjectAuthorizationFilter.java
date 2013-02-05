@@ -20,39 +20,39 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
 
-	@Override
-	abstract protected RoleType getRoleType();
+    @Override
+    abstract protected RoleType getRoleType();
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-		try {
-			Object[] arguments = getServiceCallArguments(request);
-			IUserView id = getRemoteUser(request);
-			Integer idInternal;
-			if (arguments[0] instanceof Integer) {
-				idInternal = (Integer) arguments[0];
-			} else {
-				idInternal = ((InfoObject) arguments[0]).getIdInternal();
-			}
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+        try {
+            Object[] arguments = getServiceCallArguments(request);
+            IUserView id = getRemoteUser(request);
+            Integer idInternal;
+            if (arguments[0] instanceof Integer) {
+                idInternal = (Integer) arguments[0];
+            } else {
+                idInternal = ((InfoObject) arguments[0]).getIdInternal();
+            }
 
-			/*
-			 * note: if it is neither an Integer nor an InfoObject representing
-			 * the object to be modified, it is supposed to throw a
-			 * RuntimeException to be caught and encapsulated in a
-			 * NotAuthorizedFilterException
-			 */
+            /*
+             * note: if it is neither an Integer nor an InfoObject representing
+             * the object to be modified, it is supposed to throw a
+             * RuntimeException to be caught and encapsulated in a
+             * NotAuthorizedFilterException
+             */
 
-			boolean isNew = ((idInternal == null) || idInternal.equals(Integer.valueOf(0)));
+            boolean isNew = ((idInternal == null) || idInternal.equals(Integer.valueOf(0)));
 
-			if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-					|| (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, idInternal)))) {
-				throw new NotAuthorizedFilterException();
-			}
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			throw new NotAuthorizedFilterException(e.getMessage());
-		}
-	}
+            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
+                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, idInternal)))) {
+                throw new NotAuthorizedFilterException();
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new NotAuthorizedFilterException(e.getMessage());
+        }
+    }
 
-	abstract protected boolean verifyCondition(IUserView id, Integer objectId);
+    abstract protected boolean verifyCondition(IUserView id, Integer objectId);
 }

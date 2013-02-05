@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.phd;
 
 public enum PhdStudyPlanEntryType {
 
-	PROPAEDEUTIC,
+    PROPAEDEUTIC,
 
-	EXTRA_CURRICULAR,
+    EXTRA_CURRICULAR,
 
-	NORMAL;
+    NORMAL;
 
 }

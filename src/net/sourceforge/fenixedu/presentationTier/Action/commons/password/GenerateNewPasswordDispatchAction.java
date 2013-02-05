@@ -29,68 +29,68 @@ import org.apache.struts.action.DynaActionForm;
 
 public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		return mapping.findForward("PrepareSuccess");
-	}
+        return mapping.findForward("PrepareSuccess");
+    }
 
-	public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		DynaActionForm newPasswordForm = (DynaActionForm) form;
+        DynaActionForm newPasswordForm = (DynaActionForm) form;
 
-		String username = (String) newPasswordForm.get("username");
+        String username = (String) newPasswordForm.get("username");
 
-		InfoPerson infoPerson = null;
-		try {
+        InfoPerson infoPerson = null;
+        try {
 
-			infoPerson = ReadPersonByUsername.run(username);
-		} catch (ExcepcaoInexistente e) {
-			throw new NonExistingActionException("A Person", e);
-		}
+            infoPerson = ReadPersonByUsername.run(username);
+        } catch (ExcepcaoInexistente e) {
+            throw new NonExistingActionException("A Person", e);
+        }
 
-		request.setAttribute("infoPerson", infoPerson);
+        request.setAttribute("infoPerson", infoPerson);
 
-		return mapping.findForward("Confirm");
-	}
+        return mapping.findForward("Confirm");
+    }
 
-	public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		Integer personID = new Integer(request.getParameter("personID"));
+        Integer personID = new Integer(request.getParameter("personID"));
 
-		String password = null;
+        String password = null;
 
-		final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
-		if (person != null) {
-			SetUserUID.run(person);
-		}
+        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+        if (person != null) {
+            SetUserUID.run(person);
+        }
 
-		// Change the Password
-		try {
+        // Change the Password
+        try {
 
-			password = GenerateNewPasswordService.run(personID);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+            password = GenerateNewPasswordService.run(personID);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute("password", password);
+        request.setAttribute("password", password);
 
-		InfoPerson infoPerson = null;
-		try {
+        InfoPerson infoPerson = null;
+        try {
 
-			infoPerson = ReadPersonByUsername.run(request.getParameter("username"));
-		} catch (ExcepcaoInexistente e) {
-			throw new NonExistingActionException("A Person", e);
-		}
+            infoPerson = ReadPersonByUsername.run(request.getParameter("username"));
+        } catch (ExcepcaoInexistente e) {
+            throw new NonExistingActionException("A Person", e);
+        }
 
-		request.setAttribute("infoPerson", infoPerson);
+        request.setAttribute("infoPerson", infoPerson);
 
-		return mapping.findForward("Success");
-	}
+        return mapping.findForward("Success");
+    }
 }

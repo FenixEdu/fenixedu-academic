@@ -42,78 +42,73 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(
-		module = "gep",
-		path = "/competenceCoursesStatistics",
-		input = "/competenceCoursesStatistics.do?method=prepare",
-		attribute = "competenceCourseStatisticsForm",
-		formBean = "competenceCourseStatisticsForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "gep", path = "/competenceCoursesStatistics", input = "/competenceCoursesStatistics.do?method=prepare",
+        attribute = "competenceCourseStatisticsForm", formBean = "competenceCourseStatisticsForm", scope = "request",
+        parameter = "method")
 @Forwards(value = { @Forward(name = "chooseExecutionYear", path = "/gep/courses/viewCompetenceCoursesStatistics.jsp") })
 public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
-		return mapping.findForward("chooseExecutionYear");
-	}
+        request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
+        return mapping.findForward("chooseExecutionYear");
+    }
 
-	public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+    public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
-		IUserView userView = getUserView(request);
-		DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-		Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
-		String agreementName = (String) dynaActionForm.get("registrationAgreement");
-		RegistrationAgreement agreement =
-				StringUtils.isEmpty(agreementName) ? null : RegistrationAgreement.valueOf(agreementName);
+        IUserView userView = getUserView(request);
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
+        String agreementName = (String) dynaActionForm.get("registrationAgreement");
+        RegistrationAgreement agreement =
+                StringUtils.isEmpty(agreementName) ? null : RegistrationAgreement.valueOf(agreementName);
 
-		Collection<String> processedDegreeCurricularPlans = new ArrayList<String>();
-		Collection<String> processingDegreeCurricularPlans = new ArrayList<String>();
-		Collection<String> toProcessDegreeCurricularPlans = new ArrayList<String>();
+        Collection<String> processedDegreeCurricularPlans = new ArrayList<String>();
+        Collection<String> processingDegreeCurricularPlans = new ArrayList<String>();
+        Collection<String> toProcessDegreeCurricularPlans = new ArrayList<String>();
 
-		CurricularCourseStatisticsStatusBridge.processedDegreeCurricularPlans.put(userView, processedDegreeCurricularPlans);
-		CurricularCourseStatisticsStatusBridge.processingDegreeCurricularPlans.put(userView, processingDegreeCurricularPlans);
-		CurricularCourseStatisticsStatusBridge.toProcessDegreeCurricularPlans.put(userView, toProcessDegreeCurricularPlans);
+        CurricularCourseStatisticsStatusBridge.processedDegreeCurricularPlans.put(userView, processedDegreeCurricularPlans);
+        CurricularCourseStatisticsStatusBridge.processingDegreeCurricularPlans.put(userView, processingDegreeCurricularPlans);
+        CurricularCourseStatisticsStatusBridge.toProcessDegreeCurricularPlans.put(userView, toProcessDegreeCurricularPlans);
 
-		StringBuilder result = new StringBuilder();
-		result.append("CurricularCourse Code\tCurricularCourse Name\tExecutionCourse ID\tExecutionCourse Name\tCurricular Plan ID\tCurricular Plan Name\tSemester\tYear\tFirst Enrolments\tSecond Enrolments\tAll Enrolments\n");
+        StringBuilder result = new StringBuilder();
+        result.append("CurricularCourse Code\tCurricularCourse Name\tExecutionCourse ID\tExecutionCourse Name\tCurricular Plan ID\tCurricular Plan Name\tSemester\tYear\tFirst Enrolments\tSecond Enrolments\tAll Enrolments\n");
 
-		Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-		degreeTypes.add(DegreeType.DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+        Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+        degreeTypes.add(DegreeType.DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
 
-		List<DegreeCurricularPlan> degreeCurricularPlans =
-				DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes, DegreeCurricularPlanState.ACTIVE);
+        List<DegreeCurricularPlan> degreeCurricularPlans =
+                DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes, DegreeCurricularPlanState.ACTIVE);
 
-		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-			toProcessDegreeCurricularPlans.add(degreeCurricularPlan.getName());
-		}
+        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+            toProcessDegreeCurricularPlans.add(degreeCurricularPlan.getName());
+        }
 
-		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-			toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
-			processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
+        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+            toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
+            processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
 
-			result.append(ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getIdInternal(), executionYearID, agreement));
+            result.append(ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getIdInternal(), executionYearID, agreement));
 
-			processingDegreeCurricularPlans.clear();
-			processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());
-		}
+            processingDegreeCurricularPlans.clear();
+            processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());
+        }
 
-		String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
-		response.setHeader("Content-disposition", "attachment;filename=" + executionYearID + "_" + currentDate + ".csv");
-		response.setContentType("application/txt");
-		PrintWriter writer = response.getWriter();
-		writer.write(result.toString());
-		writer.close();
+        String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
+        response.setHeader("Content-disposition", "attachment;filename=" + executionYearID + "_" + currentDate + ".csv");
+        response.setContentType("application/txt");
+        PrintWriter writer = response.getWriter();
+        writer.write(result.toString());
+        writer.close();
 
-		CurricularCourseStatisticsStatusBridge.processedDegreeCurricularPlans.remove(userView);
+        CurricularCourseStatisticsStatusBridge.processedDegreeCurricularPlans.remove(userView);
 
-		return null;
-	}
+        return null;
+    }
 
 }

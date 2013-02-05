@@ -8,9 +8,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddExamCoordinator extends FenixService {
 
-	@Service
-	public static void run(Person person, ExecutionYear executionYear, Unit unit) {
-		person.addExamCoordinator(executionYear, unit);
-	}
+    @Service
+    public static void run(Person person, ExecutionYear executionYear, Unit unit) {
+        person.addExamCoordinator(executionYear, unit);
+    }
 
 }

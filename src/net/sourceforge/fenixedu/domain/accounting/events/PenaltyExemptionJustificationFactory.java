@@ -6,23 +6,23 @@ import org.joda.time.YearMonthDay;
 
 public class PenaltyExemptionJustificationFactory {
 
-	public static PenaltyExemptionJustification create(final PenaltyExemption penaltyExemption,
-			final PenaltyExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
+    public static PenaltyExemptionJustification create(final PenaltyExemption penaltyExemption,
+            final PenaltyExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
 
-		switch (justificationType) {
+        switch (justificationType) {
 
-		case SOCIAL_SHARE_GRANT_OWNER:
-		case ENROLMENT_AFTER_EQUIVALENCE:
-		case SEPARATION_CYCLES_AUTHORIZATION:
-			return new PenaltyExemptionJustification(penaltyExemption, justificationType, reason);
-		case DIRECTIVE_COUNCIL_AUTHORIZATION:
-		case NUCLEUS_COORDINATOR_AUTHORIZATION:
-			return new PenaltyExemptionJustificationByDispatch(penaltyExemption, justificationType, reason, dispatchDate);
+        case SOCIAL_SHARE_GRANT_OWNER:
+        case ENROLMENT_AFTER_EQUIVALENCE:
+        case SEPARATION_CYCLES_AUTHORIZATION:
+            return new PenaltyExemptionJustification(penaltyExemption, justificationType, reason);
+        case DIRECTIVE_COUNCIL_AUTHORIZATION:
+        case NUCLEUS_COORDINATOR_AUTHORIZATION:
+            return new PenaltyExemptionJustificationByDispatch(penaltyExemption, justificationType, reason, dispatchDate);
 
-		default:
-			throw new RuntimeException("Unknown justification type");
+        default:
+            throw new RuntimeException("Unknown justification type");
 
-		}
+        }
 
-	}
+    }
 }

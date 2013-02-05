@@ -53,355 +53,355 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 
 @Mapping(module = "manager", path = "/manageEnrolementPeriods", input = "/manageEnrolementPeriods.do?method=prepare&page=0",
-		attribute = "enrolementPeriodsForm", formBean = "enrolementPeriodsForm", scope = "request", parameter = "method")
+        attribute = "enrolementPeriodsForm", formBean = "enrolementPeriodsForm", scope = "request", parameter = "method")
 @Forwards({
-		@Forward(name = "editEnrolmentInstructions", path = "/manager/enrolmentPeriodManagement/editEnrolmentInstructions.jsp"),
-		@Forward(name = "showEnrolementPeriods", path = "/manager/enrolmentPeriodManagement/enrolementPeriods.jsp"),
-		@Forward(name = "createPeriod", path = "/manager/enrolmentPeriodManagement/createPeriod.jsp"),
-		@Forward(name = "changePeriodValues", path = "/manager/enrolmentPeriodManagement/changePeriodValues.jsp") })
+        @Forward(name = "editEnrolmentInstructions", path = "/manager/enrolmentPeriodManagement/editEnrolmentInstructions.jsp"),
+        @Forward(name = "showEnrolementPeriods", path = "/manager/enrolmentPeriodManagement/enrolementPeriods.jsp"),
+        @Forward(name = "createPeriod", path = "/manager/enrolmentPeriodManagement/createPeriod.jsp"),
+        @Forward(name = "changePeriodValues", path = "/manager/enrolmentPeriodManagement/changePeriodValues.jsp") })
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
-	static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
-			EnrolmentPeriodInCurricularCourses.class,
+    static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
+            EnrolmentPeriodInCurricularCourses.class,
 
-			EnrolmentPeriodInSpecialSeasonEvaluations.class,
+            EnrolmentPeriodInSpecialSeasonEvaluations.class,
 
-			EnrolmentPeriodInClasses.class,
+            EnrolmentPeriodInClasses.class,
 
-			EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
+            EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
 
-			EnrolmentPeriodInCurricularCoursesSpecialSeason.class,
+            EnrolmentPeriodInCurricularCoursesSpecialSeason.class,
 
-			EnrolmentPeriodInCurricularCoursesFlunkedSeason.class,
+            EnrolmentPeriodInCurricularCoursesFlunkedSeason.class,
 
-			ReingressionPeriod.class);
+            ReingressionPeriod.class);
 
-	public static class EnrolmentPeriodBean implements Serializable {
-		private ExecutionSemester semester;
+    public static class EnrolmentPeriodBean implements Serializable {
+        private ExecutionSemester semester;
 
-		public EnrolmentPeriodBean() {
-		}
+        public EnrolmentPeriodBean() {
+        }
 
-		public ExecutionSemester getSemester() {
-			return semester;
-		}
+        public ExecutionSemester getSemester() {
+            return semester;
+        }
 
-		public void setSemester(ExecutionSemester semester) {
-			this.semester = semester;
-		}
+        public void setSemester(ExecutionSemester semester) {
+            this.semester = semester;
+        }
 
-		public SortedSet<ExecutionSemester> getSemesters() {
-			TreeSet<ExecutionSemester> semesters =
-					new TreeSet<ExecutionSemester>(new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-			semesters.addAll(rootDomainObject.getExecutionPeriods());
-			return semesters;
-		}
+        public SortedSet<ExecutionSemester> getSemesters() {
+            TreeSet<ExecutionSemester> semesters =
+                    new TreeSet<ExecutionSemester>(new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+            semesters.addAll(rootDomainObject.getExecutionPeriods());
+            return semesters;
+        }
 
-		public List<EnrolmentPeriodTypeConfiguration> getConfigurations() {
-			List<EnrolmentPeriodTypeConfiguration> configurations = new ArrayList<EnrolmentPeriodTypeConfiguration>();
-			if (semester != null) {
-				Map<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration> map =
-						new HashMap<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration>();
-				for (final EnrolmentPeriod period : semester.getEnrolmentPeriod()) {
-					if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
-						if (!map.containsKey(period.getClass())) {
-							map.put(period.getClass(), new EnrolmentPeriodTypeConfiguration(period.getClass(), semester));
-						}
-						map.get(period.getClass()).addPeriod(period);
-					}
-				}
-				configurations.addAll(map.values());
-				Collections.sort(configurations);
-			}
-			return configurations;
-		}
-	}
+        public List<EnrolmentPeriodTypeConfiguration> getConfigurations() {
+            List<EnrolmentPeriodTypeConfiguration> configurations = new ArrayList<EnrolmentPeriodTypeConfiguration>();
+            if (semester != null) {
+                Map<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration> map =
+                        new HashMap<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration>();
+                for (final EnrolmentPeriod period : semester.getEnrolmentPeriod()) {
+                    if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
+                        if (!map.containsKey(period.getClass())) {
+                            map.put(period.getClass(), new EnrolmentPeriodTypeConfiguration(period.getClass(), semester));
+                        }
+                        map.get(period.getClass()).addPeriod(period);
+                    }
+                }
+                configurations.addAll(map.values());
+                Collections.sort(configurations);
+            }
+            return configurations;
+        }
+    }
 
-	public static class EnrolmentPeriodTypeConfiguration implements Serializable, Comparable<EnrolmentPeriodTypeConfiguration> {
-		private Class<? extends EnrolmentPeriod> type;
+    public static class EnrolmentPeriodTypeConfiguration implements Serializable, Comparable<EnrolmentPeriodTypeConfiguration> {
+        private Class<? extends EnrolmentPeriod> type;
 
-		private ExecutionSemester semester;
+        private ExecutionSemester semester;
 
-		private Map<Interval, EnrolmentPeriodConfigurationForEdit> configurations =
-				new HashMap<Interval, EnrolmentPeriodConfigurationForEdit>();
+        private Map<Interval, EnrolmentPeriodConfigurationForEdit> configurations =
+                new HashMap<Interval, EnrolmentPeriodConfigurationForEdit>();
 
-		public EnrolmentPeriodTypeConfiguration(Class<? extends EnrolmentPeriod> type, ExecutionSemester semester) {
-			this.type = type;
-			this.semester = semester;
-		}
+        public EnrolmentPeriodTypeConfiguration(Class<? extends EnrolmentPeriod> type, ExecutionSemester semester) {
+            this.type = type;
+            this.semester = semester;
+        }
 
-		public void addPeriod(EnrolmentPeriod period) {
-			if (!configurations.containsKey(period.getInterval())) {
-				configurations.put(period.getInterval(), new EnrolmentPeriodConfigurationForEdit(period.getInterval(), semester));
-			}
-			configurations.get(period.getInterval()).addPeriod(period);
-		}
+        public void addPeriod(EnrolmentPeriod period) {
+            if (!configurations.containsKey(period.getInterval())) {
+                configurations.put(period.getInterval(), new EnrolmentPeriodConfigurationForEdit(period.getInterval(), semester));
+            }
+            configurations.get(period.getInterval()).addPeriod(period);
+        }
 
-		public Class<? extends EnrolmentPeriod> getType() {
-			return type;
-		}
+        public Class<? extends EnrolmentPeriod> getType() {
+            return type;
+        }
 
-		public Collection<EnrolmentPeriodConfigurationForEdit> getConfigurations() {
-			return configurations.values();
-		}
+        public Collection<EnrolmentPeriodConfigurationForEdit> getConfigurations() {
+            return configurations.values();
+        }
 
-		@Override
-		public int compareTo(EnrolmentPeriodTypeConfiguration o) {
-			return getType().getSimpleName().compareTo(o.getType().getSimpleName());
-		}
-	}
+        @Override
+        public int compareTo(EnrolmentPeriodTypeConfiguration o) {
+            return getType().getSimpleName().compareTo(o.getType().getSimpleName());
+        }
+    }
 
-	public static abstract class AbstractEnrolmentPeriodConfiguration implements Serializable {
-		protected DateTime start;
+    public static abstract class AbstractEnrolmentPeriodConfiguration implements Serializable {
+        protected DateTime start;
 
-		protected DateTime end;
+        protected DateTime end;
 
-		protected ExecutionSemester semester;
+        protected ExecutionSemester semester;
 
-		protected List<DegreeCurricularPlan> scope = new ArrayList<DegreeCurricularPlan>();
+        protected List<DegreeCurricularPlan> scope = new ArrayList<DegreeCurricularPlan>();
 
-		public AbstractEnrolmentPeriodConfiguration(Interval interval, ExecutionSemester semester) {
-			if (interval != null) {
-				this.start = interval.getStart();
-				this.end = interval.getEnd();
-			}
-			this.semester = semester;
-		}
+        public AbstractEnrolmentPeriodConfiguration(Interval interval, ExecutionSemester semester) {
+            if (interval != null) {
+                this.start = interval.getStart();
+                this.end = interval.getEnd();
+            }
+            this.semester = semester;
+        }
 
-		public Interval getInterval() {
-			return new Interval(start, end);
-		}
+        public Interval getInterval() {
+            return new Interval(start, end);
+        }
 
-		public DateTime getStart() {
-			return start;
-		}
+        public DateTime getStart() {
+            return start;
+        }
 
-		public void setStart(DateTime start) {
-			this.start = start;
-		}
+        public void setStart(DateTime start) {
+            this.start = start;
+        }
 
-		public DateTime getEnd() {
-			return end;
-		}
+        public DateTime getEnd() {
+            return end;
+        }
 
-		public void setEnd(DateTime end) {
-			this.end = end;
-		}
+        public void setEnd(DateTime end) {
+            this.end = end;
+        }
 
-		public ExecutionSemester getSemester() {
-			return semester;
-		}
+        public ExecutionSemester getSemester() {
+            return semester;
+        }
 
-		public List<DegreeCurricularPlan> getScope() {
-			return scope;
-		}
+        public List<DegreeCurricularPlan> getScope() {
+            return scope;
+        }
 
-		public void setScope(List<DegreeCurricularPlan> scope) {
-			this.scope = scope;
-		}
+        public void setScope(List<DegreeCurricularPlan> scope) {
+            this.scope = scope;
+        }
 
-		public abstract SortedSet<DegreeCurricularPlan> getPossibleScope();
+        public abstract SortedSet<DegreeCurricularPlan> getPossibleScope();
 
-		public abstract void save();
-	}
+        public abstract void save();
+    }
 
-	public static class EnrolmentPeriodConfigurationForCreation extends AbstractEnrolmentPeriodConfiguration {
-		private DegreeType degreeType;
+    public static class EnrolmentPeriodConfigurationForCreation extends AbstractEnrolmentPeriodConfiguration {
+        private DegreeType degreeType;
 
-		private EnrolmentPeriodType type;
+        private EnrolmentPeriodType type;
 
-		public EnrolmentPeriodConfigurationForCreation(ExecutionSemester semester) {
-			super(null, semester);
-		}
+        public EnrolmentPeriodConfigurationForCreation(ExecutionSemester semester) {
+            super(null, semester);
+        }
 
-		public DegreeType getDegreeType() {
-			return degreeType;
-		}
+        public DegreeType getDegreeType() {
+            return degreeType;
+        }
 
-		public void setDegreeType(DegreeType degreeType) {
-			this.degreeType = degreeType;
-		}
+        public void setDegreeType(DegreeType degreeType) {
+            this.degreeType = degreeType;
+        }
 
-		public EnrolmentPeriodType getType() {
-			return type;
-		}
+        public EnrolmentPeriodType getType() {
+            return type;
+        }
 
-		public void setType(EnrolmentPeriodType type) {
-			this.type = type;
-		}
+        public void setType(EnrolmentPeriodType type) {
+            this.type = type;
+        }
 
-		@Override
-		public SortedSet<DegreeCurricularPlan> getPossibleScope() {
-			SortedSet<DegreeCurricularPlan> possible =
-					new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
-			if (degreeType != null && type != null && semester != null) {
-				if (degreeType.isBolonhaType()) {
-					for (ExecutionDegree execution : semester.getExecutionYear().getExecutionDegreesByType(degreeType)) {
-						DegreeCurricularPlan dcp = execution.getDegreeCurricularPlan();
-						addIfNotUsedInPeriod(possible, dcp);
-					}
-				} else {
-					for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
-							DegreeCurricularPlanState.PAST)) {
-						addIfNotUsedInPeriod(possible, dcp);
-					}
-				}
-			}
-			return possible;
-		}
+        @Override
+        public SortedSet<DegreeCurricularPlan> getPossibleScope() {
+            SortedSet<DegreeCurricularPlan> possible =
+                    new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
+            if (degreeType != null && type != null && semester != null) {
+                if (degreeType.isBolonhaType()) {
+                    for (ExecutionDegree execution : semester.getExecutionYear().getExecutionDegreesByType(degreeType)) {
+                        DegreeCurricularPlan dcp = execution.getDegreeCurricularPlan();
+                        addIfNotUsedInPeriod(possible, dcp);
+                    }
+                } else {
+                    for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
+                            DegreeCurricularPlanState.PAST)) {
+                        addIfNotUsedInPeriod(possible, dcp);
+                    }
+                }
+            }
+            return possible;
+        }
 
-		private void addIfNotUsedInPeriod(SortedSet<DegreeCurricularPlan> possible, DegreeCurricularPlan dcp) {
-			boolean found = false;
-			for (EnrolmentPeriod period : dcp.getEnrolmentPeriods()) {
-				if (type.is(period) && period.getExecutionPeriod().equals(semester)) {
-					found = true;
-				}
-			}
-			if (!found) {
-				possible.add(dcp);
-			}
-		}
+        private void addIfNotUsedInPeriod(SortedSet<DegreeCurricularPlan> possible, DegreeCurricularPlan dcp) {
+            boolean found = false;
+            for (EnrolmentPeriod period : dcp.getEnrolmentPeriods()) {
+                if (type.is(period) && period.getExecutionPeriod().equals(semester)) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                possible.add(dcp);
+            }
+        }
 
-		@Override
-		public void save() {
-			CreateEnrolmentPeriods.run(semester, degreeType, type, start, end, scope);
-		}
-	}
+        @Override
+        public void save() {
+            CreateEnrolmentPeriods.run(semester, degreeType, type, start, end, scope);
+        }
+    }
 
-	public static class EnrolmentPeriodConfigurationForEdit extends AbstractEnrolmentPeriodConfiguration {
-		private Set<EnrolmentPeriod> periods = new HashSet<EnrolmentPeriod>();
+    public static class EnrolmentPeriodConfigurationForEdit extends AbstractEnrolmentPeriodConfiguration {
+        private Set<EnrolmentPeriod> periods = new HashSet<EnrolmentPeriod>();
 
-		public EnrolmentPeriodConfigurationForEdit(Interval interval, ExecutionSemester semester) {
-			super(interval, semester);
-		}
+        public EnrolmentPeriodConfigurationForEdit(Interval interval, ExecutionSemester semester) {
+            super(interval, semester);
+        }
 
-		public void addPeriod(EnrolmentPeriod period) {
-			periods.add(period);
-			scope.add(period.getDegreeCurricularPlan());
-		}
+        public void addPeriod(EnrolmentPeriod period) {
+            periods.add(period);
+            scope.add(period.getDegreeCurricularPlan());
+        }
 
-		@Override
-		public SortedSet<DegreeCurricularPlan> getPossibleScope() {
-			SortedSet<DegreeCurricularPlan> possible =
-					new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
-			for (EnrolmentPeriod period : periods) {
-				possible.add(period.getDegreeCurricularPlan());
-			}
-			return possible;
-		}
+        @Override
+        public SortedSet<DegreeCurricularPlan> getPossibleScope() {
+            SortedSet<DegreeCurricularPlan> possible =
+                    new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
+            for (EnrolmentPeriod period : periods) {
+                possible.add(period.getDegreeCurricularPlan());
+            }
+            return possible;
+        }
 
-		public Collection<String> getDegrees() {
-			List<String> degrees = new ArrayList<String>();
-			for (EnrolmentPeriod period : periods) {
-				degrees.add(period.getDegree().getPresentationName(semester.getExecutionYear()));
-			}
-			Collections.sort(degrees);
-			return degrees;
-		}
+        public Collection<String> getDegrees() {
+            List<String> degrees = new ArrayList<String>();
+            for (EnrolmentPeriod period : periods) {
+                degrees.add(period.getDegree().getPresentationName(semester.getExecutionYear()));
+            }
+            Collections.sort(degrees);
+            return degrees;
+        }
 
-		public String getPeriodOids() {
-			Function<EnrolmentPeriod, String> f = new Function<EnrolmentPeriod, String>() {
-				@Override
-				public String apply(EnrolmentPeriod period) {
-					return period.getExternalId();
-				}
-			};
+        public String getPeriodOids() {
+            Function<EnrolmentPeriod, String> f = new Function<EnrolmentPeriod, String>() {
+                @Override
+                public String apply(EnrolmentPeriod period) {
+                    return period.getExternalId();
+                }
+            };
 
-			return Joiner.on(':').join(Iterables.transform(periods, f));
-		}
+            return Joiner.on(':').join(Iterables.transform(periods, f));
+        }
 
-		@Override
-		@Service
-		public void save() {
-			for (EnrolmentPeriod period : periods) {
-				if (scope.contains(period.getDegreeCurricularPlan())) {
-					period.setStartDateDateTime(start);
-					period.setEndDateDateTime(end);
-				}
-			}
-		}
-	}
+        @Override
+        @Service
+        public void save() {
+            for (EnrolmentPeriod period : periods) {
+                if (scope.contains(period.getDegreeCurricularPlan())) {
+                    period.setStartDateDateTime(start);
+                    period.setEndDateDateTime(end);
+                }
+            }
+        }
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		ExecutionSemester semester = getDomainObject(request, "semester");
-		EnrolmentPeriodBean bean = new EnrolmentPeriodBean();
-		if (semester != null) {
-			bean.setSemester(semester);
-		}
-		request.setAttribute("executionSemester", bean);
-		return mapping.findForward("showEnrolementPeriods");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        ExecutionSemester semester = getDomainObject(request, "semester");
+        EnrolmentPeriodBean bean = new EnrolmentPeriodBean();
+        if (semester != null) {
+            bean.setSemester(semester);
+        }
+        request.setAttribute("executionSemester", bean);
+        return mapping.findForward("showEnrolementPeriods");
+    }
 
-	public ActionForward selectSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		EnrolmentPeriodBean bean = getRenderedObject("executionSemester");
-		RenderUtils.invalidateViewState();
-		request.setAttribute("executionSemester", bean);
-		return mapping.findForward("showEnrolementPeriods");
-	}
+    public ActionForward selectSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        EnrolmentPeriodBean bean = getRenderedObject("executionSemester");
+        RenderUtils.invalidateViewState();
+        request.setAttribute("executionSemester", bean);
+        return mapping.findForward("showEnrolementPeriods");
+    }
 
-	public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ExecutionSemester semester = getDomainObject(request, "semester");
-		EnrolmentInstructions.createIfNecessary(semester);
-		request.setAttribute("executionSemester", semester);
+    public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExecutionSemester semester = getDomainObject(request, "semester");
+        EnrolmentInstructions.createIfNecessary(semester);
+        request.setAttribute("executionSemester", semester);
 
-		return mapping.findForward("editEnrolmentInstructions");
-	}
+        return mapping.findForward("editEnrolmentInstructions");
+    }
 
-	public ActionForward prepareChangePeriodValues(final ActionMapping mapping, final ActionForm form,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		ExecutionSemester semester = getDomainObject(request, "semester");
-		String periodOids = request.getParameter("periods");
-		EnrolmentPeriodConfigurationForEdit conf = null;
-		for (String periodOid : periodOids.split(":")) {
-			EnrolmentPeriod period = AbstractDomainObject.fromExternalId(periodOid);
-			if (conf == null) {
-				conf = new EnrolmentPeriodConfigurationForEdit(period.getInterval(), semester);
-				conf.addPeriod(period);
-			} else if (conf.getInterval().equals(period.getInterval())) {
-				conf.addPeriod(period);
-			} else {
-				// something went wrong, most likely someone changed a date concurrently. we just leave it out of the edit
-			}
-		}
-		request.setAttribute("configuration", conf);
-		return mapping.findForward("changePeriodValues");
-	}
+    public ActionForward prepareChangePeriodValues(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        ExecutionSemester semester = getDomainObject(request, "semester");
+        String periodOids = request.getParameter("periods");
+        EnrolmentPeriodConfigurationForEdit conf = null;
+        for (String periodOid : periodOids.split(":")) {
+            EnrolmentPeriod period = AbstractDomainObject.fromExternalId(periodOid);
+            if (conf == null) {
+                conf = new EnrolmentPeriodConfigurationForEdit(period.getInterval(), semester);
+                conf.addPeriod(period);
+            } else if (conf.getInterval().equals(period.getInterval())) {
+                conf.addPeriod(period);
+            } else {
+                // something went wrong, most likely someone changed a date concurrently. we just leave it out of the edit
+            }
+        }
+        request.setAttribute("configuration", conf);
+        return mapping.findForward("changePeriodValues");
+    }
 
-	public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		EnrolmentPeriodConfigurationForEdit configuration = getRenderedObject("configuration");
-		configuration.save();
-		EnrolmentPeriodBean bean = new EnrolmentPeriodBean();
-		bean.setSemester(configuration.getSemester());
-		request.setAttribute("executionSemester", bean);
-		return mapping.findForward("showEnrolementPeriods");
-	}
+    public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        EnrolmentPeriodConfigurationForEdit configuration = getRenderedObject("configuration");
+        configuration.save();
+        EnrolmentPeriodBean bean = new EnrolmentPeriodBean();
+        bean.setSemester(configuration.getSemester());
+        request.setAttribute("executionSemester", bean);
+        return mapping.findForward("showEnrolementPeriods");
+    }
 
-	public ActionForward prepareCreatePeriod(final ActionMapping mapping, final ActionForm form, HttpServletRequest request,
-			final HttpServletResponse response) {
-		ExecutionSemester semester = getDomainObject(request, "semester");
-		EnrolmentPeriodConfigurationForCreation conf = new EnrolmentPeriodConfigurationForCreation(semester);
-		request.setAttribute("configuration", conf);
-		return mapping.findForward("createPeriod");
-	}
+    public ActionForward prepareCreatePeriod(final ActionMapping mapping, final ActionForm form, HttpServletRequest request,
+            final HttpServletResponse response) {
+        ExecutionSemester semester = getDomainObject(request, "semester");
+        EnrolmentPeriodConfigurationForCreation conf = new EnrolmentPeriodConfigurationForCreation(semester);
+        request.setAttribute("configuration", conf);
+        return mapping.findForward("createPeriod");
+    }
 
-	public ActionForward selectType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		EnrolmentPeriodConfigurationForCreation configuration = getRenderedObject("configuration");
-		RenderUtils.invalidateViewState();
-		request.setAttribute("configuration", configuration);
-		return mapping.findForward("createPeriod");
-	}
+    public ActionForward selectType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        EnrolmentPeriodConfigurationForCreation configuration = getRenderedObject("configuration");
+        RenderUtils.invalidateViewState();
+        request.setAttribute("configuration", configuration);
+        return mapping.findForward("createPeriod");
+    }
 
-	public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		EnrolmentPeriodConfigurationForCreation configuration = getRenderedObject("configuration");
-		configuration.save();
-		EnrolmentPeriodBean bean = new EnrolmentPeriodBean();
-		bean.setSemester(configuration.getSemester());
-		request.setAttribute("executionSemester", bean);
-		return mapping.findForward("showEnrolementPeriods");
-	}
+    public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        EnrolmentPeriodConfigurationForCreation configuration = getRenderedObject("configuration");
+        configuration.save();
+        EnrolmentPeriodBean bean = new EnrolmentPeriodBean();
+        bean.setSemester(configuration.getSemester());
+        request.setAttribute("executionSemester", bean);
+        return mapping.findForward("showEnrolementPeriods");
+    }
 }

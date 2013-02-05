@@ -23,143 +23,143 @@ import org.joda.time.LocalDate;
 
 public class RequestJuryReviews extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-		if (!process.isJuryValidated()) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.isJuryValidated()) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
-			throw new PreConditionNotValidException();
-		}
+        if (process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
 
-	}
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 
-		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+        final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
-		if (bean.isToNotify()) {
-			notifyJuryElements(process);
-			sendAlertToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement(),
-					"message.phd.request.jury.reviews.external.access.jury.president.body");
-		}
+        if (bean.isToNotify()) {
+            notifyJuryElements(process);
+            sendAlertToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement(),
+                    "message.phd.request.jury.reviews.external.access.jury.president.body");
+        }
 
-		if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
-			process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), "");
-		}
+        if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
+            process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), "");
+        }
 
-		bean.setThesisProcess(process);
-		if (!process.hasMeetingProcess()) {
-			Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, bean);
-		}
+        bean.setThesisProcess(process);
+        if (!process.hasMeetingProcess()) {
+            Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, bean);
+        }
 
-		return process;
-	}
+        return process;
+    }
 
-	private void notifyJuryElements(PhdThesisProcess process) {
+    private void notifyJuryElements(PhdThesisProcess process) {
 
-		for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
 
-			if (juryElement.isDocumentValidated()) {
-				continue;
-			}
+            if (juryElement.isDocumentValidated()) {
+                continue;
+            }
 
-			if (!juryElement.isInternal()) {
-				createExternalAccess(juryElement);
-			}
+            if (!juryElement.isInternal()) {
+                createExternalAccess(juryElement);
+            }
 
-			if (juryElement.getReporter().booleanValue()) {
-				sendInitialAlertToReporter(process.getIndividualProgramProcess(), juryElement);
-			} else {
-				sendAlertToJuryElement(process.getIndividualProgramProcess(), juryElement,
-						"message.phd.request.jury.reviews.external.access.jury.body");
-			}
-		}
+            if (juryElement.getReporter().booleanValue()) {
+                sendInitialAlertToReporter(process.getIndividualProgramProcess(), juryElement);
+            } else {
+                sendAlertToJuryElement(process.getIndividualProgramProcess(), juryElement,
+                        "message.phd.request.jury.reviews.external.access.jury.body");
+            }
+        }
 
-		for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
-			final PhdParticipant participant = juryElement.getParticipant();
-			if (!juryElement.getReporter().booleanValue()) {
-				continue;
-			}
+        for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+            final PhdParticipant participant = juryElement.getParticipant();
+            if (!juryElement.getReporter().booleanValue()) {
+                continue;
+            }
 
-			new PhdReporterReviewAlert(process.getIndividualProgramProcess(), participant);
-		}
-	}
+            new PhdReporterReviewAlert(process.getIndividualProgramProcess(), participant);
+        }
+    }
 
-	private void sendInitialAlertToReporter(PhdIndividualProgramProcess process, ThesisJuryElement thesisJuryElement) {
-		PhdParticipant participant = thesisJuryElement.getParticipant();
+    private void sendInitialAlertToReporter(PhdIndividualProgramProcess process, ThesisJuryElement thesisJuryElement) {
+        PhdParticipant participant = thesisJuryElement.getParticipant();
 
-		if (!participant.isInternal()) {
-			participant.ensureExternalAccess();
-		}
+        if (!participant.isInternal()) {
+            participant.ensureExternalAccess();
+        }
 
-		final AlertMessage subject =
-				AlertMessage
-						.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-								.getPhdProgram().getName())).isKey(false).withPrefix(false);
+        final AlertMessage subject =
+                AlertMessage
+                        .create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
+                                .getPhdProgram().getName())).isKey(false).withPrefix(false);
 
-		final AlertMessage body =
-				AlertMessage
-						.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.jury.body", process
-								.getPerson().getName(), process.getProcessNumber())
-								+ "\n\n"
-								+ AlertMessage.get("message.phd.request.jury.reviews.reporter.body",
-										getDaysLeftForReview(process.getThesisProcess()))
-								+ "\n\n"
-								+ getAccessInformation(process, participant,
-										"message.phd.request.jury.reviews.coordinator.access",
-										"message.phd.request.jury.reviews.teacher.access")).isKey(false).withPrefix(false);
+        final AlertMessage body =
+                AlertMessage
+                        .create(AlertMessage.get("message.phd.request.jury.reviews.external.access.jury.body", process
+                                .getPerson().getName(), process.getProcessNumber())
+                                + "\n\n"
+                                + AlertMessage.get("message.phd.request.jury.reviews.reporter.body",
+                                        getDaysLeftForReview(process.getThesisProcess()))
+                                + "\n\n"
+                                + getAccessInformation(process, participant,
+                                        "message.phd.request.jury.reviews.coordinator.access",
+                                        "message.phd.request.jury.reviews.teacher.access")).isKey(false).withPrefix(false);
 
-		AlertService.alertParticipants(process, subject, body, participant);
-	}
+        AlertService.alertParticipants(process, subject, body, participant);
+    }
 
-	private void sendAlertToJuryElement(PhdIndividualProgramProcess process, ThesisJuryElement thesisJuryElement,
-			String bodyMessage) {
-		PhdParticipant participant = thesisJuryElement.getParticipant();
+    private void sendAlertToJuryElement(PhdIndividualProgramProcess process, ThesisJuryElement thesisJuryElement,
+            String bodyMessage) {
+        PhdParticipant participant = thesisJuryElement.getParticipant();
 
-		if (!participant.isInternal()) {
-			createExternalAccess(thesisJuryElement);
-			participant.ensureExternalAccess();
-		}
-		final AlertMessage subject =
-				AlertMessage
-						.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-								.getPhdProgram().getName())).isKey(false).withPrefix(false);
+        if (!participant.isInternal()) {
+            createExternalAccess(thesisJuryElement);
+            participant.ensureExternalAccess();
+        }
+        final AlertMessage subject =
+                AlertMessage
+                        .create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
+                                .getPhdProgram().getName())).isKey(false).withPrefix(false);
 
-		final AlertMessage body =
-				AlertMessage
-						.create(AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber())
-								+ "\n\n"
-								+ getAccessInformation(process, participant,
-										"message.phd.request.jury.reviews.coordinator.access",
-										"message.phd.request.jury.reviews.teacher.access")
-								+ "\n\n"
-								+ AlertMessage.get("message.phd.request.jury.external.access.reviews.body",
-										getDaysLeftForReview(process.getThesisProcess()))).isKey(false).withPrefix(false);
+        final AlertMessage body =
+                AlertMessage
+                        .create(AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber())
+                                + "\n\n"
+                                + getAccessInformation(process, participant,
+                                        "message.phd.request.jury.reviews.coordinator.access",
+                                        "message.phd.request.jury.reviews.teacher.access")
+                                + "\n\n"
+                                + AlertMessage.get("message.phd.request.jury.external.access.reviews.body",
+                                        getDaysLeftForReview(process.getThesisProcess()))).isKey(false).withPrefix(false);
 
-		AlertService.alertParticipants(process, subject, body, participant);
-	}
+        AlertService.alertParticipants(process, subject, body, participant);
+    }
 
-	private void createExternalAccess(final ThesisJuryElement juryElement) {
+    private void createExternalAccess(final ThesisJuryElement juryElement) {
 
-		final PhdParticipant participant = juryElement.getParticipant();
-		participant.addAccessType(PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD);
+        final PhdParticipant participant = juryElement.getParticipant();
+        participant.addAccessType(PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD);
 
-		if (juryElement.getReporter().booleanValue()) {
-			participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
-		}
-	}
+        if (juryElement.getReporter().booleanValue()) {
+            participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
+        }
+    }
 
-	private int getDaysLeftForReview(PhdThesisProcess process) {
-		return Days.daysBetween(process.getWhenJuryValidated().plusDays(PhdReporterReviewAlert.getReporterReviewDeadlineDays()),
-				new LocalDate()).getDays();
-	}
+    private int getDaysLeftForReview(PhdThesisProcess process) {
+        return Days.daysBetween(process.getWhenJuryValidated().plusDays(PhdReporterReviewAlert.getReporterReviewDeadlineDays()),
+                new LocalDate()).getDays();
+    }
 
 }

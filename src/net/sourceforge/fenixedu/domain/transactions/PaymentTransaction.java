@@ -17,63 +17,63 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
  */
 public abstract class PaymentTransaction extends PaymentTransaction_Base {
 
-	public PaymentTransaction() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public PaymentTransaction() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	/**
-	 * @param value
-	 * @param transactionDate
-	 * @param remarks
-	 * @param paymentType
-	 * @param transactionType
-	 * @param wasInternalBalance
-	 * @param responsiblePerson
-	 * @param personAccount
-	 * @param guideEntry
-	 */
-	public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks, PaymentType paymentType,
-			TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
-			GuideEntry guideEntry) {
-		this();
-		setGuideEntry(guideEntry);
-		setValueBigDecimal(value);
-		setTransactionDate(transactionDate);
-		setRemarks(remarks);
-		setPaymentType(paymentType);
-		setTransactionType(transactionType);
-		setWasInternalBalance(wasInternalBalance);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
-	}
+    /**
+     * @param value
+     * @param transactionDate
+     * @param remarks
+     * @param paymentType
+     * @param transactionType
+     * @param wasInternalBalance
+     * @param responsiblePerson
+     * @param personAccount
+     * @param guideEntry
+     */
+    public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+            TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+            GuideEntry guideEntry) {
+        this();
+        setGuideEntry(guideEntry);
+        setValueBigDecimal(value);
+        setTransactionDate(transactionDate);
+        setRemarks(remarks);
+        setPaymentType(paymentType);
+        setTransactionType(transactionType);
+        setWasInternalBalance(wasInternalBalance);
+        setResponsiblePerson(responsiblePerson);
+        setPersonAccount(personAccount);
+    }
 
-	@Override
-	public void delete() {
-		if (this instanceof GratuityTransaction) {
-			GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
-			GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
-			gratuityTransaction.removeGratuitySituation();
+    @Override
+    public void delete() {
+        if (this instanceof GratuityTransaction) {
+            GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
+            GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
+            gratuityTransaction.removeGratuitySituation();
 
-			gratuitySituation.updateValues();
-		}
+            gratuitySituation.updateValues();
+        }
 
-		removeGuideEntry();
-		super.delete();
-	}
+        removeGuideEntry();
+        super.delete();
+    }
 
-	public BigDecimal getValueWithAdjustment() {
+    public BigDecimal getValueWithAdjustment() {
 
-		BigDecimal reimbursedValue = BigDecimal.ZERO;
-		if (hasGuideEntry()) {
-			for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
-				if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
-					reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
-				}
-			}
-		}
+        BigDecimal reimbursedValue = BigDecimal.ZERO;
+        if (hasGuideEntry()) {
+            for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+                if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
+                    reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
+                }
+            }
+        }
 
-		return getValueBigDecimal().subtract(reimbursedValue);
-	}
+        return getValueBigDecimal().subtract(reimbursedValue);
+    }
 
 }

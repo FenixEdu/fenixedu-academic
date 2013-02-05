@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.presentationTier.servlets;
  */
 public class DomainObjectsExternalDescriptions {
 
-	public static String getShortDescription(net.sourceforge.fenixedu.domain.messaging.Announcement ann) {
-		return ann.getSubject().getContent();
-	}
+    public static String getShortDescription(net.sourceforge.fenixedu.domain.messaging.Announcement ann) {
+        return ann.getSubject().getContent();
+    }
 
 }

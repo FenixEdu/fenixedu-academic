@@ -28,26 +28,26 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class FenixContainerExceptionHandler extends FenixExceptionHandler {
 
-	private static final Logger logger = Logger.getLogger(FenixContainerExceptionHandler.class);
+    private static final Logger logger = Logger.getLogger(FenixContainerExceptionHandler.class);
 
-	@Override
-	public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    @Override
+    public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
+            HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-		ex.printStackTrace();
-		if (LogLevel.ERROR) {
-			if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
-				logger.error(ex);
-			}
-		}
+        ex.printStackTrace();
+        if (LogLevel.ERROR) {
+            if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
+                logger.error(ex);
+            }
+        }
 
-		final IUserView userView = UserView.getUser();
-		if (userView != null) {
-			final Person person = userView.getPerson();
-			request.setAttribute("loggedPersonEmail", person.getEmail());
-		}
+        final IUserView userView = UserView.getUser();
+        if (userView != null) {
+            final Person person = userView.getPerson();
+            request.setAttribute("loggedPersonEmail", person.getEmail());
+        }
 
-		super.execute(ex, ae, mapping, formInstance, request, response);
-		throw new ServletException(ex);
-	}
+        super.execute(ex, ae, mapping, formInstance, request, response);
+        throw new ServletException(ex);
+    }
 }

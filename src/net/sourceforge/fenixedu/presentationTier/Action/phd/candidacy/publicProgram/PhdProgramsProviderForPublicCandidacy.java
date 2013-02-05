@@ -8,29 +8,29 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class PhdProgramsProviderForPublicCandidacy extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		if (source instanceof PhdProgramCandidacyProcessBean) {
-			PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
-			if (bean.getFocusArea() == null) {
-				return Collections.EMPTY_LIST;
-			}
+        if (source instanceof PhdProgramCandidacyProcessBean) {
+            PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) source;
+            if (bean.getFocusArea() == null) {
+                return Collections.EMPTY_LIST;
+            }
 
-			return bean.getFocusArea().getPhdPrograms();
-		}
+            return bean.getFocusArea().getPhdPrograms();
+        }
 
-		if (source instanceof PhdIndividualProgramProcessBean) {
-			PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
-			if (bean.getFocusArea() == null) {
-				return Collections.EMPTY_LIST;
-			}
+        if (source instanceof PhdIndividualProgramProcessBean) {
+            PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
+            if (bean.getFocusArea() == null) {
+                return Collections.EMPTY_LIST;
+            }
 
-			return bean.getFocusArea().getPhdPrograms();
-		}
+            return bean.getFocusArea().getPhdPrograms();
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
 }

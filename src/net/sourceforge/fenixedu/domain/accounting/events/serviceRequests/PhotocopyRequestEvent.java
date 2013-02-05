@@ -11,36 +11,36 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
 
-	protected PhotocopyRequestEvent() {
-		super();
-	}
+    protected PhotocopyRequestEvent() {
+        super();
+    }
 
-	public PhotocopyRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final PhotocopyRequest request) {
-		this();
-		super.init(administrativeOffice, request.getEventType(), person, request);
-	}
+    public PhotocopyRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final PhotocopyRequest request) {
+        this();
+        super.init(administrativeOffice, request.getEventType(), person, request);
+    }
 
-	@Override
-	public PhotocopyRequest getAcademicServiceRequest() {
-		return (PhotocopyRequest) super.getAcademicServiceRequest();
-	}
+    @Override
+    public PhotocopyRequest getAcademicServiceRequest() {
+        return (PhotocopyRequest) super.getAcademicServiceRequest();
+    }
 
-	public Integer getNumberOfPages() {
-		return getAcademicServiceRequest().getNumberOfPages();
-	}
+    public Integer getNumberOfPages() {
+        return getAcademicServiceRequest().getNumberOfPages();
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		if (!StringUtils.isEmpty(getAcademicServiceRequest().getPurpose())) {
-			labelFormatter.appendLabel(" (").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");
-		}
-		if (getAcademicServiceRequest().hasExecutionYear()) {
-			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-		}
-		return labelFormatter;
-	}
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        if (!StringUtils.isEmpty(getAcademicServiceRequest().getPurpose())) {
+            labelFormatter.appendLabel(" (").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");
+        }
+        if (getAcademicServiceRequest().hasExecutionYear()) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
+        return labelFormatter;
+    }
 }

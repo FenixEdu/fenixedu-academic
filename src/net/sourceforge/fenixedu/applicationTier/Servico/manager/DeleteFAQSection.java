@@ -8,13 +8,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteFAQSection extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer faqSectionId) throws FenixServiceException {
-		FAQSection faqSection = rootDomainObject.readFAQSectionByOID(faqSectionId);
-		if (faqSection != null) {
-			faqSection.delete();
-		}
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer faqSectionId) throws FenixServiceException {
+        FAQSection faqSection = rootDomainObject.readFAQSectionByOID(faqSectionId);
+        if (faqSection != null) {
+            faqSection.delete();
+        }
+    }
 
 }

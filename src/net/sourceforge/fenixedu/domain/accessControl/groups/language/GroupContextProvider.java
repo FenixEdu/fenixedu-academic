@@ -8,11 +8,11 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
  */
 public interface GroupContextProvider {
 
-	/**
-	 * @return the current group context
-	 * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupContextRequiredException
-	 *                if there is no current group context
-	 */
-	GroupContext getContext();
+    /**
+     * @return the current group context
+     * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupContextRequiredException
+     *                if there is no current group context
+     */
+    GroupContext getContext();
 
 }

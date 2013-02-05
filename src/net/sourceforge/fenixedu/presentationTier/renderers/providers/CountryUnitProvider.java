@@ -11,16 +11,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CountryUnitProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final Set<CountryUnit> countryUnitSet = new TreeSet<CountryUnit>(Party.COMPARATOR_BY_NAME);
-		countryUnitSet.addAll(CountryUnit.readAllCountryUnits());
-		return countryUnitSet;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final Set<CountryUnit> countryUnitSet = new TreeSet<CountryUnit>(Party.COMPARATOR_BY_NAME);
+        countryUnitSet.addAll(CountryUnit.readAllCountryUnits());
+        return countryUnitSet;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

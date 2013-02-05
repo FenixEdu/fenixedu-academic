@@ -26,58 +26,58 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewDissertation", module = "externalSupervision")
 @Forwards({ @Forward(name = "chooseDissertation", path = "/externalSupervision/consult/chooseDissertation.jsp"),
-		@Forward(name = "view-thesis", path = "/externalSupervision/consult/showDissertation.jsp") })
+        @Forward(name = "view-thesis", path = "/externalSupervision/consult/showDissertation.jsp") })
 public class ShowThesisStatus extends ScientificCouncilManageThesisDA {
 
-	static public boolean hasDissertations(Student student) {
-		Set<DegreeCurricularPlan> degreeCurricularPlans = new HashSet<DegreeCurricularPlan>();
-		for (Registration registration : student.getRegistrationsSet()) {
-			degreeCurricularPlans.addAll(registration.getDegreeCurricularPlans());
-		}
-		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-			if (!student.getDissertationEnrolments(degreeCurricularPlan).isEmpty()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    static public boolean hasDissertations(Student student) {
+        Set<DegreeCurricularPlan> degreeCurricularPlans = new HashSet<DegreeCurricularPlan>();
+        for (Registration registration : student.getRegistrationsSet()) {
+            degreeCurricularPlans.addAll(registration.getDegreeCurricularPlans());
+        }
+        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+            if (!student.getDissertationEnrolments(degreeCurricularPlan).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	static public Set<Enrolment> getDissertations(Student student) {
-		Set<Enrolment> theses = new HashSet<Enrolment>();
-		Set<DegreeCurricularPlan> degreeCurricularPlans = new HashSet<DegreeCurricularPlan>();
-		for (Registration registration : student.getRegistrationsSet()) {
-			degreeCurricularPlans.addAll(registration.getDegreeCurricularPlans());
-		}
-		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-			for (Enrolment enrolment : student.getDissertationEnrolments(degreeCurricularPlan)) {
-				theses.add(enrolment);
-			}
-		}
-		return theses;
-	}
+    static public Set<Enrolment> getDissertations(Student student) {
+        Set<Enrolment> theses = new HashSet<Enrolment>();
+        Set<DegreeCurricularPlan> degreeCurricularPlans = new HashSet<DegreeCurricularPlan>();
+        for (Registration registration : student.getRegistrationsSet()) {
+            degreeCurricularPlans.addAll(registration.getDegreeCurricularPlans());
+        }
+        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+            for (Enrolment enrolment : student.getDissertationEnrolments(degreeCurricularPlan)) {
+                theses.add(enrolment);
+            }
+        }
+        return theses;
+    }
 
-	public ActionForward chooseDissertation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final String personId = request.getParameter("personId");
-		final Person personStudent = AbstractDomainObject.fromExternalId(personId);
-		final Student student = personStudent.getStudent();
+    public ActionForward chooseDissertation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final String personId = request.getParameter("personId");
+        final Person personStudent = AbstractDomainObject.fromExternalId(personId);
+        final Student student = personStudent.getStudent();
 
-		Set<Enrolment> dissertations = getDissertations(student);
+        Set<Enrolment> dissertations = getDissertations(student);
 
-		request.setAttribute("student", student);
-		request.setAttribute("dissertations", dissertations);
+        request.setAttribute("student", student);
+        request.setAttribute("dissertations", dissertations);
 
-		return mapping.findForward("chooseDissertation");
-	}
+        return mapping.findForward("chooseDissertation");
+    }
 
-	public ActionForward viewThesisForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Integer thesisId = Integer.valueOf(request.getParameter("thesisID"));
-		final Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
-		final Student student = thesis.getStudent();
+    public ActionForward viewThesisForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Integer thesisId = Integer.valueOf(request.getParameter("thesisID"));
+        final Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
+        final Student student = thesis.getStudent();
 
-		request.setAttribute("student", student);
-		return viewThesis(mapping, form, request, response);
-	}
+        request.setAttribute("student", student);
+        return viewThesis(mapping, form, request, response);
+    }
 
 }

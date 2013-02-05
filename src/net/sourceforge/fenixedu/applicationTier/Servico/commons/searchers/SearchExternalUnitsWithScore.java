@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class SearchExternalUnitsWithScore extends SearchParties {
 
-	@Override
-	protected Collection search(String value, int size) {
-		return UnitName.findExternalInstitutionUnitWithScore(value, size);
-	}
+    @Override
+    protected Collection search(String value, int size) {
+        return UnitName.findExternalInstitutionUnitWithScore(value, size);
+    }
 
 }

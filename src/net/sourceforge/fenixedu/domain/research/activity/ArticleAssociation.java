@@ -7,35 +7,35 @@ import dml.runtime.RelationAdapter;
 
 public class ArticleAssociation extends ArticleAssociation_Base {
 
-	static {
-		JournalIssueArticleAssociation.addListener(new RelationAdapter<ArticleAssociation, JournalIssue>() {
+    static {
+        JournalIssueArticleAssociation.addListener(new RelationAdapter<ArticleAssociation, JournalIssue>() {
 
-			@Override
-			public void afterRemove(ArticleAssociation association, JournalIssue issue) {
-				super.afterRemove(association, issue);
+            @Override
+            public void afterRemove(ArticleAssociation association, JournalIssue issue) {
+                super.afterRemove(association, issue);
 
-				if (issue != null && association != null && !issue.hasAnyArticleAssociations() && !issue.hasAnyParticipations()) {
-					issue.delete();
-				}
-			}
+                if (issue != null && association != null && !issue.hasAnyArticleAssociations() && !issue.hasAnyParticipations()) {
+                    issue.delete();
+                }
+            }
 
-		});
-	}
+        });
+    }
 
-	public ArticleAssociation(JournalIssue journalIssue, Article article, Person creator) {
-		super();
-		this.setRootDomainObject(RootDomainObject.getInstance());
-		this.setJournalIssue(journalIssue);
-		this.setArticle(article);
-		this.setCreator(creator);
-	}
+    public ArticleAssociation(JournalIssue journalIssue, Article article, Person creator) {
+        super();
+        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setJournalIssue(journalIssue);
+        this.setArticle(article);
+        this.setCreator(creator);
+    }
 
-	public void delete() {
-		removeJournalIssue();
-		removeArticle();
-		removeCreator();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removeJournalIssue();
+        removeArticle();
+        removeCreator();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
 }

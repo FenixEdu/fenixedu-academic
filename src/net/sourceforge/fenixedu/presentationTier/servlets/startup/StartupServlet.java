@@ -43,171 +43,171 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public class StartupServlet extends HttpServlet {
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		// Custodian.registerPID();
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        // Custodian.registerPID();
 
-		super.init(config);
+        super.init(config);
 
-		FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(FenixFrameworkInitializer.CONFIG_PATH));
+        FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(FenixFrameworkInitializer.CONFIG_PATH));
 
-		try {
-			final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");
-			PendingRequest.buildVersion = FileUtils.readFile(inputStream);
-		} catch (java.io.IOException e) {
-			throw new ServletException("Unable to load build version file");
-		}
+        try {
+            final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");
+            PendingRequest.buildVersion = FileUtils.readFile(inputStream);
+        } catch (java.io.IOException e) {
+            throw new ServletException("Unable to load build version file");
+        }
 
-		FenixService.init(RootDomainObject.getInstance());
+        FenixService.init(RootDomainObject.getInstance());
 
-		try {
-			try {
-				InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
-				config.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+        try {
+            try {
+                InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+                config.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
-				setScheduleForGratuitySituationCreation();
+                setScheduleForGratuitySituationCreation();
 
-			} catch (Throwable e) {
-				throw new ServletException("Error reading actual execution period!", e);
-			}
+            } catch (Throwable e) {
+                throw new ServletException("Error reading actual execution period!", e);
+            }
 
-			try {
-				long start = System.currentTimeMillis();
-				CreateMetaDomainObectTypes.run();
-				long end = System.currentTimeMillis();
-				System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
-			} catch (Throwable throwable) {
-				throw new ServletException("Error creating MetaDomainObject!", throwable);
-			}
+            try {
+                long start = System.currentTimeMillis();
+                CreateMetaDomainObectTypes.run();
+                long end = System.currentTimeMillis();
+                System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
+            } catch (Throwable throwable) {
+                throw new ServletException("Error creating MetaDomainObject!", throwable);
+            }
 
-			try {
-				final Boolean result = CheckIsAliveService.run();
+            try {
+                final Boolean result = CheckIsAliveService.run();
 
-				if (result != null && result.booleanValue()) {
-					System.out.println("Check is alive is working.");
-				} else {
-					System.out.println("Check is alive is not working.");
-				}
-			} catch (Exception ex) {
-				System.out.println("Check is alive is not working. Caught excpetion.");
-				ex.printStackTrace();
-			}
-			FenixReport.setRealPath(getServletContext().getRealPath("/"));
+                if (result != null && result.booleanValue()) {
+                    System.out.println("Check is alive is working.");
+                } else {
+                    System.out.println("Check is alive is not working.");
+                }
+            } catch (Exception ex) {
+                System.out.println("Check is alive is not working. Caught excpetion.");
+                ex.printStackTrace();
+            }
+            FenixReport.setRealPath(getServletContext().getRealPath("/"));
 
-			loadLogins();
-			loadPersonNames();
-			loadUnitNames();
-			loadRoles();
-			startContactValidationServices();
-			initScheduler();
-		} finally {
-			Transaction.forceFinish();
-		}
-	}
+            loadLogins();
+            loadPersonNames();
+            loadUnitNames();
+            loadRoles();
+            startContactValidationServices();
+            initScheduler();
+        } finally {
+            Transaction.forceFinish();
+        }
+    }
 
-	private void startContactValidationServices() {
-		PhoneValidationUtils.getInstance();
-	}
+    private void startContactValidationServices() {
+        PhoneValidationUtils.getInstance();
+    }
 
-	@Service
-	private void initScheduler() {
-		final String scheduleSystemFlag = PropertiesManager.getProperty("schedule.system");
-		if (scheduleSystemFlag == null || scheduleSystemFlag.isEmpty() || !scheduleSystemFlag.equalsIgnoreCase("active")) {
-			SchedulerSystem.getInstance().clearAllScheduledTasks();
-		} else {
-			Scheduler.initialize();
-		}
-	}
+    @Service
+    private void initScheduler() {
+        final String scheduleSystemFlag = PropertiesManager.getProperty("schedule.system");
+        if (scheduleSystemFlag == null || scheduleSystemFlag.isEmpty() || !scheduleSystemFlag.equalsIgnoreCase("active")) {
+            SchedulerSystem.getInstance().clearAllScheduledTasks();
+        } else {
+            Scheduler.initialize();
+        }
+    }
 
-	private void loadLogins() {
-		long start = System.currentTimeMillis();
-		Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
-		long end = System.currentTimeMillis();
-		System.out.println("Load of all logins took: " + (end - start) + "ms.");
-	}
+    private void loadLogins() {
+        long start = System.currentTimeMillis();
+        Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
+        long end = System.currentTimeMillis();
+        System.out.println("Load of all logins took: " + (end - start) + "ms.");
+    }
 
-	private void loadPersonNames() {
-		long start = System.currentTimeMillis();
-		PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
-		long end = System.currentTimeMillis();
-		System.out.println("Load of all person names took: " + (end - start) + "ms.");
-	}
+    private void loadPersonNames() {
+        long start = System.currentTimeMillis();
+        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
+        long end = System.currentTimeMillis();
+        System.out.println("Load of all person names took: " + (end - start) + "ms.");
+    }
 
-	private void loadUnitNames() {
-		long start = System.currentTimeMillis();
-		UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
-		long end = System.currentTimeMillis();
-		System.out.println("Load of all unit names took: " + (end - start) + "ms.");
+    private void loadUnitNames() {
+        long start = System.currentTimeMillis();
+        UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
+        long end = System.currentTimeMillis();
+        System.out.println("Load of all unit names took: " + (end - start) + "ms.");
 
-		start = System.currentTimeMillis();
-		for (final UnitName unitName : RootDomainObject.getInstance().getUnitNameSet()) {
-			unitName.getName();
-		}
-		end = System.currentTimeMillis();
-		System.out.println("Load of all units took: " + (end - start) + "ms.");
-	}
+        start = System.currentTimeMillis();
+        for (final UnitName unitName : RootDomainObject.getInstance().getUnitNameSet()) {
+            unitName.getName();
+        }
+        end = System.currentTimeMillis();
+        System.out.println("Load of all units took: " + (end - start) + "ms.");
+    }
 
-	private void loadRoles() {
-		long start = System.currentTimeMillis();
-		Role.getRoleByRoleType(null);
-		long end = System.currentTimeMillis();
-		System.out.println("Load of all roles took: " + (end - start) + "ms.");
-	}
+    private void loadRoles() {
+        long start = System.currentTimeMillis();
+        Role.getRoleByRoleType(null);
+        long end = System.currentTimeMillis();
+        System.out.println("Load of all roles took: " + (end - start) + "ms.");
+    }
 
-	private void setScheduleForGratuitySituationCreation() {
+    private void setScheduleForGratuitySituationCreation() {
 
-		TimerTask gratuitySituationCreatorTask = new TimerTask() {
+        TimerTask gratuitySituationCreatorTask = new TimerTask() {
 
-			@Override
-			public void run() {
-				try {
-					try {
-						Object[] args = { "" };
-						ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
+            @Override
+            public void run() {
+                try {
+                    try {
+                        Object[] args = { "" };
+                        ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
 
-					} catch (Exception e) {
-					}
+                    } catch (Exception e) {
+                    }
 
-					// temporary
-					try {
-						Object[] args2003_2004 = { "2003/2004" };
-						ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear",
-								args2003_2004);
+                    // temporary
+                    try {
+                        Object[] args2003_2004 = { "2003/2004" };
+                        ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear",
+                                args2003_2004);
 
-					} catch (Exception e) {
-					}
-				} finally {
-					Transaction.forceFinish();
-				}
-			}
-		};
+                    } catch (Exception e) {
+                    }
+                } finally {
+                    Transaction.forceFinish();
+                }
+            }
+        };
 
-		try {
-			Calendar calendar = Calendar.getInstance();
-			String hourString = PropertiesManager.getProperty("gratuity.situation.creator.task.hour");
-			int scheduledHour = Integer.parseInt(hourString);
-			if (scheduledHour == -1) {
-				return;
-			}
-			int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        try {
+            Calendar calendar = Calendar.getInstance();
+            String hourString = PropertiesManager.getProperty("gratuity.situation.creator.task.hour");
+            int scheduledHour = Integer.parseInt(hourString);
+            if (scheduledHour == -1) {
+                return;
+            }
+            int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-			calendar.set(Calendar.HOUR_OF_DAY, scheduledHour);
-			calendar.set(Calendar.MINUTE, 0);
-			calendar.set(Calendar.SECOND, 0);
-			calendar.set(Calendar.MILLISECOND, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, scheduledHour);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
 
-			if (currentHour >= scheduledHour) {
-				calendar.add(Calendar.DAY_OF_MONTH, 1);
-			}
-			Date firstTimeDate = calendar.getTime();
+            if (currentHour >= scheduledHour) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            Date firstTimeDate = calendar.getTime();
 
-			Timer timer = new Timer();
+            Timer timer = new Timer();
 
-			timer.schedule(gratuitySituationCreatorTask, firstTimeDate, 3600 * 24 * 1000);
+            timer.schedule(gratuitySituationCreatorTask, firstTimeDate, 3600 * 24 * 1000);
 
-		} catch (Exception e) {
-		}
+        } catch (Exception e) {
+        }
 
-	}
+    }
 
 }

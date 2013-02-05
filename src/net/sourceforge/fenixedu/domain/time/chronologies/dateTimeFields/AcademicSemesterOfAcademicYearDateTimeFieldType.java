@@ -11,41 +11,41 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicSemesterOfAcademicYearDateTimeFieldType extends DateTimeFieldType {
 
-	private static final AcademicSemesterOfAcademicYearDateTimeFieldType ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
-	static {
-		ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR =
-				new AcademicSemesterOfAcademicYearDateTimeFieldType("academicSemesterOfAcademicYear",
-						AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE,
-						AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE);
-	}
+    private static final AcademicSemesterOfAcademicYearDateTimeFieldType ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
+    static {
+        ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR =
+                new AcademicSemesterOfAcademicYearDateTimeFieldType("academicSemesterOfAcademicYear",
+                        AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE,
+                        AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE);
+    }
 
-	private AcademicSemesterOfAcademicYearDateTimeFieldType(String name, DurationFieldType unitType, DurationFieldType rangeType) {
-		super(name);
-	}
+    private AcademicSemesterOfAcademicYearDateTimeFieldType(String name, DurationFieldType unitType, DurationFieldType rangeType) {
+        super(name);
+    }
 
-	public static DateTimeFieldType academicSemesterOfAcademicYear() {
-		return ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
-	}
+    public static DateTimeFieldType academicSemesterOfAcademicYear() {
+        return ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
+    }
 
-	@Override
-	public DateTimeField getField(Chronology chronology) {
-		if (chronology instanceof AcademicChronology) {
-			return ((AcademicChronology) chronology).academicSemesterOfAcademicYear();
-		}
-		throw unsupported();
-	}
+    @Override
+    public DateTimeField getField(Chronology chronology) {
+        if (chronology instanceof AcademicChronology) {
+            return ((AcademicChronology) chronology).academicSemesterOfAcademicYear();
+        }
+        throw unsupported();
+    }
 
-	@Override
-	public DurationFieldType getDurationType() {
-		return AcademicSemestersDurationFieldType.academicSemesters();
-	}
+    @Override
+    public DurationFieldType getDurationType() {
+        return AcademicSemestersDurationFieldType.academicSemesters();
+    }
 
-	@Override
-	public DurationFieldType getRangeDurationType() {
-		return AcademicYearsDurationFieldType.academicYears();
-	}
+    @Override
+    public DurationFieldType getRangeDurationType() {
+        return AcademicYearsDurationFieldType.academicYears();
+    }
 
-	private UnsupportedOperationException unsupported() {
-		return new UnsupportedOperationException(ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR + " field is unsupported");
-	}
+    private UnsupportedOperationException unsupported() {
+        return new UnsupportedOperationException(ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR + " field is unsupported");
+    }
 }

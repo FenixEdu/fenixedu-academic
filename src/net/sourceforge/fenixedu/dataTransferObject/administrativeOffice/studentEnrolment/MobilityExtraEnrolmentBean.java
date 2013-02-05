@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 
 public class MobilityExtraEnrolmentBean extends StudentExtraEnrolmentBean {
 
-	public MobilityExtraEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
-		super(studentCurricularPlan, executionSemester);
-	}
+    public MobilityExtraEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+        super(studentCurricularPlan, executionSemester);
+    }
 
-	@Override
-	public NoCourseGroupCurriculumGroupType getGroupType() {
-		return NoCourseGroupCurriculumGroupType.STANDALONE;
-	}
+    @Override
+    public NoCourseGroupCurriculumGroupType getGroupType() {
+        return NoCourseGroupCurriculumGroupType.STANDALONE;
+    }
 
 }

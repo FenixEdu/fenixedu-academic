@@ -8,26 +8,26 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class NewRoundElectionBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private List<Student> candidates;
+    private static final long serialVersionUID = 1L;
+    private List<Student> candidates;
 
-	public NewRoundElectionBean(List<Student> candidates, DelegateElection delegateElection) {
-		setCandidates(candidates);
-	}
+    public NewRoundElectionBean(List<Student> candidates, DelegateElection delegateElection) {
+        setCandidates(candidates);
+    }
 
-	public boolean containsCandidates() {
-		if (getCandidates() != null && getCandidates().size() > 0) {
-			return true;
-		}
-		return false;
-	}
+    public boolean containsCandidates() {
+        if (getCandidates() != null && getCandidates().size() > 0) {
+            return true;
+        }
+        return false;
+    }
 
-	public void setCandidates(List<Student> candidates) {
-		this.candidates = candidates;
-	}
+    public void setCandidates(List<Student> candidates) {
+        this.candidates = candidates;
+    }
 
-	public List<Student> getCandidates() {
-		return candidates;
-	}
+    public List<Student> getCandidates() {
+        return candidates;
+    }
 
 }

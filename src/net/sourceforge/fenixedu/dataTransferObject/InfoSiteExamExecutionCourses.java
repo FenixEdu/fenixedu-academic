@@ -9,21 +9,21 @@ package net.sourceforge.fenixedu.dataTransferObject;
  * 
  */
 public class InfoSiteExamExecutionCourses extends InfoSiteEvaluationExecutionCourses implements ISiteComponent {
-	protected InfoExam infoExam;
+    protected InfoExam infoExam;
 
-	/**
-	 * @return Returns the infoExam.
-	 */
-	public InfoExam getInfoExam() {
-		return infoExam;
-	}
+    /**
+     * @return Returns the infoExam.
+     */
+    public InfoExam getInfoExam() {
+        return infoExam;
+    }
 
-	/**
-	 * @param infoExam
-	 *            The infoExam to set.
-	 */
-	public void setInfoExam(InfoExam infoExam) {
-		this.infoExam = infoExam;
-	}
+    /**
+     * @param infoExam
+     *            The infoExam to set.
+     */
+    public void setInfoExam(InfoExam infoExam) {
+        this.infoExam = infoExam;
+    }
 
 }

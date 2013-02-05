@@ -11,34 +11,34 @@ import org.joda.time.DateTime;
  */
 public class RequestLog extends RequestLog_Base {
 
-	public RequestLog() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setRequestTime(new DateTime());
-	}
+    public RequestLog() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setRequestTime(new DateTime());
+    }
 
-	public RequestLog(String queryString, String referer, String user, String requestAttributes, String sessionAttributes,
-			String path, Boolean post, String... parameters) {
-		this();
-		setQueryString(queryString);
-		setRequester(user);
-		setRequestAttributes(requestAttributes);
-		setSessionAttributes(sessionAttributes);
-		setReferer(referer);
-		setMapping(RequestMapping.createOrRetrieveRequestMapping(path, parameters));
-		setPost(post);
-	}
+    public RequestLog(String queryString, String referer, String user, String requestAttributes, String sessionAttributes,
+            String path, Boolean post, String... parameters) {
+        this();
+        setQueryString(queryString);
+        setRequester(user);
+        setRequestAttributes(requestAttributes);
+        setSessionAttributes(sessionAttributes);
+        setReferer(referer);
+        setMapping(RequestMapping.createOrRetrieveRequestMapping(path, parameters));
+        setPost(post);
+    }
 
-	public static RequestLog registerError(String path, String referer, String[] parameters, String queryString, String user,
-			String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType, Boolean post) {
+    public static RequestLog registerError(String path, String referer, String[] parameters, String queryString, String user,
+            String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType, Boolean post) {
 
-		RequestLog requestLog =
-				new RequestLog(queryString, referer, user, requestAttributes, sessionAttributes, path, post, parameters);
-		RequestLogDay.getToday().addLogs(requestLog);
-		ErrorLog errorLog = ErrorLog.retrieveOrCreateErrorLog(stackTrace, exceptionType, requestLog);
-		requestLog.setErrorLog(errorLog);
+        RequestLog requestLog =
+                new RequestLog(queryString, referer, user, requestAttributes, sessionAttributes, path, post, parameters);
+        RequestLogDay.getToday().addLogs(requestLog);
+        ErrorLog errorLog = ErrorLog.retrieveOrCreateErrorLog(stackTrace, exceptionType, requestLog);
+        requestLog.setErrorLog(errorLog);
 
-		return requestLog;
-	}
+        return requestLog;
+    }
 
 }

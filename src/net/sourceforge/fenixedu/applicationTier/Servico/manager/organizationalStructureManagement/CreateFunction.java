@@ -15,16 +15,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateFunction extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end, FunctionType type,
-			Integer unitID) throws FenixServiceException, DomainException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end, FunctionType type,
+            Integer unitID) throws FenixServiceException, DomainException {
 
-		Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
-		if (unit == null) {
-			throw new FenixServiceException("error.function.no.unit");
-		}
+        Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
+        if (unit == null) {
+            throw new FenixServiceException("error.function.no.unit");
+        }
 
-		new Function(functionName, begin, end, type, unit);
-	}
+        new Function(functionName, begin, end, type, unit);
+    }
 }

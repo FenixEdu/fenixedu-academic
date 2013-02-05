@@ -16,96 +16,96 @@ import org.joda.time.YearMonthDay;
  */
 public class IngressionInformationBean implements Serializable {
 
-	static private final List<RegistrationAgreement> AGREEMENTS_TO_REQUEST_INFORMATION = Arrays.asList(RegistrationAgreement.AFA,
-			RegistrationAgreement.MA);
+    static private final List<RegistrationAgreement> AGREEMENTS_TO_REQUEST_INFORMATION = Arrays.asList(RegistrationAgreement.AFA,
+            RegistrationAgreement.MA);
 
-	private RegistrationAgreement registrationAgreement;
+    private RegistrationAgreement registrationAgreement;
 
-	private String agreementInformation;
+    private String agreementInformation;
 
-	private Ingression ingression;
+    private Ingression ingression;
 
-	private EntryPhase entryPhase;
+    private EntryPhase entryPhase;
 
-	private YearMonthDay studiesStartDate;
+    private YearMonthDay studiesStartDate;
 
-	private YearMonthDay homologationDate;
+    private YearMonthDay homologationDate;
 
-	private boolean requestAgreementInformation;
+    private boolean requestAgreementInformation;
 
-	public IngressionInformationBean() {
-		super();
-		this.registrationAgreement = RegistrationAgreement.NORMAL;
-		requestAgreementInformation = false;
-	}
+    public IngressionInformationBean() {
+        super();
+        this.registrationAgreement = RegistrationAgreement.NORMAL;
+        requestAgreementInformation = false;
+    }
 
-	public RegistrationAgreement getRegistrationAgreement() {
-		return registrationAgreement;
-	}
+    public RegistrationAgreement getRegistrationAgreement() {
+        return registrationAgreement;
+    }
 
-	public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-		this.registrationAgreement = registrationAgreement;
-		this.requestAgreementInformation = AGREEMENTS_TO_REQUEST_INFORMATION.contains(registrationAgreement);
-	}
+    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
+        this.registrationAgreement = registrationAgreement;
+        this.requestAgreementInformation = AGREEMENTS_TO_REQUEST_INFORMATION.contains(registrationAgreement);
+    }
 
-	public boolean hasRegistrationAgreement() {
-		return getRegistrationAgreement() != null;
-	}
+    public boolean hasRegistrationAgreement() {
+        return getRegistrationAgreement() != null;
+    }
 
-	public String getAgreementInformation() {
-		return agreementInformation;
-	}
+    public String getAgreementInformation() {
+        return agreementInformation;
+    }
 
-	public void setAgreementInformation(String agreementInformation) {
-		this.agreementInformation = agreementInformation;
-	}
+    public void setAgreementInformation(String agreementInformation) {
+        this.agreementInformation = agreementInformation;
+    }
 
-	public boolean isRequestAgreementInformation() {
-		return requestAgreementInformation;
-	}
+    public boolean isRequestAgreementInformation() {
+        return requestAgreementInformation;
+    }
 
-	public Ingression getIngression() {
-		return ingression;
-	}
+    public Ingression getIngression() {
+        return ingression;
+    }
 
-	public void setIngression(Ingression ingression) {
-		this.ingression = ingression;
-	}
+    public void setIngression(Ingression ingression) {
+        this.ingression = ingression;
+    }
 
-	public EntryPhase getEntryPhase() {
-		return entryPhase;
-	}
+    public EntryPhase getEntryPhase() {
+        return entryPhase;
+    }
 
-	public void setEntryPhase(EntryPhase entryPhase) {
-		this.entryPhase = entryPhase;
-	}
+    public void setEntryPhase(EntryPhase entryPhase) {
+        this.entryPhase = entryPhase;
+    }
 
-	public void clearIngressionAndEntryPhase() {
-		this.ingression = null;
-		this.entryPhase = null;
-		this.studiesStartDate = null;
-		this.homologationDate = null;
-	}
+    public void clearIngressionAndEntryPhase() {
+        this.ingression = null;
+        this.entryPhase = null;
+        this.studiesStartDate = null;
+        this.homologationDate = null;
+    }
 
-	public void clearAgreement() {
-		this.registrationAgreement = RegistrationAgreement.NORMAL;
-		this.agreementInformation = null;
-	}
+    public void clearAgreement() {
+        this.registrationAgreement = RegistrationAgreement.NORMAL;
+        this.agreementInformation = null;
+    }
 
-	public YearMonthDay getHomologationDate() {
-		return homologationDate;
-	}
+    public YearMonthDay getHomologationDate() {
+        return homologationDate;
+    }
 
-	public void setHomologationDate(YearMonthDay homologationDate) {
-		this.homologationDate = homologationDate;
-	}
+    public void setHomologationDate(YearMonthDay homologationDate) {
+        this.homologationDate = homologationDate;
+    }
 
-	public YearMonthDay getStudiesStartDate() {
-		return studiesStartDate;
-	}
+    public YearMonthDay getStudiesStartDate() {
+        return studiesStartDate;
+    }
 
-	public void setStudiesStartDate(YearMonthDay studiesStartDate) {
-		this.studiesStartDate = studiesStartDate;
-	}
+    public void setStudiesStartDate(YearMonthDay studiesStartDate) {
+        this.studiesStartDate = studiesStartDate;
+    }
 
 }

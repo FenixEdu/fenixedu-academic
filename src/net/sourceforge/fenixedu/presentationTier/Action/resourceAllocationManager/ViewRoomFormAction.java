@@ -29,51 +29,51 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixServiceException, FenixFilterException {
-		try {
-			super.execute(mapping, form, request, response);
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixServiceException, FenixFilterException {
+        try {
+            super.execute(mapping, form, request, response);
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }
 
-		RoomOccupationWeekBean roomOccupationWeekBean = getRoomOccupationWeekBean();
-		if (roomOccupationWeekBean == null) {
-			roomOccupationWeekBean = new RoomOccupationWeekBean();
-		}
-		request.setAttribute("roomOccupationWeekBean", roomOccupationWeekBean);
+        RoomOccupationWeekBean roomOccupationWeekBean = getRoomOccupationWeekBean();
+        if (roomOccupationWeekBean == null) {
+            roomOccupationWeekBean = new RoomOccupationWeekBean();
+        }
+        request.setAttribute("roomOccupationWeekBean", roomOccupationWeekBean);
 
-		DynaActionForm indexForm = (DynaActionForm) form;
-		List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
-		InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
-		request.setAttribute(PresentationConstants.ROOM, infoRoom);
-		request.setAttribute(PresentationConstants.ROOM_OID, infoRoom.getIdInternal());
+        DynaActionForm indexForm = (DynaActionForm) form;
+        List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
+        InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
+        request.setAttribute(PresentationConstants.ROOM, infoRoom);
+        request.setAttribute(PresentationConstants.ROOM_OID, infoRoom.getIdInternal());
 
-		final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
-		Calendar calendar = Calendar.getInstance();
-		if (roomOccupationWeekBean.getWeekBean() == null) {
-			calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());
-		} else {
-			calendar.setTime(roomOccupationWeekBean.getWeekBean().getWeek().toDateMidnight().toDate());
-		}
-		List<InfoObject> showOccupations =
-				ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room, YearMonthDay.fromCalendarFields(calendar));
-		if (showOccupations != null) {
-			request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
-		}
+        final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
+        Calendar calendar = Calendar.getInstance();
+        if (roomOccupationWeekBean.getWeekBean() == null) {
+            calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());
+        } else {
+            calendar.setTime(roomOccupationWeekBean.getWeekBean().getWeek().toDateMidnight().toDate());
+        }
+        List<InfoObject> showOccupations =
+                ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room, YearMonthDay.fromCalendarFields(calendar));
+        if (showOccupations != null) {
+            request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
+        }
 
-		return mapping.findForward("Sucess");
-	}
+        return mapping.findForward("Sucess");
+    }
 
-	private RoomOccupationWeekBean getRoomOccupationWeekBean() {
-		if (RenderUtils.getViewState() == null) {
-			return null;
-		}
+    private RoomOccupationWeekBean getRoomOccupationWeekBean() {
+        if (RenderUtils.getViewState() == null) {
+            return null;
+        }
 
-		RoomOccupationWeekBean roomOccupationWeekBean =
-				(RoomOccupationWeekBean) RenderUtils.getViewState().getMetaObject().getObject();
-		return roomOccupationWeekBean;
-	}
+        RoomOccupationWeekBean roomOccupationWeekBean =
+                (RoomOccupationWeekBean) RenderUtils.getViewState().getMetaObject().getObject();
+        return roomOccupationWeekBean;
+    }
 
 }

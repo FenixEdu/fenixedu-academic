@@ -18,48 +18,48 @@ import org.apache.commons.collections.Predicate;
  */
 public class DeleteProfessorship extends FenixService {
 
-	public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException {
 
-		Teacher teacher = rootDomainObject.readTeacherByOID(teacherCode);
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
 
-		Professorship professorshipToDelete = null;
-		if (teacher != null) {
-			professorshipToDelete = teacher.getProfessorshipByExecutionCourse(executionCourse);
-		}
+        Professorship professorshipToDelete = null;
+        if (teacher != null) {
+            professorshipToDelete = teacher.getProfessorshipByExecutionCourse(executionCourse);
+        }
 
-		List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
-		boolean hasCredits = false;
+        boolean hasCredits = false;
 
-		if (!shiftProfessorshipList.isEmpty()) {
-			hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
+        if (!shiftProfessorshipList.isEmpty()) {
+            hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
 
-				@Override
-				public boolean evaluate(Object arg0) {
-					ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
-					return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
-				}
-			});
-		}
+                @Override
+                public boolean evaluate(Object arg0) {
+                    ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
+                    return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
+                }
+            });
+        }
 
-		if (!hasCredits) {
-			professorshipToDelete.delete();
-		} else {
-			if (hasCredits) {
-				throw new ExistingAssociatedCredits("error.remove.professorship");
-			}
-		}
-		return Boolean.TRUE;
-	}
+        if (!hasCredits) {
+            professorshipToDelete.delete();
+        } else {
+            if (hasCredits) {
+                throw new ExistingAssociatedCredits("error.remove.professorship");
+            }
+        }
+        return Boolean.TRUE;
+    }
 
-	protected boolean canDeleteResponsibleFor() {
-		return false;
-	}
+    protected boolean canDeleteResponsibleFor() {
+        return false;
+    }
 
-	public class ExistingAssociatedCredits extends FenixServiceException {
-		private ExistingAssociatedCredits(String key) {
-			super(key);
-		}
-	}
+    public class ExistingAssociatedCredits extends FenixServiceException {
+        private ExistingAssociatedCredits(String key) {
+            super(key);
+        }
+    }
 }

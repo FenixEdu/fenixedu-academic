@@ -15,60 +15,60 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class DegreeCoordinatorsGroup extends Group {
 
-	private static final long serialVersionUID = -7559780015187749338L;
+    private static final long serialVersionUID = -7559780015187749338L;
 
-	@Override
-	public String getPresentationNameBundle() {
-		return "resources.SiteResources";
-	}
+    @Override
+    public String getPresentationNameBundle() {
+        return "resources.SiteResources";
+    }
 
-	@Override
-	public String getPresentationNameKey() {
-		return "label." + getClass().getName();
-	}
+    @Override
+    public String getPresentationNameKey() {
+        return "label." + getClass().getName();
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		final Set<Person> elements = super.buildSet();
-		final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
-		for (final ExecutionYear executionYear : executionYears) {
-			if (executionYear.isCurrent()) {
-				for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-					final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-					final Degree degree = degreeCurricularPlan.getDegree();
-					if (degree.getDegreeType() == DegreeType.DEGREE) {
-						for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-							final Person person = coordinator.getPerson();
-							elements.add(person);
-						}
-					}
-				}
-				break;
-			}
-		}
-		return elements;
-	}
+    @Override
+    public Set<Person> getElements() {
+        final Set<Person> elements = super.buildSet();
+        final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
+        for (final ExecutionYear executionYear : executionYears) {
+            if (executionYear.isCurrent()) {
+                for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+                    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                    final Degree degree = degreeCurricularPlan.getDegree();
+                    if (degree.getDegreeType() == DegreeType.DEGREE) {
+                        for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+                            final Person person = coordinator.getPerson();
+                            elements.add(person);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return elements;
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		return person != null
-				&& person.hasTeacher()
-				&& person.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(ExecutionYear
-						.readCurrentExecutionYear());
-	}
+    @Override
+    public boolean isMember(Person person) {
+        return person != null
+                && person.hasTeacher()
+                && person.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(ExecutionYear
+                        .readCurrentExecutionYear());
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[0];
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof DegreeCoordinatorsGroup;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof DegreeCoordinatorsGroup;
+    }
 
-	@Override
-	public int hashCode() {
-		return getClass().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

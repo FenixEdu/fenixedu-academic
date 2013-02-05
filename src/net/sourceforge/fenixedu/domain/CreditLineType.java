@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.domain;
  */
 public enum CreditLineType {
 
-	MANAGEMENT_POSITION,
+    MANAGEMENT_POSITION,
 
-	SERVICE_EXEMPTION,
+    SERVICE_EXEMPTION,
 
-	SABBATICAL,
+    SABBATICAL,
 
-	OTHER;
+    OTHER;
 
 }

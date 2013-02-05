@@ -7,69 +7,69 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
 
-	public DegreeSpecializationArea(DegreeOfficialPublication officialPublication, MultiLanguageString area) {
-		super();
-		init(officialPublication, area);
-	}
+    public DegreeSpecializationArea(DegreeOfficialPublication officialPublication, MultiLanguageString area) {
+        super();
+        init(officialPublication, area);
+    }
 
-	protected void init(DegreeOfficialPublication degreeOfficialPublication, MultiLanguageString area) {
-		checkParameters(degreeOfficialPublication, area);
-		setOfficialPublication(degreeOfficialPublication);
-		setName(area);
-	}
+    protected void init(DegreeOfficialPublication degreeOfficialPublication, MultiLanguageString area) {
+        checkParameters(degreeOfficialPublication, area);
+        setOfficialPublication(degreeOfficialPublication);
+        setName(area);
+    }
 
-	private void checkParameters(DegreeOfficialPublication degreeOfficialPublication, MultiLanguageString area) {
-		if (degreeOfficialPublication == null) {
-			throw new DomainException(DegreeSpecializationArea.class.getName() + ".degreeOfficialPublication.required");
-		}
-		if (area == null) {
-			throw new DomainException(MultiLanguageString.class.getName() + ".area.required");
-		}
+    private void checkParameters(DegreeOfficialPublication degreeOfficialPublication, MultiLanguageString area) {
+        if (degreeOfficialPublication == null) {
+            throw new DomainException(DegreeSpecializationArea.class.getName() + ".degreeOfficialPublication.required");
+        }
+        if (area == null) {
+            throw new DomainException(MultiLanguageString.class.getName() + ".area.required");
+        }
 
-		if (area.getAllLanguages().isEmpty()) {
-			throw new DomainException(DegreeSpecializationArea.class.getName() + ".area.names.required");
-		}
+        if (area.getAllLanguages().isEmpty()) {
+            throw new DomainException(DegreeSpecializationArea.class.getName() + ".area.names.required");
+        }
 
-		if (!verifyIfSomeContentsAreNotEmpty(area)) {
-			throw new DomainException(DegreeSpecializationArea.class.getName() + ".area.names.nameForLanguage.required");
-		}
-	}
+        if (!verifyIfSomeContentsAreNotEmpty(area)) {
+            throw new DomainException(DegreeSpecializationArea.class.getName() + ".area.names.nameForLanguage.required");
+        }
+    }
 
-	private boolean verifyIfSomeContentsAreNotEmpty(MultiLanguageString area) {
-		for (String language : area.getAllContents()) {
-			if (!language.isEmpty()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean verifyIfSomeContentsAreNotEmpty(MultiLanguageString area) {
+        for (String language : area.getAllContents()) {
+            if (!language.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected RootDomainObject getRootDomainObject() {
-		return getOfficialPublication().getRootDomainObject();
-	}
+    @Override
+    protected RootDomainObject getRootDomainObject() {
+        return getOfficialPublication().getRootDomainObject();
+    }
 
-	public void delete() {
-		removeOfficialPublication();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeOfficialPublication();
+        deleteDomainObject();
+    }
 
-	@Service
-	public void setNameEn(String nameEn) {
-		this.getName().setContent(Language.en, nameEn);
-	}
+    @Service
+    public void setNameEn(String nameEn) {
+        this.getName().setContent(Language.en, nameEn);
+    }
 
-	@Service
-	public void setNamePt(String namePt) {
-		this.getName().setContent(Language.pt, namePt);
-	}
+    @Service
+    public void setNamePt(String namePt) {
+        this.getName().setContent(Language.pt, namePt);
+    }
 
-	public String getNameEn() {
-		return this.getName().getContent(Language.en);
-	}
+    public String getNameEn() {
+        return this.getName().getContent(Language.en);
+    }
 
-	public String getNamePt() {
-		return this.getName().getContent(Language.pt);
-	}
+    public String getNamePt() {
+        return this.getName().getContent(Language.pt);
+    }
 
 }

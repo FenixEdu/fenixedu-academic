@@ -16,47 +16,47 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class TeachingCareer extends TeachingCareer_Base {
 
-	public TeachingCareer() {
-		super();
-	}
+    public TeachingCareer() {
+        super();
+    }
 
-	public TeachingCareer(Teacher teacher, MultiLanguageString category, InfoTeachingCareer infoTeachingCareer) {
-		if (teacher == null || category == null) {
-			throw new DomainException("Neither teacher nor category should be null!");
-		}
+    public TeachingCareer(Teacher teacher, MultiLanguageString category, InfoTeachingCareer infoTeachingCareer) {
+        if (teacher == null || category == null) {
+            throw new DomainException("Neither teacher nor category should be null!");
+        }
 
-		setTeacher(teacher);
-		setCategoryName(category);
-		setBasicProperties(infoTeachingCareer);
-	}
+        setTeacher(teacher);
+        setCategoryName(category);
+        setBasicProperties(infoTeachingCareer);
+    }
 
-	@Override
-	public void delete() {
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        super.delete();
+    }
 
-	public void edit(InfoTeachingCareer infoTeachingCareer, MultiLanguageString category) {
-		if (category == null) {
-			throw new DomainException("The category should not be null!");
-		}
+    public void edit(InfoTeachingCareer infoTeachingCareer, MultiLanguageString category) {
+        if (category == null) {
+            throw new DomainException("The category should not be null!");
+        }
 
-		setBasicProperties(infoTeachingCareer);
-		this.setCategoryName(category);
-	}
+        setBasicProperties(infoTeachingCareer);
+        this.setCategoryName(category);
+    }
 
-	private void setBasicProperties(InfoTeachingCareer infoTeachingCareer) {
-		this.setBeginYear(infoTeachingCareer.getBeginYear());
-		this.setEndYear(infoTeachingCareer.getEndYear());
-		this.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
+    private void setBasicProperties(InfoTeachingCareer infoTeachingCareer) {
+        this.setBeginYear(infoTeachingCareer.getBeginYear());
+        this.setEndYear(infoTeachingCareer.getEndYear());
+        this.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
 
-	}
+    }
 
-	@Override
-	public void setCourseOrPosition(String courseOrPosition) {
-		if (courseOrPosition != null && courseOrPosition.length() > 100) {
-			throw new DomainException("error.courseOrPosition.max.length.exceeded");
-		}
-		super.setCourseOrPosition(courseOrPosition);
-	}
+    @Override
+    public void setCourseOrPosition(String courseOrPosition) {
+        if (courseOrPosition != null && courseOrPosition.length() > 100) {
+            throw new DomainException("error.courseOrPosition.max.length.exceeded");
+        }
+        super.setCourseOrPosition(courseOrPosition);
+    }
 
 }

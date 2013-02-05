@@ -8,28 +8,28 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class StandByConfirmedDataCandidacySituation extends StandByConfirmedDataCandidacySituation_Base {
 
-	public StandByConfirmedDataCandidacySituation(Candidacy candidacy) {
-		this(candidacy, AccessControl.getPerson());
-	}
+    public StandByConfirmedDataCandidacySituation(Candidacy candidacy) {
+        this(candidacy, AccessControl.getPerson());
+    }
 
-	public StandByConfirmedDataCandidacySituation(Candidacy candidacy, Person person) {
-		super();
-		init(candidacy, person);
-	}
+    public StandByConfirmedDataCandidacySituation(Candidacy candidacy, Person person) {
+        super();
+        init(candidacy, person);
+    }
 
-	@Override
-	public CandidacySituationType getCandidacySituationType() {
-		return CandidacySituationType.STAND_BY_CONFIRMED_DATA;
-	}
+    @Override
+    public CandidacySituationType getCandidacySituationType() {
+        return CandidacySituationType.STAND_BY_CONFIRMED_DATA;
+    }
 
-	@Override
-	public Collection<Operation> getOperationsForPerson(Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Collection<Operation> getOperationsForPerson(Person person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public boolean canExecuteOperationAutomatically() {
-		return false;
-	}
+    @Override
+    public boolean canExecuteOperationAutomatically() {
+        return false;
+    }
 }

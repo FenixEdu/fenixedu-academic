@@ -16,15 +16,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionPeriod extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		if (executionSemester == null) {
-			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-		}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        if (executionSemester == null) {
+            throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+        }
 
-		return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
-	}
+        return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+    }
 
 }

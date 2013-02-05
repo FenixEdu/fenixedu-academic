@@ -11,16 +11,16 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
  */
 public class DeleteBibliographicReference extends FenixService {
 
-	public Boolean run(Integer bibliographicReferenceOID) throws FenixServiceException {
+    public Boolean run(Integer bibliographicReferenceOID) throws FenixServiceException {
 
-		BibliographicReference bibliographicReference =
-				rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceOID);
-		if (bibliographicReference == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        BibliographicReference bibliographicReference =
+                rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceOID);
+        if (bibliographicReference == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		bibliographicReference.delete();
-		return true;
-	}
+        bibliographicReference.delete();
+        return true;
+    }
 
 }

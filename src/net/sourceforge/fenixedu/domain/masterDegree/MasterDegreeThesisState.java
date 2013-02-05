@@ -9,6 +9,6 @@ package net.sourceforge.fenixedu.domain.masterDegree;
  */
 public enum MasterDegreeThesisState {
 
-	NOT_DELIVERED, DELIVERED, CONCLUDED
+    NOT_DELIVERED, DELIVERED, CONCLUDED
 
 }

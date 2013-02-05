@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class AcademicRequestTypeForServicesRequestCreation implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return AcademicServiceRequestType.getServiceRequests();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return AcademicServiceRequestType.getServiceRequests();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

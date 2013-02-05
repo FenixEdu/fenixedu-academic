@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class ParkingRequestAsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ParkingRequestFactory parkingRequestFactory = (ParkingRequestFactory) source;
-		return parkingRequestFactory.getParkingParty().getSubmitAsRoles();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ParkingRequestFactory parkingRequestFactory = (ParkingRequestFactory) source;
+        return parkingRequestFactory.getParkingParty().getSubmitAsRoles();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 }

@@ -28,120 +28,120 @@ import org.joda.time.YearMonthDay;
 
 public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBackingBean {
 
-	public ManagerFunctionsManagementBackingBean() {
-	}
+    public ManagerFunctionsManagementBackingBean() {
+    }
 
-	@Override
-	public String associateNewFunction() throws FenixFilterException, FenixServiceException, ParseException {
+    @Override
+    public String associateNewFunction() throws FenixFilterException, FenixServiceException, ParseException {
 
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		Double credits = Double.valueOf(this.getCredits());
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Double credits = Double.valueOf(this.getCredits());
 
-		Date beginDate_ = null, endDate_ = null;
-		try {
-			if (this.getBeginDate() != null) {
-				beginDate_ = format.parse(this.getBeginDate());
-			} else {
-				setErrorMessage("error.notBeginDate");
-				return "";
-			}
-			if (this.getEndDate() != null) {
-				endDate_ = format.parse(this.getEndDate());
-			} else {
-				setErrorMessage("error.notEndDate");
-				return "";
-			}
+        Date beginDate_ = null, endDate_ = null;
+        try {
+            if (this.getBeginDate() != null) {
+                beginDate_ = format.parse(this.getBeginDate());
+            } else {
+                setErrorMessage("error.notBeginDate");
+                return "";
+            }
+            if (this.getEndDate() != null) {
+                endDate_ = format.parse(this.getEndDate());
+            } else {
+                setErrorMessage("error.notEndDate");
+                return "";
+            }
 
-			final Object[] argsToRead =
-					{ this.getFunctionID(), this.getPersonID(), credits, YearMonthDay.fromDateFields(beginDate_),
-							YearMonthDay.fromDateFields(endDate_) };
-			ServiceUtils.executeService("AssociateNewFunctionToPerson", argsToRead);
-			setErrorMessage("message.success");
-			return "success";
+            final Object[] argsToRead =
+                    { this.getFunctionID(), this.getPersonID(), credits, YearMonthDay.fromDateFields(beginDate_),
+                            YearMonthDay.fromDateFields(endDate_) };
+            ServiceUtils.executeService("AssociateNewFunctionToPerson", argsToRead);
+            setErrorMessage("message.success");
+            return "success";
 
-		} catch (ParseException e) {
-			setErrorMessage("error.date1.format");
-		} catch (FenixServiceException e) {
-			setErrorMessage(e.getMessage());
-		} catch (DomainException e) {
-			setErrorMessage(e.getMessage());
-		}
+        } catch (ParseException e) {
+            setErrorMessage("error.date1.format");
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
+        }
 
-		return "";
-	}
+        return "";
+    }
 
-	@Override
-	public String getUnits() throws FenixFilterException, FenixServiceException {
-		StringBuilder buffer = new StringBuilder();
-		YearMonthDay currentDate = new YearMonthDay();
-		getUnitTree(buffer, UnitUtils.readInstitutionUnit(), currentDate);
-		return buffer.toString();
-	}
+    @Override
+    public String getUnits() throws FenixFilterException, FenixServiceException {
+        StringBuilder buffer = new StringBuilder();
+        YearMonthDay currentDate = new YearMonthDay();
+        getUnitTree(buffer, UnitUtils.readInstitutionUnit(), currentDate);
+        return buffer.toString();
+    }
 
-	protected void getUnitTree(StringBuilder buffer, Unit parentUnit, YearMonthDay currentDate) {
-		buffer.append("<ul class='padding1 nobullet'>");
-		getUnitsList(parentUnit, null, buffer, currentDate);
-		buffer.append("</ul>");
-	}
+    protected void getUnitTree(StringBuilder buffer, Unit parentUnit, YearMonthDay currentDate) {
+        buffer.append("<ul class='padding1 nobullet'>");
+        getUnitsList(parentUnit, null, buffer, currentDate);
+        buffer.append("</ul>");
+    }
 
-	protected void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate) {
+    protected void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate) {
 
-		openLITag(buffer);
+        openLITag(buffer);
 
-		List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-		Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
+        List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
+        Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 
-		if (!subUnits.isEmpty()) {
-			putImage(parentUnit, buffer, parentUnitParent);
-		}
+        if (!subUnits.isEmpty()) {
+            putImage(parentUnit, buffer, parentUnitParent);
+        }
 
-		buffer.append("<a href=\"").append(getContextPath())
-				.append("/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append("&unitID=")
-				.append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName()).append("</a>")
-				.append("</li>");
+        buffer.append("<a href=\"").append(getContextPath())
+                .append("/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append("&unitID=")
+                .append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName()).append("</a>")
+                .append("</li>");
 
-		if (!subUnits.isEmpty()) {
-			openULTag(parentUnit, buffer, parentUnitParent);
-		}
+        if (!subUnits.isEmpty()) {
+            openULTag(parentUnit, buffer, parentUnitParent);
+        }
 
-		for (Unit subUnit : subUnits) {
-			getUnitsList(subUnit, parentUnit, buffer, currentDate);
-		}
+        for (Unit subUnit : subUnits) {
+            getUnitsList(subUnit, parentUnit, buffer, currentDate);
+        }
 
-		if (!subUnits.isEmpty()) {
-			closeULTag(buffer);
-		}
-	}
+        if (!subUnits.isEmpty()) {
+            closeULTag(buffer);
+        }
+    }
 
-	@Override
-	public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
+    @Override
+    public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
 
-		if (this.activeFunctions == null) {
-			Person person = this.getPerson();
-			List<PersonFunction> activeFunctions = person.getPersonFunctions(null, false, true, null);
-			Collections.sort(activeFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
-			this.activeFunctions = activeFunctions;
-		}
-		return activeFunctions;
-	}
+        if (this.activeFunctions == null) {
+            Person person = this.getPerson();
+            List<PersonFunction> activeFunctions = person.getPersonFunctions(null, false, true, null);
+            Collections.sort(activeFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
+            this.activeFunctions = activeFunctions;
+        }
+        return activeFunctions;
+    }
 
-	@Override
-	public List<PersonFunction> getInactiveFunctions() throws FenixFilterException, FenixServiceException {
+    @Override
+    public List<PersonFunction> getInactiveFunctions() throws FenixFilterException, FenixServiceException {
 
-		if (this.inactiveFunctions == null) {
-			Person person = this.getPerson();
-			List<PersonFunction> inactiveFunctions = person.getPersonFunctions(null, false, false, null);
-			Collections.sort(inactiveFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
-			this.inactiveFunctions = inactiveFunctions;
-		}
-		return inactiveFunctions;
-	}
+        if (this.inactiveFunctions == null) {
+            Person person = this.getPerson();
+            List<PersonFunction> inactiveFunctions = person.getPersonFunctions(null, false, false, null);
+            Collections.sort(inactiveFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
+            this.inactiveFunctions = inactiveFunctions;
+        }
+        return inactiveFunctions;
+    }
 
-	@Override
-	public List<Function> getInherentFunctions() throws FenixFilterException, FenixServiceException {
-		if (this.inherentFunctions == null) {
-			this.inherentFunctions = this.getPerson().getActiveInherentPersonFunctions();
-		}
-		return inherentFunctions;
-	}
+    @Override
+    public List<Function> getInherentFunctions() throws FenixFilterException, FenixServiceException {
+        if (this.inherentFunctions == null) {
+            this.inherentFunctions = this.getPerson().getActiveInherentPersonFunctions();
+        }
+        return inherentFunctions;
+    }
 }

@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveExamCoordinatorsFromVigilantGroup extends FenixService {
-	@Service
-	public static void run(List<ExamCoordinator> coordinators, VigilantGroup group) {
-		for (ExamCoordinator coordinator : coordinators) {
-			group.removeExamCoordinators(coordinator);
-		}
-	}
+    @Service
+    public static void run(List<ExamCoordinator> coordinators, VigilantGroup group) {
+        for (ExamCoordinator coordinator : coordinators) {
+            group.removeExamCoordinators(coordinator);
+        }
+    }
 }

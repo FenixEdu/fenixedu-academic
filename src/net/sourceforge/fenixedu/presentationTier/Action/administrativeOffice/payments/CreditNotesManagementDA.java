@@ -28,157 +28,155 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/creditNotes",
-		module = "academicAdministration",
-		formBeanClass = CreditNotesManagementDA.CreditNotesActionForm.class)
+@Mapping(path = "/creditNotes", module = "academicAdministration",
+        formBeanClass = CreditNotesManagementDA.CreditNotesActionForm.class)
 @Forwards({ @Forward(name = "list", path = "/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"),
-		@Forward(name = "create", path = "/academicAdminOffice/payments/creditNotes/createCreditNote.jsp"),
-		@Forward(name = "show", path = "/academicAdminOffice/payments/creditNotes/showCreditNote.jsp"),
-		@Forward(name = "prepareShowReceipt", path = "/receipts.do?method=prepareShowReceipt") })
+        @Forward(name = "create", path = "/academicAdminOffice/payments/creditNotes/createCreditNote.jsp"),
+        @Forward(name = "show", path = "/academicAdminOffice/payments/creditNotes/showCreditNote.jsp"),
+        @Forward(name = "prepareShowReceipt", path = "/receipts.do?method=prepareShowReceipt") })
 public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
 
-	public static class CreditNotesActionForm extends FenixActionForm {
+    public static class CreditNotesActionForm extends FenixActionForm {
 
-		/**
+        /**
 	 * 
 	 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private String creditNoteState;
+        private String creditNoteState;
 
-		public String getCreditNoteState() {
-			return creditNoteState;
-		}
+        public String getCreditNoteState() {
+            return creditNoteState;
+        }
 
-		public void setCreditNoteState(String creditNoteState) {
-			this.creditNoteState = creditNoteState;
-		}
+        public void setCreditNoteState(String creditNoteState) {
+            this.creditNoteState = creditNoteState;
+        }
 
-	}
+    }
 
-	public ActionForward showCreditNotes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showCreditNotes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("receipt", getReceiptFromViewState("receipt"));
+        request.setAttribute("receipt", getReceiptFromViewState("receipt"));
 
-		return mapping.findForward("list");
-	}
+        return mapping.findForward("list");
+    }
 
-	private Receipt getReceiptFromViewState(String viewStateId) {
-		return (Receipt) getObjectFromViewState(viewStateId);
-	}
+    private Receipt getReceiptFromViewState(String viewStateId) {
+        return (Receipt) getObjectFromViewState(viewStateId);
+    }
 
-	public ActionForward showCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("creditNote", getCreditNote(request));
-		((CreditNotesActionForm) form).setCreditNoteState(getCreditNote(request).getState().name());
+        request.setAttribute("creditNote", getCreditNote(request));
+        ((CreditNotesActionForm) form).setCreditNoteState(getCreditNote(request).getState().name());
 
-		return mapping.findForward("show");
-	}
+        return mapping.findForward("show");
+    }
 
-	private CreditNote getCreditNote(HttpServletRequest request) {
-		return rootDomainObject.readCreditNoteByOID(getIntegerFromRequest(request, "creditNoteId"));
-	}
+    private CreditNote getCreditNote(HttpServletRequest request) {
+        return rootDomainObject.readCreditNoteByOID(getIntegerFromRequest(request, "creditNoteId"));
+    }
 
-	public ActionForward prepareCreateCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("createCreditNoteBean", new CreateCreditNoteBean(getReceiptFromViewState("receipt")));
+        request.setAttribute("createCreditNoteBean", new CreateCreditNoteBean(getReceiptFromViewState("receipt")));
 
-		return mapping.findForward("create");
+        return mapping.findForward("create");
 
-	}
+    }
 
-	public ActionForward createCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final CreateCreditNoteBean createCreditNoteBean =
-				(CreateCreditNoteBean) RenderUtils.getViewState("create-credit-note").getMetaObject().getObject();
+        final CreateCreditNoteBean createCreditNoteBean =
+                (CreateCreditNoteBean) RenderUtils.getViewState("create-credit-note").getMetaObject().getObject();
 
-		try {
-			CreateCreditNote.run(getUserView(request).getPerson(), createCreditNoteBean);
+        try {
+            CreateCreditNote.run(getUserView(request).getPerson(), createCreditNoteBean);
 
-		} catch (DomainExceptionWithLabelFormatter ex) {
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-			request.setAttribute("createCreditNoteBean", createCreditNoteBean);
-			return mapping.findForward("create");
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+            request.setAttribute("createCreditNoteBean", createCreditNoteBean);
+            return mapping.findForward("create");
 
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getKey());
-			request.setAttribute("createCreditNoteBean", createCreditNoteBean);
-			return mapping.findForward("create");
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey());
+            request.setAttribute("createCreditNoteBean", createCreditNoteBean);
+            return mapping.findForward("create");
 
-		}
+        }
 
-		request.setAttribute("receipt", createCreditNoteBean.getReceipt());
+        request.setAttribute("receipt", createCreditNoteBean.getReceipt());
 
-		return mapping.findForward("list");
+        return mapping.findForward("list");
 
-	}
+    }
 
-	public ActionForward changeCreditNoteState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final CreditNote creditNote = getCreditNoteFromViewState();
-		final CreditNoteState creditNoteState = CreditNoteState.valueOf(((CreditNotesActionForm) form).getCreditNoteState());
+    public ActionForward changeCreditNoteState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final CreditNote creditNote = getCreditNoteFromViewState();
+        final CreditNoteState creditNoteState = CreditNoteState.valueOf(((CreditNotesActionForm) form).getCreditNoteState());
 
-		try {
-			ChangeCreditNoteState.run(getUserView(request).getPerson(), creditNote, creditNoteState);
+        try {
+            ChangeCreditNoteState.run(getUserView(request).getPerson(), creditNote, creditNoteState);
 
-		} catch (DomainExceptionWithLabelFormatter ex) {
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getKey());
-		}
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey());
+        }
 
-		request.setAttribute("creditNote", creditNote);
+        request.setAttribute("creditNote", creditNote);
 
-		return mapping.findForward("show");
+        return mapping.findForward("show");
 
-	}
+    }
 
-	private CreditNote getCreditNoteFromViewState() {
-		final CreditNote creditNote = (CreditNote) RenderUtils.getViewState("creditNote").getMetaObject().getObject();
-		return creditNote;
-	}
+    private CreditNote getCreditNoteFromViewState() {
+        final CreditNote creditNote = (CreditNote) RenderUtils.getViewState("creditNote").getMetaObject().getObject();
+        return creditNote;
+    }
 
-	public ActionForward printCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws JRException, IOException {
+    public ActionForward printCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws JRException, IOException {
 
-		final CreditNote creditNote = getCreditNoteFromViewState();
+        final CreditNote creditNote = getCreditNoteFromViewState();
 
-		try {
+        try {
 
-			final CreditNoteDocument original = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), true);
-			final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), false);
+            final CreditNoteDocument original = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), true);
+            final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), false);
 
-			final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
+            final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
-			CreditNoteGeneratedDocument.store(creditNote, original.getReportFileName() + ".pdf", data);
-			response.setContentLength(data.length);
-			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", original.getReportFileName()));
+            CreditNoteGeneratedDocument.store(creditNote, original.getReportFileName() + ".pdf", data);
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", original.getReportFileName()));
 
-			response.getOutputStream().write(data);
+            response.getOutputStream().write(data);
 
-			return null;
+            return null;
 
-		} catch (DomainException e) {
-			addActionMessage(request, e.getKey(), e.getArgs());
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
 
-			request.setAttribute("creditNoteId", creditNote.getIdInternal());
+            request.setAttribute("creditNoteId", creditNote.getIdInternal());
 
-			return showCreditNote(mapping, form, request, response);
-		}
+            return showCreditNote(mapping, form, request, response);
+        }
 
-	}
+    }
 
-	public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		return mapping.findForward("prepareShowReceipt");
+        return mapping.findForward("prepareShowReceipt");
 
-	}
+    }
 
 }

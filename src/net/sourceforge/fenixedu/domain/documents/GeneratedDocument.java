@@ -28,75 +28,75 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  * @author Pedro Santos (pmrsa)
  */
 public abstract class GeneratedDocument extends GeneratedDocument_Base {
-	protected static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
+    protected static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
 
-	private static final String ROOT_DIR_DESCRIPTION = "Generated Documents";
+    private static final String ROOT_DIR_DESCRIPTION = "Generated Documents";
 
-	private static final String ROOT_DIR = "GeneratedDocuments";
+    private static final String ROOT_DIR = "GeneratedDocuments";
 
-	private static final String NO_ADDRESSEE_NODE = "NoAddressee";
+    private static final String NO_ADDRESSEE_NODE = "NoAddressee";
 
-	private static final String NO_ADDRESSEE_NODE_DESCRIPTION = "No Addressee";
+    private static final String NO_ADDRESSEE_NODE_DESCRIPTION = "No Addressee";
 
-	public GeneratedDocument() {
-		super();
-	}
+    public GeneratedDocument() {
+        super();
+    }
 
-	protected void init(GeneratedDocumentType type, Party addressee, Person operator, String filename, byte[] content) {
-		setType(type);
-		setAddressee(addressee);
-		setOperator(operator);
-		init(getVirtualPath(), filename, filename, createMetaData(operator, filename), content, computePermittedGroup());
-	}
+    protected void init(GeneratedDocumentType type, Party addressee, Person operator, String filename, byte[] content) {
+        setType(type);
+        setAddressee(addressee);
+        setOperator(operator);
+        init(getVirtualPath(), filename, filename, createMetaData(operator, filename), content, computePermittedGroup());
+    }
 
-	@Override
-	public void delete() {
-		removeAddressee();
-		removeOperator();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        removeAddressee();
+        removeOperator();
+        super.delete();
+    }
 
-	@Override
-	public boolean isPersonAllowedToAccess(Person person) {
-		if (person == null) {
-			return false;
-		}
-		if (person.equals(getOperator())) {
-			return true;
-		}
-		if (person.equals(getAddressee())) {
-			return true;
-		}
-		return super.isPersonAllowedToAccess(person);
-	}
+    @Override
+    public boolean isPersonAllowedToAccess(Person person) {
+        if (person == null) {
+            return false;
+        }
+        if (person.equals(getOperator())) {
+            return true;
+        }
+        if (person.equals(getAddressee())) {
+            return true;
+        }
+        return super.isPersonAllowedToAccess(person);
+    }
 
-	protected VirtualPath getVirtualPath() {
-		final VirtualPath filePath = new VirtualPath();
-		filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
-		if (getAddressee() != null) {
-			filePath.addNode(new VirtualPathNode(getAddressee().getIdInternal().toString(), getAddressee().getName()));
-		} else {
-			filePath.addNode(new VirtualPathNode(NO_ADDRESSEE_NODE, NO_ADDRESSEE_NODE_DESCRIPTION));
-		}
-		filePath.addNode(new VirtualPathNode(getType().name(), getType().name()));
-		return filePath;
-	}
+    protected VirtualPath getVirtualPath() {
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
+        if (getAddressee() != null) {
+            filePath.addNode(new VirtualPathNode(getAddressee().getIdInternal().toString(), getAddressee().getName()));
+        } else {
+            filePath.addNode(new VirtualPathNode(NO_ADDRESSEE_NODE, NO_ADDRESSEE_NODE_DESCRIPTION));
+        }
+        filePath.addNode(new VirtualPathNode(getType().name(), getType().name()));
+        return filePath;
+    }
 
-	protected abstract Group computePermittedGroup();
+    protected abstract Group computePermittedGroup();
 
-	private Collection<FileSetMetaData> createMetaData(Person operator, String filename) {
-		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-		metaData.add(FileSetMetaData.createAuthorMeta(operator == null ? "script" : operator.getName()));
-		metaData.add(FileSetMetaData.createTitleMeta(filename));
-		return metaData;
-	}
+    private Collection<FileSetMetaData> createMetaData(Person operator, String filename) {
+        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+        metaData.add(FileSetMetaData.createAuthorMeta(operator == null ? "script" : operator.getName()));
+        metaData.add(FileSetMetaData.createTitleMeta(filename));
+        return metaData;
+    }
 
-	public static final Comparator<GeneratedDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<GeneratedDocument>() {
+    public static final Comparator<GeneratedDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<GeneratedDocument>() {
 
-		@Override
-		public int compare(GeneratedDocument o1, GeneratedDocument o2) {
-			return o1.getUploadTime().compareTo(o2.getUploadTime());
-		}
+        @Override
+        public int compare(GeneratedDocument o1, GeneratedDocument o2) {
+            return o1.getUploadTime().compareTo(o2.getUploadTime());
+        }
 
-	};
+    };
 }

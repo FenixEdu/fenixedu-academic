@@ -12,23 +12,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeTypeDegreesManager implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-		if (markSheetManagementBean.getExecutionPeriod() != null) {
-			List<Degree> res = new ArrayList<Degree>();
-			res.addAll(Degree.readNotEmptyDegrees());
-			Collections.sort(res, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-			return res;
-		}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
+        if (markSheetManagementBean.getExecutionPeriod() != null) {
+            List<Degree> res = new ArrayList<Degree>();
+            res.addAll(Degree.readNotEmptyDegrees());
+            Collections.sort(res, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+            return res;
+        }
 
-		return Collections.emptySet();
+        return Collections.emptySet();
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

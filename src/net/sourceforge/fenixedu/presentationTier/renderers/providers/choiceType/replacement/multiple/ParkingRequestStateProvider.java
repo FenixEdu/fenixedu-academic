@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class ParkingRequestStateProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(ParkingRequestState.values());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(ParkingRequestState.values());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumArrayConverter(ParkingRequestState.class);
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumArrayConverter(ParkingRequestState.class);
+    }
 
 }

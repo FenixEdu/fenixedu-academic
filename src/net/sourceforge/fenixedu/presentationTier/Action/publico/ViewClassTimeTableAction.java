@@ -29,48 +29,48 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewClassTimeTableAction extends FenixContextAction {
 
-	/**
-	 * Constructor for ViewClassTimeTableAction.
-	 */
+    /**
+     * Constructor for ViewClassTimeTableAction.
+     */
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		try {
-			super.execute(mapping, form, request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        try {
+            super.execute(mapping, form, request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		String className = request.getParameter("className");
+        String className = request.getParameter("className");
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-		request.setAttribute("degreeInitials", "");
-		request.setAttribute("nameDegreeCurricularPlan", "");
-		request.setAttribute("degreeCurricularPlanID", "");
-		request.setAttribute("degreeID", "");
-		String classIdString = request.getParameter("classId");
-		Integer classId = null;
-		if (classIdString != null) {
-			classId = new Integer(classIdString);
-		} else {
-			return mapping.getInputForward();
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        request.setAttribute("degreeInitials", "");
+        request.setAttribute("nameDegreeCurricularPlan", "");
+        request.setAttribute("degreeCurricularPlanID", "");
+        request.setAttribute("degreeID", "");
+        String classIdString = request.getParameter("classId");
+        Integer classId = null;
+        if (classIdString != null) {
+            classId = new Integer(classIdString);
+        } else {
+            return mapping.getInputForward();
 
-		}
-		InfoSiteTimetable component = new InfoSiteTimetable();
+        }
+        InfoSiteTimetable component = new InfoSiteTimetable();
 
-		SiteView siteView = null;
+        SiteView siteView = null;
 
-		try {
-			siteView =
-					(SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
-							infoExecutionPeriod.getName(), null, null, className, null, classId);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
-		}
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("className", className);
-		return mapping.findForward("Sucess");
-	}
+        try {
+            siteView =
+                    (SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                            infoExecutionPeriod.getName(), null, null, className, null, classId);
+        } catch (FenixServiceException e1) {
+            throw new FenixActionException(e1);
+        }
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("className", className);
+        return mapping.findForward("Sucess");
+    }
 }

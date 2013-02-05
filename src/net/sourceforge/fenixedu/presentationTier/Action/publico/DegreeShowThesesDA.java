@@ -19,39 +19,39 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "publico", path = "/showDegreeTheses", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showThesisDetails", path = "degree-showDegreeThesisDetails"),
-		@Forward(name = "showTheses", path = "degree-showDegreeTheses") })
+        @Forward(name = "showTheses", path = "degree-showDegreeTheses") })
 public class DegreeShowThesesDA extends PublicShowThesesDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		request.setAttribute("degree", getDegree(request));
-		return super.execute(mapping, form, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        request.setAttribute("degree", getDegree(request));
+        return super.execute(mapping, form, request, response);
+    }
 
-	public Degree getDegree(HttpServletRequest request) throws FenixActionException {
+    public Degree getDegree(HttpServletRequest request) throws FenixActionException {
 
-		FilterFunctionalityContext currentContext =
-				(FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-		DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
-		Degree degree = selectedContainer.getDegree();
+        FilterFunctionalityContext currentContext =
+                (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+        DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
+        Degree degree = selectedContainer.getDegree();
 
-		if (degree == null) {
-			throw new FenixActionException();
-		}
+        if (degree == null) {
+            throw new FenixActionException();
+        }
 
-		request.setAttribute("degreeID", degree.getIdInternal());
-		request.setAttribute("degree", degree);
+        request.setAttribute("degreeID", degree.getIdInternal());
+        request.setAttribute("degree", degree);
 
-		return degree;
-	}
+        return degree;
+    }
 
-	@Override
-	protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
-		ThesisFilterBean bean = super.getFilterBean(request);
-		bean.setDegree(getDegree(request));
-		bean.setDegreeOptions(Degree.readNotEmptyDegrees());
-		return bean;
-	}
+    @Override
+    protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
+        ThesisFilterBean bean = super.getFilterBean(request);
+        bean.setDegree(getDegree(request));
+        bean.setDegreeOptions(Degree.readNotEmptyDegrees());
+        return bean;
+    }
 
 }

@@ -28,76 +28,76 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(
-		path = "/caseHandlingStandaloneCandidacyProcess",
-		module = "coordinator",
-		formBeanClass = net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
+        path = "/caseHandlingStandaloneCandidacyProcess",
+        module = "coordinator",
+        formBeanClass = net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/coordinator/candidacy/standalone/mainCandidacyProcess.jsp", tileProperties = @Tile(
-		title = "private.coordinator.management.courses.applicationprocesses.isolatedcurriculum")) })
+        title = "private.coordinator.management.courses.applicationprocesses.isolatedcurriculum")) })
 public class StandaloneCandidacyProcessDA extends
-		net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA {
+        net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	@Override
-	public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		throw new RuntimeException("not allowed");
-	}
+    @Override
+    public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        throw new RuntimeException("not allowed");
+    }
 
-	@Override
-	public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		throw new RuntimeException("not allowed");
-	}
+    @Override
+    public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        throw new RuntimeException("not allowed");
+    }
 
-	@Override
-	public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		throw new RuntimeException("not allowed");
-	}
+    @Override
+    public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        throw new RuntimeException("not allowed");
+    }
 
-	@Override
-	public ActionForward prepareExecutePrintCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		throw new RuntimeException("not allowed");
-	}
+    @Override
+    public ActionForward prepareExecutePrintCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        throw new RuntimeException("not allowed");
+    }
 
-	@Override
-	protected List<IndividualCandidacyProcess> getChildProcesses(CandidacyProcess process, HttpServletRequest request) {
-		final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-		final List<IndividualCandidacyProcess> result = new ArrayList(super.getChildProcesses(process, request));
-		for (final Iterator<IndividualCandidacyProcess> i = result.iterator(); i.hasNext();) {
-			final StandaloneIndividualCandidacyProcess individualCandidacyProcess =
-					(StandaloneIndividualCandidacyProcess) i.next();
-			if (!matchesDegree(degreeCurricularPlan, individualCandidacyProcess)) {
-				i.remove();
-			}
-		}
-		return result;
-	}
+    @Override
+    protected List<IndividualCandidacyProcess> getChildProcesses(CandidacyProcess process, HttpServletRequest request) {
+        final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        final List<IndividualCandidacyProcess> result = new ArrayList(super.getChildProcesses(process, request));
+        for (final Iterator<IndividualCandidacyProcess> i = result.iterator(); i.hasNext();) {
+            final StandaloneIndividualCandidacyProcess individualCandidacyProcess =
+                    (StandaloneIndividualCandidacyProcess) i.next();
+            if (!matchesDegree(degreeCurricularPlan, individualCandidacyProcess)) {
+                i.remove();
+            }
+        }
+        return result;
+    }
 
-	private boolean matchesDegree(final DegreeCurricularPlan degreeCurricularPlan,
-			final StandaloneIndividualCandidacyProcess individualCandidacyProcess) {
-		if (degreeCurricularPlan == null) {
-			return true;
-		}
-		for (final CurricularCourse curricularCourse : individualCandidacyProcess.getCurricularCourses()) {
-			final Degree degree = curricularCourse.getDegree();
-			if (degree == degreeCurricularPlan.getDegree()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean matchesDegree(final DegreeCurricularPlan degreeCurricularPlan,
+            final StandaloneIndividualCandidacyProcess individualCandidacyProcess) {
+        if (degreeCurricularPlan == null) {
+            return true;
+        }
+        for (final CurricularCourse curricularCourse : individualCandidacyProcess.getCurricularCourses()) {
+            final Degree degree = curricularCourse.getDegree();
+            if (degree == degreeCurricularPlan.getDegree()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
-		final String param = request.getParameter("degreeCurricularPlanID");
-		return param == null || param.isEmpty() ? null : rootDomainObject.readDegreeCurricularPlanByOID(new Integer(param));
-	}
+    private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
+        final String param = request.getParameter("degreeCurricularPlanID");
+        return param == null || param.isEmpty() ? null : rootDomainObject.readDegreeCurricularPlanByOID(new Integer(param));
+    }
 
 }

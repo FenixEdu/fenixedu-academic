@@ -12,29 +12,29 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/qucAudit", module = "departmentMember")
 @Forwards({ @Forward(name = "viewAuditProcesses", path = "/departmentMember/quc/viewAuditProcesses.jsp"),
-		@Forward(name = "viewProcessDetails", path = "/departmentMember/quc/viewProcessDetails.jsp"),
-		@Forward(name = "editProcess", path = "/departmentMember/quc/editProcess.jsp"),
-		@Forward(name = "manageAuditFiles", path = "/departmentMember/quc/manageAuditFiles.jsp") })
+        @Forward(name = "viewProcessDetails", path = "/departmentMember/quc/viewProcessDetails.jsp"),
+        @Forward(name = "editProcess", path = "/departmentMember/quc/editProcess.jsp"),
+        @Forward(name = "manageAuditFiles", path = "/departmentMember/quc/manageAuditFiles.jsp") })
 public class QUCTeacherAuditorDA extends QUCAuditorDA {
 
-	@Override
-	protected List<ExecutionCourseAudit> getExecutionCoursesAudit(ExecutionSemester executionSemester) {
-		Teacher teacher = AccessControl.getPerson().getTeacher();
-		return teacher.getExecutionCourseAudits(executionSemester);
-	}
+    @Override
+    protected List<ExecutionCourseAudit> getExecutionCoursesAudit(ExecutionSemester executionSemester) {
+        Teacher teacher = AccessControl.getPerson().getTeacher();
+        return teacher.getExecutionCourseAudits(executionSemester);
+    }
 
-	@Override
-	protected boolean isTeacher() {
-		return true;
-	}
+    @Override
+    protected boolean isTeacher() {
+        return true;
+    }
 
-	@Override
-	protected String getApprovedSelf() {
-		return "approvedByTeacher";
-	}
+    @Override
+    protected String getApprovedSelf() {
+        return "approvedByTeacher";
+    }
 
-	@Override
-	protected String getApprovedOther() {
-		return "approvedByStudent";
-	}
+    @Override
+    protected String getApprovedOther() {
+        return "approvedByStudent";
+    }
 }

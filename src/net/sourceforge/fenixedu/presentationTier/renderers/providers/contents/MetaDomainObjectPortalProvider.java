@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class MetaDomainObjectPortalProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		List<MetaDomainObjectPortal> portals = new ArrayList<MetaDomainObjectPortal>();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        List<MetaDomainObjectPortal> portals = new ArrayList<MetaDomainObjectPortal>();
 
-		for (MetaDomainObject metaDomainObject : RootDomainObject.getInstance().getMetaDomainObjects()) {
-			if (metaDomainObject.isPortalAvailable()) {
-				portals.add((MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal());
-			}
-		}
-		return portals;
-	}
+        for (MetaDomainObject metaDomainObject : RootDomainObject.getInstance().getMetaDomainObjects()) {
+            if (metaDomainObject.isPortalAvailable()) {
+                portals.add((MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal());
+            }
+        }
+        return portals;
+    }
 
 }

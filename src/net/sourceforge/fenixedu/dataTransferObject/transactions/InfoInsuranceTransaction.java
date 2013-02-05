@@ -11,61 +11,61 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
  */
 public class InfoInsuranceTransaction extends InfoPaymentTransaction {
 
-	private InfoExecutionYear infoExecutionYear;
+    private InfoExecutionYear infoExecutionYear;
 
-	private InfoStudent infoStudent;
+    private InfoStudent infoStudent;
 
-	public InfoInsuranceTransaction() {
+    public InfoInsuranceTransaction() {
 
-	}
+    }
 
-	protected void copyFromDomain(InsuranceTransaction insuranceTransaction) {
+    protected void copyFromDomain(InsuranceTransaction insuranceTransaction) {
 
-		super.copyFromDomain(insuranceTransaction);
+        super.copyFromDomain(insuranceTransaction);
 
-		this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceTransaction.getExecutionYear());
-		this.infoStudent = InfoStudent.newInfoFromDomain(insuranceTransaction.getStudent());
-	}
+        this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceTransaction.getExecutionYear());
+        this.infoStudent = InfoStudent.newInfoFromDomain(insuranceTransaction.getStudent());
+    }
 
-	public static InfoInsuranceTransaction newInfoFromDomain(InsuranceTransaction insuranceTransaction) {
+    public static InfoInsuranceTransaction newInfoFromDomain(InsuranceTransaction insuranceTransaction) {
 
-		if (insuranceTransaction == null) {
-			return null;
-		}
+        if (insuranceTransaction == null) {
+            return null;
+        }
 
-		InfoInsuranceTransaction infoInsuranceTransaction = new InfoInsuranceTransaction();
-		infoInsuranceTransaction.copyFromDomain(insuranceTransaction);
+        InfoInsuranceTransaction infoInsuranceTransaction = new InfoInsuranceTransaction();
+        infoInsuranceTransaction.copyFromDomain(insuranceTransaction);
 
-		return infoInsuranceTransaction;
-	}
+        return infoInsuranceTransaction;
+    }
 
-	/**
-	 * @return Returns the infoExecutionYear.
-	 */
-	public InfoExecutionYear getInfoExecutionYear() {
-		return infoExecutionYear;
-	}
+    /**
+     * @return Returns the infoExecutionYear.
+     */
+    public InfoExecutionYear getInfoExecutionYear() {
+        return infoExecutionYear;
+    }
 
-	/**
-	 * @param infoExecutionYear
-	 *            The infoExecutionYear to set.
-	 */
-	public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-		this.infoExecutionYear = infoExecutionYear;
-	}
+    /**
+     * @param infoExecutionYear
+     *            The infoExecutionYear to set.
+     */
+    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
+        this.infoExecutionYear = infoExecutionYear;
+    }
 
-	/**
-	 * @return Returns the infoStudent.
-	 */
-	public InfoStudent getInfoStudent() {
-		return infoStudent;
-	}
+    /**
+     * @return Returns the infoStudent.
+     */
+    public InfoStudent getInfoStudent() {
+        return infoStudent;
+    }
 
-	/**
-	 * @param infoStudent
-	 *            The infoStudent to set.
-	 */
-	public void setInfoStudent(InfoStudent infoStudent) {
-		this.infoStudent = infoStudent;
-	}
+    /**
+     * @param infoStudent
+     *            The infoStudent to set.
+     */
+    public void setInfoStudent(InfoStudent infoStudent) {
+        this.infoStudent = infoStudent;
+    }
 }

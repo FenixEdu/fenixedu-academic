@@ -9,33 +9,33 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class PrintRegistrationDeclarationOperation extends CandidacyOperation {
 
-	public PrintRegistrationDeclarationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
-		super(roleTypes, candidacy);
-	}
+    public PrintRegistrationDeclarationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
+        super(roleTypes, candidacy);
+    }
 
-	@Override
-	protected void internalExecute() {
-		// nothing to be done
+    @Override
+    protected void internalExecute() {
+        // nothing to be done
 
-	}
+    }
 
-	@Override
-	public CandidacyOperationType getType() {
-		return CandidacyOperationType.PRINT_REGISTRATION_DECLARATION;
-	}
+    @Override
+    public CandidacyOperationType getType() {
+        return CandidacyOperationType.PRINT_REGISTRATION_DECLARATION;
+    }
 
-	@Override
-	public boolean isInput() {
-		return false;
-	}
+    @Override
+    public boolean isInput() {
+        return false;
+    }
 
-	@Override
-	public boolean isVisible() {
-		return false;
-	}
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
 
-	@Override
-	public boolean isAuthorized(Person person) {
-		return super.isAuthorized(person) && person == getCandidacy().getPerson();
-	}
+    @Override
+    public boolean isAuthorized(Person person) {
+        return super.isAuthorized(person) && person == getCandidacy().getPerson();
+    }
 }

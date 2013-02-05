@@ -8,32 +8,32 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 public abstract class StudentCandidacyBean implements Serializable {
 
-	private Degree degree;
-	private DegreeCurricularPlan degreeCurricularPlan;
-	private ExecutionDegree executionDegree;
+    private Degree degree;
+    private DegreeCurricularPlan degreeCurricularPlan;
+    private ExecutionDegree executionDegree;
 
-	public Degree getDegree() {
-		return this.degree;
-	}
+    public Degree getDegree() {
+        return this.degree;
+    }
 
-	public void setDegree(Degree degree) {
-		this.degree = degree;
-	}
+    public void setDegree(Degree degree) {
+        this.degree = degree;
+    }
 
-	public DegreeCurricularPlan getDegreeCurricularPlan() {
-		return this.degreeCurricularPlan;
-	}
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return this.degreeCurricularPlan;
+    }
 
-	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	}
+    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
 
-	public ExecutionDegree getExecutionDegree() {
-		return this.executionDegree;
-	}
+    public ExecutionDegree getExecutionDegree() {
+        return this.executionDegree;
+    }
 
-	public void setExecutionDegree(ExecutionDegree executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+    public void setExecutionDegree(ExecutionDegree executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
 }

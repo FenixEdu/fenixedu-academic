@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class PhdProgramsProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
-		return RootDomainObject.getInstance().getPhdPrograms();
-	}
+    @Override
+    public Object provide(Object source, Object current) {
+        return RootDomainObject.getInstance().getPhdPrograms();
+    }
 }

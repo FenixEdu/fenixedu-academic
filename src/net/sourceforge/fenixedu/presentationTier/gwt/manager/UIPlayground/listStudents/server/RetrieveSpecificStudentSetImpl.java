@@ -11,18 +11,18 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class RetrieveSpecificStudentSetImpl extends RemoteServiceServlet implements RetrieveSpecificStudentSet {
 
-	@Override
-	public List<String> getStudentNames() {
-		DegreeCurricularPlan mean = DegreeCurricularPlan.readByNameAndDegreeSigla("MEAN 2006", "MEAN");
-		List<String> pupils = new ArrayList<String>();
+    @Override
+    public List<String> getStudentNames() {
+        DegreeCurricularPlan mean = DegreeCurricularPlan.readByNameAndDegreeSigla("MEAN 2006", "MEAN");
+        List<String> pupils = new ArrayList<String>();
 
-		for (StudentCurricularPlan scp : mean.getStudentCurricularPlans()) {
-			if (scp.getRegistration().getCurricularYear() == 1) {
-				pupils.add(scp.getRegistration().getStudent().getPerson().getName());
-			}
-		}
+        for (StudentCurricularPlan scp : mean.getStudentCurricularPlans()) {
+            if (scp.getRegistration().getCurricularYear() == 1) {
+                pupils.add(scp.getRegistration().getStudent().getPerson().getName());
+            }
+        }
 
-		return pupils;
-	}
+        return pupils;
+    }
 
 }

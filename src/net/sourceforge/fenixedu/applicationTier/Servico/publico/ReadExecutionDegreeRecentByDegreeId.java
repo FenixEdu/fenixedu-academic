@@ -23,19 +23,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionDegreeRecentByDegreeId extends FenixService {
 
-	@Service
-	public static InfoExecutionDegree run(final Integer degreeId) {
-		List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
+    @Service
+    public static InfoExecutionDegree run(final Integer degreeId) {
+        List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
 
-		Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-		for (DegreeCurricularPlan curricularPlan : degree.getDegreeCurricularPlans()) {
-			listExecutionDegrees.addAll(curricularPlan.getExecutionDegrees());
-		}
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        for (DegreeCurricularPlan curricularPlan : degree.getDegreeCurricularPlans()) {
+            listExecutionDegrees.addAll(curricularPlan.getExecutionDegrees());
+        }
 
-		ComparatorChain chain = new ComparatorChain(new BeanComparator("degreeCurricularPlan.initialDate"));
-		chain.addComparator(new BeanComparator("executionYear.year"));
-		ExecutionDegree executionDegree = Collections.max(listExecutionDegrees, chain);
+        ComparatorChain chain = new ComparatorChain(new BeanComparator("degreeCurricularPlan.initialDate"));
+        chain.addComparator(new BeanComparator("executionYear.year"));
+        ExecutionDegree executionDegree = Collections.max(listExecutionDegrees, chain);
 
-		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	}
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    }
 }

@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.injectionCode.injector.CodeGenerator;
 
 public class FenixVoidAccessControlCallsGenerator implements CodeGenerator {
 
-	@Override
-	public String getCode(Map<String, Object> annotationParameters) {
-		return "";
-	}
+    @Override
+    public String getCode(Map<String, Object> annotationParameters) {
+        return "";
+    }
 
 }

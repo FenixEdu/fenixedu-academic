@@ -15,61 +15,61 @@ import net.sourceforge.fenixedu.domain.Mark;
 
 public class InfoMark extends InfoObject {
 
-	private final Mark markDomainReference;
+    private final Mark markDomainReference;
 
-	public InfoMark(final Mark mark) {
-		markDomainReference = mark;
-	}
+    public InfoMark(final Mark mark) {
+        markDomainReference = mark;
+    }
 
-	public static InfoMark newInfoFromDomain(Mark mark) {
-		return mark == null ? null : new InfoMark(mark);
-	}
+    public static InfoMark newInfoFromDomain(Mark mark) {
+        return mark == null ? null : new InfoMark(mark);
+    }
 
-	private Mark getMarkObject() {
-		return markDomainReference;
-	}
+    private Mark getMarkObject() {
+        return markDomainReference;
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getMarkObject().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getMarkObject().getIdInternal();
+    }
 
-	@Override
-	public void setIdInternal(Integer integer) {
-		throw new Error("Method should not be called!");
-	}
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
 
-	/**
-	 * @return
-	 */
-	public String getMark() {
-		return getMarkObject().getMark();
-	}
+    /**
+     * @return
+     */
+    public String getMark() {
+        return getMarkObject().getMark();
+    }
 
-	/**
-	 * @return
-	 */
-	public String getPublishedMark() {
-		return getMarkObject().getPublishedMark();
-	}
+    /**
+     * @return
+     */
+    public String getPublishedMark() {
+        return getMarkObject().getPublishedMark();
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoEvaluation getInfoEvaluation() {
-		return InfoEvaluation.newInfoFromDomain(getMarkObject().getEvaluation());
-	}
+    /**
+     * @return
+     */
+    public InfoEvaluation getInfoEvaluation() {
+        return InfoEvaluation.newInfoFromDomain(getMarkObject().getEvaluation());
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoFrequenta getInfoFrequenta() {
-		return InfoFrequenta.newInfoFromDomain(getMarkObject().getAttend());
-	}
+    /**
+     * @return
+     */
+    public InfoFrequenta getInfoFrequenta() {
+        return InfoFrequenta.newInfoFromDomain(getMarkObject().getAttend());
+    }
 
-	@Override
-	public String toString() {
-		return getMarkObject().toString();
-	}
+    @Override
+    public String toString() {
+        return getMarkObject().toString();
+    }
 
 }

@@ -7,38 +7,38 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CandidacyProcessState {
 
-	STAND_BY,
+    STAND_BY,
 
-	SENT_TO_JURY,
+    SENT_TO_JURY,
 
-	SENT_TO_COORDINATOR,
+    SENT_TO_COORDINATOR,
 
-	SENT_TO_SCIENTIFIC_COUNCIL,
+    SENT_TO_SCIENTIFIC_COUNCIL,
 
-	PUBLISHED;
+    PUBLISHED;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public String getQualifiedName() {
-		return CandidacyProcessState.class.getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return CandidacyProcessState.class.getSimpleName() + "." + name();
+    }
 
-	public String getFullyQualifiedName() {
-		return CandidacyProcessState.class.getName() + "." + name();
-	}
+    public String getFullyQualifiedName() {
+        return CandidacyProcessState.class.getName() + "." + name();
+    }
 
-	protected String localizedName(Locale locale) {
-		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-	}
+    protected String localizedName(Locale locale) {
+        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+    }
 
-	protected String localizedName() {
-		return localizedName(Language.getLocale());
-	}
+    protected String localizedName() {
+        return localizedName(Language.getLocale());
+    }
 
-	public String getLocalizedName() {
-		return localizedName();
-	}
+    public String getLocalizedName() {
+        return localizedName();
+    }
 
 }

@@ -25,147 +25,147 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({
 
 @Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp"),
-		@Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp"),
-		@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp"),
-		@Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp") })
+        @Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp"),
+        @Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp"),
+        @Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp") })
 public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();
-		request.setAttribute("bean", bean);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("prepare");
-	}
+        return mapping.findForward("prepare");
+    }
 
-	public ActionForward showReport(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-			final HttpServletResponse response) throws IOException {
-		ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
+    public ActionForward showReport(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws IOException {
+        ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
 
-		if (bean == null || bean.getXlsFile() == null) {
-			return prepare(mapping, actionForm, request, response);
-		}
+        if (bean == null || bean.getXlsFile() == null) {
+            return prepare(mapping, actionForm, request, response);
+        }
 
-		POIFSFileSystem fs = new POIFSFileSystem(bean.getXlsFile());
-		HSSFWorkbook wb = new HSSFWorkbook(fs);
-		HSSFSheet sheet = wb.getSheetAt(0);
+        POIFSFileSystem fs = new POIFSFileSystem(bean.getXlsFile());
+        HSSFWorkbook wb = new HSSFWorkbook(fs);
+        HSSFSheet sheet = wb.getSheetAt(0);
 
-		if (sheet == null) {
-			addErrorMessage(request, "error", "error.academicAdminOffice.scholarship.utl.report.invalid.spreadsheet",
-					new String[0]);
-			return prepare(mapping, actionForm, request, response);
-		}
+        if (sheet == null) {
+            addErrorMessage(request, "error", "error.academicAdminOffice.scholarship.utl.report.invalid.spreadsheet",
+                    new String[0]);
+            return prepare(mapping, actionForm, request, response);
+        }
 
-		ReportStudentsUTLCandidates report = null;
+        ReportStudentsUTLCandidates report = null;
 
-		if (bean.getForFirstYear()) {
-			report = new ReportStudentsUTLCandidatesForFirstYear(bean.getExecutionYear(), sheet);
-		} else {
-			report = new ReportStudentsUTLCandidates(bean.getExecutionYear(), sheet);
-		}
+        if (bean.getForFirstYear()) {
+            report = new ReportStudentsUTLCandidatesForFirstYear(bean.getExecutionYear(), sheet);
+        } else {
+            report = new ReportStudentsUTLCandidates(bean.getExecutionYear(), sheet);
+        }
 
-		request.setAttribute("report", report);
+        request.setAttribute("report", report);
 
-		List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
-		List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
+        List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
+        List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
 
-		erroneousStudentLines.addAll(report.getErroneousStudentLines());
+        erroneousStudentLines.addAll(report.getErroneousStudentLines());
 
-		for (StudentLine studentLine : report.getCorrectStudentLines()) {
-			if (studentLine.isAbleToReadAllValues()) {
-				correctStudentLines.add(studentLine);
-			} else {
-				erroneousStudentLines.add(studentLine);
-			}
-		}
+        for (StudentLine studentLine : report.getCorrectStudentLines()) {
+            if (studentLine.isAbleToReadAllValues()) {
+                correctStudentLines.add(studentLine);
+            } else {
+                erroneousStudentLines.add(studentLine);
+            }
+        }
 
-		request.setAttribute("correctStudentLines", correctStudentLines);
-		request.setAttribute("erroneousStudentLines", erroneousStudentLines);
+        request.setAttribute("correctStudentLines", correctStudentLines);
+        request.setAttribute("erroneousStudentLines", erroneousStudentLines);
 
-		return mapping.findForward("showReport");
-	}
+        return mapping.findForward("showReport");
+    }
 
-	public ActionForward viewDetails(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-			final HttpServletResponse response) {
-		return mapping.findForward("viewDetails");
-	}
+    public ActionForward viewDetails(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        return mapping.findForward("viewDetails");
+    }
 
-	public ActionForward exportReport(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		ReportStudentsUTLCandidates report = getRenderedObject("report");
+    public ActionForward exportReport(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        ReportStudentsUTLCandidates report = getRenderedObject("report");
 
-		HSSFWorkbook generateReport = report.generateReport();
+        HSSFWorkbook generateReport = report.generateReport();
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment; filename=bolsa_accao_social_utl.xls");
-		generateReport.write(response.getOutputStream());
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=bolsa_accao_social_utl.xls");
+        generateReport.write(response.getOutputStream());
 
-		response.getOutputStream().flush();
-		response.flushBuffer();
+        response.getOutputStream().flush();
+        response.flushBuffer();
 
-		return null;
-	}
+        return null;
+    }
 
-	public ActionForward exportErrors(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		ReportStudentsUTLCandidates report = getRenderedObject("report");
+    public ActionForward exportErrors(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        ReportStudentsUTLCandidates report = getRenderedObject("report");
 
-		HSSFWorkbook generateReport = report.generateErrors();
+        HSSFWorkbook generateReport = report.generateErrors();
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment; filename=erros_bolsa_accao_social.xls");
-		generateReport.write(response.getOutputStream());
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=erros_bolsa_accao_social.xls");
+        generateReport.write(response.getOutputStream());
 
-		response.getOutputStream().flush();
-		response.flushBuffer();
+        response.getOutputStream().flush();
+        response.flushBuffer();
 
-		return null;
-	}
+        return null;
+    }
 
-	public ActionForward prepareForOneStudent(final ActionMapping mapping, final ActionForm form,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();
+    public ActionForward prepareForOneStudent(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();
 
-		request.setAttribute("bean", bean);
-		return mapping.findForward("prepareForOneStudent");
-	}
+        request.setAttribute("bean", bean);
+        return mapping.findForward("prepareForOneStudent");
+    }
 
-	public ActionForward showReportForOneStudent(final ActionMapping mapping, final ActionForm form,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
+    public ActionForward showReportForOneStudent(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
 
-		if (bean == null) {
-			return prepareForOneStudent(mapping, form, request, response);
-		}
+        if (bean == null) {
+            return prepareForOneStudent(mapping, form, request, response);
+        }
 
-		ReportStudentsUTLCandidates report = null;
-		if (bean.getForFirstYear()) {
-			report =
-					new ReportStudentsUTLCandidatesForOneStudentFirstYear(bean.getExecutionYear(),
-							Student.readStudentByNumber(bean.getStudentNumber()));
-		} else {
-			report =
-					new ReportStudentsUTLCandidatesForOneStudent(bean.getExecutionYear(), Student.readStudentByNumber(bean
-							.getStudentNumber()));
-		}
+        ReportStudentsUTLCandidates report = null;
+        if (bean.getForFirstYear()) {
+            report =
+                    new ReportStudentsUTLCandidatesForOneStudentFirstYear(bean.getExecutionYear(),
+                            Student.readStudentByNumber(bean.getStudentNumber()));
+        } else {
+            report =
+                    new ReportStudentsUTLCandidatesForOneStudent(bean.getExecutionYear(), Student.readStudentByNumber(bean
+                            .getStudentNumber()));
+        }
 
-		request.setAttribute("report", report);
+        request.setAttribute("report", report);
 
-		List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
-		List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
+        List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
+        List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
 
-		erroneousStudentLines.addAll(report.getErroneousStudentLines());
+        erroneousStudentLines.addAll(report.getErroneousStudentLines());
 
-		for (StudentLine studentLine : report.getCorrectStudentLines()) {
-			if (studentLine.isAbleToReadAllValues()) {
-				correctStudentLines.add(studentLine);
-			} else {
-				erroneousStudentLines.add(studentLine);
-			}
-		}
+        for (StudentLine studentLine : report.getCorrectStudentLines()) {
+            if (studentLine.isAbleToReadAllValues()) {
+                correctStudentLines.add(studentLine);
+            } else {
+                erroneousStudentLines.add(studentLine);
+            }
+        }
 
-		request.setAttribute("correctStudentLines", correctStudentLines);
-		request.setAttribute("erroneousStudentLines", erroneousStudentLines);
+        request.setAttribute("correctStudentLines", correctStudentLines);
+        request.setAttribute("erroneousStudentLines", erroneousStudentLines);
 
-		return mapping.findForward("showReport");
-	}
+        return mapping.findForward("showReport");
+    }
 }

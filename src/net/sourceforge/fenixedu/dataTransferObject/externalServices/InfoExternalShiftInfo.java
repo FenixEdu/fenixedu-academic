@@ -14,30 +14,30 @@ import net.sourceforge.fenixedu.domain.Shift;
  *         Created at 2:16:00 PM, Mar 10, 2005
  */
 public class InfoExternalShiftInfo {
-	private String name;
+    private String name;
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName() {
-		return this.name;
-	}
+    /**
+     * @return Returns the name.
+     */
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @param shift
-	 * @return
-	 */
-	public static InfoExternalShiftInfo newFromShift(Shift shift) {
-		InfoExternalShiftInfo info = new InfoExternalShiftInfo();
-		info.setName(shift.getNome());
-		return info;
-	}
+    /**
+     * @param shift
+     * @return
+     */
+    public static InfoExternalShiftInfo newFromShift(Shift shift) {
+        InfoExternalShiftInfo info = new InfoExternalShiftInfo();
+        info.setName(shift.getNome());
+        return info;
+    }
 }

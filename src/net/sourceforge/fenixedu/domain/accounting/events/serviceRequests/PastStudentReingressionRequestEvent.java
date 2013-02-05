@@ -9,19 +9,19 @@ import net.sourceforge.fenixedu.util.Money;
 
 public class PastStudentReingressionRequestEvent extends PastStudentReingressionRequestEvent_Base implements IPastRequestEvent {
 
-	protected PastStudentReingressionRequestEvent() {
-		super();
-	}
+    protected PastStudentReingressionRequestEvent() {
+        super();
+    }
 
-	public PastStudentReingressionRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final StudentReingressionRequest request) {
-		this();
-		super.init(administrativeOffice, EventType.PAST_STUDENT_REINGRESSION_REQUEST, person, request);
-	}
+    public PastStudentReingressionRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final StudentReingressionRequest request) {
+        this();
+        super.init(administrativeOffice, EventType.PAST_STUDENT_REINGRESSION_REQUEST, person, request);
+    }
 
-	@Override
-	public void setPastAmount(Money pastAmount) {
-		throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
-	}
+    @Override
+    public void setPastAmount(Money pastAmount) {
+        throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
+    }
 
 }

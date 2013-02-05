@@ -11,31 +11,31 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
 public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
 
-	public RestrictionPeriodToApply() {
-	}
+    public RestrictionPeriodToApply() {
+    }
 
-	public RestrictionPeriodToApply(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
-		setPrecedence(precedence);
-		setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
-	}
+    public RestrictionPeriodToApply(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
+        setPrecedence(precedence);
+        setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
+    }
 
-	@Override
-	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-		ExecutionSemester executionSemester = precedenceContext.getExecutionPeriod();
+    @Override
+    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+        ExecutionSemester executionSemester = precedenceContext.getExecutionPeriod();
 
-		boolean isValid = false;
+        boolean isValid = false;
 
-		if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS)) {
-			isValid = true;
-		} else if (executionSemester.getSemester().equals(Integer.valueOf(this.getPeriodToApplyRestriction().getValue()))) {
-			isValid = true;
-		}
+        if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS)) {
+            isValid = true;
+        } else if (executionSemester.getSemester().equals(Integer.valueOf(this.getPeriodToApplyRestriction().getValue()))) {
+            isValid = true;
+        }
 
-		if (isValid) {
-			return CurricularCourseEnrollmentType.DEFINITIVE;
-		}
+        if (isValid) {
+            return CurricularCourseEnrollmentType.DEFINITIVE;
+        }
 
-		return CurricularCourseEnrollmentType.NO_EVALUATE;
-	}
+        return CurricularCourseEnrollmentType.NO_EVALUATE;
+    }
 
 }

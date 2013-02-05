@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddContentToPool extends FenixService {
 
-	@Service
-	public static void run(MetaDomainObjectPortal portal, Content content) {
-		portal.addPool(content);
-	}
+    @Service
+    public static void run(MetaDomainObjectPortal portal, Content content) {
+        portal.addPool(content);
+    }
 }

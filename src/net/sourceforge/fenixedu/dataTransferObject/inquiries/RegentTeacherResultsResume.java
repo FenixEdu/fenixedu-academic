@@ -11,46 +11,46 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class RegentTeacherResultsResume implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<TeacherShiftTypeGroupsResumeResult> teacherShiftTypeGroupsResumeResults;
-	private Professorship professorship;
+    private List<TeacherShiftTypeGroupsResumeResult> teacherShiftTypeGroupsResumeResults;
+    private Professorship professorship;
 
-	public RegentTeacherResultsResume(Professorship professorship) {
-		setProfessorship(professorship);
-	}
+    public RegentTeacherResultsResume(Professorship professorship) {
+        setProfessorship(professorship);
+    }
 
-	@Override
-	public int hashCode() {
-		return getProfessorship().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getProfessorship().hashCode();
+    }
 
-	public void addTeacherShiftTypeGroupsResumeResult(TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult) {
-		if (getTeacherShiftTypeGroupsResumeResults() == null) {
-			setTeacherShiftTypeGroupsResumeResults(new ArrayList<TeacherShiftTypeGroupsResumeResult>());
-		}
-		getTeacherShiftTypeGroupsResumeResults().add(teacherShiftTypeGroupsResumeResult);
-	}
+    public void addTeacherShiftTypeGroupsResumeResult(TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult) {
+        if (getTeacherShiftTypeGroupsResumeResults() == null) {
+            setTeacherShiftTypeGroupsResumeResults(new ArrayList<TeacherShiftTypeGroupsResumeResult>());
+        }
+        getTeacherShiftTypeGroupsResumeResults().add(teacherShiftTypeGroupsResumeResult);
+    }
 
-	public void setTeacherShiftTypeGroupsResumeResults(
-			List<TeacherShiftTypeGroupsResumeResult> teacherShiftTypeGroupsResumeResults) {
-		this.teacherShiftTypeGroupsResumeResults = teacherShiftTypeGroupsResumeResults;
-	}
+    public void setTeacherShiftTypeGroupsResumeResults(
+            List<TeacherShiftTypeGroupsResumeResult> teacherShiftTypeGroupsResumeResults) {
+        this.teacherShiftTypeGroupsResumeResults = teacherShiftTypeGroupsResumeResults;
+    }
 
-	public List<TeacherShiftTypeGroupsResumeResult> getTeacherShiftTypeGroupsResumeResults() {
-		return teacherShiftTypeGroupsResumeResults;
-	}
+    public List<TeacherShiftTypeGroupsResumeResult> getTeacherShiftTypeGroupsResumeResults() {
+        return teacherShiftTypeGroupsResumeResults;
+    }
 
-	public List<TeacherShiftTypeGroupsResumeResult> getOrderedTeacherShiftResumes() {
-		Collections.sort(getTeacherShiftTypeGroupsResumeResults(), new BeanComparator("shiftType"));
-		return getTeacherShiftTypeGroupsResumeResults();
-	}
+    public List<TeacherShiftTypeGroupsResumeResult> getOrderedTeacherShiftResumes() {
+        Collections.sort(getTeacherShiftTypeGroupsResumeResults(), new BeanComparator("shiftType"));
+        return getTeacherShiftTypeGroupsResumeResults();
+    }
 
-	public void setProfessorship(Professorship professorship) {
-		this.professorship = professorship;
-	}
+    public void setProfessorship(Professorship professorship) {
+        this.professorship = professorship;
+    }
 
-	public Professorship getProfessorship() {
-		return professorship;
-	}
+    public Professorship getProfessorship() {
+        return professorship;
+    }
 }

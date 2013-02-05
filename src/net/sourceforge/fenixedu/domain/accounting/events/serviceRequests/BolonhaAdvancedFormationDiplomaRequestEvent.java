@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaR
 
 public class BolonhaAdvancedFormationDiplomaRequestEvent extends BolonhaAdvancedFormationDiplomaRequestEvent_Base {
 
-	protected BolonhaAdvancedFormationDiplomaRequestEvent() {
-		super();
-	}
+    protected BolonhaAdvancedFormationDiplomaRequestEvent() {
+        super();
+    }
 
-	public BolonhaAdvancedFormationDiplomaRequestEvent(final AdministrativeOffice administrativeOffice,
-			final EventType eventType, final Person person, final DiplomaRequest diplomaRequest) {
-		this();
-		super.init(administrativeOffice, eventType, person, diplomaRequest);
-	}
+    public BolonhaAdvancedFormationDiplomaRequestEvent(final AdministrativeOffice administrativeOffice,
+            final EventType eventType, final Person person, final DiplomaRequest diplomaRequest) {
+        this();
+        super.init(administrativeOffice, eventType, person, diplomaRequest);
+    }
 
 }

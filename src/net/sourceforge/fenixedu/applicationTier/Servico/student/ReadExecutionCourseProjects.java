@@ -27,31 +27,31 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourseProjects extends FenixService {
 
-	@Service
-	public static ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
+    @Service
+    public static ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
 
-		InfoSiteProjects infoSiteProjects = null;
+        InfoSiteProjects infoSiteProjects = null;
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-		final List<Grouping> executionCourseProjects = executionCourse.getGroupings();
+        final List<Grouping> executionCourseProjects = executionCourse.getGroupings();
 
-		if (executionCourseProjects.size() != 0) {
-			infoSiteProjects = new InfoSiteProjects();
-			List infoGroupPropertiesList = new ArrayList();
+        if (executionCourseProjects.size() != 0) {
+            infoSiteProjects = new InfoSiteProjects();
+            List infoGroupPropertiesList = new ArrayList();
 
-			for (final Grouping grouping : executionCourseProjects) {
-				IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-				IGroupEnrolmentStrategy strategy =
-						enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-				if (strategy.checkEnrolmentDate(grouping, Calendar.getInstance())
-						&& strategy.checkStudentInGrouping(grouping, userName)) {
-					InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
-					infoGroupPropertiesList.add(infoGroupProperties);
-				}
-			}
-			infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
-		}
-		return infoSiteProjects;
-	}
+            for (final Grouping grouping : executionCourseProjects) {
+                IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+                IGroupEnrolmentStrategy strategy =
+                        enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+                if (strategy.checkEnrolmentDate(grouping, Calendar.getInstance())
+                        && strategy.checkStudentInGrouping(grouping, userName)) {
+                    InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
+                    infoGroupPropertiesList.add(infoGroupProperties);
+                }
+            }
+            infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
+        }
+        return infoSiteProjects;
+    }
 }

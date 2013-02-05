@@ -13,24 +13,24 @@ import net.sourceforge.fenixedu.util.Money;
 
 public class PastEquivalencePlanRequestEvent extends PastEquivalencePlanRequestEvent_Base implements IPastRequestEvent {
 
-	protected PastEquivalencePlanRequestEvent() {
-		super();
-	}
+    protected PastEquivalencePlanRequestEvent() {
+        super();
+    }
 
-	public PastEquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final EquivalencePlanRequest request) {
-		this();
-		super.init(administrativeOffice, EventType.PAST_EQUIVALENCE_PLAN_REQUEST, person, request);
-	}
+    public PastEquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final EquivalencePlanRequest request) {
+        this();
+        super.init(administrativeOffice, EventType.PAST_EQUIVALENCE_PLAN_REQUEST, person, request);
+    }
 
-	@Override
-	public Set<EntryType> getPossibleEntryTypesForDeposit() {
-		return Collections.singleton(EntryType.EQUIVALENCE_PLAN_REQUEST_FEE);
-	}
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.EQUIVALENCE_PLAN_REQUEST_FEE);
+    }
 
-	@Override
-	public void setPastAmount(Money pastAmount) {
-		throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
-	}
+    @Override
+    public void setPastAmount(Money pastAmount) {
+        throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
+    }
 
 }

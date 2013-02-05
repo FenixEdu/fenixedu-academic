@@ -13,28 +13,28 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhas
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class CreateTSDCurricularCourses extends FenixService {
-	public void run(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId, Integer executionPeriodId,
-			Boolean activateCourses) {
+    public void run(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId, Integer executionPeriodId,
+            Boolean activateCourses) {
 
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
-		TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
+        TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-		List<CurricularCourse> curricularCourseList =
-				competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester);
+        List<CurricularCourse> curricularCourseList =
+                competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester);
 
-		Set<CurricularCourse> existingCurricularCourses = new HashSet<CurricularCourse>();
-		for (TSDCurricularCourse tsdCourse : tsdProcessPhase.getRootTSD().getTSDCurricularCourses(competenceCourse,
-				executionSemester)) {
-			existingCurricularCourses.add(tsdCourse.getCurricularCourse());
-		}
+        Set<CurricularCourse> existingCurricularCourses = new HashSet<CurricularCourse>();
+        for (TSDCurricularCourse tsdCourse : tsdProcessPhase.getRootTSD().getTSDCurricularCourses(competenceCourse,
+                executionSemester)) {
+            existingCurricularCourses.add(tsdCourse.getCurricularCourse());
+        }
 
-		for (CurricularCourse curricularCourse : curricularCourseList) {
-			if (!existingCurricularCourses.contains(curricularCourse)) {
-				TSDCurricularCourse tsdCurricularCourse = new TSDCurricularCourse(tsd, curricularCourse, executionSemester);
-				tsdCurricularCourse.setIsActive(activateCourses);
-			}
-		}
-	}
+        for (CurricularCourse curricularCourse : curricularCourseList) {
+            if (!existingCurricularCourses.contains(curricularCourse)) {
+                TSDCurricularCourse tsdCurricularCourse = new TSDCurricularCourse(tsd, curricularCourse, executionSemester);
+                tsdCurricularCourse.setIsActive(activateCourses);
+            }
+        }
+    }
 }

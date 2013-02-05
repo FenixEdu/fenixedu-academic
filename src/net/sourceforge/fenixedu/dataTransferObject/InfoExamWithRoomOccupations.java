@@ -16,33 +16,33 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
  */
 public class InfoExamWithRoomOccupations extends InfoExam {
 
-	@Override
-	public void copyFromDomain(Exam exam) {
-		super.copyFromDomain(exam);
-		if (exam != null) {
-			setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(exam
-					.getWrittenEvaluationSpaceOccupations()));
-		}
-	}
+    @Override
+    public void copyFromDomain(Exam exam) {
+        super.copyFromDomain(exam);
+        if (exam != null) {
+            setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(exam
+                    .getWrittenEvaluationSpaceOccupations()));
+        }
+    }
 
-	private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(
-			List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
-		final List<InfoRoomOccupation> infoRoomOccupations = new ArrayList<InfoRoomOccupation>(associatedRoomOccupation.size());
-		for (WrittenEvaluationSpaceOccupation roomOccupation : associatedRoomOccupation) {
-			final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
-			if (infoRoomOccupation != null) {
-				infoRoomOccupations.add(infoRoomOccupation);
-			}
-		}
-		return infoRoomOccupations;
-	}
+    private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(
+            List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
+        final List<InfoRoomOccupation> infoRoomOccupations = new ArrayList<InfoRoomOccupation>(associatedRoomOccupation.size());
+        for (WrittenEvaluationSpaceOccupation roomOccupation : associatedRoomOccupation) {
+            final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+            if (infoRoomOccupation != null) {
+                infoRoomOccupations.add(infoRoomOccupation);
+            }
+        }
+        return infoRoomOccupations;
+    }
 
-	public static InfoExam newInfoFromDomain(Exam exam) {
-		InfoExamWithRoomOccupations infoExam = null;
-		if (exam != null) {
-			infoExam = new InfoExamWithRoomOccupations();
-			infoExam.copyFromDomain(exam);
-		}
-		return infoExam;
-	}
+    public static InfoExam newInfoFromDomain(Exam exam) {
+        InfoExamWithRoomOccupations infoExam = null;
+        if (exam != null) {
+            infoExam = new InfoExamWithRoomOccupations();
+            infoExam.copyFromDomain(exam);
+        }
+        return infoExam;
+    }
 }

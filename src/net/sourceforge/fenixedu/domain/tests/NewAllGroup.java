@@ -10,81 +10,81 @@ import org.apache.commons.collections.Predicate;
 
 public class NewAllGroup extends NewAllGroup_Base {
 
-	public NewAllGroup() {
-		super();
-	}
+    public NewAllGroup() {
+        super();
+    }
 
-	public NewAllGroup(NewQuestionGroup parentQuestionGroup) {
-		this();
+    public NewAllGroup(NewQuestionGroup parentQuestionGroup) {
+        this();
 
-		this.init(parentQuestionGroup);
-	}
+        this.init(parentQuestionGroup);
+    }
 
-	protected static class AllGroupPredicate implements Predicate {
-		@Override
-		public boolean evaluate(Object arg0) {
-			return arg0 instanceof NewAllGroup;
-		}
-	}
+    protected static class AllGroupPredicate implements Predicate {
+        @Override
+        public boolean evaluate(Object arg0) {
+            return arg0 instanceof NewAllGroup;
+        }
+    }
 
-	public static final Predicate ALL_GROUP_PREDICATE = new AllGroupPredicate();
+    public static final Predicate ALL_GROUP_PREDICATE = new AllGroupPredicate();
 
-	@Override
-	public boolean isComposite() {
-		return false;
-	}
+    @Override
+    public boolean isComposite() {
+        return false;
+    }
 
-	@Override
-	public Integer getNewPosition(NewQuestionGroup parentQuestionGroup) {
-		return parentQuestionGroup.getChildAtomicQuestionsCount();
-	}
+    @Override
+    public Integer getNewPosition(NewQuestionGroup parentQuestionGroup) {
+        return parentQuestionGroup.getChildAtomicQuestionsCount();
+    }
 
-	@Override
-	public void setParentQuestionGroup(NewQuestionGroup parentQuestionGroup) {
-		if (!isTopAllGroup()) {
-			throw new DomainException("could.not.associate");
-		}
+    @Override
+    public void setParentQuestionGroup(NewQuestionGroup parentQuestionGroup) {
+        if (!isTopAllGroup()) {
+            throw new DomainException("could.not.associate");
+        }
 
-		super.setParentQuestionGroup(parentQuestionGroup);
-	}
+        super.setParentQuestionGroup(parentQuestionGroup);
+    }
 
-	public boolean isTopAllGroup() {
-		if (this.getParentQuestionGroupsCount() == 1 && this.getParentQuestionGroups().get(0) instanceof NewAllGroup) {
-			return false;
-		}
+    public boolean isTopAllGroup() {
+        if (this.getParentQuestionGroupsCount() == 1 && this.getParentQuestionGroups().get(0) instanceof NewAllGroup) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public NewQuestionType getQuestionType() {
-		return NewQuestionType.ALL_QUESTION_GROUP;
-	}
+    @Override
+    public NewQuestionType getQuestionType() {
+        return NewQuestionType.ALL_QUESTION_GROUP;
+    }
 
-	@Override
-	public List<NewQuestionGroup> getAssociableParents() {
-		if (!this.getParentQuestionGroups().get(0).isComposite()) {
-			return new ArrayList<NewQuestionGroup>();
-		}
+    @Override
+    public List<NewQuestionGroup> getAssociableParents() {
+        if (!this.getParentQuestionGroups().get(0).isComposite()) {
+            return new ArrayList<NewQuestionGroup>();
+        }
 
-		return super.getAssociableParents();
-	}
+        return super.getAssociableParents();
+    }
 
-	protected static final List<PredicateType> predicates = new ArrayList<PredicateType>();
+    protected static final List<PredicateType> predicates = new ArrayList<PredicateType>();
 
-	@Override
-	public List<PredicateType> getPredicates() {
-		return predicates;
-	}
+    @Override
+    public List<PredicateType> getPredicates() {
+        return predicates;
+    }
 
-	@Override
-	public List<NewQuestion> provide(int count) {
-		this.setTimesUsed(this.getTimesUsed() + 1);
+    @Override
+    public List<NewQuestion> provide(int count) {
+        this.setTimesUsed(this.getTimesUsed() + 1);
 
-		ArrayList<NewQuestion> choosenQuestions = new ArrayList<NewQuestion>();
-		choosenQuestions.add(this);
+        ArrayList<NewQuestion> choosenQuestions = new ArrayList<NewQuestion>();
+        choosenQuestions.add(this);
 
-		return choosenQuestions;
-	}
+        return choosenQuestions;
+    }
 
 }

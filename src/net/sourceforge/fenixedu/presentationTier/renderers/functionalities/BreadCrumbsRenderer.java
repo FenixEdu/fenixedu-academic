@@ -25,79 +25,79 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class BreadCrumbsRenderer extends OutputRenderer {
 
-	private String separator;
+    private String separator;
 
-	private Map<String, String> links;
+    private Map<String, String> links;
 
-	public BreadCrumbsRenderer() {
-		super();
+    public BreadCrumbsRenderer() {
+        super();
 
-		setSeparator("&gt;");
-		links = new HashMap<String, String>();
-	}
+        setSeparator("&gt;");
+        links = new HashMap<String, String>();
+    }
 
-	public void setLinkFor(String name, String value) {
-		links.put(name, value);
-	}
+    public void setLinkFor(String name, String value) {
+        links.put(name, value);
+    }
 
-	public String getLinkFor(String name) {
-		return links.get(name);
-	}
+    public String getLinkFor(String name) {
+        return links.get(name);
+    }
 
-	public String getSeparator() {
-		return this.separator;
-	}
+    public String getSeparator() {
+        return this.separator;
+    }
 
-	/**
-	 * The text separator used when separating the different links. By default
-	 * &gt; is used.
-	 * 
-	 * @param separator
-	 */
-	public void setSeparator(String separator) {
-		this.separator = separator;
-	}
+    /**
+     * The text separator used when separating the different links. By default
+     * &gt; is used.
+     * 
+     * @param separator
+     */
+    public void setSeparator(String separator) {
+        this.separator = separator;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				HtmlContainer container = new HtmlInlineContainer();
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
+                HtmlContainer container = new HtmlInlineContainer();
 
-				Content content = (Content) object;
+                Content content = (Content) object;
 
-				List<Content> contents = RootDomainObject.getInstance().getRootPortal().getPathTo(content);
-				Iterator<Content> contentIterator = contents.iterator();
+                List<Content> contents = RootDomainObject.getInstance().getRootPortal().getPathTo(content);
+                Iterator<Content> contentIterator = contents.iterator();
 
-				while (contentIterator.hasNext()) {
-					container.addChild(createLink(contentIterator.next()));
-					if (contentIterator.hasNext()) {
-						container.addChild(new HtmlText(getSeparator(), false));
-					}
-				}
+                while (contentIterator.hasNext()) {
+                    container.addChild(createLink(contentIterator.next()));
+                    if (contentIterator.hasNext()) {
+                        container.addChild(new HtmlText(getSeparator(), false));
+                    }
+                }
 
-				return container;
-			}
+                return container;
+            }
 
-			private HtmlComponent createLink(Content content) {
-				String linkToFormat = getLinkFor(content.getClass().getSimpleName());
-				if (linkToFormat != null) {
-					HtmlLink link =
-							content.isPublic() ? new HtmlLinkWithPreprendedComment(
-									pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX) : new HtmlLink();
-					link.setModuleRelative(true);
-					link.setContextRelative(true);
-					link.setText(content.getName().getContent());
-					link.setUrl(RenderUtils.getFormattedProperties(linkToFormat, content));
+            private HtmlComponent createLink(Content content) {
+                String linkToFormat = getLinkFor(content.getClass().getSimpleName());
+                if (linkToFormat != null) {
+                    HtmlLink link =
+                            content.isPublic() ? new HtmlLinkWithPreprendedComment(
+                                    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX) : new HtmlLink();
+                    link.setModuleRelative(true);
+                    link.setContextRelative(true);
+                    link.setText(content.getName().getContent());
+                    link.setUrl(RenderUtils.getFormattedProperties(linkToFormat, content));
 
-					return link;
-				} else {
-					return new HtmlText(content.getName().getContent());
-				}
-			}
+                    return link;
+                } else {
+                    return new HtmlText(content.getName().getContent());
+                }
+            }
 
-		};
-	}
+        };
+    }
 }

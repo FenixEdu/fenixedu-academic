@@ -29,34 +29,34 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAvailableClassesForShift extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static List run(Integer shiftOID) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer shiftOID) {
 
-		final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
-		final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-		final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-		final ExecutionYear executionYear = executionSemester.getExecutionYear();
+        final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
+        final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+        final ExecutionYear executionYear = executionSemester.getExecutionYear();
 
-		final Set<SchoolClass> availableSchoolClasses = new HashSet<SchoolClass>();
+        final Set<SchoolClass> availableSchoolClasses = new HashSet<SchoolClass>();
 
-		for (DegreeCurricularPlan degreeCurricularPlan : executionCourse.getAssociatedDegreeCurricularPlans()) {
-			for (SchoolClass schoolClass : degreeCurricularPlan.getExecutionDegreeByAcademicInterval(
-					executionCourse.getAcademicInterval()).getSchoolClassesSet()) {
-				if (schoolClass.getAcademicInterval().equals(executionCourse.getAcademicInterval())) {
-					if (!shift.getAssociatedClassesSet().contains(schoolClass)) {
-						availableSchoolClasses.add(schoolClass);
-					}
-				}
-			}
-		}
+        for (DegreeCurricularPlan degreeCurricularPlan : executionCourse.getAssociatedDegreeCurricularPlans()) {
+            for (SchoolClass schoolClass : degreeCurricularPlan.getExecutionDegreeByAcademicInterval(
+                    executionCourse.getAcademicInterval()).getSchoolClassesSet()) {
+                if (schoolClass.getAcademicInterval().equals(executionCourse.getAcademicInterval())) {
+                    if (!shift.getAssociatedClassesSet().contains(schoolClass)) {
+                        availableSchoolClasses.add(schoolClass);
+                    }
+                }
+            }
+        }
 
-		final List<InfoClass> infoClasses = new ArrayList<InfoClass>(availableSchoolClasses.size());
-		for (final SchoolClass schoolClass : availableSchoolClasses) {
-			final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-			infoClasses.add(infoClass);
-		}
+        final List<InfoClass> infoClasses = new ArrayList<InfoClass>(availableSchoolClasses.size());
+        for (final SchoolClass schoolClass : availableSchoolClasses) {
+            final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+            infoClasses.add(infoClass);
+        }
 
-		return infoClasses;
-	}
+        return infoClasses;
+    }
 }

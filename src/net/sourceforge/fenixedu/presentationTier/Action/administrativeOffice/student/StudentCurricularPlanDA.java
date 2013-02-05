@@ -27,33 +27,33 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(path = "/addNewStudentCurricularPlan", module = "academicAdministration")
 @Forwards({
-		@Forward(name = "showCreateNewStudentCurricularPlan", path = "/academicAdminOffice/createStudentCurricularPlan.jsp"),
-		@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
+        @Forward(name = "showCreateNewStudentCurricularPlan", path = "/academicAdminOffice/createStudentCurricularPlan.jsp"),
+        @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
 
 })
 public class StudentCurricularPlanDA extends FenixDispatchAction {
 
-	public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final Registration registration =
-				rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+        final Registration registration =
+                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
 
-		request.setAttribute("studentCurricularPlanCreator",
-				new StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator(registration));
-		request.setAttribute("registration", registration);
+        request.setAttribute("studentCurricularPlanCreator",
+                new StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator(registration));
+        request.setAttribute("registration", registration);
 
-		return mapping.findForward("showCreateNewStudentCurricularPlan");
-	}
+        return mapping.findForward("showCreateNewStudentCurricularPlan");
+    }
 
-	public ActionForward createSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward createSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		executeFactoryMethod();
-		addActionMessage(request, "message.registration.addNewSCP.success");
+        executeFactoryMethod();
+        addActionMessage(request, "message.registration.addNewSCP.success");
 
-		request.setAttribute("registration", ((StudentCurricularPlanCreator) getRenderedObject()).getRegistration());
-		return mapping.findForward("viewRegistrationDetails");
-	}
+        request.setAttribute("registration", ((StudentCurricularPlanCreator) getRenderedObject()).getRegistration());
+        return mapping.findForward("viewRegistrationDetails");
+    }
 
 }

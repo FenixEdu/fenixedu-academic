@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.tests.NewTestModel;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class SelectQuestionGroupRestriction extends FenixService {
-	@Service
-	public static void run(NewTestModel testModel, NewModelRestriction atomicRestriction, NewModelGroup destinationGroup,
-			Integer count, Double value) throws FenixServiceException {
-		testModel.selectQuestionGroupRestriction(atomicRestriction, destinationGroup, count, value);
-	}
+    @Service
+    public static void run(NewTestModel testModel, NewModelRestriction atomicRestriction, NewModelGroup destinationGroup,
+            Integer count, Double value) throws FenixServiceException {
+        testModel.selectQuestionGroupRestriction(atomicRestriction, destinationGroup, count, value);
+    }
 }

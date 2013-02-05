@@ -19,107 +19,107 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class SopClassTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
-	private InfoCurricularYear infoCurricularYear = null;
+    private InfoCurricularYear infoCurricularYear = null;
 
-	private InfoExecutionDegree infoExecutionDegree = null;
+    private InfoExecutionDegree infoExecutionDegree = null;
 
-	public SopClassTimeTableLessonContentRenderer(InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear) {
-		super();
-		this.infoCurricularYear = infoCurricularYear;
-		this.infoExecutionDegree = infoExecutionDegree;
-	}
+    public SopClassTimeTableLessonContentRenderer(InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear) {
+        super();
+        this.infoCurricularYear = infoCurricularYear;
+        this.infoExecutionDegree = infoExecutionDegree;
+    }
 
-	@Override
-	public StringBuilder render(String context, LessonSlot lessonSlot) {
-		StringBuilder strBuffer = new StringBuilder();
+    @Override
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
+        StringBuilder strBuffer = new StringBuilder();
 
-		InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-		if (showOccupation instanceof InfoLesson) {
-			InfoLesson lesson = (InfoLesson) showOccupation;
+        if (showOccupation instanceof InfoLesson) {
+            InfoLesson lesson = (InfoLesson) showOccupation;
 
-			strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
 
-			final InfoShift infoShift = lesson.getInfoShift();
-			InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
+            final InfoShift infoShift = lesson.getInfoShift();
+            InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
 
-			strBuffer.append("&nbsp;(");
-			strBuffer.append("<a href='");
-			strBuffer.append(context).append("/resourceAllocationManager/")
-					.append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-					.append(infoShift.getIdInternal()).append("&amp;execution_course_oid=")
-					.append(infoExecutionCourse.getIdInternal()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-					.append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-					.append("&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
-					.append("&amp;execution_degree_oid=").append(infoExecutionDegree.getIdInternal()).append("'>")
-					.append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
+            strBuffer.append("&nbsp;(");
+            strBuffer.append("<a href='");
+            strBuffer.append(context).append("/resourceAllocationManager/")
+                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+                    .append(infoShift.getIdInternal()).append("&amp;execution_course_oid=")
+                    .append(infoExecutionCourse.getIdInternal()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+                    .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
+                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getIdInternal()).append("'>")
+                    .append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
-			if (lesson.getInfoRoomOccupation() != null) {
-				strBuffer.append(" <a href='");
-				strBuffer.append(context).append("/resourceAllocationManager/");
-				strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
-						.append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
-			}
+            if (lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(" <a href='");
+                strBuffer.append(context).append("/resourceAllocationManager/");
+                strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
+                        .append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+            }
 
-			if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
-				strBuffer.append("&nbsp;&nbsp;[Q]");
-			}
+            if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
+                strBuffer.append("&nbsp;&nbsp;[Q]");
+            }
 
-		} else if (showOccupation instanceof InfoLessonInstance) {
+        } else if (showOccupation instanceof InfoLessonInstance) {
 
-			InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+            InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
-			strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
 
-			final InfoShift infoShift = lesson.getInfoShift();
-			InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
+            final InfoShift infoShift = lesson.getInfoShift();
+            InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
 
-			strBuffer.append("&nbsp;(");
-			strBuffer.append("<a href='");
-			strBuffer.append(context).append("/resourceAllocationManager/")
-					.append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-					.append(infoShift.getIdInternal()).append("&amp;execution_course_oid=")
-					.append(infoExecutionCourse.getIdInternal()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-					.append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-					.append("&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
-					.append("&amp;execution_degree_oid=").append(infoExecutionDegree.getIdInternal()).append("'>")
-					.append(lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
+            strBuffer.append("&nbsp;(");
+            strBuffer.append("<a href='");
+            strBuffer.append(context).append("/resourceAllocationManager/")
+                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+                    .append(infoShift.getIdInternal()).append("&amp;execution_course_oid=")
+                    .append(infoExecutionCourse.getIdInternal()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+                    .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
+                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getIdInternal()).append("'>")
+                    .append(lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
 
-			if (lesson.getInfoRoomOccupation() != null) {
-				strBuffer.append(" <a href='");
-				strBuffer.append(context).append("/resourceAllocationManager/");
-				strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
-						.append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
-			}
+            if (lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(" <a href='");
+                strBuffer.append(context).append("/resourceAllocationManager/");
+                strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
+                        .append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+            }
 
-		} else if (showOccupation instanceof InfoExam) {
-			InfoExam infoExam = (InfoExam) showOccupation;
-			for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-				InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-				if (iterEC != 0) {
-					strBuffer.append(", ");
-				}
-				strBuffer.append(infoEC.getSigla());
+        } else if (showOccupation instanceof InfoExam) {
+            InfoExam infoExam = (InfoExam) showOccupation;
+            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
+                InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
+                strBuffer.append(infoEC.getSigla());
 
-			}
-			strBuffer.append(" - ");
-			strBuffer.append(infoExam.getSeason().getSeason());
-			strBuffer.append("� �poca");
+            }
+            strBuffer.append(" - ");
+            strBuffer.append(infoExam.getSeason().getSeason());
+            strBuffer.append("� �poca");
 
-		} else if (showOccupation instanceof InfoWrittenTest) {
-			InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-			for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-				InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-				if (iterEC != 0) {
-					strBuffer.append(", ");
-				}
-				strBuffer.append(infoEC.getSigla());
-			}
-			strBuffer.append(" - ");
-			strBuffer.append(infoWrittenTest.getDescription());
-		}
+        } else if (showOccupation instanceof InfoWrittenTest) {
+            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
+            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
+                InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
+                strBuffer.append(infoEC.getSigla());
+            }
+            strBuffer.append(" - ");
+            strBuffer.append(infoWrittenTest.getDescription());
+        }
 
-		return strBuffer;
-	}
+        return strBuffer;
+    }
 
 }

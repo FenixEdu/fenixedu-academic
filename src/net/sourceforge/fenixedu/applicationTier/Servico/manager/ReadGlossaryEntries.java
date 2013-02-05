@@ -10,15 +10,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadGlossaryEntries extends FenixService {
 
-	@Service
-	public static List<InfoGlossaryEntry> run() {
-		List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();
+    @Service
+    public static List<InfoGlossaryEntry> run() {
+        List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();
 
-		for (GlossaryEntry glossaryEntry : rootDomainObject.getGlossaryEntrys()) {
-			result.add(InfoGlossaryEntry.newInfoFromDomain(glossaryEntry));
-		}
+        for (GlossaryEntry glossaryEntry : rootDomainObject.getGlossaryEntrys()) {
+            result.add(InfoGlossaryEntry.newInfoFromDomain(glossaryEntry));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

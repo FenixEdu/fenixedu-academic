@@ -24,61 +24,60 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/registeredDegreeCandidacies", module = "academicAdministration")
-@Forwards({ @Forward(
-		name = "viewRegisteredDegreeCandidacies",
-		path = "/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })
+@Forwards({ @Forward(name = "viewRegisteredDegreeCandidacies",
+        path = "/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })
 public class RegisteredDegreeCandidaciesDA extends FenixDispatchAction {
 
-	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =
-				getRegisteredDegreeCandidaciesSelectionBean();
-		if (registeredDegreeCandidaciesSelectionBean == null) {
-			request.setAttribute("bean", new RegisteredDegreeCandidaciesSelectionBean());
-			return mapping.findForward("viewRegisteredDegreeCandidacies");
-		}
+        RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =
+                getRegisteredDegreeCandidaciesSelectionBean();
+        if (registeredDegreeCandidaciesSelectionBean == null) {
+            request.setAttribute("bean", new RegisteredDegreeCandidaciesSelectionBean());
+            return mapping.findForward("viewRegisteredDegreeCandidacies");
+        }
 
-		List<StudentCandidacy> studentCandidacies = registeredDegreeCandidaciesSelectionBean.search(getDegreesToSearch());
-		request.setAttribute("studentCandidacies", studentCandidacies);
+        List<StudentCandidacy> studentCandidacies = registeredDegreeCandidaciesSelectionBean.search(getDegreesToSearch());
+        request.setAttribute("studentCandidacies", studentCandidacies);
 
-		return mapping.findForward("viewRegisteredDegreeCandidacies");
-	}
+        return mapping.findForward("viewRegisteredDegreeCandidacies");
+    }
 
-	public ActionForward export(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-		RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =
-				getRegisteredDegreeCandidaciesSelectionBean();
-		Spreadsheet export = registeredDegreeCandidaciesSelectionBean.export(getDegreesToSearch());
+    public ActionForward export(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =
+                getRegisteredDegreeCandidaciesSelectionBean();
+        Spreadsheet export = registeredDegreeCandidaciesSelectionBean.export(getDegreesToSearch());
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition",
-				"attachment; filename=" + registeredDegreeCandidaciesSelectionBean.getFilename());
-		export.exportToXLSSheet(response.getOutputStream());
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" + registeredDegreeCandidaciesSelectionBean.getFilename());
+        export.exportToXLSSheet(response.getOutputStream());
 
-		return null;
-	}
+        return null;
+    }
 
-	public ActionForward exportWithApplyForResidence(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =
-				getRegisteredDegreeCandidaciesSelectionBean();
-		RegisteredDegreeCandidaciesWithApplyForResidence forResidence =
-				new RegisteredDegreeCandidaciesWithApplyForResidence(registeredDegreeCandidaciesSelectionBean);
+    public ActionForward exportWithApplyForResidence(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =
+                getRegisteredDegreeCandidaciesSelectionBean();
+        RegisteredDegreeCandidaciesWithApplyForResidence forResidence =
+                new RegisteredDegreeCandidaciesWithApplyForResidence(registeredDegreeCandidaciesSelectionBean);
 
-		Spreadsheet spreadsheet = forResidence.export(getDegreesToSearch());
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment; filename=" + forResidence.getFilename());
-		spreadsheet.exportToXLSSheet(response.getOutputStream());
+        Spreadsheet spreadsheet = forResidence.export(getDegreesToSearch());
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=" + forResidence.getFilename());
+        spreadsheet.exportToXLSSheet(response.getOutputStream());
 
-		return null;
-	}
+        return null;
+    }
 
-	private RegisteredDegreeCandidaciesSelectionBean getRegisteredDegreeCandidaciesSelectionBean() {
-		return getRenderedObject("bean");
-	}
+    private RegisteredDegreeCandidaciesSelectionBean getRegisteredDegreeCandidaciesSelectionBean() {
+        return getRenderedObject("bean");
+    }
 
-	protected Set<Degree> getDegreesToSearch() {
-		return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-				AcademicOperationType.MANAGE_REGISTERED_DEGREE_CANDIDACIES);
-	}
+    protected Set<Degree> getDegreesToSearch() {
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_REGISTERED_DEGREE_CANDIDACIES);
+    }
 }

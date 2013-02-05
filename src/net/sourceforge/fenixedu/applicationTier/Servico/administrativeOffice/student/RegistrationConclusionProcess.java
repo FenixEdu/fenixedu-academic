@@ -12,43 +12,43 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RegistrationConclusionProcess {
 
-	@Service
-	public static void run(final RegistrationConclusionBean conclusionBean) {
-		final Registration registration = conclusionBean.getRegistration();
+    @Service
+    public static void run(final RegistrationConclusionBean conclusionBean) {
+        final Registration registration = conclusionBean.getRegistration();
 
-		if (registration.isBolonha()) {
-			final CycleCurriculumGroup cycleCurriculumGroup = conclusionBean.getCycleCurriculumGroup();
+        if (registration.isBolonha()) {
+            final CycleCurriculumGroup cycleCurriculumGroup = conclusionBean.getCycleCurriculumGroup();
 
-			registration.conclude(cycleCurriculumGroup);
+            registration.conclude(cycleCurriculumGroup);
 
-			if (conclusionBean.hasEnteredConclusionDate()) {
+            if (conclusionBean.hasEnteredConclusionDate()) {
 
-				checkEnteredConclusionDate(conclusionBean);
+                checkEnteredConclusionDate(conclusionBean);
 
-				cycleCurriculumGroup.editConclusionInformation(AccessControl.getPerson(), cycleCurriculumGroup.getFinalAverage(),
-						new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
-			}
+                cycleCurriculumGroup.editConclusionInformation(AccessControl.getPerson(), cycleCurriculumGroup.getFinalAverage(),
+                        new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
+            }
 
-		} else {
-			registration.conclude();
+        } else {
+            registration.conclude();
 
-			if (conclusionBean.hasEnteredConclusionDate()) {
+            if (conclusionBean.hasEnteredConclusionDate()) {
 
-				checkEnteredConclusionDate(conclusionBean);
+                checkEnteredConclusionDate(conclusionBean);
 
-				registration.editConclusionInformation(AccessControl.getPerson(), registration.getFinalAverage(),
-						new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
-			}
-		}
-	}
+                registration.editConclusionInformation(AccessControl.getPerson(), registration.getFinalAverage(),
+                        new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
+            }
+        }
+    }
 
-	private static void checkEnteredConclusionDate(final RegistrationConclusionBean conclusionBean) {
-		final YearMonthDay startDate = conclusionBean.getRegistration().getStartDate();
+    private static void checkEnteredConclusionDate(final RegistrationConclusionBean conclusionBean) {
+        final YearMonthDay startDate = conclusionBean.getRegistration().getStartDate();
 
-		if (startDate.isAfter(conclusionBean.getEnteredConclusionDate())) {
-			throw new DomainException("error.RegistrationConclusionProcess.start.date.is.after.entered.date");
-		}
+        if (startDate.isAfter(conclusionBean.getEnteredConclusionDate())) {
+            throw new DomainException("error.RegistrationConclusionProcess.start.date.is.after.entered.date");
+        }
 
-	}
+    }
 
 }

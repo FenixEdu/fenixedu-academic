@@ -12,306 +12,306 @@ import org.joda.time.ReadablePartial;
 
 public class AcademicYearDateTimeField extends DateTimeField {
 
-	private final Chronology chronology;
+    private final Chronology chronology;
 
-	public AcademicYearDateTimeField(Chronology chronology_) {
-		super();
-		this.chronology = chronology_;
-	}
+    public AcademicYearDateTimeField(Chronology chronology_) {
+        super();
+        this.chronology = chronology_;
+    }
 
-	@Override
-	public long add(long instant, int value) {
+    @Override
+    public long add(long instant, int value) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long add(long instant, long value) {
+    @Override
+    public long add(long instant, long value) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int[] add(ReadablePartial instant, int fieldIndex, int[] values, int valueToAdd) {
+    @Override
+    public int[] add(ReadablePartial instant, int fieldIndex, int[] values, int valueToAdd) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long addWrapField(long instant, int value) {
+    @Override
+    public long addWrapField(long instant, int value) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int[] addWrapField(ReadablePartial instant, int fieldIndex, int[] values, int valueToAdd) {
+    @Override
+    public int[] addWrapField(ReadablePartial instant, int fieldIndex, int[] values, int valueToAdd) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int[] addWrapPartial(ReadablePartial instant, int fieldIndex, int[] values, int valueToAdd) {
+    @Override
+    public int[] addWrapPartial(ReadablePartial instant, int fieldIndex, int[] values, int valueToAdd) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int get(long instant) {
-		if (chronology instanceof AcademicChronology) {
-			return ((AcademicChronology) chronology).getAcademicYear(instant);
-		}
-		throw unsupported();
-	}
+    @Override
+    public int get(long instant) {
+        if (chronology instanceof AcademicChronology) {
+            return ((AcademicChronology) chronology).getAcademicYear(instant);
+        }
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsShortText(long instant) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsShortText(long instant) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsShortText(long instant, Locale locale) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsShortText(long instant, Locale locale) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsShortText(ReadablePartial partial, Locale locale) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsShortText(ReadablePartial partial, Locale locale) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsShortText(int fieldValue, Locale locale) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsShortText(int fieldValue, Locale locale) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsShortText(ReadablePartial partial, int fieldValue, Locale locale) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsShortText(ReadablePartial partial, int fieldValue, Locale locale) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsText(long instant) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsText(long instant) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsText(long instant, Locale locale) {
-		throw unsupported();
-	}
+    @Override
+    public String getAsText(long instant, Locale locale) {
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsText(ReadablePartial partial, Locale locale) {
+    @Override
+    public String getAsText(ReadablePartial partial, Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsText(int fieldValue, Locale locale) {
+    @Override
+    public String getAsText(int fieldValue, Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public String getAsText(ReadablePartial partial, int fieldValue, Locale locale) {
+    @Override
+    public String getAsText(ReadablePartial partial, int fieldValue, Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getDifference(long minuendInstant, long subtrahendInstant) {
+    @Override
+    public int getDifference(long minuendInstant, long subtrahendInstant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long getDifferenceAsLong(long minuendInstant, long subtrahendInstant) {
+    @Override
+    public long getDifferenceAsLong(long minuendInstant, long subtrahendInstant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public DurationField getDurationField() {
+    @Override
+    public DurationField getDurationField() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getLeapAmount(long instant) {
+    @Override
+    public int getLeapAmount(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public DurationField getLeapDurationField() {
+    @Override
+    public DurationField getLeapDurationField() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMaximumShortTextLength(Locale locale) {
+    @Override
+    public int getMaximumShortTextLength(Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMaximumTextLength(Locale locale) {
+    @Override
+    public int getMaximumTextLength(Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMaximumValue() {
+    @Override
+    public int getMaximumValue() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMaximumValue(long instant) {
+    @Override
+    public int getMaximumValue(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMaximumValue(ReadablePartial instant) {
+    @Override
+    public int getMaximumValue(ReadablePartial instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMaximumValue(ReadablePartial instant, int[] values) {
+    @Override
+    public int getMaximumValue(ReadablePartial instant, int[] values) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMinimumValue() {
+    @Override
+    public int getMinimumValue() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMinimumValue(long instant) {
+    @Override
+    public int getMinimumValue(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMinimumValue(ReadablePartial instant) {
+    @Override
+    public int getMinimumValue(ReadablePartial instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int getMinimumValue(ReadablePartial instant, int[] values) {
+    @Override
+    public int getMinimumValue(ReadablePartial instant, int[] values) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public String getName() {
-		return AcademicYearDateTimeFieldType.academicYear().getName();
-	}
+    @Override
+    public String getName() {
+        return AcademicYearDateTimeFieldType.academicYear().getName();
+    }
 
-	@Override
-	public DurationField getRangeDurationField() {
+    @Override
+    public DurationField getRangeDurationField() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public DateTimeFieldType getType() {
-		return AcademicYearDateTimeFieldType.academicYear();
-	}
+    @Override
+    public DateTimeFieldType getType() {
+        return AcademicYearDateTimeFieldType.academicYear();
+    }
 
-	@Override
-	public boolean isLeap(long instant) {
+    @Override
+    public boolean isLeap(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public boolean isLenient() {
+    @Override
+    public boolean isLenient() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public boolean isSupported() {
-		return true;
-	}
+    @Override
+    public boolean isSupported() {
+        return true;
+    }
 
-	@Override
-	public long remainder(long instant) {
+    @Override
+    public long remainder(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long roundCeiling(long instant) {
+    @Override
+    public long roundCeiling(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long roundFloor(long instant) {
+    @Override
+    public long roundFloor(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long roundHalfCeiling(long instant) {
+    @Override
+    public long roundHalfCeiling(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long roundHalfEven(long instant) {
+    @Override
+    public long roundHalfEven(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long roundHalfFloor(long instant) {
+    @Override
+    public long roundHalfFloor(long instant) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long set(long instant, int value) {
+    @Override
+    public long set(long instant, int value) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long set(long instant, String text) {
+    @Override
+    public long set(long instant, String text) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public long set(long instant, String text, Locale locale) {
+    @Override
+    public long set(long instant, String text, Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int[] set(ReadablePartial instant, int fieldIndex, int[] values, int newValue) {
+    @Override
+    public int[] set(ReadablePartial instant, int fieldIndex, int[] values, int newValue) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public int[] set(ReadablePartial instant, int fieldIndex, int[] values, String text, Locale locale) {
+    @Override
+    public int[] set(ReadablePartial instant, int fieldIndex, int[] values, String text, Locale locale) {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		throw unsupported();
-	}
+        throw unsupported();
+    }
 
-	private UnsupportedOperationException unsupported() {
-		return new UnsupportedOperationException(AcademicYearDateTimeFieldType.academicYear() + " field is unsupported");
-	}
+    private UnsupportedOperationException unsupported() {
+        return new UnsupportedOperationException(AcademicYearDateTimeFieldType.academicYear() + " field is unsupported");
+    }
 }

@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public abstract class RestrictionByCurricularCourse extends RestrictionByCurricularCourse_Base {
 
-	public RestrictionByCurricularCourse() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public RestrictionByCurricularCourse() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	@Override
-	public void delete() {
-		removePrecedentCurricularCourse();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        removePrecedentCurricularCourse();
+        super.delete();
+    }
 
 }

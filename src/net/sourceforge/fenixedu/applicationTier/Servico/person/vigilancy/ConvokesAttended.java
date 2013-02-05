@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ConvokesAttended extends FenixService {
 
-	@Service
-	public static void run(Vigilancy convoke, Boolean bool) {
-		convoke.setAttendedToConvoke(bool);
-	}
+    @Service
+    public static void run(Vigilancy convoke, Boolean bool) {
+        convoke.setAttendedToConvoke(bool);
+    }
 
 }

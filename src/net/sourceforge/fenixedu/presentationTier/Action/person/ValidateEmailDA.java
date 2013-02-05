@@ -16,42 +16,42 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/validateEmail", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showForm", path = "/person/validateEmail.jsp", tileProperties = @Tile(
-		title = "private.personal.dspace.emailconfirm")) })
+        title = "private.personal.dspace.emailconfirm")) })
 public class ValidateEmailDA extends FenixDispatchAction {
 
-	public static class ValidateEmailForm {
-		private String validationString;
+    public static class ValidateEmailForm {
+        private String validationString;
 
-		public String getValidationString() {
-			return validationString;
-		}
+        public String getValidationString() {
+            return validationString;
+        }
 
-		public void setValidationString(String validationString) {
-			this.validationString = validationString;
-		}
-	}
+        public void setValidationString(String validationString) {
+            this.validationString = validationString;
+        }
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("showForm");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("showForm");
+    }
 
-	public ActionForward redirect(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		final ActionForward actionForward = new ActionForward();
-		actionForward.setRedirect(true);
+    public ActionForward redirect(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final ActionForward actionForward = new ActionForward();
+        actionForward.setRedirect(true);
 
-		final ValidateEmailForm validateEmailForm = getRenderedObject();
-		if (validateEmailForm == null) {
-			return prepare(mapping, actionForm, request, response);
-		}
+        final ValidateEmailForm validateEmailForm = getRenderedObject();
+        if (validateEmailForm == null) {
+            return prepare(mapping, actionForm, request, response);
+        }
 
-		final StringBuilder path = new StringBuilder();
-		path.append("https://ciist.ist.utl.pt/servicos/self_service/verify.php?hash=");
-		path.append(validateEmailForm.getValidationString());
-		actionForward.setPath(path.toString());
+        final StringBuilder path = new StringBuilder();
+        path.append("https://ciist.ist.utl.pt/servicos/self_service/verify.php?hash=");
+        path.append(validateEmailForm.getValidationString());
+        actionForward.setPath(path.toString());
 
-		return actionForward;
-	}
+        return actionForward;
+    }
 
 }

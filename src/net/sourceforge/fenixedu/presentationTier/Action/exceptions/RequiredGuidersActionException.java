@@ -13,53 +13,53 @@ import org.apache.struts.action.ActionForward;
  * 
  */
 public class RequiredGuidersActionException extends FenixActionException {
-	public static String key = "error.exception.masterDegree.noGuidersSelected";
+    public static String key = "error.exception.masterDegree.noGuidersSelected";
 
-	public RequiredGuidersActionException(Throwable cause) {
-		super(key, cause);
-	}
+    public RequiredGuidersActionException(Throwable cause) {
+        super(key, cause);
+    }
 
-	public RequiredGuidersActionException(Object value, Throwable cause) {
-		super(key, value, cause);
-	}
+    public RequiredGuidersActionException(Object value, Throwable cause) {
+        super(key, value, cause);
+    }
 
-	public RequiredGuidersActionException(Object[] values, Throwable cause) {
-		super(key, values, cause);
-	}
+    public RequiredGuidersActionException(Object[] values, Throwable cause) {
+        super(key, values, cause);
+    }
 
-	public RequiredGuidersActionException(String text) {
-		super(text);
-	}
+    public RequiredGuidersActionException(String text) {
+        super(text);
+    }
 
-	public RequiredGuidersActionException(String text, ActionForward actionForward) {
-		super(actionForward);
-		error = new ActionError(text);
-	}
+    public RequiredGuidersActionException(String text, ActionForward actionForward) {
+        super(actionForward);
+        error = new ActionError(text);
+    }
 
-	/**
-	 * @return String
-	 */
-	public static String getKey() {
-		return key;
-	}
+    /**
+     * @return String
+     */
+    public static String getKey() {
+        return key;
+    }
 
-	/**
-	 * Sets the key.
-	 * 
-	 * @param key
-	 *            The key to set
-	 */
-	public static void setKey(String key) {
-		RequiredGuidersActionException.key = key;
-	}
+    /**
+     * Sets the key.
+     * 
+     * @param key
+     *            The key to set
+     */
+    public static void setKey(String key) {
+        RequiredGuidersActionException.key = key;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[" + getClass().getName() + "n";
-		result += "property" + this.getProperty() + "\n";
-		result += "error" + this.getError() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[" + getClass().getName() + "n";
+        result += "property" + this.getProperty() + "\n";
+        result += "error" + this.getError() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

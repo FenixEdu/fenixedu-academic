@@ -14,39 +14,39 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent_Base implements IPastRequestEvent {
 
-	protected PastDegreeDiplomaRequestEvent() {
-		super();
-	}
+    protected PastDegreeDiplomaRequestEvent() {
+        super();
+    }
 
-	public PastDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final PastDiplomaRequest pastDiplomaRequest, final Money pastAmount) {
-		this();
-		super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, pastDiplomaRequest);
-		super.setPastAmount(pastAmount);
-	}
+    public PastDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final PastDiplomaRequest pastDiplomaRequest, final Money pastAmount) {
+        this();
+        super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, pastDiplomaRequest);
+        super.setPastAmount(pastAmount);
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(getEventType().getQualifiedName(), "enum");
-		labelFormatter.appendLabel(" (");
-		labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
-		labelFormatter.appendLabel(")");
-		return labelFormatter;
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(getEventType().getQualifiedName(), "enum");
+        labelFormatter.appendLabel(" (");
+        labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+        labelFormatter.appendLabel(")");
+        return labelFormatter;
+    }
 
-	@Override
-	public Set<EntryType> getPossibleEntryTypesForDeposit() {
-		return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
-	}
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
+    }
 
-	@Override
-	public void setPastAmount(Money pastDegreeDiplomaRequestAmount) {
-		throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
-	}
+    @Override
+    public void setPastAmount(Money pastDegreeDiplomaRequestAmount) {
+        throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
+    }
 
 }

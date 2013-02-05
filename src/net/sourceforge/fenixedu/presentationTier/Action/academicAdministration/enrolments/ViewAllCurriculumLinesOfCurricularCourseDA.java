@@ -15,16 +15,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/viewAllCurriculumLinesOfCurricularCourse", module = "academicAdministration")
-@Forwards({ @Forward(
-		name = "viewCurriculumLinesOfCurricularCourse",
-		path = "/academicAdministration/bolonha/enrolments/information/viewCurriculumLinesOfCurricularCourse.jsp") })
+@Forwards({ @Forward(name = "viewCurriculumLinesOfCurricularCourse",
+        path = "/academicAdministration/bolonha/enrolments/information/viewCurriculumLinesOfCurricularCourse.jsp") })
 public class ViewAllCurriculumLinesOfCurricularCourseDA extends FenixDispatchAction {
 
-	public ActionForward view(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-			final HttpServletResponse response) {
-		CurricularCourse curricularCourse = getDomainObject(request, "curricularCourseId");
-		request.setAttribute("curricularCourse", curricularCourse);
+    public ActionForward view(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        CurricularCourse curricularCourse = getDomainObject(request, "curricularCourseId");
+        request.setAttribute("curricularCourse", curricularCourse);
 
-		return mapping.findForward("viewCurriculumLinesOfCurricularCourse");
-	}
+        return mapping.findForward("viewCurriculumLinesOfCurricularCourse");
+    }
 }

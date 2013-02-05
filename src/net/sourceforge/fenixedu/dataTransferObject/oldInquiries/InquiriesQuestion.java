@@ -15,125 +15,125 @@ import org.apache.commons.lang.StringUtils;
  */
 public abstract class InquiriesQuestion implements Serializable {
 
-	private String label;
+    private String label;
 
-	private String value;
+    private String value;
 
-	private QuestionHeader header;
+    private QuestionHeader header;
 
-	private String toolTip;
+    private String toolTip;
 
-	private Boolean required;
+    private Boolean required;
 
-	private Boolean showRequiredMark = true;
+    private Boolean showRequiredMark = true;
 
-	private Boolean newRow = true;
+    private Boolean newRow = true;
 
-	private Boolean autofit = true;
+    private Boolean autofit = true;
 
-	public InquiriesQuestion(final String label) {
-		super();
-		this.label = label;
-	}
+    public InquiriesQuestion(final String label) {
+        super();
+        this.label = label;
+    }
 
-	public InquiriesQuestion(final String label, QuestionHeader header) {
-		this(label);
-		this.header = header;
-	}
+    public InquiriesQuestion(final String label, QuestionHeader header) {
+        this(label);
+        this.header = header;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public Boolean getValueAsBoolean() {
-		return getValue() != null && (Boolean.valueOf(getValue()) || getValue().equalsIgnoreCase("on"));
-	}
+    public Boolean getValueAsBoolean() {
+        return getValue() != null && (Boolean.valueOf(getValue()) || getValue().equalsIgnoreCase("on"));
+    }
 
-	public Integer getValueAsInteger() {
-		throw new DomainException("Value not convertible do Integer");
-	}
+    public Integer getValueAsInteger() {
+        throw new DomainException("Value not convertible do Integer");
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public InquiriesQuestion setInitialValue(final Object value) {
-		setValue(value != null ? value.toString() : null);
-		return this;
-	}
+    public InquiriesQuestion setInitialValue(final Object value) {
+        setValue(value != null ? value.toString() : null);
+        return this;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public QuestionHeader getHeader() {
-		return header;
-	}
+    public QuestionHeader getHeader() {
+        return header;
+    }
 
-	public InquiriesQuestion setHeader(QuestionHeader header) {
-		this.header = header;
-		return this;
-	}
+    public InquiriesQuestion setHeader(QuestionHeader header) {
+        this.header = header;
+        return this;
+    }
 
-	public boolean hasHeader() {
-		return this.header != null;
-	}
+    public boolean hasHeader() {
+        return this.header != null;
+    }
 
-	public boolean isEmpty() {
-		return StringUtils.isEmpty(getValue());
-	}
+    public boolean isEmpty() {
+        return StringUtils.isEmpty(getValue());
+    }
 
-	public String getToolTip() {
-		return toolTip;
-	}
+    public String getToolTip() {
+        return toolTip;
+    }
 
-	public InquiriesQuestion setToolTip(String toolTip) {
-		this.toolTip = toolTip;
-		return this;
-	}
+    public InquiriesQuestion setToolTip(String toolTip) {
+        this.toolTip = toolTip;
+        return this;
+    }
 
-	public boolean hasToolTip() {
-		return !StringUtils.isEmpty(getToolTip());
-	}
+    public boolean hasToolTip() {
+        return !StringUtils.isEmpty(getToolTip());
+    }
 
-	public Boolean getRequired() {
-		return required;
-	}
+    public Boolean getRequired() {
+        return required;
+    }
 
-	public InquiriesQuestion setRequired(Boolean required) {
-		this.required = required;
-		return this;
-	}
+    public InquiriesQuestion setRequired(Boolean required) {
+        this.required = required;
+        return this;
+    }
 
-	public Boolean getShowRequiredMark() {
-		return showRequiredMark != null && showRequiredMark;
-	}
+    public Boolean getShowRequiredMark() {
+        return showRequiredMark != null && showRequiredMark;
+    }
 
-	public InquiriesQuestion setShowRequiredMark(Boolean showRequiredMark) {
-		this.showRequiredMark = showRequiredMark;
-		return this;
-	}
+    public InquiriesQuestion setShowRequiredMark(Boolean showRequiredMark) {
+        this.showRequiredMark = showRequiredMark;
+        return this;
+    }
 
-	public Boolean getNewRow() {
-		return newRow;
-	}
+    public Boolean getNewRow() {
+        return newRow;
+    }
 
-	public InquiriesQuestion setNewRow(Boolean newRow) {
-		this.newRow = newRow;
-		return this;
-	}
+    public InquiriesQuestion setNewRow(Boolean newRow) {
+        this.newRow = newRow;
+        return this;
+    }
 
-	public Boolean getAutofit() {
-		return autofit;
-	}
+    public Boolean getAutofit() {
+        return autofit;
+    }
 
-	public InquiriesQuestion setAutofit(Boolean autofit) {
-		this.autofit = autofit;
-		return this;
-	}
+    public InquiriesQuestion setAutofit(Boolean autofit) {
+        this.autofit = autofit;
+        return this;
+    }
 
 }

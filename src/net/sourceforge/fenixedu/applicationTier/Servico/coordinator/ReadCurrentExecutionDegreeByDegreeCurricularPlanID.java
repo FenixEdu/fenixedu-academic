@@ -12,19 +12,19 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID extends FenixService {
 
-	public InfoExecutionDegree run(final Integer degreeCurricularPlanID) {
+    public InfoExecutionDegree run(final Integer degreeCurricularPlanID) {
 
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-		final List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
-		final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(executionDegrees, new Predicate() {
-			@Override
-			public boolean evaluate(Object arg0) {
-				final ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-				return executionDegree.getExecutionYear().isCurrent();
-			}
-		});
+        final List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(executionDegrees, new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                final ExecutionDegree executionDegree = (ExecutionDegree) arg0;
+                return executionDegree.getExecutionYear().isCurrent();
+            }
+        });
 
-		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	}
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    }
 }

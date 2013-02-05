@@ -25,70 +25,70 @@ import org.apache.struts.action.ActionMapping;
 
 public class CreateContentsContextAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request, Collections.EMPTY_LIST);
-		request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
+        final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request, Collections.EMPTY_LIST);
+        request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
 
-		final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);
-		if (initialMenuEntry == null) {
-			sendLoginRedirect(request, response);
-			return null;
-		}
+        final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);
+        if (initialMenuEntry == null) {
+            sendLoginRedirect(request, response);
+            return null;
+        }
 
-		Content content = initialMenuEntry.getReferingContent();
-		if (content.isContainer()) {
-			Container container = (Container) content;
-			if (container.getInitialContent() != null) {
-				content = container.getInitialContent();
-			}
-		}
+        Content content = initialMenuEntry.getReferingContent();
+        if (content.isContainer()) {
+            Container container = (Container) content;
+            if (container.getInitialContent() != null) {
+                content = container.getInitialContent();
+            }
+        }
 
-		return menuActionForward(content, request);
-	}
+        return menuActionForward(content, request);
+    }
 
-	private void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
-	}
+    private void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
+    }
 
-	protected ActionForward menuActionForward(Content content, HttpServletRequest request) {
-		ActionForward actionForward = new ActionForward();
-		actionForward.setRedirect(true);
-		Portal rootPortal = RootDomainObject.getInstance().getRootPortal();
-		List<Content> contents = rootPortal.getPathTo(content);
+    protected ActionForward menuActionForward(Content content, HttpServletRequest request) {
+        ActionForward actionForward = new ActionForward();
+        actionForward.setRedirect(true);
+        Portal rootPortal = RootDomainObject.getInstance().getRootPortal();
+        List<Content> contents = rootPortal.getPathTo(content);
 
-		List<String> paths = new ArrayList<String>();
-		for (Content contentForPath : contents.subList(1, contents.size())) {
-			paths.add(contentForPath.getNormalizedName().getContent());
-		}
+        List<String> paths = new ArrayList<String>();
+        for (Content contentForPath : contents.subList(1, contents.size())) {
+            paths.add(contentForPath.getNormalizedName().getContent());
+        }
 
-		StringBuilder buffer = new StringBuilder();
-		for (String pathPart : paths) {
-			buffer.append("/");
-			buffer.append(pathPart);
-		}
+        StringBuilder buffer = new StringBuilder();
+        for (String pathPart : paths) {
+            buffer.append("/");
+            buffer.append(pathPart);
+        }
 
-		String realPath = buffer.toString();
-		final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
-		actionForward.setPath(realPath
-				+ seperator
-				+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME
-				+ "="
-				+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
-						.getContextPath() + realPath));
-		return actionForward;
-	}
+        String realPath = buffer.toString();
+        final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
+        actionForward.setPath(realPath
+                + seperator
+                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME
+                + "="
+                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
+                        .getContextPath() + realPath));
+        return actionForward;
+    }
 
-	private MenuEntry getInitialMenuEntry(FunctionalityContext functionalityContext) {
-		for (MenuEntry menuEntry : Portal.getRootPortal().getMenu()) {
-			if (menuEntry.isNodeVisible() && !(menuEntry.getReferingContent() instanceof MetaDomainObjectPortal)
-					&& menuEntry.getReferingContent().isAvailable(functionalityContext)) {
-				return menuEntry;
-			}
-		}
-		return null;
-	}
+    private MenuEntry getInitialMenuEntry(FunctionalityContext functionalityContext) {
+        for (MenuEntry menuEntry : Portal.getRootPortal().getMenu()) {
+            if (menuEntry.isNodeVisible() && !(menuEntry.getReferingContent() instanceof MetaDomainObjectPortal)
+                    && menuEntry.getReferingContent().isAvailable(functionalityContext)) {
+                return menuEntry;
+            }
+        }
+        return null;
+    }
 
 }

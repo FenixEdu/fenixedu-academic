@@ -17,6 +17,6 @@ package net.sourceforge.fenixedu.commons;
  */
 public interface Transformer<T, V> {
 
-	public V transform(T input);
+    public V transform(T input);
 
 }

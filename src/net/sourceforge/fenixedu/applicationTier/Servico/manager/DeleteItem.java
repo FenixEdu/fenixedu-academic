@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.Site;
  */
 public class DeleteItem extends FenixService {
 
-	public Boolean run(Site site, final Item item) {
-		if (item != null) {
-			item.delete();
-		}
-		return Boolean.TRUE;
-	}
+    public Boolean run(Site site, final Item item) {
+        if (item != null) {
+            item.delete();
+        }
+        return Boolean.TRUE;
+    }
 
 }

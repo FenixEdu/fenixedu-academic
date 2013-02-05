@@ -23,71 +23,71 @@ import org.joda.time.DateTime;
 
 public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativeOfficeFeeAndInsurancePR_Base {
 
-	protected PastAdministrativeOfficeFeeAndInsurancePR() {
-		super();
-	}
+    protected PastAdministrativeOfficeFeeAndInsurancePR() {
+        super();
+    }
 
-	public PastAdministrativeOfficeFeeAndInsurancePR(DateTime startDate, DateTime endDate,
-			ServiceAgreementTemplate serviceAgreementTemplate) {
-		this();
-		init(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, startDate, endDate,
-				serviceAgreementTemplate);
-	}
+    public PastAdministrativeOfficeFeeAndInsurancePR(DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate) {
+        this();
+        init(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, startDate, endDate,
+                serviceAgreementTemplate);
+    }
 
-	@Override
-	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-		final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-		return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, event.getPayedAmount(), event
-				.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
-	}
+    @Override
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+        final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
+        return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, event.getPayedAmount(), event
+                .calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event.calculateAmountToPay(when)));
+    }
 
-	@Override
-	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-		final PastAdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-				(PastAdministrativeOfficeFeeAndInsuranceEvent) event;
-		return administrativeOfficeFeeAndInsuranceEvent.getPastAdministrativeOfficeFeeAndInsuranceAmount();
-	}
+    @Override
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        final PastAdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
+                (PastAdministrativeOfficeFeeAndInsuranceEvent) event;
+        return administrativeOfficeFeeAndInsuranceEvent.getPastAdministrativeOfficeFeeAndInsuranceAmount();
+    }
 
-	@Override
-	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-		final PastAdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-				(PastAdministrativeOfficeFeeAndInsuranceEvent) event;
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+        final PastAdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
+                (PastAdministrativeOfficeFeeAndInsuranceEvent) event;
 
-		if (applyDiscount && administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
-			return Money.ZERO;
-		}
+        if (applyDiscount && administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
+            return Money.ZERO;
+        }
 
-		return amountToPay;
-	}
+        return amountToPay;
+    }
 
-	@Override
-	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    @Override
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
-		if (entryDTOs.size() != 1) {
-			throw new DomainException("error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
-		}
+        if (entryDTOs.size() != 1) {
+            throw new DomainException("error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
+        }
 
-		final EntryDTO entryDTO = entryDTOs.iterator().next();
+        final EntryDTO entryDTO = entryDTOs.iterator().next();
 
-		checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
+        checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
-		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
-				entryDTO.getAmountToPay(), transactionDetail));
-	}
+        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
+                entryDTO.getAmountToPay(), transactionDetail));
+    }
 
-	private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-		if (amountToPay.lessThan(event.calculateAmountToPay(when))) {
-			throw new DomainExceptionWithLabelFormatter(
-					"error.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR.amount.being.payed.must.match.amount.to.pay",
-					event.getDescriptionForEntryType(getEntryType()));
-		}
+    private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
+        if (amountToPay.lessThan(event.calculateAmountToPay(when))) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR.amount.being.payed.must.match.amount.to.pay",
+                    event.getDescriptionForEntryType(getEntryType()));
+        }
 
-	}
+    }
 
-	@Override
-	public boolean isVisible() {
-		return false;
-	}
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
 
 }

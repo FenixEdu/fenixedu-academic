@@ -15,31 +15,31 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Deprecated
 public enum AdministrativeOfficeType {
 
-	DEGREE, MASTER_DEGREE;
+    DEGREE, MASTER_DEGREE;
 
-	@Deprecated
-	public String getName() {
-		return name();
-	}
+    @Deprecated
+    public String getName() {
+        return name();
+    }
 
-	@Deprecated
-	public String getQualifiedName() {
-		return AdministrativeOfficeType.class.getSimpleName() + "." + name();
-	}
+    @Deprecated
+    public String getQualifiedName() {
+        return AdministrativeOfficeType.class.getSimpleName() + "." + name();
+    }
 
-	@Deprecated
-	public String getFullyQualifiedName() {
-		return AdministrativeOfficeType.class.getName() + "." + name();
-	}
+    @Deprecated
+    public String getFullyQualifiedName() {
+        return AdministrativeOfficeType.class.getName() + "." + name();
+    }
 
-	@Deprecated
-	public String getDescription() {
-		return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
-	}
+    @Deprecated
+    public String getDescription() {
+        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+    }
 
-	@Deprecated
-	public AdministrativeOffice getAdministrativeOffice() {
-		return AdministrativeOffice.readByAdministrativeOfficeType(this);
-	}
+    @Deprecated
+    public AdministrativeOffice getAdministrativeOffice() {
+        return AdministrativeOffice.readByAdministrativeOfficeType(this);
+    }
 
 }

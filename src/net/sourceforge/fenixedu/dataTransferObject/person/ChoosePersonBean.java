@@ -11,103 +11,103 @@ import org.joda.time.YearMonthDay;
 
 public class ChoosePersonBean implements Serializable {
 
-	private Person person;
+    private Person person;
 
-	private String name;
+    private String name;
 
-	private String identificationNumber;
+    private String identificationNumber;
 
-	private IDDocumentType documentType;
+    private IDDocumentType documentType;
 
-	private YearMonthDay dateOfBirth;
+    private YearMonthDay dateOfBirth;
 
-	private boolean firstTimeSearch = true;
+    private boolean firstTimeSearch = true;
 
-	private Integer studentNumber;
+    private Integer studentNumber;
 
-	public ChoosePersonBean() {
-		super();
-	}
+    public ChoosePersonBean() {
+        super();
+    }
 
-	public ChoosePersonBean(IndividualCandidacyPersonalDetails personalDetails) {
-		this.name = personalDetails.getName();
+    public ChoosePersonBean(IndividualCandidacyPersonalDetails personalDetails) {
+        this.name = personalDetails.getName();
 
-		this.identificationNumber = personalDetails.getDocumentIdNumber();
-		this.documentType = personalDetails.getIdDocumentType();
-		this.dateOfBirth = personalDetails.getDateOfBirthYearMonthDay();
-	}
+        this.identificationNumber = personalDetails.getDocumentIdNumber();
+        this.documentType = personalDetails.getIdDocumentType();
+        this.dateOfBirth = personalDetails.getDateOfBirthYearMonthDay();
+    }
 
-	public ChoosePersonBean(Person person) {
-		this();
-		setPerson(person);
-	}
+    public ChoosePersonBean(Person person) {
+        this();
+        setPerson(person);
+    }
 
-	public Person getPerson() {
-		return this.person;
-	}
+    public Person getPerson() {
+        return this.person;
+    }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
-	public boolean hasPerson() {
-		return getPerson() != null;
-	}
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
 
-	public IDDocumentType getDocumentType() {
-		return documentType;
-	}
+    public IDDocumentType getDocumentType() {
+        return documentType;
+    }
 
-	public void setDocumentType(IDDocumentType documentType) {
-		this.documentType = documentType;
-	}
+    public void setDocumentType(IDDocumentType documentType) {
+        this.documentType = documentType;
+    }
 
-	public String getIdentificationNumber() {
-		return identificationNumber;
-	}
+    public String getIdentificationNumber() {
+        return identificationNumber;
+    }
 
-	public void setIdentificationNumber(String identificationNumber) {
-		this.identificationNumber = identificationNumber;
-	}
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
+    }
 
-	public YearMonthDay getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public YearMonthDay getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setDateOfBirth(YearMonthDay dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setDateOfBirth(YearMonthDay dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public boolean isFirstTimeSearch() {
-		return firstTimeSearch;
-	}
+    public boolean isFirstTimeSearch() {
+        return firstTimeSearch;
+    }
 
-	public boolean getFirstTimeSearch() {
-		return this.firstTimeSearch;
-	}
+    public boolean getFirstTimeSearch() {
+        return this.firstTimeSearch;
+    }
 
-	public void setFirstTimeSearch(boolean firstTimeSearch) {
-		this.firstTimeSearch = firstTimeSearch;
-	}
+    public void setFirstTimeSearch(boolean firstTimeSearch) {
+        this.firstTimeSearch = firstTimeSearch;
+    }
 
-	public boolean isEmployee() {
-		return getPerson() != null && getPerson().hasRole(RoleType.EMPLOYEE);
-	}
+    public boolean isEmployee() {
+        return getPerson() != null && getPerson().hasRole(RoleType.EMPLOYEE);
+    }
 
-	public Integer getStudentNumber() {
-		return studentNumber;
-	}
+    public Integer getStudentNumber() {
+        return studentNumber;
+    }
 
-	public void setStudentNumber(Integer studentNumber) {
-		this.studentNumber = studentNumber;
-	}
+    public void setStudentNumber(Integer studentNumber) {
+        this.studentNumber = studentNumber;
+    }
 
 }

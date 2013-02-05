@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 
 public class ExecutionCourseShiftTypesToEditLessonPlanningProvider extends
-		ExecutionCourseShiftTypesToCreateLessonPlanningProvider {
+        ExecutionCourseShiftTypesToCreateLessonPlanningProvider {
 
-	@Override
-	public ExecutionCourse getExecutionCourse(Object source) {
-		return ((LessonPlanning) source).getExecutionCourse();
-	}
+    @Override
+    public ExecutionCourse getExecutionCourse(Object source) {
+        return ((LessonPlanning) source).getExecutionCourse();
+    }
 }

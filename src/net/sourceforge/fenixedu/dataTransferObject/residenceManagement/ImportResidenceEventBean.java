@@ -6,54 +6,54 @@ import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFil
 
 public class ImportResidenceEventBean extends SimpleFileBean {
 
-	private ResidenceYear residenceYear;
-	private ResidenceMonth residenceMonth;
-	private Integer paymentLimitDay;
+    private ResidenceYear residenceYear;
+    private ResidenceMonth residenceMonth;
+    private Integer paymentLimitDay;
 
-	private String spreadsheetName;
+    private String spreadsheetName;
 
-	public ImportResidenceEventBean(ResidenceMonth month) {
-		setResidenceMonth(month);
-		setResidenceYear(month.getYear());
-	}
+    public ImportResidenceEventBean(ResidenceMonth month) {
+        setResidenceMonth(month);
+        setResidenceYear(month.getYear());
+    }
 
-	public ImportResidenceEventBean() {
-		setResidenceYear(null);
-		setResidenceMonth(null);
-	}
+    public ImportResidenceEventBean() {
+        setResidenceYear(null);
+        setResidenceMonth(null);
+    }
 
-	public ResidenceYear getResidenceYear() {
-		return this.residenceYear;
-	}
+    public ResidenceYear getResidenceYear() {
+        return this.residenceYear;
+    }
 
-	public void setResidenceYear(ResidenceYear residenceYear) {
-		this.residenceYear = residenceYear;
-		if (residenceYear != null) {
-			setPaymentLimitDay(residenceYear.getUnit().getCurrentPaymentLimitDay());
-		}
-	}
+    public void setResidenceYear(ResidenceYear residenceYear) {
+        this.residenceYear = residenceYear;
+        if (residenceYear != null) {
+            setPaymentLimitDay(residenceYear.getUnit().getCurrentPaymentLimitDay());
+        }
+    }
 
-	public ResidenceMonth getResidenceMonth() {
-		return this.residenceMonth;
-	}
+    public ResidenceMonth getResidenceMonth() {
+        return this.residenceMonth;
+    }
 
-	public void setResidenceMonth(ResidenceMonth residenceMonth) {
-		this.residenceMonth = residenceMonth;
-	}
+    public void setResidenceMonth(ResidenceMonth residenceMonth) {
+        this.residenceMonth = residenceMonth;
+    }
 
-	public Integer getPaymentLimitDay() {
-		return paymentLimitDay;
-	}
+    public Integer getPaymentLimitDay() {
+        return paymentLimitDay;
+    }
 
-	public void setPaymentLimitDay(Integer paymentLimitDay) {
-		this.paymentLimitDay = paymentLimitDay;
-	}
+    public void setPaymentLimitDay(Integer paymentLimitDay) {
+        this.paymentLimitDay = paymentLimitDay;
+    }
 
-	public String getSpreadsheetName() {
-		return spreadsheetName;
-	}
+    public String getSpreadsheetName() {
+        return spreadsheetName;
+    }
 
-	public void setSpreadsheetName(String spreadsheetName) {
-		this.spreadsheetName = spreadsheetName;
-	}
+    public void setSpreadsheetName(String spreadsheetName) {
+        this.spreadsheetName = spreadsheetName;
+    }
 }

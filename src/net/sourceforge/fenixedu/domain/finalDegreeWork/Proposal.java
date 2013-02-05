@@ -34,347 +34,347 @@ import org.apache.commons.collections.Predicate;
 
 public class Proposal extends Proposal_Base {
 
-	public final static Comparator<Proposal> COMPARATOR_BY_PROPOSAL_NUMBER = new Comparator<Proposal>() {
+    public final static Comparator<Proposal> COMPARATOR_BY_PROPOSAL_NUMBER = new Comparator<Proposal>() {
 
-		@Override
-		public int compare(Proposal arg0, Proposal arg1) {
-			return arg0.getProposalNumber().compareTo(arg1.getProposalNumber());
-		}
+        @Override
+        public int compare(Proposal arg0, Proposal arg1) {
+            return arg0.getProposalNumber().compareTo(arg1.getProposalNumber());
+        }
 
-	};
+    };
 
-	public final static Comparator<Proposal> COMPARATOR_BY_STATUS = new Comparator<Proposal>() {
+    public final static Comparator<Proposal> COMPARATOR_BY_STATUS = new Comparator<Proposal>() {
 
-		@Override
-		public int compare(Proposal arg0, Proposal arg1) {
-			return arg0.getProposalStatus().compareTo(arg1.getProposalStatus());
-		}
+        @Override
+        public int compare(Proposal arg0, Proposal arg1) {
+            return arg0.getProposalStatus().compareTo(arg1.getProposalStatus());
+        }
 
-	};
+    };
 
-	public final static Comparator<Proposal> COMPARATOR_BY_NUMBER_OF_CANDIDATES = new Comparator<Proposal>() {
+    public final static Comparator<Proposal> COMPARATOR_BY_NUMBER_OF_CANDIDATES = new Comparator<Proposal>() {
 
-		@Override
-		public int compare(Proposal arg0, Proposal arg1) {
-			if (arg1.getNumberOfCandidates() > arg0.getNumberOfCandidates()) {
-				return -1;
-			} else {
-				return 1;
-			}
-		}
+        @Override
+        public int compare(Proposal arg0, Proposal arg1) {
+            if (arg1.getNumberOfCandidates() > arg0.getNumberOfCandidates()) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
 
-	};
+    };
 
-	public static class StatusPredicate implements Predicate {
-		private final ProposalStatusType status;
+    public static class StatusPredicate implements Predicate {
+        private final ProposalStatusType status;
 
-		public StatusPredicate(ProposalStatusType status) {
-			this.status = status;
-		}
+        public StatusPredicate(ProposalStatusType status) {
+            this.status = status;
+        }
 
-		@Override
-		public boolean evaluate(Object object) {
-			if (object instanceof Proposal) {
-				Proposal proposal = (Proposal) object;
-				return proposal.getProposalStatus().equals(this.status);
-			}
-			return false;
-		}
-	}
+        @Override
+        public boolean evaluate(Object object) {
+            if (object instanceof Proposal) {
+                Proposal proposal = (Proposal) object;
+                return proposal.getProposalStatus().equals(this.status);
+            }
+            return false;
+        }
+    }
 
-	public static class CandidacyAttributionPredicate implements Predicate {
-		private final Set<CandidacyAttributionType> attributionTypes;
+    public static class CandidacyAttributionPredicate implements Predicate {
+        private final Set<CandidacyAttributionType> attributionTypes;
 
-		public CandidacyAttributionPredicate(Set<CandidacyAttributionType> types) {
-			attributionTypes = types;
-		}
+        public CandidacyAttributionPredicate(Set<CandidacyAttributionType> types) {
+            attributionTypes = types;
+        }
 
-		@Override
-		public boolean evaluate(Object object) {
-			if (object instanceof Proposal) {
-				if (attributionTypes == null || attributionTypes.isEmpty()) {
-					return true;
-				}
-				final CandidacyAttributionType status = ((Proposal) object).getAttributionStatus();
-				if (status == null) {
-					return false;
-				}
-				for (CandidacyAttributionType type : attributionTypes) {
-					if (type.equals(status)) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-	}
+        @Override
+        public boolean evaluate(Object object) {
+            if (object instanceof Proposal) {
+                if (attributionTypes == null || attributionTypes.isEmpty()) {
+                    return true;
+                }
+                final CandidacyAttributionType status = ((Proposal) object).getAttributionStatus();
+                if (status == null) {
+                    return false;
+                }
+                for (CandidacyAttributionType type : attributionTypes) {
+                    if (type.equals(status)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
 
-	public static class HasCandidatesPredicate implements Predicate {
-		private final WithCandidatesFilter withCandidates;
+    public static class HasCandidatesPredicate implements Predicate {
+        private final WithCandidatesFilter withCandidates;
 
-		public HasCandidatesPredicate(WithCandidatesFilter withCandidatesFilter) {
-			this.withCandidates = withCandidatesFilter;
-		}
+        public HasCandidatesPredicate(WithCandidatesFilter withCandidatesFilter) {
+            this.withCandidates = withCandidatesFilter;
+        }
 
-		@Override
-		public boolean evaluate(Object object) {
-			if (object instanceof Proposal) {
-				Proposal proposal = (Proposal) object;
-				switch (withCandidates) {
-				case ALL:
-					return true;
-				case WITH_CANDIDATES:
-					return proposal.getNumberOfCandidates() > 0;
-				case WITHOUT_CANDIDATES:
-					return proposal.getNumberOfCandidates() == 0;
+        @Override
+        public boolean evaluate(Object object) {
+            if (object instanceof Proposal) {
+                Proposal proposal = (Proposal) object;
+                switch (withCandidates) {
+                case ALL:
+                    return true;
+                case WITH_CANDIDATES:
+                    return proposal.getNumberOfCandidates() > 0;
+                case WITHOUT_CANDIDATES:
+                    return proposal.getNumberOfCandidates() == 0;
 
-				}
-			}
-			return false;
-		}
-	}
+                }
+            }
+            return false;
+        }
+    }
 
-	public Proposal() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public Proposal() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		getAssociatedGroupStudentsSet().clear();
-		getBranchesSet().clear();
-		removeCoorientator();
-		removeGroupAttributed();
-		removeGroupAttributedByTeacher();
-		for (final GroupProposal groupProposal : getGroupProposalsSet()) {
-			groupProposal.delete();
-		}
-		removeOrientator();
-		removeScheduleing();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+    public void delete() {
+        getAssociatedGroupStudentsSet().clear();
+        getBranchesSet().clear();
+        removeCoorientator();
+        removeGroupAttributed();
+        removeGroupAttributedByTeacher();
+        for (final GroupProposal groupProposal : getGroupProposalsSet()) {
+            groupProposal.delete();
+        }
+        removeOrientator();
+        removeScheduleing();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	public boolean isProposalConfirmedByTeacherAndStudents(final FinalDegreeWorkGroup group) {
-		return getGroupAttributedByTeacher() == group && group.isConfirmedByStudents(this);
-	}
+    public boolean isProposalConfirmedByTeacherAndStudents(final FinalDegreeWorkGroup group) {
+        return getGroupAttributedByTeacher() == group && group.isConfirmedByStudents(this);
+    }
 
-	public boolean isForExecutionYear(final ExecutionYear executionYear) {
-		final Scheduleing scheduleing = getScheduleing();
-		for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
-			if (executionDegree.getExecutionYear() == executionYear) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isForExecutionYear(final ExecutionYear executionYear) {
+        final Scheduleing scheduleing = getScheduleing();
+        for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
+            if (executionDegree.getExecutionYear() == executionYear) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean canBeReadBy(final IUserView userView) {
-		if (getStatus() != null && getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS)) {
-			return true;
-		}
-		if (getOrientator() != null && getOrientator() != null && userView != null
-				&& getOrientator().getUsername().equals(userView.getUtilizador())) {
-			return true;
-		}
-		if (getCoorientator() != null && getCoorientator() != null && userView != null
-				&& getCoorientator().getUsername().equals(userView.getUtilizador())) {
-			return true;
-		}
-		if (userView != null) {
-			final Person person = userView.getPerson();
-			for (final ExecutionDegree executionDegree : getScheduleing().getExecutionDegrees()) {
-				for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-					if (coordinator.getPerson() == person) {
-						return true;
-					}
-				}
+    public boolean canBeReadBy(final IUserView userView) {
+        if (getStatus() != null && getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS)) {
+            return true;
+        }
+        if (getOrientator() != null && getOrientator() != null && userView != null
+                && getOrientator().getUsername().equals(userView.getUtilizador())) {
+            return true;
+        }
+        if (getCoorientator() != null && getCoorientator() != null && userView != null
+                && getCoorientator().getUsername().equals(userView.getUtilizador())) {
+            return true;
+        }
+        if (userView != null) {
+            final Person person = userView.getPerson();
+            for (final ExecutionDegree executionDegree : getScheduleing().getExecutionDegrees()) {
+                for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                    if (coordinator.getPerson() == person) {
+                        return true;
+                    }
+                }
 
-				if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-					final Employee employee = person.getEmployee();
-					final Department department = employee.getCurrentDepartmentWorkingPlace();
-					final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
-					if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
-							|| hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+                if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+                    final Employee employee = person.getEmployee();
+                    final Department department = employee.getCurrentDepartmentWorkingPlace();
+                    final Set<CompetenceCourse> competenceCourses = department.getCompetenceCoursesSet();
+                    if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourses)
+                            || hasDissertationCompetenceCourseForDepartment(executionDegree, department.getDepartmentUnit())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	protected boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree,
-			final Set<CompetenceCourse> competenceCourses) {
-		for (final CompetenceCourse competenceCourse : competenceCourses) {
-			for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
-				if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
-					final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-					if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    protected boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree,
+            final Set<CompetenceCourse> competenceCourses) {
+        for (final CompetenceCourse competenceCourse : competenceCourses) {
+            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
+                if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
+                    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                    if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	private boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree, final Unit unit) {
-		if (unit.isCompetenceCourseGroupUnit()) {
-			final CompetenceCourseGroupUnit competenceCourseGroupUnit = (CompetenceCourseGroupUnit) unit;
-			if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourseGroupUnit.getCompetenceCoursesSet())) {
-				return true;
-			}
-		}
-		for (final Accountability accountability : unit.getChildsSet()) {
-			final Party party = accountability.getChildParty();
-			if (party.isUnit() && hasDissertationCompetenceCourseForDepartment(executionDegree, (Unit) party)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasDissertationCompetenceCourseForDepartment(final ExecutionDegree executionDegree, final Unit unit) {
+        if (unit.isCompetenceCourseGroupUnit()) {
+            final CompetenceCourseGroupUnit competenceCourseGroupUnit = (CompetenceCourseGroupUnit) unit;
+            if (hasDissertationCompetenceCourseForDepartment(executionDegree, competenceCourseGroupUnit.getCompetenceCoursesSet())) {
+                return true;
+            }
+        }
+        for (final Accountability accountability : unit.getChildsSet()) {
+            final Party party = accountability.getChildParty();
+            if (party.isUnit() && hasDissertationCompetenceCourseForDepartment(executionDegree, (Unit) party)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public int getNumberOfCandidates() {
-		return getGroupProposalsCount();
-	}
+    public int getNumberOfCandidates() {
+        return getGroupProposalsCount();
+    }
 
-	public List<Person> getOrientators() {
-		List<Person> persons = new ArrayList<Person>();
-		persons.add(getOrientator());
-		persons.add(getCoorientator());
-		return persons;
-	}
+    public List<Person> getOrientators() {
+        List<Person> persons = new ArrayList<Person>();
+        persons.add(getOrientator());
+        persons.add(getCoorientator());
+        return persons;
+    }
 
-	public String getOrientatorsAsString() {
-		final StringBuilder builder = new StringBuilder();
-		if (hasOrientator()) {
-			builder.append(getOrientator().getName());
-		}
-		if (hasCoorientator()) {
-			if (builder.length() > 0) {
-				builder.append(", ");
-			}
-			builder.append(getCoorientator().getName());
-		}
-		if (getCompanionName() != null && !getCompanionName().isEmpty()) {
-			if (builder.length() > 0) {
-				builder.append(", ");
-			}
-			builder.append(getCompanionName());
-		}
-		return builder.toString();
-	}
+    public String getOrientatorsAsString() {
+        final StringBuilder builder = new StringBuilder();
+        if (hasOrientator()) {
+            builder.append(getOrientator().getName());
+        }
+        if (hasCoorientator()) {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append(getCoorientator().getName());
+        }
+        if (getCompanionName() != null && !getCompanionName().isEmpty()) {
+            if (builder.length() > 0) {
+                builder.append(", ");
+            }
+            builder.append(getCompanionName());
+        }
+        return builder.toString();
+    }
 
-	public CandidacyAttributionType getAttributionStatus() {
-		if (hasGroupAttributed()) {
-			return CandidacyAttributionType.ATTRIBUTED_BY_CORDINATOR;
-		}
-		if (hasGroupAttributedByTeacher()) {
-			FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
-			for (GroupStudent groupStudent : group.getGroupStudents()) {
-				if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
-					return CandidacyAttributionType.ATTRIBUTED_NOT_CONFIRMED;
-				}
-			}
-			return CandidacyAttributionType.ATTRIBUTED;
-		}
-		return CandidacyAttributionType.NOT_ATTRIBUTED;
-	}
+    public CandidacyAttributionType getAttributionStatus() {
+        if (hasGroupAttributed()) {
+            return CandidacyAttributionType.ATTRIBUTED_BY_CORDINATOR;
+        }
+        if (hasGroupAttributedByTeacher()) {
+            FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
+            for (GroupStudent groupStudent : group.getGroupStudents()) {
+                if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
+                    return CandidacyAttributionType.ATTRIBUTED_NOT_CONFIRMED;
+                }
+            }
+            return CandidacyAttributionType.ATTRIBUTED;
+        }
+        return CandidacyAttributionType.NOT_ATTRIBUTED;
+    }
 
-	public List<GroupStudent> getAttributionGroup() {
-		if (hasGroupAttributed()) {
-			return getGroupAttributed().getGroupStudents();
-		}
-		if (hasGroupAttributedByTeacher()) {
-			FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
-			for (GroupStudent groupStudent : group.getGroupStudents()) {
-				if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
-					return Collections.emptyList();
-				}
-			}
-			return group.getGroupStudents();
-		}
-		return Collections.emptyList();
-	}
+    public List<GroupStudent> getAttributionGroup() {
+        if (hasGroupAttributed()) {
+            return getGroupAttributed().getGroupStudents();
+        }
+        if (hasGroupAttributedByTeacher()) {
+            FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
+            for (GroupStudent groupStudent : group.getGroupStudents()) {
+                if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
+                    return Collections.emptyList();
+                }
+            }
+            return group.getGroupStudents();
+        }
+        return Collections.emptyList();
+    }
 
-	public String getAttributionStatusLabel() {
-		String key = getAttributionStatus().getClass().getSimpleName() + "." + getAttributionStatus();
-		return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", key);
-	}
+    public String getAttributionStatusLabel() {
+        String key = getAttributionStatus().getClass().getSimpleName() + "." + getAttributionStatus();
+        return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", key);
+    }
 
-	public boolean getForPublish() {
-		return getForApproval() || getStatus().equals(FinalDegreeWorkProposalStatus.APPROVED_STATUS);
-	}
+    public boolean getForPublish() {
+        return getForApproval() || getStatus().equals(FinalDegreeWorkProposalStatus.APPROVED_STATUS);
+    }
 
-	public boolean getForApproval() {
-		return getStatus() == null;
-	}
+    public boolean getForApproval() {
+        return getStatus() == null;
+    }
 
-	public ProposalStatusType getProposalStatus() {
-		FinalDegreeWorkProposalStatus status = getStatus();
-		if (status == null) {
-			return ProposalStatusType.FOR_APPROVAL;
-		}
-		if (FinalDegreeWorkProposalStatus.APPROVED_STATUS.equals(status)) {
-			return ProposalStatusType.APPROVED;
-		}
-		if (FinalDegreeWorkProposalStatus.PUBLISHED_STATUS.equals(status)) {
-			return ProposalStatusType.PUBLISHED;
-		}
-		return null;
-	}
+    public ProposalStatusType getProposalStatus() {
+        FinalDegreeWorkProposalStatus status = getStatus();
+        if (status == null) {
+            return ProposalStatusType.FOR_APPROVAL;
+        }
+        if (FinalDegreeWorkProposalStatus.APPROVED_STATUS.equals(status)) {
+            return ProposalStatusType.APPROVED;
+        }
+        if (FinalDegreeWorkProposalStatus.PUBLISHED_STATUS.equals(status)) {
+            return ProposalStatusType.PUBLISHED;
+        }
+        return null;
+    }
 
-	public String getPresentationName() {
-		return String.format("%s - %s", getProposalNumber(), getTitle());
-	}
+    public String getPresentationName() {
+        return String.format("%s - %s", getProposalNumber(), getTitle());
+    }
 
-	public Set<FinalDegreeWorkGroup> getCandidacies() {
-		final Set<FinalDegreeWorkGroup> candidacies = new HashSet<FinalDegreeWorkGroup>();
-		for (GroupProposal groupProposal : getGroupProposals()) {
-			candidacies.add(groupProposal.getFinalDegreeDegreeWorkGroup());
-		}
-		return candidacies;
-	}
+    public Set<FinalDegreeWorkGroup> getCandidacies() {
+        final Set<FinalDegreeWorkGroup> candidacies = new HashSet<FinalDegreeWorkGroup>();
+        for (GroupProposal groupProposal : getGroupProposals()) {
+            candidacies.add(groupProposal.getFinalDegreeDegreeWorkGroup());
+        }
+        return candidacies;
+    }
 
-	@Override
-	public void setCoorientator(Person coorientator) {
-		if (coorientator != getCoorientator()) {
-			checkPersonProposals(coorientator);
-		}
-		super.setCoorientator(coorientator);
-	}
+    @Override
+    public void setCoorientator(Person coorientator) {
+        if (coorientator != getCoorientator()) {
+            checkPersonProposals(coorientator);
+        }
+        super.setCoorientator(coorientator);
+    }
 
-	@Override
-	public void setOrientator(Person orientator) {
-		if (orientator != getOrientator()) {
-			checkPersonProposals(orientator);
-		}
-		super.setOrientator(orientator);
-	}
+    @Override
+    public void setOrientator(Person orientator) {
+        if (orientator != getOrientator()) {
+            checkPersonProposals(orientator);
+        }
+        super.setOrientator(orientator);
+    }
 
-	protected void checkPersonProposals(Person person) {
-		if (person != null && getScheduleing() != null) {
-			int count = 0;
+    protected void checkPersonProposals(Person person) {
+        if (person != null && getScheduleing() != null) {
+            int count = 0;
 
-			for (Proposal p : person.getAssociatedProposalsByOrientator()) {
-				if (p.getScheduleing().equals(getScheduleing())) {
-					count++;
-				}
-			}
+            for (Proposal p : person.getAssociatedProposalsByOrientator()) {
+                if (p.getScheduleing().equals(getScheduleing())) {
+                    count++;
+                }
+            }
 
-			for (Proposal p : person.getAssociatedProposalsByCoorientator()) {
-				if (p.getScheduleing().equals(getScheduleing())) {
-					count++;
-				}
-			}
+            for (Proposal p : person.getAssociatedProposalsByCoorientator()) {
+                if (p.getScheduleing().equals(getScheduleing())) {
+                    count++;
+                }
+            }
 
-			Integer maximumNumberOfProposalsPerPerson = getScheduleing().getMaximumNumberOfProposalsPerPerson();
+            Integer maximumNumberOfProposalsPerPerson = getScheduleing().getMaximumNumberOfProposalsPerPerson();
 
-			if (maximumNumberOfProposalsPerPerson != null && maximumNumberOfProposalsPerPerson > 0) {
-				if (count >= maximumNumberOfProposalsPerPerson) {
-					throw new DomainException("error.Scheduleing.maximumNumberOfProposalsPerPerson");
-				}
-			}
-		}
-	}
+            if (maximumNumberOfProposalsPerPerson != null && maximumNumberOfProposalsPerPerson > 0) {
+                if (count >= maximumNumberOfProposalsPerPerson) {
+                    throw new DomainException("error.Scheduleing.maximumNumberOfProposalsPerPerson");
+                }
+            }
+        }
+    }
 }

@@ -27,277 +27,274 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/accountingEventsManagement", module = "academicAdministration")
 @Forwards({
 
-		@Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"),
-		@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"),
-		@Forward(
-				name = "createAdministrativeOfficeFeeAndInsuranceEvent",
-				path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
-		@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp"),
-		@Forward(
-				name = "createEnrolmentOutOfPeriodEvent",
-				path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"),
-		@Forward(
-				name = "createDfaRegistrationEvent",
-				path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp")
+        @Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"),
+        @Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"),
+        @Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent",
+                path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
+        @Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp"),
+        @Forward(name = "createEnrolmentOutOfPeriodEvent",
+                path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"),
+        @Forward(name = "createDfaRegistrationEvent",
+                path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp")
 
 })
 public class AccountingEventsManagementDA extends FenixDispatchAction {
 
-	private static List<EventType> supportedEventTypes = Arrays.asList(EventType.GRATUITY,
-			EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, EventType.ENROLMENT_OUT_OF_PERIOD);
+    private static List<EventType> supportedEventTypes = Arrays.asList(EventType.GRATUITY,
+            EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, EventType.ENROLMENT_OUT_OF_PERIOD);
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+        StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 
-		request.setAttribute("eventTypes", supportedEventTypes);
-		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+        request.setAttribute("eventTypes", supportedEventTypes);
+        request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
-		/**
-		 * The insurance is an {@link EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE} if the target
-		 * degree has no PhdProgram associated
-		 */
-		request.setAttribute("officeFeeInsurance", !studentCurricularPlan.getDegree().hasPhdProgram());
+        /**
+         * The insurance is an {@link EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE} if the target
+         * degree has no PhdProgram associated
+         */
+        request.setAttribute("officeFeeInsurance", !studentCurricularPlan.getDegree().hasPhdProgram());
 
-		return mapping.findForward("chooseEventType");
+        return mapping.findForward("chooseEventType");
 
-	}
+    }
 
-	public ActionForward prepareInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("eventTypes", supportedEventTypes);
+        request.setAttribute("eventTypes", supportedEventTypes);
 
-		return mapping.findForward("chooseEventType");
-	}
+        return mapping.findForward("chooseEventType");
+    }
 
-	private AccountingEventCreateBean getAccountingEventCreateBean() {
-		return getRenderedObject("accountingEventCreateBean");
-	}
+    private AccountingEventCreateBean getAccountingEventCreateBean() {
+        return getRenderedObject("accountingEventCreateBean");
+    }
 
-	public ActionForward chooseEventType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward chooseEventType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final EventType eventType = getEventType(request);
+        final EventType eventType = getEventType(request);
 
-		switch (eventType) {
-		case GRATUITY:
-			return prepareCreateGratuityEvent(mapping, request);
-		case ADMINISTRATIVE_OFFICE_FEE_INSURANCE:
-			return prepareCreateAdministrativeOfficeFeeAndInsuranceEvent(mapping, request);
-		case ENROLMENT_OUT_OF_PERIOD:
-			return prepareCreateEnrolmentOutOfPeriod(mapping, request);
-		case INSURANCE:
-			return prepareCreateInsuranceEvent(mapping, request);
-		case DFA_REGISTRATION:
-			return prepareCreateDfaRegistration(mapping, request);
-		default:
-			throw new RuntimeException("Unknown event type");
-		}
+        switch (eventType) {
+        case GRATUITY:
+            return prepareCreateGratuityEvent(mapping, request);
+        case ADMINISTRATIVE_OFFICE_FEE_INSURANCE:
+            return prepareCreateAdministrativeOfficeFeeAndInsuranceEvent(mapping, request);
+        case ENROLMENT_OUT_OF_PERIOD:
+            return prepareCreateEnrolmentOutOfPeriod(mapping, request);
+        case INSURANCE:
+            return prepareCreateInsuranceEvent(mapping, request);
+        case DFA_REGISTRATION:
+            return prepareCreateDfaRegistration(mapping, request);
+        default:
+            throw new RuntimeException("Unknown event type");
+        }
 
-	}
+    }
 
-	private ActionForward prepareCreateDfaRegistration(ActionMapping mapping, HttpServletRequest request) {
-		request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
-		return mapping.findForward("createDfaRegistrationEvent");
-	}
+    private ActionForward prepareCreateDfaRegistration(ActionMapping mapping, HttpServletRequest request) {
+        request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
+        return mapping.findForward("createDfaRegistrationEvent");
+    }
 
-	public ActionForward prepareCreateDfaRegistrationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
-		return mapping.findForward("createDfaRegistrationEvent");
-	}
+    public ActionForward prepareCreateDfaRegistrationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+        return mapping.findForward("createDfaRegistrationEvent");
+    }
 
-	public ActionForward createDfaRegistrationEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createDfaRegistrationEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
-		try {
-			AccountingEventsCreator.createDfaRegistrationEvent(accountingEventCreateBean.getStudentCurricularPlan(),
-					accountingEventCreateBean.getExecutionYear());
+        final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
+        try {
+            AccountingEventsCreator.createDfaRegistrationEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+                    accountingEventCreateBean.getExecutionYear());
 
-			addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+            addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-			request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
-			return prepare(mapping, form, request, response);
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            return prepare(mapping, form, request, response);
 
-		} catch (DomainExceptionWithInvocationResult e) {
-			addActionMessages("error", request, e.getInvocationResult().getMessages());
-		} catch (DomainException e) {
-			addActionMessage("error", request, e.getKey(), e.getArgs());
-		}
+        } catch (DomainExceptionWithInvocationResult e) {
+            addActionMessages("error", request, e.getInvocationResult().getMessages());
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
 
-		request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+        request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
 
-		return mapping.findForward("createDfaRegistrationEvent");
-	}
+        return mapping.findForward("createDfaRegistrationEvent");
+    }
 
-	private ActionForward prepareCreateGratuityEvent(ActionMapping mapping, HttpServletRequest request) {
-		request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
-		return mapping.findForward("createGratuityEvent");
-	}
+    private ActionForward prepareCreateGratuityEvent(ActionMapping mapping, HttpServletRequest request) {
+        request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
+        return mapping.findForward("createGratuityEvent");
+    }
 
-	public ActionForward prepareCreateGratuityEventInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
-		return mapping.findForward("createGratuityEvent");
-	}
+    public ActionForward prepareCreateGratuityEventInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+        return mapping.findForward("createGratuityEvent");
+    }
 
-	private EventType getEventType(HttpServletRequest request) {
-		return EventType.valueOf(request.getParameter("eventType"));
-	}
+    private EventType getEventType(HttpServletRequest request) {
+        return EventType.valueOf(request.getParameter("eventType"));
+    }
 
-	public ActionForward createGratuityEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createGratuityEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
-		try {
+        final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
+        try {
 
-			AccountingEventsCreator.createGratuityEvent(accountingEventCreateBean.getStudentCurricularPlan(),
-					accountingEventCreateBean.getExecutionYear());
+            AccountingEventsCreator.createGratuityEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+                    accountingEventCreateBean.getExecutionYear());
 
-			addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+            addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-			request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
-			return prepare(mapping, form, request, response);
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            return prepare(mapping, form, request, response);
 
-		} catch (DomainExceptionWithInvocationResult e) {
-			addActionMessages("error", request, e.getInvocationResult().getMessages());
-		} catch (DomainException e) {
-			addActionMessage("error", request, e.getKey(), e.getArgs());
-		}
+        } catch (DomainExceptionWithInvocationResult e) {
+            addActionMessages("error", request, e.getInvocationResult().getMessages());
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
 
-		request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+        request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
 
-		return mapping.findForward("createGratuityEvent");
+        return mapping.findForward("createGratuityEvent");
 
-	}
+    }
 
-	private ActionForward prepareCreateAdministrativeOfficeFeeAndInsuranceEvent(ActionMapping mapping, HttpServletRequest request) {
-		request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
-		return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceEvent");
-	}
+    private ActionForward prepareCreateAdministrativeOfficeFeeAndInsuranceEvent(ActionMapping mapping, HttpServletRequest request) {
+        request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
+        return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceEvent");
+    }
 
-	public ActionForward prepareCreateAdministrativeOfficeFeeAndInsuranceEventInvalid(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
-		return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceEvent");
-	}
+    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsuranceEventInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+        return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceEvent");
+    }
 
-	public ActionForward createAdministrativeOfficeFeeAndInsuranceEvent(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward createAdministrativeOfficeFeeAndInsuranceEvent(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
-		try {
+        final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
+        try {
 
-			AccountingEventsCreator.createAdministrativeOfficeFeeAndInsuranceEvent(
-					accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear());
+            AccountingEventsCreator.createAdministrativeOfficeFeeAndInsuranceEvent(
+                    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear());
 
-			addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+            addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-			request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
-			return prepare(mapping, form, request, response);
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            return prepare(mapping, form, request, response);
 
-		} catch (DomainExceptionWithInvocationResult e) {
-			addActionMessages("error", request, e.getInvocationResult().getMessages());
-		} catch (DomainException e) {
-			addActionMessage("error", request, e.getKey(), e.getArgs());
-		}
+        } catch (DomainExceptionWithInvocationResult e) {
+            addActionMessages("error", request, e.getInvocationResult().getMessages());
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
 
-		request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+        request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
 
-		return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceEvent");
+        return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceEvent");
 
-	}
+    }
 
-	private ActionForward prepareCreateEnrolmentOutOfPeriod(ActionMapping mapping, HttpServletRequest request) {
-		request.setAttribute("accountingEventCreateBean", new EnrolmentOutOfPeriodEventCreateBean(
-				getStudentCurricularPlan(request)));
-		return mapping.findForward("createEnrolmentOutOfPeriodEvent");
-	}
+    private ActionForward prepareCreateEnrolmentOutOfPeriod(ActionMapping mapping, HttpServletRequest request) {
+        request.setAttribute("accountingEventCreateBean", new EnrolmentOutOfPeriodEventCreateBean(
+                getStudentCurricularPlan(request)));
+        return mapping.findForward("createEnrolmentOutOfPeriodEvent");
+    }
 
-	public ActionForward prepareCreateEnrolmentOutOfPeriodPostback(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateEnrolmentOutOfPeriodPostback(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
-		RenderUtils.invalidateViewState("accountingEventCreateBean");
+        request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+        RenderUtils.invalidateViewState("accountingEventCreateBean");
 
-		return mapping.findForward("createEnrolmentOutOfPeriodEvent");
-	}
+        return mapping.findForward("createEnrolmentOutOfPeriodEvent");
+    }
 
-	public ActionForward prepareCreateEnrolmentOutOfPeriodInvalid(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateEnrolmentOutOfPeriodInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
-		return mapping.findForward("createEnrolmentOutOfPeriodEvent");
-	}
+        request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+        return mapping.findForward("createEnrolmentOutOfPeriodEvent");
+    }
 
-	public ActionForward createEnrolmentOutOfPeriodEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createEnrolmentOutOfPeriodEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final EnrolmentOutOfPeriodEventCreateBean accountingEventCreateBean =
-				(EnrolmentOutOfPeriodEventCreateBean) getAccountingEventCreateBean();
+        final EnrolmentOutOfPeriodEventCreateBean accountingEventCreateBean =
+                (EnrolmentOutOfPeriodEventCreateBean) getAccountingEventCreateBean();
 
-		try {
+        try {
 
-			AccountingEventsCreator.createEnrolmentOutOfPeriodEvent(accountingEventCreateBean.getStudentCurricularPlan(),
-					accountingEventCreateBean.getExecutionPeriod(), accountingEventCreateBean.getNumberOfDelayDays());
+            AccountingEventsCreator.createEnrolmentOutOfPeriodEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+                    accountingEventCreateBean.getExecutionPeriod(), accountingEventCreateBean.getNumberOfDelayDays());
 
-			addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+            addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-			request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
-			return prepare(mapping, form, request, response);
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            return prepare(mapping, form, request, response);
 
-		} catch (DomainExceptionWithInvocationResult e) {
-			addActionMessages("error", request, e.getInvocationResult().getMessages());
-		} catch (DomainException e) {
-			addActionMessage("error", request, e.getKey(), e.getArgs());
-		}
+        } catch (DomainExceptionWithInvocationResult e) {
+            addActionMessages("error", request, e.getInvocationResult().getMessages());
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
 
-		request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+        request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
 
-		return mapping.findForward("createEnrolmentOutOfPeriodEvent");
-	}
+        return mapping.findForward("createEnrolmentOutOfPeriodEvent");
+    }
 
-	private StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
-		return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpID"));
-	}
+    private StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
+        return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpID"));
+    }
 
-	private ActionForward prepareCreateInsuranceEvent(ActionMapping mapping, HttpServletRequest request) {
-		request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
-		return mapping.findForward("createInsuranceEvent");
-	}
+    private ActionForward prepareCreateInsuranceEvent(ActionMapping mapping, HttpServletRequest request) {
+        request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
+        return mapping.findForward("createInsuranceEvent");
+    }
 
-	public ActionForward prepareCreateInsuranceEventInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
-		return mapping.findForward("createInsuranceEvent");
-	}
+    public ActionForward prepareCreateInsuranceEventInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+        return mapping.findForward("createInsuranceEvent");
+    }
 
-	public ActionForward createInsuranceEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createInsuranceEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
-		try {
+        final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
+        try {
 
-			AccountingEventsCreator.createInsuranceEvent(accountingEventCreateBean.getStudentCurricularPlan(),
-					accountingEventCreateBean.getExecutionYear());
+            AccountingEventsCreator.createInsuranceEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+                    accountingEventCreateBean.getExecutionYear());
 
-			addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+            addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-			request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
-			return prepare(mapping, form, request, response);
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            return prepare(mapping, form, request, response);
 
-		} catch (DomainExceptionWithInvocationResult e) {
-			addActionMessages("error", request, e.getInvocationResult().getMessages());
-		} catch (DomainException e) {
-			addActionMessage("error", request, e.getKey(), e.getArgs());
-		}
+        } catch (DomainExceptionWithInvocationResult e) {
+            addActionMessages("error", request, e.getInvocationResult().getMessages());
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
 
-		request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+        request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
 
-		return mapping.findForward("createInsuranceEvent");
+        return mapping.findForward("createInsuranceEvent");
 
-	}
+    }
 
 }

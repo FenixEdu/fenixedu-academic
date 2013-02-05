@@ -9,10 +9,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateExternalEnrolment extends FenixService {
 
-	@Service
-	public static ExternalEnrolment run(final CreateExternalEnrolmentBean bean, final Registration registration)
-			throws FenixServiceException {
-		return new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(),
-				bean.getExecutionPeriod(), bean.getEvaluationDate(), bean.getEctsCredits());
-	}
+    @Service
+    public static ExternalEnrolment run(final CreateExternalEnrolmentBean bean, final Registration registration)
+            throws FenixServiceException {
+        return new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(),
+                bean.getExecutionPeriod(), bean.getEvaluationDate(), bean.getEctsCredits());
+    }
 }

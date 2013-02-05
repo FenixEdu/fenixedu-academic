@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.domain.masterDegree;
  */
 public enum MasterDegreeClassification {
 
-	APPROVED,
+    APPROVED,
 
-	NOT_APPROVED,
+    NOT_APPROVED,
 
-	UNDEFINED;
+    UNDEFINED;
 
 }

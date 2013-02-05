@@ -16,10 +16,10 @@ import javax.servlet.jsp.tagext.VariableInfo;
  *          gedl $
  */
 public class EnumDescriptionTagExtraInfo extends TagExtraInfo {
-	@Override
-	public VariableInfo[] getVariableInfo(TagData arg0) {
-		return new VariableInfo[] { new VariableInfo("id", "java.lang.String", true, VariableInfo.AT_END) };
+    @Override
+    public VariableInfo[] getVariableInfo(TagData arg0) {
+        return new VariableInfo[] { new VariableInfo("id", "java.lang.String", true, VariableInfo.AT_END) };
 
-	}
+    }
 
 }

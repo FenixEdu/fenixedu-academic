@@ -15,20 +15,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GetEndOfScholarshipDate extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static Date run(Integer studentCurricularPlanID) {
-		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Date run(Integer studentCurricularPlanID) {
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
-				DegreeCurricularPlanStrategyFactory.getInstance();
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
+                DegreeCurricularPlanStrategyFactory.getInstance();
 
-		IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
-				(IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-						.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
+                (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+                        .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-		return masterDegreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan);
+        return masterDegreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan);
 
-	}
+    }
 
 }

@@ -9,17 +9,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DefineExamComment extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static void run(String executionCourseInitials, Integer executionPeriodId, String comment)
-			throws FenixServiceException {
-		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(String executionCourseInitials, Integer executionPeriodId, String comment)
+            throws FenixServiceException {
+        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
-		if (executionCourse == null) {
-			throw new FenixServiceException("error.noExecutionCourse");
-		}
-		executionCourse.setComment(comment);
-	}
+        if (executionCourse == null) {
+            throw new FenixServiceException("error.noExecutionCourse");
+        }
+        executionCourse.setComment(comment);
+    }
 
 }

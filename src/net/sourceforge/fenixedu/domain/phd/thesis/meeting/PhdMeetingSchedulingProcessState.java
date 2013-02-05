@@ -10,93 +10,93 @@ import org.joda.time.DateTime;
 
 public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProcessState_Base {
 
-	public PhdMeetingSchedulingProcessState() {
-		super();
-	}
+    public PhdMeetingSchedulingProcessState() {
+        super();
+    }
 
-	protected PhdMeetingSchedulingProcessState(PhdMeetingSchedulingProcess process, PhdMeetingSchedulingProcessStateType type,
-			Person person, String remarks, final DateTime stateDate) {
-		this();
-		checkType(process, type);
-		check(process, "error.PhdMeetingSchedulingProcessState.invalid.process");
-		check(type, "error.PhdMeetingSchedulingProcessState.invalid.type");
+    protected PhdMeetingSchedulingProcessState(PhdMeetingSchedulingProcess process, PhdMeetingSchedulingProcessStateType type,
+            Person person, String remarks, final DateTime stateDate) {
+        this();
+        checkType(process, type);
+        check(process, "error.PhdMeetingSchedulingProcessState.invalid.process");
+        check(type, "error.PhdMeetingSchedulingProcessState.invalid.type");
 
-		setMeetingProcess(process);
+        setMeetingProcess(process);
 
-		super.init(person, remarks, stateDate, type);
+        super.init(person, remarks, stateDate, type);
 
-		setType(type);
-	}
+        setType(type);
+    }
 
-	protected void init(final Person person, final String remarks, DateTime stateDate) {
-		throw new RuntimeException("invoke other init");
-	}
+    protected void init(final Person person, final String remarks, DateTime stateDate) {
+        throw new RuntimeException("invoke other init");
+    }
 
-	private void checkType(final PhdMeetingSchedulingProcess process, final PhdMeetingSchedulingProcessStateType type) {
-		final PhdMeetingSchedulingProcessStateType currentType = process.getActiveState();
-		if (currentType != null && currentType.equals(type)) {
-			throw new PhdDomainOperationException("error.PhdMeetingSchedulingProcessState.equals.previous.state",
-					type.getLocalizedName());
-		}
-	}
+    private void checkType(final PhdMeetingSchedulingProcess process, final PhdMeetingSchedulingProcessStateType type) {
+        final PhdMeetingSchedulingProcessStateType currentType = process.getActiveState();
+        if (currentType != null && currentType.equals(type)) {
+            throw new PhdDomainOperationException("error.PhdMeetingSchedulingProcessState.equals.previous.state",
+                    type.getLocalizedName());
+        }
+    }
 
-	@Override
-	protected void disconnect() {
-		removeMeetingProcess();
-		super.disconnect();
-	}
+    @Override
+    protected void disconnect() {
+        removeMeetingProcess();
+        super.disconnect();
+    }
 
-	@Override
-	public boolean isLast() {
-		return getMeetingProcess().getMostRecentState() == this;
-	}
+    @Override
+    public boolean isLast() {
+        return getMeetingProcess().getMostRecentState() == this;
+    }
 
-	public static PhdMeetingSchedulingProcessState createWithInferredStateDate(PhdMeetingSchedulingProcess process,
-			PhdMeetingSchedulingProcessStateType type, Person person, String remarks) {
+    public static PhdMeetingSchedulingProcessState createWithInferredStateDate(PhdMeetingSchedulingProcess process,
+            PhdMeetingSchedulingProcessStateType type, Person person, String remarks) {
 
-		DateTime stateDate = null;
+        DateTime stateDate = null;
 
-		PhdMeetingSchedulingProcessState mostRecentState = process.getMostRecentState();
+        PhdMeetingSchedulingProcessState mostRecentState = process.getMostRecentState();
 
-		switch (type) {
-		case WAITING_FIRST_THESIS_MEETING_REQUEST:
-			if (process.getThesisProcess().getWhenJuryValidated() == null) {
-				throw new PhdDomainOperationException(
-						"error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.whenJuryValidated.required");
-			}
+        switch (type) {
+        case WAITING_FIRST_THESIS_MEETING_REQUEST:
+            if (process.getThesisProcess().getWhenJuryValidated() == null) {
+                throw new PhdDomainOperationException(
+                        "error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.whenJuryValidated.required");
+            }
 
-			stateDate = process.getThesisProcess().getWhenJuryValidated().toDateTimeAtStartOfDay();
-			break;
-		case WAITING_FIRST_THESIS_MEETING_SCHEDULE:
-			stateDate = mostRecentState.getStateDate().plusMinutes(1);
-			break;
-		case WAITING_THESIS_MEETING_SCHEDULE:
-			stateDate = mostRecentState.getStateDate().plusMinutes(1);
-			break;
-		case WITHOUT_THESIS_MEETING_REQUEST:
-			stateDate = mostRecentState.getStateDate().plusMinutes(1);
-		}
+            stateDate = process.getThesisProcess().getWhenJuryValidated().toDateTimeAtStartOfDay();
+            break;
+        case WAITING_FIRST_THESIS_MEETING_SCHEDULE:
+            stateDate = mostRecentState.getStateDate().plusMinutes(1);
+            break;
+        case WAITING_THESIS_MEETING_SCHEDULE:
+            stateDate = mostRecentState.getStateDate().plusMinutes(1);
+            break;
+        case WITHOUT_THESIS_MEETING_REQUEST:
+            stateDate = mostRecentState.getStateDate().plusMinutes(1);
+        }
 
-		return createWithGivenStateDate(process, type, person, remarks, stateDate);
-	}
+        return createWithGivenStateDate(process, type, person, remarks, stateDate);
+    }
 
-	public static PhdMeetingSchedulingProcessState createWithGivenStateDate(PhdMeetingSchedulingProcess process,
-			PhdMeetingSchedulingProcessStateType type, Person person, String remarks, DateTime stateDate) {
-		List<PhdMeetingSchedulingProcessStateType> possibleNextStates =
-				PhdMeetingSchedulingProcessStateType.getPossibleNextStates(process);
+    public static PhdMeetingSchedulingProcessState createWithGivenStateDate(PhdMeetingSchedulingProcess process,
+            PhdMeetingSchedulingProcessStateType type, Person person, String remarks, DateTime stateDate) {
+        List<PhdMeetingSchedulingProcessStateType> possibleNextStates =
+                PhdMeetingSchedulingProcessStateType.getPossibleNextStates(process);
 
-		String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
-		if (!possibleNextStates.contains(type)) {
-			throw new PhdDomainOperationException("error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.invalid.next.state",
-					type.getLocalizedName(), expectedStatesDescription);
-		}
+        String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
+        if (!possibleNextStates.contains(type)) {
+            throw new PhdDomainOperationException("error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.invalid.next.state",
+                    type.getLocalizedName(), expectedStatesDescription);
+        }
 
-		return new PhdMeetingSchedulingProcessState(process, type, person, remarks, stateDate);
-	}
+        return new PhdMeetingSchedulingProcessState(process, type, person, remarks, stateDate);
+    }
 
-	@Override
-	public PhdProgramProcess getProcess() {
-		return getMeetingProcess();
-	}
+    @Override
+    public PhdProgramProcess getProcess() {
+        return getMeetingProcess();
+    }
 
 }

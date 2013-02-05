@@ -8,18 +8,18 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 
 abstract public class PhdAcademicServiceRequestEvent extends PhdAcademicServiceRequestEvent_Base {
 
-	protected PhdAcademicServiceRequestEvent() {
-		super();
-	}
+    protected PhdAcademicServiceRequestEvent() {
+        super();
+    }
 
-	@Override
-	protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
-			final AcademicServiceRequest academicServiceRequest) {
-		if (!academicServiceRequest.isRequestForPhd()) {
-			throw new DomainException("PhdAcademicServiceRequestEvent.request.is.not.for.phd");
-		}
+    @Override
+    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
+            final AcademicServiceRequest academicServiceRequest) {
+        if (!academicServiceRequest.isRequestForPhd()) {
+            throw new DomainException("PhdAcademicServiceRequestEvent.request.is.not.for.phd");
+        }
 
-		super.init(administrativeOffice, eventType, person, academicServiceRequest);
-	}
+        super.init(administrativeOffice, eventType, person, academicServiceRequest);
+    }
 
 }

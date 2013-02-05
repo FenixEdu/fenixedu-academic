@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ChoosePreCondition extends FenixService {
-	@Service
-	public static void run(NewQuestion question, Predicate preCondition) throws FenixServiceException {
-		question.setPreCondition(preCondition);
-	}
+    @Service
+    public static void run(NewQuestion question, Predicate preCondition) throws FenixServiceException {
+        question.setPreCondition(preCondition);
+    }
 }

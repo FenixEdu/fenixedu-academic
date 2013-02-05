@@ -8,21 +8,21 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 
 public class AddState extends PhdProgramCandidacyProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+    @Override
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-		PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
+    @Override
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
-		PhdCandidacyProcessState.createStateWithGivenStateDate(process, bean.getState(), userView.getPerson(), "", bean
-				.getStateDate().toDateTimeAtStartOfDay());
+        PhdCandidacyProcessState.createStateWithGivenStateDate(process, bean.getState(), userView.getPerson(), "", bean
+                .getStateDate().toDateTimeAtStartOfDay());
 
-		return process;
-	}
+        return process;
+    }
 
 }

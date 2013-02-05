@@ -19,39 +19,39 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCoursesByDegree extends FenixService {
 
-	@Service
-	public static List run(String executionYearString, String degreeName) throws FenixServiceException {
-		ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
+    @Service
+    public static List run(String executionYearString, String degreeName) throws FenixServiceException {
+        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
-		// Read degree
-		ExecutionDegree executionDegree =
-				ExecutionDegree.getByDegreeCurricularPlanNameAndExecutionYear(degreeName, executionYear);
+        // Read degree
+        ExecutionDegree executionDegree =
+                ExecutionDegree.getByDegreeCurricularPlanNameAndExecutionYear(degreeName, executionYear);
 
-		if (executionDegree == null || executionDegree.getDegreeCurricularPlan() == null
-				|| executionDegree.getDegreeCurricularPlan().getCurricularCourses() == null
-				|| executionDegree.getDegreeCurricularPlan().getCurricularCourses().isEmpty()) {
-			throw new NonExistingServiceException();
-		}
+        if (executionDegree == null || executionDegree.getDegreeCurricularPlan() == null
+                || executionDegree.getDegreeCurricularPlan().getCurricularCourses() == null
+                || executionDegree.getDegreeCurricularPlan().getCurricularCourses().isEmpty()) {
+            throw new NonExistingServiceException();
+        }
 
-		List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-		for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
-			infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-		}
+        List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+        for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
+            infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+        }
 
-		return infoCurricularCourses;
+        return infoCurricularCourses;
 
-	}
+    }
 
-	@Service
-	public static List run(Integer degreeCurricularPlanID) {
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+    @Service
+    public static List run(Integer degreeCurricularPlanID) {
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-		List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-		for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-			infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-		}
+        List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+            infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+        }
 
-		return infoCurricularCourses;
-	}
+        return infoCurricularCourses;
+    }
 
 }

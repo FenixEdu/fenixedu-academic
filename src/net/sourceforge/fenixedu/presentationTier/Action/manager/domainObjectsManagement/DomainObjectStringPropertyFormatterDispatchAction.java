@@ -38,82 +38,77 @@ import dml.Slot;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(
-		module = "manager",
-		path = "/domainObjectStringPropertyFormatter",
-		attribute = "stringPropertyFormatterForm",
-		formBean = "stringPropertyFormatterForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "manager", path = "/domainObjectStringPropertyFormatter", attribute = "stringPropertyFormatterForm",
+        formBean = "stringPropertyFormatterForm", scope = "request", parameter = "method")
 @Forwards(
-		value = { @Forward(name = "propertyFormatter", path = "/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp") })
+        value = { @Forward(name = "propertyFormatter", path = "/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp") })
 public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("domainClasses", getClasses());
+        request.setAttribute("domainClasses", getClasses());
 
-		return mapping.findForward("propertyFormatter");
-	}
+        return mapping.findForward("propertyFormatter");
+    }
 
-	public ActionForward chooseClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward chooseClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		DynaActionForm actionForm = (DynaActionForm) form;
-		String domainObjectClass = (String) actionForm.get("domainObjectClass");
+        DynaActionForm actionForm = (DynaActionForm) form;
+        String domainObjectClass = (String) actionForm.get("domainObjectClass");
 
-		DomainClass domainObjectToFormat = FenixFramework.getDomainModel().findClass(domainObjectClass);
+        DomainClass domainObjectToFormat = FenixFramework.getDomainModel().findClass(domainObjectClass);
 
-		List<LabelValueBean> slots = new ArrayList<LabelValueBean>();
-		Iterator<Slot> slotsIter = domainObjectToFormat.getSlots();
-		while (slotsIter.hasNext()) {
-			Slot slot = slotsIter.next();
-			if (slot.getType().equals("java.lang.String")) {
-				slots.add(new LabelValueBean(slot.getName(), slot.getName()));
-			}
-		}
+        List<LabelValueBean> slots = new ArrayList<LabelValueBean>();
+        Iterator<Slot> slotsIter = domainObjectToFormat.getSlots();
+        while (slotsIter.hasNext()) {
+            Slot slot = slotsIter.next();
+            if (slot.getType().equals("java.lang.String")) {
+                slots.add(new LabelValueBean(slot.getName(), slot.getName()));
+            }
+        }
 
-		request.setAttribute("domainClasses", getClasses());
-		request.setAttribute("classSlots", slots);
+        request.setAttribute("domainClasses", getClasses());
+        request.setAttribute("classSlots", slots);
 
-		return mapping.findForward("propertyFormatter");
-	}
+        return mapping.findForward("propertyFormatter");
+    }
 
-	public ActionForward formatProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws ClassNotFoundException, FenixFilterException, FenixServiceException {
+    public ActionForward formatProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws ClassNotFoundException, FenixFilterException, FenixServiceException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		DynaActionForm actionForm = (DynaActionForm) form;
-		String domainObjectClass = (String) actionForm.get("domainObjectClass");
-		String slotName = (String) actionForm.get("slotName");
+        DynaActionForm actionForm = (DynaActionForm) form;
+        String domainObjectClass = (String) actionForm.get("domainObjectClass");
+        String slotName = (String) actionForm.get("slotName");
 
-		DomainObjectStringPropertyFormatter.run(Class.forName(domainObjectClass), slotName);
+        DomainObjectStringPropertyFormatter.run(Class.forName(domainObjectClass), slotName);
 
-		ActionMessages actionMessages = new ActionMessages();
-		actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));
-		saveMessages(request, actionMessages);
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));
+        saveMessages(request, actionMessages);
 
-		request.setAttribute("domainClasses", getClasses());
+        request.setAttribute("domainClasses", getClasses());
 
-		return mapping.findForward("propertyFormatter");
-	}
+        return mapping.findForward("propertyFormatter");
+    }
 
-	private List<LabelValueBean> getClasses() {
-		List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
-		for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
-			DomainClass domainClass = iter.next();
-			classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
-		}
+    private List<LabelValueBean> getClasses() {
+        List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
+        for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
+            DomainClass domainClass = iter.next();
+            classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
+        }
 
-		Collections.sort(classes, new Comparator<LabelValueBean>() {
-			@Override
-			public int compare(LabelValueBean bean1, LabelValueBean bean2) {
-				return bean1.compareTo(bean2);
-			}
-		});
+        Collections.sort(classes, new Comparator<LabelValueBean>() {
+            @Override
+            public int compare(LabelValueBean bean1, LabelValueBean bean2) {
+                return bean1.compareTo(bean2);
+            }
+        });
 
-		return classes;
-	}
+        return classes;
+    }
 
 }

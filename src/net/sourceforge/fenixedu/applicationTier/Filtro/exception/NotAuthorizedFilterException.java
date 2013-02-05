@@ -10,33 +10,33 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.exception;
  * 
  */
 public class NotAuthorizedFilterException extends FenixFilterException {
-	/**
+    /**
      *  
      */
-	public NotAuthorizedFilterException() {
-		super();
-	}
+    public NotAuthorizedFilterException() {
+        super();
+    }
 
-	/**
-	 * @param message
-	 */
-	public NotAuthorizedFilterException(String message) {
-		super(message);
-	}
+    /**
+     * @param message
+     */
+    public NotAuthorizedFilterException(String message) {
+        super(message);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public NotAuthorizedFilterException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public NotAuthorizedFilterException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public NotAuthorizedFilterException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public NotAuthorizedFilterException(Throwable cause) {
+        super(cause);
+    }
 
 }

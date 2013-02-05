@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class PhdCandidacyPeriodsProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return PhdCandidacyPeriod.readPhdCandidacyPeriods();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return PhdCandidacyPeriod.readPhdCandidacyPeriods();
+    }
 
 }

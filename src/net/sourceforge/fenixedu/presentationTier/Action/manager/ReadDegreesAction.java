@@ -28,13 +28,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "readDegrees", path = "/manager/readDegrees_bd.jsp") })
 public class ReadDegreesAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		degrees.addAll(Degree.readAllByDegreeType(DegreeType.MASTER_DEGREE));
-		request.setAttribute("degreesList", degrees);
-		return mapping.findForward("readDegrees");
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.MASTER_DEGREE));
+        request.setAttribute("degreesList", degrees);
+        return mapping.findForward("readDegrees");
+    }
 
 }

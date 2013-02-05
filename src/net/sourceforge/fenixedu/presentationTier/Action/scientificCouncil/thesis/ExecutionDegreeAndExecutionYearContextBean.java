@@ -8,29 +8,29 @@ import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 
 public class ExecutionDegreeAndExecutionYearContextBean implements Serializable, HasExecutionYear {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExecutionYear executionYear;
-	private ExecutionDegree executionDegree;
+    private ExecutionYear executionYear;
+    private ExecutionDegree executionDegree;
 
-	public ExecutionDegreeAndExecutionYearContextBean() {
-	}
+    public ExecutionDegreeAndExecutionYearContextBean() {
+    }
 
-	public ExecutionDegree getExecutionDegree() {
-		return executionDegree;
-	}
+    public ExecutionDegree getExecutionDegree() {
+        return executionDegree;
+    }
 
-	public void setExecutionDegree(final ExecutionDegree executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+    public void setExecutionDegree(final ExecutionDegree executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
-	@Override
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    @Override
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
 }

@@ -43,131 +43,120 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Tânia Pousão
  * 
  */
-@Mapping(
-		module = "manager",
-		path = "/makeSimplePrecedence",
-		input = "/managePrecedences.do",
-		attribute = "insertRestrictionForm",
-		formBean = "insertRestrictionForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "manager", path = "/makeSimplePrecedence", input = "/managePrecedences.do",
+        attribute = "insertRestrictionForm", formBean = "insertRestrictionForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "sucess", path = "/managePrecedences.do"),
-		@Forward(
-				name = "insertRestrictionByPeriodToApply",
-				path = "/manager/precedences/insertRestrictionByPeriodToApply.jsp",
-				tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
-		@Forward(
-				name = "insertRestrictionByCurricularCourse",
-				path = "/manager/precedences/insertRestrictionByCurricularCourse.jsp",
-				tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
-		@Forward(
-				name = "insertRestrictionByNumber",
-				path = "/manager/precedences/insertRestrictionByNumber.jsp",
-				tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
-		@Forward(name = "showAllRestrictions", path = "/manager/precedences/manageRestriction.jsp", tileProperties = @Tile(
-				navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
+        @Forward(name = "sucess", path = "/managePrecedences.do"),
+        @Forward(name = "insertRestrictionByPeriodToApply", path = "/manager/precedences/insertRestrictionByPeriodToApply.jsp",
+                tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+        @Forward(name = "insertRestrictionByCurricularCourse",
+                path = "/manager/precedences/insertRestrictionByCurricularCourse.jsp", tileProperties = @Tile(
+                        navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+        @Forward(name = "insertRestrictionByNumber", path = "/manager/precedences/insertRestrictionByNumber.jsp",
+                tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+        @Forward(name = "showAllRestrictions", path = "/manager/precedences/manageRestriction.jsp", tileProperties = @Tile(
+                navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
-	public ActionForward showAllRestrictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Integer degreeID = new Integer(request.getParameter("degreeId"));
-		Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+    public ActionForward showAllRestrictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Integer degreeID = new Integer(request.getParameter("degreeId"));
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-		request.setAttribute("degreeId", degreeID);
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+        request.setAttribute("degreeId", degreeID);
+        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-		return mapping.findForward("showAllRestrictions");
-	}
+        return mapping.findForward("showAllRestrictions");
+    }
 
-	public ActionForward chooseRestriction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = UserView.getUser();
+    public ActionForward chooseRestriction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        IUserView userView = UserView.getUser();
 
-		ActionErrors errors = new ActionErrors();
+        ActionErrors errors = new ActionErrors();
 
-		Integer degreeID = new Integer(request.getParameter("degreeId"));
-		Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer degreeID = new Integer(request.getParameter("degreeId"));
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-		request.setAttribute("degreeId", degreeID);
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+        request.setAttribute("degreeId", degreeID);
+        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-		// read all curricular courses belong to this degree curricular year
+        // read all curricular courses belong to this degree curricular year
 
-		List curricularCoursesList = null;
-		try {
-			curricularCoursesList = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			errors.add("impossibleCCOfDCP", new ActionError("error.manager.impossible.readCCofDCP"));
-		}
-		if (curricularCoursesList == null || curricularCoursesList.size() <= 0) {
-			errors.add("impossibleCCOfDCP", new ActionError("error.manager.impossible.readCCofDCP"));
-		}
-		if (!errors.isEmpty()) {
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
+        List curricularCoursesList = null;
+        try {
+            curricularCoursesList = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            errors.add("impossibleCCOfDCP", new ActionError("error.manager.impossible.readCCofDCP"));
+        }
+        if (curricularCoursesList == null || curricularCoursesList.size() <= 0) {
+            errors.add("impossibleCCOfDCP", new ActionError("error.manager.impossible.readCCofDCP"));
+        }
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
 
-		Collections.sort(curricularCoursesList, new BeanComparator("name"));
+        Collections.sort(curricularCoursesList, new BeanComparator("name"));
 
-		request.setAttribute("curricularCoursesList", curricularCoursesList);
+        request.setAttribute("curricularCoursesList", curricularCoursesList);
 
-		String className = request.getParameter("className");
-		if (className == null || className.length() <= 0) {
-			return mapping.getInputForward();
-		}
-		request.setAttribute("className", className);
+        String className = request.getParameter("className");
+        if (className == null || className.length() <= 0) {
+            return mapping.getInputForward();
+        }
+        request.setAttribute("className", className);
 
-		if (className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName())) {
-			return mapping.findForward("insertRestrictionByNumber");
-		} else if (className.equals(RestrictionPeriodToApply.class.getName())) {
-			request.setAttribute("periodToApplyList", PeriodToApplyRestriction.getEnumList());
-			return mapping.findForward("insertRestrictionByPeriodToApply");
-		} else if (className.equals(RestrictionDoneCurricularCourse.class.getName())
-				|| className.equals(RestrictionNotDoneCurricularCourse.class.getName())
-				|| className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName())
-				|| className.equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName())
-				|| className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName())
-				|| className.equals(RestrictionNotEnrolledInCurricularCourse.class.getName())) {
-			return mapping.findForward("insertRestrictionByCurricularCourse");
-		}
+        if (className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName())) {
+            return mapping.findForward("insertRestrictionByNumber");
+        } else if (className.equals(RestrictionPeriodToApply.class.getName())) {
+            request.setAttribute("periodToApplyList", PeriodToApplyRestriction.getEnumList());
+            return mapping.findForward("insertRestrictionByPeriodToApply");
+        } else if (className.equals(RestrictionDoneCurricularCourse.class.getName())
+                || className.equals(RestrictionNotDoneCurricularCourse.class.getName())
+                || className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName())
+                || className.equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName())
+                || className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName())
+                || className.equals(RestrictionNotEnrolledInCurricularCourse.class.getName())) {
+            return mapping.findForward("insertRestrictionByCurricularCourse");
+        }
 
-		return mapping.getInputForward();
-	}
+        return mapping.getInputForward();
+    }
 
-	public ActionForward insertRestriction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = UserView.getUser();
+    public ActionForward insertRestriction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        IUserView userView = UserView.getUser();
 
-		ActionErrors errors = new ActionErrors();
+        ActionErrors errors = new ActionErrors();
 
-		Integer degreeID = new Integer(request.getParameter("degreeId"));
-		Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer degreeID = new Integer(request.getParameter("degreeId"));
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-		request.setAttribute("degreeId", degreeID);
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+        request.setAttribute("degreeId", degreeID);
+        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-		DynaActionForm insertRestrictionForm = (DynaActionForm) actionForm;
+        DynaActionForm insertRestrictionForm = (DynaActionForm) actionForm;
 
-		String classeNameRestriction = (String) insertRestrictionForm.get("className");
-		Integer number = (Integer) insertRestrictionForm.get("number");
-		Integer curricularCourseToAddPrecedenceID = (Integer) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
-		Integer precedentCurricularCourseID = (Integer) insertRestrictionForm.get("precedentCurricularCourseID");
+        String classeNameRestriction = (String) insertRestrictionForm.get("className");
+        Integer number = (Integer) insertRestrictionForm.get("number");
+        Integer curricularCourseToAddPrecedenceID = (Integer) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
+        Integer precedentCurricularCourseID = (Integer) insertRestrictionForm.get("precedentCurricularCourseID");
 
-		request.setAttribute("className", classeNameRestriction);
-		request.setAttribute("number", number);
-		request.setAttribute("curricularCourseToAddPrecedenceID", curricularCourseToAddPrecedenceID);
-		request.setAttribute("precedentCurricularCourseID", precedentCurricularCourseID);
+        request.setAttribute("className", classeNameRestriction);
+        request.setAttribute("number", number);
+        request.setAttribute("curricularCourseToAddPrecedenceID", curricularCourseToAddPrecedenceID);
+        request.setAttribute("precedentCurricularCourseID", precedentCurricularCourseID);
 
-		try {
-			InsertSimplePrecedence.run(classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID,
-					number);
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));
-		}
+        try {
+            InsertSimplePrecedence.run(classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID,
+                    number);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));
+        }
 
-		return mapping.findForward("sucess");
-	}
+        return mapping.findForward("sucess");
+    }
 }

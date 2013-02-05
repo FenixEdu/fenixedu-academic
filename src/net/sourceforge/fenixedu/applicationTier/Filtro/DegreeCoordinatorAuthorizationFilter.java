@@ -20,52 +20,52 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
-	public DegreeCoordinatorAuthorizationFilter() {
-	}
+    public DegreeCoordinatorAuthorizationFilter() {
+    }
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.COORDINATOR;
-	}
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.COORDINATOR;
+    }
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView id = getRemoteUser(request);
-		Object[] argumentos = getServiceCallArguments(request);
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView id = getRemoteUser(request);
+        Object[] argumentos = getServiceCallArguments(request);
 
-		try {
-			if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-					|| !isCoordinatorOfExecutionDegree(id, argumentos)) {
-				throw new NotAuthorizedFilterException();
-			}
-		} catch (RuntimeException e) {
-			throw new NotAuthorizedFilterException();
-		}
-	}
+        try {
+            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+                    || !isCoordinatorOfExecutionDegree(id, argumentos)) {
+                throw new NotAuthorizedFilterException();
+            }
+        } catch (RuntimeException e) {
+            throw new NotAuthorizedFilterException();
+        }
+    }
 
-	private boolean isCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
-		boolean result = false;
-		if (argumentos == null) {
-			return result;
-		}
-		if (argumentos[0] == null) {
-			return result;
-		}
-		try {
-			final Person person = id.getPerson();
-			ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
-			if (executionDegree == null) {
-				return false;
-			}
-			Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+    private boolean isCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
+        boolean result = false;
+        if (argumentos == null) {
+            return result;
+        }
+        if (argumentos[0] == null) {
+            return result;
+        }
+        try {
+            final Person person = id.getPerson();
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+            if (executionDegree == null) {
+                return false;
+            }
+            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
-			result = coordinator != null;
+            result = coordinator != null;
 
-		} catch (Exception e) {
-			return false;
-		}
+        } catch (Exception e) {
+            return false;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

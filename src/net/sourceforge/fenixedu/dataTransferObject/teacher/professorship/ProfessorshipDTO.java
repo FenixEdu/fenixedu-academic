@@ -12,18 +12,18 @@ import net.sourceforge.fenixedu.domain.Professorship;
 
 public class ProfessorshipDTO {
 
-	public ProfessorshipDTO(Professorship professorship) {
-		setProfessorship(professorship);
-	}
+    public ProfessorshipDTO(Professorship professorship) {
+        setProfessorship(professorship);
+    }
 
-	Professorship professorship;
+    Professorship professorship;
 
-	public Professorship getProfessorship() {
-		return professorship;
-	}
+    public Professorship getProfessorship() {
+        return professorship;
+    }
 
-	public void setProfessorship(Professorship professorship) {
-		this.professorship = professorship;
-	}
+    public void setProfessorship(Professorship professorship) {
+        this.professorship = professorship;
+    }
 
 }

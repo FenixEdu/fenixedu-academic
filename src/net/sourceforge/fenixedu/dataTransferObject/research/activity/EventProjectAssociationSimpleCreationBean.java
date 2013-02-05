@@ -7,32 +7,32 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.
 
 public class EventProjectAssociationSimpleCreationBean implements Serializable {
 
-	private Project project;
-	private ProjectEventAssociationRole role;
-	private String projectTitle;
+    private Project project;
+    private ProjectEventAssociationRole role;
+    private String projectTitle;
 
-	public ProjectEventAssociationRole getRole() {
-		return role;
-	}
+    public ProjectEventAssociationRole getRole() {
+        return role;
+    }
 
-	public void setRole(ProjectEventAssociationRole associationRole) {
-		this.role = associationRole;
-	}
+    public void setRole(ProjectEventAssociationRole associationRole) {
+        this.role = associationRole;
+    }
 
-	public String getProjectTitle() {
-		return projectTitle;
-	}
+    public String getProjectTitle() {
+        return projectTitle;
+    }
 
-	public void setProjectTitle(String title) {
-		this.projectTitle = title;
-	}
+    public void setProjectTitle(String title) {
+        this.projectTitle = title;
+    }
 
-	public Project getProject() {
-		return this.project;
-	}
+    public Project getProject() {
+        return this.project;
+    }
 
-	public void setProject(Project project) {
-		this.project = project;
-	}
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
 }

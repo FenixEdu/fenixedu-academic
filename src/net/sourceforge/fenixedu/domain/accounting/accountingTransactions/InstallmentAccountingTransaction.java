@@ -9,44 +9,44 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class InstallmentAccountingTransaction extends InstallmentAccountingTransaction_Base {
 
-	protected InstallmentAccountingTransaction() {
-		super();
-	}
+    protected InstallmentAccountingTransaction() {
+        super();
+    }
 
-	public InstallmentAccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,
-			Installment installment, AccountingTransactionDetail transactionDetail) {
-		this();
-		init(responsibleUser, event, debit, credit, installment, transactionDetail);
-	}
+    public InstallmentAccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,
+            Installment installment, AccountingTransactionDetail transactionDetail) {
+        this();
+        init(responsibleUser, event, debit, credit, installment, transactionDetail);
+    }
 
-	private void init(User responsibleUser, Event event, Entry debit, Entry credit, Installment installment,
-			AccountingTransactionDetail transactionDetail) {
-		super.init(responsibleUser, event, debit, credit, transactionDetail);
-		checkParameters(installment);
-		super.setInstallment(installment);
-	}
+    private void init(User responsibleUser, Event event, Entry debit, Entry credit, Installment installment,
+            AccountingTransactionDetail transactionDetail) {
+        super.init(responsibleUser, event, debit, credit, transactionDetail);
+        checkParameters(installment);
+        super.setInstallment(installment);
+    }
 
-	private void checkParameters(Installment installment) {
-		if (installment == null) {
-			throw new DomainException(
-					"error.accounting.accountingTransactions.InstallmentAccountingTransaction.installment.cannot.be.null");
-		}
-	}
+    private void checkParameters(Installment installment) {
+        if (installment == null) {
+            throw new DomainException(
+                    "error.accounting.accountingTransactions.InstallmentAccountingTransaction.installment.cannot.be.null");
+        }
+    }
 
-	@Override
-	public void setInstallment(Installment installment) {
-		throw new DomainException(
-				"error.accounting.accountingTransactions.InstallmentAccountingTransaction.cannot.modify.installment");
-	}
+    @Override
+    public void setInstallment(Installment installment) {
+        throw new DomainException(
+                "error.accounting.accountingTransactions.InstallmentAccountingTransaction.cannot.modify.installment");
+    }
 
-	@Override
-	public boolean isInstallment() {
-		return true;
-	}
+    @Override
+    public boolean isInstallment() {
+        return true;
+    }
 
-	@Override
-	public void delete() {
-		super.setInstallment(null);
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        super.setInstallment(null);
+        super.delete();
+    }
 }

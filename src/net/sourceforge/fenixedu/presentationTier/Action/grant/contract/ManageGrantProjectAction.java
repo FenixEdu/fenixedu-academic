@@ -27,30 +27,23 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/manageGrantProject",
-		input = "/manageGrantProject.do?page=0&method=prepareManageGrantProject",
-		attribute = "voidForm",
-		formBean = "voidForm",
-		scope = "request",
-		parameter = "method")
-@Forwards(value = { @Forward(
-		name = "manage-grant-project",
-		path = "/facultyAdmOffice/grant/contract/manageGrantProject.jsp",
-		tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.projects")) })
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantProject",
+        input = "/manageGrantProject.do?page=0&method=prepareManageGrantProject", attribute = "voidForm", formBean = "voidForm",
+        scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-project", path = "/facultyAdmOffice/grant/contract/manageGrantProject.jsp",
+        tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.projects")) })
 public class ManageGrantProjectAction extends FenixDispatchAction {
 
-	public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		List<GrantProject> grantProjectList = new ArrayList<GrantProject>();
-		for (final GrantPaymentEntity grantPaymentEntity : rootDomainObject.getGrantPaymentEntitys()) {
-			if (grantPaymentEntity.isGrantProject()) {
-				grantProjectList.add((GrantProject) grantPaymentEntity);
-			}
-		}
-		request.setAttribute("grantProjectList", grantProjectList);
-		return mapping.findForward("manage-grant-project");
+    public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        List<GrantProject> grantProjectList = new ArrayList<GrantProject>();
+        for (final GrantPaymentEntity grantPaymentEntity : rootDomainObject.getGrantPaymentEntitys()) {
+            if (grantPaymentEntity.isGrantProject()) {
+                grantProjectList.add((GrantProject) grantPaymentEntity);
+            }
+        }
+        request.setAttribute("grantProjectList", grantProjectList);
+        return mapping.findForward("manage-grant-project");
 
-	}
+    }
 }

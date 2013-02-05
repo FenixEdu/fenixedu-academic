@@ -13,8 +13,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
 
 public class FenixTransactionException extends FenixActionException {
 
-	public FenixTransactionException(String key) {
+    public FenixTransactionException(String key) {
 
-		super(key);
-	}
+        super(key);
+    }
 }

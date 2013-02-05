@@ -12,25 +12,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateDegreeCurricularPlan extends FenixService {
 
-	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-	@Service
-	public static void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
 
-		if (degreeId == null || name == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        if (degreeId == null || name == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		final Person creator = AccessControl.getPerson();
-		if (creator == null) {
-			throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
-		}
+        final Person creator = AccessControl.getPerson();
+        if (creator == null) {
+            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
+        }
 
-		final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-		if (degree == null) {
-			throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
-		}
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        if (degree == null) {
+            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
+        }
 
-		degree.createBolonhaDegreeCurricularPlan(name, gradeScale, creator);
-	}
+        degree.createBolonhaDegreeCurricularPlan(name, gradeScale, creator);
+    }
 
 }

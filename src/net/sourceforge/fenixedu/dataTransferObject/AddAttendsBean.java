@@ -12,44 +12,44 @@ import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 
 public class AddAttendsBean implements Serializable, HasExecutionYear, HasExecutionSemester, HasExecutionDegree {
 
-	private ExecutionYear executionYear;
-	private ExecutionSemester executionPeriod;
-	private ExecutionDegree executionDegree;
-	private ExecutionCourse executionCourse;
+    private ExecutionYear executionYear;
+    private ExecutionSemester executionPeriod;
+    private ExecutionDegree executionDegree;
+    private ExecutionCourse executionCourse;
 
-	@Override
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    @Override
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(final ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(final ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	@Override
-	public ExecutionSemester getExecutionPeriod() {
-		return executionPeriod;
-	}
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return executionPeriod;
+    }
 
-	public void setExecutionPeriod(ExecutionSemester executionPeriod) {
-		this.executionPeriod = executionPeriod;
-	}
+    public void setExecutionPeriod(ExecutionSemester executionPeriod) {
+        this.executionPeriod = executionPeriod;
+    }
 
-	@Override
-	public ExecutionDegree getExecutionDegree() {
-		return executionDegree;
-	}
+    @Override
+    public ExecutionDegree getExecutionDegree() {
+        return executionDegree;
+    }
 
-	public void setExecutionDegree(final ExecutionDegree executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+    public void setExecutionDegree(final ExecutionDegree executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
-	public ExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public ExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(final ExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
+    public void setExecutionCourse(final ExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
 
 }

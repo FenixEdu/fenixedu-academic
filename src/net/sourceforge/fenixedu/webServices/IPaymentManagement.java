@@ -6,7 +6,7 @@ import org.codehaus.xfire.MessageContext;
 
 public interface IPaymentManagement {
 
-	public String generatePaymentTicket(String username, String password, String source, MessageContext context)
-			throws NotAuthorizedException;
+    public String generatePaymentTicket(String username, String password, String source, MessageContext context)
+            throws NotAuthorizedException;
 
 }

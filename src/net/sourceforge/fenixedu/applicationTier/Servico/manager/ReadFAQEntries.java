@@ -11,15 +11,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadFAQEntries extends FenixService {
 
-	@Service
-	public static Collection run() {
-		List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
+    @Service
+    public static Collection run() {
+        List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
 
-		for (FAQEntry faqEntry : rootDomainObject.getFAQEntrys()) {
-			result.add(InfoFAQEntry.newInfoFromDomain(faqEntry));
-		}
+        for (FAQEntry faqEntry : rootDomainObject.getFAQEntrys()) {
+            result.add(InfoFAQEntry.newInfoFromDomain(faqEntry));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

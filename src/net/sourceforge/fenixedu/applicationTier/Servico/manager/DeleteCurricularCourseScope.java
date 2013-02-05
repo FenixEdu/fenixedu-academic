@@ -16,17 +16,17 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteCurricularCourseScope extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer scopeId) throws FenixServiceException {
-		CurricularCourseScope scope = rootDomainObject.readCurricularCourseScopeByOID(scopeId);
-		if (scope != null) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer scopeId) throws FenixServiceException {
+        CurricularCourseScope scope = rootDomainObject.readCurricularCourseScopeByOID(scopeId);
+        if (scope != null) {
 
-			try {
-				scope.delete();
-			} catch (DomainException e) {
-				throw new CantDeleteServiceException();
-			}
-		}
-	}
+            try {
+                scope.delete();
+            } catch (DomainException e) {
+                throw new CantDeleteServiceException();
+            }
+        }
+    }
 }

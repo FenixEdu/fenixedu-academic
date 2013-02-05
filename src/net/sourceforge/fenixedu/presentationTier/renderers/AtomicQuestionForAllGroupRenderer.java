@@ -9,35 +9,35 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 
 public class AtomicQuestionForAllGroupRenderer extends StringRenderer {
 
-	private String classes;
+    private String classes;
 
-	@Override
-	public String getClasses() {
-		return classes;
-	}
+    @Override
+    public String getClasses() {
+        return classes;
+    }
 
-	@Override
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    @Override
+    public void setClasses(String classes) {
+        this.classes = classes;
+    }
 
-	@Override
-	public HtmlComponent render(Object object, Class type) {
-		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
+    @Override
+    public HtmlComponent render(Object object, Class type) {
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
 
-		StringBuilder builder = new StringBuilder("Alinea ");
+        StringBuilder builder = new StringBuilder("Alinea ");
 
-		Iterator<Integer> iterator = atomicQuestion.getPath().iterator();
-		while (iterator.hasNext()) {
-			Integer position = iterator.next();
-			builder.append(position);
+        Iterator<Integer> iterator = atomicQuestion.getPath().iterator();
+        while (iterator.hasNext()) {
+            Integer position = iterator.next();
+            builder.append(position);
 
-			if (iterator.hasNext()) {
-				builder.append(".");
-			}
-		}
+            if (iterator.hasNext()) {
+                builder.append(".");
+            }
+        }
 
-		return new HtmlText(builder.toString());
-	}
+        return new HtmlText(builder.toString());
+    }
 
 }

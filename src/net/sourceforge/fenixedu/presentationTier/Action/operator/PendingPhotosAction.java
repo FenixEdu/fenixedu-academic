@@ -23,29 +23,29 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "operator", path = "/pendingPhotos", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "list", path = "/operator/photo/listPending.jsp", tileProperties = @Tile(
-		title = "private.operator.photos")) })
+        title = "private.operator.photos")) })
 public class PendingPhotosAction extends FenixDispatchAction {
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		List<Photograph> pending = new ArrayList<Photograph>();
-		for (Photograph photo : RootDomainObject.getInstance().getPendingPhotographsSet()) {
-			if (photo.getState() == PhotoState.PENDING) {
-				pending.add(photo);
-			}
-		}
-		request.setAttribute("pending", pending);
-		return mapping.findForward("list");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        List<Photograph> pending = new ArrayList<Photograph>();
+        for (Photograph photo : RootDomainObject.getInstance().getPendingPhotographsSet()) {
+            if (photo.getState() == PhotoState.PENDING) {
+                pending.add(photo);
+            }
+        }
+        request.setAttribute("pending", pending);
+        return mapping.findForward("list");
+    }
 
-	public ActionForward accept(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		RenderUtils.invalidateViewState();
-		return prepare(mapping, actionForm, request, response);
-	}
+    public ActionForward accept(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, actionForm, request, response);
+    }
 
-	public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		RenderUtils.invalidateViewState();
-		return prepare(mapping, actionForm, request, response);
-	}
+    public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, actionForm, request, response);
+    }
 }

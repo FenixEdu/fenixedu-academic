@@ -20,28 +20,28 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class UnEnrollStudentGroupShift extends FenixService {
 
-	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
-			throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
+            throws FenixServiceException {
 
-		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
-		if (groupProperties == null) {
-			throw new ExistingServiceException();
-		}
+        if (groupProperties == null) {
+            throw new ExistingServiceException();
+        }
 
-		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-		if (studentGroup == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        if (studentGroup == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null) {
-			throw new InvalidChangeServiceException();
-		}
+        if (!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null) {
+            throw new InvalidChangeServiceException();
+        }
 
-		Shift shift = null;
-		studentGroup.setShift(shift);
+        Shift shift = null;
+        studentGroup.setShift(shift);
 
-		return new Boolean(true);
-	}
+        return new Boolean(true);
+    }
 }

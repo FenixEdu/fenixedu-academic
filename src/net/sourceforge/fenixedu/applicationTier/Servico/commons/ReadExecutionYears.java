@@ -12,12 +12,12 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionYears extends FenixService {
-	@Service
-	public static List run() throws FenixServiceException {
-		final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-		for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-			result.add(new LabelValueBean(executionYear.getYear(), executionYear.getYear()));
-		}
-		return result;
-	}
+    @Service
+    public static List run() throws FenixServiceException {
+        final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+        for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+            result.add(new LabelValueBean(executionYear.getYear(), executionYear.getYear()));
+        }
+        return result;
+    }
 }

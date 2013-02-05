@@ -8,13 +8,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResearchProject extends FenixService {
 
-	@Checked("ResultPredicates.author")
-	@Service
-	public static void run(Integer oid) throws FenixServiceException {
-		Project project = rootDomainObject.readProjectByOID(oid);
-		if (project == null) {
-			throw new FenixServiceException();
-		}
-		project.delete();
-	}
+    @Checked("ResultPredicates.author")
+    @Service
+    public static void run(Integer oid) throws FenixServiceException {
+        Project project = rootDomainObject.readProjectByOID(oid);
+        if (project == null) {
+            throw new FenixServiceException();
+        }
+        project.delete();
+    }
 }

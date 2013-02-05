@@ -41,295 +41,295 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "resourceAllocationManager", path = "/roomsPunctualScheduling", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "seeHistory", path = "see-rooms-punctual-scheduling-history"),
-		@Forward(name = "prepareFinalizeCreation", path = "prepare-finalize-creation-of-rooms-punctual-scheduling"),
-		@Forward(name = "prepareViewRoomsPunctualScheduling", path = "prepare-view-rooms-punctual-scheduling"),
-		@Forward(name = "prepareCreateNewRoomPunctualScheduling", path = "prepare-create-room-punctual-scheduling"),
-		@Forward(name = "prepareRoomsPunctualScheduling", path = "prepare-rooms-punctual-scheduling") })
+        @Forward(name = "prepareFinalizeCreation", path = "prepare-finalize-creation-of-rooms-punctual-scheduling"),
+        @Forward(name = "prepareViewRoomsPunctualScheduling", path = "prepare-view-rooms-punctual-scheduling"),
+        @Forward(name = "prepareCreateNewRoomPunctualScheduling", path = "prepare-create-room-punctual-scheduling"),
+        @Forward(name = "prepareRoomsPunctualScheduling", path = "prepare-rooms-punctual-scheduling") })
 public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws InvalidArgumentException {
-		Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
-		if (!genericEvents.isEmpty()) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws InvalidArgumentException {
+        Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
+        if (!genericEvents.isEmpty()) {
 
-			RoomsPunctualSchedulingBean bean = null;
-			IViewState viewState = RenderUtils.getViewState();
-			if (viewState == null) {
-				bean = new RoomsPunctualSchedulingBean();
-			} else {
-				bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
-			}
+            RoomsPunctualSchedulingBean bean = null;
+            IViewState viewState = RenderUtils.getViewState();
+            if (viewState == null) {
+                bean = new RoomsPunctualSchedulingBean();
+            } else {
+                bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+            }
 
-			YearMonthDay firstDay = getFirstDay(request);
-			GanttDiagram diagram =
-					GanttDiagram.getNewWeeklyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
-			request.setAttribute("ganttDiagram", diagram);
-			request.setAttribute("roomsPunctualSchedulingBean", bean);
-		}
-		return mapping.findForward("prepareRoomsPunctualScheduling");
-	}
+            YearMonthDay firstDay = getFirstDay(request);
+            GanttDiagram diagram =
+                    GanttDiagram.getNewWeeklyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
+            request.setAttribute("ganttDiagram", diagram);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
+        }
+        return mapping.findForward("prepareRoomsPunctualScheduling");
+    }
 
-	public ActionForward prepareViewDailyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException {
-		Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
-		if (!genericEvents.isEmpty()) {
-			YearMonthDay firstDay = getFirstDay(request);
-			GanttDiagram diagram =
-					GanttDiagram.getNewDailyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
-			RoomsPunctualSchedulingBean bean = new RoomsPunctualSchedulingBean();
-			request.setAttribute("roomsPunctualSchedulingBean", bean);
-			request.setAttribute("ganttDiagram", diagram);
-		}
-		return mapping.findForward("prepareRoomsPunctualScheduling");
-	}
+    public ActionForward prepareViewDailyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException {
+        Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
+        if (!genericEvents.isEmpty()) {
+            YearMonthDay firstDay = getFirstDay(request);
+            GanttDiagram diagram =
+                    GanttDiagram.getNewDailyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
+            RoomsPunctualSchedulingBean bean = new RoomsPunctualSchedulingBean();
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
+            request.setAttribute("ganttDiagram", diagram);
+        }
+        return mapping.findForward("prepareRoomsPunctualScheduling");
+    }
 
-	public ActionForward prepareViewMonthlyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException {
-		Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
-		if (!genericEvents.isEmpty()) {
-			YearMonthDay firstDay = getFirstDay(request);
-			GanttDiagram diagram =
-					GanttDiagram.getNewMonthlyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
-			RoomsPunctualSchedulingBean bean = new RoomsPunctualSchedulingBean();
-			request.setAttribute("roomsPunctualSchedulingBean", bean);
-			request.setAttribute("ganttDiagram", diagram);
-		}
-		return mapping.findForward("prepareRoomsPunctualScheduling");
-	}
+    public ActionForward prepareViewMonthlyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException {
+        Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
+        if (!genericEvents.isEmpty()) {
+            YearMonthDay firstDay = getFirstDay(request);
+            GanttDiagram diagram =
+                    GanttDiagram.getNewMonthlyGanttDiagram(new ArrayList<GanttDiagramEvent>(genericEvents), firstDay);
+            RoomsPunctualSchedulingBean bean = new RoomsPunctualSchedulingBean();
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
+            request.setAttribute("ganttDiagram", diagram);
+        }
+        return mapping.findForward("prepareRoomsPunctualScheduling");
+    }
 
-	public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException {
-		GenericEvent genericEvent = getGenericEventFromParameter(request);
-		request.setAttribute("genericEvent", genericEvent);
-		request.setAttribute("roomsPunctualSchedulingBean", new RoomsPunctualSchedulingBean(genericEvent));
-		return mapping.findForward("prepareViewRoomsPunctualScheduling");
-	}
+    public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException {
+        GenericEvent genericEvent = getGenericEventFromParameter(request);
+        request.setAttribute("genericEvent", genericEvent);
+        request.setAttribute("roomsPunctualSchedulingBean", new RoomsPunctualSchedulingBean(genericEvent));
+        return mapping.findForward("prepareViewRoomsPunctualScheduling");
+    }
 
-	public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+    public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-		GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
-		try {
-			DeleteGenericEvent.run(genericEventFromParameter);
-		} catch (DomainException e) {
-			saveMessages(request, e);
-		}
+        GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
+        try {
+            DeleteGenericEvent.run(genericEventFromParameter);
+        } catch (DomainException e) {
+            saveMessages(request, e);
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
+    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 
-		RoomsPunctualSchedulingBean bean = null;
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithPeriodType");
-		if (viewState == null) {
-			viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithInfo");
-		}
+        RoomsPunctualSchedulingBean bean = null;
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithPeriodType");
+        if (viewState == null) {
+            viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithInfo");
+        }
 
-		if (viewState == null) {
-			bean = new RoomsPunctualSchedulingBean();
-		} else {
-			bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
-		}
+        if (viewState == null) {
+            bean = new RoomsPunctualSchedulingBean();
+        } else {
+            bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+        }
 
-		if (bean.getPeriodType() != null && bean.getFrequency() != null && bean.getPeriodType().equals(PeriodType.WITH_FREQUENCY)) {
-			RenderUtils.invalidateViewState("roomsPunctualSchedulingWithInfo");
-		}
+        if (bean.getPeriodType() != null && bean.getFrequency() != null && bean.getPeriodType().equals(PeriodType.WITH_FREQUENCY)) {
+            RenderUtils.invalidateViewState("roomsPunctualSchedulingWithInfo");
+        }
 
-		request.setAttribute("roomsPunctualSchedulingBean", bean);
-		return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
-	}
+        request.setAttribute("roomsPunctualSchedulingBean", bean);
+        return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
+    }
 
-	public ActionForward prepareFinalizeCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepareFinalizeCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithInfo");
-		RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
-		request.setAttribute("roomsPunctualSchedulingBean", bean);
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithInfo");
+        RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+        request.setAttribute("roomsPunctualSchedulingBean", bean);
 
-		final YearMonthDay begin = bean.getBegin();
-		final YearMonthDay end = bean.getEnd();
-		final Partial beginTime = bean.getBeginTime();
-		final Partial endTime = bean.getEndTime();
+        final YearMonthDay begin = bean.getBegin();
+        final YearMonthDay end = bean.getEnd();
+        final Partial beginTime = bean.getBeginTime();
+        final Partial endTime = bean.getEndTime();
 
-		if (begin == null || end == null) {
-			saveMessages(request, "error.occupationPeriod.invalid.dates");
-			return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
-		}
+        if (begin == null || end == null) {
+            saveMessages(request, "error.occupationPeriod.invalid.dates");
+            return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
+        }
 
-		if (beginTime == null || endTime == null) {
-			saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
-			return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
-		}
+        if (beginTime == null || endTime == null) {
+            saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
+            return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
+        }
 
-		final DateTime b =
-				new DateTime(begin.getYear(), begin.getMonthOfYear(), begin.getDayOfMonth(), beginTime.get(DateTimeFieldType
-						.hourOfDay()), beginTime.get(DateTimeFieldType.minuteOfHour()), 0, 0);
-		final DateTime e =
-				new DateTime(end.getYear(), end.getMonthOfYear(), end.getDayOfMonth(),
-						endTime.get(DateTimeFieldType.hourOfDay()), endTime.get(DateTimeFieldType.minuteOfHour()), 0, 0);
+        final DateTime b =
+                new DateTime(begin.getYear(), begin.getMonthOfYear(), begin.getDayOfMonth(), beginTime.get(DateTimeFieldType
+                        .hourOfDay()), beginTime.get(DateTimeFieldType.minuteOfHour()), 0, 0);
+        final DateTime e =
+                new DateTime(end.getYear(), end.getMonthOfYear(), end.getDayOfMonth(),
+                        endTime.get(DateTimeFieldType.hourOfDay()), endTime.get(DateTimeFieldType.minuteOfHour()), 0, 0);
 
-		if (!b.isBefore(e)) {
-			saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
-			return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
-		}
+        if (!b.isBefore(e)) {
+            saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
+            return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
+        }
 
-		return mapping.findForward("prepareFinalizeCreation");
-	}
+        return mapping.findForward("prepareFinalizeCreation");
+    }
 
-	public ActionForward associateNewRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward associateNewRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithNewRoom");
-		if (viewState == null) {
-			viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
-		}
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithNewRoom");
+        if (viewState == null) {
+            viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+        }
 
-		RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
-		bean.addNewRoom(bean.getSelectedRoom());
-		bean.setSelectedRoom(null);
+        RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+        bean.addNewRoom(bean.getSelectedRoom());
+        bean.setSelectedRoom(null);
 
-		request.setAttribute("roomsPunctualSchedulingBean", bean);
-		RenderUtils.invalidateViewState("roomsPunctualSchedulingWithNewRoom");
-		return mapping.findForward("prepareFinalizeCreation");
-	}
+        request.setAttribute("roomsPunctualSchedulingBean", bean);
+        RenderUtils.invalidateViewState("roomsPunctualSchedulingWithNewRoom");
+        return mapping.findForward("prepareFinalizeCreation");
+    }
 
-	public ActionForward removeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward removeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingBeanHidden");
-		if (viewState == null) {
-			viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
-		}
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingBeanHidden");
+        if (viewState == null) {
+            viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+        }
 
-		RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
-		String[] selectedRooms = request.getParameterValues("selectedRoom");
-		if (selectedRooms != null && selectedRooms.length > 0) {
-			for (String selectedRoom : selectedRooms) {
-				Integer roomIdInternal = Integer.valueOf(selectedRoom);
-				AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(roomIdInternal);
-				bean.removeRoom(room);
-			}
-		}
+        RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+        String[] selectedRooms = request.getParameterValues("selectedRoom");
+        if (selectedRooms != null && selectedRooms.length > 0) {
+            for (String selectedRoom : selectedRooms) {
+                Integer roomIdInternal = Integer.valueOf(selectedRoom);
+                AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(roomIdInternal);
+                bean.removeRoom(room);
+            }
+        }
 
-		request.setAttribute("roomsPunctualSchedulingBean", bean);
-		return mapping.findForward("prepareFinalizeCreation");
-	}
+        request.setAttribute("roomsPunctualSchedulingBean", bean);
+        return mapping.findForward("prepareFinalizeCreation");
+    }
 
-	public ActionForward associateNewRoomToEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		associateNewRoom(mapping, form, request, response);
-		return mapping.findForward("prepareViewRoomsPunctualScheduling");
-	}
+    public ActionForward associateNewRoomToEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        associateNewRoom(mapping, form, request, response);
+        return mapping.findForward("prepareViewRoomsPunctualScheduling");
+    }
 
-	public ActionForward removeRoomToEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		removeRoom(mapping, form, request, response);
-		return mapping.findForward("prepareViewRoomsPunctualScheduling");
-	}
+    public ActionForward removeRoomToEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        removeRoom(mapping, form, request, response);
+        return mapping.findForward("prepareViewRoomsPunctualScheduling");
+    }
 
-	public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+    public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
 
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
-		RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+        RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
-		try {
-			CreateRoomsPunctualScheduling.run(bean);
+        try {
+            CreateRoomsPunctualScheduling.run(bean);
 
-		} catch (DomainException domainException) {
-			saveMessages(request, domainException);
-			request.setAttribute("roomsPunctualSchedulingBean", bean);
-			return mapping.findForward("prepareFinalizeCreation");
-		}
+        } catch (DomainException domainException) {
+            saveMessages(request, domainException);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
+            return mapping.findForward("prepareFinalizeCreation");
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+    public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
 
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
-		RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
+        RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
-		try {
-			EditRoomsPunctualScheduling.run(bean);
+        try {
+            EditRoomsPunctualScheduling.run(bean);
 
-		} catch (DomainException domainException) {
-			saveMessages(request, domainException);
-			request.setAttribute("roomsPunctualSchedulingBean", bean);
-			return mapping.findForward("prepareFinalizeCreation");
-		}
+        } catch (DomainException domainException) {
+            saveMessages(request, domainException);
+            request.setAttribute("roomsPunctualSchedulingBean", bean);
+            return mapping.findForward("prepareFinalizeCreation");
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward seeRoomsPunctualSchedulingHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+    public ActionForward seeRoomsPunctualSchedulingHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
 
-		RoomsPunctualSchedulingHistoryBean bean = null;
-		IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingHistoryWithYearAndMonth");
-		if (viewState != null) {
-			bean = (RoomsPunctualSchedulingHistoryBean) viewState.getMetaObject().getObject();
-		} else {
-			bean = new RoomsPunctualSchedulingHistoryBean();
-		}
+        RoomsPunctualSchedulingHistoryBean bean = null;
+        IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingHistoryWithYearAndMonth");
+        if (viewState != null) {
+            bean = (RoomsPunctualSchedulingHistoryBean) viewState.getMetaObject().getObject();
+        } else {
+            bean = new RoomsPunctualSchedulingHistoryBean();
+        }
 
-		if (bean.getYear() != null && bean.getMonth() != null) {
-			DateTime firstDayOfMonth =
-					new DateTime(bean.getYear().get(DateTimeFieldType.year()), bean.getMonth().get(
-							DateTimeFieldType.monthOfYear()), 1, 0, 0, 0, 0);
-			DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
-			Set<GenericEvent> events =
-					GenericEvent.getAllGenericEvents(firstDayOfMonth, lastDayOfMonth, bean.getAllocatableSpace());
-			request.setAttribute("events", events);
-		}
+        if (bean.getYear() != null && bean.getMonth() != null) {
+            DateTime firstDayOfMonth =
+                    new DateTime(bean.getYear().get(DateTimeFieldType.year()), bean.getMonth().get(
+                            DateTimeFieldType.monthOfYear()), 1, 0, 0, 0, 0);
+            DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
+            Set<GenericEvent> events =
+                    GenericEvent.getAllGenericEvents(firstDayOfMonth, lastDayOfMonth, bean.getAllocatableSpace());
+            request.setAttribute("events", events);
+        }
 
-		request.setAttribute("roomsPunctualSchedulingHistoryBean", bean);
-		return mapping.findForward("seeHistory");
-	}
+        request.setAttribute("roomsPunctualSchedulingHistoryBean", bean);
+        return mapping.findForward("seeHistory");
+    }
 
-	// Private Methods
+    // Private Methods
 
-	private YearMonthDay getFirstDay(HttpServletRequest request) {
-		YearMonthDay firstDay = getFirstDayFromParameter(request);
-		if (firstDay == null) {
-			firstDay = new YearMonthDay();
-		}
-		return firstDay;
-	}
+    private YearMonthDay getFirstDay(HttpServletRequest request) {
+        YearMonthDay firstDay = getFirstDayFromParameter(request);
+        if (firstDay == null) {
+            firstDay = new YearMonthDay();
+        }
+        return firstDay;
+    }
 
-	private YearMonthDay getFirstDayFromParameter(final HttpServletRequest request) {
-		final String firstDayString = request.getParameter("firstDay");
-		if (!StringUtils.isEmpty(firstDayString)) {
-			int day = Integer.parseInt(firstDayString.substring(0, 2));
-			int month = Integer.parseInt(firstDayString.substring(2, 4));
-			int year = Integer.parseInt(firstDayString.substring(4, 8));
+    private YearMonthDay getFirstDayFromParameter(final HttpServletRequest request) {
+        final String firstDayString = request.getParameter("firstDay");
+        if (!StringUtils.isEmpty(firstDayString)) {
+            int day = Integer.parseInt(firstDayString.substring(0, 2));
+            int month = Integer.parseInt(firstDayString.substring(2, 4));
+            int year = Integer.parseInt(firstDayString.substring(4, 8));
 
-			if (year == 0 || month == 0 || day == 0) {
-				return null;
-			}
-			return new YearMonthDay(year, month, day);
-		}
-		return null;
-	}
+            if (year == 0 || month == 0 || day == 0) {
+                return null;
+            }
+            return new YearMonthDay(year, month, day);
+        }
+        return null;
+    }
 
-	private void saveMessages(HttpServletRequest request, DomainException e) {
-		ActionMessages actionMessages = new ActionMessages();
-		actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
-		saveMessages(request, actionMessages);
-	}
+    private void saveMessages(HttpServletRequest request, DomainException e) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
+        saveMessages(request, actionMessages);
+    }
 
-	private void saveMessages(HttpServletRequest request, String key) {
-		ActionMessages actionMessages = new ActionMessages();
-		actionMessages.add("", new ActionMessage(key));
-		saveMessages(request, actionMessages);
-	}
+    private void saveMessages(HttpServletRequest request, String key) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("", new ActionMessage(key));
+        saveMessages(request, actionMessages);
+    }
 
-	protected GenericEvent getGenericEventFromParameter(final HttpServletRequest request) {
-		final String genericEventIDString = request.getParameter("genericEventID");
-		final Integer genericEventID = Integer.valueOf(genericEventIDString);
-		return rootDomainObject.readGenericEventByOID(genericEventID);
-	}
+    protected GenericEvent getGenericEventFromParameter(final HttpServletRequest request) {
+        final String genericEventIDString = request.getParameter("genericEventID");
+        final Integer genericEventID = Integer.valueOf(genericEventIDString);
+        return rootDomainObject.readGenericEventByOID(genericEventID);
+    }
 }

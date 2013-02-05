@@ -13,29 +13,29 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 public class InfoViewExam extends InfoObject {
-	protected List infoViewExamsByDayAndShift;
+    protected List infoViewExamsByDayAndShift;
 
-	public InfoViewExam() {
-	}
+    public InfoViewExam() {
+    }
 
-	public InfoViewExam(List infoViewExamsByDayAndShift) {
-		this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
-	}
+    public InfoViewExam(List infoViewExamsByDayAndShift) {
+        this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoViewExam) {
-			InfoViewExam infoViewExam = (InfoViewExam) obj;
-			return this.getInfoViewExamsByDayAndShift().size() == infoViewExam.getInfoViewExamsByDayAndShift().size();
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoViewExam) {
+            InfoViewExam infoViewExam = (InfoViewExam) obj;
+            return this.getInfoViewExamsByDayAndShift().size() == infoViewExam.getInfoViewExamsByDayAndShift().size();
+        }
+        return false;
+    }
 
-	public List getInfoViewExamsByDayAndShift() {
-		return infoViewExamsByDayAndShift;
-	}
+    public List getInfoViewExamsByDayAndShift() {
+        return infoViewExamsByDayAndShift;
+    }
 
-	public void setInfoViewExamsByDayAndShift(List list) {
-		infoViewExamsByDayAndShift = list;
-	}
+    public void setInfoViewExamsByDayAndShift(List list) {
+        infoViewExamsByDayAndShift = list;
+    }
 }

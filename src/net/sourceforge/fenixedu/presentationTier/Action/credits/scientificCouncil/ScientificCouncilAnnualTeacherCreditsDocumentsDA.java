@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "scientificCouncil", path = "/annualTeachingCreditsDocument", scope = "request", parameter = "method")
 public class ScientificCouncilAnnualTeacherCreditsDocumentsDA extends AnnualTeacherCreditsDocumentsDA {
 
-	@Override
-	public ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-		return getTeacherCreditsDocument(mapping, request, RoleType.SCIENTIFIC_COUNCIL);
-	}
+    @Override
+    public ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+        return getTeacherCreditsDocument(mapping, request, RoleType.SCIENTIFIC_COUNCIL);
+    }
 }

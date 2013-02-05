@@ -38,105 +38,98 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author jpvl
  */
-@Mapping(
-		module = "departmentAdmOffice",
-		path = "/showTeacherProfessorshipsForSummariesManagement",
-		input = "show-teacher-professorships-for-management",
-		attribute = "teacherExecutionCourseResponsabilities",
-		formBean = "teacherExecutionCourseResponsabilities",
-		scope = "request")
-@Forwards(value = { @Forward(
-		name = "list-professorships",
-		path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagementSummaries.jsp") })
+@Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForSummariesManagement",
+        input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
+        formBean = "teacherExecutionCourseResponsabilities", scope = "request")
+@Forwards(value = { @Forward(name = "list-professorships",
+        path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagementSummaries.jsp") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
-		key = "message.teacher-not-belong-to-department",
-		handler = org.apache.struts.action.ExceptionHandler.class,
-		path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0",
-		scope = "request") })
+        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
+        key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
+        path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0", scope = "request") })
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
-	@Override
-	List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
-			throws FenixServiceException, FenixFilterException {
+    @Override
+    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
 
-		List detailedInfoProfessorshipList =
-				(List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
-						actionForm.get("executionYearId") });
-		request.setAttribute("args", new TreeMap());
-		return detailedInfoProfessorshipList;
-	}
+        List detailedInfoProfessorshipList =
+                (List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
+                        actionForm.get("executionYearId") });
+        request.setAttribute("args", new TreeMap());
+        return detailedInfoProfessorshipList;
+    }
 
-	@Override
-	protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
-			DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+    @Override
+    protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
+            DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
 
-		prepareConstants(userView, infoTeacher, request);
-		prepareForm(dynaForm, request);
-	}
+        prepareConstants(userView, infoTeacher, request);
+        prepareForm(dynaForm, request);
+    }
 
-	private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
-		InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-		dynaForm.set("idInternal", infoTeacher.getIdInternal());
-		dynaForm.set("teacherId", infoTeacher.getIdInternal().toString());
-		if (dynaForm.get("executionYearId") == null) {
-			dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
-		}
+    private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
+        InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
+        dynaForm.set("idInternal", infoTeacher.getIdInternal());
+        dynaForm.set("teacherId", infoTeacher.getIdInternal().toString());
+        if (dynaForm.get("executionYearId") == null) {
+            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+        }
 
-		List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
+        List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
 
-		List executionCourseIds = new ArrayList();
-		Map hours = new HashMap();
-		for (int i = 0; i < detailedProfessorshipList.size(); i++) {
-			DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
+        List executionCourseIds = new ArrayList();
+        Map hours = new HashMap();
+        for (int i = 0; i < detailedProfessorshipList.size(); i++) {
+            DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-			Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
-			if (dps.getResponsibleFor().booleanValue()) {
-				executionCourseIds.add(executionCourseId);
-			}
-			if (dps.getMasterDegreeOnly().booleanValue()) {
-				if (dps.getInfoProfessorship().getHours() != null) {
-					hours.put(executionCourseId.toString(), dps.getInfoProfessorship().getHours().toString());
-				}
-			}
-		}
+            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
+            if (dps.getResponsibleFor().booleanValue()) {
+                executionCourseIds.add(executionCourseId);
+            }
+            if (dps.getMasterDegreeOnly().booleanValue()) {
+                if (dps.getInfoProfessorship().getHours() != null) {
+                    hours.put(executionCourseId.toString(), dps.getInfoProfessorship().getHours().toString());
+                }
+            }
+        }
 
-		dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
-		dynaForm.set("hours", hours);
+        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
+        dynaForm.set("hours", hours);
 
-	}
+    }
 
-	private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
-			throws FenixServiceException, FenixFilterException {
+    private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
 
-		List executionYears = ReadNotClosedExecutionYears.run();
+        List executionYears = ReadNotClosedExecutionYears.run();
 
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
-			@Override
-			public boolean evaluate(Object arg0) {
-				InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear) arg0;
-				if (infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {
-					return true;
-				}
-				return false;
-			}
-		});
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear) arg0;
+                if (infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
-		Department department = infoTeacher.getTeacher().getCurrentWorkingDepartment();
-		InfoDepartment teacherDepartment = InfoDepartment.newInfoFromDomain(department);
+        Department department = infoTeacher.getTeacher().getCurrentWorkingDepartment();
+        InfoDepartment teacherDepartment = InfoDepartment.newInfoFromDomain(department);
 
-		if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
+        if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
 
-			final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
-			request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
+            final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+            request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
 
-		} else {
-			request.setAttribute("isDepartmentManager", Boolean.FALSE);
-		}
+        } else {
+            request.setAttribute("isDepartmentManager", Boolean.FALSE);
+        }
 
-		request.setAttribute("teacherDepartment", teacherDepartment);
-		request.setAttribute("executionYear", infoExecutionYear);
-		request.setAttribute("executionYears", executionYears);
-	}
+        request.setAttribute("teacherDepartment", teacherDepartment);
+        request.setAttribute("executionYear", infoExecutionYear);
+        request.setAttribute("executionYears", executionYears);
+    }
 }

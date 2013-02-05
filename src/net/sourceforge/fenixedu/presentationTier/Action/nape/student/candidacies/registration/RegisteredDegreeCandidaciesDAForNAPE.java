@@ -10,14 +10,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/registeredDegreeCandidacies", module = "nape")
-@Forwards({ @Forward(
-		name = "viewRegisteredDegreeCandidacies",
-		path = "/nape/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })
+@Forwards({ @Forward(name = "viewRegisteredDegreeCandidacies",
+        path = "/nape/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })
 public class RegisteredDegreeCandidaciesDAForNAPE extends RegisteredDegreeCandidaciesDA {
 
-	@Override
-	protected Set<Degree> getDegreesToSearch() {
-		return RootDomainObject.getInstance().getDegreesSet();
-	}
+    @Override
+    protected Set<Degree> getDegreesToSearch() {
+        return RootDomainObject.getInstance().getDegreesSet();
+    }
 
 }

@@ -15,20 +15,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionYearsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final List<ExecutionYear> executionYears =
-				new ArrayList<ExecutionYear>(RootDomainObject.getInstance().getExecutionYears());
+        final List<ExecutionYear> executionYears =
+                new ArrayList<ExecutionYear>(RootDomainObject.getInstance().getExecutionYears());
 
-		Collections.sort(executionYears, new ReverseComparator());
+        Collections.sort(executionYears, new ReverseComparator());
 
-		return executionYears;
-	}
+        return executionYears;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

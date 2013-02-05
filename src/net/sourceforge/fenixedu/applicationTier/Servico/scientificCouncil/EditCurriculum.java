@@ -19,25 +19,25 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EditCurriculum extends FenixService {
 
-	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-	@Service
-	public static Boolean run(Integer curriculumId, String program, String programEn, String operacionalObjectives,
-			String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, Boolean basic)
-			throws FenixServiceException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static Boolean run(Integer curriculumId, String program, String programEn, String operacionalObjectives,
+            String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, Boolean basic)
+            throws FenixServiceException {
 
-		Curriculum curriculum = rootDomainObject.readCurriculumByOID(curriculumId);
-		if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
-			curriculum.setProgram(program);
-			curriculum.setProgramEn(programEn);
-			curriculum.setOperacionalObjectives(operacionalObjectives);
-			curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
-			curriculum.setGeneralObjectives(generalObjectives);
-			curriculum.setGeneralObjectivesEn(generalObjectivesEn);
-			return new Boolean(true);
-		}
-		return new Boolean(false);
+        Curriculum curriculum = rootDomainObject.readCurriculumByOID(curriculumId);
+        if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
+            curriculum.setProgram(program);
+            curriculum.setProgramEn(programEn);
+            curriculum.setOperacionalObjectives(operacionalObjectives);
+            curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
+            curriculum.setGeneralObjectives(generalObjectives);
+            curriculum.setGeneralObjectivesEn(generalObjectivesEn);
+            return new Boolean(true);
+        }
+        return new Boolean(false);
 
-		// TODO: KEEP HISTORY OF CURRICULAR INFORMATION
-	}
+        // TODO: KEEP HISTORY OF CURRICULAR INFORMATION
+    }
 
 }

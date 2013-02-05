@@ -16,16 +16,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadMasterDegreeProofVersionByID extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
-		MasterDegreeProofVersion masterDegreeProofVersion =
-				rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
-		if (masterDegreeProofVersion == null) {
-			throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
-		}
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
+        MasterDegreeProofVersion masterDegreeProofVersion =
+                rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
+        if (masterDegreeProofVersion == null) {
+            throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
+        }
 
-		return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
-	}
+        return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
+    }
 
 }

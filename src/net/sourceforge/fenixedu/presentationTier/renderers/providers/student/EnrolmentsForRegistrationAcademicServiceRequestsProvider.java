@@ -12,18 +12,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EnrolmentsForRegistrationAcademicServiceRequestsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
-		final List<Enrolment> enrolments =
-				new ArrayList<Enrolment>(bean.getRegistration().getLastStudentCurricularPlan()
-						.getStudentEnrollmentsWithEnrolledState());
-		Collections.sort(enrolments, Enrolment.COMPARATOR_BY_NAME_AND_ID);
-		return enrolments;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
+        final List<Enrolment> enrolments =
+                new ArrayList<Enrolment>(bean.getRegistration().getLastStudentCurricularPlan()
+                        .getStudentEnrollmentsWithEnrolledState());
+        Collections.sort(enrolments, Enrolment.COMPARATOR_BY_NAME_AND_ID);
+        return enrolments;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

@@ -19,43 +19,43 @@ import org.apache.commons.collections.Transformer;
  */
 public abstract class SearchService extends FenixService {
 
-	/**
-	 * @param searchParameters
-	 *            HashMap that contains name of attribute for key and value of
-	 *            the attribute
-	 * @return An empty list if nothing was found.
-	 * @throws ExcepcaoPersistencia
-	 * @throws FenixServiceException
-	 *             if it can't get persistent support
-	 */
-	public List run(HashMap searchParameters) {
-		final List domainList = doSearch(searchParameters);
+    /**
+     * @param searchParameters
+     *            HashMap that contains name of attribute for key and value of
+     *            the attribute
+     * @return An empty list if nothing was found.
+     * @throws ExcepcaoPersistencia
+     * @throws FenixServiceException
+     *             if it can't get persistent support
+     */
+    public List run(HashMap searchParameters) {
+        final List domainList = doSearch(searchParameters);
 
-		final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
-			@Override
-			public Object transform(Object input) {
-				InfoObject infoObject = newInfoFromDomain((DomainObject) input);
-				return infoObject;
-			}
-		});
+        final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
+            @Override
+            public Object transform(Object input) {
+                InfoObject infoObject = newInfoFromDomain((DomainObject) input);
+                return infoObject;
+            }
+        });
 
-		return infoList;
-	}
+        return infoList;
+    }
 
-	/**
-	 * Clones the de DomainObject to InfoObject
-	 * 
-	 * @param object
-	 * @return
-	 */
-	abstract protected InfoObject newInfoFromDomain(DomainObject object);
+    /**
+     * Clones the de DomainObject to InfoObject
+     * 
+     * @param object
+     * @return
+     */
+    abstract protected InfoObject newInfoFromDomain(DomainObject object);
 
-	/**
-	 * Do the search using search using the search parameters.
-	 * 
-	 * @param searchParameters
-	 * @return A list of DomainObject.
-	 */
-	abstract protected List doSearch(HashMap searchParameters);
+    /**
+     * Do the search using search using the search parameters.
+     * 
+     * @param searchParameters
+     * @return A list of DomainObject.
+     */
+    abstract protected List doSearch(HashMap searchParameters);
 
 }

@@ -12,14 +12,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditUnitAnnouncementBoardApprovers extends FenixService {
 
-	@Service
-	public static void run(final AnnouncementBoard announcementBoard, final Collection<AnnouncementBoardApproversBean> approvers) {
-		Collection<Person> persons = new HashSet<Person>();
-		for (AnnouncementBoardApproversBean announcementBoardApproversBean : approvers) {
-			if (announcementBoardApproversBean.isApprover()) {
-				persons.add(announcementBoardApproversBean.getPerson());
-			}
-		}
-		announcementBoard.setApprovers(new FixedSetGroup(persons));
-	}
+    @Service
+    public static void run(final AnnouncementBoard announcementBoard, final Collection<AnnouncementBoardApproversBean> approvers) {
+        Collection<Person> persons = new HashSet<Person>();
+        for (AnnouncementBoardApproversBean announcementBoardApproversBean : approvers) {
+            if (announcementBoardApproversBean.isApprover()) {
+                persons.add(announcementBoardApproversBean.getPerson());
+            }
+        }
+        announcementBoard.setApprovers(new FixedSetGroup(persons));
+    }
 }

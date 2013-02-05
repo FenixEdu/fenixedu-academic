@@ -20,23 +20,23 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteStudentCurricularPlan extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
-		final StudentCurricularPlan studentCurricularPlan =
-				rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
+        final StudentCurricularPlan studentCurricularPlan =
+                rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 
-		if (studentCurricularPlan != null) {
+        if (studentCurricularPlan != null) {
 
-			for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-				for (EnrolmentEvaluation evaluation : enrolment.getEvaluations()) {
-					evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-				}
-			}
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+                for (EnrolmentEvaluation evaluation : enrolment.getEvaluations()) {
+                    evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+                }
+            }
 
-			studentCurricularPlan.delete();
-		} else {
-			throw new NonExistingServiceException();
-		}
-	}
+            studentCurricularPlan.delete();
+        } else {
+            throw new NonExistingServiceException();
+        }
+    }
 }

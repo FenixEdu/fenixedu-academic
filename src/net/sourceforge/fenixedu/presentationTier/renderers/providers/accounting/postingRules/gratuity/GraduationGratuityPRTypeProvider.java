@@ -10,30 +10,30 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class GraduationGratuityPRTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(GratuityWithPaymentPlanPR.class, PastDegreeGratuityPR.class);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(GratuityWithPaymentPlanPR.class, PastDegreeGratuityPR.class);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new BiDirectionalConverter() {
+    @Override
+    public Converter getConverter() {
+        return new BiDirectionalConverter() {
 
-			static private final long serialVersionUID = 1L;
+            static private final long serialVersionUID = 1L;
 
-			@Override
-			public Object convert(Class arg0, Object value) {
-				try {
-					return Class.forName((String) value);
-				} catch (ClassNotFoundException e) {
-					throw new RuntimeException(e);
-				}
-			}
+            @Override
+            public Object convert(Class arg0, Object value) {
+                try {
+                    return Class.forName((String) value);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-			@Override
-			public String deserialize(Object value) {
-				return ((Class) value).getName();
-			}
-		};
-	}
+            @Override
+            public String deserialize(Object value) {
+                return ((Class) value).getName();
+            }
+        };
+    }
 }

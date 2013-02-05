@@ -13,23 +13,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 @Deprecated
 public class DegreeTypesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_VALUES);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_VALUES);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new Converter() {
-			@Override
-			public Object convert(Class type, Object value) {
-				final List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
-				for (final String o : (String[]) value) {
-					degreeTypes.add(DegreeType.valueOf(o));
-				}
-				return degreeTypes;
-			}
-		};
-	}
+    @Override
+    public Converter getConverter() {
+        return new Converter() {
+            @Override
+            public Object convert(Class type, Object value) {
+                final List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
+                for (final String o : (String[]) value) {
+                    degreeTypes.add(DegreeType.valueOf(o));
+                }
+                return degreeTypes;
+            }
+        };
+    }
 
 }

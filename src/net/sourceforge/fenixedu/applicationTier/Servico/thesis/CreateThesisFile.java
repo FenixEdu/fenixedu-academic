@@ -34,85 +34,85 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class CreateThesisFile extends FenixService {
 
-	public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title, String subTitle, Language language)
-			throws FenixServiceException, IOException {
+    public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title, String subTitle, Language language)
+            throws FenixServiceException, IOException {
 
-		if (!thesis.isWaitingConfirmation() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
-			throw new DomainException("thesis.files.submit.unavailable");
-		}
+        if (!thesis.isWaitingConfirmation() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+            throw new DomainException("thesis.files.submit.unavailable");
+        }
 
-		if (!thesis.isDeclarationAccepted() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
-			throw new DomainException("thesis.files.submit.unavailable");
-		}
+        if (!thesis.isDeclarationAccepted() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+            throw new DomainException("thesis.files.submit.unavailable");
+        }
 
-		removePreviousFile(thesis);
+        removePreviousFile(thesis);
 
-		if (fileToUpload == null || fileName == null) {
-			return null;
-		}
+        if (fileToUpload == null || fileName == null) {
+            return null;
+        }
 
-		VirtualPath filePath = getVirtualPath(thesis);
-		Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
+        VirtualPath filePath = getVirtualPath(thesis);
+        Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
 
-		RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
-		CurrentDegreeScientificCommissionMembersGroup commissionMembers =
-				new CurrentDegreeScientificCommissionMembersGroup(thesis.getDegree());
-		PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
-		ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
-		final GroupUnion permittedGroup = new GroupUnion(scientificCouncil, commissionMembers, student, thesisGroup);
+        RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
+        CurrentDegreeScientificCommissionMembersGroup commissionMembers =
+                new CurrentDegreeScientificCommissionMembersGroup(thesis.getDegree());
+        PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
+        ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
+        final GroupUnion permittedGroup = new GroupUnion(scientificCouncil, commissionMembers, student, thesisGroup);
 
-		byte[] content = FileUtils.readFileToByteArray(fileToUpload);
+        byte[] content = FileUtils.readFileToByteArray(fileToUpload);
 
-		ThesisFile file = new ThesisFile(filePath, fileName, fileName, metaData, content, permittedGroup);
+        ThesisFile file = new ThesisFile(filePath, fileName, fileName, metaData, content, permittedGroup);
 
-		updateThesis(thesis, file, title, subTitle, language, fileName, fileToUpload);
+        updateThesis(thesis, file, title, subTitle, language, fileName, fileToUpload);
 
-		return file;
-	}
+        return file;
+    }
 
-	protected VirtualPath getVirtualPath(Thesis thesis) {
-		// TODO: thesis, review path
+    protected VirtualPath getVirtualPath(Thesis thesis) {
+        // TODO: thesis, review path
 
-		VirtualPathNode[] nodes =
-				{ new VirtualPathNode("Thesis", "Thesis"),
-						new VirtualPathNode("Student" + thesis.getStudent().getIdInternal(), "Student") };
+        VirtualPathNode[] nodes =
+                { new VirtualPathNode("Thesis", "Thesis"),
+                        new VirtualPathNode("Student" + thesis.getStudent().getIdInternal(), "Student") };
 
-		VirtualPath path = new VirtualPath();
-		for (VirtualPathNode node : nodes) {
-			path.addNode(node);
-		}
+        VirtualPath path = new VirtualPath();
+        for (VirtualPathNode node : nodes) {
+            path.addNode(node);
+        }
 
-		return path;
-	}
+        return path;
+    }
 
-	protected Collection<FileSetMetaData> createMetaData(Thesis thesis, String fileName) {
-		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+    protected Collection<FileSetMetaData> createMetaData(Thesis thesis, String fileName) {
+        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
 
-		metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
-		metaData.add(FileSetMetaData.createTitleMeta(thesis.getTitle().getContent()));
+        metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
+        metaData.add(FileSetMetaData.createTitleMeta(thesis.getTitle().getContent()));
 
-		return metaData;
-	}
+        return metaData;
+    }
 
-	protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-			Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
-	}
+    protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
+            Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
+        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+        InputStream is = null;
+        try {
+            is = new FileInputStream(file);
+            return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
+        } catch (FileNotFoundException e) {
+            throw new FenixServiceException(e.getMessage());
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
 
-	protected abstract void removePreviousFile(Thesis thesis);
+    protected abstract void removePreviousFile(Thesis thesis);
 
-	protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
-			String fileName, File fileToUpload) throws FenixServiceException, IOException;
+    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
+            String fileName, File fileToUpload) throws FenixServiceException, IOException;
 
 }

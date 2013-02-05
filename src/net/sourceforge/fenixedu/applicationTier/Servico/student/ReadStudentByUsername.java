@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentByUsername extends FenixService {
 
-	public Object run(String username) {
-		final Registration registration = Registration.readByUsername(username);
-		return registration == null ? null : InfoStudent.newInfoFromDomain(registration);
-	}
+    public Object run(String username) {
+        final Registration registration = Registration.readByUsername(username);
+        return registration == null ? null : InfoStudent.newInfoFromDomain(registration);
+    }
 
 }

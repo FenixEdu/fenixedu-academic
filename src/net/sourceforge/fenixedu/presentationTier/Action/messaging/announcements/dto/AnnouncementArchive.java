@@ -20,62 +20,62 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
  */
 public class AnnouncementArchive {
 
-	private AnnouncementBoard board;
+    private AnnouncementBoard board;
 
-	private AnnouncementArchiveAnnouncementsVisibility visibility;
+    private AnnouncementArchiveAnnouncementsVisibility visibility;
 
-	private Map<Integer, YearAnnouncementArchiveEntry> entries = null;
+    private Map<Integer, YearAnnouncementArchiveEntry> entries = null;
 
-	public Map<Integer, YearAnnouncementArchiveEntry> getEntries() {
-		if (this.entries == null) {
-			this.init();
-		}
-		return entries;
-	}
+    public Map<Integer, YearAnnouncementArchiveEntry> getEntries() {
+        if (this.entries == null) {
+            this.init();
+        }
+        return entries;
+    }
 
-	public AnnouncementArchive(AnnouncementBoard board, AnnouncementArchiveAnnouncementsVisibility visibility) {
-		this.board = board;
-		this.visibility = visibility;
-	}
+    public AnnouncementArchive(AnnouncementBoard board, AnnouncementArchiveAnnouncementsVisibility visibility) {
+        this.board = board;
+        this.visibility = visibility;
+    }
 
-	private void init() {
-		Collection<Announcement> announcements = new ArrayList<Announcement>();
-		this.entries = new TreeMap<Integer, YearAnnouncementArchiveEntry>();
-		switch (this.visibility) {
-		case ACTIVE:
-			announcements.addAll(this.board.getActiveAnnouncements());
-			break;
-		case ALL:
-			announcements.addAll(this.board.getAnnouncements());
-			break;
-		case VISIBLE:
-			announcements.addAll(this.board.getVisibleAnnouncements());
-			break;
-		}
-		for (Announcement announcement : announcements) {
-			this.addAnnouncement(announcement);
-		}
-	}
+    private void init() {
+        Collection<Announcement> announcements = new ArrayList<Announcement>();
+        this.entries = new TreeMap<Integer, YearAnnouncementArchiveEntry>();
+        switch (this.visibility) {
+        case ACTIVE:
+            announcements.addAll(this.board.getActiveAnnouncements());
+            break;
+        case ALL:
+            announcements.addAll(this.board.getAnnouncements());
+            break;
+        case VISIBLE:
+            announcements.addAll(this.board.getVisibleAnnouncements());
+            break;
+        }
+        for (Announcement announcement : announcements) {
+            this.addAnnouncement(announcement);
+        }
+    }
 
-	public void addAnnouncement(Announcement announcement) {
+    public void addAnnouncement(Announcement announcement) {
 
-		Integer announcementYear =
-				announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getYear() : announcement
-						.getCreationDate().getYear();
+        Integer announcementYear =
+                announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getYear() : announcement
+                        .getCreationDate().getYear();
 
-		YearAnnouncementArchiveEntry year = entries.get(announcementYear);
-		if (year == null) {
-			year = new YearAnnouncementArchiveEntry(announcementYear);
-			entries.put(announcementYear, year);
-		}
-		year.addAnnouncement(announcement);
-	}
+        YearAnnouncementArchiveEntry year = entries.get(announcementYear);
+        if (year == null) {
+            year = new YearAnnouncementArchiveEntry(announcementYear);
+            entries.put(announcementYear, year);
+        }
+        year.addAnnouncement(announcement);
+    }
 
-	public int getYearsCount() {
-		return this.entries.keySet().size();
-	}
+    public int getYearsCount() {
+        return this.entries.keySet().size();
+    }
 
-	public AnnouncementBoard getBoard() {
-		return board;
-	}
+    public AnnouncementBoard getBoard() {
+        return board;
+    }
 }

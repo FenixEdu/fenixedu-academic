@@ -46,411 +46,409 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
-@Mapping(
-		path = "/caseHandlingDegreeChangeCandidacyProcess",
-		module = "academicAdministration",
-		formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+@Mapping(path = "/caseHandlingDegreeChangeCandidacyProcess", module = "academicAdministration",
+        formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards({
 
 @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-		@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-		@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-		@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
-		@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
-		@Forward(name = "view-candidacy-results", path = "/candidacy/degreeChange/viewCandidacyResults.jsp"),
-		@Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeChange/introduceCandidacyResults.jsp"),
-		@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-		@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
+        @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+        @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
+        @Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
+        @Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
+        @Forward(name = "view-candidacy-results", path = "/candidacy/degreeChange/viewCandidacyResults.jsp"),
+        @Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeChange/introduceCandidacyResults.jsp"),
+        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
+        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
 
 })
 public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
-	private static final int MAX_GRADE_VALUE = 20;
+    private static final int MAX_GRADE_VALUE = 20;
 
-	@Override
-	protected Class getProcessType() {
-		return DegreeChangeCandidacyProcess.class;
-	}
+    @Override
+    protected Class getProcessType() {
+        return DegreeChangeCandidacyProcess.class;
+    }
 
-	@Override
-	protected Class getCandidacyPeriodType() {
-		return DegreeChangeCandidacyPeriod.class;
-	}
+    @Override
+    protected Class getCandidacyPeriodType() {
+        return DegreeChangeCandidacyPeriod.class;
+    }
 
-	@Override
-	protected Class getChildProcessType() {
-		return DegreeChangeIndividualCandidacyProcess.class;
-	}
+    @Override
+    protected Class getChildProcessType() {
+        return DegreeChangeIndividualCandidacyProcess.class;
+    }
 
-	@Override
-	protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
-		return executionInterval.hasDegreeChangeCandidacyPeriod() ? executionInterval.getDegreeChangeCandidacyPeriod()
-				.getDegreeChangeCandidacyProcess() : null;
-	}
+    @Override
+    protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
+        return executionInterval.hasDegreeChangeCandidacyPeriod() ? executionInterval.getDegreeChangeCandidacyPeriod()
+                .getDegreeChangeCandidacyProcess() : null;
+    }
 
-	@Override
-	protected DegreeChangeCandidacyProcess getProcess(HttpServletRequest request) {
-		return (DegreeChangeCandidacyProcess) super.getProcess(request);
-	}
+    @Override
+    protected DegreeChangeCandidacyProcess getProcess(HttpServletRequest request) {
+        return (DegreeChangeCandidacyProcess) super.getProcess(request);
+    }
 
-	@Override
-	protected ActionForward introForward(ActionMapping mapping) {
-		return mapping.findForward("intro");
-	}
+    @Override
+    protected ActionForward introForward(ActionMapping mapping) {
+        return mapping.findForward("intro");
+    }
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		setChooseDegreeBean(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        setChooseDegreeBean(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	private void setChooseDegreeBean(HttpServletRequest request) {
-		ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
+    private void setChooseDegreeBean(HttpServletRequest request) {
+        ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
-		if (chooseDegreeBean == null) {
-			chooseDegreeBean = new ChooseDegreeBean();
-		}
+        if (chooseDegreeBean == null) {
+            chooseDegreeBean = new ChooseDegreeBean();
+        }
 
-		request.setAttribute("chooseDegreeBean", chooseDegreeBean);
-	}
+        request.setAttribute("chooseDegreeBean", chooseDegreeBean);
+    }
 
-	private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
-		return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
-	}
+    private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+        return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
+    }
 
-	@Override
-	public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		setCandidacyProcessInformation(request, getProcess(request));
-		setCandidacyProcessInformation(form, getProcess(request));
-		return introForward(mapping);
-	}
+    @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        setCandidacyProcessInformation(request, getProcess(request));
+        setCandidacyProcessInformation(form, getProcess(request));
+        return introForward(mapping);
+    }
 
-	protected void setCandidacyProcessInformation(final ActionForm actionForm, final CandidacyProcess process) {
-		final CandidacyProcessForm form = (CandidacyProcessForm) actionForm;
-		form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
-	}
+    protected void setCandidacyProcessInformation(final ActionForm actionForm, final CandidacyProcess process) {
+        final CandidacyProcessForm form = (CandidacyProcessForm) actionForm;
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+    }
 
-	@Override
-	protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		if (!hasExecutionInterval(request)) {
-			final List<ExecutionInterval> executionIntervals =
-					ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
-			if (executionIntervals.size() == 1) {
-				setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
-			} else {
-				request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-				request.setAttribute("executionIntervals", executionIntervals);
-			}
-		} else {
-			setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
-		}
-	}
+    @Override
+    protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        if (!hasExecutionInterval(request)) {
+            final List<ExecutionInterval> executionIntervals =
+                    ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+            if (executionIntervals.size() == 1) {
+                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
+            } else {
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", executionIntervals);
+            }
+        } else {
+            setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
+        }
+    }
 
-	public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("send-to-coordinator");
-	}
+    public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("send-to-coordinator");
+    }
 
-	public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		try {
-			executeActivity(getProcess(request), "SendToCoordinator");
-		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), e.getArgs());
-			return prepareExecuteSendToCoordinator(mapping, actionForm, request, response);
-		}
-		return listProcessAllowedActivities(mapping, actionForm, request, response);
-	}
+    public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        try {
+            executeActivity(getProcess(request), "SendToCoordinator");
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            return prepareExecuteSendToCoordinator(mapping, actionForm, request, response);
+        }
+        return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareExecuteSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("send-to-scientificCouncil");
-	}
+    public ActionForward prepareExecuteSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("send-to-scientificCouncil");
+    }
 
-	public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		try {
-			executeActivity(getProcess(request), "SendToScientificCouncil");
-		} catch (final DomainException e) {
-			addActionMessage(request, e.getMessage(), e.getArgs());
-			return prepareExecuteSendToScientificCouncil(mapping, actionForm, request, response);
-		}
-		return listProcessAllowedActivities(mapping, actionForm, request, response);
-	}
+    public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        try {
+            executeActivity(getProcess(request), "SendToScientificCouncil");
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            return prepareExecuteSendToScientificCouncil(mapping, actionForm, request, response);
+        }
+        return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareExecutePrintCandidaciesFromInstitutionDegrees(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ActionForward prepareExecutePrintCandidaciesFromInstitutionDegrees(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment; filename="
-				+ getLabel("label.candidacy.degreeChange.institution.report.filename") + ".xls");
-		writeReportForInstitutionDegrees(getProcess(request), response.getOutputStream());
-		response.getOutputStream().flush();
-		response.flushBuffer();
-		return null;
-	}
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename="
+                + getLabel("label.candidacy.degreeChange.institution.report.filename") + ".xls");
+        writeReportForInstitutionDegrees(getProcess(request), response.getOutputStream());
+        response.getOutputStream().flush();
+        response.flushBuffer();
+        return null;
+    }
 
-	private void writeReportForInstitutionDegrees(final DegreeChangeCandidacyProcess process,
-			final ServletOutputStream outputStream) throws IOException {
-		final StyledExcelSpreadsheet excelSpreadsheet = new StyledExcelSpreadsheet();
-		for (final Entry<Degree, SortedSet<DegreeChangeIndividualCandidacyProcess>> entry : process
-				.getValidInstitutionIndividualCandidacyProcessesByDegree().entrySet()) {
-			createSpreadsheet(excelSpreadsheet, entry.getKey(), entry.getValue());
-		}
-		excelSpreadsheet.getWorkbook().write(outputStream);
-	}
+    private void writeReportForInstitutionDegrees(final DegreeChangeCandidacyProcess process,
+            final ServletOutputStream outputStream) throws IOException {
+        final StyledExcelSpreadsheet excelSpreadsheet = new StyledExcelSpreadsheet();
+        for (final Entry<Degree, SortedSet<DegreeChangeIndividualCandidacyProcess>> entry : process
+                .getValidInstitutionIndividualCandidacyProcessesByDegree().entrySet()) {
+            createSpreadsheet(excelSpreadsheet, entry.getKey(), entry.getValue());
+        }
+        excelSpreadsheet.getWorkbook().write(outputStream);
+    }
 
-	public ActionForward prepareExecutePrintCandidaciesFromExternalDegrees(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ActionForward prepareExecutePrintCandidaciesFromExternalDegrees(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment; filename="
-				+ getLabel("label.candidacy.degreeChange.external.report.filename") + ".xls");
-		writeReportForExternalDegrees(getProcess(request), response.getOutputStream());
-		response.getOutputStream().flush();
-		response.flushBuffer();
-		return null;
-	}
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename="
+                + getLabel("label.candidacy.degreeChange.external.report.filename") + ".xls");
+        writeReportForExternalDegrees(getProcess(request), response.getOutputStream());
+        response.getOutputStream().flush();
+        response.flushBuffer();
+        return null;
+    }
 
-	private String getLabel(final String key) {
-		return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(key);
-	}
+    private String getLabel(final String key) {
+        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(key);
+    }
 
-	private void writeReportForExternalDegrees(final DegreeChangeCandidacyProcess process, final ServletOutputStream outputStream)
-			throws IOException {
-		final StyledExcelSpreadsheet excelSpreadsheet = new StyledExcelSpreadsheet();
-		for (final Entry<Degree, SortedSet<DegreeChangeIndividualCandidacyProcess>> entry : process
-				.getValidExternalIndividualCandidacyProcessesByDegree().entrySet()) {
-			createSpreadsheet(excelSpreadsheet, entry.getKey(), entry.getValue());
-		}
-		excelSpreadsheet.getWorkbook().write(outputStream);
-	}
+    private void writeReportForExternalDegrees(final DegreeChangeCandidacyProcess process, final ServletOutputStream outputStream)
+            throws IOException {
+        final StyledExcelSpreadsheet excelSpreadsheet = new StyledExcelSpreadsheet();
+        for (final Entry<Degree, SortedSet<DegreeChangeIndividualCandidacyProcess>> entry : process
+                .getValidExternalIndividualCandidacyProcessesByDegree().entrySet()) {
+            createSpreadsheet(excelSpreadsheet, entry.getKey(), entry.getValue());
+        }
+        excelSpreadsheet.getWorkbook().write(outputStream);
+    }
 
-	private void createSpreadsheet(final StyledExcelSpreadsheet excelSpreadsheet, final Degree degree,
-			final SortedSet<DegreeChangeIndividualCandidacyProcess> candidacies) {
-		excelSpreadsheet.getSheet(degree.getSigla());
-		createHeader(excelSpreadsheet, degree);
-		createBody(excelSpreadsheet, candidacies);
-	}
+    private void createSpreadsheet(final StyledExcelSpreadsheet excelSpreadsheet, final Degree degree,
+            final SortedSet<DegreeChangeIndividualCandidacyProcess> candidacies) {
+        excelSpreadsheet.getSheet(degree.getSigla());
+        createHeader(excelSpreadsheet, degree);
+        createBody(excelSpreadsheet, candidacies);
+    }
 
-	private void createBody(final StyledExcelSpreadsheet excelSpreadsheet,
-			final SortedSet<DegreeChangeIndividualCandidacyProcess> candidacies) {
-		for (final DegreeChangeIndividualCandidacyProcess process : candidacies) {
-			if (!process.canExecuteActivity(AccessControl.getUserView())) {
-				continue;
-			}
-			excelSpreadsheet.newRow();
-			if (process.hasCandidacyStudent()) {
-				excelSpreadsheet.addCell(process.getCandidacyStudent().getNumber());
-			} else {
-				excelSpreadsheet.addCell("-");
-			}
-			excelSpreadsheet.addCell(process.getPersonalDetails().getName());
-			final PrecedentDegreeInformation information = process.getPrecedentDegreeInformation();
-			excelSpreadsheet.addCell(information.getDegreeAndInstitutionName());
-			excelSpreadsheet.addCell(getValue(process.getCandidacyAffinity()));
-			excelSpreadsheet.addCell(getValue(process.getCandidacyDegreeNature()));
-			excelSpreadsheet.addCell(getValue(information.getNumberOfApprovedCurricularCourses()));
-			excelSpreadsheet.addCell(getValue(information.getGradeSum()));
-			excelSpreadsheet.addCell(getValue(information.getApprovedEcts()));
-			excelSpreadsheet.addCell(getValue(information.getEnroledEcts()));
-			excelSpreadsheet.addCell(getValue(calculateA(process, true)));
-			excelSpreadsheet.addCell(getValue(calculateB(process, true)));
-			excelSpreadsheet.addCell(getValue(calculateC(process)));
-			if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-				excelSpreadsheet.addCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale())
-						.getString(process.getCandidacyState().getQualifiedName()).toUpperCase());
-			} else {
-				excelSpreadsheet.addCell("");
-			}
-		}
-	}
+    private void createBody(final StyledExcelSpreadsheet excelSpreadsheet,
+            final SortedSet<DegreeChangeIndividualCandidacyProcess> candidacies) {
+        for (final DegreeChangeIndividualCandidacyProcess process : candidacies) {
+            if (!process.canExecuteActivity(AccessControl.getUserView())) {
+                continue;
+            }
+            excelSpreadsheet.newRow();
+            if (process.hasCandidacyStudent()) {
+                excelSpreadsheet.addCell(process.getCandidacyStudent().getNumber());
+            } else {
+                excelSpreadsheet.addCell("-");
+            }
+            excelSpreadsheet.addCell(process.getPersonalDetails().getName());
+            final PrecedentDegreeInformation information = process.getPrecedentDegreeInformation();
+            excelSpreadsheet.addCell(information.getDegreeAndInstitutionName());
+            excelSpreadsheet.addCell(getValue(process.getCandidacyAffinity()));
+            excelSpreadsheet.addCell(getValue(process.getCandidacyDegreeNature()));
+            excelSpreadsheet.addCell(getValue(information.getNumberOfApprovedCurricularCourses()));
+            excelSpreadsheet.addCell(getValue(information.getGradeSum()));
+            excelSpreadsheet.addCell(getValue(information.getApprovedEcts()));
+            excelSpreadsheet.addCell(getValue(information.getEnroledEcts()));
+            excelSpreadsheet.addCell(getValue(calculateA(process, true)));
+            excelSpreadsheet.addCell(getValue(calculateB(process, true)));
+            excelSpreadsheet.addCell(getValue(calculateC(process)));
+            if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
+                excelSpreadsheet.addCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale())
+                        .getString(process.getCandidacyState().getQualifiedName()).toUpperCase());
+            } else {
+                excelSpreadsheet.addCell("");
+            }
+        }
+    }
 
-	private String getValue(final Object value) {
-		return value != null ? value.toString() : "";
-	}
+    private String getValue(final Object value) {
+        return value != null ? value.toString() : "";
+    }
 
-	private String getValue(final BigDecimal value) {
-		return value != null ? value.toPlainString() : "";
-	}
+    private String getValue(final BigDecimal value) {
+        return value != null ? value.toPlainString() : "";
+    }
 
-	private BigDecimal calculateA(final DegreeChangeIndividualCandidacyProcess process, final boolean setScale) {
-		if (process.getCandidacyApprovedEctsRate() != null) {
-			return process.getCandidacyApprovedEctsRate();
-		}
+    private BigDecimal calculateA(final DegreeChangeIndividualCandidacyProcess process, final boolean setScale) {
+        if (process.getCandidacyApprovedEctsRate() != null) {
+            return process.getCandidacyApprovedEctsRate();
+        }
 
-		final BigDecimal approvedEcts = process.getPrecedentDegreeInformation().getApprovedEcts();
-		final BigDecimal enroledEcts = process.getPrecedentDegreeInformation().getEnroledEcts();
-		if (approvedEcts != null && enroledEcts != null && enroledEcts.signum() > 0) {
-			final BigDecimal result = approvedEcts.divide(enroledEcts, MathContext.DECIMAL32);
-			return setScale ? result.setScale(2, RoundingMode.HALF_EVEN) : result;
-		}
-		return null;
-	}
+        final BigDecimal approvedEcts = process.getPrecedentDegreeInformation().getApprovedEcts();
+        final BigDecimal enroledEcts = process.getPrecedentDegreeInformation().getEnroledEcts();
+        if (approvedEcts != null && enroledEcts != null && enroledEcts.signum() > 0) {
+            final BigDecimal result = approvedEcts.divide(enroledEcts, MathContext.DECIMAL32);
+            return setScale ? result.setScale(2, RoundingMode.HALF_EVEN) : result;
+        }
+        return null;
+    }
 
-	private BigDecimal calculateB(final DegreeChangeIndividualCandidacyProcess process, final boolean setScale) {
-		if (process.getCandidacyGradeRate() != null) {
-			return process.getCandidacyGradeRate();
-		}
+    private BigDecimal calculateB(final DegreeChangeIndividualCandidacyProcess process, final boolean setScale) {
+        if (process.getCandidacyGradeRate() != null) {
+            return process.getCandidacyGradeRate();
+        }
 
-		final Integer total = process.getPrecedentDegreeInformation().getNumberOfApprovedCurricularCourses();
-		final BigDecimal gradeSum = process.getPrecedentDegreeInformation().getGradeSum();
-		if (gradeSum != null && total != null && total.intValue() != 0) {
-			final BigDecimal result = gradeSum.divide(new BigDecimal(total.intValue() * MAX_GRADE_VALUE), MathContext.DECIMAL32);
-			return setScale ? result.setScale(2, RoundingMode.HALF_EVEN) : result;
-		}
-		return null;
-	}
+        final Integer total = process.getPrecedentDegreeInformation().getNumberOfApprovedCurricularCourses();
+        final BigDecimal gradeSum = process.getPrecedentDegreeInformation().getGradeSum();
+        if (gradeSum != null && total != null && total.intValue() != 0) {
+            final BigDecimal result = gradeSum.divide(new BigDecimal(total.intValue() * MAX_GRADE_VALUE), MathContext.DECIMAL32);
+            return setScale ? result.setScale(2, RoundingMode.HALF_EVEN) : result;
+        }
+        return null;
+    }
 
-	private BigDecimal calculateC(final DegreeChangeIndividualCandidacyProcess process) {
-		if (process.getCandidacySeriesCandidacyGrade() != null) {
-			return process.getCandidacySeriesCandidacyGrade().setScale(2, RoundingMode.HALF_EVEN);
-		}
+    private BigDecimal calculateC(final DegreeChangeIndividualCandidacyProcess process) {
+        if (process.getCandidacySeriesCandidacyGrade() != null) {
+            return process.getCandidacySeriesCandidacyGrade().setScale(2, RoundingMode.HALF_EVEN);
+        }
 
-		final BigDecimal affinity = process.getCandidacyAffinity();
-		final Integer nature = process.getCandidacyDegreeNature();
-		final BigDecimal valueA = calculateA(process, false);
-		final BigDecimal valueB = calculateB(process, false);
-		if (valueA != null && valueB != null && affinity != null && nature != null) {
-			final BigDecimal value03 = new BigDecimal("0.3");
-			final BigDecimal aff = new BigDecimal(affinity.toString()).multiply(new BigDecimal("0.4"), MathContext.DECIMAL32);
-			final BigDecimal nat = new BigDecimal(nature).multiply(value03).divide(new BigDecimal(5), MathContext.DECIMAL32);
-			final BigDecimal abp = valueA.add(valueB).multiply(value03).divide(new BigDecimal(2), MathContext.DECIMAL32);
-			return aff.add(nat).add(abp).multiply(new BigDecimal(200)).setScale(2, RoundingMode.HALF_EVEN);
-		}
-		return null;
-	}
+        final BigDecimal affinity = process.getCandidacyAffinity();
+        final Integer nature = process.getCandidacyDegreeNature();
+        final BigDecimal valueA = calculateA(process, false);
+        final BigDecimal valueB = calculateB(process, false);
+        if (valueA != null && valueB != null && affinity != null && nature != null) {
+            final BigDecimal value03 = new BigDecimal("0.3");
+            final BigDecimal aff = new BigDecimal(affinity.toString()).multiply(new BigDecimal("0.4"), MathContext.DECIMAL32);
+            final BigDecimal nat = new BigDecimal(nature).multiply(value03).divide(new BigDecimal(5), MathContext.DECIMAL32);
+            final BigDecimal abp = valueA.add(valueB).multiply(value03).divide(new BigDecimal(2), MathContext.DECIMAL32);
+            return aff.add(nat).add(abp).multiply(new BigDecimal(200)).setScale(2, RoundingMode.HALF_EVEN);
+        }
+        return null;
+    }
 
-	private void createHeader(final StyledExcelSpreadsheet spreadsheet, final Degree degree) {
-		final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+    private void createHeader(final StyledExcelSpreadsheet spreadsheet, final Degree degree) {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
 
-		// title
-		spreadsheet.newHeaderRow();
-		spreadsheet.addCell(degree.getName(), spreadsheet.getExcelStyle().getTitleStyle());
+        // title
+        spreadsheet.newHeaderRow();
+        spreadsheet.addCell(degree.getName(), spreadsheet.getExcelStyle().getTitleStyle());
 
-		// empty row
-		spreadsheet.newHeaderRow();
+        // empty row
+        spreadsheet.newHeaderRow();
 
-		// table header
-		spreadsheet.newHeaderRow();
-		spreadsheet.addHeader(bundle.getString("label.candidacy.identification"));
-		spreadsheet.addHeader(2, bundle.getString("label.candidacy.degree.and.school"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.affinity"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.degreeNature"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.concludedUCs"));
-		spreadsheet.addHeader(8, "");
-		spreadsheet.addHeader(bundle.getString("label.candidacy.approvedEctsRate"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.gradeRate"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.degreeChange.seriesCandidacyGrade"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.result"));
+        // table header
+        spreadsheet.newHeaderRow();
+        spreadsheet.addHeader(bundle.getString("label.candidacy.identification"));
+        spreadsheet.addHeader(2, bundle.getString("label.candidacy.degree.and.school"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.affinity"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.degreeNature"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.concludedUCs"));
+        spreadsheet.addHeader(8, "");
+        spreadsheet.addHeader(bundle.getString("label.candidacy.approvedEctsRate"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.gradeRate"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.degreeChange.seriesCandidacyGrade"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.result"));
 
-		spreadsheet.newHeaderRow();
-		spreadsheet.addHeader(bundle.getString("label.number"));
-		spreadsheet.addHeader(bundle.getString("label.name"));
-		spreadsheet.addHeader(5, bundle.getString("label.number"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.gradeSum.abbr"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.approvedEcts"));
-		spreadsheet.addHeader(bundle.getString("label.candidacy.enroledEcts"));
+        spreadsheet.newHeaderRow();
+        spreadsheet.addHeader(bundle.getString("label.number"));
+        spreadsheet.addHeader(bundle.getString("label.name"));
+        spreadsheet.addHeader(5, bundle.getString("label.number"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.gradeSum.abbr"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.approvedEcts"));
+        spreadsheet.addHeader(bundle.getString("label.candidacy.enroledEcts"));
 
-		// Id + Nº + Nome merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
-		// Degree name merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 2, 3, (short) 2));
-		// affinity merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 3, 3, (short) 3));
-		// degreeNature merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 4, 3, (short) 4));
-		// UCs merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 5, 2, (short) 7));
-		// A merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 9, 3, (short) 9));
-		// B merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 10, 3, (short) 10));
-		// C merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 11, 3, (short) 11));
-		// result merge
-		spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 12, 3, (short) 12));
-	}
+        // Id + Nº + Nome merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
+        // Degree name merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 2, 3, (short) 2));
+        // affinity merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 3, 3, (short) 3));
+        // degreeNature merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 4, 3, (short) 4));
+        // UCs merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 5, 2, (short) 7));
+        // A merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 9, 3, (short) 9));
+        // B merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 10, 3, (short) 10));
+        // C merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 11, 3, (short) 11));
+        // result merge
+        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 12, 3, (short) 12));
+    }
 
-	static public class DegreeChangeCandidacyDegreeBean extends CandidacyDegreeBean {
-		DegreeChangeCandidacyDegreeBean(final DegreeChangeIndividualCandidacyProcess process) {
-			setPersonalDetails(process.getPersonalDetails());
-			setDegree(process.getCandidacySelectedDegree());
-			setState(process.getCandidacyState());
-			setRegistrationCreated(process.hasRegistrationForCandidacy());
-		}
-	}
+    static public class DegreeChangeCandidacyDegreeBean extends CandidacyDegreeBean {
+        DegreeChangeCandidacyDegreeBean(final DegreeChangeIndividualCandidacyProcess process) {
+            setPersonalDetails(process.getPersonalDetails());
+            setDegree(process.getCandidacySelectedDegree());
+            setState(process.getCandidacyState());
+            setRegistrationCreated(process.hasRegistrationForCandidacy());
+        }
+    }
 
-	@Override
-	protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
-		final List<CandidacyDegreeBean> result = new ArrayList<CandidacyDegreeBean>();
-		for (final DegreeChangeIndividualCandidacyProcess child : getProcess(request)
-				.getAcceptedDegreeChangeIndividualCandidacyProcesses()) {
-			result.add(new DegreeChangeCandidacyDegreeBean(child));
-		}
-		return result;
-	}
+    @Override
+    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
+        final List<CandidacyDegreeBean> result = new ArrayList<CandidacyDegreeBean>();
+        for (final DegreeChangeIndividualCandidacyProcess child : getProcess(request)
+                .getAcceptedDegreeChangeIndividualCandidacyProcesses()) {
+            result.add(new DegreeChangeCandidacyDegreeBean(child));
+        }
+        return result;
+    }
 
-	@Override
-	protected List<Object> getCandidacyHeader() {
-		final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
-		final List<Object> result = new ArrayList<Object>();
+    @Override
+    protected List<Object> getCandidacyHeader() {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        final List<Object> result = new ArrayList<Object>();
 
-		result.add(bundle.getString("label.spreadsheet.processCode"));
-		result.add(bundle.getString("label.spreadsheet.name"));
-		result.add(bundle.getString("label.spreadsheet.identificationType"));
-		result.add(bundle.getString("label.spreadsheet.identificationNumber"));
-		result.add(bundle.getString("label.spreadsheet.nationality"));
-		result.add(bundle.getString("label.spreadsheet.precedent.institution"));
-		result.add(bundle.getString("label.spreadsheet.actual.degree.designation"));
-		result.add(bundle.getString("label.spreadsheet.selected.degree"));
-		result.add(bundle.getString("label.spreadsheet.state"));
-		result.add(bundle.getString("label.spreadsheet.verified"));
+        result.add(bundle.getString("label.spreadsheet.processCode"));
+        result.add(bundle.getString("label.spreadsheet.name"));
+        result.add(bundle.getString("label.spreadsheet.identificationType"));
+        result.add(bundle.getString("label.spreadsheet.identificationNumber"));
+        result.add(bundle.getString("label.spreadsheet.nationality"));
+        result.add(bundle.getString("label.spreadsheet.precedent.institution"));
+        result.add(bundle.getString("label.spreadsheet.actual.degree.designation"));
+        result.add(bundle.getString("label.spreadsheet.selected.degree"));
+        result.add(bundle.getString("label.spreadsheet.state"));
+        result.add(bundle.getString("label.spreadsheet.verified"));
 
-		return result;
-	}
+        return result;
+    }
 
-	private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
 
-	@Override
-	protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
-			final IndividualCandidacyProcess individualCandidacyProcess) {
-		DegreeChangeIndividualCandidacyProcess degreeChangeIndividualCandidacyProcess =
-				(DegreeChangeIndividualCandidacyProcess) individualCandidacyProcess;
-		ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-		ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+    @Override
+    protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
+            final IndividualCandidacyProcess individualCandidacyProcess) {
+        DegreeChangeIndividualCandidacyProcess degreeChangeIndividualCandidacyProcess =
+                (DegreeChangeIndividualCandidacyProcess) individualCandidacyProcess;
+        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
+        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
 
-		final Row row = spreadsheet.addRow();
-		row.setCell(degreeChangeIndividualCandidacyProcess.getProcessCode());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getName());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getInstitution().getName());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeDesignation());
-		row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
-		row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
-		row.setCell(candidateBundle.getString(degreeChangeIndividualCandidacyProcess.getProcessChecked() != null
-				&& degreeChangeIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
-		return spreadsheet;
-	}
+        final Row row = spreadsheet.addRow();
+        row.setCell(degreeChangeIndividualCandidacyProcess.getProcessCode());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getName());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getInstitution().getName());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeDesignation());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
+        row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
+        row.setCell(candidateBundle.getString(degreeChangeIndividualCandidacyProcess.getProcessChecked() != null
+                && degreeChangeIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
+        return spreadsheet;
+    }
 
-	@Override
-	protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
-			HttpServletRequest request) {
-		final Degree selectedDegree = getChooseDegreeBean(request).getDegree();
-		if (selectedDegree == null) {
-			return Predicates.alwaysTrue();
-		} else {
-			return new Predicate<IndividualCandidacyProcess>() {
-				@Override
-				public boolean apply(IndividualCandidacyProcess process) {
-					return ((DegreeChangeIndividualCandidacyProcess) process).getCandidacy().getSelectedDegree() == selectedDegree;
-				}
-			};
-		}
-	}
+    @Override
+    protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
+            HttpServletRequest request) {
+        final Degree selectedDegree = getChooseDegreeBean(request).getDegree();
+        if (selectedDegree == null) {
+            return Predicates.alwaysTrue();
+        } else {
+            return new Predicate<IndividualCandidacyProcess>() {
+                @Override
+                public boolean apply(IndividualCandidacyProcess process) {
+                    return ((DegreeChangeIndividualCandidacyProcess) process).getCandidacy().getSelectedDegree() == selectedDegree;
+                }
+            };
+        }
+    }
 
 }

@@ -41,113 +41,113 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "show-classes-list", path = "df.page.showClassesList") })
 public class ShowClassesDispatchAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ContextUtils.setExecutionPeriodContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ContextUtils.setExecutionPeriodContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public Degree getDegree(HttpServletRequest request) throws FenixActionException {
-		final Degree degree = ShowDegreeSiteAction.getDegree(request);
-		if (degree != null) {
-			request.setAttribute("degreeID", degree.getIdInternal());
-			request.setAttribute("degree", degree);
-		}
-		return degree;
-	}
+    public Degree getDegree(HttpServletRequest request) throws FenixActionException {
+        final Degree degree = ShowDegreeSiteAction.getDegree(request);
+        if (degree != null) {
+            request.setAttribute("degreeID", degree.getIdInternal());
+            request.setAttribute("degree", degree);
+        }
+        return degree;
+    }
 
-	public ActionForward listClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Degree degree = getDegree(request);
+    public ActionForward listClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Degree degree = getDegree(request);
 
-		getInfoDegreeCurricularPlan(request, degree);
+        getInfoDegreeCurricularPlan(request, degree);
 
-		final Integer executionPeriodID =
-				((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getIdInternal();
-		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final Integer executionPeriodID =
+                ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getIdInternal();
+        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-		if (executionSemester != null) {
-			final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
-			ExecutionSemester otherExecutionPeriodToShow = null;
-			if (nextExecutionPeriod != null) {
-				final IUserView userview = (IUserView) UserView.getUser();
-				if (nextExecutionPeriod.getState() == PeriodState.OPEN) {
-					otherExecutionPeriodToShow = nextExecutionPeriod;
-				} else if (userview != null && nextExecutionPeriod.getState() == PeriodState.NOT_OPEN) {
-					if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER) || userview.hasRoleType(RoleType.COORDINATOR)) {
-						otherExecutionPeriodToShow = nextExecutionPeriod;
-					}
-				}
-			}
-			if (otherExecutionPeriodToShow == null) {
-				otherExecutionPeriodToShow = executionSemester.getPreviousExecutionPeriod();
-			}
-			organizeClassViewsNext(request, degree, executionSemester, otherExecutionPeriodToShow);
-			request.setAttribute("nextInfoExecutionPeriod", InfoExecutionPeriod.newInfoFromDomain(otherExecutionPeriodToShow));
-		}
-		return mapping.findForward("show-classes-list");
-	}
+        if (executionSemester != null) {
+            final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
+            ExecutionSemester otherExecutionPeriodToShow = null;
+            if (nextExecutionPeriod != null) {
+                final IUserView userview = (IUserView) UserView.getUser();
+                if (nextExecutionPeriod.getState() == PeriodState.OPEN) {
+                    otherExecutionPeriodToShow = nextExecutionPeriod;
+                } else if (userview != null && nextExecutionPeriod.getState() == PeriodState.NOT_OPEN) {
+                    if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER) || userview.hasRoleType(RoleType.COORDINATOR)) {
+                        otherExecutionPeriodToShow = nextExecutionPeriod;
+                    }
+                }
+            }
+            if (otherExecutionPeriodToShow == null) {
+                otherExecutionPeriodToShow = executionSemester.getPreviousExecutionPeriod();
+            }
+            organizeClassViewsNext(request, degree, executionSemester, otherExecutionPeriodToShow);
+            request.setAttribute("nextInfoExecutionPeriod", InfoExecutionPeriod.newInfoFromDomain(otherExecutionPeriodToShow));
+        }
+        return mapping.findForward("show-classes-list");
+    }
 
-	private void organizeClassViewsNext(final HttpServletRequest request, final Degree degree,
-			final ExecutionSemester executionSemester, final ExecutionSemester otherExecutionPeriodToShow) {
-		request.setAttribute("classViewsTableCurrent", organizeClassViews(degree, executionSemester));
-		request.setAttribute("classViewsTableNext", organizeClassViews(degree, otherExecutionPeriodToShow));
-	}
+    private void organizeClassViewsNext(final HttpServletRequest request, final Degree degree,
+            final ExecutionSemester executionSemester, final ExecutionSemester otherExecutionPeriodToShow) {
+        request.setAttribute("classViewsTableCurrent", organizeClassViews(degree, executionSemester));
+        request.setAttribute("classViewsTableNext", organizeClassViews(degree, otherExecutionPeriodToShow));
+    }
 
-	private Table organizeClassViews(final Degree degree, final ExecutionSemester executionSemester) {
-		final Table classViewsTable = new Table(degree.buildFullCurricularYearList().size());
+    private Table organizeClassViews(final Degree degree, final ExecutionSemester executionSemester) {
+        final Table classViewsTable = new Table(degree.buildFullCurricularYearList().size());
 
-		final DegreeCurricularPlan degreeCurricularPlan = findMostRecentDegreeCurricularPlan(degree, executionSemester);
+        final DegreeCurricularPlan degreeCurricularPlan = findMostRecentDegreeCurricularPlan(degree, executionSemester);
 
-		final SortedSet<SchoolClass> schoolClasses = new TreeSet<SchoolClass>(new BeanComparator("nome"));
-		for (final SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
-			final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-			if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
-				schoolClasses.add(schoolClass);
-			}
-		}
+        final SortedSet<SchoolClass> schoolClasses = new TreeSet<SchoolClass>(new BeanComparator("nome"));
+        for (final SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
+            final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+            if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+                schoolClasses.add(schoolClass);
+            }
+        }
 
-		for (final SchoolClass schoolClass : schoolClasses) {
-			classViewsTable.appendToColumn(schoolClass.getAnoCurricular().intValue() - 1, newClassView(schoolClass));
-		}
+        for (final SchoolClass schoolClass : schoolClasses) {
+            classViewsTable.appendToColumn(schoolClass.getAnoCurricular().intValue() - 1, newClassView(schoolClass));
+        }
 
-		return classViewsTable;
-	}
+        return classViewsTable;
+    }
 
-	private DegreeCurricularPlan findMostRecentDegreeCurricularPlan(final Degree degree, final ExecutionSemester executionSemester) {
-		DegreeCurricularPlan result = null;
-		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-			if (hasExecutionDegreeForExecutionPeriod(degreeCurricularPlan, executionSemester)) {
-				if (result == null
-						|| degreeCurricularPlan.getInitialDateYearMonthDay().compareTo(result.getInitialDateYearMonthDay()) > 0) {
-					result = degreeCurricularPlan;
-				}
-			}
-		}
-		return result;
-	}
+    private DegreeCurricularPlan findMostRecentDegreeCurricularPlan(final Degree degree, final ExecutionSemester executionSemester) {
+        DegreeCurricularPlan result = null;
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+            if (hasExecutionDegreeForExecutionPeriod(degreeCurricularPlan, executionSemester)) {
+                if (result == null
+                        || degreeCurricularPlan.getInitialDateYearMonthDay().compareTo(result.getInitialDateYearMonthDay()) > 0) {
+                    result = degreeCurricularPlan;
+                }
+            }
+        }
+        return result;
+    }
 
-	private boolean hasExecutionDegreeForExecutionPeriod(final DegreeCurricularPlan degreeCurricularPlan,
-			final ExecutionSemester executionSemester) {
-		final ExecutionYear executionYear = executionSemester.getExecutionYear();
-		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-			if (degreeCurricularPlan == executionDegree.getDegreeCurricularPlan()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasExecutionDegreeForExecutionPeriod(final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionSemester executionSemester) {
+        final ExecutionYear executionYear = executionSemester.getExecutionYear();
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+            if (degreeCurricularPlan == executionDegree.getDegreeCurricularPlan()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private ClassView newClassView(final SchoolClass schoolClass) {
-		return new ClassView(schoolClass);
-	}
+    private ClassView newClassView(final SchoolClass schoolClass) {
+        return new ClassView(schoolClass);
+    }
 
-	private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) throws FenixServiceException,
-			FenixFilterException {
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) throws FenixServiceException,
+            FenixFilterException {
 
-		InfoDegree infoDegree = ReadDegreeByOID.run(degree.getIdInternal());
-		request.setAttribute("infoDegree", infoDegree);
-	}
+        InfoDegree infoDegree = ReadDegreeByOID.run(degree.getIdInternal());
+        request.setAttribute("infoDegree", infoDegree);
+    }
 
 }

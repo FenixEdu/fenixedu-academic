@@ -10,16 +10,16 @@ package net.sourceforge.fenixedu.domain.gratuity;
  */
 public enum ReimbursementGuideState {
 
-	ISSUED,
+    ISSUED,
 
-	APPROVED,
+    APPROVED,
 
-	PAYED,
+    PAYED,
 
-	ANNULLED;
+    ANNULLED;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
 }

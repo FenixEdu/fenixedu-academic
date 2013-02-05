@@ -12,15 +12,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class OldInquiriesSummary extends OldInquiriesSummary_Base {
 
-	public OldInquiriesSummary() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public OldInquiriesSummary() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		removeExecutionPeriod();
-		removeDegree();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeExecutionPeriod();
+        removeDegree();
+        deleteDomainObject();
+    }
 
 }

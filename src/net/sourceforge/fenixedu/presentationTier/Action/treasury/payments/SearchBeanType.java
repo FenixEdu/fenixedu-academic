@@ -5,11 +5,11 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum SearchBeanType implements IPresentableEnum {
 
-	PERSON_SEARCH_BEAN, OPERATOR_SEARCH_BEAN, UNIT_SEARCH_BEAN;
+    PERSON_SEARCH_BEAN, OPERATOR_SEARCH_BEAN, UNIT_SEARCH_BEAN;
 
-	@Override
-	public String getLocalizedName() {
-		return BundleUtil.getStringFromResourceBundle("resources.AccountingResources", "label." + name());
-	}
+    @Override
+    public String getLocalizedName() {
+        return BundleUtil.getStringFromResourceBundle("resources.AccountingResources", "label." + name());
+    }
 
 }

@@ -16,35 +16,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/improvementBolonhaStudentEnrollment",
-		module = "academicAdministration",
-		formBean = "bolonhaStudentEnrollmentForm")
-@Forwards({ @Forward(
-		name = "showDegreeModulesToEnrol",
-		path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp") })
+@Mapping(path = "/improvementBolonhaStudentEnrollment", module = "academicAdministration",
+        formBean = "bolonhaStudentEnrollmentForm")
+@Forwards({ @Forward(name = "showDegreeModulesToEnrol",
+        path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp") })
 public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
 
-	@Override
-	protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
-		return CurricularRuleLevel.IMPROVEMENT_ENROLMENT;
-	}
+    @Override
+    protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
+        return CurricularRuleLevel.IMPROVEMENT_ENROLMENT;
+    }
 
-	@Override
-	protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
-		request.setAttribute("action", getAction());
-		request.setAttribute("bolonhaStudentEnrollmentBean", new ImprovementBolonhaStudentEnrolmentBean(studentCurricularPlan,
-				executionSemester));
+    @Override
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+        request.setAttribute("action", getAction());
+        request.setAttribute("bolonhaStudentEnrollmentBean", new ImprovementBolonhaStudentEnrolmentBean(studentCurricularPlan,
+                executionSemester));
 
-		addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+        addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 
-		return mapping.findForward("showDegreeModulesToEnrol");
-	}
+        return mapping.findForward("showDegreeModulesToEnrol");
+    }
 
-	@Override
-	protected String getAction() {
-		return "/improvementBolonhaStudentEnrollment.do";
-	}
+    @Override
+    protected String getAction() {
+        return "/improvementBolonhaStudentEnrollment.do";
+    }
 
 }

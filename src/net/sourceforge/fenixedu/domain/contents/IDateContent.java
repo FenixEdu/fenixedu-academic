@@ -4,5 +4,5 @@ import org.joda.time.DateTime;
 
 public interface IDateContent {
 
-	public DateTime getContentDate();
+    public DateTime getContentDate();
 }

@@ -9,18 +9,18 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 
 public class RemoveCourseFromTeacherServiceDistribution extends FenixService {
 
-	public void run(Integer tsdId, Integer courseId) throws FenixServiceException {
+    public void run(Integer tsdId, Integer courseId) throws FenixServiceException {
 
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		TSDCourse course = rootDomainObject.readTSDCourseByOID(courseId);
-		CompetenceCourse competenceCourse = course.getCompetenceCourse();
+        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        TSDCourse course = rootDomainObject.readTSDCourseByOID(courseId);
+        CompetenceCourse competenceCourse = course.getCompetenceCourse();
 
-		if (course instanceof TSDVirtualCourseGroup) {
-			course.delete();
-		} else {
-			for (TSDCourse tsdCourse : tsd.getTSDCoursesByCompetenceCourse(competenceCourse)) {
-				tsdCourse.delete();
-			}
-		}
-	}
+        if (course instanceof TSDVirtualCourseGroup) {
+            course.delete();
+        } else {
+            for (TSDCourse tsdCourse : tsd.getTSDCoursesByCompetenceCourse(competenceCourse)) {
+                tsdCourse.delete();
+            }
+        }
+    }
 }

@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PublicPresentationSeminarStateProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) source;
-		return bean.getProcess().getPossibleNextStates();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) source;
+        return bean.getProcess().getPossibleNextStates();
+    }
 
 }

@@ -3,55 +3,55 @@ package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsY
 import com.google.gwt.i18n.client.Constants;
 
 public interface CatConstants extends Constants {
-	String serviceError();
+    String serviceError();
 
-	String generalException();
+    String generalException();
 
-	String loadingCaption();
+    String loadingCaption();
 
-	String loadingSubcaption();
+    String loadingSubcaption();
 
-	String inFrequency();
+    String inFrequency();
 
-	String approved();
+    String approved();
 
-	String nonEvaluated();
+    String nonEvaluated();
 
-	String flunked();
+    String flunked();
 
-	String outOf();
+    String outOf();
 
-	String ianfPerCurricularYear();
+    String ianfPerCurricularYear();
 
-	String _1stYear();
+    String _1stYear();
 
-	String _2ndYear();
+    String _2ndYear();
 
-	String _3rdYear();
+    String _3rdYear();
 
-	String _4thYear();
+    String _4thYear();
 
-	String _5thYear();
+    String _5thYear();
 
-	String averageByCurricularYear();
+    String averageByCurricularYear();
 
-	String curricularCourseAnalysis();
+    String curricularCourseAnalysis();
 
-	String showAll();
+    String showAll();
 
-	String AB50();
+    String AB50();
 
-	String FO30();
+    String FO30();
 
-	String _1stSemester();
+    String _1stSemester();
 
-	String _2ndSemester();
+    String _2ndSemester();
 
-	String enrollmentsStatus();
+    String enrollmentsStatus();
 
-	String gradesDistribution();
+    String gradesDistribution();
 
-	String distribution();
+    String distribution();
 
-	String grades();
+    String grades();
 }

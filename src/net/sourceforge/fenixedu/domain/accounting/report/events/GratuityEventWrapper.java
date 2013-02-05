@@ -14,128 +14,128 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class GratuityEventWrapper implements Wrapper {
 
-	private final GratuityEvent event;
+    private final GratuityEvent event;
 
-	public GratuityEventWrapper(final GratuityEvent event) {
-		this.event = event;
-	}
+    public GratuityEventWrapper(final GratuityEvent event) {
+        this.event = event;
+    }
 
-	@Override
-	public String getStudentNumber() {
-		if (event.getPerson().hasStudent()) {
-			return event.getPerson().getStudent().getNumber().toString();
-		}
+    @Override
+    public String getStudentNumber() {
+        if (event.getPerson().hasStudent()) {
+            return event.getPerson().getStudent().getNumber().toString();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getStudentName() {
-		return event.getPerson().getName();
-	}
+    @Override
+    public String getStudentName() {
+        return event.getPerson().getName();
+    }
 
-	@Override
-	public String getStudentEmail() {
-		return event.getPerson().getDefaultEmailAddressValue();
-	}
+    @Override
+    public String getStudentEmail() {
+        return event.getPerson().getDefaultEmailAddressValue();
+    }
 
-	@Override
-	public String getRegistrationStartDate() {
-		return event.getRegistration().getStartDate().toString("dd/MM/yyyy");
-	}
+    @Override
+    public String getRegistrationStartDate() {
+        return event.getRegistration().getStartDate().toString("dd/MM/yyyy");
+    }
 
-	@Override
-	public String getExecutionYear() {
-		return getForExecutionYear().getName();
-	}
+    @Override
+    public String getExecutionYear() {
+        return getForExecutionYear().getName();
+    }
 
-	@Override
-	public String getDegreeName() {
-		return event.getRegistration().getDegree().getNameI18N().getContent(Language.pt);
-	}
+    @Override
+    public String getDegreeName() {
+        return event.getRegistration().getDegree().getNameI18N().getContent(Language.pt);
+    }
 
-	@Override
-	public String getDegreeType() {
-		return event.getRegistration().getDegreeType().getLocalizedName();
-	}
+    @Override
+    public String getDegreeType() {
+        return event.getRegistration().getDegreeType().getLocalizedName();
+    }
 
-	@Override
-	public String getPhdProgramName() {
-		return "-";
-	}
+    @Override
+    public String getPhdProgramName() {
+        return "-";
+    }
 
-	@Override
-	public String getEnrolledECTS() {
-		return new BigDecimal(event.getRegistration().getLastStudentCurricularPlan()
-				.getEnrolmentsEctsCredits(event.getExecutionYear())).toString();
-	}
+    @Override
+    public String getEnrolledECTS() {
+        return new BigDecimal(event.getRegistration().getLastStudentCurricularPlan()
+                .getEnrolmentsEctsCredits(event.getExecutionYear())).toString();
+    }
 
-	@Override
-	public String getRegime() {
-		return event.getRegistration().getRegimeType(event.getExecutionYear()).getLocalizedName();
-	}
+    @Override
+    public String getRegime() {
+        return event.getRegistration().getRegimeType(event.getExecutionYear()).getLocalizedName();
+    }
 
-	@Override
-	public String getEnrolmentModel() {
-		if (event.isDfaGratuityEvent()) {
-			EnrolmentModel enrolmentModelForExecutionYear =
-					event.getRegistration().getEnrolmentModelForExecutionYear(event.getExecutionYear());
-			if (enrolmentModelForExecutionYear != null) {
-				return enrolmentModelForExecutionYear.getLocalizedName();
-			}
-		}
+    @Override
+    public String getEnrolmentModel() {
+        if (event.isDfaGratuityEvent()) {
+            EnrolmentModel enrolmentModelForExecutionYear =
+                    event.getRegistration().getEnrolmentModelForExecutionYear(event.getExecutionYear());
+            if (enrolmentModelForExecutionYear != null) {
+                return enrolmentModelForExecutionYear.getLocalizedName();
+            }
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getResidenceYear() {
-		return "-";
-	}
+    @Override
+    public String getResidenceYear() {
+        return "-";
+    }
 
-	@Override
-	public String getResidenceMonth() {
-		return "-";
-	}
+    @Override
+    public String getResidenceMonth() {
+        return "-";
+    }
 
-	@Override
-	public String getStudiesType() {
-		return REGISTRATION_STUDIES;
-	}
+    @Override
+    public String getStudiesType() {
+        return REGISTRATION_STUDIES;
+    }
 
-	@Override
-	public String getTotalDiscount() {
-		return event.getTotalDiscount().toPlainString();
-	}
+    @Override
+    public String getTotalDiscount() {
+        return event.getTotalDiscount().toPlainString();
+    }
 
-	@Override
-	public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
-		return !event.getExecutionYear().isBefore(executionYear);
-	}
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+        return !event.getExecutionYear().isBefore(executionYear);
+    }
 
-	@Override
-	public ExecutionYear getForExecutionYear() {
-		return event.getExecutionYear();
-	}
+    @Override
+    public ExecutionYear getForExecutionYear() {
+        return event.getExecutionYear();
+    }
 
-	@Override
-	public AdministrativeOffice getRelatedAcademicOffice() {
-		return event.getAdministrativeOffice();
-	}
+    @Override
+    public AdministrativeOffice getRelatedAcademicOffice() {
+        return event.getAdministrativeOffice();
+    }
 
-	public List<InstallmentWrapper> getInstallments() {
-		List<InstallmentWrapper> wrappers = new ArrayList<InstallmentWrapper>();
+    public List<InstallmentWrapper> getInstallments() {
+        List<InstallmentWrapper> wrappers = new ArrayList<InstallmentWrapper>();
 
-		if (this.event.isGratuityEventWithPaymentPlan()) {
-			GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan = (GratuityEventWithPaymentPlan) this.event;
-			List<Installment> installments = gratuityEventWithPaymentPlan.getInstallments();
+        if (this.event.isGratuityEventWithPaymentPlan()) {
+            GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan = (GratuityEventWithPaymentPlan) this.event;
+            List<Installment> installments = gratuityEventWithPaymentPlan.getInstallments();
 
-			for (Installment installment : installments) {
-				wrappers.add(new GratuityEventInstallmentWrapper(gratuityEventWithPaymentPlan, installment));
-			}
-		}
+            for (Installment installment : installments) {
+                wrappers.add(new GratuityEventInstallmentWrapper(gratuityEventWithPaymentPlan, installment));
+            }
+        }
 
-		return wrappers;
-	}
+        return wrappers;
+    }
 
 }

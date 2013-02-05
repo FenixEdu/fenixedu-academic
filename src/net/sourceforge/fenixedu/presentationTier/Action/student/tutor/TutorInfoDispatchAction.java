@@ -26,81 +26,79 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/viewTutorInfo", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "ShowStudentTutorInfo",
-		path = "/student/tutor/showStudentTutorInfo.jsp",
-		tileProperties = @Tile(title = "private.student.view.tutoring")) })
+@Forwards(value = { @Forward(name = "ShowStudentTutorInfo", path = "/student/tutor/showStudentTutorInfo.jsp",
+        tileProperties = @Tile(title = "private.student.view.tutoring")) })
 public class TutorInfoDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final Person person = getLoggedPerson(request);
-		List<Tutorship> pastTutors = new ArrayList<Tutorship>();
+        final Person person = getLoggedPerson(request);
+        List<Tutorship> pastTutors = new ArrayList<Tutorship>();
 
-		List<Registration> registrations = person.getStudent().getRegistrations();
+        List<Registration> registrations = person.getStudent().getRegistrations();
 
-		for (Registration registration : registrations) {
-			List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
-			for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-				for (Tutorship tutorship : studentCurricularPlan.getTutorships()) {
-					if (tutorship.isActive()) {
-						request.setAttribute("actualTutor", tutorship);
-						request.setAttribute("personID", tutorship.getTeacher().getPerson().getIdInternal());
-					} else {
-						pastTutors.add(tutorship);
-					}
-				}
-			}
-		}
-		request.setAttribute("pastTutors", pastTutors);
-		return prepareStudentStatistics(mapping, actionForm, request, response);
-	}
+        for (Registration registration : registrations) {
+            List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
+            for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+                for (Tutorship tutorship : studentCurricularPlan.getTutorships()) {
+                    if (tutorship.isActive()) {
+                        request.setAttribute("actualTutor", tutorship);
+                        request.setAttribute("personID", tutorship.getTeacher().getPerson().getIdInternal());
+                    } else {
+                        pastTutors.add(tutorship);
+                    }
+                }
+            }
+        }
+        request.setAttribute("pastTutors", pastTutors);
+        return prepareStudentStatistics(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareStudentStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareStudentStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final Person person = getLoggedPerson(request);
-		final List<Registration> registrations = person.getStudent().getRegistrations();
+        final Person person = getLoggedPerson(request);
+        final List<Registration> registrations = person.getStudent().getRegistrations();
 
-		List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
+        List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
 
-		request.setAttribute("studentStatistics", studentStatistics);
-		return mapping.findForward("ShowStudentTutorInfo");
-	}
+        request.setAttribute("studentStatistics", studentStatistics);
+        return mapping.findForward("ShowStudentTutorInfo");
+    }
 
-	/*
-	 * AUXIALIRY METHODS
-	 */
+    /*
+     * AUXIALIRY METHODS
+     */
 
-	private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
-		List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
+    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
+        List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
 
-		Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =
-				new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
+        Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =
+                new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
 
-		for (Registration registration : registrations) {
-			for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-				for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
-					if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
-						ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
-								enrolmentsByExecutionPeriod.get(executionSemester);
-						executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-								.getEnrolmentsByExecutionPeriod(executionSemester));
-						enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
-					} else {
-						ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
-								new ExecutionPeriodStatisticsBean(executionSemester);
-						executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-								.getEnrolmentsByExecutionPeriod(executionSemester));
-						enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
-					}
-				}
-			}
-		}
+        for (Registration registration : registrations) {
+            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+                for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+                    if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
+                        ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
+                                enrolmentsByExecutionPeriod.get(executionSemester);
+                        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
+                                .getEnrolmentsByExecutionPeriod(executionSemester));
+                        enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+                    } else {
+                        ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
+                                new ExecutionPeriodStatisticsBean(executionSemester);
+                        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
+                                .getEnrolmentsByExecutionPeriod(executionSemester));
+                        enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+                    }
+                }
+            }
+        }
 
-		studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
+        studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
 
-		return studentStatistics;
-	}
+        return studentStatistics;
+    }
 }

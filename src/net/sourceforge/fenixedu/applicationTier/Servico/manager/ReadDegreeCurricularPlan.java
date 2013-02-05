@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 
 public class ReadDegreeCurricularPlan extends FenixService {
 
-	public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException {
+    public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException {
 
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
 
-		if (degreeCurricularPlan == null) {
-			throw new NonExistingServiceException();
-		}
+        if (degreeCurricularPlan == null) {
+            throw new NonExistingServiceException();
+        }
 
-		return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-	}
+        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+    }
 }

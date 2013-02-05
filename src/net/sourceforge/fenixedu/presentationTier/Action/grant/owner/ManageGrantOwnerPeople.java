@@ -8,15 +8,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/personnelManagePeople", module = "facultyAdmOffice")
 @Forwards({
-		@Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp", tileProperties = @Tile(
-				title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
-		@Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp", tileProperties = @Tile(
-				title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
-		@Forward(
-				name = "createPersonFillInfo",
-				path = "/personnelSection/people/createPersonFillInfo.jsp",
-				tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
-		@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp", tileProperties = @Tile(
-				title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
+        @Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp", tileProperties = @Tile(
+                title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
+        @Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp", tileProperties = @Tile(
+                title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
+        @Forward(name = "createPersonFillInfo", path = "/personnelSection/people/createPersonFillInfo.jsp",
+                tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
+        @Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp", tileProperties = @Tile(
+                title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
 public class ManageGrantOwnerPeople extends ManagePeople {
 }

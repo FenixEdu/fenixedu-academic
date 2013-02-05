@@ -13,27 +13,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurricularYearForExecutionDegreeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		ContextSelectionBean contextSelectionBean = (ContextSelectionBean) source;
-		List<CurricularYear> result = new ArrayList<CurricularYear>();
-		ExecutionDegree executionDegree = contextSelectionBean.getExecutionDegree();
+        ContextSelectionBean contextSelectionBean = (ContextSelectionBean) source;
+        List<CurricularYear> result = new ArrayList<CurricularYear>();
+        ExecutionDegree executionDegree = contextSelectionBean.getExecutionDegree();
 
-		if (executionDegree != null) {
-			Integer index = executionDegree.getDegreeCurricularPlan().getDegreeDuration();
+        if (executionDegree != null) {
+            Integer index = executionDegree.getDegreeCurricularPlan().getDegreeDuration();
 
-			result.addAll(RootDomainObject.getInstance().getCurricularYears());
-			Collections.sort(result, CurricularYear.CURRICULAR_YEAR_COMPARATORY_BY_YEAR);
-			return index == null ? result : result.subList(0, index);
-		}
+            result.addAll(RootDomainObject.getInstance().getCurricularYears());
+            Collections.sort(result, CurricularYear.CURRICULAR_YEAR_COMPARATORY_BY_YEAR);
+            return index == null ? result : result.subList(0, index);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

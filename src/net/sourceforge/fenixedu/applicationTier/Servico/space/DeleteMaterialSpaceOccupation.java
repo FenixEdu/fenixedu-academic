@@ -6,11 +6,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteMaterialSpaceOccupation {
 
-	@Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
-	@Service
-	public static void run(MaterialSpaceOccupation materialSpaceOccupation) {
-		if (materialSpaceOccupation != null) {
-			materialSpaceOccupation.delete();
-		}
-	}
+    @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
+    @Service
+    public static void run(MaterialSpaceOccupation materialSpaceOccupation) {
+        if (materialSpaceOccupation != null) {
+            materialSpaceOccupation.delete();
+        }
+    }
 }

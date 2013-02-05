@@ -18,129 +18,129 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
 
-	private static String realPath = null;
+    private static String realPath = null;
 
-	@SuppressWarnings("rawtypes")
-	final private Collection dataSource;
+    @SuppressWarnings("rawtypes")
+    final private Collection dataSource;
 
-	final private Map<String, Object> parameters = new HashMap<String, Object>();
+    final private Map<String, Object> parameters = new HashMap<String, Object>();
 
-	private ResourceBundle resourceBundle;
+    private ResourceBundle resourceBundle;
 
-	private final ResourceBundle applicationBundle;
+    private final ResourceBundle applicationBundle;
 
-	private final ResourceBundle enumerationBundle;
+    private final ResourceBundle enumerationBundle;
 
-	final private Locale locale;
+    final private Locale locale;
 
-	final private Language language;
+    final private Language language;
 
-	static final public Locale[] suportedLocales = { Language.getDefaultLocale(), new Locale("en") };
+    static final public Locale[] suportedLocales = { Language.getDefaultLocale(), new Locale("en") };
 
-	static final protected String EMPTY_STR = StringUtils.EMPTY;
+    static final protected String EMPTY_STR = StringUtils.EMPTY;
 
-	static final protected String SINGLE_SPACE = StringUtils.SINGLE_SPACE;
+    static final protected String SINGLE_SPACE = StringUtils.SINGLE_SPACE;
 
-	static final protected String DD_MMMM_YYYY = "dd MMMM yyyy";
+    static final protected String DD_MMMM_YYYY = "dd MMMM yyyy";
 
-	static final protected String DD_SLASH_MM_SLASH_YYYY = "dd/MM/yyyy";
+    static final protected String DD_SLASH_MM_SLASH_YYYY = "dd/MM/yyyy";
 
-	static final protected String YYYYMMMDD = "yyyyMMdd";
+    static final protected String YYYYMMMDD = "yyyyMMdd";
 
-	static final protected String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    static final protected String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
-	{
-		addParameter("path", realPath);
-	}
+    {
+        addParameter("path", realPath);
+    }
 
-	protected FenixReport() {
-		this(null, Language.getLocale());
-	}
+    protected FenixReport() {
+        this(null, Language.getLocale());
+    }
 
-	protected FenixReport(final Locale locale) {
-		this(null, locale);
-	}
+    protected FenixReport(final Locale locale) {
+        this(null, locale);
+    }
 
-	private FenixReport(final Collection<?> dataSource, final Locale locale) {
-		this.dataSource = dataSource == null ? new ArrayList<Object>() : dataSource;
-		this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
-		this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
-		this.locale = locale;
-		this.language = Language.valueOf(locale.getLanguage());
-	}
+    private FenixReport(final Collection<?> dataSource, final Locale locale) {
+        this.dataSource = dataSource == null ? new ArrayList<Object>() : dataSource;
+        this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
+        this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
+        this.locale = locale;
+        this.language = Language.valueOf(locale.getLanguage());
+    }
 
-	public final Collection<?> getDataSource() {
-		return dataSource;
-	}
+    public final Collection<?> getDataSource() {
+        return dataSource;
+    }
 
-	public final Map<String, Object> getParameters() {
-		return parameters;
-	}
+    public final Map<String, Object> getParameters() {
+        return parameters;
+    }
 
-	public final ResourceBundle getResourceBundle() {
-		return resourceBundle;
-	}
+    public final ResourceBundle getResourceBundle() {
+        return resourceBundle;
+    }
 
-	public void setResourceBundle(ResourceBundle resourceBundle) {
-		this.resourceBundle = resourceBundle;
-	}
+    public void setResourceBundle(ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
+    }
 
-	public ResourceBundle getApplicationBundle() {
-		return applicationBundle;
-	}
+    public ResourceBundle getApplicationBundle() {
+        return applicationBundle;
+    }
 
-	public ResourceBundle getEnumerationBundle() {
-		return enumerationBundle;
-	}
+    public ResourceBundle getEnumerationBundle() {
+        return enumerationBundle;
+    }
 
-	public Locale getLocale() {
-		return locale;
-	}
+    public Locale getLocale() {
+        return locale;
+    }
 
-	public Language getLanguage() {
-		return language;
-	}
+    public Language getLanguage() {
+        return language;
+    }
 
-	public String getReportTemplateKey() {
-		return getClass().getName();
-	}
+    public String getReportTemplateKey() {
+        return getClass().getName();
+    }
 
-	public JasperPrintProcessor getPreProcessor() {
-		return null;
-	}
+    public JasperPrintProcessor getPreProcessor() {
+        return null;
+    }
 
-	public void addParameter(final String key, final Object value) {
-		this.parameters.put(key, value);
-	}
+    public void addParameter(final String key, final Object value) {
+        this.parameters.put(key, value);
+    }
 
-	@SuppressWarnings("unchecked")
-	public void addDataSourceElement(final Object object) {
-		this.dataSource.add(object);
-	}
+    @SuppressWarnings("unchecked")
+    public void addDataSourceElement(final Object object) {
+        this.dataSource.add(object);
+    }
 
-	@SuppressWarnings("unchecked")
-	public void addDataSourceElements(final Collection<?> objects) {
-		this.dataSource.addAll(objects);
-	}
+    @SuppressWarnings("unchecked")
+    public void addDataSourceElements(final Collection<?> objects) {
+        this.dataSource.addAll(objects);
+    }
 
-	abstract public String getReportFileName();
+    abstract public String getReportFileName();
 
-	abstract protected void fillReport();
+    abstract protected void fillReport();
 
-	public synchronized static void setRealPath(String realPath) {
-		FenixReport.realPath = realPath;
-	}
+    public synchronized static void setRealPath(String realPath) {
+        FenixReport.realPath = realPath;
+    }
 
-	protected void printParameters() {
-		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-			System.out.println(String.format("%s - %s", entry.getKey(), entry.getValue()));
-		}
+    protected void printParameters() {
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            System.out.println(String.format("%s - %s", entry.getKey(), entry.getValue()));
+        }
 
-	}
+    }
 
-	protected String verboseDate(LocalDate date) {
-		return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth(), getEnumerationBundle()) + " do mês de "
-				+ date.toString("MMMM", new Locale("pt")) + " de "
-				+ DateI18NUtil.verboseNumber(date.getYear(), getEnumerationBundle());
-	}
+    protected String verboseDate(LocalDate date) {
+        return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth(), getEnumerationBundle()) + " do mês de "
+                + date.toString("MMMM", new Locale("pt")) + " de "
+                + DateI18NUtil.verboseNumber(date.getYear(), getEnumerationBundle());
+    }
 }

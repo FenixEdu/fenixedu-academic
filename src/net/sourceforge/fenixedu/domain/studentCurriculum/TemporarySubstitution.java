@@ -12,25 +12,25 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 
 public class TemporarySubstitution extends TemporarySubstitution_Base {
 
-	public TemporarySubstitution() {
-		super();
-	}
+    public TemporarySubstitution() {
+        super();
+    }
 
-	public TemporarySubstitution(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-			Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
-		this();
-		init(studentCurricularPlan, dismissals, enrolments, executionSemester);
-	}
+    public TemporarySubstitution(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
+            Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+        this();
+        init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+    }
 
-	@Override
-	public boolean isTemporary() {
-		return true;
-	}
+    @Override
+    public boolean isTemporary() {
+        return true;
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
-		return Collections.EMPTY_SET;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
+        return Collections.EMPTY_SET;
+    }
 
 }

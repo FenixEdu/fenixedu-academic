@@ -8,71 +8,71 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ReportStudentsUTLCandidatesBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExecutionYear executionYear = null;
-	private InputStream xlsFile = null;
-	private String fileName;
-	private Integer fileSize;
-	private Boolean forFirstYear;
-	private Integer studentNumber;
+    private ExecutionYear executionYear = null;
+    private InputStream xlsFile = null;
+    private String fileName;
+    private Integer fileSize;
+    private Boolean forFirstYear;
+    private Integer studentNumber;
 
-	public ReportStudentsUTLCandidatesBean() {
-	}
+    public ReportStudentsUTLCandidatesBean() {
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(final ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(final ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public Integer getFileSize() {
-		return fileSize;
-	}
+    public Integer getFileSize() {
+        return fileSize;
+    }
 
-	public void setFileSize(Integer fileSize) {
-		this.fileSize = fileSize;
-	}
+    public void setFileSize(Integer fileSize) {
+        this.fileSize = fileSize;
+    }
 
-	public InputStream getXlsFile() {
-		return xlsFile;
-	}
+    public InputStream getXlsFile() {
+        return xlsFile;
+    }
 
-	public void setXlsFile(InputStream xlsFile) {
-		this.xlsFile = xlsFile;
-	}
+    public void setXlsFile(InputStream xlsFile) {
+        this.xlsFile = xlsFile;
+    }
 
-	public byte[] readXLSContents() throws IOException {
-		byte[] contents = new byte[fileSize];
-		xlsFile.read(contents);
+    public byte[] readXLSContents() throws IOException {
+        byte[] contents = new byte[fileSize];
+        xlsFile.read(contents);
 
-		return contents;
-	}
+        return contents;
+    }
 
-	public Boolean getForFirstYear() {
-		return forFirstYear;
-	}
+    public Boolean getForFirstYear() {
+        return forFirstYear;
+    }
 
-	public void setForFirstYear(Boolean forFirstYear) {
-		this.forFirstYear = forFirstYear;
-	}
+    public void setForFirstYear(Boolean forFirstYear) {
+        this.forFirstYear = forFirstYear;
+    }
 
-	public Integer getStudentNumber() {
-		return studentNumber;
-	}
+    public Integer getStudentNumber() {
+        return studentNumber;
+    }
 
-	public void setStudentNumber(Integer studentNumber) {
-		this.studentNumber = studentNumber;
-	}
+    public void setStudentNumber(Integer studentNumber) {
+        this.studentNumber = studentNumber;
+    }
 
 }

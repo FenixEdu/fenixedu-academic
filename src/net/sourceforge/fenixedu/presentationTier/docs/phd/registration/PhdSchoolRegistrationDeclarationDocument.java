@@ -19,76 +19,76 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	private final PhdIndividualProgramProcess process;
+    private final PhdIndividualProgramProcess process;
 
-	public PhdSchoolRegistrationDeclarationDocument(final PhdIndividualProgramProcess process) {
-		this.process = process;
+    public PhdSchoolRegistrationDeclarationDocument(final PhdIndividualProgramProcess process) {
+        this.process = process;
 
-		setResourceBundle(ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()));
-		fillReport();
-	}
+        setResourceBundle(ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()));
+        fillReport();
+    }
 
-	@Override
-	protected void fillReport() {
-		final Unit unit = process.getPhdProgram().getAdministrativeOffice().getUnit();
+    @Override
+    protected void fillReport() {
+        final Unit unit = process.getPhdProgram().getAdministrativeOffice().getUnit();
 
-		addParameter("administrativeOfficeName", unit.getName());
-		addParameter("administrativeOfficeCoordinator", unit.getActiveUnitCoordinator().getName());
+        addParameter("administrativeOfficeName", unit.getName());
+        addParameter("administrativeOfficeCoordinator", unit.getActiveUnitCoordinator().getName());
 
-		addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent());
-		addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
+        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent());
+        addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
 
-		addParameter("studentNumber", getStudentNumber());
-		addParameter("studentName", getPerson().getName());
-		addParameter("documentId", getPerson().getDocumentIdNumber());
-		addParameter("parishOfBirth", getPerson().getParishOfBirth());
-		addParameter("nationality", getPerson().getCountry().getCountryNationality().getContent());
+        addParameter("studentNumber", getStudentNumber());
+        addParameter("studentName", getPerson().getName());
+        addParameter("documentId", getPerson().getDocumentIdNumber());
+        addParameter("parishOfBirth", getPerson().getParishOfBirth());
+        addParameter("nationality", getPerson().getCountry().getCountryNationality().getContent());
 
-		addParameter("registrationState", getRegistrationStateLabel());
-		addParameter("executionYear", process.getExecutionYear().getName());
-		addParameter("phdProgramName", process.getPhdProgram().getName().getContent());
+        addParameter("registrationState", getRegistrationStateLabel());
+        addParameter("executionYear", process.getExecutionYear().getName());
+        addParameter("phdProgramName", process.getPhdProgram().getName().getContent());
 
-		addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, Language.getLocale()));
-	}
+        addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, Language.getLocale()));
+    }
 
-	private String getStudentNumber() {
-		return hasRegistration() ? getRegistration().getNumber().toString() : getStudent().getNumber().toString();
-	}
+    private String getStudentNumber() {
+        return hasRegistration() ? getRegistration().getNumber().toString() : getStudent().getNumber().toString();
+    }
 
-	private String getRegistrationStateLabel() {
-		final Gender gender = getPerson().getGender();
-		return gender == Gender.MALE ? getMessage("label.phd.schoolRegistrationDeclaration.registered.male") : getMessage("label.phd.schoolRegistrationDeclaration.registered.female");
-	}
+    private String getRegistrationStateLabel() {
+        final Gender gender = getPerson().getGender();
+        return gender == Gender.MALE ? getMessage("label.phd.schoolRegistrationDeclaration.registered.male") : getMessage("label.phd.schoolRegistrationDeclaration.registered.female");
+    }
 
-	private Person getPerson() {
-		return process.getPerson();
-	}
+    private Person getPerson() {
+        return process.getPerson();
+    }
 
-	private Student getStudent() {
-		return getPerson().getStudent();
-	}
+    private Student getStudent() {
+        return getPerson().getStudent();
+    }
 
-	private Registration getRegistration() {
-		return process.getRegistration();
-	}
+    private Registration getRegistration() {
+        return process.getRegistration();
+    }
 
-	private boolean hasRegistration() {
-		return process.hasRegistration();
-	}
+    private boolean hasRegistration() {
+        return process.hasRegistration();
+    }
 
-	private String getMessage(final String key) {
-		return getResourceBundle().getString(key);
-	}
+    private String getMessage(final String key) {
+        return getResourceBundle().getString(key);
+    }
 
-	@Override
-	public String getReportFileName() {
-		return "SchoolRegistrationDeclaration-" + new DateTime().toString(YYYYMMDDHHMMSS);
-	}
+    @Override
+    public String getReportFileName() {
+        return "SchoolRegistrationDeclaration-" + new DateTime().toString(YYYYMMDDHHMMSS);
+    }
 
-	@Override
-	public String getReportTemplateKey() {
-		return super.getReportTemplateKey() + ".pt";
-	}
+    @Override
+    public String getReportTemplateKey() {
+        return super.getReportTemplateKey() + ".pt";
+    }
 }

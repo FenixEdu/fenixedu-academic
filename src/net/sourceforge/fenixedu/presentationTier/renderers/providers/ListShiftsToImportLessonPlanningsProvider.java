@@ -16,40 +16,40 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ListShiftsToImportLessonPlanningsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) source;
-		Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+        ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) source;
+        Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 
-		ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
-		ExecutionCourse executionCourseTo = bean.getExecutionCourseTo();
+        ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
+        ExecutionCourse executionCourseTo = bean.getExecutionCourseTo();
 
-		if (executionCourseFrom != null && executionCourseTo != null) {
+        if (executionCourseFrom != null && executionCourseTo != null) {
 
-			List<ShiftType> shiftTypesTo = new ArrayList<ShiftType>();
-			for (ShiftType shiftType : executionCourseTo.getShiftTypes()) {
-				if (executionCourseTo.hasCourseLoadForType(shiftType)) {
-					shiftTypesTo.add(shiftType);
-				}
-			}
+            List<ShiftType> shiftTypesTo = new ArrayList<ShiftType>();
+            for (ShiftType shiftType : executionCourseTo.getShiftTypes()) {
+                if (executionCourseTo.hasCourseLoadForType(shiftType)) {
+                    shiftTypesTo.add(shiftType);
+                }
+            }
 
-			for (Shift shift : executionCourseFrom.getAssociatedShifts()) {
-				if (CollectionUtils.containsAny(shiftTypesTo, shift.getTypes())) {
-					shifts.add(shift);
-				}
-			}
+            for (Shift shift : executionCourseFrom.getAssociatedShifts()) {
+                if (CollectionUtils.containsAny(shiftTypesTo, shift.getTypes())) {
+                    shifts.add(shift);
+                }
+            }
 
-			if (shifts.isEmpty()) {
-				return executionCourseFrom.getAssociatedShifts();
-			}
-		}
+            if (shifts.isEmpty()) {
+                return executionCourseFrom.getAssociatedShifts();
+            }
+        }
 
-		return shifts;
-	}
+        return shifts;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

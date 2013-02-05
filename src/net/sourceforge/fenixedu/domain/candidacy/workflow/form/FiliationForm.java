@@ -14,133 +14,133 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class FiliationForm extends Form {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private YearMonthDay dateOfBirth;
+    private YearMonthDay dateOfBirth;
 
-	private Country nationality;
+    private Country nationality;
 
-	private String parishOfBirth;
+    private String parishOfBirth;
 
-	private String districtSubdivisionOfBirth;
+    private String districtSubdivisionOfBirth;
 
-	private String districtOfBirth;
+    private String districtOfBirth;
 
-	private String fatherName;
+    private String fatherName;
 
-	private String motherName;
+    private String motherName;
 
-	private Country countryOfBirth;
+    private Country countryOfBirth;
 
-	public FiliationForm() {
-		super();
-	}
+    public FiliationForm() {
+        super();
+    }
 
-	public static FiliationForm createFromPerson(final Person person) {
-		final Country nationality = person.getCountry() != null ? person.getCountry() : Country.readDefault();
-		final Country countryOfBirth = person.hasCountryOfBirth() ? person.getCountryOfBirth() : Country.readDefault();
+    public static FiliationForm createFromPerson(final Person person) {
+        final Country nationality = person.getCountry() != null ? person.getCountry() : Country.readDefault();
+        final Country countryOfBirth = person.hasCountryOfBirth() ? person.getCountryOfBirth() : Country.readDefault();
 
-		return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(),
-				person.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality,
-				person.getParishOfBirth(), countryOfBirth);
-	}
+        return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(),
+                person.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality,
+                person.getParishOfBirth(), countryOfBirth);
+    }
 
-	private FiliationForm(YearMonthDay dateOfBirth, String districtOfBirth, String districtSubdivisionOfBirth, String fatherName,
-			String motherName, Country nationality, String parishOfBirth, Country countryOfBirth) {
-		this();
-		this.dateOfBirth = dateOfBirth;
-		this.districtOfBirth = districtOfBirth;
-		this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
-		this.fatherName = fatherName;
-		this.motherName = motherName;
-		setNationality(nationality);
-		this.parishOfBirth = parishOfBirth;
-		setCountryOfBirth(countryOfBirth);
-	}
+    private FiliationForm(YearMonthDay dateOfBirth, String districtOfBirth, String districtSubdivisionOfBirth, String fatherName,
+            String motherName, Country nationality, String parishOfBirth, Country countryOfBirth) {
+        this();
+        this.dateOfBirth = dateOfBirth;
+        this.districtOfBirth = districtOfBirth;
+        this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
+        this.fatherName = fatherName;
+        this.motherName = motherName;
+        setNationality(nationality);
+        this.parishOfBirth = parishOfBirth;
+        setCountryOfBirth(countryOfBirth);
+    }
 
-	public YearMonthDay getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public YearMonthDay getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setDateOfBirth(YearMonthDay dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setDateOfBirth(YearMonthDay dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public String getDistrictOfBirth() {
-		return districtOfBirth;
-	}
+    public String getDistrictOfBirth() {
+        return districtOfBirth;
+    }
 
-	public void setDistrictOfBirth(String districtOfBirth) {
-		this.districtOfBirth = districtOfBirth;
-	}
+    public void setDistrictOfBirth(String districtOfBirth) {
+        this.districtOfBirth = districtOfBirth;
+    }
 
-	public String getDistrictSubdivisionOfBirth() {
-		return districtSubdivisionOfBirth;
-	}
+    public String getDistrictSubdivisionOfBirth() {
+        return districtSubdivisionOfBirth;
+    }
 
-	public void setDistrictSubdivisionOfBirth(String districtSubdivisionOfBirth) {
-		this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
-	}
+    public void setDistrictSubdivisionOfBirth(String districtSubdivisionOfBirth) {
+        this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
+    }
 
-	public String getFatherName() {
-		return fatherName;
-	}
+    public String getFatherName() {
+        return fatherName;
+    }
 
-	public void setFatherName(String fatherName) {
-		this.fatherName = fatherName;
-	}
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
 
-	public String getMotherName() {
-		return motherName;
-	}
+    public String getMotherName() {
+        return motherName;
+    }
 
-	public void setMotherName(String motherName) {
-		this.motherName = motherName;
-	}
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
 
-	public Country getNationality() {
-		return this.nationality;
-	}
+    public Country getNationality() {
+        return this.nationality;
+    }
 
-	public void setNationality(Country nationality) {
-		this.nationality = nationality;
-	}
+    public void setNationality(Country nationality) {
+        this.nationality = nationality;
+    }
 
-	public String getParishOfBirth() {
-		return parishOfBirth;
-	}
+    public String getParishOfBirth() {
+        return parishOfBirth;
+    }
 
-	public void setParishOfBirth(String parishOfBirth) {
-		this.parishOfBirth = parishOfBirth;
-	}
+    public void setParishOfBirth(String parishOfBirth) {
+        this.parishOfBirth = parishOfBirth;
+    }
 
-	public Country getCountryOfBirth() {
-		return this.countryOfBirth;
-	}
+    public Country getCountryOfBirth() {
+        return this.countryOfBirth;
+    }
 
-	public void setCountryOfBirth(Country countryOfBirth) {
-		this.countryOfBirth = countryOfBirth;
-	}
+    public void setCountryOfBirth(Country countryOfBirth) {
+        this.countryOfBirth = countryOfBirth;
+    }
 
-	@Override
-	public List<LabelFormatter> validate() {
-		if (getCountryOfBirth().isDefaultCountry()) {
-			if (StringUtils.isEmpty(getDistrictOfBirth()) || StringUtils.isEmpty(getDistrictSubdivisionOfBirth())
-					|| StringUtils.isEmpty(getParishOfBirth())) {
-				return Collections.singletonList(new LabelFormatter(
-						"error.candidacy.workflow.FiliationForm.zone.information.is.required.for.national.students",
-						"application"));
-			}
-		}
+    @Override
+    public List<LabelFormatter> validate() {
+        if (getCountryOfBirth().isDefaultCountry()) {
+            if (StringUtils.isEmpty(getDistrictOfBirth()) || StringUtils.isEmpty(getDistrictSubdivisionOfBirth())
+                    || StringUtils.isEmpty(getParishOfBirth())) {
+                return Collections.singletonList(new LabelFormatter(
+                        "error.candidacy.workflow.FiliationForm.zone.information.is.required.for.national.students",
+                        "application"));
+            }
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
-	@Override
-	public String getFormName() {
-		return "label.candidacy.workflow.filiationForm";
-	}
+    @Override
+    public String getFormName() {
+        return "label.candidacy.workflow.filiationForm";
+    }
 }

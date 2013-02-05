@@ -9,19 +9,19 @@ import net.sourceforge.fenixedu.util.Money;
 
 public class PastPhotocopyRequestEvent extends PastPhotocopyRequestEvent_Base implements IPastRequestEvent {
 
-	protected PastPhotocopyRequestEvent() {
-		super();
-	}
+    protected PastPhotocopyRequestEvent() {
+        super();
+    }
 
-	public PastPhotocopyRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final PhotocopyRequest request) {
-		this();
-		super.init(administrativeOffice, EventType.PAST_PHOTOCOPY_REQUEST, person, request);
-	}
+    public PastPhotocopyRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final PhotocopyRequest request) {
+        this();
+        super.init(administrativeOffice, EventType.PAST_PHOTOCOPY_REQUEST, person, request);
+    }
 
-	@Override
-	public void setPastAmount(Money amount) {
-		throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
-	}
+    @Override
+    public void setPastAmount(Money amount) {
+        throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
+    }
 
 }

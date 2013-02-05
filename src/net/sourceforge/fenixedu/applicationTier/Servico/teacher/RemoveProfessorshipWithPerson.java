@@ -15,35 +15,35 @@ import org.apache.commons.collections.Predicate;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson {
-	@Service
-	public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
-		AbstractModifyProfessorshipWithPerson.run(person);
+    @Service
+    public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
+        AbstractModifyProfessorshipWithPerson.run(person);
 
-		Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
+        Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
 
-		List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
-		boolean hasCredits = false;
+        boolean hasCredits = false;
 
-		if (!shiftProfessorshipList.isEmpty()) {
-			hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
+        if (!shiftProfessorshipList.isEmpty()) {
+            hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
 
-				@Override
-				public boolean evaluate(Object arg0) {
-					ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
-					return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
-				}
-			});
-		}
+                @Override
+                public boolean evaluate(Object arg0) {
+                    ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
+                    return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
+                }
+            });
+        }
 
-		if (!hasCredits) {
-			professorshipToDelete.delete();
-		} else {
-			if (hasCredits) {
-				throw new DomainException("error.remove.professorship");
-			}
-		}
-		return Boolean.TRUE;
-	}
+        if (!hasCredits) {
+            professorshipToDelete.delete();
+        } else {
+            if (hasCredits) {
+                throw new DomainException("error.remove.professorship");
+            }
+        }
+        return Boolean.TRUE;
+    }
 
 }

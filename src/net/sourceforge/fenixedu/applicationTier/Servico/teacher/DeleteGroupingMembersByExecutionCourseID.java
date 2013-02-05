@@ -26,66 +26,66 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DeleteGroupingMembersByExecutionCourseID extends FenixService {
 
-	public Boolean run(Integer executionCourseCode, Integer groupingCode) throws FenixServiceException {
-		Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+    public Boolean run(Integer executionCourseCode, Integer groupingCode) throws FenixServiceException {
+        Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
 
-		if (grouping == null) {
-			throw new ExistingServiceException();
-		}
+        if (grouping == null) {
+            throw new ExistingServiceException();
+        }
 
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-		if (executionCourse == null) {
-			throw new InvalidSituationServiceException();
-		}
+        if (executionCourse == null) {
+            throw new InvalidSituationServiceException();
+        }
 
-		List executionCourseStudentNumbers = new ArrayList();
-		final List<Attends> attends = executionCourse.getAttends();
-		for (final Attends attend : attends) {
-			final Registration registration = attend.getRegistration();
-			executionCourseStudentNumbers.add(registration.getNumber());
-		}
+        List executionCourseStudentNumbers = new ArrayList();
+        final List<Attends> attends = executionCourse.getAttends();
+        for (final Attends attend : attends) {
+            final Registration registration = attend.getRegistration();
+            executionCourseStudentNumbers.add(registration.getNumber());
+        }
 
-		List attendsElements = new ArrayList();
-		attendsElements.addAll(grouping.getAttends());
-		Iterator iterator = attendsElements.iterator();
-		StringBuilder sbStudentNumbers = new StringBuilder("");
-		sbStudentNumbers.setLength(0);
+        List attendsElements = new ArrayList();
+        attendsElements.addAll(grouping.getAttends());
+        Iterator iterator = attendsElements.iterator();
+        StringBuilder sbStudentNumbers = new StringBuilder("");
+        sbStudentNumbers.setLength(0);
 
-		while (iterator.hasNext()) {
-			Attends attend = (Attends) iterator.next();
-			if (executionCourseStudentNumbers.contains(attend.getRegistration().getNumber())) {
-				if (sbStudentNumbers.length() != 0) {
-					sbStudentNumbers.append(", " + attend.getRegistration().getNumber());
-				} else {
-					sbStudentNumbers.append(attend.getRegistration().getNumber());
-				}
+        while (iterator.hasNext()) {
+            Attends attend = (Attends) iterator.next();
+            if (executionCourseStudentNumbers.contains(attend.getRegistration().getNumber())) {
+                if (sbStudentNumbers.length() != 0) {
+                    sbStudentNumbers.append(", " + attend.getRegistration().getNumber());
+                } else {
+                    sbStudentNumbers.append(attend.getRegistration().getNumber());
+                }
 
-				boolean found = false;
-				Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
-				while (iterStudentsGroups.hasNext() && !found) {
-					final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
-					if (studentGroup != null) {
-						studentGroup.removeAttends(attend);
-						found = true;
-					}
-				}
-				grouping.removeAttends(attend);
-			}
-		}
+                boolean found = false;
+                Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
+                while (iterStudentsGroups.hasNext() && !found) {
+                    final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
+                    if (studentGroup != null) {
+                        studentGroup.removeAttends(attend);
+                        found = true;
+                    }
+                }
+                grouping.removeAttends(attend);
+            }
+        }
 
-		// no students means no log entry -- list may contain invalid values, so
-		// its size cannot be used to test
-		if (sbStudentNumbers.length() != 0) {
-			List<ExecutionCourse> ecs = grouping.getExecutionCourses();
-			for (ExecutionCourse ec : ecs) {
-				GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-						"log.executionCourse.groupAndShifts.grouping.memberSet.removed",
-						Integer.toString(attendsElements.size()), sbStudentNumbers.toString(), grouping.getName(), ec.getNome(),
-						ec.getDegreePresentationString());
-			}
-		}
+        // no students means no log entry -- list may contain invalid values, so
+        // its size cannot be used to test
+        if (sbStudentNumbers.length() != 0) {
+            List<ExecutionCourse> ecs = grouping.getExecutionCourses();
+            for (ExecutionCourse ec : ecs) {
+                GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+                        "log.executionCourse.groupAndShifts.grouping.memberSet.removed",
+                        Integer.toString(attendsElements.size()), sbStudentNumbers.toString(), grouping.getName(), ec.getNome(),
+                        ec.getDegreePresentationString());
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

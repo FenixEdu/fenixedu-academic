@@ -16,151 +16,151 @@ import org.joda.time.DateTime;
 
 abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
-	protected CandidacyProcess() {
-		super();
-	}
+    protected CandidacyProcess() {
+        super();
+    }
 
-	public ExecutionInterval getCandidacyExecutionInterval() {
-		return hasCandidacyPeriod() ? getCandidacyPeriod().getExecutionInterval() : null;
-	}
+    public ExecutionInterval getCandidacyExecutionInterval() {
+        return hasCandidacyPeriod() ? getCandidacyPeriod().getExecutionInterval() : null;
+    }
 
-	public DateTime getCandidacyStart() {
-		return hasCandidacyPeriod() ? getCandidacyPeriod().getStart() : null;
-	}
+    public DateTime getCandidacyStart() {
+        return hasCandidacyPeriod() ? getCandidacyPeriod().getStart() : null;
+    }
 
-	public DateTime getCandidacyEnd() {
-		return hasCandidacyPeriod() ? getCandidacyPeriod().getEnd() : null;
-	}
+    public DateTime getCandidacyEnd() {
+        return hasCandidacyPeriod() ? getCandidacyPeriod().getEnd() : null;
+    }
 
-	public boolean hasStarted() {
-		return !getCandidacyStart().isAfterNow();
-	}
+    public boolean hasStarted() {
+        return !getCandidacyStart().isAfterNow();
+    }
 
-	public boolean hasOpenCandidacyPeriod() {
-		return hasCandidacyPeriod() && getCandidacyPeriod().isOpen();
-	}
+    public boolean hasOpenCandidacyPeriod() {
+        return hasCandidacyPeriod() && getCandidacyPeriod().isOpen();
+    }
 
-	public boolean hasOpenCandidacyPeriod(final DateTime date) {
-		return hasCandidacyPeriod() && getCandidacyPeriod().isOpen(date);
-	}
+    public boolean hasOpenCandidacyPeriod(final DateTime date) {
+        return hasCandidacyPeriod() && getCandidacyPeriod().isOpen(date);
+    }
 
-	public boolean hasState() {
-		return getState() != null;
-	}
+    public boolean hasState() {
+        return getState() != null;
+    }
 
-	public boolean isInStandBy() {
-		return getState() == CandidacyProcessState.STAND_BY;
-	}
+    public boolean isInStandBy() {
+        return getState() == CandidacyProcessState.STAND_BY;
+    }
 
-	public boolean isSentToJury() {
-		return getState() == CandidacyProcessState.SENT_TO_JURY;
-	}
+    public boolean isSentToJury() {
+        return getState() == CandidacyProcessState.SENT_TO_JURY;
+    }
 
-	public boolean isSentToCoordinator() {
-		return getState() == CandidacyProcessState.SENT_TO_COORDINATOR;
-	}
+    public boolean isSentToCoordinator() {
+        return getState() == CandidacyProcessState.SENT_TO_COORDINATOR;
+    }
 
-	public boolean isSentToScientificCouncil() {
-		return getState() == CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL;
-	}
+    public boolean isSentToScientificCouncil() {
+        return getState() == CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL;
+    }
 
-	public boolean isPublished() {
-		return getState() == CandidacyProcessState.PUBLISHED;
-	}
+    public boolean isPublished() {
+        return getState() == CandidacyProcessState.PUBLISHED;
+    }
 
-	@Override
-	public String getDisplayName() {
-		return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
-	}
+    @Override
+    public String getDisplayName() {
+        return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
+    }
 
-	public static <T extends CandidacyProcess> T getCandidacyProcessByDate(Class<T> clazz, final DateTime date) {
-		Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
+    public static <T extends CandidacyProcess> T getCandidacyProcessByDate(Class<T> clazz, final DateTime date) {
+        Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
 
-		for (T process : candidacyProcessList) {
-			if (process.hasCandidacyPeriod() && process.getCandidacyPeriod().isOpen(date)) {
-				return process;
-			}
-		}
+        for (T process : candidacyProcessList) {
+            if (process.hasCandidacyPeriod() && process.getCandidacyPeriod().isOpen(date)) {
+                return process;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
-			final ExecutionInterval executionInterval) {
-		Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
+    public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
+            final ExecutionInterval executionInterval) {
+        Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
 
-		for (T process : candidacyProcessList) {
-			if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
-				return process;
-			}
-		}
+        for (T process : candidacyProcessList) {
+            if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
+                return process;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public IndividualCandidacyProcess getChildProcessByDocumentId(IDDocumentType type, String identification) {
-		for (IndividualCandidacyProcess individualCandidacyProcess : getChildProcesses()) {
-			if (individualCandidacyProcess.getCandidacy() != null
-					&& identification
-							.equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getDocumentIdNumber())
-					&& type.equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getIdDocumentType())) {
-				return individualCandidacyProcess;
-			}
-		}
+    public IndividualCandidacyProcess getChildProcessByDocumentId(IDDocumentType type, String identification) {
+        for (IndividualCandidacyProcess individualCandidacyProcess : getChildProcesses()) {
+            if (individualCandidacyProcess.getCandidacy() != null
+                    && identification
+                            .equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getDocumentIdNumber())
+                    && type.equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getIdDocumentType())) {
+                return individualCandidacyProcess;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public IndividualCandidacyProcess getOpenChildProcessByDocumentId(IDDocumentType documentType, String documentId) {
-		for (IndividualCandidacyProcess child : this.getChildProcesses()) {
-			if (documentId.equals(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
-					&& !child.isCandidacyCancelled()) {
-				return child;
-			}
-		}
+    public IndividualCandidacyProcess getOpenChildProcessByDocumentId(IDDocumentType documentType, String documentId) {
+        for (IndividualCandidacyProcess child : this.getChildProcesses()) {
+            if (documentId.equals(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
+                    && !child.isCandidacyCancelled()) {
+                return child;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public IndividualCandidacyProcess getOpenChildProcessByEidentifier(final String eidentifier) {
-		if (StringUtils.isEmpty(eidentifier)) {
-			return null;
-		}
+    public IndividualCandidacyProcess getOpenChildProcessByEidentifier(final String eidentifier) {
+        if (StringUtils.isEmpty(eidentifier)) {
+            return null;
+        }
 
-		for (IndividualCandidacyProcess child : this.getChildProcesses()) {
-			if (child.isCandidacyCancelled()) {
-				continue;
-			}
+        for (IndividualCandidacyProcess child : this.getChildProcesses()) {
+            if (child.isCandidacyCancelled()) {
+                continue;
+            }
 
-			if (StringUtils.isEmpty(child.getPersonalDetails().getEidentifier())) {
-				continue;
-			}
+            if (StringUtils.isEmpty(child.getPersonalDetails().getEidentifier())) {
+                continue;
+            }
 
-			if (eidentifier.equalsIgnoreCase(child.getPersonalDetails().getEidentifier())) {
-				return child;
-			}
-		}
+            if (eidentifier.equalsIgnoreCase(child.getPersonalDetails().getEidentifier())) {
+                return child;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public List<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments() {
-		List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
+    public List<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments() {
+        List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
 
-		CollectionUtils.select(getChildProcesses(), new Predicate() {
+        CollectionUtils.select(getChildProcesses(), new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
-				return !process.isCandidacyCancelled() && process.isProcessMissingRequiredDocumentFiles();
-			}
+            @Override
+            public boolean evaluate(Object arg0) {
+                IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
+                return !process.isCandidacyCancelled() && process.isProcessMissingRequiredDocumentFiles();
+            }
 
-		}, childs);
+        }, childs);
 
-		return childs;
-	}
+        return childs;
+    }
 
-	public boolean isMobility() {
-		return false;
-	}
+    public boolean isMobility() {
+        return false;
+    }
 }

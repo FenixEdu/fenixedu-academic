@@ -28,163 +28,163 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SeperateExecutionCourse extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
-			final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
+            final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
 
-		if (destinationExecutionCourse == null) {
-			destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
-			destinationExecutionCourse.createSite();
-			ExecutionCourseUtils.copyBibliographicReference(originExecutionCourse, destinationExecutionCourse);
-			ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);
-		}
+        if (destinationExecutionCourse == null) {
+            destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
+            destinationExecutionCourse.createSite();
+            ExecutionCourseUtils.copyBibliographicReference(originExecutionCourse, destinationExecutionCourse);
+            ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);
+        }
 
-		transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseToTransfer);
+        transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseToTransfer);
 
-		transferAttends(originExecutionCourse, destinationExecutionCourse);
+        transferAttends(originExecutionCourse, destinationExecutionCourse);
 
-		transferShifts(originExecutionCourse, destinationExecutionCourse, shiftsToTransfer);
+        transferShifts(originExecutionCourse, destinationExecutionCourse, shiftsToTransfer);
 
-		fixStudentShiftEnrolements(originExecutionCourse);
-		fixStudentShiftEnrolements(destinationExecutionCourse);
+        fixStudentShiftEnrolements(originExecutionCourse);
+        fixStudentShiftEnrolements(destinationExecutionCourse);
 
-		associateGroupings(originExecutionCourse, destinationExecutionCourse);
+        associateGroupings(originExecutionCourse, destinationExecutionCourse);
 
-		return destinationExecutionCourse;
-	}
+        return destinationExecutionCourse;
+    }
 
-	private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
-			final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
-		for (final CurricularCourse curricularCourse : curricularCoursesToTransfer) {
-			originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
-			destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
-		}
-	}
+    private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
+            final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
+        for (final CurricularCourse curricularCourse : curricularCoursesToTransfer) {
+            originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
+            destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
+        }
+    }
 
-	private static void transferAttends(final ExecutionCourse originExecutionCourse,
-			final ExecutionCourse destinationExecutionCourse) {
-		final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
-		for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
-			final Attends attends = originExecutionCourse.getAttends().get(i);
-			final Enrolment enrolment = attends.getEnrolment();
-			if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
-				attends.setDisciplinaExecucao(destinationExecutionCourse);
-				i--;
-			}
-		}
-	}
+    private static void transferAttends(final ExecutionCourse originExecutionCourse,
+            final ExecutionCourse destinationExecutionCourse) {
+        final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
+        for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
+            final Attends attends = originExecutionCourse.getAttends().get(i);
+            final Enrolment enrolment = attends.getEnrolment();
+            if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
+                attends.setDisciplinaExecucao(destinationExecutionCourse);
+                i--;
+            }
+        }
+    }
 
-	private static void transferShifts(final ExecutionCourse originExecutionCourse,
-			final ExecutionCourse destinationExecutionCourse, final List<Shift> shiftsToTransfer) {
-		for (final Shift shift : shiftsToTransfer) {
+    private static void transferShifts(final ExecutionCourse originExecutionCourse,
+            final ExecutionCourse destinationExecutionCourse, final List<Shift> shiftsToTransfer) {
+        for (final Shift shift : shiftsToTransfer) {
 
-			List<CourseLoad> courseLoads = shift.getCourseLoads();
-			for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
-				CourseLoad courseLoad = iter.next();
-				CourseLoad newCourseLoad = destinationExecutionCourse.getCourseLoadByShiftType(courseLoad.getType());
-				if (newCourseLoad == null) {
-					newCourseLoad =
-							new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
-									courseLoad.getTotalQuantity());
-				}
-				iter.remove();
-				shift.removeCourseLoads(courseLoad);
-				shift.addCourseLoads(newCourseLoad);
-			}
+            List<CourseLoad> courseLoads = shift.getCourseLoads();
+            for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
+                CourseLoad courseLoad = iter.next();
+                CourseLoad newCourseLoad = destinationExecutionCourse.getCourseLoadByShiftType(courseLoad.getType());
+                if (newCourseLoad == null) {
+                    newCourseLoad =
+                            new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
+                                    courseLoad.getTotalQuantity());
+                }
+                iter.remove();
+                shift.removeCourseLoads(courseLoad);
+                shift.addCourseLoads(newCourseLoad);
+            }
 
-		}
-	}
+        }
+    }
 
-	private static void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
-		for (final Shift shift : executionCourse.getAssociatedShifts()) {
-			for (int i = 0; i < shift.getStudents().size(); i++) {
-				final Registration registration = shift.getStudents().get(i);
-				if (!registration.attends(executionCourse)) {
-					shift.removeStudents(registration);
-				}
-			}
-		}
-	}
+    private static void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
+        for (final Shift shift : executionCourse.getAssociatedShifts()) {
+            for (int i = 0; i < shift.getStudents().size(); i++) {
+                final Registration registration = shift.getStudents().get(i);
+                if (!registration.attends(executionCourse)) {
+                    shift.removeStudents(registration);
+                }
+            }
+        }
+    }
 
-	private static void associateGroupings(final ExecutionCourse originExecutionCourse,
-			final ExecutionCourse destinationExecutionCourse) {
-		for (final Grouping grouping : originExecutionCourse.getGroupings()) {
-			for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
-				studentGroup.getAttends().clear();
-				studentGroup.delete();
-			}
-			grouping.delete();
-		}
-	}
+    private static void associateGroupings(final ExecutionCourse originExecutionCourse,
+            final ExecutionCourse destinationExecutionCourse) {
+        for (final Grouping grouping : originExecutionCourse.getGroupings()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+                studentGroup.getAttends().clear();
+                studentGroup.delete();
+            }
+            grouping.delete();
+        }
+    }
 
-	private static ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
-		final String sigla =
-				getUniqueExecutionCourseCode(originExecutionCourse.getNome(), originExecutionCourse.getExecutionPeriod(),
-						originExecutionCourse.getSigla());
+    private static ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
+        final String sigla =
+                getUniqueExecutionCourseCode(originExecutionCourse.getNome(), originExecutionCourse.getExecutionPeriod(),
+                        originExecutionCourse.getSigla());
 
-		final ExecutionCourse destinationExecutionCourse =
-				new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
+        final ExecutionCourse destinationExecutionCourse =
+                new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
 
-		for (CourseLoad courseLoad : originExecutionCourse.getCourseLoads()) {
-			new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
-					courseLoad.getTotalQuantity());
-		}
+        for (CourseLoad courseLoad : originExecutionCourse.getCourseLoads()) {
+            new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
+                    courseLoad.getTotalQuantity());
+        }
 
-		for (final Professorship professorship : originExecutionCourse.getProfessorships()) {
-			final Professorship newProfessorship = new Professorship();
-			newProfessorship.setExecutionCourse(destinationExecutionCourse);
-			newProfessorship.setPerson(professorship.getPerson());
-			newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
-			professorship.getPermissions().copyPremissions(newProfessorship);
-			destinationExecutionCourse.getProfessorships().add(newProfessorship);
-		}
+        for (final Professorship professorship : originExecutionCourse.getProfessorships()) {
+            final Professorship newProfessorship = new Professorship();
+            newProfessorship.setExecutionCourse(destinationExecutionCourse);
+            newProfessorship.setPerson(professorship.getPerson());
+            newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
+            professorship.getPermissions().copyPremissions(newProfessorship);
+            destinationExecutionCourse.getProfessorships().add(newProfessorship);
+        }
 
-		return destinationExecutionCourse;
-	}
+        return destinationExecutionCourse;
+    }
 
-	private static String getUniqueExecutionCourseCode(final String executionCourseName,
-			final ExecutionSemester executionSemester, final String originalExecutionCourseCode) {
-		Set<String> executionCourseCodes = getExecutionCourseCodes(executionSemester);
-		return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes,
-				originalExecutionCourseCode);
-		//
-		// StringBuilder executionCourseCode = new
-		// StringBuilder(originalExecutionCourseCode);
-		// executionCourseCode.append("-1");
-		// int startVariablePartIndex = executionCourseCode.length() - 1;
-		// String destinationExecutionCourseCode =
-		// executionCourseCode.toString();
-		// for (int i = 1;
-		// executionCourseCodes.contains(destinationExecutionCourseCode); ++i) {
-		// executionCourseCode.replace(startVariablePartIndex,
-		// executionCourseCode.length(), "");
-		// executionCourseCode.append(i);
-		// destinationExecutionCourseCode = executionCourseCode.toString();
-		// }
-		//
-		// return destinationExecutionCourseCode;
-	}
+    private static String getUniqueExecutionCourseCode(final String executionCourseName,
+            final ExecutionSemester executionSemester, final String originalExecutionCourseCode) {
+        Set<String> executionCourseCodes = getExecutionCourseCodes(executionSemester);
+        return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes,
+                originalExecutionCourseCode);
+        //
+        // StringBuilder executionCourseCode = new
+        // StringBuilder(originalExecutionCourseCode);
+        // executionCourseCode.append("-1");
+        // int startVariablePartIndex = executionCourseCode.length() - 1;
+        // String destinationExecutionCourseCode =
+        // executionCourseCode.toString();
+        // for (int i = 1;
+        // executionCourseCodes.contains(destinationExecutionCourseCode); ++i) {
+        // executionCourseCode.replace(startVariablePartIndex,
+        // executionCourseCode.length(), "");
+        // executionCourseCode.append(i);
+        // destinationExecutionCourseCode = executionCourseCode.toString();
+        // }
+        //
+        // return destinationExecutionCourseCode;
+    }
 
-	private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
-		List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
-		return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-				return executionCourse.getSigla().toUpperCase();
-			}
-		}));
-	}
+    private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
+        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
+                return executionCourse.getSigla().toUpperCase();
+            }
+        }));
+    }
 
-	boolean contains(Integer[] integerArray, Integer integer) {
-		for (Integer element : integerArray) {
-			if (integer.equals(element)) {
-				return true;
-			}
-		}
+    boolean contains(Integer[] integerArray, Integer integer) {
+        for (Integer element : integerArray) {
+            if (integer.equals(element)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }

@@ -9,63 +9,63 @@ import com.google.gwt.user.client.ui.Composite;
 
 public class StudentCollectionWidget extends Composite {
 
-	public class CollectionProvider implements StudentCollectionDataProvider {
+    public class CollectionProvider implements StudentCollectionDataProvider {
 
-		private final RetrieveSpecificStudentSetAsync studentListService;
+        private final RetrieveSpecificStudentSetAsync studentListService;
 
-		private List<String> studentNames;
+        private List<String> studentNames;
 
-		public CollectionProvider() {
+        public CollectionProvider() {
 
-			studentListService = (RetrieveSpecificStudentSetAsync) GWT.create(RetrieveSpecificStudentSet.class);
+            studentListService = (RetrieveSpecificStudentSetAsync) GWT.create(RetrieveSpecificStudentSet.class);
 
-			ServiceDefTarget target = (ServiceDefTarget) studentListService;
+            ServiceDefTarget target = (ServiceDefTarget) studentListService;
 
-			String moduleRelativeURL = GWT.getModuleBaseURL() + "RetrieveSpecificStudentSet.gwt";
-			target.setServiceEntryPoint(moduleRelativeURL);
-		}
+            String moduleRelativeURL = GWT.getModuleBaseURL() + "RetrieveSpecificStudentSet.gwt";
+            target.setServiceEntryPoint(moduleRelativeURL);
+        }
 
-		@Override
-		public void updateRowData(final RowDataAcceptor acceptor) {
+        @Override
+        public void updateRowData(final RowDataAcceptor acceptor) {
 
-			studentListService.getStudentNames(new AsyncCallback<List<String>>() {
+            studentListService.getStudentNames(new AsyncCallback<List<String>>() {
 
-				@Override
-				public void onFailure(Throwable caught) {
-					acceptor.failed(caught);
-				}
+                @Override
+                public void onFailure(Throwable caught) {
+                    acceptor.failed(caught);
+                }
 
-				@Override
-				public void onSuccess(List<String> pupilsList) {
-					studentNames = pupilsList;
-					pushResults(acceptor, studentNames);
-				}
-			});
+                @Override
+                public void onSuccess(List<String> pupilsList) {
+                    studentNames = pupilsList;
+                    pushResults(acceptor, studentNames);
+                }
+            });
 
-		}
+        }
 
-		private void pushResults(RowDataAcceptor acceptor, List<String> pupilsList) {
+        private void pushResults(RowDataAcceptor acceptor, List<String> pupilsList) {
 
-			String[][] rows = new String[pupilsList.size()][];
-			int i = 0;
-			for (String pupil : pupilsList) {
-				rows[i] = new String[1];
-				rows[i][0] = pupil;
-				i++;
-			}
-			acceptor.accept(rows);
-		}
-	}
+            String[][] rows = new String[pupilsList.size()][];
+            int i = 0;
+            for (String pupil : pupilsList) {
+                rows[i] = new String[1];
+                rows[i][0] = pupil;
+                i++;
+            }
+            acceptor.accept(rows);
+        }
+    }
 
-	private final CollectionProvider colProvider = new CollectionProvider();
+    private final CollectionProvider colProvider = new CollectionProvider();
 
-	private final DynaTableWidget dynaTable;
+    private final DynaTableWidget dynaTable;
 
-	public StudentCollectionWidget() {
-		String[] columns = new String[] { "Name" };
-		String[] styles = new String[] { "name" };
-		dynaTable = new DynaTableWidget(colProvider, columns, styles);
-		initWidget(dynaTable);
-	}
+    public StudentCollectionWidget() {
+        String[] columns = new String[] { "Name" };
+        String[] styles = new String[] { "name" };
+        dynaTable = new DynaTableWidget(colProvider, columns, styles);
+        initWidget(dynaTable);
+    }
 
 }

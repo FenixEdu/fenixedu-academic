@@ -7,28 +7,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class RequiredGuidersServiceException extends FenixServiceException {
 
-	public RequiredGuidersServiceException() {
-	}
+    public RequiredGuidersServiceException() {
+    }
 
-	public RequiredGuidersServiceException(String message) {
-		super(message);
-	}
+    public RequiredGuidersServiceException(String message) {
+        super(message);
+    }
 
-	public RequiredGuidersServiceException(Throwable cause) {
-		super(cause);
-	}
+    public RequiredGuidersServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	public RequiredGuidersServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public RequiredGuidersServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[RequiredGuidersServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[RequiredGuidersServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

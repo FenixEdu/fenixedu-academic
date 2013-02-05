@@ -9,15 +9,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption {
 
-	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-	@Service
-	public static void run(final Person responsible,
-			final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean) {
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+    @Service
+    public static void run(final Person responsible,
+            final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean) {
 
-		new AdministrativeOfficeFeeAndInsurancePenaltyExemption(penaltyExemptionBean.getJustificationType(),
-				(AdministrativeOfficeFeeAndInsuranceEvent) penaltyExemptionBean.getEvent(), responsible,
-				penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
+        new AdministrativeOfficeFeeAndInsurancePenaltyExemption(penaltyExemptionBean.getJustificationType(),
+                (AdministrativeOfficeFeeAndInsuranceEvent) penaltyExemptionBean.getEvent(), responsible,
+                penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
 
-	}
+    }
 
 }

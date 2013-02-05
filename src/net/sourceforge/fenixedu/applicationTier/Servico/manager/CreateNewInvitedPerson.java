@@ -9,12 +9,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateNewInvitedPerson extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static Invitation run(InvitedPersonBean bean) {
-		Person person = new Person(bean);
-		Invitation invitation = new Invitation(person, bean.getUnit(), bean.getResponsible(), bean.getBegin(), bean.getEnd());
-		person.setIstUsername();
-		return invitation;
-	}
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static Invitation run(InvitedPersonBean bean) {
+        Person person = new Person(bean);
+        Invitation invitation = new Invitation(person, bean.getUnit(), bean.getResponsible(), bean.getBegin(), bean.getEnd());
+        person.setIstUsername();
+        return invitation;
+    }
 }

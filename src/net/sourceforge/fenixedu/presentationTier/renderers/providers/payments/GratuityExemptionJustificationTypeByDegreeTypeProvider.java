@@ -9,19 +9,19 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class GratuityExemptionJustificationTypeByDegreeTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final GratuityEvent gratuityEvent = getGratuityEvent(source);
-		return GratuityExemptionJustificationType.getTypesFor(gratuityEvent.getDegree().getDegreeType());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final GratuityEvent gratuityEvent = getGratuityEvent(source);
+        return GratuityExemptionJustificationType.getTypesFor(gratuityEvent.getDegree().getDegreeType());
+    }
 
-	private GratuityEvent getGratuityEvent(final Object source) {
-		return ((CreateGratuityExemptionBean) source).getGratuityEvent();
-	}
+    private GratuityEvent getGratuityEvent(final Object source) {
+        return ((CreateGratuityExemptionBean) source).getGratuityEvent();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

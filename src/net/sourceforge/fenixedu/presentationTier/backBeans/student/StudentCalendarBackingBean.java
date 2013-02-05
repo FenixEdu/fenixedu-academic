@@ -41,380 +41,380 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class StudentCalendarBackingBean extends FenixBackingBean {
 
-	private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
+    private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
-	private static final MessageResources messages = MessageResources.getMessageResources("resources/StudentResources");
+    private static final MessageResources messages = MessageResources.getMessageResources("resources/StudentResources");
 
-	private static final Comparator<ExecutionCourse> executionCourseComparator = new Comparator<ExecutionCourse>() {
+    private static final Comparator<ExecutionCourse> executionCourseComparator = new Comparator<ExecutionCourse>() {
 
-		@Override
-		public int compare(ExecutionCourse o1, ExecutionCourse o2) {
-			return o1.getNome().compareTo(o2.getNome());
-		}
+        @Override
+        public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+            return o1.getNome().compareTo(o2.getNome());
+        }
 
-	};
+    };
 
-	private Collection<ExecutionSemester> executionSemesters;
+    private Collection<ExecutionSemester> executionSemesters;
 
-	private Collection<ExecutionCourse> executionCourses;
+    private Collection<ExecutionCourse> executionCourses;
 
-	private ExecutionSemester executionSemester;
+    private ExecutionSemester executionSemester;
 
-	private Registration registration;
+    private Registration registration;
 
-	boolean setExecutionCourse = true;
+    boolean setExecutionCourse = true;
 
-	private String evaluationTypeClassname;
+    private String evaluationTypeClassname;
 
-	protected Person getPerson() {
-		return getUserView() == null ? null : getUserView().getPerson();
-	}
+    protected Person getPerson() {
+        return getUserView() == null ? null : getUserView().getPerson();
+    }
 
-	public Collection<ExecutionSemester> getExecutionPeriods() {
-		if (executionSemesters == null) {
-			final Registration registration = getStudent();
+    public Collection<ExecutionSemester> getExecutionPeriods() {
+        if (executionSemesters == null) {
+            final Registration registration = getStudent();
 
-			executionSemesters = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
-			if (registration != null) {
-				for (final Attends attends : registration.getAssociatedAttends()) {
-					executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
-				}
-			}
-		}
-		return executionSemesters;
-	}
+            executionSemesters = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+            if (registration != null) {
+                for (final Attends attends : registration.getAssociatedAttends()) {
+                    executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
+                }
+            }
+        }
+        return executionSemesters;
+    }
 
-	public Collection<ExecutionCourse> getExecutionCourses() {
-		final ExecutionSemester executionSemester = getExecutionPeriod();
+    public Collection<ExecutionCourse> getExecutionCourses() {
+        final ExecutionSemester executionSemester = getExecutionPeriod();
 
-		if (executionCourses == null
-				|| (!executionCourses.isEmpty() && executionSemester != executionCourses.iterator().next().getExecutionPeriod())) {
-			final Registration registration = getStudent();
+        if (executionCourses == null
+                || (!executionCourses.isEmpty() && executionSemester != executionCourses.iterator().next().getExecutionPeriod())) {
+            final Registration registration = getStudent();
 
-			executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
-			if (registration != null) {
-				for (final Attends attends : registration.getAssociatedAttends()) {
-					final ExecutionCourse executionCourse = attends.getExecutionCourse();
-					if (executionCourse.getExecutionPeriod() == executionSemester) {
-						executionCourses.add(executionCourse);
-					}
-				}
-			}
-		}
-		return executionCourses;
-	}
+            executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
+            if (registration != null) {
+                for (final Attends attends : registration.getAssociatedAttends()) {
+                    final ExecutionCourse executionCourse = attends.getExecutionCourse();
+                    if (executionCourse.getExecutionPeriod() == executionSemester) {
+                        executionCourses.add(executionCourse);
+                    }
+                }
+            }
+        }
+        return executionCourses;
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		final Integer executionPeriodID = getExecutionPeriodID();
-		if (executionSemester == null || !executionPeriodID.equals(executionSemester.getIdInternal())) {
-			final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
-			if (executionSemesters != null) {
-				for (final ExecutionSemester executionSemester : executionSemesters) {
-					if (executionSemester.getIdInternal().equals(executionPeriodID)) {
-						this.executionSemester = executionSemester;
-						break;
-					}
-				}
-			}
-		}
-		return executionSemester;
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        final Integer executionPeriodID = getExecutionPeriodID();
+        if (executionSemester == null || !executionPeriodID.equals(executionSemester.getIdInternal())) {
+            final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
+            if (executionSemesters != null) {
+                for (final ExecutionSemester executionSemester : executionSemesters) {
+                    if (executionSemester.getIdInternal().equals(executionPeriodID)) {
+                        this.executionSemester = executionSemester;
+                        break;
+                    }
+                }
+            }
+        }
+        return executionSemester;
+    }
 
-	public List<SelectItem> getRegistrationsSelectItems() {
-		final List<SelectItem> result = new ArrayList<SelectItem>();
+    public List<SelectItem> getRegistrationsSelectItems() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
 
-		for (final Registration registration : getPerson().getStudent().getActiveRegistrations()) {
-			result.add(new SelectItem(registration.getIdInternal(), registration.getDegreeNameWithDegreeCurricularPlanName()));
-		}
+        for (final Registration registration : getPerson().getStudent().getActiveRegistrations()) {
+            result.add(new SelectItem(registration.getIdInternal(), registration.getDegreeNameWithDegreeCurricularPlanName()));
+        }
 
-		if (!result.isEmpty()) {
-			setRegistrationID(getPerson().getStudent().getLastActiveRegistration().getIdInternal());
-		}
+        if (!result.isEmpty()) {
+            setRegistrationID(getPerson().getStudent().getLastActiveRegistration().getIdInternal());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public Integer getRegistrationID() {
-		return (Integer) getViewState().getAttribute("registrationID");
-	}
+    public Integer getRegistrationID() {
+        return (Integer) getViewState().getAttribute("registrationID");
+    }
 
-	public void setRegistrationID(Integer registrationID) {
-		getViewState().setAttribute("registrationID", registrationID);
-	}
+    public void setRegistrationID(Integer registrationID) {
+        getViewState().setAttribute("registrationID", registrationID);
+    }
 
-	public Registration getStudent() {
-		if (registration == null) {
-			for (final Registration activeRegistration : getPerson().getStudent().getActiveRegistrations()) {
-				if (activeRegistration.getIdInternal().equals(getRegistrationID())) {
-					registration = activeRegistration;
-					break;
-				}
-			}
-		}
-		return registration;
-	}
+    public Registration getStudent() {
+        if (registration == null) {
+            for (final Registration activeRegistration : getPerson().getStudent().getActiveRegistrations()) {
+                if (activeRegistration.getIdInternal().equals(getRegistrationID())) {
+                    registration = activeRegistration;
+                    break;
+                }
+            }
+        }
+        return registration;
+    }
 
-	public Date getCalendarStartDate() {
-		final ExecutionSemester executionSemester = getExecutionPeriod();
-		final String evaluationTypeClassname = getEvaluationTypeClassname();
-		final Registration registration = getStudent();
-		final StudentCurricularPlan studentCurricularPlan =
-				(registration != null) ? registration.getActiveStudentCurricularPlan() : null;
-		final DegreeCurricularPlan degreeCurricularPlan =
-				(studentCurricularPlan != null) ? studentCurricularPlan.getDegreeCurricularPlan() : null;
-		final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
-		if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
-			if (executionDegree != null && executionSemester.getSemester().intValue() == 1
-					&& executionDegree.getPeriodLessonsFirstSemester() != null) {
-				return executionDegree.getPeriodLessonsFirstSemester().getStart();
-			} else if (executionDegree != null && executionSemester.getSemester().intValue() == 2
-					&& executionDegree.getPeriodLessonsSecondSemester() != null) {
-				return executionDegree.getPeriodLessonsSecondSemester().getStart();
-			} else if (executionSemester != null) {
-				return executionSemester.getBeginDate();
-			}
-		} else {
-			if (evaluationTypeClassname.equals(Exam.class.getName())) {
-				if (executionSemester.getSemester().intValue() == 1) {
-					return executionDegree.getPeriodExamsFirstSemester().getStart();
-				} else if (executionSemester.getSemester().intValue() == 2) {
-					return executionDegree.getPeriodExamsSecondSemester().getStart();
-				}
-			} else if (evaluationTypeClassname.equals(WrittenTest.class.getName())) {
-				if (executionSemester.getSemester().intValue() == 1) {
-					return executionDegree.getPeriodLessonsFirstSemester().getStart();
-				} else if (executionSemester.getSemester().intValue() == 2) {
-					return executionDegree.getPeriodLessonsSecondSemester().getStart();
-				}
-			} else if (evaluationTypeClassname.equals(WrittenTest.class.getName())
-					|| evaluationTypeClassname.equals(Project.class.getName())) {
-				if (executionSemester.getSemester().intValue() == 1) {
-					return executionDegree.getPeriodLessonsFirstSemester().getStart();
-				} else if (executionSemester.getSemester().intValue() == 2) {
-					return executionDegree.getPeriodLessonsSecondSemester().getStart();
-				}
-			}
-		}
-		return null;
-	}
+    public Date getCalendarStartDate() {
+        final ExecutionSemester executionSemester = getExecutionPeriod();
+        final String evaluationTypeClassname = getEvaluationTypeClassname();
+        final Registration registration = getStudent();
+        final StudentCurricularPlan studentCurricularPlan =
+                (registration != null) ? registration.getActiveStudentCurricularPlan() : null;
+        final DegreeCurricularPlan degreeCurricularPlan =
+                (studentCurricularPlan != null) ? studentCurricularPlan.getDegreeCurricularPlan() : null;
+        final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
+        if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
+            if (executionDegree != null && executionSemester.getSemester().intValue() == 1
+                    && executionDegree.getPeriodLessonsFirstSemester() != null) {
+                return executionDegree.getPeriodLessonsFirstSemester().getStart();
+            } else if (executionDegree != null && executionSemester.getSemester().intValue() == 2
+                    && executionDegree.getPeriodLessonsSecondSemester() != null) {
+                return executionDegree.getPeriodLessonsSecondSemester().getStart();
+            } else if (executionSemester != null) {
+                return executionSemester.getBeginDate();
+            }
+        } else {
+            if (evaluationTypeClassname.equals(Exam.class.getName())) {
+                if (executionSemester.getSemester().intValue() == 1) {
+                    return executionDegree.getPeriodExamsFirstSemester().getStart();
+                } else if (executionSemester.getSemester().intValue() == 2) {
+                    return executionDegree.getPeriodExamsSecondSemester().getStart();
+                }
+            } else if (evaluationTypeClassname.equals(WrittenTest.class.getName())) {
+                if (executionSemester.getSemester().intValue() == 1) {
+                    return executionDegree.getPeriodLessonsFirstSemester().getStart();
+                } else if (executionSemester.getSemester().intValue() == 2) {
+                    return executionDegree.getPeriodLessonsSecondSemester().getStart();
+                }
+            } else if (evaluationTypeClassname.equals(WrittenTest.class.getName())
+                    || evaluationTypeClassname.equals(Project.class.getName())) {
+                if (executionSemester.getSemester().intValue() == 1) {
+                    return executionDegree.getPeriodLessonsFirstSemester().getStart();
+                } else if (executionSemester.getSemester().intValue() == 2) {
+                    return executionDegree.getPeriodLessonsSecondSemester().getStart();
+                }
+            }
+        }
+        return null;
+    }
 
-	public Date getCalendarEndDate() {
-		final ExecutionSemester executionSemester = getExecutionPeriod();
-		final String evaluationTypeClassname = getEvaluationTypeClassname();
-		final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
-		final DegreeCurricularPlan degreeCurricularPlan =
-				(studentCurricularPlan != null) ? studentCurricularPlan.getDegreeCurricularPlan() : null;
-		final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
-		if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
-			if (executionDegree != null && executionSemester.getSemester().intValue() == 1
-					&& executionDegree.getPeriodExamsFirstSemester() != null) {
-				return executionDegree.getPeriodExamsFirstSemester().getEnd();
-			} else if (executionDegree != null && executionSemester.getSemester().intValue() == 2
-					&& executionDegree.getPeriodExamsSecondSemester() != null) {
-				return executionDegree.getPeriodExamsSecondSemester().getEnd();
-			} else if (executionSemester != null) {
-				return executionSemester.getEndDate();
-			}
-		} else {
-			if (evaluationTypeClassname.equals(Exam.class.getName())) {
-				if (executionSemester.getSemester().intValue() == 1) {
-					return executionDegree.getPeriodExamsFirstSemester().getEnd();
-				} else if (executionSemester.getSemester().intValue() == 2) {
-					return executionDegree.getPeriodExamsSecondSemester().getEnd();
-				}
-			} else if (evaluationTypeClassname.equals(WrittenTest.class.getName())
-					|| evaluationTypeClassname.equals(Project.class.getName())) {
-				if (executionSemester.getSemester().intValue() == 1) {
-					return executionDegree.getPeriodLessonsFirstSemester().getEnd();
-				} else if (executionSemester.getSemester().intValue() == 2) {
-					return executionDegree.getPeriodLessonsSecondSemester().getEnd();
-				}
-			}
-		}
-		return null;
-	}
+    public Date getCalendarEndDate() {
+        final ExecutionSemester executionSemester = getExecutionPeriod();
+        final String evaluationTypeClassname = getEvaluationTypeClassname();
+        final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
+        final DegreeCurricularPlan degreeCurricularPlan =
+                (studentCurricularPlan != null) ? studentCurricularPlan.getDegreeCurricularPlan() : null;
+        final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
+        if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
+            if (executionDegree != null && executionSemester.getSemester().intValue() == 1
+                    && executionDegree.getPeriodExamsFirstSemester() != null) {
+                return executionDegree.getPeriodExamsFirstSemester().getEnd();
+            } else if (executionDegree != null && executionSemester.getSemester().intValue() == 2
+                    && executionDegree.getPeriodExamsSecondSemester() != null) {
+                return executionDegree.getPeriodExamsSecondSemester().getEnd();
+            } else if (executionSemester != null) {
+                return executionSemester.getEndDate();
+            }
+        } else {
+            if (evaluationTypeClassname.equals(Exam.class.getName())) {
+                if (executionSemester.getSemester().intValue() == 1) {
+                    return executionDegree.getPeriodExamsFirstSemester().getEnd();
+                } else if (executionSemester.getSemester().intValue() == 2) {
+                    return executionDegree.getPeriodExamsSecondSemester().getEnd();
+                }
+            } else if (evaluationTypeClassname.equals(WrittenTest.class.getName())
+                    || evaluationTypeClassname.equals(Project.class.getName())) {
+                if (executionSemester.getSemester().intValue() == 1) {
+                    return executionDegree.getPeriodLessonsFirstSemester().getEnd();
+                } else if (executionSemester.getSemester().intValue() == 2) {
+                    return executionDegree.getPeriodLessonsSecondSemester().getEnd();
+                }
+            }
+        }
+        return null;
+    }
 
-	private ExecutionDegree findExecutinDegree(final DegreeCurricularPlan degreeCurricularPlan,
-			final ExecutionSemester executionSemester) {
-		if (degreeCurricularPlan != null) {
-			for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-				if (executionSemester != null && executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
-					return executionDegree;
-				}
-			}
-		}
-		return null;
-	}
+    private ExecutionDegree findExecutinDegree(final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionSemester executionSemester) {
+        if (degreeCurricularPlan != null) {
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+                if (executionSemester != null && executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
+                    return executionDegree;
+                }
+            }
+        }
+        return null;
+    }
 
-	public List<CalendarLink> getCalendarLinks() {
-		List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
+    public List<CalendarLink> getCalendarLinks() {
+        List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
 
-		final ExecutionSemester executionSemester = getExecutionPeriod();
-		final Registration registration = getStudent();
+        final ExecutionSemester executionSemester = getExecutionPeriod();
+        final Registration registration = getStudent();
 
-		for (final Attends attends : registration.getAssociatedAttends()) {
-			final ExecutionCourse executionCourse = attends.getExecutionCourse();
-			if (executionCourse.getExecutionPeriod() == executionSemester
-					&& (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getIdInternal()))) {
-				for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-					if (evaluation instanceof WrittenEvaluation) {
-						if (evaluation instanceof Exam) {
-							final Exam exam = (Exam) evaluation;
-							if (!exam.isExamsMapPublished()) {
-								continue;
-							}
-						}
+        for (final Attends attends : registration.getAssociatedAttends()) {
+            final ExecutionCourse executionCourse = attends.getExecutionCourse();
+            if (executionCourse.getExecutionPeriod() == executionSemester
+                    && (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getIdInternal()))) {
+                for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                    if (evaluation instanceof WrittenEvaluation) {
+                        if (evaluation instanceof Exam) {
+                            final Exam exam = (Exam) evaluation;
+                            if (!exam.isExamsMapPublished()) {
+                                continue;
+                            }
+                        }
 
-						final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-						final String evaluationTypeClassname = getEvaluationTypeClassname();
-						if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
-								|| evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
-							CalendarLink calendarLink =
-									new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
-							calendarLinks.add(calendarLink);
-							calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
-						}
-					} else if (evaluation instanceof Project) {
-						final Project project = (Project) evaluation;
-						final String evaluationTypeClassname = getEvaluationTypeClassname();
-						if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
-								|| evaluationTypeClassname.equals(project.getClass().getName())) {
-							CalendarLink calendarLinkBegin = new CalendarLink();
-							calendarLinks.add(calendarLinkBegin);
-							calendarLinkBegin.setObjectOccurrence(project.getBegin());
-							calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project,
-									project.getBegin(), messages.getMessage("label.evaluation.project.begin")));
-							calendarLinkBegin.setLinkParameters(constructLinkParameters(executionCourse));
+                        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+                        final String evaluationTypeClassname = getEvaluationTypeClassname();
+                        if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
+                                || evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
+                            CalendarLink calendarLink =
+                                    new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                            calendarLinks.add(calendarLink);
+                            calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
+                        }
+                    } else if (evaluation instanceof Project) {
+                        final Project project = (Project) evaluation;
+                        final String evaluationTypeClassname = getEvaluationTypeClassname();
+                        if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
+                                || evaluationTypeClassname.equals(project.getClass().getName())) {
+                            CalendarLink calendarLinkBegin = new CalendarLink();
+                            calendarLinks.add(calendarLinkBegin);
+                            calendarLinkBegin.setObjectOccurrence(project.getBegin());
+                            calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project,
+                                    project.getBegin(), messages.getMessage("label.evaluation.project.begin")));
+                            calendarLinkBegin.setLinkParameters(constructLinkParameters(executionCourse));
 
-							CalendarLink calendarLinkEnd = new CalendarLink();
-							calendarLinks.add(calendarLinkEnd);
-							calendarLinkEnd.setObjectOccurrence(project.getEnd());
-							calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project,
-									project.getEnd(), messages.getMessage("label.evaluation.project.end")));
-							calendarLinkEnd.setLinkParameters(constructLinkParameters(executionCourse));
-						}
-					}
-				}
-			}
-		}
-		return calendarLinks;
-	}
+                            CalendarLink calendarLinkEnd = new CalendarLink();
+                            calendarLinks.add(calendarLinkEnd);
+                            calendarLinkEnd.setObjectOccurrence(project.getEnd());
+                            calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project,
+                                    project.getEnd(), messages.getMessage("label.evaluation.project.end")));
+                            calendarLinkEnd.setLinkParameters(constructLinkParameters(executionCourse));
+                        }
+                    }
+                }
+            }
+        }
+        return calendarLinks;
+    }
 
-	public List<SelectItem> getExecutionPeriodSelectItems() {
-		final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
+    public List<SelectItem> getExecutionPeriodSelectItems() {
+        final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
-		for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
-			if (executionSemester.getState() != PeriodState.NOT_OPEN) {
-				final ExecutionYear executionYear = executionSemester.getExecutionYear();
-				executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getName()
-						+ " " + executionYear.getYear()));
-			}
-		}
+        for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
+            if (executionSemester.getState() != PeriodState.NOT_OPEN) {
+                final ExecutionYear executionYear = executionSemester.getExecutionYear();
+                executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getName()
+                        + " " + executionYear.getYear()));
+            }
+        }
 
-		return executionPeriodSelectItems;
-	}
+        return executionPeriodSelectItems;
+    }
 
-	public List<SelectItem> getExecutionCourseSelectItems() {
-		final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
+    public List<SelectItem> getExecutionCourseSelectItems() {
+        final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
-		for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-			executionPeriodSelectItems.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
-		}
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+            executionPeriodSelectItems.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+        }
 
-		return executionPeriodSelectItems;
-	}
+        return executionPeriodSelectItems;
+    }
 
-	private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
-		final Site site = executionCourse.getSite();
+    private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
+        final Site site = executionCourse.getSite();
 
-		final Map<String, String> linkParameters = new HashMap<String, String>();
-		linkParameters.put("method", "evaluations");
-		linkParameters.put("objectCode", (site != null) ? site.getIdInternal().toString() : null);
-		linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
-		linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
-		linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
-		return linkParameters;
-	}
+        final Map<String, String> linkParameters = new HashMap<String, String>();
+        linkParameters.put("method", "evaluations");
+        linkParameters.put("objectCode", (site != null) ? site.getIdInternal().toString() : null);
+        linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+        linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
+        return linkParameters;
+    }
 
-	private String constructCalendarPresentation(final ExecutionCourse executionCourse, final Project project, final Date time,
-			final String tail) {
-		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(messages.getMessage("label.evaluation.shortname.project"));
-		stringBuilder.append(" ");
-		stringBuilder.append(executionCourse.getSigla());
-		stringBuilder.append(" (");
-		stringBuilder.append(hourFormat.format(time));
-		stringBuilder.append(") ");
-		stringBuilder.append(tail);
-		return stringBuilder.toString();
-	}
+    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final Project project, final Date time,
+            final String tail) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(messages.getMessage("label.evaluation.shortname.project"));
+        stringBuilder.append(" ");
+        stringBuilder.append(executionCourse.getSigla());
+        stringBuilder.append(" (");
+        stringBuilder.append(hourFormat.format(time));
+        stringBuilder.append(") ");
+        stringBuilder.append(tail);
+        return stringBuilder.toString();
+    }
 
-	private String constructCalendarPresentation(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation) {
-		final StringBuilder stringBuilder = new StringBuilder();
-		if (writtenEvaluation instanceof WrittenTest) {
-			stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));
-		} else if (writtenEvaluation instanceof Exam) {
-			stringBuilder.append(messages.getMessage("label.evaluation.shortname.exam"));
-		}
-		stringBuilder.append(" ");
-		stringBuilder.append(executionCourse.getSigla());
-		stringBuilder.append(" (");
-		stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginningDate()));
-		stringBuilder.append(")");
-		return stringBuilder.toString();
-	}
+    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (writtenEvaluation instanceof WrittenTest) {
+            stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));
+        } else if (writtenEvaluation instanceof Exam) {
+            stringBuilder.append(messages.getMessage("label.evaluation.shortname.exam"));
+        }
+        stringBuilder.append(" ");
+        stringBuilder.append(executionCourse.getSigla());
+        stringBuilder.append(" (");
+        stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginningDate()));
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 
-	public String getApplicationContext() {
-		final String appContext = PropertiesManager.getProperty("app.context");
-		return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
-	}
+    public String getApplicationContext() {
+        final String appContext = PropertiesManager.getProperty("app.context");
+        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+    }
 
-	public Integer getExecutionPeriodID() {
-		if (getViewState().getAttribute("executionPeriodID") == null) {
-			final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
-			if (executionSemesters != null) {
-				for (final ExecutionSemester executionSemester : executionSemesters) {
-					if (executionSemester.getState().equals(PeriodState.CURRENT)) {
-						setExecutionPeriodID(executionSemester.getIdInternal());
-						break;
-					}
-				}
-			}
-		}
-		return (Integer) getViewState().getAttribute("executionPeriodID");
-	}
+    public Integer getExecutionPeriodID() {
+        if (getViewState().getAttribute("executionPeriodID") == null) {
+            final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
+            if (executionSemesters != null) {
+                for (final ExecutionSemester executionSemester : executionSemesters) {
+                    if (executionSemester.getState().equals(PeriodState.CURRENT)) {
+                        setExecutionPeriodID(executionSemester.getIdInternal());
+                        break;
+                    }
+                }
+            }
+        }
+        return (Integer) getViewState().getAttribute("executionPeriodID");
+    }
 
-	public void setExecutionPeriodID(Integer executionPeriodID) {
-		getViewState().setAttribute("executionPeriodID", executionPeriodID);
-	}
+    public void setExecutionPeriodID(Integer executionPeriodID) {
+        getViewState().setAttribute("executionPeriodID", executionPeriodID);
+    }
 
-	public Integer getExecutionCourseID() {
-		return (Integer) getViewState().getAttribute("executionCourseID");
-	}
+    public Integer getExecutionCourseID() {
+        return (Integer) getViewState().getAttribute("executionCourseID");
+    }
 
-	public void setExecutionCourseID(Integer executionCourseID) {
-		if (setExecutionCourse) {
-			getViewState().setAttribute("executionCourseID", executionCourseID);
-		}
-	}
+    public void setExecutionCourseID(Integer executionCourseID) {
+        if (setExecutionCourse) {
+            getViewState().setAttribute("executionCourseID", executionCourseID);
+        }
+    }
 
-	public String getEvaluationTypeClassname() {
-		return evaluationTypeClassname;
-	}
+    public String getEvaluationTypeClassname() {
+        return evaluationTypeClassname;
+    }
 
-	public void setEvaluationTypeClassname(final String evaluationTypeClassname) {
-		this.evaluationTypeClassname = evaluationTypeClassname;
-	}
+    public void setEvaluationTypeClassname(final String evaluationTypeClassname) {
+        this.evaluationTypeClassname = evaluationTypeClassname;
+    }
 
-	public void resetExecutionCourses(ValueChangeEvent event) {
-		getViewState().removeAttribute("executionCourseID");
-		setExecutionCourse = false;
-		this.executionCourses = null;
-	}
+    public void resetExecutionCourses(ValueChangeEvent event) {
+        getViewState().removeAttribute("executionCourseID");
+        setExecutionCourse = false;
+        this.executionCourses = null;
+    }
 
-	public void resetExecutionCourse(ValueChangeEvent event) {
-		if (event.getNewValue() == null) {
-			getViewState().removeAttribute("executionCourseID");
-		}
-	}
+    public void resetExecutionCourse(ValueChangeEvent event) {
+        if (event.getNewValue() == null) {
+            getViewState().removeAttribute("executionCourseID");
+        }
+    }
 }

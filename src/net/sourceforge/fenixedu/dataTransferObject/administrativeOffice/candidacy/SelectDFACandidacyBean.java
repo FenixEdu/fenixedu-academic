@@ -15,60 +15,60 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
  */
 public class SelectDFACandidacyBean extends StateBean implements Serializable {
 
-	private DFACandidacy candidacy;
+    private DFACandidacy candidacy;
 
-	private String remarks;
+    private String remarks;
 
-	private Integer order;
+    private Integer order;
 
-	public SelectDFACandidacyBean(DFACandidacy candidacy) {
-		super();
-		if (candidacy != null) {
-			this.candidacy = candidacy;
-			if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.SUBSTITUTE)) {
-				setSelectionSituation(CandidacySituationType.SUBSTITUTE);
-			}
-			if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.ADMITTED)) {
-				setSelectionSituation(CandidacySituationType.ADMITTED);
-			}
-			if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.NOT_ADMITTED)) {
-				setSelectionSituation(CandidacySituationType.NOT_ADMITTED);
+    public SelectDFACandidacyBean(DFACandidacy candidacy) {
+        super();
+        if (candidacy != null) {
+            this.candidacy = candidacy;
+            if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.SUBSTITUTE)) {
+                setSelectionSituation(CandidacySituationType.SUBSTITUTE);
+            }
+            if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.ADMITTED)) {
+                setSelectionSituation(CandidacySituationType.ADMITTED);
+            }
+            if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.NOT_ADMITTED)) {
+                setSelectionSituation(CandidacySituationType.NOT_ADMITTED);
 
-			}
-			this.remarks = candidacy.getActiveCandidacySituation().getRemarks();
-		}
-	}
+            }
+            this.remarks = candidacy.getActiveCandidacySituation().getRemarks();
+        }
+    }
 
-	public DFACandidacy getCandidacy() {
-		return this.candidacy;
-	}
+    public DFACandidacy getCandidacy() {
+        return this.candidacy;
+    }
 
-	public void setCandidacy(DFACandidacy candidacy) {
-		this.candidacy = candidacy;
-	}
+    public void setCandidacy(DFACandidacy candidacy) {
+        this.candidacy = candidacy;
+    }
 
-	public Integer getOrder() {
-		return order;
-	}
+    public Integer getOrder() {
+        return order;
+    }
 
-	public void setOrder(Integer order) {
-		this.order = order;
-	}
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
 
-	public String getRemarks() {
-		return remarks;
-	}
+    public String getRemarks() {
+        return remarks;
+    }
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	public CandidacySituationType getSelectionSituation() {
-		return getNextState() == null ? null : CandidacySituationType.valueOf(getNextState());
-	}
+    public CandidacySituationType getSelectionSituation() {
+        return getNextState() == null ? null : CandidacySituationType.valueOf(getNextState());
+    }
 
-	public void setSelectionSituation(final CandidacySituationType selectionSituation) {
-		setNextState(selectionSituation == null ? null : selectionSituation.name());
-	}
+    public void setSelectionSituation(final CandidacySituationType selectionSituation) {
+        setNextState(selectionSituation == null ? null : selectionSituation.name());
+    }
 
 }

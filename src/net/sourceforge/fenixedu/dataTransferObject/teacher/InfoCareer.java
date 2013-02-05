@@ -21,74 +21,74 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
  */
 public abstract class InfoCareer extends InfoObject implements ISiteComponent {
 
-	private Integer beginYear;
-	private Integer endYear;
-	private CareerType careerType;
-	private InfoTeacher infoTeacher;
-	private Date lastModificationDate;
+    private Integer beginYear;
+    private Integer endYear;
+    private CareerType careerType;
+    private InfoTeacher infoTeacher;
+    private Date lastModificationDate;
 
-	public InfoCareer() {
-		super();
-	}
+    public InfoCareer() {
+        super();
+    }
 
-	public Integer getBeginYear() {
-		return beginYear;
-	}
+    public Integer getBeginYear() {
+        return beginYear;
+    }
 
-	public void setBeginYear(Integer beginYear) {
-		this.beginYear = beginYear;
-	}
+    public void setBeginYear(Integer beginYear) {
+        this.beginYear = beginYear;
+    }
 
-	public Integer getEndYear() {
-		return endYear;
-	}
+    public Integer getEndYear() {
+        return endYear;
+    }
 
-	public void setEndYear(Integer endYear) {
-		this.endYear = endYear;
-	}
+    public void setEndYear(Integer endYear) {
+        this.endYear = endYear;
+    }
 
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
-	public CareerType getCareerType() {
-		return careerType;
-	}
+    public CareerType getCareerType() {
+        return careerType;
+    }
 
-	public void setCareerType(CareerType careerType) {
-		this.careerType = careerType;
-	}
+    public void setCareerType(CareerType careerType) {
+        this.careerType = careerType;
+    }
 
-	public Date getLastModificationDate() {
-		return lastModificationDate;
-	}
+    public Date getLastModificationDate() {
+        return lastModificationDate;
+    }
 
-	public void setLastModificationDate(Date lastModificationDate) {
-		this.lastModificationDate = lastModificationDate;
-	}
+    public void setLastModificationDate(Date lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
-	public void copyFromDomain(Career career) {
-		super.copyFromDomain(career);
-		if (career != null) {
-			setBeginYear(career.getBeginYear());
-			setEndYear(career.getEndYear());
-			setLastModificationDate(career.getLastModificationDate());
-		}
-	}
+    public void copyFromDomain(Career career) {
+        super.copyFromDomain(career);
+        if (career != null) {
+            setBeginYear(career.getBeginYear());
+            setEndYear(career.getEndYear());
+            setLastModificationDate(career.getLastModificationDate());
+        }
+    }
 
-	public static InfoCareer newInfoFromDomain(Career career) {
-		InfoCareer infoCareer = null;
-		if (career != null) {
-			if (career instanceof TeachingCareer) {
-				infoCareer = InfoTeachingCareerWithInfoCategory.newInfoFromDomain((TeachingCareer) career);
-			} else if (career instanceof ProfessionalCareer) {
-				infoCareer = InfoProfessionalCareer.newInfoFromDomain((ProfessionalCareer) career);
-			}
-		}
-		return infoCareer;
-	}
+    public static InfoCareer newInfoFromDomain(Career career) {
+        InfoCareer infoCareer = null;
+        if (career != null) {
+            if (career instanceof TeachingCareer) {
+                infoCareer = InfoTeachingCareerWithInfoCategory.newInfoFromDomain((TeachingCareer) career);
+            } else if (career instanceof ProfessionalCareer) {
+                infoCareer = InfoProfessionalCareer.newInfoFromDomain((ProfessionalCareer) career);
+            }
+        }
+        return infoCareer;
+    }
 }

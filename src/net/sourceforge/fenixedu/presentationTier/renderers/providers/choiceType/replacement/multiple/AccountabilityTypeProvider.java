@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AccountabilityTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return new ArrayList(RootDomainObject.getInstance().getAccountabilityTypes());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return new ArrayList(RootDomainObject.getInstance().getAccountabilityTypes());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
 }

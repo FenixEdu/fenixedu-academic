@@ -10,16 +10,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateNewRoomsReserve extends FenixService {
 
-	@Service
-	public static PunctualRoomsOccupationRequest run(RoomsReserveBean bean) {
-		if (AccessControl.getPerson().hasRole(RoleType.TEACHER) || AccessControl.getPerson().hasAnyProfessorships()) {
+    @Service
+    public static PunctualRoomsOccupationRequest run(RoomsReserveBean bean) {
+        if (AccessControl.getPerson().hasRole(RoleType.TEACHER) || AccessControl.getPerson().hasAnyProfessorships()) {
 
-			if (bean != null) {
-				return new PunctualRoomsOccupationRequest(bean.getRequestor(), bean.getSubject(), bean.getDescription());
-			}
-			return null;
-		} else {
-			throw new DomainException("person.is.not.authorized");
-		}
-	}
+            if (bean != null) {
+                return new PunctualRoomsOccupationRequest(bean.getRequestor(), bean.getSubject(), bean.getDescription());
+            }
+            return null;
+        } else {
+            throw new DomainException("person.is.not.authorized");
+        }
+    }
 }

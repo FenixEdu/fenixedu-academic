@@ -16,22 +16,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class VigilantsForGivenCoordinator implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
+        UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
 
-		ExamCoordinator coordinator = bean.getCoordinator();
+        ExamCoordinator coordinator = bean.getCoordinator();
 
-		List<VigilantWrapper> vigilantsToReturn = new ArrayList<VigilantWrapper>(coordinator.getVigilantsThatCanManage());
+        List<VigilantWrapper> vigilantsToReturn = new ArrayList<VigilantWrapper>(coordinator.getVigilantsThatCanManage());
 
-		Collections.sort(vigilantsToReturn, new BeanComparator("person.name"));
-		return vigilantsToReturn;
-	}
+        Collections.sort(vigilantsToReturn, new BeanComparator("person.name"));
+        return vigilantsToReturn;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

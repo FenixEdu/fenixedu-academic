@@ -13,16 +13,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteGuideVersionInManager extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer guideID) throws InvalidChangeServiceException {
-		Guide guide = rootDomainObject.readGuideByOID(guideID);
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer guideID) throws InvalidChangeServiceException {
+        Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-		if (!guide.canBeDeleted()) {
-			throw new InvalidChangeServiceException();
-		}
+        if (!guide.canBeDeleted()) {
+            throw new InvalidChangeServiceException();
+        }
 
-		guide.delete();
-	}
+        guide.delete();
+    }
 
 }

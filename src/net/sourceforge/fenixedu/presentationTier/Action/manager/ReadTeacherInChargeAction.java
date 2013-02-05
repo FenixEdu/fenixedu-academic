@@ -32,76 +32,76 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ReadTeacherInChargeAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
-		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        IUserView userView = UserView.getUser();
+        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-		Object args[] = { executionCourseId };
+        Object args[] = { executionCourseId };
 
-		InfoExecutionCourse infoExecutionCourse = null;
-		try {
-			infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourseManagerByID", args);
+        InfoExecutionCourse infoExecutionCourse = null;
+        try {
+            infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourseManagerByID", args);
 
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		List infoTeachersList = null;
+        List infoTeachersList = null;
 
-		try {
-			infoTeachersList = (List) ServiceUtils.executeService("ReadExecutionCourseTeachers", args);
+        try {
+            infoTeachersList = (List) ServiceUtils.executeService("ReadExecutionCourseTeachers", args);
 
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		List infoNonAffiliatedTeachers = infoExecutionCourse.getNonAffiliatedTeachers();
-		if (infoTeachersList != null) {
-			List<Integer> teachersIds = new ArrayList<Integer>();
-			Integer teacherId;
-			Iterator iter = infoTeachersList.iterator();
-			while (iter.hasNext()) {
-				teacherId = ((InfoTeacher) iter.next()).getIdInternal();
-				teachersIds.add(teacherId);
-			}
+        List infoNonAffiliatedTeachers = infoExecutionCourse.getNonAffiliatedTeachers();
+        if (infoTeachersList != null) {
+            List<Integer> teachersIds = new ArrayList<Integer>();
+            Integer teacherId;
+            Iterator iter = infoTeachersList.iterator();
+            while (iter.hasNext()) {
+                teacherId = ((InfoTeacher) iter.next()).getIdInternal();
+                teachersIds.add(teacherId);
+            }
 
-			Integer[] professorShipTeachersIds = teachersIds.toArray(new Integer[] {});
-			DynaActionForm newForm = (DynaActionForm) form;
-			newForm.set("professorShipTeachersIds", professorShipTeachersIds);
+            Integer[] professorShipTeachersIds = teachersIds.toArray(new Integer[] {});
+            DynaActionForm newForm = (DynaActionForm) form;
+            newForm.set("professorShipTeachersIds", professorShipTeachersIds);
 
-			List<Integer> nonAffiliatedTeacherIDs = new ArrayList<Integer>();
-			Integer nonAffiliatedTeacherID;
+            List<Integer> nonAffiliatedTeacherIDs = new ArrayList<Integer>();
+            Integer nonAffiliatedTeacherID;
 
-			if (infoNonAffiliatedTeachers != null) {
-				for (Iterator iterator = infoNonAffiliatedTeachers.iterator(); iterator.hasNext();) {
-					InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = (InfoNonAffiliatedTeacher) iterator.next();
-					nonAffiliatedTeacherID = infoNonAffiliatedTeacher.getIdInternal();
-					nonAffiliatedTeacherIDs.add(nonAffiliatedTeacherID);
-				}
+            if (infoNonAffiliatedTeachers != null) {
+                for (Iterator iterator = infoNonAffiliatedTeachers.iterator(); iterator.hasNext();) {
+                    InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = (InfoNonAffiliatedTeacher) iterator.next();
+                    nonAffiliatedTeacherID = infoNonAffiliatedTeacher.getIdInternal();
+                    nonAffiliatedTeacherIDs.add(nonAffiliatedTeacherID);
+                }
 
-				Integer[] nonAffiliatedTeacherArrayIDs = nonAffiliatedTeacherIDs.toArray(new Integer[] {});
-				newForm.set("nonAffiliatedTeachersIds", nonAffiliatedTeacherArrayIDs);
-			}
+                Integer[] nonAffiliatedTeacherArrayIDs = nonAffiliatedTeacherIDs.toArray(new Integer[] {});
+                newForm.set("nonAffiliatedTeachersIds", nonAffiliatedTeacherArrayIDs);
+            }
 
-			List<Integer> responsiblesIds = null;
-			try {
-				responsiblesIds = (List<Integer>) ServiceUtils.executeService("ReadExecutionCourseResponsiblesIds", args);
+            List<Integer> responsiblesIds = null;
+            try {
+                responsiblesIds = (List<Integer>) ServiceUtils.executeService("ReadExecutionCourseResponsiblesIds", args);
 
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(fenixServiceException.getMessage());
-			}
+            } catch (FenixServiceException fenixServiceException) {
+                throw new FenixActionException(fenixServiceException.getMessage());
+            }
 
-			Integer[] responsibleTeachersIds = responsiblesIds.toArray(new Integer[] {});
-			newForm.set("responsibleTeachersIds", responsibleTeachersIds);
-			request.setAttribute("infoTeachersList", infoTeachersList);
-			request.setAttribute("infoNonAffiliatedTeachers", infoNonAffiliatedTeachers);
+            Integer[] responsibleTeachersIds = responsiblesIds.toArray(new Integer[] {});
+            newForm.set("responsibleTeachersIds", responsibleTeachersIds);
+            request.setAttribute("infoTeachersList", infoTeachersList);
+            request.setAttribute("infoNonAffiliatedTeachers", infoNonAffiliatedTeachers);
 
-		}
-		request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
-		return mapping.findForward("readExecutionCourseTeachers");
-	}
+        }
+        request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
+        return mapping.findForward("readExecutionCourseTeachers");
+    }
 
 }

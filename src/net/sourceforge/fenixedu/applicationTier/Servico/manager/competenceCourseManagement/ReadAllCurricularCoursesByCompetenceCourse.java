@@ -12,22 +12,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllCurricularCoursesByCompetenceCourse extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static List<CurricularCourse> run(final Integer competenceID) throws NonExistingServiceException {
-		final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);
-		if (competenceCourse == null) {
-			throw new NonExistingServiceException("error.manager.noCompetenceCourse");
-		}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<CurricularCourse> run(final Integer competenceID) throws NonExistingServiceException {
+        final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);
+        if (competenceCourse == null) {
+            throw new NonExistingServiceException("error.manager.noCompetenceCourse");
+        }
 
-		final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-		for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-			if (!curricularCourse.isBolonhaDegree()) {
-				result.add(curricularCourse);
-			}
-		}
+        final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+            if (!curricularCourse.isBolonhaDegree()) {
+                result.add(curricularCourse);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

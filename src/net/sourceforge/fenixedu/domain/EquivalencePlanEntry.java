@@ -19,426 +19,426 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
-	public static Comparator<EquivalencePlanEntry> COMPARATOR = new Comparator<EquivalencePlanEntry>() {
-		@Override
-		public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
-			return o1.getCompareString().compareTo(o2.getCompareString());
-		}
-	};
+    public static Comparator<EquivalencePlanEntry> COMPARATOR = new Comparator<EquivalencePlanEntry>() {
+        @Override
+        public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
+            return o1.getCompareString().compareTo(o2.getCompareString());
+        }
+    };
 
-	public static Comparator<EquivalencePlanEntry> COMPARATOR_BY_SOURCE_NUMBER = new Comparator<EquivalencePlanEntry>() {
-		@Override
-		public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
-			final Integer count1 = Integer.valueOf(o1.getOldDegreeModulesCount());
-			final Integer count2 = Integer.valueOf(o2.getOldDegreeModulesCount());
-			return count1.compareTo(count2);
-		}
-	};
+    public static Comparator<EquivalencePlanEntry> COMPARATOR_BY_SOURCE_NUMBER = new Comparator<EquivalencePlanEntry>() {
+        @Override
+        public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
+            final Integer count1 = Integer.valueOf(o1.getOldDegreeModulesCount());
+            final Integer count2 = Integer.valueOf(o2.getOldDegreeModulesCount());
+            return count1.compareTo(count2);
+        }
+    };
 
-	public static class EquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
-
-		private EquivalencePlan equivalencePlan;
+    public static class EquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
+
+        private EquivalencePlan equivalencePlan;
 
-		private final Set<DegreeModule> originDegreeModules = new HashSet<DegreeModule>();
-
-		private final Set<DegreeModule> destinationDegreeModules = new HashSet<DegreeModule>();
+        private final Set<DegreeModule> originDegreeModules = new HashSet<DegreeModule>();
+
+        private final Set<DegreeModule> destinationDegreeModules = new HashSet<DegreeModule>();
 
-		private DegreeModule originDegreeModuleToAdd;
-
-		private DegreeModule destinationDegreeModuleToAdd;
+        private DegreeModule originDegreeModuleToAdd;
+
+        private DegreeModule destinationDegreeModuleToAdd;
 
-		private LogicOperator originLogicOperator = LogicOperator.AND;
-
-		private LogicOperator destinationLogicOperator = LogicOperator.AND;
+        private LogicOperator originLogicOperator = LogicOperator.AND;
+
+        private LogicOperator destinationLogicOperator = LogicOperator.AND;
 
-		private Boolean transitiveOrigin = true;
-
-		private Double ectsCredits;
+        private Boolean transitiveOrigin = true;
+
+        private Double ectsCredits;
 
-		private CourseGroup destinationDegreeModulesPreviousCourseGroup;
-
-		public EquivalencePlanEntryCreator(final EquivalencePlan equivalencePlan) {
-			setEquivalencePlan(equivalencePlan);
-		}
-
-		@Override
-		public Object execute() {
+        private CourseGroup destinationDegreeModulesPreviousCourseGroup;
+
+        public EquivalencePlanEntryCreator(final EquivalencePlan equivalencePlan) {
+            setEquivalencePlan(equivalencePlan);
+        }
+
+        @Override
+        public Object execute() {
 
-			final Double ectsCredits;
-			if (getEctsCredits() != null && getEctsCredits().doubleValue() > 0) {
-				ectsCredits = getEctsCredits();
-			} else {
-				ectsCredits = null;
-			}
+            final Double ectsCredits;
+            if (getEctsCredits() != null && getEctsCredits().doubleValue() > 0) {
+                ectsCredits = getEctsCredits();
+            } else {
+                ectsCredits = null;
+            }
 
-			return new EquivalencePlanEntry(getEquivalencePlan(), getOriginDegreeModules(), getDestinationDegreeModules(),
-					getDestinationDegreeModulesPreviousCourseGroup(), getOriginLogicOperator(), getDestinationLogicOperator(),
-					getTransitiveOrigin(), ectsCredits);
+            return new EquivalencePlanEntry(getEquivalencePlan(), getOriginDegreeModules(), getDestinationDegreeModules(),
+                    getDestinationDegreeModulesPreviousCourseGroup(), getOriginLogicOperator(), getDestinationLogicOperator(),
+                    getTransitiveOrigin(), ectsCredits);
 
-		}
-
-		public EquivalencePlan getEquivalencePlan() {
-			return equivalencePlan;
-		}
-
-		public void setEquivalencePlan(EquivalencePlan equivalencePlan) {
-			this.equivalencePlan = equivalencePlan;
-		}
-
-		public Set<DegreeModule> getOriginDegreeModules() {
-			final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
-			for (final DegreeModule degreeModule : this.originDegreeModules) {
-				degreeModules.add(degreeModule);
-			}
-			return degreeModules;
-		}
-
-		public Set<DegreeModule> getDestinationDegreeModules() {
-			final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
-			for (final DegreeModule degreeModule : this.destinationDegreeModules) {
-				degreeModules.add(degreeModule);
-			}
-			return degreeModules;
-		}
-
-		public DegreeModule getOriginDegreeModuleToAdd() {
-			return originDegreeModuleToAdd;
-		}
-
-		public void setOriginDegreeModuleToAdd(DegreeModule degreeModule) {
-			this.originDegreeModuleToAdd = degreeModule;
-		}
-
-		public DegreeModule getDestinationDegreeModuleToAdd() {
-			return destinationDegreeModuleToAdd;
-		}
-
-		public void setDestinationDegreeModuleToAdd(DegreeModule degreeModule) {
-			this.destinationDegreeModuleToAdd = degreeModule;
-		}
-
-		public void addOrigin(DegreeModule degreeModule) {
-			if (degreeModule != null) {
-				originDegreeModules.add(degreeModule);
-			}
-		}
-
-		public void addDestination(DegreeModule degreeModule) {
-			if (degreeModule != null) {
-				destinationDegreeModules.add(degreeModule);
-			}
-		}
-
-		public LogicOperator getOriginLogicOperator() {
-			return originLogicOperator;
-		}
-
-		public void setOriginLogicOperator(LogicOperator originLogicOperator) {
-			this.originLogicOperator = originLogicOperator;
-		}
-
-		public LogicOperator getDestinationLogicOperator() {
-			return destinationLogicOperator;
-		}
-
-		public void setDestinationLogicOperator(LogicOperator destinationLogicOperator) {
-			this.destinationLogicOperator = destinationLogicOperator;
-		}
-
-		public Boolean getTransitiveOrigin() {
-			return transitiveOrigin;
-		}
-
-		public void setTransitiveOrigin(Boolean transitiveOrigin) {
-			this.transitiveOrigin = transitiveOrigin;
-		}
-
-		public Double getEctsCredits() {
-			return ectsCredits;
-		}
-
-		public void setEctsCredits(Double ectsCredits) {
-			this.ectsCredits = ectsCredits;
-		}
-
-		public void setDestinationDegreeModulesPreviousCourseGroup(final CourseGroup previousCourseGroup) {
-			this.destinationDegreeModulesPreviousCourseGroup = previousCourseGroup;
-		}
-
-		public CourseGroup getDestinationDegreeModulesPreviousCourseGroup() {
-			return this.destinationDegreeModulesPreviousCourseGroup;
-		}
-
-	}
-
-	//
-	protected EquivalencePlanEntry() {
-		super();
-		super.setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final CourseGroup oldCourseGroup,
-			final CourseGroup newCourseGroup) {
-		this();
-		init(equivalencePlan, Collections.singleton(oldCourseGroup), Collections.singleton(newCourseGroup), null, null, null,
-				true, null);
-	}
-
-	public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final Collection<? extends DegreeModule> oldDegreeModules,
-			final Collection<? extends DegreeModule> newDegreeModules, final CourseGroup previousCourseGroupForNewDegreeModules,
-			final LogicOperator sourceDegreeModulesOperator, final LogicOperator newDegreeModulesOperator,
-			final Boolean transitiveSource, final Double ectsCredits) {
-		this();
-		init(equivalencePlan, oldDegreeModules, newDegreeModules, previousCourseGroupForNewDegreeModules,
-				sourceDegreeModulesOperator, newDegreeModulesOperator, transitiveSource, ectsCredits);
-
-	}
-
-	protected void init(final EquivalencePlan equivalencePlan, final Collection<? extends DegreeModule> oldDegreeModules,
-			final Collection<? extends DegreeModule> newDegreeModules, final CourseGroup previousCourseGroupForNewDegreeModules,
-			final LogicOperator sourceDegreeModulesOperator, final LogicOperator newDegreeModulesOperator,
-			final Boolean transitiveSource, final Double ectsCredits) {
-
-		checkParameters(equivalencePlan);
-
-		checkRulesToCreate(newDegreeModules, previousCourseGroupForNewDegreeModules);
-
-		super.setEquivalencePlan(equivalencePlan);
-		super.getOldDegreeModulesSet().addAll(oldDegreeModules);
-		super.getNewDegreeModulesSet().addAll(newDegreeModules);
-		super.setPreviousCourseGroupForNewDegreeModules(previousCourseGroupForNewDegreeModules);
-		super.setSourceDegreeModulesOperator(sourceDegreeModulesOperator);
-		super.setNewDegreeModulesOperator(newDegreeModulesOperator);
-		super.setTransitiveSource(transitiveSource);
-		super.setEctsCredits(ectsCredits);
-
-	}
-
-	private void checkRulesToCreate(final Collection<? extends DegreeModule> newDegreeModules,
-			final CourseGroup previousCourseGroupForNewDegreeModules) {
-
-		if (previousCourseGroupForNewDegreeModules != null) {
-			for (final DegreeModule degreeModule : newDegreeModules) {
-				if (!previousCourseGroupForNewDegreeModules.hasDegreeModule(degreeModule)) {
-					throw new DomainException(
-							"error.EquivalencePlanEntry.new.degree.modules.must.be.children.of.choosen.course.group");
-				}
-			}
-		}
-
-	}
-
-	private void checkParameters(final EquivalencePlan equivalencePlan) {
-		if (equivalencePlan == null) {
-			throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
-		}
-	}
-
-	@Override
-	public void addNewDegreeModules(DegreeModule newDegreeModule) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.newDegreeModule");
-	}
-
-	public List<DegreeModule> getNewDegreeModulesSortedByType() {
-		final List<DegreeModule> result = new ArrayList<DegreeModule>(super.getNewDegreeModules());
-		Collections.sort(result, new Comparator<DegreeModule>() {
-			@Override
-			public int compare(final DegreeModule o1, final DegreeModule o2) {
-				if (o1.isCourseGroup() && !o2.isCourseGroup()) {
-					return -1;
-				}
-				if (!o1.isCourseGroup() && o2.isCourseGroup()) {
-					return 1;
-				}
-				return 0;
-			}
-		});
-
-		return result;
-	}
-
-	@Override
-	public List<DegreeModule> getNewDegreeModules() {
-		return Collections.unmodifiableList(super.getNewDegreeModules());
-	}
-
-	@Override
-	public Set<DegreeModule> getNewDegreeModulesSet() {
-		return Collections.unmodifiableSet(super.getNewDegreeModulesSet());
-	}
-
-	@Override
-	public Iterator<DegreeModule> getNewDegreeModulesIterator() {
-		return getNewDegreeModulesSet().iterator();
-	}
-
-	@Override
-	public void removeNewDegreeModules(DegreeModule newDegreeModule) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.remove.newDegreeModule");
-	}
-
-	@Override
-	public void addOldDegreeModules(DegreeModule oldDegreeModules) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.oldDegreeModules");
-	}
-
-	@Override
-	public List<DegreeModule> getOldDegreeModules() {
-		return Collections.unmodifiableList(super.getOldDegreeModules());
-	}
-
-	@Override
-	public Set<DegreeModule> getOldDegreeModulesSet() {
-		return Collections.unmodifiableSet(super.getOldDegreeModulesSet());
-	}
-
-	@Override
-	public Iterator<DegreeModule> getOldDegreeModulesIterator() {
-		return getOldDegreeModulesSet().iterator();
-	}
-
-	@Override
-	public void removeOldDegreeModules(DegreeModule oldDegreeModules) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.remove.oldDegreeModules");
-	}
-
-	@Override
-	public void setPreviousCourseGroupForNewDegreeModules(CourseGroup previousCourseGroupForNewDegreeModules) {
-		throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.previousCourseGroupForNewDegreeModules");
-	}
-
-	@Override
-	public void setEctsCredits(Double ectsCredits) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.ectsCredits");
-	}
-
-	@Override
-	public void setSourceDegreeModulesOperator(LogicOperator sourceDegreeModulesOperator) {
-		throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.sourceDegreeModulesOperator");
-	}
-
-	@Override
-	public void setNewDegreeModulesOperator(LogicOperator newDegreeModulesOperator) {
-		throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.newDegreeModulesOperator");
-	}
-
-	private boolean isOneCourseGroup(final Set<DegreeModule> degreeModules) {
-		return degreeModules.size() == 1 && !degreeModules.iterator().next().isLeaf();
-	}
-
-	public boolean isCourseGroupEntry() {
-		return isOneCourseGroup(getOldDegreeModulesSet()) && isOneCourseGroup(getNewDegreeModulesSet());
-	}
-
-	public boolean isCurricularCourseEntry() {
-		boolean hasAtLeastOneCourseGroup = false;
-		for (final DegreeModule degreeModule : getOldDegreeModulesSet()) {
-			hasAtLeastOneCourseGroup = true;
-			if (!degreeModule.isLeaf()) {
-				return false;
-			}
-		}
-		return hasAtLeastOneCourseGroup;
-	}
-
-	public void delete() {
-		removeRootDomainObject();
-		removeEquivalencePlan();
-		super.setPreviousCourseGroupForNewDegreeModules(null);
-		super.getEquivalencePlansSet().clear();
-		super.getOldDegreeModulesSet().clear();
-		super.getNewDegreeModulesSet().clear();
-		super.deleteDomainObject();
-	}
-
-	@Override
-	public void removeEquivalencePlan() {
-		super.setEquivalencePlan(null);
-	}
-
-	public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
-		for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
-			if (degreeModule.getParentDegreeCurricularPlan() == degreeCurricularPlan) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isFor(final DegreeModule degreeModule) {
-		return getNewDegreeModulesSet().contains(degreeModule) || getOldDegreeModulesSet().contains(degreeModule);
-	}
-
-	protected String getCompareString() {
-		final StringBuilder stringBuilder = new StringBuilder();
-		appendCompareString(stringBuilder, getOldDegreeModulesSet());
-		appendCompareString(stringBuilder, getNewDegreeModulesSet());
-		stringBuilder.append(getEctsCredits());
-		if (getSourceDegreeModulesOperator() != null) {
-			stringBuilder.append(getSourceDegreeModulesOperator().name());
-		}
-		if (getNewDegreeModulesOperator() != null) {
-			stringBuilder.append(getNewDegreeModulesOperator().name());
-		}
-		stringBuilder.append(getIdInternal());
-		return stringBuilder.toString();
-	}
-
-	protected void appendCompareString(final StringBuilder stringBuilder, final Set<DegreeModule> degreeModules) {
-		for (final DegreeModule degreeModule : degreeModules) {
-			stringBuilder.append(degreeModule.getName());
-		}
-	}
-
-	public void checkPermissions(final Person person) {
-		for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
-			final DegreeCurricularPlan degreeCurricularPlan = degreeModule.getParentDegreeCurricularPlan();
-			for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-				for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-					if (coordinator.getPerson() == person) {
-						return;
-					}
-				}
-			}
-		}
-		throw new Error("error.not.authorized");
-	}
-
-	public boolean hasOnlyCourseGroupsInDestination() {
-		for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
-			if (degreeModule.isLeaf()) {
-				return false;
-			}
-		}
-		return getNewDegreeModulesCount() > 0;
-	}
-
-	public boolean hasOnlyCurricularCoursesInDestination() {
-		for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
-			if (!degreeModule.isLeaf()) {
-				return false;
-			}
-		}
-		return getNewDegreeModulesCount() > 0;
-	}
-
-	public boolean isTransitiveSource() {
-		return getTransitiveSource();
-	}
-
-	public boolean canApply(StudentCurricularPlan oldStudentCurricularPlan) {
-		boolean isApprovedInAll = true;
-		for (final DegreeModule degreeModule : getOldDegreeModulesSet()) {
-			final boolean isApprovedOrEnroled = oldStudentCurricularPlan.hasEnrolmentOrAprovalInCurriculumModule(degreeModule);
-			if (getSourceDegreeModulesOperator().isOR() && isApprovedOrEnroled) {
-				return true;
-			}
-			isApprovedInAll &= isApprovedOrEnroled;
-		}
-		return isApprovedInAll;
-	}
+        }
+
+        public EquivalencePlan getEquivalencePlan() {
+            return equivalencePlan;
+        }
+
+        public void setEquivalencePlan(EquivalencePlan equivalencePlan) {
+            this.equivalencePlan = equivalencePlan;
+        }
+
+        public Set<DegreeModule> getOriginDegreeModules() {
+            final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
+            for (final DegreeModule degreeModule : this.originDegreeModules) {
+                degreeModules.add(degreeModule);
+            }
+            return degreeModules;
+        }
+
+        public Set<DegreeModule> getDestinationDegreeModules() {
+            final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
+            for (final DegreeModule degreeModule : this.destinationDegreeModules) {
+                degreeModules.add(degreeModule);
+            }
+            return degreeModules;
+        }
+
+        public DegreeModule getOriginDegreeModuleToAdd() {
+            return originDegreeModuleToAdd;
+        }
+
+        public void setOriginDegreeModuleToAdd(DegreeModule degreeModule) {
+            this.originDegreeModuleToAdd = degreeModule;
+        }
+
+        public DegreeModule getDestinationDegreeModuleToAdd() {
+            return destinationDegreeModuleToAdd;
+        }
+
+        public void setDestinationDegreeModuleToAdd(DegreeModule degreeModule) {
+            this.destinationDegreeModuleToAdd = degreeModule;
+        }
+
+        public void addOrigin(DegreeModule degreeModule) {
+            if (degreeModule != null) {
+                originDegreeModules.add(degreeModule);
+            }
+        }
+
+        public void addDestination(DegreeModule degreeModule) {
+            if (degreeModule != null) {
+                destinationDegreeModules.add(degreeModule);
+            }
+        }
+
+        public LogicOperator getOriginLogicOperator() {
+            return originLogicOperator;
+        }
+
+        public void setOriginLogicOperator(LogicOperator originLogicOperator) {
+            this.originLogicOperator = originLogicOperator;
+        }
+
+        public LogicOperator getDestinationLogicOperator() {
+            return destinationLogicOperator;
+        }
+
+        public void setDestinationLogicOperator(LogicOperator destinationLogicOperator) {
+            this.destinationLogicOperator = destinationLogicOperator;
+        }
+
+        public Boolean getTransitiveOrigin() {
+            return transitiveOrigin;
+        }
+
+        public void setTransitiveOrigin(Boolean transitiveOrigin) {
+            this.transitiveOrigin = transitiveOrigin;
+        }
+
+        public Double getEctsCredits() {
+            return ectsCredits;
+        }
+
+        public void setEctsCredits(Double ectsCredits) {
+            this.ectsCredits = ectsCredits;
+        }
+
+        public void setDestinationDegreeModulesPreviousCourseGroup(final CourseGroup previousCourseGroup) {
+            this.destinationDegreeModulesPreviousCourseGroup = previousCourseGroup;
+        }
+
+        public CourseGroup getDestinationDegreeModulesPreviousCourseGroup() {
+            return this.destinationDegreeModulesPreviousCourseGroup;
+        }
+
+    }
+
+    //
+    protected EquivalencePlanEntry() {
+        super();
+        super.setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final CourseGroup oldCourseGroup,
+            final CourseGroup newCourseGroup) {
+        this();
+        init(equivalencePlan, Collections.singleton(oldCourseGroup), Collections.singleton(newCourseGroup), null, null, null,
+                true, null);
+    }
+
+    public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final Collection<? extends DegreeModule> oldDegreeModules,
+            final Collection<? extends DegreeModule> newDegreeModules, final CourseGroup previousCourseGroupForNewDegreeModules,
+            final LogicOperator sourceDegreeModulesOperator, final LogicOperator newDegreeModulesOperator,
+            final Boolean transitiveSource, final Double ectsCredits) {
+        this();
+        init(equivalencePlan, oldDegreeModules, newDegreeModules, previousCourseGroupForNewDegreeModules,
+                sourceDegreeModulesOperator, newDegreeModulesOperator, transitiveSource, ectsCredits);
+
+    }
+
+    protected void init(final EquivalencePlan equivalencePlan, final Collection<? extends DegreeModule> oldDegreeModules,
+            final Collection<? extends DegreeModule> newDegreeModules, final CourseGroup previousCourseGroupForNewDegreeModules,
+            final LogicOperator sourceDegreeModulesOperator, final LogicOperator newDegreeModulesOperator,
+            final Boolean transitiveSource, final Double ectsCredits) {
+
+        checkParameters(equivalencePlan);
+
+        checkRulesToCreate(newDegreeModules, previousCourseGroupForNewDegreeModules);
+
+        super.setEquivalencePlan(equivalencePlan);
+        super.getOldDegreeModulesSet().addAll(oldDegreeModules);
+        super.getNewDegreeModulesSet().addAll(newDegreeModules);
+        super.setPreviousCourseGroupForNewDegreeModules(previousCourseGroupForNewDegreeModules);
+        super.setSourceDegreeModulesOperator(sourceDegreeModulesOperator);
+        super.setNewDegreeModulesOperator(newDegreeModulesOperator);
+        super.setTransitiveSource(transitiveSource);
+        super.setEctsCredits(ectsCredits);
+
+    }
+
+    private void checkRulesToCreate(final Collection<? extends DegreeModule> newDegreeModules,
+            final CourseGroup previousCourseGroupForNewDegreeModules) {
+
+        if (previousCourseGroupForNewDegreeModules != null) {
+            for (final DegreeModule degreeModule : newDegreeModules) {
+                if (!previousCourseGroupForNewDegreeModules.hasDegreeModule(degreeModule)) {
+                    throw new DomainException(
+                            "error.EquivalencePlanEntry.new.degree.modules.must.be.children.of.choosen.course.group");
+                }
+            }
+        }
+
+    }
+
+    private void checkParameters(final EquivalencePlan equivalencePlan) {
+        if (equivalencePlan == null) {
+            throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
+        }
+    }
+
+    @Override
+    public void addNewDegreeModules(DegreeModule newDegreeModule) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.newDegreeModule");
+    }
+
+    public List<DegreeModule> getNewDegreeModulesSortedByType() {
+        final List<DegreeModule> result = new ArrayList<DegreeModule>(super.getNewDegreeModules());
+        Collections.sort(result, new Comparator<DegreeModule>() {
+            @Override
+            public int compare(final DegreeModule o1, final DegreeModule o2) {
+                if (o1.isCourseGroup() && !o2.isCourseGroup()) {
+                    return -1;
+                }
+                if (!o1.isCourseGroup() && o2.isCourseGroup()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+
+        return result;
+    }
+
+    @Override
+    public List<DegreeModule> getNewDegreeModules() {
+        return Collections.unmodifiableList(super.getNewDegreeModules());
+    }
+
+    @Override
+    public Set<DegreeModule> getNewDegreeModulesSet() {
+        return Collections.unmodifiableSet(super.getNewDegreeModulesSet());
+    }
+
+    @Override
+    public Iterator<DegreeModule> getNewDegreeModulesIterator() {
+        return getNewDegreeModulesSet().iterator();
+    }
+
+    @Override
+    public void removeNewDegreeModules(DegreeModule newDegreeModule) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.remove.newDegreeModule");
+    }
+
+    @Override
+    public void addOldDegreeModules(DegreeModule oldDegreeModules) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.oldDegreeModules");
+    }
+
+    @Override
+    public List<DegreeModule> getOldDegreeModules() {
+        return Collections.unmodifiableList(super.getOldDegreeModules());
+    }
+
+    @Override
+    public Set<DegreeModule> getOldDegreeModulesSet() {
+        return Collections.unmodifiableSet(super.getOldDegreeModulesSet());
+    }
+
+    @Override
+    public Iterator<DegreeModule> getOldDegreeModulesIterator() {
+        return getOldDegreeModulesSet().iterator();
+    }
+
+    @Override
+    public void removeOldDegreeModules(DegreeModule oldDegreeModules) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.remove.oldDegreeModules");
+    }
+
+    @Override
+    public void setPreviousCourseGroupForNewDegreeModules(CourseGroup previousCourseGroupForNewDegreeModules) {
+        throw new DomainException(
+                "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.previousCourseGroupForNewDegreeModules");
+    }
+
+    @Override
+    public void setEctsCredits(Double ectsCredits) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.ectsCredits");
+    }
+
+    @Override
+    public void setSourceDegreeModulesOperator(LogicOperator sourceDegreeModulesOperator) {
+        throw new DomainException(
+                "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.sourceDegreeModulesOperator");
+    }
+
+    @Override
+    public void setNewDegreeModulesOperator(LogicOperator newDegreeModulesOperator) {
+        throw new DomainException(
+                "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.modify.newDegreeModulesOperator");
+    }
+
+    private boolean isOneCourseGroup(final Set<DegreeModule> degreeModules) {
+        return degreeModules.size() == 1 && !degreeModules.iterator().next().isLeaf();
+    }
+
+    public boolean isCourseGroupEntry() {
+        return isOneCourseGroup(getOldDegreeModulesSet()) && isOneCourseGroup(getNewDegreeModulesSet());
+    }
+
+    public boolean isCurricularCourseEntry() {
+        boolean hasAtLeastOneCourseGroup = false;
+        for (final DegreeModule degreeModule : getOldDegreeModulesSet()) {
+            hasAtLeastOneCourseGroup = true;
+            if (!degreeModule.isLeaf()) {
+                return false;
+            }
+        }
+        return hasAtLeastOneCourseGroup;
+    }
+
+    public void delete() {
+        removeRootDomainObject();
+        removeEquivalencePlan();
+        super.setPreviousCourseGroupForNewDegreeModules(null);
+        super.getEquivalencePlansSet().clear();
+        super.getOldDegreeModulesSet().clear();
+        super.getNewDegreeModulesSet().clear();
+        super.deleteDomainObject();
+    }
+
+    @Override
+    public void removeEquivalencePlan() {
+        super.setEquivalencePlan(null);
+    }
+
+    public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
+        for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+            if (degreeModule.getParentDegreeCurricularPlan() == degreeCurricularPlan) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isFor(final DegreeModule degreeModule) {
+        return getNewDegreeModulesSet().contains(degreeModule) || getOldDegreeModulesSet().contains(degreeModule);
+    }
+
+    protected String getCompareString() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        appendCompareString(stringBuilder, getOldDegreeModulesSet());
+        appendCompareString(stringBuilder, getNewDegreeModulesSet());
+        stringBuilder.append(getEctsCredits());
+        if (getSourceDegreeModulesOperator() != null) {
+            stringBuilder.append(getSourceDegreeModulesOperator().name());
+        }
+        if (getNewDegreeModulesOperator() != null) {
+            stringBuilder.append(getNewDegreeModulesOperator().name());
+        }
+        stringBuilder.append(getIdInternal());
+        return stringBuilder.toString();
+    }
+
+    protected void appendCompareString(final StringBuilder stringBuilder, final Set<DegreeModule> degreeModules) {
+        for (final DegreeModule degreeModule : degreeModules) {
+            stringBuilder.append(degreeModule.getName());
+        }
+    }
+
+    public void checkPermissions(final Person person) {
+        for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+            final DegreeCurricularPlan degreeCurricularPlan = degreeModule.getParentDegreeCurricularPlan();
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+                for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                    if (coordinator.getPerson() == person) {
+                        return;
+                    }
+                }
+            }
+        }
+        throw new Error("error.not.authorized");
+    }
+
+    public boolean hasOnlyCourseGroupsInDestination() {
+        for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+            if (degreeModule.isLeaf()) {
+                return false;
+            }
+        }
+        return getNewDegreeModulesCount() > 0;
+    }
+
+    public boolean hasOnlyCurricularCoursesInDestination() {
+        for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+            if (!degreeModule.isLeaf()) {
+                return false;
+            }
+        }
+        return getNewDegreeModulesCount() > 0;
+    }
+
+    public boolean isTransitiveSource() {
+        return getTransitiveSource();
+    }
+
+    public boolean canApply(StudentCurricularPlan oldStudentCurricularPlan) {
+        boolean isApprovedInAll = true;
+        for (final DegreeModule degreeModule : getOldDegreeModulesSet()) {
+            final boolean isApprovedOrEnroled = oldStudentCurricularPlan.hasEnrolmentOrAprovalInCurriculumModule(degreeModule);
+            if (getSourceDegreeModulesOperator().isOR() && isApprovedOrEnroled) {
+                return true;
+            }
+            isApprovedInAll &= isApprovedOrEnroled;
+        }
+        return isApprovedInAll;
+    }
 
 }

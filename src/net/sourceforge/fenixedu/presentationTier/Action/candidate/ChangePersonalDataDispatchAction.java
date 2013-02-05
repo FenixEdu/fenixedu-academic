@@ -35,61 +35,61 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(module = "candidate", path = "/changePersonalData", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "change", path = "/candidate/changePersonalData.jsp"),
-		@Forward(name = "changeSuccess", path = "/candidate/changeSuccessPersonalData.jsp"),
-		@Forward(name = "cannotChange", path = "/candidate/cannotChangePersonalData.jsp") })
+        @Forward(name = "changeSuccess", path = "/candidate/changeSuccessPersonalData.jsp"),
+        @Forward(name = "cannotChange", path = "/candidate/cannotChangePersonalData.jsp") })
 public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		final Candidacy candidacy = getCandidacy(request);
-		if (candidacy instanceof DFACandidacy && candidacy.getActiveCandidacySituation().canChangePersonalData()) {
+        final Candidacy candidacy = getCandidacy(request);
+        if (candidacy instanceof DFACandidacy && candidacy.getActiveCandidacySituation().canChangePersonalData()) {
 
-			request.setAttribute("candidacy", candidacy);
+            request.setAttribute("candidacy", candidacy);
 
-			PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) candidacy).getPrecedentDegreeInformation();
-			request.setAttribute("precedentDegreeInformation", new PrecedentDegreeInformationBean(precedentDegreeInformation));
+            PrecedentDegreeInformation precedentDegreeInformation = ((DFACandidacy) candidacy).getPrecedentDegreeInformation();
+            request.setAttribute("precedentDegreeInformation", new PrecedentDegreeInformationBean(precedentDegreeInformation));
 
-			return mapping.findForward("change");
-		}
+            return mapping.findForward("change");
+        }
 
-		return mapping.findForward("cannotChange");
-	}
+        return mapping.findForward("cannotChange");
+    }
 
-	public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixFilterException, FenixServiceException {
+    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixFilterException, FenixServiceException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		PrecedentDegreeInformationBean precedentDegreeInformation =
-				(PrecedentDegreeInformationBean) RenderUtils.getViewState("precedentDegreeInformation").getMetaObject()
-						.getObject();
+        PrecedentDegreeInformationBean precedentDegreeInformation =
+                (PrecedentDegreeInformationBean) RenderUtils.getViewState("precedentDegreeInformation").getMetaObject()
+                        .getObject();
 
-		EditPrecedentDegreeInformation.run(precedentDegreeInformation);
+        EditPrecedentDegreeInformation.run(precedentDegreeInformation);
 
-		try {
-			StateMachineRunner
-					.run(new StateMachineRunner.RunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
-							.getStudentCandidacy().getActiveCandidacySituation(), CandidacySituationType.STAND_BY_FILLED_DATA
-							.toString()));
-		} catch (DomainException e) {
-			// Didn't move to next state
-		}
+        try {
+            StateMachineRunner
+                    .run(new StateMachineRunner.RunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
+                            .getStudentCandidacy().getActiveCandidacySituation(), CandidacySituationType.STAND_BY_FILLED_DATA
+                            .toString()));
+        } catch (DomainException e) {
+            // Didn't move to next state
+        }
 
-		request.setAttribute("candidacy", precedentDegreeInformation.getPrecedentDegreeInformation().getStudentCandidacy());
+        request.setAttribute("candidacy", precedentDegreeInformation.getPrecedentDegreeInformation().getStudentCandidacy());
 
-		return mapping.findForward("changeSuccess");
-	}
+        return mapping.findForward("changeSuccess");
+    }
 
-	private Candidacy getCandidacy(HttpServletRequest request) {
-		final Integer candidacyId = getRequestParameterAsInteger(request, "candidacyID");
+    private Candidacy getCandidacy(HttpServletRequest request) {
+        final Integer candidacyId = getRequestParameterAsInteger(request, "candidacyID");
 
-		for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
-			if (candidacy.getIdInternal().equals(candidacyId)) {
-				return candidacy;
-			}
-		}
+        for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
+            if (candidacy.getIdInternal().equals(candidacyId)) {
+                return candidacy;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

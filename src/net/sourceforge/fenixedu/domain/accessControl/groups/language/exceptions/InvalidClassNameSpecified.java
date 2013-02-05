@@ -8,12 +8,12 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions
  */
 public class InvalidClassNameSpecified extends GroupDynamicExpressionException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public static final String MESSAGE = "accessControl.group.expression.operator.class.invalidName";
+    public static final String MESSAGE = "accessControl.group.expression.operator.class.invalidName";
 
-	public InvalidClassNameSpecified(String prefix, String name) {
-		super(MESSAGE, prefix, name);
-	}
+    public InvalidClassNameSpecified(String prefix, String name) {
+        super(MESSAGE, prefix, name);
+    }
 
 }

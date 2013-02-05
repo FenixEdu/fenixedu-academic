@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class RegistrationAgreementProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(RegistrationAgreement.values());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(RegistrationAgreement.values());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumArrayConverter(RegistrationAgreement.class);
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumArrayConverter(RegistrationAgreement.class);
+    }
 
 }

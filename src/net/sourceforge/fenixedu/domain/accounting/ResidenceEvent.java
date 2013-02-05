@@ -23,125 +23,125 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
 
-	protected ResidenceEvent() {
-		super();
-	}
+    protected ResidenceEvent() {
+        super();
+    }
 
-	public ResidenceEvent(ResidenceMonth month, Person person, Money roomValue, String room) {
-		init(EventType.RESIDENCE_PAYMENT, person, month, roomValue, room);
-	}
+    public ResidenceEvent(ResidenceMonth month, Person person, Money roomValue, String room) {
+        init(EventType.RESIDENCE_PAYMENT, person, month, roomValue, room);
+    }
 
-	protected void init(EventType eventType, Person person, ResidenceMonth month, Money roomValue, String room) {
-		super.init(eventType, person);
-		if (month == null) {
-			throw new DomainException("error.accounting.events.ResidenceEvent.ResidenceMonth.cannot.be.null");
-		}
-		setResidenceMonth(month);
-		setRoomValue(roomValue);
-		setRoom(room);
-	}
+    protected void init(EventType eventType, Person person, ResidenceMonth month, Money roomValue, String room) {
+        super.init(eventType, person);
+        if (month == null) {
+            throw new DomainException("error.accounting.events.ResidenceEvent.ResidenceMonth.cannot.be.null");
+        }
+        setResidenceMonth(month);
+        setRoomValue(roomValue);
+        setRoom(room);
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		return getDescriptionForEntryType(EntryType.RESIDENCE_FEE);
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        return getDescriptionForEntryType(EntryType.RESIDENCE_FEE);
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		labelFormatter.appendLabel(" - ");
-		labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), "enum");
-		labelFormatter.appendLabel("-");
-		labelFormatter.appendLabel(getResidenceMonth().getYear().getYear().toString());
-		return labelFormatter;
-	}
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(" - ");
+        labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), "enum");
+        labelFormatter.appendLabel("-");
+        labelFormatter.appendLabel(getResidenceMonth().getYear().getYear().toString());
+        return labelFormatter;
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getPerson().getAccountBy(AccountType.EXTERNAL);
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getPerson().getAccountBy(AccountType.EXTERNAL);
+    }
 
-	@Override
-	public PostingRule getPostingRule() {
-		return getManagementUnit().getUnitServiceAgreementTemplate().findPostingRuleBy(getEventType(), getWhenOccured(), null);
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return getManagementUnit().getUnitServiceAgreementTemplate().findPostingRuleBy(getEventType(), getWhenOccured(), null);
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getManagementUnit().getAccountBy(AccountType.INTERNAL);
-	}
+    @Override
+    public Account getToAccount() {
+        return getManagementUnit().getAccountBy(AccountType.INTERNAL);
+    }
 
-	public ResidenceManagementUnit getManagementUnit() {
-		return getResidenceMonth().getManagementUnit();
-	}
+    public ResidenceManagementUnit getManagementUnit() {
+        return getResidenceMonth().getManagementUnit();
+    }
 
-	public DateTime getPaymentStartDate() {
-		return getResidenceMonth().getPaymentStartDate();
-	}
+    public DateTime getPaymentStartDate() {
+        return getResidenceMonth().getPaymentStartDate();
+    }
 
-	public DateTime getPaymentLimitDate() {
-		return getResidenceMonth().getPaymentLimitDateTime();
-	}
+    public DateTime getPaymentLimitDate() {
+        return getResidenceMonth().getPaymentLimitDateTime();
+    }
 
-	@Override
-	@Checked("EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE")
-	public void cancel(Person responsible) {
-		super.cancel(responsible);
-	}
+    @Override
+    @Checked("EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE")
+    public void cancel(Person responsible) {
+        super.cancel(responsible);
+    }
 
-	public DateTime getPaymentDate() {
-		return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
-				.getWhenRegistered();
-	}
+    public DateTime getPaymentDate() {
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+                .getWhenRegistered();
+    }
 
-	public PaymentMode getPaymentMode() {
-		return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
-				.getPaymentMode();
-	}
+    public PaymentMode getPaymentMode() {
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+                .getPaymentMode();
+    }
 
-	@Override
-	public Money getAmountToPay() {
-		return calculateAmountToPay(new DateTime());
-	}
+    @Override
+    public Money getAmountToPay() {
+        return calculateAmountToPay(new DateTime());
+    }
 
-	@Override
-	protected List<AccountingEventPaymentCode> createPaymentCodes() {
-		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+    @Override
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-		return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
-				getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
-	}
+        return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
+                getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
+    }
 
-	@Override
-	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-		getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
-				entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+    @Override
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
+                entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 
-		return getNonProcessedPaymentCodes();
-	}
+        return getNonProcessedPaymentCodes();
+    }
 
-	@Override
-	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-			SibsTransactionDetailDTO transactionDetail) {
-		return internalProcess(responsibleUser,
-				Collections.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
-	}
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+            SibsTransactionDetailDTO transactionDetail) {
+        return internalProcess(responsibleUser,
+                Collections.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
+    }
 
-	public boolean isFor(int year) {
-		return getResidenceMonth().isFor(year);
-	}
+    public boolean isFor(int year) {
+        return getResidenceMonth().isFor(year);
+    }
 
-	@Override
-	public boolean isResidenceEvent() {
-		return true;
-	}
+    @Override
+    public boolean isResidenceEvent() {
+        return true;
+    }
 
-	@Override
-	public Unit getOwnerUnit() {
-		return getManagementUnit();
-	}
+    @Override
+    public Unit getOwnerUnit() {
+        return getManagementUnit();
+    }
 
 }

@@ -9,8 +9,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadOpenExecutionYears extends FenixService {
 
-	@Service
-	public static List<ExecutionYear> run() throws FenixServiceException {
-		return ExecutionYear.readOpenExecutionYears();
-	}
+    @Service
+    public static List<ExecutionYear> run() throws FenixServiceException {
+        return ExecutionYear.readOpenExecutionYears();
+    }
 }

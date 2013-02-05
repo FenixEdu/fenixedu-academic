@@ -27,373 +27,373 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {
 
-	protected PaymentPlan() {
-		super();
-		super.setRootDomainObject(RootDomainObject.getInstance());
-		super.setWhenCreated(new DateTime());
-	}
-
-	protected void init(final ExecutionYear executionYear, final Boolean defaultPlan) {
-
-		checkParameters(executionYear, defaultPlan);
-
-		super.setDefaultPlan(defaultPlan);
-		super.setExecutionYear(executionYear);
-	}
-
-	private void checkParameters(final ExecutionYear executionYear, final Boolean defaultPlan) {
-		if (executionYear == null) {
-			throw new DomainException("error.accounting.PaymentPlan.executionYear.cannot.be.null");
-		}
-
-		if (defaultPlan == null) {
-			throw new DomainException("error.accounting.PaymentPlan.defaultPlan.cannot.be.null");
-		}
-	}
-
-	@Override
-	public void setExecutionYear(ExecutionYear executionYear) {
-		throw new DomainException("error.accounting.PaymentCondition.cannot.modify.executionYear");
-	}
-
-	@Override
-	public void setDefaultPlan(Boolean defaultPlan) {
-		throw new DomainException("error.domain.accounting.PaymentPlan.cannot.modify.defaultPlan");
-	}
-
-	public List<Installment> getInstallmentsSortedByEndDate() {
-		final List<Installment> result = new ArrayList<Installment>(getInstallmentsSet());
-		Collections.sort(result, Installment.COMPARATOR_BY_END_DATE);
-
-		return result;
-	}
-
-	public Installment getLastInstallment() {
-		return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
-	}
-
-	public Installment getFirstInstallment() {
-		return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
-	}
-
-	public int getLastInstallmentOrder() {
-		final Installment installment = getLastInstallment();
-		return installment == null ? 0 : installment.getOrder();
-	}
-
-	@Override
-	public void addInstallments(Installment installment) {
-		throw new DomainException("error.accounting.PaymentPlan.cannot.add.installment");
-	}
-
-	@Override
-	public List<Installment> getInstallments() {
-		return Collections.unmodifiableList(super.getInstallments());
-	}
-
-	@Override
-	public Set<Installment> getInstallmentsSet() {
-		return Collections.unmodifiableSet(super.getInstallmentsSet());
-	}
-
-	@Override
-	public Iterator<Installment> getInstallmentsIterator() {
-		return getInstallmentsSet().iterator();
-	}
-
-	@Override
-	public void removeInstallments(Installment installment) {
-		throw new DomainException("error.accounting.PaymentPlan.cannot.remove.installment");
-	}
-
-	public boolean isDefault() {
-		return getDefaultPlan().booleanValue();
-	}
-
-	public Money calculateOriginalTotalAmount() {
-		Money result = Money.ZERO;
-		for (final Installment installment : getInstallmentsSet()) {
-			result = result.add(installment.getAmount());
-		}
-
-		return result;
-	}
-
-	public Money calculateBaseAmount(final Event event) {
-		Money result = Money.ZERO;
-		for (final Installment installment : getInstallmentsSet()) {
-			result = result.add(installment.calculateBaseAmount(event));
-		}
-
-		return result;
-	}
-
-	public Money calculateTotalAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
-
-		Money result = Money.ZERO;
-		for (final Money amount : calculateInstallmentTotalAmounts(event, when, discountPercentage).values()) {
-			result = result.add(amount);
-		}
-
-		return result;
-	}
-
-	private Map<Installment, Money> calculateInstallmentTotalAmounts(final Event event, final DateTime when,
-			final BigDecimal discountPercentage) {
-
-		final Map<Installment, Money> result = new HashMap<Installment, Money>();
-		final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
-
-		for (final Installment installment : getInstallmentsSortedByEndDate()) {
-			result.put(installment, cashFlowBox.calculateTotalAmountFor(installment));
-
-		}
-
-		return result;
-	}
-
-	private class CashFlowBox {
-		public DateTime when;
-		public Money amount;
-		public DateTime currentTransactionDate;
-		public List<AccountingTransaction> transactions;
-		public BigDecimal discountPercentage;
-		public Event event;
-		public Money discountValue;
-		public boolean usedDiscountValue;
-		private Money discountedValue;
-
-		public CashFlowBox(final Event event, final DateTime when, final BigDecimal discountPercentage) {
-			this.event = event;
-			this.transactions = new ArrayList<AccountingTransaction>(event.getSortedNonAdjustingTransactions());
-			this.when = when;
-			this.discountPercentage = discountPercentage;
-			this.discountValue = event.getTotalDiscount();
-			this.discountedValue = Money.ZERO;
-			this.usedDiscountValue = false;
-
-			if (transactions.isEmpty()) {
-				this.amount = Money.ZERO;
-				this.currentTransactionDate = when;
-			} else {
-				final AccountingTransaction transaction = transactions.remove(0);
-				this.amount = transaction.getAmountWithAdjustment();
-				this.currentTransactionDate = transaction.getWhenRegistered();
-			}
-
-		}
-
-		private boolean hasMoneyFor(final Money amount) {
-			return this.amount.greaterOrEqualThan(amount);
-		}
-
-		private boolean hasDiscountValue() {
-			return this.discountValue.isPositive();
-		}
-
-		public boolean subtractMoneyFor(final Installment installment) {
-
-			if (hasDiscountValue() && this.discountValue.greaterOrEqualThan(installment.getAmount())) {
-				usedDiscountValue = true;
-				this.discountValue = this.discountValue.subtract(installment.getAmount());
-				return true;
-			}
-
-			Money installmentAmount =
-					installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
-							isToApplyPenalty(this.event, installment));
-
-			if (hasDiscountValue()) {
-				installmentAmount = installmentAmount.subtract(this.discountValue);
-				this.discountedValue = this.discountValue;
-			}
-
-			if (hasMoneyFor(installmentAmount)) {
-				this.amount = this.amount.subtract(installmentAmount);
-				this.discountValue = Money.ZERO;
-				return true;
-			}
-
-			if (this.transactions.isEmpty()) {
-				return false;
-			}
-
-			final AccountingTransaction transaction = this.transactions.remove(0);
-			this.amount = this.amount.add(transaction.getAmountWithAdjustment());
-			this.currentTransactionDate = transaction.getWhenRegistered();
-
-			return subtractMoneyFor(installment);
-		}
-
-		public Money subtractRemainingFor(final Installment installment) {
-			final Money result =
-					installment
-							.calculateAmount(this.event, this.when, this.discountPercentage,
-									isToApplyPenalty(this.event, installment)).subtract(this.discountValue).subtract(this.amount);
-			this.amount = this.discountValue = Money.ZERO;
-			return result;
-		}
-
-		public Money calculateTotalAmountFor(final Installment installment) {
-			final Money result;
-			if (subtractMoneyFor(installment)) {
-				if (usedDiscountValue) {
-					result = Money.ZERO;
-				} else {
-					result =
-							installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
-									isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
-					this.discountedValue = Money.ZERO;
-				}
-			} else {
-				result =
-						installment.calculateAmount(this.event, this.when, this.discountPercentage,
-								isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
-				this.discountedValue = Money.ZERO;
-			}
-			usedDiscountValue = false;
-			return result;
-		}
-	}
-
-	public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event, final DateTime when,
-			final BigDecimal discountPercentage) {
-		final Map<Installment, Money> result = new HashMap<Installment, Money>();
-		final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
-
-		for (final Installment installment : getInstallmentsSortedByEndDate()) {
-
-			if (!cashFlowBox.subtractMoneyFor(installment)) {
-				result.put(installment, cashFlowBox.subtractRemainingFor(installment));
-			}
-		}
-
-		return result;
-
-	}
-
-	public Money calculateRemainingAmountFor(final Installment installment, final Event event, final DateTime when,
-			final BigDecimal discountPercentage) {
-
-		final Map<Installment, Money> amountsByInstallment =
-				calculateInstallmentRemainingAmounts(event, when, discountPercentage);
-		final Money installmentAmount = amountsByInstallment.get(installment);
-
-		return (installmentAmount != null) ? installmentAmount : Money.ZERO;
-	}
-
-	public boolean isInstallmentInDebt(final Installment installment, final Event event, final DateTime when,
-			final BigDecimal discountPercentage) {
-
-		return calculateRemainingAmountFor(installment, event, when, discountPercentage).isPositive();
-
-	}
-
-	public Installment getInstallmentByOrder(int order) {
-		for (final Installment installment : getInstallments()) {
-			if (installment.getInstallmentOrder() == order) {
-				return installment;
-			}
-		}
-
-		return null;
-	}
-
-	public boolean isToApplyPenalty(final Event event, final Installment installment) {
-		return true;
-	}
-
-	protected void removeParameters() {
-		super.setExecutionYear(null);
-	}
-
-	public boolean isGratuityPaymentPlan() {
-		return false;
-	}
-
-	public boolean isCustomGratuityPaymentPlan() {
-		return false;
-	}
-
-	private boolean hasExecutionYear(final ExecutionYear executionYear) {
-		return hasExecutionYear() && getExecutionYear().equals(executionYear);
-	}
-
-	final public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-
-		if (!hasExecutionYear(executionYear)) {
-			return false;
-		}
-
-		final Collection<PaymentPlanRule> specificRules = getSpecificPaymentPlanRules();
-
-		if (specificRules.isEmpty()) {
-			return false;
-		}
-
-		for (final PaymentPlanRule rule : specificRules) {
-			if (!rule.isAppliableFor(studentCurricularPlan, executionYear)) {
-				return false;
-			}
-		}
-
-		for (final PaymentPlanRule rule : getNotSpecificPaymentRules()) {
-			if (rule.isEvaluatedInNotSpecificPaymentRules() && rule.isAppliableFor(studentCurricularPlan, executionYear)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	protected Collection<PaymentPlanRule> getNotSpecificPaymentRules() {
-		/*
-		 * All payment rules could be connected do
-		 * DegreeCurricularPlanServiceAgreementTemplate, but for now are just
-		 * value types
-		 */
-		return CollectionUtils.subtract(PaymentPlanRuleManager.getAllPaymentPlanRules(), getSpecificPaymentPlanRules());
-	}
-
-	abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
-
-	public String getDescription() {
-		return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
-				this.getClass().getSimpleName() + ".description");
-	}
-
-	public boolean isFor(final ExecutionYear executionYear) {
-		return hasExecutionYear() && getExecutionYear().equals(executionYear);
-	}
-
-	abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
-
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	public void delete() {
-		if (!getGratuityEventsWithPaymentPlan().isEmpty()) {
-			throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
-		}
-
-		while (hasAnyInstallments()) {
-			getInstallments().get(0).delete();
-		}
-
-		removeParameters();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-
-	}
-
-	public boolean isForPartialRegime() {
-		return false;
-	}
-
-	public boolean isForFirstTimeInstitutionStudents() {
-		return false;
-	}
-
-	public boolean hasSingleInstallment() {
-		return getInstallmentsCount() == 1;
-	}
+    protected PaymentPlan() {
+        super();
+        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setWhenCreated(new DateTime());
+    }
+
+    protected void init(final ExecutionYear executionYear, final Boolean defaultPlan) {
+
+        checkParameters(executionYear, defaultPlan);
+
+        super.setDefaultPlan(defaultPlan);
+        super.setExecutionYear(executionYear);
+    }
+
+    private void checkParameters(final ExecutionYear executionYear, final Boolean defaultPlan) {
+        if (executionYear == null) {
+            throw new DomainException("error.accounting.PaymentPlan.executionYear.cannot.be.null");
+        }
+
+        if (defaultPlan == null) {
+            throw new DomainException("error.accounting.PaymentPlan.defaultPlan.cannot.be.null");
+        }
+    }
+
+    @Override
+    public void setExecutionYear(ExecutionYear executionYear) {
+        throw new DomainException("error.accounting.PaymentCondition.cannot.modify.executionYear");
+    }
+
+    @Override
+    public void setDefaultPlan(Boolean defaultPlan) {
+        throw new DomainException("error.domain.accounting.PaymentPlan.cannot.modify.defaultPlan");
+    }
+
+    public List<Installment> getInstallmentsSortedByEndDate() {
+        final List<Installment> result = new ArrayList<Installment>(getInstallmentsSet());
+        Collections.sort(result, Installment.COMPARATOR_BY_END_DATE);
+
+        return result;
+    }
+
+    public Installment getLastInstallment() {
+        return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
+    }
+
+    public Installment getFirstInstallment() {
+        return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
+    }
+
+    public int getLastInstallmentOrder() {
+        final Installment installment = getLastInstallment();
+        return installment == null ? 0 : installment.getOrder();
+    }
+
+    @Override
+    public void addInstallments(Installment installment) {
+        throw new DomainException("error.accounting.PaymentPlan.cannot.add.installment");
+    }
+
+    @Override
+    public List<Installment> getInstallments() {
+        return Collections.unmodifiableList(super.getInstallments());
+    }
+
+    @Override
+    public Set<Installment> getInstallmentsSet() {
+        return Collections.unmodifiableSet(super.getInstallmentsSet());
+    }
+
+    @Override
+    public Iterator<Installment> getInstallmentsIterator() {
+        return getInstallmentsSet().iterator();
+    }
+
+    @Override
+    public void removeInstallments(Installment installment) {
+        throw new DomainException("error.accounting.PaymentPlan.cannot.remove.installment");
+    }
+
+    public boolean isDefault() {
+        return getDefaultPlan().booleanValue();
+    }
+
+    public Money calculateOriginalTotalAmount() {
+        Money result = Money.ZERO;
+        for (final Installment installment : getInstallmentsSet()) {
+            result = result.add(installment.getAmount());
+        }
+
+        return result;
+    }
+
+    public Money calculateBaseAmount(final Event event) {
+        Money result = Money.ZERO;
+        for (final Installment installment : getInstallmentsSet()) {
+            result = result.add(installment.calculateBaseAmount(event));
+        }
+
+        return result;
+    }
+
+    public Money calculateTotalAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
+
+        Money result = Money.ZERO;
+        for (final Money amount : calculateInstallmentTotalAmounts(event, when, discountPercentage).values()) {
+            result = result.add(amount);
+        }
+
+        return result;
+    }
+
+    private Map<Installment, Money> calculateInstallmentTotalAmounts(final Event event, final DateTime when,
+            final BigDecimal discountPercentage) {
+
+        final Map<Installment, Money> result = new HashMap<Installment, Money>();
+        final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
+
+        for (final Installment installment : getInstallmentsSortedByEndDate()) {
+            result.put(installment, cashFlowBox.calculateTotalAmountFor(installment));
+
+        }
+
+        return result;
+    }
+
+    private class CashFlowBox {
+        public DateTime when;
+        public Money amount;
+        public DateTime currentTransactionDate;
+        public List<AccountingTransaction> transactions;
+        public BigDecimal discountPercentage;
+        public Event event;
+        public Money discountValue;
+        public boolean usedDiscountValue;
+        private Money discountedValue;
+
+        public CashFlowBox(final Event event, final DateTime when, final BigDecimal discountPercentage) {
+            this.event = event;
+            this.transactions = new ArrayList<AccountingTransaction>(event.getSortedNonAdjustingTransactions());
+            this.when = when;
+            this.discountPercentage = discountPercentage;
+            this.discountValue = event.getTotalDiscount();
+            this.discountedValue = Money.ZERO;
+            this.usedDiscountValue = false;
+
+            if (transactions.isEmpty()) {
+                this.amount = Money.ZERO;
+                this.currentTransactionDate = when;
+            } else {
+                final AccountingTransaction transaction = transactions.remove(0);
+                this.amount = transaction.getAmountWithAdjustment();
+                this.currentTransactionDate = transaction.getWhenRegistered();
+            }
+
+        }
+
+        private boolean hasMoneyFor(final Money amount) {
+            return this.amount.greaterOrEqualThan(amount);
+        }
+
+        private boolean hasDiscountValue() {
+            return this.discountValue.isPositive();
+        }
+
+        public boolean subtractMoneyFor(final Installment installment) {
+
+            if (hasDiscountValue() && this.discountValue.greaterOrEqualThan(installment.getAmount())) {
+                usedDiscountValue = true;
+                this.discountValue = this.discountValue.subtract(installment.getAmount());
+                return true;
+            }
+
+            Money installmentAmount =
+                    installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
+                            isToApplyPenalty(this.event, installment));
+
+            if (hasDiscountValue()) {
+                installmentAmount = installmentAmount.subtract(this.discountValue);
+                this.discountedValue = this.discountValue;
+            }
+
+            if (hasMoneyFor(installmentAmount)) {
+                this.amount = this.amount.subtract(installmentAmount);
+                this.discountValue = Money.ZERO;
+                return true;
+            }
+
+            if (this.transactions.isEmpty()) {
+                return false;
+            }
+
+            final AccountingTransaction transaction = this.transactions.remove(0);
+            this.amount = this.amount.add(transaction.getAmountWithAdjustment());
+            this.currentTransactionDate = transaction.getWhenRegistered();
+
+            return subtractMoneyFor(installment);
+        }
+
+        public Money subtractRemainingFor(final Installment installment) {
+            final Money result =
+                    installment
+                            .calculateAmount(this.event, this.when, this.discountPercentage,
+                                    isToApplyPenalty(this.event, installment)).subtract(this.discountValue).subtract(this.amount);
+            this.amount = this.discountValue = Money.ZERO;
+            return result;
+        }
+
+        public Money calculateTotalAmountFor(final Installment installment) {
+            final Money result;
+            if (subtractMoneyFor(installment)) {
+                if (usedDiscountValue) {
+                    result = Money.ZERO;
+                } else {
+                    result =
+                            installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
+                                    isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
+                    this.discountedValue = Money.ZERO;
+                }
+            } else {
+                result =
+                        installment.calculateAmount(this.event, this.when, this.discountPercentage,
+                                isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
+                this.discountedValue = Money.ZERO;
+            }
+            usedDiscountValue = false;
+            return result;
+        }
+    }
+
+    public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event, final DateTime when,
+            final BigDecimal discountPercentage) {
+        final Map<Installment, Money> result = new HashMap<Installment, Money>();
+        final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
+
+        for (final Installment installment : getInstallmentsSortedByEndDate()) {
+
+            if (!cashFlowBox.subtractMoneyFor(installment)) {
+                result.put(installment, cashFlowBox.subtractRemainingFor(installment));
+            }
+        }
+
+        return result;
+
+    }
+
+    public Money calculateRemainingAmountFor(final Installment installment, final Event event, final DateTime when,
+            final BigDecimal discountPercentage) {
+
+        final Map<Installment, Money> amountsByInstallment =
+                calculateInstallmentRemainingAmounts(event, when, discountPercentage);
+        final Money installmentAmount = amountsByInstallment.get(installment);
+
+        return (installmentAmount != null) ? installmentAmount : Money.ZERO;
+    }
+
+    public boolean isInstallmentInDebt(final Installment installment, final Event event, final DateTime when,
+            final BigDecimal discountPercentage) {
+
+        return calculateRemainingAmountFor(installment, event, when, discountPercentage).isPositive();
+
+    }
+
+    public Installment getInstallmentByOrder(int order) {
+        for (final Installment installment : getInstallments()) {
+            if (installment.getInstallmentOrder() == order) {
+                return installment;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean isToApplyPenalty(final Event event, final Installment installment) {
+        return true;
+    }
+
+    protected void removeParameters() {
+        super.setExecutionYear(null);
+    }
+
+    public boolean isGratuityPaymentPlan() {
+        return false;
+    }
+
+    public boolean isCustomGratuityPaymentPlan() {
+        return false;
+    }
+
+    private boolean hasExecutionYear(final ExecutionYear executionYear) {
+        return hasExecutionYear() && getExecutionYear().equals(executionYear);
+    }
+
+    final public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+
+        if (!hasExecutionYear(executionYear)) {
+            return false;
+        }
+
+        final Collection<PaymentPlanRule> specificRules = getSpecificPaymentPlanRules();
+
+        if (specificRules.isEmpty()) {
+            return false;
+        }
+
+        for (final PaymentPlanRule rule : specificRules) {
+            if (!rule.isAppliableFor(studentCurricularPlan, executionYear)) {
+                return false;
+            }
+        }
+
+        for (final PaymentPlanRule rule : getNotSpecificPaymentRules()) {
+            if (rule.isEvaluatedInNotSpecificPaymentRules() && rule.isAppliableFor(studentCurricularPlan, executionYear)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected Collection<PaymentPlanRule> getNotSpecificPaymentRules() {
+        /*
+         * All payment rules could be connected do
+         * DegreeCurricularPlanServiceAgreementTemplate, but for now are just
+         * value types
+         */
+        return CollectionUtils.subtract(PaymentPlanRuleManager.getAllPaymentPlanRules(), getSpecificPaymentPlanRules());
+    }
+
+    abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
+
+    public String getDescription() {
+        return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+                this.getClass().getSimpleName() + ".description");
+    }
+
+    public boolean isFor(final ExecutionYear executionYear) {
+        return hasExecutionYear() && getExecutionYear().equals(executionYear);
+    }
+
+    abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void delete() {
+        if (!getGratuityEventsWithPaymentPlan().isEmpty()) {
+            throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
+        }
+
+        while (hasAnyInstallments()) {
+            getInstallments().get(0).delete();
+        }
+
+        removeParameters();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+
+    }
+
+    public boolean isForPartialRegime() {
+        return false;
+    }
+
+    public boolean isForFirstTimeInstitutionStudents() {
+        return false;
+    }
+
+    public boolean hasSingleInstallment() {
+        return getInstallmentsCount() == 1;
+    }
 
 }

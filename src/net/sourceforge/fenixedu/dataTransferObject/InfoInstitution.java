@@ -12,48 +12,48 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
  * 
  */
 public class InfoInstitution extends InfoObject {
-	private String name;
+    private String name;
 
-	public InfoInstitution() {
-	}
+    public InfoInstitution() {
+    }
 
-	public InfoInstitution(String name) {
-		setName(name);
-	}
+    public InfoInstitution(String name) {
+        setName(name);
+    }
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return Returns the name.
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            The name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @param institution
-	 * @return
-	 */
-	public static InfoInstitution newInfoFromDomain(Unit institution) {
-		InfoInstitution infoInstitution = null;
-		if (institution != null) {
-			infoInstitution = new InfoInstitution();
-			infoInstitution.copyFromDomain(institution);
-		}
+    /**
+     * @param institution
+     * @return
+     */
+    public static InfoInstitution newInfoFromDomain(Unit institution) {
+        InfoInstitution infoInstitution = null;
+        if (institution != null) {
+            infoInstitution = new InfoInstitution();
+            infoInstitution.copyFromDomain(institution);
+        }
 
-		return infoInstitution;
-	}
+        return infoInstitution;
+    }
 
-	public void copyFromDomain(Unit institution) {
-		super.copyFromDomain(institution);
-		if (institution != null) {
-			setName(institution.getName());
-		}
-	}
+    public void copyFromDomain(Unit institution) {
+        super.copyFromDomain(institution);
+        if (institution != null) {
+            setName(institution.getName());
+        }
+    }
 }

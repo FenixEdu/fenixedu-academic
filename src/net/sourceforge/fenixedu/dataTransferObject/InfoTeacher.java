@@ -19,85 +19,85 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class InfoTeacher extends InfoObject {
 
-	private Person person;
+    private Person person;
 
-	// This constructor is needed because of CRUDActionByOID. Do not delete it.
-	public InfoTeacher() {
-	}
+    // This constructor is needed because of CRUDActionByOID. Do not delete it.
+    public InfoTeacher() {
+    }
 
-	public InfoTeacher(final Person person) {
-		this.person = person;
-	}
+    public InfoTeacher(final Person person) {
+        this.person = person;
+    }
 
-	public InfoTeacher(final Teacher teacher) {
-		this.person = teacher.getPerson();
-	}
+    public InfoTeacher(final Teacher teacher) {
+        this.person = teacher.getPerson();
+    }
 
-	public List getProfessorShipsExecutionCourses() {
-		final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>();
-		for (final Professorship professorship : getPerson().getProfessorshipsSet()) {
-			infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
-		}
-		return infoProfessorships;
-	}
+    public List getProfessorShipsExecutionCourses() {
+        final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>();
+        for (final Professorship professorship : getPerson().getProfessorshipsSet()) {
+            infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
+        }
+        return infoProfessorships;
+    }
 
-	public List getResponsibleForExecutionCourses() {
-		final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>();
-		for (final Professorship professorship : getPerson().getProfessorshipsSet()) {
-			if (professorship.isResponsibleFor()) {
-				infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
-			}
-		}
-		return infoProfessorships;
-	}
+    public List getResponsibleForExecutionCourses() {
+        final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>();
+        for (final Professorship professorship : getPerson().getProfessorshipsSet()) {
+            if (professorship.isResponsibleFor()) {
+                infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
+            }
+        }
+        return infoProfessorships;
+    }
 
-	public String getTeacherId() {
-		return getTeacher().getPerson().getIstUsername();
-	}
+    public String getTeacherId() {
+        return getTeacher().getPerson().getIstUsername();
+    }
 
-	public InfoPerson getInfoPerson() {
-		return InfoPerson.newInfoFromDomain(getPerson());
-	}
+    public InfoPerson getInfoPerson() {
+        return InfoPerson.newInfoFromDomain(getPerson());
+    }
 
-	public InfoCategory getInfoCategory() {
-		return InfoCategory.newInfoFromDomain(getTeacher().getCategory());
-	}
+    public InfoCategory getInfoCategory() {
+        return InfoCategory.newInfoFromDomain(getTeacher().getCategory());
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj != null && getPerson() == ((InfoTeacher) obj).getPerson();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && getPerson() == ((InfoTeacher) obj).getPerson();
+    }
 
-	@Override
-	public String toString() {
-		return getTeacher().toString();
-	}
+    @Override
+    public String toString() {
+        return getTeacher().toString();
+    }
 
-	public static InfoTeacher newInfoFromDomain(final Person person) {
-		return person == null ? null : new InfoTeacher(person);
-	}
+    public static InfoTeacher newInfoFromDomain(final Person person) {
+        return person == null ? null : new InfoTeacher(person);
+    }
 
-	public static InfoTeacher newInfoFromDomain(final Teacher teacher) {
-		return teacher == null ? null : new InfoTeacher(teacher);
-	}
+    public static InfoTeacher newInfoFromDomain(final Teacher teacher) {
+        return teacher == null ? null : new InfoTeacher(teacher);
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getTeacher().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getTeacher().getIdInternal();
+    }
 
-	@Override
-	public void setIdInternal(Integer integer) {
-		// This attribution is needed because of CRUDActionByOID. Do not delete
-		// it.
-		this.person = RootDomainObject.getInstance().readTeacherByOID(integer).getPerson();
-	}
+    @Override
+    public void setIdInternal(Integer integer) {
+        // This attribution is needed because of CRUDActionByOID. Do not delete
+        // it.
+        this.person = RootDomainObject.getInstance().readTeacherByOID(integer).getPerson();
+    }
 
-	public Teacher getTeacher() {
-		return person.getTeacher();
-	}
+    public Teacher getTeacher() {
+        return person.getTeacher();
+    }
 
-	public Person getPerson() {
-		return this.person;
-	}
+    public Person getPerson() {
+        return this.person;
+    }
 }

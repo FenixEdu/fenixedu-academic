@@ -14,78 +14,78 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 
-	public TeachersByShiftReportFile() {
-		super();
-	}
+    public TeachersByShiftReportFile() {
+        super();
+    }
 
-	@Override
-	public String getJobName() {
-		return "Listagem de docentes associados a turnos";
-	}
+    @Override
+    public String getJobName() {
+        return "Listagem de docentes associados a turnos";
+    }
 
-	@Override
-	protected String getPrefix() {
-		return "teachersByShift";
-	}
+    @Override
+    protected String getPrefix() {
+        return "teachersByShift";
+    }
 
-	@Override
-	public void renderReport(Spreadsheet spreadsheet) {
+    @Override
+    public void renderReport(Spreadsheet spreadsheet) {
 
-		spreadsheet.setHeader("semestre");
-		spreadsheet.setHeader("id docente");
-		spreadsheet.setHeader("id turno");
-		spreadsheet.setHeader("nome turno");
-		spreadsheet.setHeader("id execution course");
-		spreadsheet.setHeader("% assegurada pelo docente");
-		spreadsheet.setHeader("OID execucao disciplina");
-		spreadsheet.setHeader("OID professorship");
+        spreadsheet.setHeader("semestre");
+        spreadsheet.setHeader("id docente");
+        spreadsheet.setHeader("id turno");
+        spreadsheet.setHeader("nome turno");
+        spreadsheet.setHeader("id execution course");
+        spreadsheet.setHeader("% assegurada pelo docente");
+        spreadsheet.setHeader("OID execucao disciplina");
+        spreadsheet.setHeader("OID professorship");
 
-		//TODO remove when the main external teachers structure is global for everyone
-		Set<NonRegularTeachingService> nonRegularTeachingServices =
-				RootDomainObject.getInstance().getNonRegularTeachingServicesSet();
+        //TODO remove when the main external teachers structure is global for everyone
+        Set<NonRegularTeachingService> nonRegularTeachingServices =
+                RootDomainObject.getInstance().getNonRegularTeachingServicesSet();
 
-		for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
-			//TODO remove this cycle when the main external teachers structure is global for everyone
-			for (NonRegularTeachingService nonRegularTeachingService : nonRegularTeachingServices) {
-				if (nonRegularTeachingService.getProfessorship().getExecutionCourse().getExecutionPeriod() == executionSemester) {
-					final Shift shift = nonRegularTeachingService.getShift();
+        for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
+            //TODO remove this cycle when the main external teachers structure is global for everyone
+            for (NonRegularTeachingService nonRegularTeachingService : nonRegularTeachingServices) {
+                if (nonRegularTeachingService.getProfessorship().getExecutionCourse().getExecutionPeriod() == executionSemester) {
+                    final Shift shift = nonRegularTeachingService.getShift();
 
-					if (!shift.hasSchoolClassForDegreeType(getDegreeType())) {
-						continue;
-					}
-					Row row = spreadsheet.addRow();
-					row.setCell(executionSemester.getSemester());
-					row.setCell(nonRegularTeachingService.getProfessorship().getPerson().getIstUsername());
-					row.setCell(shift.getIdInternal());
-					row.setCell(shift.getNome());
-					row.setCell(shift.getExecutionCourse().getIdInternal());
-					row.setCell(nonRegularTeachingService.getPercentage() != null ? nonRegularTeachingService.getPercentage()
-							.toString().replace('.', ',') : StringUtils.EMPTY);
-					row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
-					row.setCell(String.valueOf(nonRegularTeachingService.getProfessorship().getOid()));
-				}
-			}
-			for (TeacherService teacherService : executionSemester.getTeacherServices()) {
-				for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
+                    if (!shift.hasSchoolClassForDegreeType(getDegreeType())) {
+                        continue;
+                    }
+                    Row row = spreadsheet.addRow();
+                    row.setCell(executionSemester.getSemester());
+                    row.setCell(nonRegularTeachingService.getProfessorship().getPerson().getIstUsername());
+                    row.setCell(shift.getIdInternal());
+                    row.setCell(shift.getNome());
+                    row.setCell(shift.getExecutionCourse().getIdInternal());
+                    row.setCell(nonRegularTeachingService.getPercentage() != null ? nonRegularTeachingService.getPercentage()
+                            .toString().replace('.', ',') : StringUtils.EMPTY);
+                    row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
+                    row.setCell(String.valueOf(nonRegularTeachingService.getProfessorship().getOid()));
+                }
+            }
+            for (TeacherService teacherService : executionSemester.getTeacherServices()) {
+                for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
 
-					final Shift shift = degreeTeachingService.getShift();
+                    final Shift shift = degreeTeachingService.getShift();
 
-					if (!shift.hasSchoolClassForDegreeType(getDegreeType())) {
-						continue;
-					}
+                    if (!shift.hasSchoolClassForDegreeType(getDegreeType())) {
+                        continue;
+                    }
 
-					Row row = spreadsheet.addRow();
-					row.setCell(executionSemester.getSemester());
-					row.setCell(teacherService.getTeacher().getPerson().getIstUsername());
-					row.setCell(shift.getIdInternal());
-					row.setCell(shift.getNome());
-					row.setCell(shift.getExecutionCourse().getIdInternal());
-					row.setCell(degreeTeachingService.getPercentage() != null ? degreeTeachingService.getPercentage().toString()
-							.replace('.', ',') : StringUtils.EMPTY);
-					row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
-					row.setCell(String.valueOf(degreeTeachingService.getProfessorship().getOid()));
-				}
-			}
-		}
-	}
+                    Row row = spreadsheet.addRow();
+                    row.setCell(executionSemester.getSemester());
+                    row.setCell(teacherService.getTeacher().getPerson().getIstUsername());
+                    row.setCell(shift.getIdInternal());
+                    row.setCell(shift.getNome());
+                    row.setCell(shift.getExecutionCourse().getIdInternal());
+                    row.setCell(degreeTeachingService.getPercentage() != null ? degreeTeachingService.getPercentage().toString()
+                            .replace('.', ',') : StringUtils.EMPTY);
+                    row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
+                    row.setCell(String.valueOf(degreeTeachingService.getProfessorship().getOid()));
+                }
+            }
+        }
+    }
 }

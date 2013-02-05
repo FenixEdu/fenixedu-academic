@@ -20,18 +20,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadFinalDegreeWorkProposalHeadersByTeacher extends FenixService {
 
-	@Service
-	public static List run(final Person person) throws FenixServiceException {
-		final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
-		for (final Proposal proposal : person.findFinalDegreeWorkProposals()) {
-			final Scheduleing scheduleing = proposal.getScheduleing();
+    @Service
+    public static List run(final Person person) throws FenixServiceException {
+        final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
+        for (final Proposal proposal : person.findFinalDegreeWorkProposals()) {
+            final Scheduleing scheduleing = proposal.getScheduleing();
 
-			for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegrees()) {
-				result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
-			}
-		}
+            for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegrees()) {
+                result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

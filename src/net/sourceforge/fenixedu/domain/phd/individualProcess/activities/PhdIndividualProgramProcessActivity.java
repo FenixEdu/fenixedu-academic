@@ -13,28 +13,28 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 public abstract class PhdIndividualProgramProcessActivity extends Activity<PhdIndividualProgramProcess> {
 
-	@Override
-	final public void checkPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
-		processPreConditions(process, userView);
-		activityPreConditions(process, userView);
-	}
+    @Override
+    final public void checkPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
+        processPreConditions(process, userView);
+        activityPreConditions(process, userView);
+    }
 
-	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
-		if (process != null && !process.getActiveState().isActive()) {
-			throw new PreConditionNotValidException();
-		}
-	}
+    protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
+        if (process != null && !process.getActiveState().isActive()) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	protected void email(String email, String subject, String body) {
-		final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
-		new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
-	}
+    protected void email(String email, String subject, String body) {
+        final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+        new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
+    }
 
-	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
+    abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
 
-	@Override
-	protected void log(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		PhdLog.logActivity(this, process, userView, object);
-	}
+    @Override
+    protected void log(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        PhdLog.logActivity(this, process, userView, object);
+    }
 
 }

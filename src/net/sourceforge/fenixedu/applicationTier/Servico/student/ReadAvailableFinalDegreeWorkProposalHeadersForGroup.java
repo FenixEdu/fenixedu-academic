@@ -26,40 +26,40 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static List run(Integer groupOID) {
-		final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List run(Integer groupOID) {
+        final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-		final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
+        final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 
-		if (group != null && group.getExecutionDegree() != null) {
-			final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();
+        if (group != null && group.getExecutionDegree() != null) {
+            final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();
 
-			for (final Proposal proposal : finalDegreeWorkProposals) {
-				if (!CollectionUtils.exists(group.getGroupProposals(), new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
-					result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal));
-				}
-			}
-		}
+            for (final Proposal proposal : finalDegreeWorkProposals) {
+                if (!CollectionUtils.exists(group.getGroupProposals(), new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
+                    result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal));
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private static class PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL implements Predicate {
+    private static class PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL implements Predicate {
 
-		Proposal proposal;
+        Proposal proposal;
 
-		@Override
-		public boolean evaluate(Object arg0) {
-			GroupProposal groupProposal = (GroupProposal) arg0;
-			return proposal.equals(groupProposal.getFinalDegreeWorkProposal());
-		}
+        @Override
+        public boolean evaluate(Object arg0) {
+            GroupProposal groupProposal = (GroupProposal) arg0;
+            return proposal.equals(groupProposal.getFinalDegreeWorkProposal());
+        }
 
-		public PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(Proposal proposal) {
-			super();
-			this.proposal = proposal;
-		}
-	}
+        public PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(Proposal proposal) {
+            super();
+            this.proposal = proposal;
+        }
+    }
 
 }

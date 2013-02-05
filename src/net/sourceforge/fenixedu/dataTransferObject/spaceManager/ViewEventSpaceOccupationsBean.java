@@ -11,63 +11,63 @@ import org.joda.time.YearMonthDay;
 
 public class ViewEventSpaceOccupationsBean implements Serializable {
 
-	private Partial year;
+    private Partial year;
 
-	private Partial month;
+    private Partial month;
 
-	private YearMonthDay day;
+    private YearMonthDay day;
 
-	private AllocatableSpace allocatableSpaceReference;
+    private AllocatableSpace allocatableSpaceReference;
 
-	public static int MONDAY_IN_JODA_TIME = 1;
-	public static int SATURDAY_IN_JODA_TIME = 6;
+    public static int MONDAY_IN_JODA_TIME = 1;
+    public static int SATURDAY_IN_JODA_TIME = 6;
 
-	public ViewEventSpaceOccupationsBean(YearMonthDay day, AllocatableSpace allocatableSpace) {
+    public ViewEventSpaceOccupationsBean(YearMonthDay day, AllocatableSpace allocatableSpace) {
 
-		setAllocatableSpace(allocatableSpace);
+        setAllocatableSpace(allocatableSpace);
 
-		if (day != null) {
-			setYear(new Partial(DateTimeFieldType.year(), day.getYear()));
-			setMonth(new Partial(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()));
+        if (day != null) {
+            setYear(new Partial(DateTimeFieldType.year(), day.getYear()));
+            setMonth(new Partial(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()));
 
-			YearMonthDay monday = day.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
-			if ((monday.getMonthOfYear() < day.getMonthOfYear()) || (monday.getYear() < day.getYear())) {
-				monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
-			}
+            YearMonthDay monday = day.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
+            if ((monday.getMonthOfYear() < day.getMonthOfYear()) || (monday.getYear() < day.getYear())) {
+                monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
+            }
 
-			setDay(monday);
-		}
-	}
+            setDay(monday);
+        }
+    }
 
-	public AllocatableSpace getAllocatableSpace() {
-		return allocatableSpaceReference;
-	}
+    public AllocatableSpace getAllocatableSpace() {
+        return allocatableSpaceReference;
+    }
 
-	public void setAllocatableSpace(AllocatableSpace space) {
-		this.allocatableSpaceReference = space;
-	}
+    public void setAllocatableSpace(AllocatableSpace space) {
+        this.allocatableSpaceReference = space;
+    }
 
-	public Partial getYear() {
-		return year;
-	}
+    public Partial getYear() {
+        return year;
+    }
 
-	public void setYear(Partial year) {
-		this.year = year;
-	}
+    public void setYear(Partial year) {
+        this.year = year;
+    }
 
-	public Partial getMonth() {
-		return month;
-	}
+    public Partial getMonth() {
+        return month;
+    }
 
-	public void setMonth(Partial month) {
-		this.month = month;
-	}
+    public void setMonth(Partial month) {
+        this.month = month;
+    }
 
-	public YearMonthDay getDay() {
-		return day;
-	}
+    public YearMonthDay getDay() {
+        return day;
+    }
 
-	public void setDay(YearMonthDay firstDayOWeek) {
-		this.day = firstDayOWeek;
-	}
+    public void setDay(YearMonthDay firstDayOWeek) {
+        this.day = firstDayOWeek;
+    }
 }

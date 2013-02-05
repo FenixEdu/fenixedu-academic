@@ -8,94 +8,94 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Alert extends Alert_Base {
 
-	public Alert() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setRootDomainObjectForActiveAlerts(RootDomainObject.getInstance());
-		setWhenCreated(new DateTime());
-	}
+    public Alert() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObjectForActiveAlerts(RootDomainObject.getInstance());
+        setWhenCreated(new DateTime());
+    }
 
-	protected void init(final MultiLanguageString subject, final MultiLanguageString body) {
-		checkParameters(subject, body);
-		super.setSubject(subject);
-		super.setBody(body);
-		super.setActive(Boolean.TRUE);
-	}
+    protected void init(final MultiLanguageString subject, final MultiLanguageString body) {
+        checkParameters(subject, body);
+        super.setSubject(subject);
+        super.setBody(body);
+        super.setActive(Boolean.TRUE);
+    }
 
-	private void checkParameters(MultiLanguageString subject, MultiLanguageString body) {
-		check(subject, "error.alert.Alert.subject.cannot.be.null");
-		check(body, "error.alert.Alert.body.cannot.be.null");
-	}
+    private void checkParameters(MultiLanguageString subject, MultiLanguageString body) {
+        check(subject, "error.alert.Alert.subject.cannot.be.null");
+        check(body, "error.alert.Alert.body.cannot.be.null");
+    }
 
-	@Override
-	public void setSubject(MultiLanguageString subject) {
-		throw new DomainException("error.alert.Alert.cannot.modify.subject");
-	}
+    @Override
+    public void setSubject(MultiLanguageString subject) {
+        throw new DomainException("error.alert.Alert.cannot.modify.subject");
+    }
 
-	@Override
-	public void setBody(MultiLanguageString body) {
-		throw new DomainException("error.alert.Alert.cannot.modify.body");
-	}
+    @Override
+    public void setBody(MultiLanguageString body) {
+        throw new DomainException("error.alert.Alert.cannot.modify.body");
+    }
 
-	@Override
-	public void setActive(Boolean active) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.cannot.modify.active");
-	}
+    @Override
+    public void setActive(Boolean active) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.cannot.modify.active");
+    }
 
-	@Override
-	public MultiLanguageString getBody() {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.use.getFormattedBody.instead");
-	}
+    @Override
+    public MultiLanguageString getBody() {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.use.getFormattedBody.instead");
+    }
 
-	@Override
-	public MultiLanguageString getSubject() {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.use.getFormattedSubject.instead");
-	}
+    @Override
+    public MultiLanguageString getSubject() {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.alert.Alert.use.getFormattedSubject.instead");
+    }
 
-	public MultiLanguageString getFormattedBody() {
-		return super.getBody();
-	}
+    public MultiLanguageString getFormattedBody() {
+        return super.getBody();
+    }
 
-	public MultiLanguageString getFormattedSubject() {
-		return super.getSubject();
-	}
+    public MultiLanguageString getFormattedSubject() {
+        return super.getSubject();
+    }
 
-	public void fire() {
-		if (isToDiscard()) {
-			discard();
-			return;
-		}
+    public void fire() {
+        if (isToDiscard()) {
+            discard();
+            return;
+        }
 
-		if (!isToFire()) {
-			return;
-		}
+        if (!isToFire()) {
+            return;
+        }
 
-		generateMessage();
-		super.setFireDate(new DateTime());
+        generateMessage();
+        super.setFireDate(new DateTime());
 
-		// check again, because alert may be discarded after send messages
-		if (isToDiscard()) {
-			discard();
-		}
-	}
+        // check again, because alert may be discarded after send messages
+        if (isToDiscard()) {
+            discard();
+        }
+    }
 
-	public void discard() {
-		super.setRootDomainObjectForActiveAlerts(null);
-		super.setActive(false);
-	}
+    public void discard() {
+        super.setRootDomainObjectForActiveAlerts(null);
+        super.setActive(false);
+    }
 
-	abstract public String getDescription();
+    abstract public String getDescription();
 
-	abstract protected boolean isToDiscard();
+    abstract protected boolean isToDiscard();
 
-	abstract protected boolean isToFire();
+    abstract protected boolean isToFire();
 
-	abstract protected void generateMessage();
+    abstract protected void generateMessage();
 
-	abstract public boolean isToSendMail();
+    abstract public boolean isToSendMail();
 
-	public boolean isCancelable() {
-		return isToFire();
-	}
+    public boolean isCancelable() {
+        return isToFire();
+    }
 
 }

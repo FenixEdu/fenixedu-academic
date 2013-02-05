@@ -8,24 +8,24 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSear
 
 public abstract class SearchParties extends FenixService implements AutoCompleteSearchService {
 
-	private static int DEFAULT_SIZE = 50;
+    private static int DEFAULT_SIZE = 50;
 
-	@Override
-	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-		int size = getSize(arguments);
-		return search(value, size);
-	}
+    @Override
+    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+        int size = getSize(arguments);
+        return search(value, size);
+    }
 
-	protected abstract Collection search(String value, int size);
+    protected abstract Collection search(String value, int size);
 
-	private int getSize(Map<String, String> arguments) {
-		String size = arguments.get("size");
+    private int getSize(Map<String, String> arguments) {
+        String size = arguments.get("size");
 
-		if (size == null) {
-			return DEFAULT_SIZE;
-		} else {
-			return Integer.parseInt(size);
-		}
-	}
+        if (size == null) {
+            return DEFAULT_SIZE;
+        } else {
+            return Integer.parseInt(size);
+        }
+    }
 
 }

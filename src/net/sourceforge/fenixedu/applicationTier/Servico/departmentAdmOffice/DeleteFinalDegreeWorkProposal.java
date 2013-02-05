@@ -6,11 +6,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteFinalDegreeWorkProposal extends FenixService {
 
-	@Service
-	public static void run(final Proposal proposal) {
-		if (proposal != null) {
-			proposal.delete();
-		}
-	}
+    @Service
+    public static void run(final Proposal proposal) {
+        if (proposal != null) {
+            proposal.delete();
+        }
+    }
 
 }

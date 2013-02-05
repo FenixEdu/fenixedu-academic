@@ -30,83 +30,83 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepareChoose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareChoose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String action = request.getParameter("action");
-		DynaActionForm chooseGuide = (DynaActionForm) form;
+        String action = request.getParameter("action");
+        DynaActionForm chooseGuide = (DynaActionForm) form;
 
-		if (action.equals("visualize")) {
-			request.setAttribute(PresentationConstants.ACTION, "label.action.visualizeGuide");
-		} else if (action.equals("edit")) {
-			request.setAttribute(PresentationConstants.ACTION, "label.action.editGuide");
-		}
+        if (action.equals("visualize")) {
+            request.setAttribute(PresentationConstants.ACTION, "label.action.visualizeGuide");
+        } else if (action.equals("edit")) {
+            request.setAttribute(PresentationConstants.ACTION, "label.action.editGuide");
+        }
 
-		chooseGuide.set("guideYear", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        chooseGuide.set("guideYear", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-		return mapping.findForward("PrepareReady");
+        return mapping.findForward("PrepareReady");
 
-	}
+    }
 
-	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaActionForm chooseGuide = (DynaActionForm) form;
+        DynaActionForm chooseGuide = (DynaActionForm) form;
 
-		// Get the Information
-		Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
-		Integer guideYear = new Integer((String) chooseGuide.get("guideYear"));
+        // Get the Information
+        Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
+        Integer guideYear = new Integer((String) chooseGuide.get("guideYear"));
 
-		Object args[] = { guideNumber, guideYear };
+        Object args[] = { guideNumber, guideYear };
 
-		List result = null;
-		try {
-			result = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("A Guia", e);
-		}
+        List result = null;
+        try {
+            result = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("A Guia", e);
+        }
 
-		request.setAttribute(PresentationConstants.GUIDE_LIST, result);
-		if (result.size() == 1) {
-			request.setAttribute(PresentationConstants.GUIDE, result.get(0));
-			return mapping.findForward("ActionReady");
-		}
+        request.setAttribute(PresentationConstants.GUIDE_LIST, result);
+        if (result.size() == 1) {
+            request.setAttribute(PresentationConstants.GUIDE, result.get(0));
+            return mapping.findForward("ActionReady");
+        }
 
-		request.setAttribute(PresentationConstants.GUIDE_YEAR, guideYear);
-		request.setAttribute(PresentationConstants.GUIDE_NUMBER, guideNumber);
+        request.setAttribute(PresentationConstants.GUIDE_YEAR, guideYear);
+        request.setAttribute(PresentationConstants.GUIDE_NUMBER, guideNumber);
 
-		return mapping.findForward("ShowVersionList");
-	}
+        return mapping.findForward("ShowVersionList");
+    }
 
-	public ActionForward chooseVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward chooseVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		// Get the Information
-		Integer guideNumber = new Integer(request.getParameter("number"));
-		Integer guideYear = new Integer(request.getParameter("year"));
-		Integer guideVersion = new Integer(request.getParameter("version"));
+        // Get the Information
+        Integer guideNumber = new Integer(request.getParameter("number"));
+        Integer guideYear = new Integer(request.getParameter("year"));
+        Integer guideVersion = new Integer(request.getParameter("version"));
 
-		InfoGuide infoGuide = null;
+        InfoGuide infoGuide = null;
 
-		try {
-			Object args[] = { guideNumber, guideYear, guideVersion };
-			infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("A Versão da Guia", e);
-		}
+        try {
+            Object args[] = { guideNumber, guideYear, guideVersion };
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("A Versão da Guia", e);
+        }
 
-		List guideList = null;
-		try {
-			Object args[] = { guideNumber, guideYear };
-			guideList = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("A Guia", e);
-		}
+        List guideList = null;
+        try {
+            Object args[] = { guideNumber, guideYear };
+            guideList = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("A Guia", e);
+        }
 
-		request.setAttribute(PresentationConstants.GUIDE_LIST, guideList);
-		request.setAttribute(PresentationConstants.GUIDE, infoGuide);
-		return mapping.findForward("ActionReady");
+        request.setAttribute(PresentationConstants.GUIDE_LIST, guideList);
+        request.setAttribute(PresentationConstants.GUIDE, infoGuide);
+        return mapping.findForward("ActionReady");
 
-	}
+    }
 
 }

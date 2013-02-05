@@ -11,31 +11,31 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 
 public class EditCourseGroup extends FenixService {
 
-	public void run(final Integer courseGroupID, final Integer contextID, final String name, final String nameEn,
-			final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID) throws FenixServiceException {
+    public void run(final Integer courseGroupID, final Integer contextID, final String name, final String nameEn,
+            final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID) throws FenixServiceException {
 
-		final CourseGroup courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
-		if (courseGroup == null) {
-			throw new FenixServiceException("error.noCourseGroup");
-		}
-		final Context context = rootDomainObject.readContextByOID(contextID);
-		if (context == null && !courseGroup.isRoot()) {
-			throw new FenixServiceException("error.noContext");
-		}
+        final CourseGroup courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
+        if (courseGroup == null) {
+            throw new FenixServiceException("error.noCourseGroup");
+        }
+        final Context context = rootDomainObject.readContextByOID(contextID);
+        if (context == null && !courseGroup.isRoot()) {
+            throw new FenixServiceException("error.noContext");
+        }
 
-		courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
-				getEndExecutionPeriod(endExecutionPeriodID));
-	}
+        courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
+                getEndExecutionPeriod(endExecutionPeriodID));
+    }
 
-	private ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
-		if (beginExecutionPeriodID == null) {
-			return ExecutionSemester.readActualExecutionSemester();
-		} else {
-			return rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
-		}
-	}
+    private ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+        if (beginExecutionPeriodID == null) {
+            return ExecutionSemester.readActualExecutionSemester();
+        } else {
+            return rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
+        }
+    }
 
-	private ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
-		return (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
-	}
+    private ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
+        return (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
+    }
 }

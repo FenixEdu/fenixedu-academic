@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.protocols.Protocol;
 
 public class AddFileToProtocol extends FenixService {
 
-	public Protocol run(Protocol protocol, InputStream fileInputStream, String fileName, FilePermissionType filePermissionType)
-			throws FileNotFoundException {
-		protocol.addFile(fileInputStream, fileName, filePermissionType);
-		return protocol;
-	}
+    public Protocol run(Protocol protocol, InputStream fileInputStream, String fileName, FilePermissionType filePermissionType)
+            throws FileNotFoundException {
+        protocol.addFile(fileInputStream, fileName, filePermissionType);
+        return protocol;
+    }
 }

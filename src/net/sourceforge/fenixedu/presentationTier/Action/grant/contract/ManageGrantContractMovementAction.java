@@ -28,53 +28,47 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/manageGrantContractMovement",
-		input = "/manageGrantContractMovement.do?page=0&method=prepareManageGrantContractMovement",
-		attribute = "voidForm",
-		formBean = "voidForm",
-		scope = "request",
-		parameter = "method")
-@Forwards(value = { @Forward(
-		name = "manage-grant-contract-movement",
-		path = "/facultyAdmOffice/grant/contract/manageGrantMovement.jsp") })
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantContractMovement",
+        input = "/manageGrantContractMovement.do?page=0&method=prepareManageGrantContractMovement", attribute = "voidForm",
+        formBean = "voidForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-contract-movement",
+        path = "/facultyAdmOffice/grant/contract/manageGrantMovement.jsp") })
 public class ManageGrantContractMovementAction extends FenixDispatchAction {
-	/*
-	 * Fills the form with the correspondent data
-	 */
-	public ActionForward prepareManageGrantContractMovement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    /*
+     * Fills the form with the correspondent data
+     */
+    public ActionForward prepareManageGrantContractMovement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Integer idContract = null;
-		try {
-			if (request.getAttribute("idContract") != null) {
-				idContract = (Integer) request.getAttribute("idContract");
-			} else {
-				idContract = new Integer(request.getParameter("idContract"));
-			}
-		} catch (Exception e) {
-			request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
-			request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-movement", null);
-		}
+        Integer idContract = null;
+        try {
+            if (request.getAttribute("idContract") != null) {
+                idContract = (Integer) request.getAttribute("idContract");
+            } else {
+                idContract = new Integer(request.getParameter("idContract"));
+            }
+        } catch (Exception e) {
+            request.setAttribute("idContract", new Integer(request.getParameter("idContract")));
+            request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
+            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-movement", null);
+        }
 
-		IUserView userView = UserView.getUser();
-		InfoGrantContract infoGrantContract =
-				(InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", new Object[] { idContract });
+        IUserView userView = UserView.getUser();
+        InfoGrantContract infoGrantContract =
+                (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", new Object[] { idContract });
 
-		request.setAttribute("idContract", idContract);
-		request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
+        request.setAttribute("idContract", idContract);
+        request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-		List infoGrantContractMovementsList = ReadAllGrantMovementsByContract.run(idContract);
+        List infoGrantContractMovementsList = ReadAllGrantMovementsByContract.run(idContract);
 
-		if (infoGrantContractMovementsList != null && !infoGrantContractMovementsList.isEmpty()) {
-			request.setAttribute("infoGrantContractMovementsList", infoGrantContractMovementsList);
-		}
+        if (infoGrantContractMovementsList != null && !infoGrantContractMovementsList.isEmpty()) {
+            request.setAttribute("infoGrantContractMovementsList", infoGrantContractMovementsList);
+        }
 
-		// Presenting adittional information
-		request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-		request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
-		return mapping.findForward("manage-grant-contract-movement");
-	}
+        // Presenting adittional information
+        request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
+        request.setAttribute("grantOwnerNumber", infoGrantContract.getGrantOwnerInfo().getGrantOwnerNumber());
+        return mapping.findForward("manage-grant-contract-movement");
+    }
 }

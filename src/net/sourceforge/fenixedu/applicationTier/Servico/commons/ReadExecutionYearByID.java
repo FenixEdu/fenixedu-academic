@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionYearByID extends FenixService {
 
-	@Service
-	public static InfoExecutionYear run(final Integer executionYearId) {
-		final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
-		return (executionYear != null) ? InfoExecutionYear.newInfoFromDomain(executionYear) : null;
-	}
+    @Service
+    public static InfoExecutionYear run(final Integer executionYearId) {
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+        return (executionYear != null) ? InfoExecutionYear.newInfoFromDomain(executionYear) : null;
+    }
 
 }

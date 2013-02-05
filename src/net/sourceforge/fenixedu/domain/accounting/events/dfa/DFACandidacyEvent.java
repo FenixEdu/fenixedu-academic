@@ -24,117 +24,117 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
-	private DFACandidacyEvent() {
-		super();
-	}
+    private DFACandidacyEvent() {
+        super();
+    }
 
-	public DFACandidacyEvent(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
-		this();
-		init(administrativeOffice, person, candidacy);
-	}
+    public DFACandidacyEvent(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
+        this();
+        init(administrativeOffice, person, candidacy);
+    }
 
-	private void init(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
-		init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
-		checkParameters(candidacy);
-		super.setCandidacy(candidacy);
-	}
+    private void init(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
+        init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
+        checkParameters(candidacy);
+        super.setCandidacy(candidacy);
+    }
 
-	private void checkParameters(Candidacy candidacy) {
-		if (candidacy == null) {
-			throw new DomainException("error.candidacy.dfaCandidacyEvent.invalid.candidacy");
-		}
-	}
+    private void checkParameters(Candidacy candidacy) {
+        if (candidacy == null) {
+            throw new DomainException("error.candidacy.dfaCandidacyEvent.invalid.candidacy");
+        }
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getUnit().getAccountBy(AccountType.INTERNAL);
-	}
+    @Override
+    public Account getToAccount() {
+        return getUnit().getAccountBy(AccountType.INTERNAL);
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getPerson().getAccountBy(AccountType.EXTERNAL);
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getPerson().getAccountBy(AccountType.EXTERNAL);
+    }
 
-	private Unit getUnit() {
-		return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit();
-	}
+    private Unit getUnit() {
+        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit();
+    }
 
-	@Override
-	public void setCandidacy(DFACandidacy candidacy) {
-		throw new DomainException("error.candidacy.dfaCandidacyEvent.cannot.modify.candidacy");
-	}
+    @Override
+    public void setCandidacy(DFACandidacy candidacy) {
+        throw new DomainException("error.candidacy.dfaCandidacyEvent.cannot.modify.candidacy");
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
-				.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ")
-				.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
-				.appendLabel(getExecutionYear().getYear()).appendLabel(")");
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (")
+                .appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ")
+                .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
+                .appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
-		return labelFormatter;
+        return labelFormatter;
 
-	}
+    }
 
-	private ExecutionDegree getExecutionDegree() {
-		return getCandidacy().getExecutionDegree();
+    private ExecutionDegree getExecutionDegree() {
+        return getCandidacy().getExecutionDegree();
 
-	}
+    }
 
-	private Degree getDegree() {
-		return getExecutionDegree().getDegreeCurricularPlan().getDegree();
+    private Degree getDegree() {
+        return getExecutionDegree().getDegreeCurricularPlan().getDegree();
 
-	}
+    }
 
-	@Override
-	public void closeEvent() {
-		StateMachine.execute(getCandidacy().getActiveCandidacySituation());
+    @Override
+    public void closeEvent() {
+        StateMachine.execute(getCandidacy().getActiveCandidacySituation());
 
-		super.closeEvent();
-	}
+        super.closeEvent();
+    }
 
-	@Override
-	public PostingRule getPostingRule() {
-		return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
-				.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
+                .findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+    }
 
-	public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {
-		return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(getExecutionYear());
-	}
+    public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {
+        return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(getExecutionYear());
+    }
 
-	public boolean hasCandidacyPeriodInDegreeCurricularPlan() {
-		return getExecutionDegree().getDegreeCurricularPlan().hasCandidacyPeriodFor(getExecutionYear());
-	}
+    public boolean hasCandidacyPeriodInDegreeCurricularPlan() {
+        return getExecutionDegree().getDegreeCurricularPlan().hasCandidacyPeriodFor(getExecutionYear());
+    }
 
-	private ExecutionYear getExecutionYear() {
-		return getExecutionDegree().getExecutionYear();
-	}
+    private ExecutionYear getExecutionYear() {
+        return getExecutionDegree().getExecutionYear();
+    }
 
-	public DateTime getCandidacyDate() {
-		return getCandidacy().getCandidacyDate();
-	}
+    public DateTime getCandidacyDate() {
+        return getCandidacy().getCandidacyDate();
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = super.getDescription();
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
-		labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-		labelFormatter.appendLabel(getExecutionYear().getYear());
-		return labelFormatter;
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = super.getDescription();
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
+        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
+        labelFormatter.appendLabel(getExecutionYear().getYear());
+        return labelFormatter;
+    }
 
-	@Override
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	protected void disconnect() {
-		super.setCandidacy(null);
-		super.disconnect();
-	}
+    @Override
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    protected void disconnect() {
+        super.setCandidacy(null);
+        super.disconnect();
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
 }

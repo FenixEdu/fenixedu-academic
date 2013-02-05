@@ -18,14 +18,14 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadClassByOID extends FenixService {
 
-	@Service
-	public static InfoClass run(Integer oid) throws FenixServiceException {
-		InfoClass result = null;
-		SchoolClass turma = rootDomainObject.readSchoolClassByOID(oid);
-		if (turma != null) {
-			result = InfoClass.newInfoFromDomain(turma);
-		}
+    @Service
+    public static InfoClass run(Integer oid) throws FenixServiceException {
+        InfoClass result = null;
+        SchoolClass turma = rootDomainObject.readSchoolClassByOID(oid);
+        if (turma != null) {
+            result = InfoClass.newInfoFromDomain(turma);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

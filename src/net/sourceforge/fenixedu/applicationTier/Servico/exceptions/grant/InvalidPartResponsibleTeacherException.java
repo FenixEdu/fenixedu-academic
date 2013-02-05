@@ -13,27 +13,27 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 public class InvalidPartResponsibleTeacherException extends FenixServiceException {
 
-	public InvalidPartResponsibleTeacherException() {
-	}
+    public InvalidPartResponsibleTeacherException() {
+    }
 
-	public InvalidPartResponsibleTeacherException(String message) {
-		super(message);
-	}
+    public InvalidPartResponsibleTeacherException(String message) {
+        super(message);
+    }
 
-	public InvalidPartResponsibleTeacherException(Throwable cause) {
-		super(cause);
-	}
+    public InvalidPartResponsibleTeacherException(Throwable cause) {
+        super(cause);
+    }
 
-	public InvalidPartResponsibleTeacherException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public InvalidPartResponsibleTeacherException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InvalidProjectResponsibleTeacherException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InvalidProjectResponsibleTeacherException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

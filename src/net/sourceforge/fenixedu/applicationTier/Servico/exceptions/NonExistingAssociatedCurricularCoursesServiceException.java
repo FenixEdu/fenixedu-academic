@@ -7,25 +7,25 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class NonExistingAssociatedCurricularCoursesServiceException extends FenixServiceException {
 
-	public NonExistingAssociatedCurricularCoursesServiceException() {
-		super();
-	}
+    public NonExistingAssociatedCurricularCoursesServiceException() {
+        super();
+    }
 
-	public NonExistingAssociatedCurricularCoursesServiceException(Throwable cause) {
-		super(cause);
-	}
+    public NonExistingAssociatedCurricularCoursesServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	public NonExistingAssociatedCurricularCoursesServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public NonExistingAssociatedCurricularCoursesServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[NonExistingAssociatedCurricularCoursesServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[NonExistingAssociatedCurricularCoursesServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

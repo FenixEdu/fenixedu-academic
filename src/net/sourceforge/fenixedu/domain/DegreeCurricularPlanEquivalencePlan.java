@@ -8,49 +8,49 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEquivalencePlan_Base {
 
-	@Checked("DegreeCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate")
-	public DegreeCurricularPlanEquivalencePlan(final DegreeCurricularPlan degreeCurricularPlan,
-			final DegreeCurricularPlan sourceDegreeCurricularPlan) {
-		super();
-		init(degreeCurricularPlan, sourceDegreeCurricularPlan);
-	}
+    @Checked("DegreeCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate")
+    public DegreeCurricularPlanEquivalencePlan(final DegreeCurricularPlan degreeCurricularPlan,
+            final DegreeCurricularPlan sourceDegreeCurricularPlan) {
+        super();
+        init(degreeCurricularPlan, sourceDegreeCurricularPlan);
+    }
 
-	protected void init(DegreeCurricularPlan degreeCurricularPlan, DegreeCurricularPlan sourceDegreeCurricularPlan) {
-		checkParameters(degreeCurricularPlan, sourceDegreeCurricularPlan);
+    protected void init(DegreeCurricularPlan degreeCurricularPlan, DegreeCurricularPlan sourceDegreeCurricularPlan) {
+        checkParameters(degreeCurricularPlan, sourceDegreeCurricularPlan);
 
-		super.setDegreeCurricularPlan(degreeCurricularPlan);
-		super.setSourceDegreeCurricularPlan(sourceDegreeCurricularPlan);
+        super.setDegreeCurricularPlan(degreeCurricularPlan);
+        super.setSourceDegreeCurricularPlan(sourceDegreeCurricularPlan);
 
-	}
+    }
 
-	private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, DegreeCurricularPlan sourceDegreeCurricularPlan) {
-		if (degreeCurricularPlan == null) {
-			throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.degreeCurricularPlan.cannot.be.null");
-		}
+    private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, DegreeCurricularPlan sourceDegreeCurricularPlan) {
+        if (degreeCurricularPlan == null) {
+            throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.degreeCurricularPlan.cannot.be.null");
+        }
 
-		if (sourceDegreeCurricularPlan == null) {
-			throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.sourceDegreeCurricularPlan.cannot.be.null");
-		}
+        if (sourceDegreeCurricularPlan == null) {
+            throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.sourceDegreeCurricularPlan.cannot.be.null");
+        }
 
-		if (degreeCurricularPlan == sourceDegreeCurricularPlan) {
-			throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.source.and.target.cannot.be.the.same");
-		}
-	}
+        if (degreeCurricularPlan == sourceDegreeCurricularPlan) {
+            throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.source.and.target.cannot.be.the.same");
+        }
+    }
 
-	public SortedSet<EquivalencePlanEntry> getOrderedEntries() {
-		final SortedSet<EquivalencePlanEntry> entries = new TreeSet<EquivalencePlanEntry>(EquivalencePlanEntry.COMPARATOR);
-		entries.addAll(getEntriesSet());
-		return entries;
-	}
+    public SortedSet<EquivalencePlanEntry> getOrderedEntries() {
+        final SortedSet<EquivalencePlanEntry> entries = new TreeSet<EquivalencePlanEntry>(EquivalencePlanEntry.COMPARATOR);
+        entries.addAll(getEntriesSet());
+        return entries;
+    }
 
-	@Override
-	public void delete() {
-		removeDegreeCurricularPlan();
-		removeSourceDegreeCurricularPlan();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        removeDegreeCurricularPlan();
+        removeSourceDegreeCurricularPlan();
+        super.delete();
+    }
 
-	public Degree getSourceDegree() {
-		return getSourceDegreeCurricularPlan().getDegree();
-	}
+    public Degree getSourceDegree() {
+        return getSourceDegreeCurricularPlan().getDegree();
+    }
 }

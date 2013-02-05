@@ -12,22 +12,22 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateThesisAbstractFile extends CreateThesisFile {
 
-	@Override
-	protected void removePreviousFile(Thesis thesis) {
-		ThesisFile extendedAbstract = thesis.getExtendedAbstract();
-		if (extendedAbstract != null) {
-			if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
-				extendedAbstract.deleteWithoutStateCheck();
-			} else {
-				extendedAbstract.delete();
-			}
-		}
-	}
+    @Override
+    protected void removePreviousFile(Thesis thesis) {
+        ThesisFile extendedAbstract = thesis.getExtendedAbstract();
+        if (extendedAbstract != null) {
+            if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+                extendedAbstract.deleteWithoutStateCheck();
+            } else {
+                extendedAbstract.delete();
+            }
+        }
+    }
 
-	@Override
-	protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
-			String fileName, File fileToUpload) throws FenixServiceException, IOException {
-		thesis.setExtendedAbstract(file);
-	}
+    @Override
+    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
+            String fileName, File fileToUpload) throws FenixServiceException, IOException {
+        thesis.setExtendedAbstract(file);
+    }
 
 }

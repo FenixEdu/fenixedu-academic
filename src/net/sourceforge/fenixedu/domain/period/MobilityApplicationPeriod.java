@@ -25,259 +25,259 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 
-	public MobilityApplicationPeriod() {
-		super();
-	}
+    public MobilityApplicationPeriod() {
+        super();
+    }
 
-	public MobilityApplicationPeriod(final MobilityApplicationProcess applicationProcess, final ExecutionYear executionInterval,
-			final DateTime start, final DateTime end) {
-		this();
-		init(applicationProcess, executionInterval, start, end);
-	}
+    public MobilityApplicationPeriod(final MobilityApplicationProcess applicationProcess, final ExecutionYear executionInterval,
+            final DateTime start, final DateTime end) {
+        this();
+        init(applicationProcess, executionInterval, start, end);
+    }
 
-	public void delete() {
-		if (getMobilityQuotasCount() > 0) {
-			throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.defined.quotas");
-		}
-		if (getCandidacyProcessesCount() > 0) {
-			throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.process");
-		}
-		if (getEmailTemplatesCount() > 0) {
-			throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.email.templates");
-		}
-		if (getErasmusVacancyCount() > 0) {
-			throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.erasmus.vacancies");
-		}
-		if (getExecutionInterval() != null) {
-			throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.execution.year");
-		}
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+    public void delete() {
+        if (getMobilityQuotasCount() > 0) {
+            throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.defined.quotas");
+        }
+        if (getCandidacyProcessesCount() > 0) {
+            throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.process");
+        }
+        if (getEmailTemplatesCount() > 0) {
+            throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.email.templates");
+        }
+        if (getErasmusVacancyCount() > 0) {
+            throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.erasmus.vacancies");
+        }
+        if (getExecutionInterval() != null) {
+            throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.execution.year");
+        }
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	private void init(final MobilityApplicationProcess applicationProcess, final ExecutionInterval executionInterval,
-			final DateTime start, final DateTime end) {
-		checkParameters(applicationProcess);
-		checkIfCanCreate(executionInterval, start, end);
-		super.init(executionInterval, start, end);
-		addCandidacyProcesses(applicationProcess);
-	}
+    private void init(final MobilityApplicationProcess applicationProcess, final ExecutionInterval executionInterval,
+            final DateTime start, final DateTime end) {
+        checkParameters(applicationProcess);
+        checkIfCanCreate(executionInterval, start, end);
+        super.init(executionInterval, start, end);
+        addCandidacyProcesses(applicationProcess);
+    }
 
-	private void checkParameters(final MobilityApplicationProcess applicationProcess) {
-		if (applicationProcess == null) {
-			throw new DomainException("error.ErasmusCandidacyProcess.invalid.candidacy.process");
-		}
-	}
+    private void checkParameters(final MobilityApplicationProcess applicationProcess) {
+        if (applicationProcess == null) {
+            throw new DomainException("error.ErasmusCandidacyProcess.invalid.candidacy.process");
+        }
+    }
 
-	private void checkIfCanCreate(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
-		for (final MobilityApplicationPeriod mobilityApplicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
-			if (mobilityApplicationPeriod.intercept(start, end)) {
-				throw new DomainException("error.ErasmusCandidacyPeriod.interception", executionInterval.getName(),
-						start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
-			}
-		}
-	}
+    private void checkIfCanCreate(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+        for (final MobilityApplicationPeriod mobilityApplicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
+            if (mobilityApplicationPeriod.intercept(start, end)) {
+                throw new DomainException("error.ErasmusCandidacyPeriod.interception", executionInterval.getName(),
+                        start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
+            }
+        }
+    }
 
-	public MobilityApplicationProcess getMobilityApplicationProcess() {
-		return (MobilityApplicationProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
-	}
+    public MobilityApplicationProcess getMobilityApplicationProcess() {
+        return (MobilityApplicationProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+    }
 
-	@Override
-	public ExecutionYear getExecutionInterval() {
-		return (ExecutionYear) super.getExecutionInterval();
-	}
+    @Override
+    public ExecutionYear getExecutionInterval() {
+        return (ExecutionYear) super.getExecutionInterval();
+    }
 
-	@Override
-	public String getPresentationName() {
-		return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
-	}
+    @Override
+    public String getPresentationName() {
+        return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
+    }
 
-	@Override
-	public void edit(final DateTime start, final DateTime end) {
-		checkDates(start, end);
-		checkIfCanEdit(start, end);
-		super.setStart(start);
-		super.setEnd(end);
-	}
+    @Override
+    public void edit(final DateTime start, final DateTime end) {
+        checkDates(start, end);
+        checkIfCanEdit(start, end);
+        super.setStart(start);
+        super.setEnd(end);
+    }
 
-	private void checkIfCanEdit(DateTime start, DateTime end) {
-		for (final MobilityApplicationPeriod mobilityApplicationPeriod : getExecutionInterval().getMobilityApplicationPeriods()) {
-			if (mobilityApplicationPeriod != this && mobilityApplicationPeriod.intercept(start, end)) {
-				throw new DomainException("error.ErasmusCandidacyPeriod.interception", getExecutionInterval().getName(),
-						start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
-			}
-		}
-	}
+    private void checkIfCanEdit(DateTime start, DateTime end) {
+        for (final MobilityApplicationPeriod mobilityApplicationPeriod : getExecutionInterval().getMobilityApplicationPeriods()) {
+            if (mobilityApplicationPeriod != this && mobilityApplicationPeriod.intercept(start, end)) {
+                throw new DomainException("error.ErasmusCandidacyPeriod.interception", getExecutionInterval().getName(),
+                        start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
+            }
+        }
+    }
 
-	public List<Country> getAssociatedCountries() {
-		Set<Country> countries = new HashSet<Country>();
+    public List<Country> getAssociatedCountries() {
+        Set<Country> countries = new HashSet<Country>();
 
-		for (MobilityQuota mobilityQuota : this.getMobilityQuotas()) {
-			countries.add(mobilityQuota.getMobilityAgreement().getUniversityUnit().getCountry());
-		}
+        for (MobilityQuota mobilityQuota : this.getMobilityQuotas()) {
+            countries.add(mobilityQuota.getMobilityAgreement().getUniversityUnit().getCountry());
+        }
 
-		return new ArrayList<Country>(countries);
-	}
+        return new ArrayList<Country>(countries);
+    }
 
-	public List<MobilityQuota> getOpeningsForCountry(Country country) {
-		List<MobilityQuota> openingsList = new ArrayList<MobilityQuota>();
+    public List<MobilityQuota> getOpeningsForCountry(Country country) {
+        List<MobilityQuota> openingsList = new ArrayList<MobilityQuota>();
 
-		for (MobilityQuota quota : getMobilityQuotas()) {
-			if (quota.getMobilityAgreement().getUniversityUnit().getCountry() == country) {
-				openingsList.add(quota);
-			}
-		}
+        for (MobilityQuota quota : getMobilityQuotas()) {
+            if (quota.getMobilityAgreement().getUniversityUnit().getCountry() == country) {
+                openingsList.add(quota);
+            }
+        }
 
-		return openingsList;
-	}
+        return openingsList;
+    }
 
-	public List<UniversityUnit> getUniversityUnitsAssociatedToCountry(Country country) {
-		Set<UniversityUnit> universityUnits = new HashSet<UniversityUnit>();
+    public List<UniversityUnit> getUniversityUnitsAssociatedToCountry(Country country) {
+        Set<UniversityUnit> universityUnits = new HashSet<UniversityUnit>();
 
-		for (MobilityQuota quota : getOpeningsForCountry(country)) {
-			universityUnits.add(quota.getMobilityAgreement().getUniversityUnit());
-		}
+        for (MobilityQuota quota : getOpeningsForCountry(country)) {
+            universityUnits.add(quota.getMobilityAgreement().getUniversityUnit());
+        }
 
-		return new ArrayList<UniversityUnit>(universityUnits);
-	}
+        return new ArrayList<UniversityUnit>(universityUnits);
+    }
 
-	/**
-	 * @deprecated Legacy from old ErasmusVacancy entity. Use {@link #getAssociatedOpening(Degree, MobilityAgreement)} instead.
-	 */
-	@Deprecated
-	public MobilityQuota getAssociatedOpeningsToDegreeAndUniversity(Degree selectedDegree, UniversityUnit selectedUniversity) {
-		if (selectedDegree == null) {
-			return null;
-		}
+    /**
+     * @deprecated Legacy from old ErasmusVacancy entity. Use {@link #getAssociatedOpening(Degree, MobilityAgreement)} instead.
+     */
+    @Deprecated
+    public MobilityQuota getAssociatedOpeningsToDegreeAndUniversity(Degree selectedDegree, UniversityUnit selectedUniversity) {
+        if (selectedDegree == null) {
+            return null;
+        }
 
-		if (selectedUniversity == null) {
-			return null;
-		}
+        if (selectedUniversity == null) {
+            return null;
+        }
 
-		for (MobilityQuota quota : getOpeningsForCountry(selectedUniversity.getCountry())) {
-			if (quota.getDegree() == selectedDegree && quota.getMobilityAgreement().getUniversityUnit() == selectedUniversity) {
-				return quota;
-			}
-		}
+        for (MobilityQuota quota : getOpeningsForCountry(selectedUniversity.getCountry())) {
+            if (quota.getDegree() == selectedDegree && quota.getMobilityAgreement().getUniversityUnit() == selectedUniversity) {
+                return quota;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public MobilityQuota getAssociatedOpening(Degree degree, MobilityAgreement agreement) {
-		if (degree == null || agreement == null) {
-			return null;
-		}
-		for (MobilityQuota quota : agreement.getMobilityQuotas()) {
-			if (quota.getDegree() != degree) {
-				continue;
-			}
-			if (quota.getApplicationPeriod() != this) {
-				continue;
-			}
-			return quota;
-		}
-		return null;
-	}
+    public MobilityQuota getAssociatedOpening(Degree degree, MobilityAgreement agreement) {
+        if (degree == null || agreement == null) {
+            return null;
+        }
+        for (MobilityQuota quota : agreement.getMobilityQuotas()) {
+            if (quota.getDegree() != degree) {
+                continue;
+            }
+            if (quota.getApplicationPeriod() != this) {
+                continue;
+            }
+            return quota;
+        }
+        return null;
+    }
 
-	public List<Degree> getPossibleDegreesAssociatedToUniversity(UniversityUnit university) {
-		Set<Degree> degreeSet = new HashSet<Degree>();
+    public List<Degree> getPossibleDegreesAssociatedToUniversity(UniversityUnit university) {
+        Set<Degree> degreeSet = new HashSet<Degree>();
 
-		for (MobilityQuota quota : getMobilityQuotas()) {
-			if (quota.getMobilityAgreement().getUniversityUnit() == university) {
-				degreeSet.add(quota.getDegree());
-			}
-		}
+        for (MobilityQuota quota : getMobilityQuotas()) {
+            if (quota.getMobilityAgreement().getUniversityUnit() == university) {
+                degreeSet.add(quota.getDegree());
+            }
+        }
 
-		return new ArrayList<Degree>(degreeSet);
-	}
+        return new ArrayList<Degree>(degreeSet);
+    }
 
-	public List<Degree> getPossibleDegreesAssociatedToAgreement(MobilityAgreement agreement) {
-		Set<Degree> degreeSet = new HashSet<Degree>();
+    public List<Degree> getPossibleDegreesAssociatedToAgreement(MobilityAgreement agreement) {
+        Set<Degree> degreeSet = new HashSet<Degree>();
 
-		for (MobilityQuota quota : getMobilityQuotas()) {
-			if (quota.getMobilityAgreement() == agreement) {
-				degreeSet.add(quota.getDegree());
-			}
-		}
+        for (MobilityQuota quota : getMobilityQuotas()) {
+            if (quota.getMobilityAgreement() == agreement) {
+                degreeSet.add(quota.getDegree());
+            }
+        }
 
-		return new ArrayList<Degree>(degreeSet);
-	}
+        return new ArrayList<Degree>(degreeSet);
+    }
 
-	public boolean existsFor(MobilityAgreement agreement, Degree degree) {
-		return getAssociatedOpening(degree, agreement) != null;
-	}
+    public boolean existsFor(MobilityAgreement agreement, Degree degree) {
+        return getAssociatedOpening(degree, agreement) != null;
+    }
 
-	public Set<MobilityProgram> getMobilityPrograms() {
-		Set<MobilityProgram> programs = new HashSet<MobilityProgram>();
+    public Set<MobilityProgram> getMobilityPrograms() {
+        Set<MobilityProgram> programs = new HashSet<MobilityProgram>();
 
-		List<MobilityQuota> mobilityQuotas = getMobilityQuotas();
+        List<MobilityQuota> mobilityQuotas = getMobilityQuotas();
 
-		for (MobilityQuota mobilityQuota : mobilityQuotas) {
-			programs.add(mobilityQuota.getMobilityAgreement().getMobilityProgram());
-		}
+        for (MobilityQuota mobilityQuota : mobilityQuotas) {
+            programs.add(mobilityQuota.getMobilityAgreement().getMobilityProgram());
+        }
 
-		return programs;
-	}
+        return programs;
+    }
 
-	@Service
-	public void editEmailTemplates(final MobilityEmailTemplateBean bean) {
-		final MobilityEmailTemplateType type = bean.getType();
-		final String subject = bean.getSubject();
-		final String body = bean.getBody();
+    @Service
+    public void editEmailTemplates(final MobilityEmailTemplateBean bean) {
+        final MobilityEmailTemplateType type = bean.getType();
+        final String subject = bean.getSubject();
+        final String body = bean.getBody();
 
-		/*
-		 * Don't use getMobilityPrograms() to get the programs affected by this
-		 * edit. All programs should be affected even those who don't have
-		 * quotas defines to this period at the time.
-		 */
+        /*
+         * Don't use getMobilityPrograms() to get the programs affected by this
+         * edit. All programs should be affected even those who don't have
+         * quotas defines to this period at the time.
+         */
 
-		for (MobilityProgram program : MobilityProgram.getAllMobilityPrograms()) {
-			if (!hasEmailTemplateFor(program, type)) {
-				MobilityEmailTemplate.create(this, program, type, subject, body);
-				continue;
-			}
+        for (MobilityProgram program : MobilityProgram.getAllMobilityPrograms()) {
+            if (!hasEmailTemplateFor(program, type)) {
+                MobilityEmailTemplate.create(this, program, type, subject, body);
+                continue;
+            }
 
-			getEmailTemplateFor(program, type).update(subject, body);
-		}
-	}
+            getEmailTemplateFor(program, type).update(subject, body);
+        }
+    }
 
-	public List<MobilityQuota> getMobilityQuotasByProgram(final MobilityProgram program) {
-		List<MobilityQuota> result = new ArrayList<MobilityQuota>();
+    public List<MobilityQuota> getMobilityQuotasByProgram(final MobilityProgram program) {
+        List<MobilityQuota> result = new ArrayList<MobilityQuota>();
 
-		List<MobilityQuota> mobilityQuotas = getMobilityQuotas();
+        List<MobilityQuota> mobilityQuotas = getMobilityQuotas();
 
-		for (MobilityQuota mobilityQuota : mobilityQuotas) {
-			if (mobilityQuota.isFor(program)) {
-				result.add(mobilityQuota);
-			}
-		}
+        for (MobilityQuota mobilityQuota : mobilityQuotas) {
+            if (mobilityQuota.isFor(program)) {
+                result.add(mobilityQuota);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public MobilityEmailTemplate getEmailTemplateFor(final MobilityProgram program, final MobilityEmailTemplateType type) {
-		for (MobilityEmailTemplate template : getEmailTemplates()) {
-			if (template.isFor(program, type)) {
-				return template;
-			}
-		}
+    public MobilityEmailTemplate getEmailTemplateFor(final MobilityProgram program, final MobilityEmailTemplateType type) {
+        for (MobilityEmailTemplate template : getEmailTemplates()) {
+            if (template.isFor(program, type)) {
+                return template;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public boolean hasEmailTemplateFor(final MobilityProgram program, final MobilityEmailTemplateType type) {
-		return getEmailTemplateFor(program, type) != null;
-	}
+    public boolean hasEmailTemplateFor(final MobilityProgram program, final MobilityEmailTemplateType type) {
+        return getEmailTemplateFor(program, type) != null;
+    }
 
-	public MobilityEmailTemplate getEmailTemplateFor(final MobilityEmailTemplateType type) {
-		MobilityProgram mobilityProgram = getMobilityPrograms().iterator().next();
+    public MobilityEmailTemplate getEmailTemplateFor(final MobilityEmailTemplateType type) {
+        MobilityProgram mobilityProgram = getMobilityPrograms().iterator().next();
 
-		return getEmailTemplateFor(mobilityProgram, type);
-	}
+        return getEmailTemplateFor(mobilityProgram, type);
+    }
 
-	public boolean hasEmailTemplateFor(final MobilityEmailTemplateType type) {
-		MobilityProgram mobilityProgram = getMobilityPrograms().iterator().next();
-		return hasEmailTemplateFor(mobilityProgram, type);
-	}
+    public boolean hasEmailTemplateFor(final MobilityEmailTemplateType type) {
+        MobilityProgram mobilityProgram = getMobilityPrograms().iterator().next();
+        return hasEmailTemplateFor(mobilityProgram, type);
+    }
 
 }

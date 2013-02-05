@@ -9,41 +9,41 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class DegreeLog extends DegreeLog_Base {
 
-	public enum DegreeLogTypes {
+    public enum DegreeLogTypes {
 
-		CANDIDACIES, COORDINATION_TEAM, PROGRAM_TUTORED_PARTICIPATION, QUC_RESULTS, SCIENTIFIC_COMISSION;
-		public String getQualifiedName() {
-			return StringAppender.append(DegreeLogTypes.class.getSimpleName(), ".", name());
-		}
+        CANDIDACIES, COORDINATION_TEAM, PROGRAM_TUTORED_PARTICIPATION, QUC_RESULTS, SCIENTIFIC_COMISSION;
+        public String getQualifiedName() {
+            return StringAppender.append(DegreeLogTypes.class.getSimpleName(), ".", name());
+        }
 
-		private static final Collection<DegreeLogTypes> typesAsList = Collections.unmodifiableList(Arrays.asList(values()));
+        private static final Collection<DegreeLogTypes> typesAsList = Collections.unmodifiableList(Arrays.asList(values()));
 
-		public static Collection<DegreeLogTypes> valuesAsList() {
-			return typesAsList;
-		}
-	}
+        public static Collection<DegreeLogTypes> valuesAsList() {
+            return typesAsList;
+        }
+    }
 
-	public DegreeLog() {
-		super();
-	}
+    public DegreeLog() {
+        super();
+    }
 
-	public DegreeLog(Degree degree, ExecutionYear executionYear, String description) {
-		super();
-		if (getDegree() == null) {
-			setDegree(degree);
-		}
-		if (getExecutionYear() == null) {
-			setExecutionYear(executionYear);
-		}
-		setDescription(description);
-	}
+    public DegreeLog(Degree degree, ExecutionYear executionYear, String description) {
+        super();
+        if (getDegree() == null) {
+            setDegree(degree);
+        }
+        if (getExecutionYear() == null) {
+            setExecutionYear(executionYear);
+        }
+        setDescription(description);
+    }
 
-	protected static String generateLabelDescription(String bundle, String key, String... args) {
-		return BundleUtil.getStringFromResourceBundle(bundle, key, args);
-	}
+    protected static String generateLabelDescription(String bundle, String key, String... args) {
+        return BundleUtil.getStringFromResourceBundle(bundle, key, args);
+    }
 
-	public DegreeLogTypes getDegreeLogType() {
-		return null;
-	}
+    public DegreeLogTypes getDegreeLogType() {
+        return null;
+    }
 
 }

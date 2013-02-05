@@ -7,46 +7,46 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfTagUtils
 
 public class ContentLinkTag extends UIComponentTag {
 
-	private String content;
-	private String label;
+    private String content;
+    private String label;
 
-	@Override
-	public String getComponentType() {
-		return UIContentLink.COMPONENT_TYPE;
-	}
+    @Override
+    public String getComponentType() {
+        return UIContentLink.COMPONENT_TYPE;
+    }
 
-	@Override
-	public String getRendererType() {
-		return null;
-	}
+    @Override
+    public String getRendererType() {
+        return null;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	@Override
-	protected void setProperties(UIComponent component) {
-		super.setProperties(component);
-		JsfTagUtils.setString(component, "content", this.content);
-		JsfTagUtils.setString(component, "label", this.label);
-	}
+    @Override
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        JsfTagUtils.setString(component, "content", this.content);
+        JsfTagUtils.setString(component, "label", this.label);
+    }
 
-	@Override
-	public void release() {
-		super.release();
-		content = null;
-		label = null;
-	}
+    @Override
+    public void release() {
+        super.release();
+        content = null;
+        label = null;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }

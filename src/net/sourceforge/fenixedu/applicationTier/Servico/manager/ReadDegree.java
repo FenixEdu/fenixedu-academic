@@ -15,21 +15,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDegree extends FenixService {
 
-	/**
-	 * Executes the service. Returns the current infodegree.
-	 * 
-	 * @throws ExcepcaoPersistencia
-	 */
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static InfoDegree run(Integer idInternal) throws FenixServiceException {
-		final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
+    /**
+     * Executes the service. Returns the current infodegree.
+     * 
+     * @throws ExcepcaoPersistencia
+     */
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static InfoDegree run(Integer idInternal) throws FenixServiceException {
+        final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
-		if (degree == null) {
-			throw new NonExistingServiceException();
-		}
+        if (degree == null) {
+            throw new NonExistingServiceException();
+        }
 
-		return InfoDegree.newInfoFromDomain(degree);
-	}
+        return InfoDegree.newInfoFromDomain(degree);
+    }
 
 }

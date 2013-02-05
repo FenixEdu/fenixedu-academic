@@ -9,28 +9,28 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 
 public class JournalIssueParticipantBean extends ParticipantBean implements Serializable {
 
-	JournalIssue issue;
+    JournalIssue issue;
 
-	public JournalIssueParticipantBean() {
-		super();
-		setJournalIssue(null);
-	}
+    public JournalIssueParticipantBean() {
+        super();
+        setJournalIssue(null);
+    }
 
-	public void setJournalIssue(JournalIssue issue) {
-		this.issue = issue;
-	}
+    public void setJournalIssue(JournalIssue issue) {
+        this.issue = issue;
+    }
 
-	public JournalIssue getJournalIssue() {
-		return this.issue;
-	}
+    public JournalIssue getJournalIssue() {
+        return this.issue;
+    }
 
-	@Override
-	public List<ResearchActivityParticipationRole> getAllowedRoles() {
-		return ResearchActivityParticipationRole.getAllJournalIssueRoles();
-	}
+    @Override
+    public List<ResearchActivityParticipationRole> getAllowedRoles() {
+        return ResearchActivityParticipationRole.getAllJournalIssueRoles();
+    }
 
-	@Override
-	public DomainObject getActivity() {
-		return getJournalIssue();
-	}
+    @Override
+    public DomainObject getActivity() {
+        return getJournalIssue();
+    }
 }

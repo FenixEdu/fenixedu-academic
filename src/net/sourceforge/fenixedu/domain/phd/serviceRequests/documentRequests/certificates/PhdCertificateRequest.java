@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.cer
 
 public abstract class PhdCertificateRequest extends PhdCertificateRequest_Base {
 
-	protected PhdCertificateRequest() {
-		super();
-	}
+    protected PhdCertificateRequest() {
+        super();
+    }
 
-	@Override
-	public boolean isCertificate() {
-		return true;
-	}
+    @Override
+    public boolean isCertificate() {
+        return true;
+    }
 
 }

@@ -19,175 +19,175 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
-	protected ExecutionInterval() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setState(PeriodState.NOT_OPEN);
-	}
+    protected ExecutionInterval() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setState(PeriodState.NOT_OPEN);
+    }
 
-	@Override
-	public void setAcademicInterval(AcademicInterval academicInterval) {
-		if (academicInterval == null) {
-			throw new DomainException("error.executionInterval.empty.executionInterval");
-		}
-		super.setAcademicInterval(academicInterval);
-	}
+    @Override
+    public void setAcademicInterval(AcademicInterval academicInterval) {
+        if (academicInterval == null) {
+            throw new DomainException("error.executionInterval.empty.executionInterval");
+        }
+        super.setAcademicInterval(academicInterval);
+    }
 
-	@Override
-	public void setState(PeriodState state) {
-		if (state == null) {
-			throw new DomainException("error.executionInterval.empty.state");
-		}
-		super.setState(state);
-	}
+    @Override
+    public void setState(PeriodState state) {
+        if (state == null) {
+            throw new DomainException("error.executionInterval.empty.state");
+        }
+        super.setState(state);
+    }
 
-	@jvstm.cps.ConsistencyPredicate
-	protected boolean checkDateInterval() {
-		return getBeginDateYearMonthDay() != null && getEndDateYearMonthDay() != null
-				&& getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
-	}
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+        return getBeginDateYearMonthDay() != null && getEndDateYearMonthDay() != null
+                && getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
+    }
 
-	public List<? extends CandidacyPeriod> getCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
-		final List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
-		for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
-			if (candidacyPeriod.getClass().equals(clazz)) {
-				result.add(candidacyPeriod);
-			}
-		}
-		return result;
-	}
+    public List<? extends CandidacyPeriod> getCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
+        final List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
+        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
+            if (candidacyPeriod.getClass().equals(clazz)) {
+                result.add(candidacyPeriod);
+            }
+        }
+        return result;
+    }
 
-	public boolean hasCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
-		for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
-			if (candidacyPeriod.getClass().equals(clazz)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean hasCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
+        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
+            if (candidacyPeriod.getClass().equals(clazz)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public Over23CandidacyPeriod getOver23CandidacyPeriod() {
-		final List<Over23CandidacyPeriod> candidacyPeriods =
-				(List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
-		return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
-	}
+    public Over23CandidacyPeriod getOver23CandidacyPeriod() {
+        final List<Over23CandidacyPeriod> candidacyPeriods =
+                (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
 
-	public boolean hasOver23CandidacyPeriod() {
-		return hasCandidacyPeriods(Over23CandidacyPeriod.class);
-	}
+    public boolean hasOver23CandidacyPeriod() {
+        return hasCandidacyPeriods(Over23CandidacyPeriod.class);
+    }
 
-	public List<SecondCycleCandidacyPeriod> getSecondCycleCandidacyPeriods() {
-		return (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
-	}
+    public List<SecondCycleCandidacyPeriod> getSecondCycleCandidacyPeriods() {
+        return (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
+    }
 
-	public List<MobilityApplicationPeriod> getMobilityApplicationPeriods() {
-		return (List<MobilityApplicationPeriod>) getCandidacyPeriods(MobilityApplicationPeriod.class);
-	}
+    public List<MobilityApplicationPeriod> getMobilityApplicationPeriods() {
+        return (List<MobilityApplicationPeriod>) getCandidacyPeriods(MobilityApplicationPeriod.class);
+    }
 
-	public boolean hasAnySecondCycleCandidacyPeriod() {
-		return hasCandidacyPeriods(SecondCycleCandidacyPeriod.class);
-	}
+    public boolean hasAnySecondCycleCandidacyPeriod() {
+        return hasCandidacyPeriods(SecondCycleCandidacyPeriod.class);
+    }
 
-	public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
-		final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
-				(List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
-		return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
-	}
+    public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
+        final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
+                (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
 
-	public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
-		return hasCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
-	}
+    public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
+        return hasCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
+    }
 
-	public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
-		final List<DegreeChangeCandidacyPeriod> candidacyPeriods =
-				(List<DegreeChangeCandidacyPeriod>) getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
-		return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
-	}
+    public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
+        final List<DegreeChangeCandidacyPeriod> candidacyPeriods =
+                (List<DegreeChangeCandidacyPeriod>) getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
 
-	public boolean hasDegreeChangeCandidacyPeriod() {
-		return hasCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
-	}
+    public boolean hasDegreeChangeCandidacyPeriod() {
+        return hasCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
+    }
 
-	public DegreeTransferCandidacyPeriod getDegreeTransferCandidacyPeriod() {
-		final List<DegreeTransferCandidacyPeriod> candidacyPeriods =
-				(List<DegreeTransferCandidacyPeriod>) getCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
-		return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
-	}
+    public DegreeTransferCandidacyPeriod getDegreeTransferCandidacyPeriod() {
+        final List<DegreeTransferCandidacyPeriod> candidacyPeriods =
+                (List<DegreeTransferCandidacyPeriod>) getCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
 
-	public boolean hasDegreeTransferCandidacyPeriod() {
-		return hasCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
-	}
+    public boolean hasDegreeTransferCandidacyPeriod() {
+        return hasCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
+    }
 
-	public List<StandaloneCandidacyPeriod> getStandaloneCandidacyPeriods() {
-		return (List<StandaloneCandidacyPeriod>) getCandidacyPeriods(StandaloneCandidacyPeriod.class);
-	}
+    public List<StandaloneCandidacyPeriod> getStandaloneCandidacyPeriods() {
+        return (List<StandaloneCandidacyPeriod>) getCandidacyPeriods(StandaloneCandidacyPeriod.class);
+    }
 
-	public boolean hasAnyStandaloneCandidacyPeriod() {
-		return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
-	}
+    public boolean hasAnyStandaloneCandidacyPeriod() {
+        return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
+    }
 
-	public PaymentCode findNewCodeInPaymentCodeMapping(final PaymentCode oldCode) {
-		for (final PaymentCodeMapping mapping : getPaymentCodeMappingsSet()) {
-			if (mapping.hasOldPaymentCode(oldCode)) {
-				return mapping.getNewPaymentCode();
-			}
-		}
-		return null;
-	}
+    public PaymentCode findNewCodeInPaymentCodeMapping(final PaymentCode oldCode) {
+        for (final PaymentCodeMapping mapping : getPaymentCodeMappingsSet()) {
+            if (mapping.hasOldPaymentCode(oldCode)) {
+                return mapping.getNewPaymentCode();
+            }
+        }
+        return null;
+    }
 
-	abstract public String getQualifiedName();
+    abstract public String getQualifiedName();
 
-	abstract public boolean isCurrent();
+    abstract public boolean isCurrent();
 
-	// static information
+    // static information
 
-	static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
-		final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
-		for (final ExecutionInterval executionInterval : RootDomainObject.getInstance().getExecutionIntervals()) {
-			if (executionInterval.hasCandidacyPeriods(clazz)) {
-				result.add(executionInterval);
-			}
-		}
-		return result;
-	}
+    static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
+        final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
+        for (final ExecutionInterval executionInterval : RootDomainObject.getInstance().getExecutionIntervals()) {
+            if (executionInterval.hasCandidacyPeriods(clazz)) {
+                result.add(executionInterval);
+            }
+        }
+        return result;
+    }
 
-	public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
-		for (ExecutionInterval interval : RootDomainObject.getInstance().getExecutionIntervals()) {
-			if (interval.getAcademicInterval().equals(academicInterval)) {
-				return interval;
-			}
-		}
-		return null;
-	}
+    public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
+        for (ExecutionInterval interval : RootDomainObject.getInstance().getExecutionIntervals()) {
+            if (interval.getAcademicInterval().equals(academicInterval)) {
+                return interval;
+            }
+        }
+        return null;
+    }
 
-	@Deprecated
-	public java.util.Date getBeginDate() {
-		org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getBeginDate() {
+        org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
+        return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setBeginDate(java.util.Date date) {
-		if (date == null) {
-			setBeginDateYearMonthDay(null);
-		} else {
-			setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-		}
-	}
+    @Deprecated
+    public void setBeginDate(java.util.Date date) {
+        if (date == null) {
+            setBeginDateYearMonthDay(null);
+        } else {
+            setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+        }
+    }
 
-	@Deprecated
-	public java.util.Date getEndDate() {
-		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEndDate() {
+        org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+        return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEndDate(java.util.Date date) {
-		if (date == null) {
-			setEndDateYearMonthDay(null);
-		} else {
-			setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-		}
-	}
+    @Deprecated
+    public void setEndDate(java.util.Date date) {
+        if (date == null) {
+            setEndDateYearMonthDay(null);
+        } else {
+            setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+        }
+    }
 
 }

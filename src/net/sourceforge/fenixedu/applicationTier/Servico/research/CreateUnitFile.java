@@ -24,43 +24,43 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateUnitFile extends FenixService {
 
-	private static byte[] read(final File file) {
-		try {
-			return FileUtils.readFileToByteArray(file);
-		} catch (IOException e) {
-			throw new Error(e);
-		}
-	}
+    private static byte[] read(final File file) {
+        try {
+            return FileUtils.readFileToByteArray(file);
+        } catch (IOException e) {
+            throw new Error(e);
+        }
+    }
 
-	@Service
-	public static void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
-			Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
+    @Service
+    public static void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
+            Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 
-		final Collection<FileSetMetaData> metaData = Collections.emptySet();
-		final byte[] content = read(file);
-		new UnitFile(unit, person, description, tags, getVirtualPath(unit), originalFilename, displayName, metaData, content,
-				!isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
-	}
+        final Collection<FileSetMetaData> metaData = Collections.emptySet();
+        final byte[] content = read(file);
+        new UnitFile(unit, person, description, tags, getVirtualPath(unit), originalFilename, displayName, metaData, content,
+                !isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
+    }
 
-	private static VirtualPath getVirtualPath(Unit unit) {
+    private static VirtualPath getVirtualPath(Unit unit) {
 
-		final VirtualPath filePath = new VirtualPath();
+        final VirtualPath filePath = new VirtualPath();
 
-		filePath.addNode(new VirtualPathNode("Research", "Research"));
-		filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getIdInternal(), unit.getName()));
+        filePath.addNode(new VirtualPathNode("Research", "Research"));
+        filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getIdInternal(), unit.getName()));
 
-		return filePath;
-	}
+        return filePath;
+    }
 
-	private static boolean isPublic(Group permittedGroup) {
-		if (permittedGroup == null) {
-			return true;
-		}
+    private static boolean isPublic(Group permittedGroup) {
+        if (permittedGroup == null) {
+            return true;
+        }
 
-		if (permittedGroup instanceof EveryoneGroup) {
-			return true;
-		}
+        if (permittedGroup instanceof EveryoneGroup) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

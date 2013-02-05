@@ -7,32 +7,32 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 
 public enum CooperationType {
 
-	ScientificOrganizationsAndNetworks, BilateralCooperation, Commission;
+    ScientificOrganizationsAndNetworks, BilateralCooperation, Commission;
 
-	public static CooperationType getDefaultType() {
-		return ScientificOrganizationsAndNetworks;
-	}
+    public static CooperationType getDefaultType() {
+        return ScientificOrganizationsAndNetworks;
+    }
 
-	public static List<ResearchActivityParticipationRole> getParticipationRoles(CooperationType type) {
+    public static List<ResearchActivityParticipationRole> getParticipationRoles(CooperationType type) {
 
-		return getCooperationRoles(type);
-	}
+        return getCooperationRoles(type);
+    }
 
-	public List<ResearchActivityParticipationRole> getParticipationRoles() {
+    public List<ResearchActivityParticipationRole> getParticipationRoles() {
 
-		return getCooperationRoles(this);
-	}
+        return getCooperationRoles(this);
+    }
 
-	private static List<ResearchActivityParticipationRole> getCooperationRoles(CooperationType type) {
-		List<ResearchActivityParticipationRole> cooperationsRoles = new ArrayList<ResearchActivityParticipationRole>();
+    private static List<ResearchActivityParticipationRole> getCooperationRoles(CooperationType type) {
+        List<ResearchActivityParticipationRole> cooperationsRoles = new ArrayList<ResearchActivityParticipationRole>();
 
-		if (CooperationType.ScientificOrganizationsAndNetworks.equals(type)) {
-			cooperationsRoles = ResearchActivityParticipationRole.getAllScientificOrganizationsAndNetworksRoles();
-		} else if (CooperationType.BilateralCooperation.equals(type)) {
-			cooperationsRoles = ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
-		} else if (CooperationType.Commission.equals(type)) {
-			cooperationsRoles = ResearchActivityParticipationRole.getAllCommissionRoles();
-		}
-		return cooperationsRoles;
-	}
+        if (CooperationType.ScientificOrganizationsAndNetworks.equals(type)) {
+            cooperationsRoles = ResearchActivityParticipationRole.getAllScientificOrganizationsAndNetworksRoles();
+        } else if (CooperationType.BilateralCooperation.equals(type)) {
+            cooperationsRoles = ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+        } else if (CooperationType.Commission.equals(type)) {
+            cooperationsRoles = ResearchActivityParticipationRole.getAllCommissionRoles();
+        }
+        return cooperationsRoles;
+    }
 }

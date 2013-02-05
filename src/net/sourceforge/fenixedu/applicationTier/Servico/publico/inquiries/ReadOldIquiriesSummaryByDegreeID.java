@@ -23,32 +23,32 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadOldIquiriesSummaryByDegreeID extends FenixService {
 
-	@Service
-	public static List run(Integer degreeID) throws FenixServiceException {
-		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+    @Service
+    public static List run(Integer degreeID) throws FenixServiceException {
+        Degree degree = rootDomainObject.readDegreeByOID(degreeID);
 
-		if (degree == null) {
-			throw new FenixServiceException("nullDegreeId");
-		}
+        if (degree == null) {
+            throw new FenixServiceException("nullDegreeId");
+        }
 
-		List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummaries();
+        List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummaries();
 
-		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
+        CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 
-			@Override
-			public Object transform(Object oldInquiriesSummary) {
-				InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
-				try {
-					iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
+            @Override
+            public Object transform(Object oldInquiriesSummary) {
+                InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
+                try {
+                    iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
 
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
-				return iois;
-			}
-		});
+                return iois;
+            }
+        });
 
-		return oldInquiriesSummaryList;
-	}
+        return oldInquiriesSummaryList;
+    }
 }

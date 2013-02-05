@@ -10,62 +10,62 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecutionYearGroup {
 
-	/**
+    /**
          * 
          */
-	private static final long serialVersionUID = 8466471514890333054L;
+    private static final long serialVersionUID = 8466471514890333054L;
 
-	public DepartmentEmployeesByExecutionYearGroup(ExecutionYear executionYear, Department department) {
-		super(executionYear, department);
-	}
+    public DepartmentEmployeesByExecutionYearGroup(ExecutionYear executionYear, Department department) {
+        super(executionYear, department);
+    }
 
-	public DepartmentEmployeesByExecutionYearGroup(String executionYear, String department) {
-		super(executionYear, department);
+    public DepartmentEmployeesByExecutionYearGroup(String executionYear, String department) {
+        super(executionYear, department);
 
-	}
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = super.buildSet();
-		Collection<Employee> departmentEmployees =
-				getDepartment().getAllWorkingEmployees(getExecutionYear().getBeginDateYearMonthDay(),
-						getExecutionYear().getEndDateYearMonthDay());
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
+        Collection<Employee> departmentEmployees =
+                getDepartment().getAllWorkingEmployees(getExecutionYear().getBeginDateYearMonthDay(),
+                        getExecutionYear().getEndDateYearMonthDay());
 
-		for (Employee employee : departmentEmployees) {
-			elements.add(employee.getPerson());
-		}
+        for (Employee employee : departmentEmployees) {
+            elements.add(employee.getPerson());
+        }
 
-		return super.freezeSet(elements);
-	}
+        return super.freezeSet(elements);
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		if (person != null && person.hasEmployee()) {
-			final Department lastDepartmentWorkingPlace =
-					person.getEmployee().getLastDepartmentWorkingPlace(getExecutionYear().getBeginDateYearMonthDay(),
-							getExecutionYear().getEndDateYearMonthDay());
-			return (lastDepartmentWorkingPlace != null && lastDepartmentWorkingPlace.equals(getDepartment()));
-		}
-		return false;
-	}
+    @Override
+    public boolean isMember(Person person) {
+        if (person != null && person.hasEmployee()) {
+            final Department lastDepartmentWorkingPlace =
+                    person.getEmployee().getLastDepartmentWorkingPlace(getExecutionYear().getBeginDateYearMonthDay(),
+                            getExecutionYear().getEndDateYearMonthDay());
+            return (lastDepartmentWorkingPlace != null && lastDepartmentWorkingPlace.equals(getDepartment()));
+        }
+        return false;
+    }
 
-	public static class Builder extends DepartmentByExecutionYearGroup.Builder {
+    public static class Builder extends DepartmentByExecutionYearGroup.Builder {
 
-		@Override
-		protected DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department) {
-			return new DepartmentEmployeesByExecutionYearGroup(year, department);
-		}
+        @Override
+        protected DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department) {
+            return new DepartmentEmployeesByExecutionYearGroup(year, department);
+        }
 
-	}
+    }
 
-	@Override
-	public String getPresentationNameKey() {
-		return "label.name.employees.by.department.and.execution.year";
-	}
+    @Override
+    public String getPresentationNameKey() {
+        return "label.name.employees.by.department.and.execution.year";
+    }
 
-	@Override
-	public String[] getPresentationNameKeyArgs() {
-		return new String[] { getDepartment().getName(), getExecutionYear().getYear() };
-	}
+    @Override
+    public String[] getPresentationNameKeyArgs() {
+        return new String[] { getDepartment().getName(), getExecutionYear().getYear() };
+    }
 
 }

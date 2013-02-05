@@ -20,31 +20,31 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCourseTeachers extends FenixService {
 
-	/**
-	 * Executes the service. Returns the current collection of infoTeachers.
-	 * 
-	 * @throws ExcepcaoPersistencia
-	 */
+    /**
+     * Executes the service. Returns the current collection of infoTeachers.
+     * 
+     * @throws ExcepcaoPersistencia
+     */
 
-	public List run(Integer executionCourseId) throws FenixServiceException {
+    public List run(Integer executionCourseId) throws FenixServiceException {
 
-		List professorShips = null;
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		professorShips = executionCourse.getProfessorships();
+        List professorShips = null;
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        professorShips = executionCourse.getProfessorships();
 
-		if (professorShips == null || professorShips.isEmpty()) {
-			return null;
-		}
+        if (professorShips == null || professorShips.isEmpty()) {
+            return null;
+        }
 
-		List infoTeachers = new ArrayList();
-		Iterator iter = professorShips.iterator();
-		Teacher teacher = null;
+        List infoTeachers = new ArrayList();
+        Iterator iter = professorShips.iterator();
+        Teacher teacher = null;
 
-		while (iter.hasNext()) {
-			teacher = ((Professorship) iter.next()).getTeacher();
-			infoTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
-		}
+        while (iter.hasNext()) {
+            teacher = ((Professorship) iter.next()).getTeacher();
+            infoTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
+        }
 
-		return infoTeachers;
-	}
+        return infoTeachers;
+    }
 }

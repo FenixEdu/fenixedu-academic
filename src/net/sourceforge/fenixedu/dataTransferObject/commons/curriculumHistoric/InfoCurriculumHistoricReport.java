@@ -19,81 +19,81 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class InfoCurriculumHistoricReport implements Serializable {
 
-	int evaluated = 0;
+    int evaluated = 0;
 
-	int approved = 0;
+    int approved = 0;
 
-	Collection<InfoEnrolmentHistoricReport> enrolments;
+    Collection<InfoEnrolmentHistoricReport> enrolments;
 
-	CurricularCourse curricularCourse;
+    CurricularCourse curricularCourse;
 
-	AcademicInterval academicInterval;
+    AcademicInterval academicInterval;
 
-	public Integer getApproved() {
-		return approved;
-	}
+    public Integer getApproved() {
+        return approved;
+    }
 
-	public Integer getEvaluated() {
-		return evaluated;
-	}
+    public Integer getEvaluated() {
+        return evaluated;
+    }
 
-	public Collection<InfoEnrolmentHistoricReport> getEnrolments() {
-		return enrolments;
-	}
+    public Collection<InfoEnrolmentHistoricReport> getEnrolments() {
+        return enrolments;
+    }
 
-	public Integer getEnroled() {
-		return getEnrolments().size();
-	}
+    public Integer getEnroled() {
+        return getEnrolments().size();
+    }
 
-	public Integer getRatioApprovedEnroled() {
-		return Math.round(((float) getApproved() / (float) getEnroled()) * 100);
-	}
+    public Integer getRatioApprovedEnroled() {
+        return Math.round(((float) getApproved() / (float) getEnroled()) * 100);
+    }
 
-	public Integer getRatioApprovedEvaluated() {
-		return Math.round(((float) getApproved() / (float) getEvaluated()) * 100);
-	}
+    public Integer getRatioApprovedEvaluated() {
+        return Math.round(((float) getApproved() / (float) getEvaluated()) * 100);
+    }
 
-	public CurricularCourse getCurricularCourse() {
-		return this.curricularCourse;
-	}
+    public CurricularCourse getCurricularCourse() {
+        return this.curricularCourse;
+    }
 
-	private void setCurricularCourse(final CurricularCourse curricularCourse) {
-		this.curricularCourse = curricularCourse;
+    private void setCurricularCourse(final CurricularCourse curricularCourse) {
+        this.curricularCourse = curricularCourse;
 
-	}
+    }
 
-	public InfoCurriculumHistoricReport(final AcademicInterval academicInterval, final CurricularCourse curricularCourse) {
-		setAcademicInterval(academicInterval);
-		setCurricularCourse(curricularCourse);
+    public InfoCurriculumHistoricReport(final AcademicInterval academicInterval, final CurricularCourse curricularCourse) {
+        setAcademicInterval(academicInterval);
+        setCurricularCourse(curricularCourse);
 
-		init();
-	}
+        init();
+    }
 
-	private void init() {
-		this.enrolments =
-				new TreeSet<InfoEnrolmentHistoricReport>(
-						new BeanComparator("enrolment.studentCurricularPlan.registration.number"));
-		for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByAcademicInterval(academicInterval)) {
-			if (!enrolment.isAnnulled()) {
-				this.enrolments.add(new InfoEnrolmentHistoricReport(enrolment));
+    private void init() {
+        this.enrolments =
+                new TreeSet<InfoEnrolmentHistoricReport>(
+                        new BeanComparator("enrolment.studentCurricularPlan.registration.number"));
+        for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByAcademicInterval(academicInterval)) {
+            if (!enrolment.isAnnulled()) {
+                this.enrolments.add(new InfoEnrolmentHistoricReport(enrolment));
 
-				if (enrolment.isEvaluated()) {
-					this.evaluated++;
+                if (enrolment.isEvaluated()) {
+                    this.evaluated++;
 
-					if (enrolment.isEnrolmentStateApproved()) {
-						this.approved++;
-					}
-				}
-			}
-		}
-	}
+                    if (enrolment.isEnrolmentStateApproved()) {
+                        this.approved++;
+                    }
+                }
+            }
+        }
+    }
 
-	public AcademicInterval getAcademicInterval() {
-		return academicInterval;
-	}
+    public AcademicInterval getAcademicInterval() {
+        return academicInterval;
+    }
 
-	public void setAcademicInterval(AcademicInterval academicInterval) {
-		this.academicInterval = academicInterval;
-	}
+    public void setAcademicInterval(AcademicInterval academicInterval) {
+        this.academicInterval = academicInterval;
+    }
 
 }

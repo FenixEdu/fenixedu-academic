@@ -8,20 +8,20 @@ import java.util.List;
  */
 public class InfoSiteEvaluation extends DataTranferObject implements ISiteComponent {
 
-	private List infoEvaluations;
+    private List infoEvaluations;
 
-	/**
-	 * @return
-	 */
-	public List getInfoEvaluations() {
-		return infoEvaluations;
-	}
+    /**
+     * @return
+     */
+    public List getInfoEvaluations() {
+        return infoEvaluations;
+    }
 
-	/**
-	 * @param infoEvaluations
-	 */
-	public void setInfoEvaluations(List infoEvaluations) {
-		this.infoEvaluations = infoEvaluations;
-	}
+    /**
+     * @param infoEvaluations
+     */
+    public void setInfoEvaluations(List infoEvaluations) {
+        this.infoEvaluations = infoEvaluations;
+    }
 
 }

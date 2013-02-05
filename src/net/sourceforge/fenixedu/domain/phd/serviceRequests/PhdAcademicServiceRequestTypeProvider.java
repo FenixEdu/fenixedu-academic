@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PhdAcademicServiceRequestTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Collections.singletonList(AcademicServiceRequestType.PHD_STUDENT_REINGRESSION);
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Collections.singletonList(AcademicServiceRequestType.PHD_STUDENT_REINGRESSION);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

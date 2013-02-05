@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreatePhdRegistrationFeePenaltyExemption {
 
-	@Service
-	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-	public static void run(final Person responsible, final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean) {
-		new PhdRegistrationFeePenaltyExemption(penaltyExemptionBean.getJustificationType(), penaltyExemptionBean.getEvent(),
-				responsible, penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
-	}
+    @Service
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+    public static void run(final Person responsible, final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean) {
+        new PhdRegistrationFeePenaltyExemption(penaltyExemptionBean.getJustificationType(), penaltyExemptionBean.getEvent(),
+                responsible, penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
+    }
 
 }

@@ -10,55 +10,55 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 
 public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersistent {
 
-	private CourseGroup courseGroup;
+    private CourseGroup courseGroup;
 
-	private PreviousYearsEnrolmentCurricularRule() {
-		super();
-	}
+    private PreviousYearsEnrolmentCurricularRule() {
+        super();
+    }
 
-	public PreviousYearsEnrolmentCurricularRule(final CourseGroup courseGroup) {
-		this();
-		this.courseGroup = courseGroup;
-	}
+    public PreviousYearsEnrolmentCurricularRule(final CourseGroup courseGroup) {
+        this();
+        this.courseGroup = courseGroup;
+    }
 
-	@Override
-	public ExecutionSemester getBegin() {
-		return ExecutionSemester.readActualExecutionSemester();
-	}
+    @Override
+    public ExecutionSemester getBegin() {
+        return ExecutionSemester.readActualExecutionSemester();
+    }
 
-	@Override
-	public CourseGroup getContextCourseGroup() {
-		return null;
-	}
+    @Override
+    public CourseGroup getContextCourseGroup() {
+        return null;
+    }
 
-	@Override
-	public CompositeRule getParentCompositeRule() {
-		return null;
-	}
+    @Override
+    public CompositeRule getParentCompositeRule() {
+        return null;
+    }
 
-	@Override
-	public CurricularRuleType getCurricularRuleType() {
-		return CurricularRuleType.PREVIOUS_YEARS_ENROLMENT;
-	}
+    @Override
+    public CurricularRuleType getCurricularRuleType() {
+        return CurricularRuleType.PREVIOUS_YEARS_ENROLMENT;
+    }
 
-	@Override
-	public CourseGroup getDegreeModuleToApplyRule() {
-		return this.courseGroup;
-	}
+    @Override
+    public CourseGroup getDegreeModuleToApplyRule() {
+        return this.courseGroup;
+    }
 
-	@Override
-	public ExecutionSemester getEnd() {
-		return null;
-	}
+    @Override
+    public ExecutionSemester getEnd() {
+        return null;
+    }
 
-	@Override
-	public List<GenericPair<Object, Boolean>> getLabel() {
-		return Collections.singletonList(new GenericPair<Object, Boolean>("label.previousYearsEnrolment", true));
-	}
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel() {
+        return Collections.singletonList(new GenericPair<Object, Boolean>("label.previousYearsEnrolment", true));
+    }
 
-	@Override
-	public VerifyRuleExecutor createVerifyRuleExecutor() {
-		return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
-	}
+    @Override
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+        return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+    }
 
 }

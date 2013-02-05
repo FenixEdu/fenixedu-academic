@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PublishTestGroup extends FenixService {
-	@Service
-	public static void run(NewTestGroup testGroup) throws FenixServiceException {
-		testGroup.publish();
-	}
+    @Service
+    public static void run(NewTestGroup testGroup) throws FenixServiceException {
+        testGroup.publish();
+    }
 }

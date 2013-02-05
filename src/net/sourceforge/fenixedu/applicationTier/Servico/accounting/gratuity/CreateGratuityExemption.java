@@ -11,19 +11,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateGratuityExemption {
 
-	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-	@Service
-	public static void run(final Person responsible, final CreateGratuityExemptionBean createGratuityExemptionBean) {
-		if (createGratuityExemptionBean.isPercentageExemption()) {
-			new PercentageGratuityExemption(responsible, createGratuityExemptionBean.getGratuityEvent(),
-					createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean.getReason(),
-					createGratuityExemptionBean.getDispatchDate(), createGratuityExemptionBean.getSelectedPercentage().divide(
-							BigDecimal.valueOf(100)));
-		} else {
-			new ValueGratuityExemption(responsible, createGratuityExemptionBean.getGratuityEvent(),
-					createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean.getReason(),
-					createGratuityExemptionBean.getDispatchDate(), createGratuityExemptionBean.getAmount());
-		}
-	}
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+    @Service
+    public static void run(final Person responsible, final CreateGratuityExemptionBean createGratuityExemptionBean) {
+        if (createGratuityExemptionBean.isPercentageExemption()) {
+            new PercentageGratuityExemption(responsible, createGratuityExemptionBean.getGratuityEvent(),
+                    createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean.getReason(),
+                    createGratuityExemptionBean.getDispatchDate(), createGratuityExemptionBean.getSelectedPercentage().divide(
+                            BigDecimal.valueOf(100)));
+        } else {
+            new ValueGratuityExemption(responsible, createGratuityExemptionBean.getGratuityEvent(),
+                    createGratuityExemptionBean.getExemptionJustificationType(), createGratuityExemptionBean.getReason(),
+                    createGratuityExemptionBean.getDispatchDate(), createGratuityExemptionBean.getAmount());
+        }
+    }
 
 }

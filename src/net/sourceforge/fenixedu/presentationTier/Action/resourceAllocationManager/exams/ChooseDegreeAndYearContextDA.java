@@ -39,126 +39,120 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Ana e Ricardo
  */
-@Mapping(
-		module = "resourceAllocationManager",
-		path = "/chooseDegreeAndYearContext",
-		input = "/chooseDegreeAndYearContext.do?method=prepare&page=0",
-		attribute = "showExamsManagementForm",
-		formBean = "showExamsManagementForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "resourceAllocationManager", path = "/chooseDegreeAndYearContext",
+        input = "/chooseDegreeAndYearContext.do?method=prepare&page=0", attribute = "showExamsManagementForm",
+        formBean = "showExamsManagementForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "chooseDegreeAndYearContext", path = "df.page.chooseDegreeAndYear"),
-		@Forward(name = "viewExamsMap", path = "/showExamsManagement.do?method=view") })
+        @Forward(name = "viewExamsMap", path = "/showExamsManagement.do?method=view") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
-		key = "resources.Action.exceptions.FenixActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
+        key = "resources.Action.exceptions.FenixActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts
-	 * .action.ActionMapping, org.apache.struts.action.ActionForm,
-	 * javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse, java.lang.String)
-	 */
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts
+     * .action.ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, java.lang.String)
+     */
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-		/* Criar o bean de anos curriculares */
-		List anosCurriculares = createCurricularYearList();
-		request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
+        /* Criar o bean de anos curriculares */
+        List anosCurriculares = createCurricularYearList();
+        request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
 
-		/* Cria o form bean com as licenciaturas em execucao. */
+        /* Cria o form bean com as licenciaturas em execucao. */
 
-		List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
+        List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
-		List licenciaturas = new ArrayList();
+        List licenciaturas = new ArrayList();
 
-		licenciaturas.add(new LabelValueBean("", ""));
+        licenciaturas.add(new LabelValueBean("", ""));
 
-		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+        Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
-		Iterator iterator = executionDegreeList.iterator();
+        Iterator iterator = executionDegreeList.iterator();
 
-		while (iterator.hasNext()) {
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
 
-			name +=
-					duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-							+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+            name +=
+                    duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+                            + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-			licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
-		}
+            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+        }
 
-		request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
+        request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
 
-		return mapping.findForward("chooseDegreeAndYearContext");
-	}
+        return mapping.findForward("chooseDegreeAndYearContext");
+    }
 
-	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaValidatorForm chooseDegreeAndYearForm = (DynaValidatorForm) form;
+        DynaValidatorForm chooseDegreeAndYearForm = (DynaValidatorForm) form;
 
-		String executionDegree = (String) chooseDegreeAndYearForm.get("executionDegree");
-		String curricularYear = (String) chooseDegreeAndYearForm.get("curricularYear");
+        String executionDegree = (String) chooseDegreeAndYearForm.get("executionDegree");
+        String curricularYear = (String) chooseDegreeAndYearForm.get("curricularYear");
 
-		request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegree);
-		request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, curricularYear);
+        request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegree);
+        request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, curricularYear);
 
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setCurricularYearContext(request);
 
-		return mapping.findForward("viewExamsMap");
+        return mapping.findForward("viewExamsMap");
 
-	}
+    }
 
-	/**
-	 * Method createCurricularYearList.
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 */
-	private List createCurricularYearList() {
+    /**
+     * Method createCurricularYearList.
+     * 
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     */
+    private List createCurricularYearList() {
 
-		List anosCurriculares = new ArrayList();
+        List anosCurriculares = new ArrayList();
 
-		anosCurriculares.add(new LabelValueBean("", ""));
-		anosCurriculares.add(new LabelValueBean("1 º", "1"));
-		anosCurriculares.add(new LabelValueBean("2 º", "2"));
-		anosCurriculares.add(new LabelValueBean("3 º", "3"));
-		anosCurriculares.add(new LabelValueBean("4 º", "4"));
-		anosCurriculares.add(new LabelValueBean("5 º", "5"));
+        anosCurriculares.add(new LabelValueBean("", ""));
+        anosCurriculares.add(new LabelValueBean("1 º", "1"));
+        anosCurriculares.add(new LabelValueBean("2 º", "2"));
+        anosCurriculares.add(new LabelValueBean("3 º", "3"));
+        anosCurriculares.add(new LabelValueBean("4 º", "4"));
+        anosCurriculares.add(new LabelValueBean("5 º", "5"));
 
-		return anosCurriculares;
-	}
+        return anosCurriculares;
+    }
 
-	private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-		Iterator iterator = executionDegreeList.iterator();
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        Iterator iterator = executionDegreeList.iterator();
 
-		while (iterator.hasNext()) {
-			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-					&& !(infoExecutionDegree.equals(infoExecutionDegree2))) {
-				return true;
-			}
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2))) {
+                return true;
+            }
 
-		}
-		return false;
-	}
+        }
+        return false;
+    }
 }

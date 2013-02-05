@@ -6,103 +6,103 @@ import dml.runtime.RelationAdapter;
 
 public class ScientificCommission extends ScientificCommission_Base {
 
-	static {
-		ScientificCommissionPerson.addListener(new ManageCoordinatorRole());
-	}
+    static {
+        ScientificCommissionPerson.addListener(new ManageCoordinatorRole());
+    }
 
-	public ScientificCommission(ExecutionDegree executionDegree, Person person) {
-		super();
+    public ScientificCommission(ExecutionDegree executionDegree, Person person) {
+        super();
 
-		if (executionDegree.isPersonInScientificCommission(person)) {
-			throw new DomainException("scientificCommission.person.duplicate");
-		}
+        if (executionDegree.isPersonInScientificCommission(person)) {
+            throw new DomainException("scientificCommission.person.duplicate");
+        }
 
-		setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(RootDomainObject.getInstance());
 
-		setContact(false);
-		setExecutionDegree(executionDegree);
-		setPerson(person);
+        setContact(false);
+        setExecutionDegree(executionDegree);
+        setPerson(person);
 
-		ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
-				"resources.MessagingResources", "log.degree.scientificcomission.addmember", this.getPerson()
-						.getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
-	}
+        ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
+                "resources.MessagingResources", "log.degree.scientificcomission.addmember", this.getPerson()
+                        .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
+    }
 
-	public Coordinator getCoordinator() {
-		for (Coordinator coordinator : getExecutionDegree().getCoordinatorsList()) {
-			if (this.getPerson().equals(coordinator.getPerson())) {
-				return coordinator;
-			}
-		}
-		return null;
-	}
+    public Coordinator getCoordinator() {
+        for (Coordinator coordinator : getExecutionDegree().getCoordinatorsList()) {
+            if (this.getPerson().equals(coordinator.getPerson())) {
+                return coordinator;
+            }
+        }
+        return null;
+    }
 
-	public Boolean getHasCoordinator() {
-		return getCoordinator() != null;
-	}
+    public Boolean getHasCoordinator() {
+        return getCoordinator() != null;
+    }
 
-	public Boolean isContact() {
-		return getContact() == null ? false : getContact();
-	}
+    public Boolean isContact() {
+        return getContact() == null ? false : getContact();
+    }
 
-	public void delete() {
-		ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
-				"resources.MessagingResources", "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
-						.getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
-		removePerson();
-		removeExecutionDegree();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+    public void delete() {
+        ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
+                "resources.MessagingResources", "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
+                        .getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
+        removePerson();
+        removeExecutionDegree();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	/**
-	 * Manage the role COORDINATOR associated with the person. The person
-	 * becomes a COORDINATOR when it's added to a scientific commission. This
-	 * listerner also removes the role from the person when it's removed from
-	 * every scientific commissions and it's not in a coordination team.
-	 * 
-	 * @author cfgi
-	 */
-	private static class ManageCoordinatorRole extends RelationAdapter<ScientificCommission, Person> {
+    /**
+     * Manage the role COORDINATOR associated with the person. The person
+     * becomes a COORDINATOR when it's added to a scientific commission. This
+     * listerner also removes the role from the person when it's removed from
+     * every scientific commissions and it's not in a coordination team.
+     * 
+     * @author cfgi
+     */
+    private static class ManageCoordinatorRole extends RelationAdapter<ScientificCommission, Person> {
 
-		@Override
-		public void afterAdd(ScientificCommission commission, Person person) {
-			super.afterAdd(commission, person);
+        @Override
+        public void afterAdd(ScientificCommission commission, Person person) {
+            super.afterAdd(commission, person);
 
-			if (person != null && commission != null) {
-				person.addPersonRoleByRoleType(RoleType.COORDINATOR);
-			}
-		}
+            if (person != null && commission != null) {
+                person.addPersonRoleByRoleType(RoleType.COORDINATOR);
+            }
+        }
 
-		@Override
-		public void afterRemove(ScientificCommission commission, Person person) {
-			super.afterRemove(commission, person);
+        @Override
+        public void afterRemove(ScientificCommission commission, Person person) {
+            super.afterRemove(commission, person);
 
-			if (person != null && commission != null) {
-				if (person.hasAnyCoordinators()) {
-					return;
-				}
+            if (person != null && commission != null) {
+                if (person.hasAnyCoordinators()) {
+                    return;
+                }
 
-				if (person.hasAnyScientificCommissions()) {
-					return;
-				}
+                if (person.hasAnyScientificCommissions()) {
+                    return;
+                }
 
-				person.removeRoleByType(RoleType.COORDINATOR);
-			}
-		}
+                person.removeRoleByType(RoleType.COORDINATOR);
+            }
+        }
 
-	}
+    }
 
-	public void changeContactStatus(Boolean contact) {
-		if (!contact.equals(getContact())) {
-			setContact(contact);
-			logEditMember();
-		}
-	}
+    public void changeContactStatus(Boolean contact) {
+        if (!contact.equals(getContact())) {
+            setContact(contact);
+            logEditMember();
+        }
+    }
 
-	public void logEditMember() {
-		ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
-				"resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
-						.getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
-	}
+    public void logEditMember() {
+        ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
+                "resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
+                        .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
+    }
 }

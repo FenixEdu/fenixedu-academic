@@ -7,17 +7,17 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class ExecutionCoursesProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
+    @Override
+    public Object provide(Object source, Object current) {
 
-		ExecutionCourseManagementBean bean = (ExecutionCourseManagementBean) source;
+        ExecutionCourseManagementBean bean = (ExecutionCourseManagementBean) source;
 
-		ExecutionSemester semester = bean.getSemester();
-		CurricularYear curricularYear = bean.getCurricularYear();
-		DegreeCurricularPlan plan = bean.getDegreeCurricularPlan();
+        ExecutionSemester semester = bean.getSemester();
+        CurricularYear curricularYear = bean.getCurricularYear();
+        DegreeCurricularPlan plan = bean.getDegreeCurricularPlan();
 
-		return plan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(semester, curricularYear.getYear(),
-				semester.getSemester());
-	}
+        return plan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(semester, curricularYear.getYear(),
+                semester.getSemester());
+    }
 
 }

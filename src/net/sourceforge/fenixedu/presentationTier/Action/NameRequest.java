@@ -20,37 +20,37 @@ import com.lowagie.text.DocumentException;
 @Mapping(path = "/NameResolution", module = "external")
 public class NameRequest extends FenixDispatchAction {
 
-	private static final String storedPassword;
-	private static final String storedUsername;
+    private static final String storedPassword;
+    private static final String storedUsername;
 
-	static {
-		storedUsername = PropertiesManager.getProperty("nameresolution.name");
-		storedPassword = PropertiesManager.getProperty("nameresolution.password");
-	}
+    static {
+        storedUsername = PropertiesManager.getProperty("nameresolution.name");
+        storedPassword = PropertiesManager.getProperty("nameresolution.password");
+    }
 
-	public ActionForward resolve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			final HttpServletResponse httpServletResponse) throws Exception {
+    public ActionForward resolve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            final HttpServletResponse httpServletResponse) throws Exception {
 
-		String digest = DigestUtils.shaHex(storedPassword);
-		String providedUsername = request.getParameter("username");
-		String providedDigest = request.getParameter("password");
+        String digest = DigestUtils.shaHex(storedPassword);
+        String providedUsername = request.getParameter("username");
+        String providedDigest = request.getParameter("password");
 
-		if (storedUsername.equals(providedUsername) && digest.equals(providedDigest)) {
-			String id = request.getParameter("id");
-			User user = User.readUserByUserUId(id);
+        if (storedUsername.equals(providedUsername) && digest.equals(providedDigest)) {
+            String id = request.getParameter("id");
+            User user = User.readUserByUserUId(id);
 
-			String name = user.getPerson().getName();
-			String nickName = user.getPerson().getNickname();
-			httpServletResponse.setHeader("Content-Type", "application/json; charset=" + CharEncoding.UTF_8);
-			String message = "{\n" + "\"name\" : \"" + name + "\",\n" + "\"nickName\" : \"" + nickName + "\"\n" + "}";
-			httpServletResponse.getOutputStream().write(message.getBytes(CharEncoding.UTF_8));
-			httpServletResponse.getOutputStream().close();
-			return null;
+            String name = user.getPerson().getName();
+            String nickName = user.getPerson().getNickname();
+            httpServletResponse.setHeader("Content-Type", "application/json; charset=" + CharEncoding.UTF_8);
+            String message = "{\n" + "\"name\" : \"" + name + "\",\n" + "\"nickName\" : \"" + nickName + "\"\n" + "}";
+            httpServletResponse.getOutputStream().write(message.getBytes(CharEncoding.UTF_8));
+            httpServletResponse.getOutputStream().close();
+            return null;
 
-		} else {
-			throw new DocumentException("invalid.authentication");
-		}
+        } else {
+            throw new DocumentException("invalid.authentication");
+        }
 
-	}
+    }
 
 }

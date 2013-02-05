@@ -24,29 +24,29 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/projects/projectsManagement.jsp") })
 public class ProjectsManagementDispatchAction extends FenixDispatchAction {
 
-	public ActionForward listProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final IUserView userView = getUserView(request);
+    public ActionForward listProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
 
-		List<Project> projects = new ArrayList<Project>();
+        List<Project> projects = new ArrayList<Project>();
 
-		for (ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
-			if (!projects.contains(participation.getProject())) {
-				projects.add(participation.getProject());
-			}
-		}
-		request.setAttribute("projects", projects);
-		return mapping.findForward("Success");
-	}
+        for (ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
+            if (!projects.contains(participation.getProject())) {
+                projects.add(participation.getProject());
+            }
+        }
+        request.setAttribute("projects", projects);
+        return mapping.findForward("Success");
+    }
 
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final IUserView userView = getUserView(request);
-		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final IUserView userView = getUserView(request);
+        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-		DeleteResearchProject.run(oid);
+        DeleteResearchProject.run(oid);
 
-		return listProjects(mapping, form, request, response);
-	}
+        return listProjects(mapping, form, request, response);
+    }
 
 }

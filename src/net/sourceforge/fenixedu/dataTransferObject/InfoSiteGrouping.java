@@ -9,40 +9,40 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 public class InfoSiteGrouping extends DataTranferObject implements ISiteComponent {
 
-	private InfoGrouping infoGrouping;
+    private InfoGrouping infoGrouping;
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String result = "[INFO_SITE_ATTENDS_SET";
-		result += ", infoAttendsSet=" + getInfoGrouping();
-		result += "]";
-		return result;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        String result = "[INFO_SITE_ATTENDS_SET";
+        result += ", infoAttendsSet=" + getInfoGrouping();
+        result += "]";
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof InfoGrouping) {
-			result = (getInfoGrouping().equals(((InfoSiteGrouping) arg0).getInfoGrouping()));
-		}
-		return result;
-	}
+    @Override
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof InfoGrouping) {
+            result = (getInfoGrouping().equals(((InfoSiteGrouping) arg0).getInfoGrouping()));
+        }
+        return result;
+    }
 
-	/**
-	 * @return InfoAttendsSet
-	 */
-	public InfoGrouping getInfoGrouping() {
-		return infoGrouping;
-	}
+    /**
+     * @return InfoAttendsSet
+     */
+    public InfoGrouping getInfoGrouping() {
+        return infoGrouping;
+    }
 
-	/**
-	 * @param infoAttendsSet
-	 */
-	public void setInfoGrouping(InfoGrouping infoGrouping) {
-		this.infoGrouping = infoGrouping;
-	}
+    /**
+     * @param infoAttendsSet
+     */
+    public void setInfoGrouping(InfoGrouping infoGrouping) {
+        this.infoGrouping = infoGrouping;
+    }
 
 }

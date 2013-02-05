@@ -4,47 +4,47 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 
 public class InfoEnrollmentGrade extends DataTranferObject {
-	private InfoEnrolment infoEnrollment;
+    private InfoEnrolment infoEnrollment;
 
-	private String gradeValue;
+    private String gradeValue;
 
-	public InfoEnrollmentGrade() {
-	}
+    public InfoEnrollmentGrade() {
+    }
 
-	/**
-	 * @return
-	 */
-	public String getGradeValue() {
-		return gradeValue;
-	}
+    /**
+     * @return
+     */
+    public String getGradeValue() {
+        return gradeValue;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setGradeValue(String string) {
-		gradeValue = string;
-	}
+    /**
+     * @param string
+     */
+    public void setGradeValue(String string) {
+        gradeValue = string;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoEnrollment = " + this.infoEnrollment + "; ";
-		result += "grade = " + this.gradeValue + "]\n";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "infoEnrollment = " + this.infoEnrollment + "; ";
+        result += "grade = " + this.gradeValue + "]\n";
+        return result;
+    }
 
-	/**
-	 * @return Returns the infoEnrollment.
-	 */
-	public InfoEnrolment getInfoEnrollment() {
-		return infoEnrollment;
-	}
+    /**
+     * @return Returns the infoEnrollment.
+     */
+    public InfoEnrolment getInfoEnrollment() {
+        return infoEnrollment;
+    }
 
-	/**
-	 * @param infoEnrollment
-	 *            The infoEnrollment to set.
-	 */
-	public void setInfoEnrollment(InfoEnrolment infoEnrollment) {
-		this.infoEnrollment = infoEnrollment;
-	}
+    /**
+     * @param infoEnrollment
+     *            The infoEnrollment to set.
+     */
+    public void setInfoEnrollment(InfoEnrolment infoEnrollment) {
+        this.infoEnrollment = infoEnrollment;
+    }
 }

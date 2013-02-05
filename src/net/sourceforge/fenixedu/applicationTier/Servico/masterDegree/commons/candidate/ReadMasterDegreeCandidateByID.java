@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadMasterDegreeCandidateByID extends FenixService {
 
-	@Service
-	public static InfoMasterDegreeCandidate run(Integer candidateID) {
-		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-		return (masterDegreeCandidate != null) ? InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate) : null;
-	}
+    @Service
+    public static InfoMasterDegreeCandidate run(Integer candidateID) {
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+        return (masterDegreeCandidate != null) ? InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate) : null;
+    }
 
 }

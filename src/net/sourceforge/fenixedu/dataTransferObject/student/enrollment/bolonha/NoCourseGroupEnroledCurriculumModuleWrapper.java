@@ -14,52 +14,52 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class NoCourseGroupEnroledCurriculumModuleWrapper extends EnroledCurriculumModuleWrapper {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public NoCourseGroupEnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule,
-			final ExecutionSemester executionSemester) {
-		super(curriculumModule, executionSemester);
-	}
+    public NoCourseGroupEnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule,
+            final ExecutionSemester executionSemester) {
+        super(curriculumModule, executionSemester);
+    }
 
-	@Override
-	public boolean canCollectRules() {
-		return false;
-	}
+    @Override
+    public boolean canCollectRules() {
+        return false;
+    }
 
-	@Override
-	public Context getContext() {
-		return null;
-	}
+    @Override
+    public Context getContext() {
+        return null;
+    }
 
-	@Override
-	public double getAccumulatedEctsCredits(ExecutionSemester executionSemester) {
-		if (getCurriculumModule().isEnrolment()) {
-			final Enrolment enrolment = (Enrolment) getCurriculumModule();
+    @Override
+    public double getAccumulatedEctsCredits(ExecutionSemester executionSemester) {
+        if (getCurriculumModule().isEnrolment()) {
+            final Enrolment enrolment = (Enrolment) getCurriculumModule();
 
-			if (!enrolment.isBolonhaDegree()) {
-				return enrolment.getAccumulatedEctsCredits(executionSemester);
-			} else {
-				return enrolment.getStudentCurricularPlan().getAccumulatedEctsCredits(getExecutionPeriod(),
-						enrolment.getCurricularCourse());
-			}
-		} else {
-			return 0d;
-		}
-	}
+            if (!enrolment.isBolonhaDegree()) {
+                return enrolment.getAccumulatedEctsCredits(executionSemester);
+            } else {
+                return enrolment.getStudentCurricularPlan().getAccumulatedEctsCredits(getExecutionPeriod(),
+                        enrolment.getCurricularCourse());
+            }
+        } else {
+            return 0d;
+        }
+    }
 
-	@Override
-	public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
-		return Collections.emptySet();
-	}
+    @Override
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
+        return Collections.emptySet();
+    }
 
-	@Override
-	public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-		return Collections.emptyList();
-	}
+    @Override
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+        return Collections.emptyList();
+    }
 
-	@Override
-	public boolean isDissertation() {
-		return getCurriculumModule().getDegreeModule().isDissertation();
-	}
+    @Override
+    public boolean isDissertation() {
+        return getCurriculumModule().getDegreeModule().isDissertation();
+    }
 
 }

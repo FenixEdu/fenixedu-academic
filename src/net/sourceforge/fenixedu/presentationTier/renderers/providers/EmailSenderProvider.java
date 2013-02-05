@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EmailSenderProvider implements DataProvider {
 
-	@Override
-	public Object provide(final Object source, final Object currentValue) {
-		return Sender.getAvailableSenders();
-	}
+    @Override
+    public Object provide(final Object source, final Object currentValue) {
+        return Sender.getAvailableSenders();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

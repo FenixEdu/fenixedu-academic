@@ -16,44 +16,44 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ExemptionsManagement {
 
-	@Service
-	public static void createAdministrativeOfficeFeeAndInsuranceExemption(final Person responsible,
-			final AdministrativeOfficeFeeAndInsuranceExemptionBean exemptionBean) {
-		AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-				exemptionBean.getAdministrativeOfficeFeeAndInsuranceEvent();
-		AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType = exemptionBean.getJustificationType();
-		String reason = exemptionBean.getReason();
-		YearMonthDay dispatchDate = exemptionBean.getDispatchDate();
+    @Service
+    public static void createAdministrativeOfficeFeeAndInsuranceExemption(final Person responsible,
+            final AdministrativeOfficeFeeAndInsuranceExemptionBean exemptionBean) {
+        AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
+                exemptionBean.getAdministrativeOfficeFeeAndInsuranceEvent();
+        AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType = exemptionBean.getJustificationType();
+        String reason = exemptionBean.getReason();
+        YearMonthDay dispatchDate = exemptionBean.getDispatchDate();
 
-		switch (exemptionBean.getApplyExemptionOn()) {
-		case ADMINISTRATIVE_OFFICE_FEE:
-			new AdministrativeOfficeFeeExemption(responsible, administrativeOfficeFeeAndInsuranceEvent, justificationType,
-					reason, dispatchDate);
-			return;
-		case ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE:
-			new AdministrativeOfficeFeeAndInsuranceExemption(responsible, administrativeOfficeFeeAndInsuranceEvent,
-					justificationType, reason, dispatchDate);
-			return;
-		case INSURANCE_FEE:
-			InsuranceExemptionJustificationType insuranceJustificationType = null;
-			switch (justificationType) {
-			case DIRECTIVE_COUNCIL_AUTHORIZATION:
-				insuranceJustificationType = InsuranceExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
-				break;
-			case MIT_AGREEMENT:
-				insuranceJustificationType = InsuranceExemptionJustificationType.MIT_AGREEMENT;
-			}
+        switch (exemptionBean.getApplyExemptionOn()) {
+        case ADMINISTRATIVE_OFFICE_FEE:
+            new AdministrativeOfficeFeeExemption(responsible, administrativeOfficeFeeAndInsuranceEvent, justificationType,
+                    reason, dispatchDate);
+            return;
+        case ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE:
+            new AdministrativeOfficeFeeAndInsuranceExemption(responsible, administrativeOfficeFeeAndInsuranceEvent,
+                    justificationType, reason, dispatchDate);
+            return;
+        case INSURANCE_FEE:
+            InsuranceExemptionJustificationType insuranceJustificationType = null;
+            switch (justificationType) {
+            case DIRECTIVE_COUNCIL_AUTHORIZATION:
+                insuranceJustificationType = InsuranceExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
+                break;
+            case MIT_AGREEMENT:
+                insuranceJustificationType = InsuranceExemptionJustificationType.MIT_AGREEMENT;
+            }
 
-			new InsuranceExemption(responsible, administrativeOfficeFeeAndInsuranceEvent, insuranceJustificationType, reason,
-					dispatchDate);
-		}
+            new InsuranceExemption(responsible, administrativeOfficeFeeAndInsuranceEvent, insuranceJustificationType, reason,
+                    dispatchDate);
+        }
 
-	}
+    }
 
-	@Service
-	public static void createInsuranceExemption(final Person responsible, final InsuranceExemptionBean exemptionBean) {
-		new InsuranceExemption(responsible, exemptionBean.getInsuranceEvent(), exemptionBean.getJustificationType(),
-				exemptionBean.getReason(), exemptionBean.getDispatchDate());
-	}
+    @Service
+    public static void createInsuranceExemption(final Person responsible, final InsuranceExemptionBean exemptionBean) {
+        new InsuranceExemption(responsible, exemptionBean.getInsuranceEvent(), exemptionBean.getJustificationType(),
+                exemptionBean.getReason(), exemptionBean.getDispatchDate());
+    }
 
 }

@@ -35,332 +35,332 @@ import com.google.common.collect.Sets;
 
 public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Base {
 
-	static private List<Activity> activities = new ArrayList<Activity>();
-	static {
-		activities.add(new EditCandidacyPeriod());
-		activities.add(new SendToCoordinator());
-		activities.add(new PrintCandidacies());
-		activities.add(new ExportCandidacies());
-		activities.add(new SendToScientificCouncil());
-		activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
-		activities.add(new SelectAvailableDegrees());
-	}
+    static private List<Activity> activities = new ArrayList<Activity>();
+    static {
+        activities.add(new EditCandidacyPeriod());
+        activities.add(new SendToCoordinator());
+        activities.add(new PrintCandidacies());
+        activities.add(new ExportCandidacies());
+        activities.add(new SendToScientificCouncil());
+        activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
+        activities.add(new SelectAvailableDegrees());
+    }
 
-	private SecondCycleCandidacyProcess() {
-		super();
-	}
+    private SecondCycleCandidacyProcess() {
+        super();
+    }
 
-	private SecondCycleCandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
-		this();
-		checkParameters(executionYear, start, end);
-		setState(CandidacyProcessState.STAND_BY);
-		new SecondCycleCandidacyPeriod(this, executionYear, start, end);
-	}
+    private SecondCycleCandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
+        this();
+        checkParameters(executionYear, start, end);
+        setState(CandidacyProcessState.STAND_BY);
+        new SecondCycleCandidacyPeriod(this, executionYear, start, end);
+    }
 
-	private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
-		if (executionInterval == null) {
-			throw new DomainException("error.SecondCycleCandidacyProcess.invalid.executionInterval");
-		}
+    private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+        if (executionInterval == null) {
+            throw new DomainException("error.SecondCycleCandidacyProcess.invalid.executionInterval");
+        }
 
-		if (start == null || end == null || start.isAfter(end)) {
-			throw new DomainException("error.SecondCycleCandidacyProcess.invalid.interval");
-		}
-	}
+        if (start == null || end == null || start.isAfter(end)) {
+            throw new DomainException("error.SecondCycleCandidacyProcess.invalid.interval");
+        }
+    }
 
-	private void edit(final DateTime start, final DateTime end) {
-		checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
-		getCandidacyPeriod().edit(start, end);
-	}
+    private void edit(final DateTime start, final DateTime end) {
+        checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
+        getCandidacyPeriod().edit(start, end);
+    }
 
-	@Override
-	public boolean canExecuteActivity(IUserView userView) {
-		return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
-				|| userView.hasRoleType(RoleType.COORDINATOR);
-	}
+    @Override
+    public boolean canExecuteActivity(IUserView userView) {
+        return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
+                || userView.hasRoleType(RoleType.COORDINATOR);
+    }
 
-	@Override
-	public List<Activity> getActivities() {
-		return activities;
-	}
+    @Override
+    public List<Activity> getActivities() {
+        return activities;
+    }
 
-	@Override
-	public ExecutionYear getCandidacyExecutionInterval() {
-		return (ExecutionYear) super.getCandidacyExecutionInterval();
-	}
+    @Override
+    public ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
+    }
 
-	public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies() {
-		final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-			if (process.isCandidacyValid()) {
-				result.add(process);
-			}
-		}
-		return result;
-	}
+    public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies() {
+        final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
+            if (process.isCandidacyValid()) {
+                result.add(process);
+            }
+        }
+        return result;
+    }
 
-	public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies(final Degree degree) {
-		if (degree == null) {
-			return Collections.emptyList();
-		}
-		final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-			if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
-				result.add(process);
-			}
-		}
-		return result;
-	}
+    public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies(final Degree degree) {
+        if (degree == null) {
+            return Collections.emptyList();
+        }
+        final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
+            if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
+                result.add(process);
+            }
+        }
+        return result;
+    }
 
-	public Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> getValidSecondCycleIndividualCandidaciesByDegree() {
-		final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result =
-				new TreeMap<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>>(Degree.COMPARATOR_BY_NAME_AND_ID);
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-			if (process.isCandidacyValid()) {
-				addCandidacy(result, process);
-			}
-		}
-		return result;
-	}
+    public Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> getValidSecondCycleIndividualCandidaciesByDegree() {
+        final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result =
+                new TreeMap<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>>(Degree.COMPARATOR_BY_NAME_AND_ID);
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
+            if (process.isCandidacyValid()) {
+                addCandidacy(result, process);
+            }
+        }
+        return result;
+    }
 
-	private void addCandidacy(final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result,
-			final SecondCycleIndividualCandidacyProcess process) {
-		SortedSet<SecondCycleIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
-		if (values == null) {
-			result.put(process.getCandidacySelectedDegree(), values =
-					new TreeSet<SecondCycleIndividualCandidacyProcess>(
-							SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
-		}
-		values.add(process);
-	}
+    private void addCandidacy(final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result,
+            final SecondCycleIndividualCandidacyProcess process) {
+        SortedSet<SecondCycleIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
+        if (values == null) {
+            result.put(process.getCandidacySelectedDegree(), values =
+                    new TreeSet<SecondCycleIndividualCandidacyProcess>(
+                            SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
+        }
+        values.add(process);
+    }
 
-	public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
-		final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
-				result.add((SecondCycleIndividualCandidacyProcess) child);
-			}
-		}
-		return result;
-	}
+    public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
+        final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
+                result.add((SecondCycleIndividualCandidacyProcess) child);
+            }
+        }
+        return result;
+    }
 
-	private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_MASTER_DEGREE,
-			DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_MASTER_DEGREE,
+            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-	static private boolean isAllowedToManageProcess(IUserView userView) {
-		for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-				AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
-			if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    static private boolean isAllowedToManageProcess(IUserView userView) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+            if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@StartActivity
-	static public class CreateCandidacyPeriod extends Activity<SecondCycleCandidacyProcess> {
+    @StartActivity
+    static public class CreateCandidacyPeriod extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-			return new SecondCycleCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
-		}
-	}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+            return new SecondCycleCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+        }
+    }
 
-	static private class EditCandidacyPeriod extends Activity<SecondCycleCandidacyProcess> {
+    static private class EditCandidacyPeriod extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-			process.edit(bean.getStart(), bean.getEnd());
-			return process;
-		}
-	}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+            process.edit(bean.getStart(), bean.getEnd());
+            return process;
+        }
+    }
 
-	static private class SendToCoordinator extends Activity<SecondCycleCandidacyProcess> {
+    static private class SendToCoordinator extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.isInStandBy() && !process.isSentToScientificCouncil()) {
-				throw new PreConditionNotValidException();
-			}
+            if (!process.isInStandBy() && !process.isSentToScientificCouncil()) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
-			return process;
-		}
-	}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
+            return process;
+        }
+    }
 
-	static private class PrintCandidacies extends Activity<SecondCycleCandidacyProcess> {
+    static private class PrintCandidacies extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-			if (process.isInStandBy()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+            if (process.isInStandBy()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			return process; // for now, nothing to be done
-		}
-	}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            return process; // for now, nothing to be done
+        }
+    }
 
-	static private class ExportCandidacies extends Activity<SecondCycleCandidacyProcess> {
+    static private class ExportCandidacies extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			return process; // for now, nothing to be done
-		}
-	}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            return process; // for now, nothing to be done
+        }
+    }
 
-	static private class SendToScientificCouncil extends Activity<SecondCycleCandidacyProcess> {
+    static private class SendToScientificCouncil extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.isInStandBy() && !process.isSentToCoordinator()) {
-				throw new PreConditionNotValidException();
-			}
+            if (!process.isInStandBy() && !process.isSentToCoordinator()) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
-			return process;
-		}
-	}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
+            return process;
+        }
+    }
 
-	static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<SecondCycleCandidacyProcess> {
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+    static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<SecondCycleCandidacyProcess> {
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			return process;
-		}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            return process;
+        }
 
-		@Override
-		public Boolean isVisibleForAdminOffice() {
-			return true;
-		}
+        @Override
+        public Boolean isVisibleForAdminOffice() {
+            return true;
+        }
 
-		@Override
-		public Boolean isVisibleForCoordinator() {
-			return false;
-		}
+        @Override
+        public Boolean isVisibleForCoordinator() {
+            return false;
+        }
 
-		@Override
-		public Boolean isVisibleForGriOffice() {
-			return false;
-		}
+        @Override
+        public Boolean isVisibleForGriOffice() {
+            return false;
+        }
 
-	}
+    }
 
-	static private class SelectAvailableDegrees extends Activity<SecondCycleCandidacyProcess> {
+    static private class SelectAvailableDegrees extends Activity<SecondCycleCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
-				Object object) {
-			final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
-			final List<Degree> degrees = bean.getDegrees();
-			process.getDegreeSet().addAll(degrees);
-			process.getDegreeSet().retainAll(degrees);
-			return process;
-		}
+        @Override
+        protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+                Object object) {
+            final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
+            final List<Degree> degrees = bean.getDegrees();
+            process.getDegreeSet().addAll(degrees);
+            process.getDegreeSet().retainAll(degrees);
+            return process;
+        }
 
-		@Override
-		public Boolean isVisibleForCoordinator() {
-			return Boolean.FALSE;
-		}
+        @Override
+        public Boolean isVisibleForCoordinator() {
+            return Boolean.FALSE;
+        }
 
-		@Override
-		public Boolean isVisibleForGriOffice() {
-			return Boolean.FALSE;
-		}
+        @Override
+        public Boolean isVisibleForGriOffice() {
+            return Boolean.FALSE;
+        }
 
-	}
+    }
 
-	public List<Degree> getAvailableDegrees() {
-		final Set<Degree> degrees = getDegreeSet();
-		return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
-				DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
-	}
+    public List<Degree> getAvailableDegrees() {
+        final Set<Degree> degrees = getDegreeSet();
+        return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
+                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
+    }
 
-	public List<SecondCycleCandidacyProcess> getNextSecondCyleCandidacyProcesses() {
-		List<SecondCycleCandidacyProcess> result = new ArrayList<SecondCycleCandidacyProcess>();
+    public List<SecondCycleCandidacyProcess> getNextSecondCyleCandidacyProcesses() {
+        List<SecondCycleCandidacyProcess> result = new ArrayList<SecondCycleCandidacyProcess>();
 
-		List<CandidacyPeriod> readAllByType = CandidacyPeriod.readAllByType(SecondCycleCandidacyPeriod.class);
+        List<CandidacyPeriod> readAllByType = CandidacyPeriod.readAllByType(SecondCycleCandidacyPeriod.class);
 
-		for (CandidacyPeriod candidacyPeriod : readAllByType) {
-			SecondCycleCandidacyPeriod secondCycleCandidacyPeriod = (SecondCycleCandidacyPeriod) candidacyPeriod;
-			if (getCandidacyPeriod().getStart().isBefore(candidacyPeriod.getStart())) {
-				result.add(secondCycleCandidacyPeriod.getSecondCycleCandidacyProcess());
-			}
-		}
+        for (CandidacyPeriod candidacyPeriod : readAllByType) {
+            SecondCycleCandidacyPeriod secondCycleCandidacyPeriod = (SecondCycleCandidacyPeriod) candidacyPeriod;
+            if (getCandidacyPeriod().getStart().isBefore(candidacyPeriod.getStart())) {
+                result.add(secondCycleCandidacyPeriod.getSecondCycleCandidacyProcess());
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

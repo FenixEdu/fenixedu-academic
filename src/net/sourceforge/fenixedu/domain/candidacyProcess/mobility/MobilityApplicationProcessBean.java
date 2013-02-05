@@ -7,22 +7,22 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForS
 
 public class MobilityApplicationProcessBean extends CandidacyProcessBean {
 
-	private ErasmusApplyForSemesterType forSemester;
+    private ErasmusApplyForSemesterType forSemester;
 
-	public MobilityApplicationProcessBean(final ExecutionInterval executionInterval) {
-		super(executionInterval);
-	}
+    public MobilityApplicationProcessBean(final ExecutionInterval executionInterval) {
+        super(executionInterval);
+    }
 
-	public MobilityApplicationProcessBean(final CandidacyProcess process) {
-		super(process);
-	}
+    public MobilityApplicationProcessBean(final CandidacyProcess process) {
+        super(process);
+    }
 
-	public ErasmusApplyForSemesterType getForSemester() {
-		return forSemester;
-	}
+    public ErasmusApplyForSemesterType getForSemester() {
+        return forSemester;
+    }
 
-	public void setForSemester(ErasmusApplyForSemesterType forSemester) {
-		this.forSemester = forSemester;
-	}
+    public void setForSemester(ErasmusApplyForSemesterType forSemester) {
+        this.forSemester = forSemester;
+    }
 
 }

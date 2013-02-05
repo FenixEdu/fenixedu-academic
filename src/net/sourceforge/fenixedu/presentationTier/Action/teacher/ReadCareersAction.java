@@ -27,46 +27,42 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Sergio Montelobo
  * 
  */
-@Mapping(
-		module = "teacher",
-		path = "/readCareers",
-		attribute = "readCareersForm",
-		formBean = "readCareersForm",
-		scope = "request")
+@Mapping(module = "teacher", path = "/readCareers", attribute = "readCareersForm", formBean = "readCareersForm",
+        scope = "request")
 @Forwards(value = { @Forward(name = "show-teaching-form", path = "view-teaching-careers"),
-		@Forward(name = "show-professional-form", path = "view-professional-careers") })
+        @Forward(name = "show-professional-form", path = "view-professional-careers") })
 public class ReadCareersAction extends FenixAction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-	 * ActionMapping, org.apache.struts.action.ActionForm,
-	 * javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    /*
+     * (non-Javadoc)
+     * 
+     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+     * ActionMapping, org.apache.struts.action.ActionForm,
+     * javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String string = request.getParameter("careerType");
-		CareerType careerType = null;
-		IUserView userView = UserView.getUser();
+        String string = request.getParameter("careerType");
+        CareerType careerType = null;
+        IUserView userView = UserView.getUser();
 
-		if ((string != null)) {
-			careerType = CareerType.valueOf(string);
+        if ((string != null)) {
+            careerType = CareerType.valueOf(string);
 
-			SiteView siteView = ReadCareers.run(careerType, userView.getUtilizador());
+            SiteView siteView = ReadCareers.run(careerType, userView.getUtilizador());
 
-			request.setAttribute("siteView", siteView);
-		}
-		ActionForward actionForward = null;
+            request.setAttribute("siteView", siteView);
+        }
+        ActionForward actionForward = null;
 
-		if (careerType.equals(CareerType.PROFESSIONAL)) {
-			actionForward = mapping.findForward("show-professional-form");
-		} else {
-			actionForward = mapping.findForward("show-teaching-form");
-		}
-		return actionForward;
-	}
+        if (careerType.equals(CareerType.PROFESSIONAL)) {
+            actionForward = mapping.findForward("show-professional-form");
+        } else {
+            actionForward = mapping.findForward("show-teaching-form");
+        }
+        return actionForward;
+    }
 }

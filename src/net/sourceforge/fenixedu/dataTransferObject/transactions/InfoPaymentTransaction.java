@@ -12,57 +12,57 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
  */
 public abstract class InfoPaymentTransaction extends InfoTransaction {
 
-	private InfoGuideEntry infoGuideEntry;
+    private InfoGuideEntry infoGuideEntry;
 
-	public InfoPaymentTransaction() {
+    public InfoPaymentTransaction() {
 
-	}
+    }
 
-	public static InfoPaymentTransaction newInfoFromDomain(PaymentTransaction paymentTransaction) {
+    public static InfoPaymentTransaction newInfoFromDomain(PaymentTransaction paymentTransaction) {
 
-		if (paymentTransaction == null) {
-			return null;
-		}
+        if (paymentTransaction == null) {
+            return null;
+        }
 
-		InfoPaymentTransaction infoPaymentTransaction = null;
+        InfoPaymentTransaction infoPaymentTransaction = null;
 
-		if (paymentTransaction instanceof GratuityTransaction) {
+        if (paymentTransaction instanceof GratuityTransaction) {
 
-			infoPaymentTransaction = InfoGratuityTransaction.newInfoFromDomain((GratuityTransaction) paymentTransaction);
+            infoPaymentTransaction = InfoGratuityTransaction.newInfoFromDomain((GratuityTransaction) paymentTransaction);
 
-		} else if (paymentTransaction instanceof InsuranceTransaction) {
+        } else if (paymentTransaction instanceof InsuranceTransaction) {
 
-			infoPaymentTransaction = InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) paymentTransaction);
+            infoPaymentTransaction = InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) paymentTransaction);
 
-		}
+        }
 
-		return infoPaymentTransaction;
-	}
+        return infoPaymentTransaction;
+    }
 
-	protected void copyFromDomain(PaymentTransaction paymentTransaction) {
+    protected void copyFromDomain(PaymentTransaction paymentTransaction) {
 
-		super.copyFromDomain(paymentTransaction);
+        super.copyFromDomain(paymentTransaction);
 
-		InfoGuideEntry infoGuideEntry = null;
-		if (paymentTransaction.getGuideEntry() != null) {
-			infoGuideEntry = InfoGuideEntry.newInfoFromDomain(paymentTransaction.getGuideEntry());
-		}
+        InfoGuideEntry infoGuideEntry = null;
+        if (paymentTransaction.getGuideEntry() != null) {
+            infoGuideEntry = InfoGuideEntry.newInfoFromDomain(paymentTransaction.getGuideEntry());
+        }
 
-		this.infoGuideEntry = infoGuideEntry;
-	}
+        this.infoGuideEntry = infoGuideEntry;
+    }
 
-	/**
-	 * @return Returns the infoGuideEntry.
-	 */
-	public InfoGuideEntry getInfoGuideEntry() {
-		return infoGuideEntry;
-	}
+    /**
+     * @return Returns the infoGuideEntry.
+     */
+    public InfoGuideEntry getInfoGuideEntry() {
+        return infoGuideEntry;
+    }
 
-	/**
-	 * @param infoGuideEntry
-	 *            The infoGuideEntry to set.
-	 */
-	public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
-		this.infoGuideEntry = infoGuideEntry;
-	}
+    /**
+     * @param infoGuideEntry
+     *            The infoGuideEntry to set.
+     */
+    public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
+        this.infoGuideEntry = infoGuideEntry;
+    }
 }

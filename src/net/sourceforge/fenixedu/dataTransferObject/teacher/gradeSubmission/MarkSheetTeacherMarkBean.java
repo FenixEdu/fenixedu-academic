@@ -11,65 +11,65 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public class MarkSheetTeacherMarkBean extends DataTranferObject {
 
-	private Attends attends;
+    private Attends attends;
 
-	private EnrolmentEvaluationType enrolmentEvaluationType;
+    private EnrolmentEvaluationType enrolmentEvaluationType;
 
-	private Date evaluationDate;
+    private Date evaluationDate;
 
-	private String gradeValue;
+    private String gradeValue;
 
-	private boolean toSubmitMark;
+    private boolean toSubmitMark;
 
-	public MarkSheetTeacherMarkBean() {
-	}
+    public MarkSheetTeacherMarkBean() {
+    }
 
-	public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade,
-			EnrolmentEvaluationType enrolmentEvaluationType, boolean sendMark) {
-		setAttends(attends);
-		setEvaluationDate(evaluationDate);
-		setGradeValue(grade);
-		setEnrolmentEvaluationType(enrolmentEvaluationType);
-		setToSubmitMark(sendMark);
-	}
+    public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade,
+            EnrolmentEvaluationType enrolmentEvaluationType, boolean sendMark) {
+        setAttends(attends);
+        setEvaluationDate(evaluationDate);
+        setGradeValue(grade);
+        setEnrolmentEvaluationType(enrolmentEvaluationType);
+        setToSubmitMark(sendMark);
+    }
 
-	public Attends getAttends() {
-		return this.attends;
-	}
+    public Attends getAttends() {
+        return this.attends;
+    }
 
-	public void setAttends(Attends attends) {
-		this.attends = attends;
-	}
+    public void setAttends(Attends attends) {
+        this.attends = attends;
+    }
 
-	public boolean isToSubmitMark() {
-		return toSubmitMark;
-	}
+    public boolean isToSubmitMark() {
+        return toSubmitMark;
+    }
 
-	public void setToSubmitMark(boolean markToSubmit) {
-		this.toSubmitMark = markToSubmit;
-	}
+    public void setToSubmitMark(boolean markToSubmit) {
+        this.toSubmitMark = markToSubmit;
+    }
 
-	public String getGradeValue() {
-		return gradeValue;
-	}
+    public String getGradeValue() {
+        return gradeValue;
+    }
 
-	public void setGradeValue(String grade) {
-		this.gradeValue = grade;
-	}
+    public void setGradeValue(String grade) {
+        this.gradeValue = grade;
+    }
 
-	public Date getEvaluationDate() {
-		return evaluationDate;
-	}
+    public Date getEvaluationDate() {
+        return evaluationDate;
+    }
 
-	public void setEvaluationDate(Date evaluationDate) {
-		this.evaluationDate = evaluationDate;
-	}
+    public void setEvaluationDate(Date evaluationDate) {
+        this.evaluationDate = evaluationDate;
+    }
 
-	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-		return enrolmentEvaluationType;
-	}
+    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+        return enrolmentEvaluationType;
+    }
 
-	public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
-		this.enrolmentEvaluationType = enrolmentEvaluationType;
-	}
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
+        this.enrolmentEvaluationType = enrolmentEvaluationType;
+    }
 }

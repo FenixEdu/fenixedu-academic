@@ -27,118 +27,118 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/portalManagement", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "editPortal", path = "/person/portals/editPortal.jsp", tileProperties = @Tile(
-				title = "private.personal.system.metadomainobjects")),
-		@Forward(name = "addToPool", path = "/person/portals/addToPool.jsp", tileProperties = @Tile(
-				title = "private.personal.system.metadomainobjects")),
-		@Forward(name = "createPortal", path = "/person/portals/createMetaPortal.jsp", tileProperties = @Tile(
-				title = "private.personal.system.metadomainobjects")),
-		@Forward(name = "selectMetaDomainObject", path = "/person/portals/prepareCreatePortal.jsp", tileProperties = @Tile(
-				title = "private.personal.system.metadomainobjects")) })
+        @Forward(name = "editPortal", path = "/person/portals/editPortal.jsp", tileProperties = @Tile(
+                title = "private.personal.system.metadomainobjects")),
+        @Forward(name = "addToPool", path = "/person/portals/addToPool.jsp", tileProperties = @Tile(
+                title = "private.personal.system.metadomainobjects")),
+        @Forward(name = "createPortal", path = "/person/portals/createMetaPortal.jsp", tileProperties = @Tile(
+                title = "private.personal.system.metadomainobjects")),
+        @Forward(name = "selectMetaDomainObject", path = "/person/portals/prepareCreatePortal.jsp", tileProperties = @Tile(
+                title = "private.personal.system.metadomainobjects")) })
 public class PortalManagement extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("metaDomainObjects", rootDomainObject.getMetaDomainObjects());
+        request.setAttribute("metaDomainObjects", rootDomainObject.getMetaDomainObjects());
 
-		return mapping.findForward("selectMetaDomainObject");
-	}
+        return mapping.findForward("selectMetaDomainObject");
+    }
 
-	public ActionForward prepareCreatePortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		MetaDomainObject metaDomainObject = getMetaDomainObject(request);
-		PortalBean bean = new PortalBean(metaDomainObject);
+    public ActionForward prepareCreatePortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        MetaDomainObject metaDomainObject = getMetaDomainObject(request);
+        PortalBean bean = new PortalBean(metaDomainObject);
 
-		request.setAttribute("bean", bean);
-		return mapping.findForward("createPortal");
-	}
+        request.setAttribute("bean", bean);
+        return mapping.findForward("createPortal");
+    }
 
-	public ActionForward prepareEditPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		PortalBean bean = new PortalBean(getPortal(request));
-		request.setAttribute("bean", bean);
-		return mapping.findForward("editPortal");
-	}
+        PortalBean bean = new PortalBean(getPortal(request));
+        request.setAttribute("bean", bean);
+        return mapping.findForward("editPortal");
+    }
 
-	public ActionForward editPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward editPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		PortalBean bean = (PortalBean) RenderUtils.getViewState("editPortal").getMetaObject().getObject();
+        PortalBean bean = (PortalBean) RenderUtils.getViewState("editPortal").getMetaObject().getObject();
 
-		try {
-			EditPortal.run(bean.getPortal(), bean.getName(), bean.getPrefix());
-		} catch (Exception exception) {
-			addActionMessage(request, exception.getMessage());
-		}
+        try {
+            EditPortal.run(bean.getPortal(), bean.getName(), bean.getPrefix());
+        } catch (Exception exception) {
+            addActionMessage(request, exception.getMessage());
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward createPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PortalBean bean = (PortalBean) RenderUtils.getViewState("createPortal").getMetaObject().getObject();
+    public ActionForward createPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PortalBean bean = (PortalBean) RenderUtils.getViewState("createPortal").getMetaObject().getObject();
 
-		try {
-			CreatePortal.run((MetaDomainObject) (bean.getContainer() == null ? bean.getMetaDomainObject() : bean.getContainer()),
-					bean.getName(), bean.getPrefix());
-		} catch (Exception exception) {
-			addActionMessage(request, exception.getMessage());
-		}
+        try {
+            CreatePortal.run((MetaDomainObject) (bean.getContainer() == null ? bean.getMetaDomainObject() : bean.getContainer()),
+                    bean.getName(), bean.getPrefix());
+        } catch (Exception exception) {
+            addActionMessage(request, exception.getMessage());
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward deleteFromPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward deleteFromPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		String elementId = request.getParameter("elementId");
-		Element element =
-				elementId != null ? (Element) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(elementId)) : null;
-		Portal portal = getPortal(request);
+        String elementId = request.getParameter("elementId");
+        Element element =
+                elementId != null ? (Element) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(elementId)) : null;
+        Portal portal = getPortal(request);
 
-		try {
-			DeleteTemplatedContent.run((MetaDomainObjectPortal) portal, element);
-		} catch (Exception e) {
-			addActionMessage(request, e.getMessage());
-		}
+        try {
+            DeleteTemplatedContent.run((MetaDomainObjectPortal) portal, element);
+        } catch (Exception e) {
+            addActionMessage(request, e.getMessage());
+        }
 
-		return prepareEditPortal(mapping, form, request, response);
-	}
+        return prepareEditPortal(mapping, form, request, response);
+    }
 
-	public ActionForward prepareAddToPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareAddToPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Portal portal = getPortal(request);
-		request.setAttribute("portal", portal);
-		request.setAttribute("rootModule", Module.getRootModule());
+        Portal portal = getPortal(request);
+        request.setAttribute("portal", portal);
+        request.setAttribute("rootModule", Module.getRootModule());
 
-		return mapping.findForward("addToPool");
-	}
+        return mapping.findForward("addToPool");
+    }
 
-	public ActionForward addToPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward addToPool(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Portal portal = getPortal(request);
-		String elementId = request.getParameter("elementId");
-		Element element =
-				(elementId != null) ? (Element) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(elementId)) : null;
-		try {
-			AddContentToPool.run((MetaDomainObjectPortal) portal, element);
-		} catch (Exception e) {
-			addActionMessage(request, e.getMessage());
-		}
+        Portal portal = getPortal(request);
+        String elementId = request.getParameter("elementId");
+        Element element =
+                (elementId != null) ? (Element) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(elementId)) : null;
+        try {
+            AddContentToPool.run((MetaDomainObjectPortal) portal, element);
+        } catch (Exception e) {
+            addActionMessage(request, e.getMessage());
+        }
 
-		return prepareEditPortal(mapping, form, request, response);
-	}
+        return prepareEditPortal(mapping, form, request, response);
+    }
 
-	private Portal getPortal(HttpServletRequest request) {
-		String portalID = request.getParameter("pid");
-		return (Portal) rootDomainObject.readContentByOID(Integer.valueOf(portalID));
-	}
+    private Portal getPortal(HttpServletRequest request) {
+        String portalID = request.getParameter("pid");
+        return (Portal) rootDomainObject.readContentByOID(Integer.valueOf(portalID));
+    }
 
-	private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
-		String metaObjectID = request.getParameter("oid");
-		return rootDomainObject.readMetaDomainObjectByOID(Integer.valueOf(metaObjectID));
-	}
+    private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
+        String metaObjectID = request.getParameter("oid");
+        return rootDomainObject.readMetaDomainObjectByOID(Integer.valueOf(metaObjectID));
+    }
 }

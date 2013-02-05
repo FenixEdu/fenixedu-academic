@@ -24,74 +24,74 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
  */
 public class UnitEmployeesGroup extends DomainBackedGroup<Unit> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public UnitEmployeesGroup(Unit unit) {
-		super(unit);
-	}
+    public UnitEmployeesGroup(Unit unit) {
+        super(unit);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		final Set<Person> elements = super.buildSet();
-		for (final Employee employee : this.getObject().getAllCurrentActiveWorkingEmployees()) {
-			elements.add(employee.getPerson());
-		}
-		return elements;
-	}
+    @Override
+    public Set<Person> getElements() {
+        final Set<Person> elements = super.buildSet();
+        for (final Employee employee : this.getObject().getAllCurrentActiveWorkingEmployees()) {
+            elements.add(employee.getPerson());
+        }
+        return elements;
+    }
 
-	private boolean checkParentUnits(Unit search, Collection<Unit> units) {
-		if (units.isEmpty()) {
-			return false;
-		} else {
-			for (Unit unit : units) {
-				if (unit == search) {
-					return true;
-				}
-			}
-			for (Unit unit : units) {
-				if (unit != null && checkParentUnits(search, unit.getParentUnits())) {
-					return true;
-				}
-			}
-			return false;
-		}
-	}
+    private boolean checkParentUnits(Unit search, Collection<Unit> units) {
+        if (units.isEmpty()) {
+            return false;
+        } else {
+            for (Unit unit : units) {
+                if (unit == search) {
+                    return true;
+                }
+            }
+            for (Unit unit : units) {
+                if (unit != null && checkParentUnits(search, unit.getParentUnits())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		return (person != null && person.hasEmployee() && checkParentUnits(getObject(),
-				Collections.singletonList(person.getEmployee().getCurrentWorkingPlace())));
-		// return (person != null && person.hasEmployee() && getObject() ==
-		// person.getEmployee().getCurrentDepartmentWorkingPlace()
-		// .getDepartmentUnit());
-	}
+    @Override
+    public boolean isMember(Person person) {
+        return (person != null && person.hasEmployee() && checkParentUnits(getObject(),
+                Collections.singletonList(person.getEmployee().getCurrentWorkingPlace())));
+        // return (person != null && person.hasEmployee() && getObject() ==
+        // person.getEmployee().getCurrentDepartmentWorkingPlace()
+        // .getDepartmentUnit());
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new UnitEmployeesGroup((Unit) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException("accessControl.group.builder.unitEmployees.notUnit",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new UnitEmployeesGroup((Unit) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException("accessControl.group.builder.unitEmployees.notUnit",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

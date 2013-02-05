@@ -16,108 +16,108 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEnrolmentEvent_Base {
 
-	protected ImprovementOfApprovedEnrolmentEvent() {
-		super();
-	}
+    protected ImprovementOfApprovedEnrolmentEvent() {
+        super();
+    }
 
-	public ImprovementOfApprovedEnrolmentEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
-		this();
-		init(administrativeOffice, EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT, person, enrolmentEvaluations);
-	}
+    public ImprovementOfApprovedEnrolmentEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
+        this();
+        init(administrativeOffice, EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT, person, enrolmentEvaluations);
+    }
 
-	protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
-			final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
-		checkParameters(enrolmentEvaluations);
-		getImprovementEnrolmentEvaluations().addAll(enrolmentEvaluations);
-		super.init(administrativeOffice, eventType, person);
-	}
+    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
+            final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
+        checkParameters(enrolmentEvaluations);
+        getImprovementEnrolmentEvaluations().addAll(enrolmentEvaluations);
+        super.init(administrativeOffice, eventType, person);
+    }
 
-	private void checkParameters(final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
-		if (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) {
-			throw new DomainException(
-					"error.accounting.events.EnrolmentInSpecialSeasonEvaluationEvent.enrolmentEvaluations.cannot.be.null");
-		}
-	}
+    private void checkParameters(final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
+        if (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) {
+            throw new DomainException(
+                    "error.accounting.events.EnrolmentInSpecialSeasonEvaluationEvent.enrolmentEvaluations.cannot.be.null");
+        }
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = super.getDescription();
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = super.getDescription();
 
-		getDetailedDescription(labelFormatter);
+        getDetailedDescription(labelFormatter);
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	private void getDetailedDescription(final LabelFormatter labelFormatter) {
-		labelFormatter.appendLabel(" (").appendLabel(getImprovementEnrolmentsDescription()).appendLabel(")");
-	}
+    private void getDetailedDescription(final LabelFormatter labelFormatter) {
+        labelFormatter.appendLabel(" (").appendLabel(getImprovementEnrolmentsDescription()).appendLabel(")");
+    }
 
-	private String getImprovementEnrolmentsDescription() {
-		final StringBuilder result = new StringBuilder();
-		for (final EnrolmentEvaluation enrolmentEvaluation : getImprovementEnrolmentEvaluations()) {
-			result.append(enrolmentEvaluation.getEnrolment().getName().getContent()).append(", ");
-		}
+    private String getImprovementEnrolmentsDescription() {
+        final StringBuilder result = new StringBuilder();
+        for (final EnrolmentEvaluation enrolmentEvaluation : getImprovementEnrolmentEvaluations()) {
+            result.append(enrolmentEvaluation.getEnrolment().getName().getContent()).append(", ");
+        }
 
-		if (result.toString().endsWith(", ")) {
-			result.delete(result.length() - 2, result.length());
-		}
+        if (result.toString().endsWith(", ")) {
+            result.delete(result.length() - 2, result.length());
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		getDetailedDescription(labelFormatter);
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        getDetailedDescription(labelFormatter);
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getPerson().getAccountBy(AccountType.EXTERNAL);
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getPerson().getAccountBy(AccountType.EXTERNAL);
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
-	}
+    @Override
+    public Account getToAccount() {
+        return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
+    }
 
-	@Override
-	public PostingRule getPostingRule() {
-		return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-				getWhenOccured());
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+                getWhenOccured());
+    }
 
-	public boolean hasImprovementOfApprovedEnrolmentPenaltyExemption() {
-		return getImprovementOfApprovedEnrolmentPenaltyExemption() != null;
-	}
+    public boolean hasImprovementOfApprovedEnrolmentPenaltyExemption() {
+        return getImprovementOfApprovedEnrolmentPenaltyExemption() != null;
+    }
 
-	public ImprovementOfApprovedEnrolmentPenaltyExemption getImprovementOfApprovedEnrolmentPenaltyExemption() {
-		for (final Exemption exemption : getExemptionsSet()) {
-			if (exemption instanceof ImprovementOfApprovedEnrolmentPenaltyExemption) {
-				return (ImprovementOfApprovedEnrolmentPenaltyExemption) exemption;
-			}
-		}
+    public ImprovementOfApprovedEnrolmentPenaltyExemption getImprovementOfApprovedEnrolmentPenaltyExemption() {
+        for (final Exemption exemption : getExemptionsSet()) {
+            if (exemption instanceof ImprovementOfApprovedEnrolmentPenaltyExemption) {
+                return (ImprovementOfApprovedEnrolmentPenaltyExemption) exemption;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
-	@Override
-	public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
-		super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
+    @Override
+    public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
+        super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
 
-		if (!hasAnyImprovementEnrolmentEvaluations() && !hasAnyAccountingTransactions()) {
-			this.delete();
-		}
-	}
+        if (!hasAnyImprovementEnrolmentEvaluations() && !hasAnyAccountingTransactions()) {
+            this.delete();
+        }
+    }
 
 }

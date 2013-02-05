@@ -10,10 +10,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class InvalidServiceException extends RuntimeException {
 
-	public InvalidServiceException() {
-	}
+    public InvalidServiceException() {
+    }
 
-	public InvalidServiceException(String s) {
-		super(s);
-	}
+    public InvalidServiceException(String s) {
+        super(s);
+    }
 }

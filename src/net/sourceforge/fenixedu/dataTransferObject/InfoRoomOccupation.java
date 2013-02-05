@@ -16,50 +16,50 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  */
 public class InfoRoomOccupation extends InfoObject {
 
-	private EventSpaceOccupation roomOccupationDomainReference;
+    private EventSpaceOccupation roomOccupationDomainReference;
 
-	public InfoRoomOccupation(final EventSpaceOccupation roomOccupation) {
-		roomOccupationDomainReference = roomOccupation;
-	}
+    public InfoRoomOccupation(final EventSpaceOccupation roomOccupation) {
+        roomOccupationDomainReference = roomOccupation;
+    }
 
-	public static InfoRoomOccupation newInfoFromDomain(final EventSpaceOccupation roomOccupation) {
-		return roomOccupation == null ? null : new InfoRoomOccupation(roomOccupation);
-	}
+    public static InfoRoomOccupation newInfoFromDomain(final EventSpaceOccupation roomOccupation) {
+        return roomOccupation == null ? null : new InfoRoomOccupation(roomOccupation);
+    }
 
-	private EventSpaceOccupation getRoomOccupation() {
-		return roomOccupationDomainReference;
-	}
+    private EventSpaceOccupation getRoomOccupation() {
+        return roomOccupationDomainReference;
+    }
 
-	public FrequencyType getFrequency() {
-		return getRoomOccupation().getFrequency();
-	}
+    public FrequencyType getFrequency() {
+        return getRoomOccupation().getFrequency();
+    }
 
-	/**
-	 * @return
-	 */
-	public DiaSemana getDayOfWeek() {
-		return getRoomOccupation().getDayOfWeek();
-	}
+    /**
+     * @return
+     */
+    public DiaSemana getDayOfWeek() {
+        return getRoomOccupation().getDayOfWeek();
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getEndTime() {
-		return getRoomOccupation().getEndTime();
-	}
+    /**
+     * @return
+     */
+    public Calendar getEndTime() {
+        return getRoomOccupation().getEndTime();
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getStartTime() {
-		return getRoomOccupation().getStartTime();
-	}
+    /**
+     * @return
+     */
+    public Calendar getStartTime() {
+        return getRoomOccupation().getStartTime();
+    }
 
-	/**
-	 * @return Returns the infoRoom.
-	 */
-	public InfoRoom getInfoRoom() {
-		return InfoRoom.newInfoFromDomain(getRoomOccupation().getRoom());
-	}
+    /**
+     * @return Returns the infoRoom.
+     */
+    public InfoRoom getInfoRoom() {
+        return InfoRoom.newInfoFromDomain(getRoomOccupation().getRoom());
+    }
 
 }

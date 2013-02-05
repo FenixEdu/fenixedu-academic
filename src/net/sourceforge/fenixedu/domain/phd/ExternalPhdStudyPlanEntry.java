@@ -4,49 +4,49 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ExternalPhdStudyPlanEntry extends ExternalPhdStudyPlanEntry_Base {
 
-	protected ExternalPhdStudyPlanEntry() {
-		super();
-	}
+    protected ExternalPhdStudyPlanEntry() {
+        super();
+    }
 
-	public ExternalPhdStudyPlanEntry(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan, String courseName) {
-		this();
-		init(type, studyPlan, courseName);
-	}
+    public ExternalPhdStudyPlanEntry(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan, String courseName) {
+        this();
+        init(type, studyPlan, courseName);
+    }
 
-	protected void init(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan, String courseName) {
+    protected void init(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan, String courseName) {
 
-		check(courseName, "error.net.sourceforge.fenixedu.domain.phd.ExternalPhdStudyPlanEntry.courseName.cannot.be.null");
+        check(courseName, "error.net.sourceforge.fenixedu.domain.phd.ExternalPhdStudyPlanEntry.courseName.cannot.be.null");
 
-		super.setCourseName(courseName);
+        super.setCourseName(courseName);
 
-		super.init(type, studyPlan);
+        super.init(type, studyPlan);
 
-	}
+    }
 
-	@Override
-	public void setCourseName(String courseName) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.ExternalPhdStudyPlanEntry.cannot.modify.courseName");
-	}
+    @Override
+    public void setCourseName(String courseName) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.ExternalPhdStudyPlanEntry.cannot.modify.courseName");
+    }
 
-	@Override
-	public boolean isExternalEntry() {
-		return true;
-	}
+    @Override
+    public boolean isExternalEntry() {
+        return true;
+    }
 
-	@Override
-	public boolean isSimilar(PhdStudyPlanEntry entry) {
-		if (entry.isExternalEntry()) {
-			final ExternalPhdStudyPlanEntry externalPhdStudyPlanEntry = (ExternalPhdStudyPlanEntry) entry;
-			return getCourseName().equals(externalPhdStudyPlanEntry.getCourseName());
-		}
+    @Override
+    public boolean isSimilar(PhdStudyPlanEntry entry) {
+        if (entry.isExternalEntry()) {
+            final ExternalPhdStudyPlanEntry externalPhdStudyPlanEntry = (ExternalPhdStudyPlanEntry) entry;
+            return getCourseName().equals(externalPhdStudyPlanEntry.getCourseName());
+        }
 
-		return false;
+        return false;
 
-	}
+    }
 
-	@Override
-	public String getCourseDescription() {
-		return getCourseName();
-	}
+    @Override
+    public String getCourseDescription() {
+        return getCourseName();
+    }
 
 }

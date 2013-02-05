@@ -14,35 +14,35 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public abstract class GrantPaymentEntity extends GrantPaymentEntity_Base {
 
-	public GrantPaymentEntity() {
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public GrantPaymentEntity() {
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public static GrantPaymentEntity findGrantPaymentEntityByNumberAndConcreteClass(String entityNumber, String entityClass) {
-		for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
-			if (grantPaymentEntity.getNumber().equals(entityNumber)
-					&& grantPaymentEntity.getClass().getName().equals(entityClass)) {
-				return grantPaymentEntity;
-			}
-		}
-		return null;
-	}
+    public static GrantPaymentEntity findGrantPaymentEntityByNumberAndConcreteClass(String entityNumber, String entityClass) {
+        for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
+            if (grantPaymentEntity.getNumber().equals(entityNumber)
+                    && grantPaymentEntity.getClass().getName().equals(entityClass)) {
+                return grantPaymentEntity;
+            }
+        }
+        return null;
+    }
 
-	public static Set<GrantPaymentEntity> findGrantPaymentEntityByConcreteClass(final String classname) {
-		final Set<GrantPaymentEntity> grantPaymentEntities = new HashSet<GrantPaymentEntity>();
-		for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
-			if (grantPaymentEntity.getClass().getName().equals(classname)) {
-				grantPaymentEntities.add(grantPaymentEntity);
-			}
-		}
-		return grantPaymentEntities;
-	}
+    public static Set<GrantPaymentEntity> findGrantPaymentEntityByConcreteClass(final String classname) {
+        final Set<GrantPaymentEntity> grantPaymentEntities = new HashSet<GrantPaymentEntity>();
+        for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitysSet()) {
+            if (grantPaymentEntity.getClass().getName().equals(classname)) {
+                grantPaymentEntities.add(grantPaymentEntity);
+            }
+        }
+        return grantPaymentEntities;
+    }
 
-	public boolean isGrantProject() {
-		return false;
-	}
+    public boolean isGrantProject() {
+        return false;
+    }
 
-	public boolean isCostCenter() {
-		return false;
-	}
+    public boolean isCostCenter() {
+        return false;
+    }
 }

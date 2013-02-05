@@ -10,35 +10,35 @@ import com.Ostermiller.util.RandPass;
 
 public class GeneratePasswordBase implements IGeneratePassword {
 
-	protected RandPass randPass;
+    protected RandPass randPass;
 
-	public GeneratePasswordBase() {
-		inicializeRandandomPassGenerator();
-	}
+    public GeneratePasswordBase() {
+        inicializeRandandomPassGenerator();
+    }
 
-	private void inicializeRandandomPassGenerator() {
-		try {
-			randPass = new RandPass(SecureRandom.getInstance("SHA1PRNG"));
-			randPass.setMaxRepetition(1);
-			randPass.addVerifier(getPasswordVerifier());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private void inicializeRandandomPassGenerator() {
+        try {
+            randPass = new RandPass(SecureRandom.getInstance("SHA1PRNG"));
+            randPass.setMaxRepetition(1);
+            randPass.addVerifier(getPasswordVerifier());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private PasswordVerifier getPasswordVerifier() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		String stringClass = PropertiesManager.getProperty("passVerifier");
-		if (stringClass != null) {
-			Class clazz = Class.forName(stringClass);
-			return (PasswordVerifier) clazz.newInstance();
-		}
-		return null;
-	}
+    private PasswordVerifier getPasswordVerifier() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String stringClass = PropertiesManager.getProperty("passVerifier");
+        if (stringClass != null) {
+            Class clazz = Class.forName(stringClass);
+            return (PasswordVerifier) clazz.newInstance();
+        }
+        return null;
+    }
 
-	@Override
-	public String generatePassword(Person person) {
+    @Override
+    public String generatePassword(Person person) {
 
-		return randPass.getPass(PropertiesManager.getIntegerProperty("passSize"));
+        return randPass.getPass(PropertiesManager.getIntegerProperty("passSize"));
 
-	}
+    }
 }

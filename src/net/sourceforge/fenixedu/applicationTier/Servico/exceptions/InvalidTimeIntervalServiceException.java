@@ -10,37 +10,37 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class InvalidTimeIntervalServiceException extends FenixServiceException {
 
-	/**
+    /**
      *  
      */
-	public InvalidTimeIntervalServiceException() {
-		super();
+    public InvalidTimeIntervalServiceException() {
+        super();
 
-	}
+    }
 
-	/**
-	 * @param s
-	 */
-	public InvalidTimeIntervalServiceException(String s) {
-		super(s);
+    /**
+     * @param s
+     */
+    public InvalidTimeIntervalServiceException(String s) {
+        super(s);
 
-	}
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidTimeIntervalServiceException(Throwable cause) {
-		super(cause);
+    /**
+     * @param cause
+     */
+    public InvalidTimeIntervalServiceException(Throwable cause) {
+        super(cause);
 
-	}
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidTimeIntervalServiceException(String message, Throwable cause) {
-		super(message, cause);
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidTimeIntervalServiceException(String message, Throwable cause) {
+        super(message, cause);
 
-	}
+    }
 
 }

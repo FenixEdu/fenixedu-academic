@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "directiveCouncil", path = "/evaluationMethodControl", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "search", path = "/directiveCouncil/evaluationMethodControl.jsp", tileProperties = @Tile(
-		title = "private.steeringcouncil.control.controlassessmentmethods")) })
+        title = "private.steeringcouncil.control.controlassessmentmethods")) })
 public class EvaluationMethodControlDAForDirectiveCouncil extends
-		net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.EvaluationMethodControlDA {
+        net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.EvaluationMethodControlDA {
 }

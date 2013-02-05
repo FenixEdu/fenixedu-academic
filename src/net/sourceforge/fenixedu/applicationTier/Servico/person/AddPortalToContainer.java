@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddPortalToContainer extends FenixService {
 
-	@Service
-	public static void run(Container container, Portal portal) {
-		container.addChild(portal);
-	}
+    @Service
+    public static void run(Container container, Portal portal) {
+        container.addChild(portal);
+    }
 }

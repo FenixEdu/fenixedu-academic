@@ -11,43 +11,43 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 
 public class AcceptEnrolments extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    @Override
+    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 
-		if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
-			throw new PreConditionNotValidException();
-		}
-	}
+        if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-		final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
+        final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
 
-		for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
-			if (process.getRegistration().hasEnrolments(enrolment)) {
-				enrolment.setEnrolmentCondition(EnrollmentCondition.VALIDATED);
-			}
-		}
+        for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
+            if (process.getRegistration().hasEnrolments(enrolment)) {
+                enrolment.setEnrolmentCondition(EnrollmentCondition.VALIDATED);
+            }
+        }
 
-		AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false),
-				AlertMessage.create(buildBody(bean)).isKey(false));
+        AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false),
+                AlertMessage.create(buildBody(bean)).isKey(false));
 
-		// TODO: wich group should be used in academic office?
-		// AlertService.alertAcademicOffice(process, permissionType,
-		// subjectKey, bodyKey)
+        // TODO: wich group should be used in academic office?
+        // AlertService.alertAcademicOffice(process, permissionType,
+        // subjectKey, bodyKey)
 
-		return process;
-	}
+        return process;
+    }
 
-	private String buildBody(ManageEnrolmentsBean bean) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(AlertService.getMessageFromResource("label.phd.accepted.enrolments")).append("\n");
-		for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
-			sb.append("- ").append(enrolment.getPresentationName()).append(enrolment.getExecutionPeriod().getQualifiedName())
-					.append("\n");
-		}
-		return sb.toString();
-	}
+    private String buildBody(ManageEnrolmentsBean bean) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(AlertService.getMessageFromResource("label.phd.accepted.enrolments")).append("\n");
+        for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
+            sb.append("- ").append(enrolment.getPresentationName()).append(enrolment.getExecutionPeriod().getQualifiedName())
+                    .append("\n");
+        }
+        return sb.toString();
+    }
 
 }

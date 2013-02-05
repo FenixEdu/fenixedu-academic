@@ -8,14 +8,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class MonthProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(net.sourceforge.fenixedu.util.Month.values());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(net.sourceforge.fenixedu.util.Month.values());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

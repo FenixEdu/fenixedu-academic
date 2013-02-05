@@ -12,141 +12,141 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class InfoGuideSituation extends InfoObject {
 
-	protected String remarks;
+    protected String remarks;
 
-	protected GuideState situation;
+    protected GuideState situation;
 
-	protected Date date;
+    protected Date date;
 
-	protected State state;
+    protected State state;
 
-	protected InfoGuide infoGuide;
+    protected InfoGuide infoGuide;
 
-	public InfoGuideSituation() {
-	}
+    public InfoGuideSituation() {
+    }
 
-	public InfoGuideSituation(String remarks, GuideState situationOfGuide, Date date, State state, InfoGuide infoGuide) {
-		this.remarks = remarks;
-		this.situation = situationOfGuide;
-		this.date = date;
-		this.state = state;
-		this.infoGuide = infoGuide;
-	}
+    public InfoGuideSituation(String remarks, GuideState situationOfGuide, Date date, State state, InfoGuide infoGuide) {
+        this.remarks = remarks;
+        this.situation = situationOfGuide;
+        this.date = date;
+        this.state = state;
+        this.infoGuide = infoGuide;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoGuideSituation) {
-			InfoGuideSituation infoGuideSituation = (InfoGuideSituation) obj;
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoGuideSituation) {
+            InfoGuideSituation infoGuideSituation = (InfoGuideSituation) obj;
 
-			resultado =
-					getInfoGuide().equals(infoGuideSituation.getInfoGuide())
-							&& getSituation().equals(infoGuideSituation.getSituation());
-		}
+            resultado =
+                    getInfoGuide().equals(infoGuideSituation.getInfoGuide())
+                            && getSituation().equals(infoGuideSituation.getSituation());
+        }
 
-		return resultado;
-	}
+        return resultado;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[GUIDE SITUATION";
-		result += ", remarks=" + remarks;
-		result += ", guide=" + infoGuide;
-		result += ", guide Situtation=" + situation;
-		result += ", date=" + date;
-		result += ", state=" + state;
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[GUIDE SITUATION";
+        result += ", remarks=" + remarks;
+        result += ", guide=" + infoGuide;
+        result += ", guide Situtation=" + situation;
+        result += ", date=" + date;
+        result += ", state=" + state;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getDate() {
-		return date;
-	}
+    /**
+     * @return
+     */
+    public Date getDate() {
+        return date;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoGuide getInfoGuide() {
-		return infoGuide;
-	}
+    /**
+     * @return
+     */
+    public InfoGuide getInfoGuide() {
+        return infoGuide;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
 
-	/**
-	 * @return
-	 */
-	public GuideState getSituation() {
-		return situation;
-	}
+    /**
+     * @return
+     */
+    public GuideState getSituation() {
+        return situation;
+    }
 
-	/**
-	 * @return
-	 */
-	public State getState() {
-		return state;
-	}
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    /**
+     * @param date
+     */
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	/**
-	 * @param guide
-	 */
-	public void setInfoGuide(InfoGuide guide) {
-		infoGuide = guide;
-	}
+    /**
+     * @param guide
+     */
+    public void setInfoGuide(InfoGuide guide) {
+        infoGuide = guide;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setRemarks(String string) {
-		remarks = string;
-	}
+    /**
+     * @param string
+     */
+    public void setRemarks(String string) {
+        remarks = string;
+    }
 
-	/**
-	 * @param guide
-	 */
-	public void setSituation(GuideState guide) {
-		situation = guide;
-	}
+    /**
+     * @param guide
+     */
+    public void setSituation(GuideState guide) {
+        situation = guide;
+    }
 
-	/**
-	 * @param state
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
 
-	public void copyFromDomain(GuideSituation guideSituation) {
-		super.copyFromDomain(guideSituation);
-		if (guideSituation != null) {
-			setDate(guideSituation.getDate());
-			setRemarks(guideSituation.getRemarks());
-			setSituation(guideSituation.getSituation());
-			setState(guideSituation.getState());
-		}
-	}
+    public void copyFromDomain(GuideSituation guideSituation) {
+        super.copyFromDomain(guideSituation);
+        if (guideSituation != null) {
+            setDate(guideSituation.getDate());
+            setRemarks(guideSituation.getRemarks());
+            setSituation(guideSituation.getSituation());
+            setState(guideSituation.getState());
+        }
+    }
 
-	public static InfoGuideSituation newInfoFromDomain(GuideSituation guideSituation) {
-		InfoGuideSituation infoGuideSituation = null;
-		if (guideSituation != null) {
-			infoGuideSituation = new InfoGuideSituation();
-			infoGuideSituation.copyFromDomain(guideSituation);
-		}
+    public static InfoGuideSituation newInfoFromDomain(GuideSituation guideSituation) {
+        InfoGuideSituation infoGuideSituation = null;
+        if (guideSituation != null) {
+            infoGuideSituation = new InfoGuideSituation();
+            infoGuideSituation.copyFromDomain(guideSituation);
+        }
 
-		return infoGuideSituation;
-	}
+        return infoGuideSituation;
+    }
 
 }

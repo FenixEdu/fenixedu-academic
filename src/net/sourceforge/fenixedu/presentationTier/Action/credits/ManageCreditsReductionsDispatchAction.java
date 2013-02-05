@@ -17,19 +17,19 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManageCreditsReductionsDispatchAction extends FenixDispatchAction {
 
-	public ActionForward editCreditsReduction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward editCreditsReduction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ExecutionSemester executionSemester =
-				AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOID"));
-		Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOID"));
-		TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
-		ReductionService reductionService = teacherService.getReductionService();
-		if (reductionService != null) {
-			request.setAttribute("reductionService", reductionService);
-		} else {
-			request.setAttribute("teacherService", teacherService);
-		}
-		return mapping.findForward("editReductionService");
-	}
+        ExecutionSemester executionSemester =
+                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOID"));
+        Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOID"));
+        TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
+        ReductionService reductionService = teacherService.getReductionService();
+        if (reductionService != null) {
+            request.setAttribute("reductionService", reductionService);
+        } else {
+            request.setAttribute("teacherService", teacherService);
+        }
+        return mapping.findForward("editReductionService");
+    }
 }

@@ -8,38 +8,38 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ExecutionCourseSearchBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExecutionSemester semester;
-	private DegreeCurricularPlan degreeCurricularPlan;
-	private CurricularCourse curricularCourse;
+    private ExecutionSemester semester;
+    private DegreeCurricularPlan degreeCurricularPlan;
+    private CurricularCourse curricularCourse;
 
-	public ExecutionCourseSearchBean() {
+    public ExecutionCourseSearchBean() {
 
-	}
+    }
 
-	public ExecutionSemester getSemester() {
-		return semester;
-	}
+    public ExecutionSemester getSemester() {
+        return semester;
+    }
 
-	public void setSemester(ExecutionSemester semester) {
-		this.semester = semester;
-	}
+    public void setSemester(ExecutionSemester semester) {
+        this.semester = semester;
+    }
 
-	public DegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
 
-	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	}
+    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
 
-	public CurricularCourse getCurricularCourse() {
-		return curricularCourse;
-	}
+    public CurricularCourse getCurricularCourse() {
+        return curricularCourse;
+    }
 
-	public void setCurricularCourse(CurricularCourse curricularCourse) {
-		this.curricularCourse = curricularCourse;
-	}
+    public void setCurricularCourse(CurricularCourse curricularCourse) {
+        this.curricularCourse = curricularCourse;
+    }
 
 }

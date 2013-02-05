@@ -19,39 +19,39 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends FenixService {
 
-	/**
-	 * Constructor
-	 */
-	public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
-	}
+    /**
+     * Constructor
+     */
+    public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
+    }
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
 
-		InfoInsuranceTransaction infoInsuranceTransaction = null;
+        InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
-		Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
 
-		if ((executionYear == null) || (registration == null)) {
-			return null;
-		}
+        if ((executionYear == null) || (registration == null)) {
+            return null;
+        }
 
-		List insuranceTransactionList = registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
+        List insuranceTransactionList = registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
-		if (insuranceTransactionList.size() > 1) {
-			throw new FenixServiceException(
-					"Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
+        if (insuranceTransactionList.size() > 1) {
+            throw new FenixServiceException(
+                    "Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
 
-		}
+        }
 
-		if (insuranceTransactionList.size() == 1) {
-			infoInsuranceTransaction =
-					InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
-		}
+        if (insuranceTransactionList.size() == 1) {
+            infoInsuranceTransaction =
+                    InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
+        }
 
-		return infoInsuranceTransaction;
-	}
+        return infoInsuranceTransaction;
+    }
 }

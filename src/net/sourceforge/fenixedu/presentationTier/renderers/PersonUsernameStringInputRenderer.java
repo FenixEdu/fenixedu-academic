@@ -11,21 +11,21 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
 
 public class PersonUsernameStringInputRenderer extends StringInputRenderer {
 
-	@Override
-	protected HtmlComponent createTextField(Object object, Class type) {
+    @Override
+    protected HtmlComponent createTextField(Object object, Class type) {
 
-		Person person = (Person) object;
-		String username = (person != null) ? person.getUsername() : null;
+        Person person = (Person) object;
+        String username = (person != null) ? person.getUsername() : null;
 
-		final HtmlComponent container = super.createTextField(username, type);
-		final HtmlFormComponent formComponent = (HtmlFormComponent) container.getChild(new Predicate() {
-			@Override
-			public boolean evaluate(Object arg0) {
-				return arg0 instanceof HtmlFormComponent;
-			}
-		});
-		formComponent.setConverter(new PersonUsernameConverter());
+        final HtmlComponent container = super.createTextField(username, type);
+        final HtmlFormComponent formComponent = (HtmlFormComponent) container.getChild(new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                return arg0 instanceof HtmlFormComponent;
+            }
+        });
+        formComponent.setConverter(new PersonUsernameConverter());
 
-		return formComponent;
-	}
+        return formComponent;
+    }
 }

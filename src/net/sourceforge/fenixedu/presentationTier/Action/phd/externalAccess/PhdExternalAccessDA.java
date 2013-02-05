@@ -68,273 +68,273 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class PhdExternalAccessDA extends PhdProcessDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
-		request.setAttribute("participant", getPhdParticipant(request));
+        request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
+        request.setAttribute("participant", getPhdParticipant(request));
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		return mapping.findForward("showOperations");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("showOperations");
+    }
 
-	private PhdParticipant getPhdParticipant(HttpServletRequest request) {
-		final PhdExternalOperationBean bean = getOperationBean();
-		return bean != null ? bean.getParticipant() : PhdParticipant.readByAccessHashCode(getHash(request));
-	}
+    private PhdParticipant getPhdParticipant(HttpServletRequest request) {
+        final PhdExternalOperationBean bean = getOperationBean();
+        return bean != null ? bean.getParticipant() : PhdParticipant.readByAccessHashCode(getHash(request));
+    }
 
-	private PhdExternalOperationBean getOperationBean() {
-		return getRenderedObject("operationBean");
-	}
+    private PhdExternalOperationBean getOperationBean() {
+        return getRenderedObject("operationBean");
+    }
 
-	private String getHash(HttpServletRequest request) {
-		return (String) getFromRequest(request, "hash");
-	}
+    private String getHash(HttpServletRequest request) {
+        return (String) getFromRequest(request, "hash");
+    }
 
-	// jury document download
+    // jury document download
 
-	public ActionForward prepareJuryDocumentsDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
-				PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD));
+    public ActionForward prepareJuryDocumentsDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
+                PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD));
 
-		return mapping.findForward("juryDocumentsDownload");
-	}
+        return mapping.findForward("juryDocumentsDownload");
+    }
 
-	public ActionForward prepareJuryDocumentsDownloadInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareJuryDocumentsDownloadInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("operationBean", getOperationBean());
+        request.setAttribute("operationBean", getOperationBean());
 
-		return mapping.findForward("juryDocumentsDownload");
-	}
+        return mapping.findForward("juryDocumentsDownload");
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
-		return getPhdParticipant(request).getIndividualProcess();
-	}
+    @Override
+    protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
+        return getPhdParticipant(request).getIndividualProcess();
+    }
 
-	public ActionForward juryDocumentsDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+    public ActionForward juryDocumentsDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
 
-		try {
+        try {
 
-			final PhdIndividualProgramProcess process = getProcess(request);
-			ExecuteProcessActivity.run(process.getThesisProcess(), JuryDocumentsDownload.class, getOperationBean());
-			writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
-					.getThesisProcess().getThesisDocumentsToFeedback()));
+            final PhdIndividualProgramProcess process = getProcess(request);
+            ExecuteProcessActivity.run(process.getThesisProcess(), JuryDocumentsDownload.class, getOperationBean());
+            writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
+                    .getThesisProcess().getThesisDocumentsToFeedback()));
 
-			return null;
+            return null;
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return prepareJuryDocumentsDownloadInvalid(mapping, form, request, response);
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return prepareJuryDocumentsDownloadInvalid(mapping, form, request, response);
+        }
 
-	}
+    }
 
-	// end jury document download
+    // end jury document download
 
-	// jury report feedback operations
+    // jury report feedback operations
 
-	public ActionForward prepareJuryReporterFeedbackUpload(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareJuryReporterFeedbackUpload(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final PhdExternalOperationBean bean =
-				new PhdExternalOperationBean(getPhdParticipant(request), PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
+        final PhdExternalOperationBean bean =
+                new PhdExternalOperationBean(getPhdParticipant(request), PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
 
-		bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
+        bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
 
-		request.setAttribute("operationBean", bean);
-		request.setAttribute("lastReportFeedbackDocument", getThesisJuryElement(request, bean).getLastFeedbackDocument());
-		request.setAttribute("waitingForJuryReporterFeedback", getProcess(request).getThesisProcess()
-				.isWaitingForJuryReporterFeedback());
+        request.setAttribute("operationBean", bean);
+        request.setAttribute("lastReportFeedbackDocument", getThesisJuryElement(request, bean).getLastFeedbackDocument());
+        request.setAttribute("waitingForJuryReporterFeedback", getProcess(request).getThesisProcess()
+                .isWaitingForJuryReporterFeedback());
 
-		return mapping.findForward("juryReporterFeedbackUpload");
-	}
+        return mapping.findForward("juryReporterFeedbackUpload");
+    }
 
-	public ActionForward prepareJuryReporterFeedbackUploadInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareJuryReporterFeedbackUploadInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final PhdExternalOperationBean bean = getOperationBean();
-		request.setAttribute("operationBean", bean);
-		request.setAttribute("lastReportFeedbackDocument", getThesisJuryElement(request, bean).getLastFeedbackDocument());
-		request.setAttribute("waitingForJuryReporterFeedback", getProcess(request).getThesisProcess()
-				.isWaitingForJuryReporterFeedback());
+        final PhdExternalOperationBean bean = getOperationBean();
+        request.setAttribute("operationBean", bean);
+        request.setAttribute("lastReportFeedbackDocument", getThesisJuryElement(request, bean).getLastFeedbackDocument());
+        request.setAttribute("waitingForJuryReporterFeedback", getProcess(request).getThesisProcess()
+                .isWaitingForJuryReporterFeedback());
 
-		return mapping.findForward("juryReporterFeedbackUpload");
-	}
+        return mapping.findForward("juryReporterFeedbackUpload");
+    }
 
-	private ThesisJuryElement getThesisJuryElement(HttpServletRequest request, final PhdExternalOperationBean bean) {
-		return bean.getParticipant().getThesisJuryElement(getProcess(request).getThesisProcess());
-	}
+    private ThesisJuryElement getThesisJuryElement(HttpServletRequest request, final PhdExternalOperationBean bean) {
+        return bean.getParticipant().getThesisJuryElement(getProcess(request).getThesisProcess());
+    }
 
-	public ActionForward juryReporterFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward juryReporterFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			if (!RenderUtils.getViewState("operationBean").isValid()) {
-				return prepareJuryReporterFeedbackUploadInvalid(mapping, actionForm, request, response);
-			}
+            if (!RenderUtils.getViewState("operationBean").isValid()) {
+                return prepareJuryReporterFeedbackUploadInvalid(mapping, actionForm, request, response);
+            }
 
-			ExecuteProcessActivity.run(getProcess(request).getThesisProcess(), JuryReporterFeedbackExternalUpload.class,
-					getOperationBean());
+            ExecuteProcessActivity.run(getProcess(request).getThesisProcess(), JuryReporterFeedbackExternalUpload.class,
+                    getOperationBean());
 
-			addSuccessMessage(request, "message.jury.report.feedback.upload.with.success");
+            addSuccessMessage(request, "message.jury.report.feedback.upload.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return prepareJuryReporterFeedbackUploadInvalid(mapping, actionForm, request, response);
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return prepareJuryReporterFeedbackUploadInvalid(mapping, actionForm, request, response);
+        }
 
-		return prepare(mapping, actionForm, request, response);
-	}
+        return prepare(mapping, actionForm, request, response);
+    }
 
-	// end of jury report feedback operations
+    // end of jury report feedback operations
 
-	// Download candidacy feedback documents
+    // Download candidacy feedback documents
 
-	public ActionForward prepareCandidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCandidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
-				PhdProcessAccessType.CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD));
-		return mapping.findForward("candidacyFeedbackDocumentsDownload");
-	}
+        request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
+                PhdProcessAccessType.CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD));
+        return mapping.findForward("candidacyFeedbackDocumentsDownload");
+    }
 
-	public ActionForward prepareCandidacyFeedbackDocumentsDownloadInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCandidacyFeedbackDocumentsDownloadInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("operationBean", getOperationBean());
-		return mapping.findForward("candidacyFeedbackDocumentsDownload");
-	}
+        request.setAttribute("operationBean", getOperationBean());
+        return mapping.findForward("candidacyFeedbackDocumentsDownload");
+    }
 
-	public ActionForward candidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ActionForward candidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		try {
+        try {
 
-			final PhdCandidacyFeedbackRequestProcess process = getFeedBackRequest(request);
-			ExecuteProcessActivity.run(process, DownloadCandidacyFeedbackDocuments.class, getOperationBean());
+            final PhdCandidacyFeedbackRequestProcess process = getFeedBackRequest(request);
+            ExecuteProcessActivity.run(process, DownloadCandidacyFeedbackDocuments.class, getOperationBean());
 
-			final Set<PhdProgramProcessDocument> documents = process.getSharedDocumentsContent();
+            final Set<PhdProgramProcessDocument> documents = process.getSharedDocumentsContent();
 
-			if (!documents.isEmpty()) {
-				writeFile(response, getZipDocumentsFilename(process.getCandidacyProcess().getIndividualProgramProcess()),
-						PhdDocumentsZip.ZIP_MIME_TYPE, createZip(documents));
+            if (!documents.isEmpty()) {
+                writeFile(response, getZipDocumentsFilename(process.getCandidacyProcess().getIndividualProgramProcess()),
+                        PhdDocumentsZip.ZIP_MIME_TYPE, createZip(documents));
 
-				return null;
+                return null;
 
-			} else {
-				addErrorMessage(request, "error.phd.candidacy.feedback.request.no.documents.to.download");
-			}
+            } else {
+                addErrorMessage(request, "error.phd.candidacy.feedback.request.no.documents.to.download");
+            }
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+        }
 
-		return prepareJuryDocumentsDownloadInvalid(mapping, actionForm, request, response);
-	}
+        return prepareJuryDocumentsDownloadInvalid(mapping, actionForm, request, response);
+    }
 
-	private PhdCandidacyFeedbackRequestProcess getFeedBackRequest(HttpServletRequest request) {
-		return getProcess(request).getCandidacyProcess().getFeedbackRequest();
-	}
+    private PhdCandidacyFeedbackRequestProcess getFeedBackRequest(HttpServletRequest request) {
+        return getProcess(request).getCandidacyProcess().getFeedbackRequest();
+    }
 
-	public ActionForward prepareCandidacyFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCandidacyFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdExternalOperationBean bean =
-				new PhdExternalOperationBean(getPhdParticipant(request), PhdProcessAccessType.CANDIDACY_FEEDBACK_UPLOAD);
+        final PhdExternalOperationBean bean =
+                new PhdExternalOperationBean(getPhdParticipant(request), PhdProcessAccessType.CANDIDACY_FEEDBACK_UPLOAD);
 
-		bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT));
+        bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT));
 
-		request.setAttribute("operationBean", bean);
-		request.setAttribute("canUploadDocuments", getFeedBackRequest(request).canUploadDocuments());
-		request.setAttribute("lastFeedbackDocument", getCandidacyFeedbackRequestElement(request, bean).getLastFeedbackDocument());
+        request.setAttribute("operationBean", bean);
+        request.setAttribute("canUploadDocuments", getFeedBackRequest(request).canUploadDocuments());
+        request.setAttribute("lastFeedbackDocument", getCandidacyFeedbackRequestElement(request, bean).getLastFeedbackDocument());
 
-		return mapping.findForward("candidacyFeedbackUpload");
-	}
+        return mapping.findForward("candidacyFeedbackUpload");
+    }
 
-	private PhdCandidacyFeedbackRequestElement getCandidacyFeedbackRequestElement(HttpServletRequest request,
-			PhdExternalOperationBean bean) {
-		return bean.getParticipant().getPhdCandidacyFeedbackRequestElement(getFeedBackRequest(request));
-	}
+    private PhdCandidacyFeedbackRequestElement getCandidacyFeedbackRequestElement(HttpServletRequest request,
+            PhdExternalOperationBean bean) {
+        return bean.getParticipant().getPhdCandidacyFeedbackRequestElement(getFeedBackRequest(request));
+    }
 
-	public ActionForward prepareCandidacyFeedbackUploadInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCandidacyFeedbackUploadInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final PhdExternalOperationBean bean = getOperationBean();
-		request.setAttribute("operationBean", bean);
-		request.setAttribute("canUploadDocuments", getFeedBackRequest(request).canUploadDocuments());
-		request.setAttribute("lastFeedbackDocument", getCandidacyFeedbackRequestElement(request, bean).getLastFeedbackDocument());
+        final PhdExternalOperationBean bean = getOperationBean();
+        request.setAttribute("operationBean", bean);
+        request.setAttribute("canUploadDocuments", getFeedBackRequest(request).canUploadDocuments());
+        request.setAttribute("lastFeedbackDocument", getCandidacyFeedbackRequestElement(request, bean).getLastFeedbackDocument());
 
-		return mapping.findForward("candidacyFeedbackUpload");
-	}
+        return mapping.findForward("candidacyFeedbackUpload");
+    }
 
-	public ActionForward candidacyFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward candidacyFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			if (!RenderUtils.getViewState("operationBean").isValid()) {
-				return prepareCandidacyFeedbackUploadInvalid(mapping, actionForm, request, response);
-			}
+            if (!RenderUtils.getViewState("operationBean").isValid()) {
+                return prepareCandidacyFeedbackUploadInvalid(mapping, actionForm, request, response);
+            }
 
-			ExecuteProcessActivity.run(getFeedBackRequest(request), ExternalUploadCandidacyFeedback.class, getOperationBean());
+            ExecuteProcessActivity.run(getFeedBackRequest(request), ExternalUploadCandidacyFeedback.class, getOperationBean());
 
-			addSuccessMessage(request, "message.phd.candidacy.feedback.document.uploaded.with.success");
+            addSuccessMessage(request, "message.phd.candidacy.feedback.document.uploaded.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return prepareCandidacyFeedbackUploadInvalid(mapping, actionForm, request, response);
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return prepareCandidacyFeedbackUploadInvalid(mapping, actionForm, request, response);
+        }
 
-		return prepare(mapping, actionForm, request, response);
-	}
+        return prepare(mapping, actionForm, request, response);
+    }
 
-	// end of Download candidacy feedback documents
+    // end of Download candidacy feedback documents
 
-	// Jury review documents download
+    // Jury review documents download
 
-	public ActionForward prepareJuryReviewDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareJuryReviewDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
-				PhdProcessAccessType.JURY_REVIEW_DOCUMENTS_DOWNLOAD));
+        request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
+                PhdProcessAccessType.JURY_REVIEW_DOCUMENTS_DOWNLOAD));
 
-		return mapping.findForward("juryReviewDocumentsDownload");
-	}
+        return mapping.findForward("juryReviewDocumentsDownload");
+    }
 
-	public ActionForward prepareJuryReviewDocumentsDownloadInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareJuryReviewDocumentsDownloadInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("operationBean", getOperationBean());
-		return mapping.findForward("juryReviewDocumentsDownload");
-	}
+        request.setAttribute("operationBean", getOperationBean());
+        return mapping.findForward("juryReviewDocumentsDownload");
+    }
 
-	public ActionForward juryReviewDocumentsDownload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+    public ActionForward juryReviewDocumentsDownload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
 
-		try {
+        try {
 
-			final PhdIndividualProgramProcess process = getProcess(request);
-			ExecuteProcessActivity.run(process.getThesisProcess(), JuryReviewDocumentsDownload.class, getOperationBean());
+            final PhdIndividualProgramProcess process = getProcess(request);
+            ExecuteProcessActivity.run(process.getThesisProcess(), JuryReviewDocumentsDownload.class, getOperationBean());
 
-			writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
-					.getThesisProcess().getReportThesisJuryElementDocuments()));
+            writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
+                    .getThesisProcess().getReportThesisJuryElementDocuments()));
 
-			return null;
+            return null;
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return prepareJuryReviewDocumentsDownloadInvalid(mapping, actionForm, request, response);
-		}
-	}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return prepareJuryReviewDocumentsDownloadInvalid(mapping, actionForm, request, response);
+        }
+    }
 
-	// End of jury review documents download
+    // End of jury review documents download
 }

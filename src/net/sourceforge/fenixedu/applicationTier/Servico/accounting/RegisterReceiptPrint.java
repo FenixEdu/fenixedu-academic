@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RegisterReceiptPrint {
 
-	@Service
-	public static void run(final Receipt receipt, final Person person) {
-		receipt.registerReceiptPrint(person);
-	}
+    @Service
+    public static void run(final Receipt receipt, final Person person) {
+        receipt.registerReceiptPrint(person);
+    }
 }

@@ -15,20 +15,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionSemestersProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final List<ExecutionSemester> executionSemesters =
-				new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriods());
+        final List<ExecutionSemester> executionSemesters =
+                new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriods());
 
-		Collections.sort(executionSemesters, new ReverseComparator());
+        Collections.sort(executionSemesters, new ReverseComparator());
 
-		return executionSemesters;
-	}
+        return executionSemesters;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

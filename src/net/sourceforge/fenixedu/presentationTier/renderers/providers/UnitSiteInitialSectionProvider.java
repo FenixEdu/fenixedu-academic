@@ -13,17 +13,17 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class UnitSiteInitialSectionProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		UnitSite unitSite = (UnitSite) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        UnitSite unitSite = (UnitSite) source;
 
-		return unitSite.getSideSection().getChildrenAsContent();
+        return unitSite.getSideSection().getChildrenAsContent();
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

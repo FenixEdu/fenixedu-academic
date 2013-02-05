@@ -15,35 +15,35 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlanForStudentEquivalenciesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final StudentSearchBean studentSearchBean = (StudentSearchBean) source;
-		return studentSearchBean.getDegreeCurricularPlan() == studentSearchBean.getOldDegreeCurricularPlan() ? getAllDegreeCurricularPlans() : getDestinationsDegreeCurricularPlans(studentSearchBean
-				.getOldDegreeCurricularPlan());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final StudentSearchBean studentSearchBean = (StudentSearchBean) source;
+        return studentSearchBean.getDegreeCurricularPlan() == studentSearchBean.getOldDegreeCurricularPlan() ? getAllDegreeCurricularPlans() : getDestinationsDegreeCurricularPlans(studentSearchBean
+                .getOldDegreeCurricularPlan());
+    }
 
-	private List<DegreeCurricularPlan> getDestinationsDegreeCurricularPlans(DegreeCurricularPlan oldDegreeCurricularPlan) {
-		final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-		for (final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan : oldDegreeCurricularPlan
-				.getTargetEquivalencePlans()) {
-			result.add(degreeCurricularPlanEquivalencePlan.getDegreeCurricularPlan());
-		}
+    private List<DegreeCurricularPlan> getDestinationsDegreeCurricularPlans(DegreeCurricularPlan oldDegreeCurricularPlan) {
+        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        for (final DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan : oldDegreeCurricularPlan
+                .getTargetEquivalencePlans()) {
+            result.add(degreeCurricularPlanEquivalencePlan.getDegreeCurricularPlan());
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	private List<DegreeCurricularPlan> getAllDegreeCurricularPlans() {
-		final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-		degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-		degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-		return new ArrayList<DegreeCurricularPlan>(DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
-	}
+    private List<DegreeCurricularPlan> getAllDegreeCurricularPlans() {
+        final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+        degreeTypes.add(DegreeType.BOLONHA_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+        degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+        return new ArrayList<DegreeCurricularPlan>(DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

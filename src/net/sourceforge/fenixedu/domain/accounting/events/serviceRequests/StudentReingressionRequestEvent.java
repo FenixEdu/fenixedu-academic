@@ -10,39 +10,39 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class StudentReingressionRequestEvent extends StudentReingressionRequestEvent_Base {
 
-	protected StudentReingressionRequestEvent() {
-		super();
-	}
+    protected StudentReingressionRequestEvent() {
+        super();
+    }
 
-	public StudentReingressionRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final StudentReingressionRequest academicServiceRequest) {
-		this();
-		super.init(administrativeOffice, EventType.STUDENT_REINGRESSION_REQUEST, person, academicServiceRequest);
-	}
+    public StudentReingressionRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final StudentReingressionRequest academicServiceRequest) {
+        this();
+        super.init(administrativeOffice, EventType.STUDENT_REINGRESSION_REQUEST, person, academicServiceRequest);
+    }
 
-	@Override
-	public StudentReingressionRequest getAcademicServiceRequest() {
-		return (StudentReingressionRequest) super.getAcademicServiceRequest();
-	}
+    @Override
+    public StudentReingressionRequest getAcademicServiceRequest() {
+        return (StudentReingressionRequest) super.getAcademicServiceRequest();
+    }
 
-	private Registration getRegistration() {
-		return getAcademicServiceRequest().getRegistration();
-	}
+    private Registration getRegistration() {
+        return getAcademicServiceRequest().getRegistration();
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		labelFormatter.appendLabel(" (");
-		labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
-		labelFormatter.appendLabel(")");
-		if (getAcademicServiceRequest().hasExecutionYear()) {
-			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-		}
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(" (");
+        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
+        labelFormatter.appendLabel(")");
+        if (getAcademicServiceRequest().hasExecutionYear()) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 }

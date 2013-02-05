@@ -22,61 +22,61 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SearchObjectsByMultiLanguageString extends FenixService implements AutoCompleteSearchService {
 
-	@Override
-	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-		List<DomainObject> result = new ArrayList<DomainObject>();
+    @Override
+    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+        List<DomainObject> result = new ArrayList<DomainObject>();
 
-		String slotName = arguments.get("slot");
-		Collection<DomainObject> objects = RootDomainObject.readAllDomainObjects(type);
+        String slotName = arguments.get("slot");
+        Collection<DomainObject> objects = RootDomainObject.readAllDomainObjects(type);
 
-		if (value == null) {
-			result.addAll(objects);
-		} else {
-			String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+        if (value == null) {
+            result.addAll(objects);
+        } else {
+            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-			for (DomainObject object : objects) {
-				try {
-					MultiLanguageString objectMLS = (MultiLanguageString) PropertyUtils.getProperty(object, slotName);
+            for (DomainObject object : objects) {
+                try {
+                    MultiLanguageString objectMLS = (MultiLanguageString) PropertyUtils.getProperty(object, slotName);
 
-					if (objectMLS == null || objectMLS.getAllContents().size() == 0) {
-						continue;
-					}
+                    if (objectMLS == null || objectMLS.getAllContents().size() == 0) {
+                        continue;
+                    }
 
-					for (Language language : objectMLS.getAllLanguages()) {
-						String objectValue = objectMLS.getContent(language);
+                    for (Language language : objectMLS.getAllLanguages()) {
+                        String objectValue = objectMLS.getContent(language);
 
-						String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
+                        String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
 
-						boolean matches = true;
-						for (String value2 : values) {
-							String part = value2;
+                        boolean matches = true;
+                        for (String value2 : values) {
+                            String part = value2;
 
-							if (!normalizedValue.contains(part)) {
-								matches = false;
-							}
-						}
+                            if (!normalizedValue.contains(part)) {
+                                matches = false;
+                            }
+                        }
 
-						if (matches) {
-							result.add(object);
-							break;
-						}
-					}
+                        if (matches) {
+                            result.add(object);
+                            break;
+                        }
+                    }
 
-					if (result.size() >= limit) {
-						break;
-					}
+                    if (result.size() >= limit) {
+                        break;
+                    }
 
-				} catch (IllegalAccessException e) {
-					throw new DomainException("searchObject.type.notFound", e);
-				} catch (InvocationTargetException e) {
-					throw new DomainException("searchObject.failed.read", e);
-				} catch (NoSuchMethodException e) {
-					throw new DomainException("searchObject.failed.read", e);
-				}
-			}
-		}
+                } catch (IllegalAccessException e) {
+                    throw new DomainException("searchObject.type.notFound", e);
+                } catch (InvocationTargetException e) {
+                    throw new DomainException("searchObject.failed.read", e);
+                } catch (NoSuchMethodException e) {
+                    throw new DomainException("searchObject.failed.read", e);
+                }
+            }
+        }
 
-		Collections.sort(result, new BeanComparator(slotName + ".content"));
-		return result;
-	}
+        Collections.sort(result, new BeanComparator(slotName + ".content"));
+        return result;
+    }
 }

@@ -20,93 +20,93 @@ import org.apache.commons.collections.Transformer;
  */
 public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegreeThesisDataVersion {
 
-	private List<GuiderDTO> allGuiders;
+    private List<GuiderDTO> allGuiders;
 
-	public List getAllGuiders() {
+    public List getAllGuiders() {
 
-		Properties properties = new Properties();
+        Properties properties = new Properties();
 
-		InputStream inputStream = getClass().getResourceAsStream("/resources/GlobalResources.properties");
-		try {
-			properties.load(inputStream);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		String institution = properties.getProperty("institution.name.abbreviation");
+        InputStream inputStream = getClass().getResourceAsStream("/resources/GlobalResources.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        String institution = properties.getProperty("institution.name.abbreviation");
 
-		this.allGuiders = new ArrayList<GuiderDTO>();
+        this.allGuiders = new ArrayList<GuiderDTO>();
 
-		for (InfoTeacher guider : this.getInfoGuiders()) {
-			this.allGuiders.add(new GuiderDTO(GuiderType.GUIDER, guider.getInfoPerson().getNome(), guider.getTeacherId(),
-					institution));
-		}
+        for (InfoTeacher guider : this.getInfoGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.GUIDER, guider.getInfoPerson().getNome(), guider.getTeacherId(),
+                    institution));
+        }
 
-		for (InfoExternalPerson guider : this.getInfoExternalGuiders()) {
-			this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_GUIDER, guider.getInfoPerson().getNome(), null, guider
-					.getInfoInstitution().getName()));
-		}
+        for (InfoExternalPerson guider : this.getInfoExternalGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_GUIDER, guider.getInfoPerson().getNome(), null, guider
+                    .getInfoInstitution().getName()));
+        }
 
-		for (InfoTeacher assistentGuider : this.getInfoAssistentGuiders()) {
-			this.allGuiders.add(new GuiderDTO(GuiderType.ASSISTENT, assistentGuider.getInfoPerson().getNome(), assistentGuider
-					.getTeacherId(), institution));
-		}
+        for (InfoTeacher assistentGuider : this.getInfoAssistentGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.ASSISTENT, assistentGuider.getInfoPerson().getNome(), assistentGuider
+                    .getTeacherId(), institution));
+        }
 
-		for (InfoExternalPerson assistentGuider : this.getInfoExternalAssistentGuiders()) {
-			this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_ASSISTENT, assistentGuider.getInfoPerson().getNome(), null,
-					assistentGuider.getInfoInstitution().getName()));
-		}
+        for (InfoExternalPerson assistentGuider : this.getInfoExternalAssistentGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_ASSISTENT, assistentGuider.getInfoPerson().getNome(), null,
+                    assistentGuider.getInfoInstitution().getName()));
+        }
 
-		return this.allGuiders;
-	}
+        return this.allGuiders;
+    }
 
-	@Override
-	public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
-		super.copyFromDomain(masterDegreeThesisDataVersion);
-		if (masterDegreeThesisDataVersion != null) {
-			setInfoAssistentGuiders(copyTeachers(masterDegreeThesisDataVersion.getAssistentGuiders()));
+    @Override
+    public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+        super.copyFromDomain(masterDegreeThesisDataVersion);
+        if (masterDegreeThesisDataVersion != null) {
+            setInfoAssistentGuiders(copyTeachers(masterDegreeThesisDataVersion.getAssistentGuiders()));
 
-			setInfoExternalAssistentGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalAssistentGuiders()));
+            setInfoExternalAssistentGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalAssistentGuiders()));
 
-			setInfoExternalGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalGuiders()));
+            setInfoExternalGuiders(copyExternalPersons(masterDegreeThesisDataVersion.getExternalGuiders()));
 
-			setInfoGuiders(copyTeachers(masterDegreeThesisDataVersion.getGuiders()));
-		}
-	}
+            setInfoGuiders(copyTeachers(masterDegreeThesisDataVersion.getGuiders()));
+        }
+    }
 
-	/**
-	 * @param externalPersons
-	 * @return
-	 */
-	private List<InfoExternalPerson> copyExternalPersons(List<ExternalContract> externalPersons) {
+    /**
+     * @param externalPersons
+     * @return
+     */
+    private List<InfoExternalPerson> copyExternalPersons(List<ExternalContract> externalPersons) {
 
-		List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
-		for (ExternalContract externalPerson : externalPersons) {
-			infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
-		}
-		return infoExternalPersons;
+        List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
+        for (ExternalContract externalPerson : externalPersons) {
+            infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+        }
+        return infoExternalPersons;
 
-	}
+    }
 
-	/**
-	 * @param masterDegreeThesisDataVersion
-	 * @return
-	 */
-	private List<InfoTeacher> copyTeachers(List teachers) {
-		return (List<InfoTeacher>) CollectionUtils.collect(teachers, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				Teacher teacher = (Teacher) arg0;
-				return InfoTeacher.newInfoFromDomain(teacher);
-			}
-		});
-	}
+    /**
+     * @param masterDegreeThesisDataVersion
+     * @return
+     */
+    private List<InfoTeacher> copyTeachers(List teachers) {
+        return (List<InfoTeacher>) CollectionUtils.collect(teachers, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                Teacher teacher = (Teacher) arg0;
+                return InfoTeacher.newInfoFromDomain(teacher);
+            }
+        });
+    }
 
-	public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
-		InfoMasterDegreeThesisDataVersionWithGuiders infoMasterDegreeThesisDataVersionWithGuiders = null;
-		if (masterDegreeThesisDataVersion != null) {
-			infoMasterDegreeThesisDataVersionWithGuiders = new InfoMasterDegreeThesisDataVersionWithGuiders();
-			infoMasterDegreeThesisDataVersionWithGuiders.copyFromDomain(masterDegreeThesisDataVersion);
-		}
-		return infoMasterDegreeThesisDataVersionWithGuiders;
-	}
+    public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+        InfoMasterDegreeThesisDataVersionWithGuiders infoMasterDegreeThesisDataVersionWithGuiders = null;
+        if (masterDegreeThesisDataVersion != null) {
+            infoMasterDegreeThesisDataVersionWithGuiders = new InfoMasterDegreeThesisDataVersionWithGuiders();
+            infoMasterDegreeThesisDataVersionWithGuiders.copyFromDomain(masterDegreeThesisDataVersion);
+        }
+        return infoMasterDegreeThesisDataVersionWithGuiders;
+    }
 }

@@ -21,45 +21,45 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/externalScholarshipProvider", module = "manager")
 @Forwards({ @Forward(name = "list", path = "/manager/listExternalScholarshipProvideres.jsp"),
-		@Forward(name = "add", path = "/manager/addExternalScholarshipProvideres.jsp") })
+        @Forward(name = "add", path = "/manager/addExternalScholarshipProvideres.jsp") })
 public class ExternalScholarshipProviderDA extends FenixDispatchAction {
 
-	public static class ExternalScholarshipBean implements Serializable {
-		private Party selected;
+    public static class ExternalScholarshipBean implements Serializable {
+        private Party selected;
 
-		public Party getSelected() {
-			return selected;
-		}
+        public Party getSelected() {
+            return selected;
+        }
 
-		public void setSelected(Party selected) {
-			this.selected = selected;
-		}
-	}
+        public void setSelected(Party selected) {
+            this.selected = selected;
+        }
+    }
 
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
-		request.setAttribute("externalScholarshipProviders", externalScholarshipProvider);
-		return mapping.findForward("list");
-	}
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
+        request.setAttribute("externalScholarshipProviders", externalScholarshipProvider);
+        return mapping.findForward("list");
+    }
 
-	@Service
-	public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		if (request.getMethod() != "POST") {
-			request.setAttribute("bean", new ExternalScholarshipBean());
-			return mapping.findForward("add");
-		} else {
-			ExternalScholarshipBean bean = getRenderedObject();
-			List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
-			externalScholarshipProvider.add(bean.getSelected());
-			return redirect("/externalScholarshipProvider.do?method=list", request);
-		}
-	}
+    @Service
+    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        if (request.getMethod() != "POST") {
+            request.setAttribute("bean", new ExternalScholarshipBean());
+            return mapping.findForward("add");
+        } else {
+            ExternalScholarshipBean bean = getRenderedObject();
+            List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
+            externalScholarshipProvider.add(bean.getSelected());
+            return redirect("/externalScholarshipProvider.do?method=list", request);
+        }
+    }
 
-	@Service
-	public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		Party party = Party.fromExternalId(request.getParameter("provider"));
-		List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
-		externalScholarshipProvider.remove(party);
-		return redirect("/externalScholarshipProvider.do?method=list", request);
-	}
+    @Service
+    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        Party party = Party.fromExternalId(request.getParameter("provider"));
+        List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
+        externalScholarshipProvider.remove(party);
+        return redirect("/externalScholarshipProvider.do?method=list", request);
+    }
 }

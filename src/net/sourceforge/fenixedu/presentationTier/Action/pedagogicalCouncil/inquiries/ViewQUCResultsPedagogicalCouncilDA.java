@@ -28,52 +28,52 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewQucResults", module = "pedagogicalCouncil")
 @Forwards({
-		@Forward(name = "chooseDepartment", path = "/pedagogicalCouncil/inquiries/chooseDepartment.jsp", tileProperties = @Tile(
-				title = "private.pedagogiccouncil.control.qucresults2")),
-		@Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
-		@Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
-		@Forward(name = "viewTeachersResults", path = "/departmentMember/quc/viewTeachersResults.jsp"),
-		@Forward(name = "departmentUCView", path = "/departmentMember/quc/departmentUCView.jsp"),
-		@Forward(name = "departmentTeacherView", path = "/departmentMember/quc/departmentTeacherView.jsp") })
+        @Forward(name = "chooseDepartment", path = "/pedagogicalCouncil/inquiries/chooseDepartment.jsp", tileProperties = @Tile(
+                title = "private.pedagogiccouncil.control.qucresults2")),
+        @Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
+        @Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
+        @Forward(name = "viewTeachersResults", path = "/departmentMember/quc/viewTeachersResults.jsp"),
+        @Forward(name = "departmentUCView", path = "/departmentMember/quc/departmentUCView.jsp"),
+        @Forward(name = "departmentTeacherView", path = "/departmentMember/quc/departmentTeacherView.jsp") })
 public class ViewQUCResultsPedagogicalCouncilDA extends ViewQUCResultsDA {
 
-	public ActionForward chooseDepartment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward chooseDepartment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		List<DepartmentUnit> departmentUnits = new ArrayList<DepartmentUnit>();
-		for (DepartmentUnit departmentUnit : DepartmentUnit.readAllDepartmentUnits()) {
-			if (departmentUnit.getDepartment() != null) {
-				departmentUnits.add(departmentUnit);
-			}
-		}
-		Collections.sort(departmentUnits, new BeanComparator("name"));
-		request.setAttribute("departments", departmentUnits);
-		return mapping.findForward("chooseDepartment");
-	}
+        List<DepartmentUnit> departmentUnits = new ArrayList<DepartmentUnit>();
+        for (DepartmentUnit departmentUnit : DepartmentUnit.readAllDepartmentUnits()) {
+            if (departmentUnit.getDepartment() != null) {
+                departmentUnits.add(departmentUnit);
+            }
+        }
+        Collections.sort(departmentUnits, new BeanComparator("name"));
+        request.setAttribute("departments", departmentUnits);
+        return mapping.findForward("chooseDepartment");
+    }
 
-	@Override
-	public ActionForward showTeacherResultsAndComments(ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward showTeacherResultsAndComments(ActionMapping actionMapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		request.setAttribute("showAllComments", "true");
-		return super.showTeacherResultsAndComments(actionMapping, actionForm, request, response);
-	}
+        request.setAttribute("showAllComments", "true");
+        return super.showTeacherResultsAndComments(actionMapping, actionForm, request, response);
+    }
 
-	@Override
-	protected DepartmentUnit getDepartmentUnit(HttpServletRequest request) {
-		String departmentUnitOID = request.getParameter("departmentUnitOID");
-		if (StringUtils.isEmpty(departmentUnitOID)) {
-			DepartmentExecutionSemester departmentExecutionSemester = getRenderedObject("executionSemesterBean");
-			departmentUnitOID = departmentExecutionSemester.getDepartmentUnitOID();
-		}
-		DepartmentUnit departmentUnit = AbstractDomainObject.fromExternalId(departmentUnitOID);
-		request.setAttribute("fromPedagogicalCouncil", "true");
-		request.setAttribute("departmentName", departmentUnit.getName());
-		return departmentUnit;
-	}
+    @Override
+    protected DepartmentUnit getDepartmentUnit(HttpServletRequest request) {
+        String departmentUnitOID = request.getParameter("departmentUnitOID");
+        if (StringUtils.isEmpty(departmentUnitOID)) {
+            DepartmentExecutionSemester departmentExecutionSemester = getRenderedObject("executionSemesterBean");
+            departmentUnitOID = departmentExecutionSemester.getDepartmentUnitOID();
+        }
+        DepartmentUnit departmentUnit = AbstractDomainObject.fromExternalId(departmentUnitOID);
+        request.setAttribute("fromPedagogicalCouncil", "true");
+        request.setAttribute("departmentName", departmentUnit.getName());
+        return departmentUnit;
+    }
 
-	@Override
-	public boolean getShowAllComments() {
-		return true;
-	}
+    @Override
+    public boolean getShowAllComments() {
+        return true;
+    }
 }

@@ -7,5 +7,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "coordinator", path = "/readTeacherInformation", scope = "request")
 @Forwards(value = { @Forward(name = "show", path = "/teacher/information/viewTeacherInformation.jsp") })
 public class ReadTeacherInformationActionForCoordinator extends
-		net.sourceforge.fenixedu.presentationTier.Action.coordinator.ReadTeacherInformationAction {
+        net.sourceforge.fenixedu.presentationTier.Action.coordinator.ReadTeacherInformationAction {
 }

@@ -29,129 +29,129 @@ import org.apache.struts.action.DynaActionForm;
  * 
  */
 public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAction {
-	public ActionForward prepareDissociateEC(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("prepareDissociateEC");
-	}
+    public ActionForward prepareDissociateEC(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("prepareDissociateEC");
+    }
 
-	public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-		DynaActionForm teacherIdForm = (DynaActionForm) form;
+        DynaActionForm teacherIdForm = (DynaActionForm) form;
 
-		// Integer teacherNumber = Integer.valueOf((String)
-		// teacherNumberForm.get("teacherNumber"));
-		String personId = (String) teacherIdForm.get("teacherId");
-		// InfoTeacher infoTeacher = null;
-		Person person = null;
+        // Integer teacherNumber = Integer.valueOf((String)
+        // teacherNumberForm.get("teacherNumber"));
+        String personId = (String) teacherIdForm.get("teacherId");
+        // InfoTeacher infoTeacher = null;
+        Person person = null;
 
-		// infoTeacher = (InfoTeacher)
-		// ReadInfoTeacherByTeacherNumber.run(teacherNumber);
-		person = Person.readPersonByIstUsername(personId);
+        // infoTeacher = (InfoTeacher)
+        // ReadInfoTeacherByTeacherNumber.run(teacherNumber);
+        person = Person.readPersonByIstUsername(personId);
 
-		if (person == null) {
-			addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", personId);
-			return mapping.getInputForward();
-		}
+        if (person == null) {
+            addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", personId);
+            return mapping.getInputForward();
+        }
 
-		request.setAttribute("person", person);
-		return mapping.findForward("prepareDissociateECShowProfShipsAndRespFor");
-	}
+        request.setAttribute("person", person);
+        return mapping.findForward("prepareDissociateECShowProfShipsAndRespFor");
+    }
 
-	public ActionForward dissociateProfShipsAndRespFor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward dissociateProfShipsAndRespFor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-		DynaActionForm teacherForm = (DynaActionForm) form;
-		String personNumber = (String) teacherForm.get("teacherId");
-		Integer professorshipsListSize = (Integer) teacherForm.get("professorshipsListSize");
-		Integer responsibleForListSize = (Integer) teacherForm.get("responsibleForListSize");
+        DynaActionForm teacherForm = (DynaActionForm) form;
+        String personNumber = (String) teacherForm.get("teacherId");
+        Integer professorshipsListSize = (Integer) teacherForm.get("professorshipsListSize");
+        Integer responsibleForListSize = (Integer) teacherForm.get("responsibleForListSize");
 
-		List professorshipsToDelete =
-				getInformationToDissociate(request, professorshipsListSize, "professorship", "idInternal", "toDelete");
-		List responsibleForsToDelete =
-				getInformationToDissociate(request, responsibleForListSize, "responsibleFor", "idInternal", "toDelete");
+        List professorshipsToDelete =
+                getInformationToDissociate(request, professorshipsListSize, "professorship", "idInternal", "toDelete");
+        List responsibleForsToDelete =
+                getInformationToDissociate(request, responsibleForListSize, "responsibleFor", "idInternal", "toDelete");
 
-		ActionErrors errors = new ActionErrors();
-		HashMap professorshipsNotRemoved = null;
+        ActionErrors errors = new ActionErrors();
+        HashMap professorshipsNotRemoved = null;
 
-		try {
-			professorshipsNotRemoved =
-					(HashMap) DissociateProfessorShipsAndResponsibleFor.run(personNumber, professorshipsToDelete,
-							responsibleForsToDelete);
+        try {
+            professorshipsNotRemoved =
+                    (HashMap) DissociateProfessorShipsAndResponsibleFor.run(personNumber, professorshipsToDelete,
+                            responsibleForsToDelete);
 
-		} catch (NonExistingServiceException e) {
-			if (e.getMessage().equals("noTeacher")) {
-				addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noPerson", personNumber);
-			} else {
-				throw new NonExistingActionException("");
-			}
-		} catch (FenixServiceException e) {
-			if (e.getMessage().equals("nullTeacherNumber")) {
-				addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noPersonNumber");
-			} else if (e.getMessage().equals("nullPSNorRF")) {
-				addErrorMessage(request, "nullPSNorRF", "error.manager.teachersManagement.nullPSNorRF", personNumber);
-			} else if (e.getMessage().equals("notPSNorRFTeacher")) {
-				addErrorMessage(request, "notPSNorRFTeacher", "error.manager.teachersManagement.notPSNorRFPerson");
-			} else {
-				throw new FenixActionException(e);
-			}
-		}
-		/*
-		 * if (!errors.isEmpty()) { return mapping.getInputForward(); }
-		 */
+        } catch (NonExistingServiceException e) {
+            if (e.getMessage().equals("noTeacher")) {
+                addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noPerson", personNumber);
+            } else {
+                throw new NonExistingActionException("");
+            }
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullTeacherNumber")) {
+                addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noPersonNumber");
+            } else if (e.getMessage().equals("nullPSNorRF")) {
+                addErrorMessage(request, "nullPSNorRF", "error.manager.teachersManagement.nullPSNorRF", personNumber);
+            } else if (e.getMessage().equals("notPSNorRFTeacher")) {
+                addErrorMessage(request, "notPSNorRFTeacher", "error.manager.teachersManagement.notPSNorRFPerson");
+            } else {
+                throw new FenixActionException(e);
+            }
+        }
+        /*
+         * if (!errors.isEmpty()) { return mapping.getInputForward(); }
+         */
 
-		if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
-			errors =
-					createErrors(request, professorshipsNotRemoved, "supportLessons", "PSWithSL",
-							"error.manager.teachersManagement.PSWithSL", errors);
-			errors =
-					createErrors(request, professorshipsNotRemoved, "shifts", "PSWithS",
-							"error.manager.teachersManagement.PSWithS", errors);
-			return prepareDissociateECShowProfShipsAndRespFor(mapping, form, request, response);
-		}
-		// must only set this to null when we're certain of not returning to the
-		// previous form
-		teacherForm.set("teacherId", null);
+        if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
+            errors =
+                    createErrors(request, professorshipsNotRemoved, "supportLessons", "PSWithSL",
+                            "error.manager.teachersManagement.PSWithSL", errors);
+            errors =
+                    createErrors(request, professorshipsNotRemoved, "shifts", "PSWithS",
+                            "error.manager.teachersManagement.PSWithS", errors);
+            return prepareDissociateECShowProfShipsAndRespFor(mapping, form, request, response);
+        }
+        // must only set this to null when we're certain of not returning to the
+        // previous form
+        teacherForm.set("teacherId", null);
 
-		return prepareDissociateEC(mapping, form, request, response);
-	}
+        return prepareDissociateEC(mapping, form, request, response);
+    }
 
-	private ActionErrors createErrors(HttpServletRequest request, HashMap hash, String hashKey, String errorKey, String message,
-			ActionErrors errors) {
-		List professorships = (List) hash.get(hashKey);
+    private ActionErrors createErrors(HttpServletRequest request, HashMap hash, String hashKey, String errorKey, String message,
+            ActionErrors errors) {
+        List professorships = (List) hash.get(hashKey);
 
-		if (professorships != null) {
-			Iterator iterProfessorships = professorships.iterator();
-			while (iterProfessorships.hasNext()) {
-				InfoProfessorship infoProfessorship = (InfoProfessorship) iterProfessorships.next();
-				addErrorMessage(request, errorKey, message, infoProfessorship.getInfoExecutionCourse().getNome());
-			}
-		}
-		return errors;
-	}
+        if (professorships != null) {
+            Iterator iterProfessorships = professorships.iterator();
+            while (iterProfessorships.hasNext()) {
+                InfoProfessorship infoProfessorship = (InfoProfessorship) iterProfessorships.next();
+                addErrorMessage(request, errorKey, message, infoProfessorship.getInfoExecutionCourse().getNome());
+            }
+        }
+        return errors;
+    }
 
-	private List getInformationToDissociate(HttpServletRequest request, Integer professorshipsListSize, String what,
-			String property, String formProperty) {
-		List informationToDeleteList = new ArrayList();
-		for (int i = 0; i < professorshipsListSize.intValue(); i++) {
-			Integer informationToDelete = dataToDelete(request, i, what, property, formProperty);
-			if (informationToDelete != null) {
-				informationToDeleteList.add(informationToDelete);
-			}
-		}
-		return informationToDeleteList;
-	}
+    private List getInformationToDissociate(HttpServletRequest request, Integer professorshipsListSize, String what,
+            String property, String formProperty) {
+        List informationToDeleteList = new ArrayList();
+        for (int i = 0; i < professorshipsListSize.intValue(); i++) {
+            Integer informationToDelete = dataToDelete(request, i, what, property, formProperty);
+            if (informationToDelete != null) {
+                informationToDeleteList.add(informationToDelete);
+            }
+        }
+        return informationToDeleteList;
+    }
 
-	private Integer dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
-		Integer itemToDelete = null;
-		String checkbox = request.getParameter(what + "[" + index + "]." + "responsibleFor");
-		String toDelete = null;
-		if (checkbox != null && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
-			toDelete = request.getParameter(what + "[" + index + "]." + property);
-		}
-		if (toDelete != null) {
-			itemToDelete = new Integer(toDelete);
-		}
-		return itemToDelete;
-	}
+    private Integer dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
+        Integer itemToDelete = null;
+        String checkbox = request.getParameter(what + "[" + index + "]." + "responsibleFor");
+        String toDelete = null;
+        if (checkbox != null && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
+            toDelete = request.getParameter(what + "[" + index + "]." + property);
+        }
+        if (toDelete != null) {
+            itemToDelete = new Integer(toDelete);
+        }
+        return itemToDelete;
+    }
 }

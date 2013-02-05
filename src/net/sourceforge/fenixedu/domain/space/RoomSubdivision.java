@@ -15,166 +15,166 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class RoomSubdivision extends RoomSubdivision_Base {
 
-	public RoomSubdivision(Space suroundingSpace, String identification, YearMonthDay begin, YearMonthDay end) {
-		super();
-		setSuroundingSpace(suroundingSpace);
-		new RoomSubdivisionInformation(identification, this, begin, end);
-	}
+    public RoomSubdivision(Space suroundingSpace, String identification, YearMonthDay begin, YearMonthDay end) {
+        super();
+        setSuroundingSpace(suroundingSpace);
+        new RoomSubdivisionInformation(identification, this, begin, end);
+    }
 
-	@Override
-	@Checked("SpacePredicates.checkPermissionsToManageSpace")
-	@FenixDomainObjectActionLogAnnotation(actionName = "Deleted roomSubdivision", parameters = {})
-	public void delete() {
-		super.delete();
-	}
+    @Override
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted roomSubdivision", parameters = {})
+    public void delete() {
+        super.delete();
+    }
 
-	@Override
-	public RoomSubdivisionInformation getSpaceInformation() {
-		return (RoomSubdivisionInformation) super.getSpaceInformation();
-	}
+    @Override
+    public RoomSubdivisionInformation getSpaceInformation() {
+        return (RoomSubdivisionInformation) super.getSpaceInformation();
+    }
 
-	@Override
-	public RoomSubdivisionInformation getSpaceInformation(YearMonthDay when) {
-		return (RoomSubdivisionInformation) super.getSpaceInformation(when);
-	}
+    @Override
+    public RoomSubdivisionInformation getSpaceInformation(YearMonthDay when) {
+        return (RoomSubdivisionInformation) super.getSpaceInformation(when);
+    }
 
-	@Override
-	public void setSuroundingSpace(Space suroundingSpace) {
-		if (suroundingSpace == null || !suroundingSpace.isRoom()) {
-			throw new DomainException("error.Space.invalid.suroundingSpace");
-		}
-		super.setSuroundingSpace(suroundingSpace);
-	}
+    @Override
+    public void setSuroundingSpace(Space suroundingSpace) {
+        if (suroundingSpace == null || !suroundingSpace.isRoom()) {
+            throw new DomainException("error.Space.invalid.suroundingSpace");
+        }
+        super.setSuroundingSpace(suroundingSpace);
+    }
 
-	@Override
-	public List<ResourceAllocation> getResourceAllocationsForCheck() {
-		List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
-		result.addAll(getResourceAllocations());
-		Room suroundingSpace = (Room) getSuroundingSpace();
-		result.addAll(suroundingSpace.getResourceAllocations());
-		return result;
-	}
+    @Override
+    public List<ResourceAllocation> getResourceAllocationsForCheck() {
+        List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
+        result.addAll(getResourceAllocations());
+        Room suroundingSpace = (Room) getSuroundingSpace();
+        result.addAll(suroundingSpace.getResourceAllocations());
+        return result;
+    }
 
-	@Override
-	public boolean isRoomSubdivision() {
-		return true;
-	}
+    @Override
+    public boolean isRoomSubdivision() {
+        return true;
+    }
 
-	@Override
-	public Integer getExamCapacity() {
-		return Integer.valueOf(0);
-	}
+    @Override
+    public Integer getExamCapacity() {
+        return Integer.valueOf(0);
+    }
 
-	@Override
-	public Integer getNormalCapacity() {
-		return Integer.valueOf(0);
-	}
+    @Override
+    public Integer getNormalCapacity() {
+        return Integer.valueOf(0);
+    }
 
-	@Override
-	public Integer getCapacidadeExame() {
-		return Integer.valueOf(0);
-	}
+    @Override
+    public Integer getCapacidadeExame() {
+        return Integer.valueOf(0);
+    }
 
-	@Override
-	public Integer getCapacidadeNormal() {
-		return Integer.valueOf(0);
-	}
+    @Override
+    public Integer getCapacidadeNormal() {
+        return Integer.valueOf(0);
+    }
 
-	@Override
-	public void setExamCapacity(Integer capacidadeExame) {
-		// Do nothing !!
-	}
+    @Override
+    public void setExamCapacity(Integer capacidadeExame) {
+        // Do nothing !!
+    }
 
-	@Override
-	public void setNormalCapacity(Integer capacidadeNormal) {
-		// Do nothing !!
-	}
+    @Override
+    public void setNormalCapacity(Integer capacidadeNormal) {
+        // Do nothing !!
+    }
 
-	@Override
-	public String getIdentification() {
-		return getSpaceInformation().getIdentification();
-	}
+    @Override
+    public String getIdentification() {
+        return getSpaceInformation().getIdentification();
+    }
 
-	@Override
-	public RoomClassification getRoomClassification() {
-		return ((AllocatableSpace) getSuroundingSpace()).getRoomClassification();
-	}
+    @Override
+    public RoomClassification getRoomClassification() {
+        return ((AllocatableSpace) getSuroundingSpace()).getRoomClassification();
+    }
 
-	@Override
-	public RoomClassification getTipo() {
-		return ((AllocatableSpace) getSuroundingSpace()).getRoomClassification();
-	}
+    @Override
+    public RoomClassification getTipo() {
+        return ((AllocatableSpace) getSuroundingSpace()).getRoomClassification();
+    }
 
-	public static abstract class RoomSubdivisionFactory implements Serializable, FactoryExecutor {
+    public static abstract class RoomSubdivisionFactory implements Serializable, FactoryExecutor {
 
-		private String identification;
+        private String identification;
 
-		private YearMonthDay begin;
+        private YearMonthDay begin;
 
-		private YearMonthDay end;
+        private YearMonthDay end;
 
-		public YearMonthDay getBegin() {
-			return begin;
-		}
+        public YearMonthDay getBegin() {
+            return begin;
+        }
 
-		public void setBegin(YearMonthDay begin) {
-			this.begin = begin;
-		}
+        public void setBegin(YearMonthDay begin) {
+            this.begin = begin;
+        }
 
-		public YearMonthDay getEnd() {
-			return end;
-		}
+        public YearMonthDay getEnd() {
+            return end;
+        }
 
-		public void setEnd(YearMonthDay end) {
-			this.end = end;
-		}
+        public void setEnd(YearMonthDay end) {
+            this.end = end;
+        }
 
-		public String getIdentification() {
-			return identification;
-		}
+        public String getIdentification() {
+            return identification;
+        }
 
-		public void setIdentification(String identification) {
-			this.identification = identification;
-		}
-	}
+        public void setIdentification(String identification) {
+            this.identification = identification;
+        }
+    }
 
-	public static class RoomSubdivisionFactoryCreator extends RoomSubdivisionFactory {
+    public static class RoomSubdivisionFactoryCreator extends RoomSubdivisionFactory {
 
-		private Space surroundingSpaceReference;
+        private Space surroundingSpaceReference;
 
-		public Space getSurroundingSpace() {
-			return surroundingSpaceReference;
-		}
+        public Space getSurroundingSpace() {
+            return surroundingSpaceReference;
+        }
 
-		public void setSurroundingSpace(Space surroundingSpace) {
-			if (surroundingSpace != null) {
-				this.surroundingSpaceReference = surroundingSpace;
-			}
-		}
+        public void setSurroundingSpace(Space surroundingSpace) {
+            if (surroundingSpace != null) {
+                this.surroundingSpaceReference = surroundingSpace;
+            }
+        }
 
-		@Override
-		public RoomSubdivision execute() {
-			return new RoomSubdivision(getSurroundingSpace(), getIdentification(), getBegin(), getEnd());
-		}
-	}
+        @Override
+        public RoomSubdivision execute() {
+            return new RoomSubdivision(getSurroundingSpace(), getIdentification(), getBegin(), getEnd());
+        }
+    }
 
-	public static class RoomSubdivisionFactoryEditor extends RoomSubdivisionFactory {
+    public static class RoomSubdivisionFactoryEditor extends RoomSubdivisionFactory {
 
-		private RoomSubdivision roomSubdivisionReference;
+        private RoomSubdivision roomSubdivisionReference;
 
-		public RoomSubdivision getSpace() {
-			return roomSubdivisionReference;
-		}
+        public RoomSubdivision getSpace() {
+            return roomSubdivisionReference;
+        }
 
-		public void setSpace(RoomSubdivision roomSubdivision) {
-			if (roomSubdivision != null) {
-				this.roomSubdivisionReference = roomSubdivision;
-			}
-		}
+        public void setSpace(RoomSubdivision roomSubdivision) {
+            if (roomSubdivision != null) {
+                this.roomSubdivisionReference = roomSubdivision;
+            }
+        }
 
-		@Override
-		public RoomSubdivisionInformation execute() {
-			return new RoomSubdivisionInformation(getIdentification(), getSpace(), getBegin(), getEnd());
-		}
-	}
+        @Override
+        public RoomSubdivisionInformation execute() {
+            return new RoomSubdivisionInformation(getIdentification(), getSpace(), getBegin(), getEnd());
+        }
+    }
 }

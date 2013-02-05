@@ -6,81 +6,81 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
 public class LongRangeValidator extends HtmlValidator {
 
-	private boolean isNumber;
+    private boolean isNumber;
 
-	private Long upperBound;
+    private Long upperBound;
 
-	private Long lowerBound;
+    private Long lowerBound;
 
-	public LongRangeValidator() {
-		super();
+    public LongRangeValidator() {
+        super();
 
-		upperBound = null;
-		lowerBound = null;
-	}
+        upperBound = null;
+        lowerBound = null;
+    }
 
-	public LongRangeValidator(HtmlChainValidator htmlChainValidator) {
-		super(htmlChainValidator);
+    public LongRangeValidator(HtmlChainValidator htmlChainValidator) {
+        super(htmlChainValidator);
 
-		upperBound = null;
-		lowerBound = null;
-	}
+        upperBound = null;
+        lowerBound = null;
+    }
 
-	public long getLowerBound() {
-		return lowerBound;
-	}
+    public long getLowerBound() {
+        return lowerBound;
+    }
 
-	public void setLowerBound(long lowerBound) {
-		this.lowerBound = lowerBound;
-	}
+    public void setLowerBound(long lowerBound) {
+        this.lowerBound = lowerBound;
+    }
 
-	public long getUpperBound() {
-		return upperBound;
-	}
+    public long getUpperBound() {
+        return upperBound;
+    }
 
-	public void setUpperBound(long upperBound) {
-		this.upperBound = upperBound;
-	}
+    public void setUpperBound(long upperBound) {
+        this.upperBound = upperBound;
+    }
 
-	@Override
-	public void performValidation() {
+    @Override
+    public void performValidation() {
 
-		try {
-			long number = Long.parseLong(getComponent().getValue().trim());
+        try {
+            long number = Long.parseLong(getComponent().getValue().trim());
 
-			boolean inRange = true;
-			isNumber = true;
+            boolean inRange = true;
+            isNumber = true;
 
-			if (lowerBound != null) {
-				inRange &= lowerBound <= number;
-			}
+            if (lowerBound != null) {
+                inRange &= lowerBound <= number;
+            }
 
-			if (upperBound != null) {
-				inRange &= upperBound >= number;
-			}
+            if (upperBound != null) {
+                inRange &= upperBound >= number;
+            }
 
-			this.setValid(inRange);
-		} catch (NumberFormatException e) {
-			isNumber = false;
-			setValid(false);
-		}
-	}
+            this.setValid(inRange);
+        } catch (NumberFormatException e) {
+            isNumber = false;
+            setValid(false);
+        }
+    }
 
-	@Override
-	public String getErrorMessage() {
-		if (!isNumber) {
-			return RenderUtils.getResourceString("renderers.validator.number");
-		}
+    @Override
+    public String getErrorMessage() {
+        if (!isNumber) {
+            return RenderUtils.getResourceString("renderers.validator.number");
+        }
 
-		if (lowerBound != null && upperBound != null) {
-			return RenderUtils.getFormatedResourceString("renderers.validator.number.range.both", lowerBound, upperBound);
-		}
+        if (lowerBound != null && upperBound != null) {
+            return RenderUtils.getFormatedResourceString("renderers.validator.number.range.both", lowerBound, upperBound);
+        }
 
-		if (lowerBound != null) {
-			return RenderUtils.getFormatedResourceString("renderers.validator.number.range.lower", lowerBound);
-		}
+        if (lowerBound != null) {
+            return RenderUtils.getFormatedResourceString("renderers.validator.number.range.lower", lowerBound);
+        }
 
-		return RenderUtils.getFormatedResourceString("renderers.validator.number.range.upper", upperBound);
-	}
+        return RenderUtils.getFormatedResourceString("renderers.validator.number.range.upper", upperBound);
+    }
 
 }

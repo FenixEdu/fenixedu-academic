@@ -8,27 +8,27 @@ import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 
 public class UploadGuidanceDocument extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		if (process.isGuiderOrAssistentGuider(userView.getPerson())) {
-			return;
-		}
+    @Override
+    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        if (process.isGuiderOrAssistentGuider(userView.getPerson())) {
+            return;
+        }
 
-		if (process.isCoordinatorForPhdProgram(userView.getPerson())) {
-			return;
-		}
+        if (process.isCoordinatorForPhdProgram(userView.getPerson())) {
+            return;
+        }
 
-		throw new PreConditionNotValidException();
-	}
+        throw new PreConditionNotValidException();
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
 
-		new PhdGuidanceDocument(process, bean.getType(), bean.getRemarks(), bean.getFileContent(), bean.getFilename(),
-				userView.getPerson());
+        new PhdGuidanceDocument(process, bean.getType(), bean.getRemarks(), bean.getFileContent(), bean.getFilename(),
+                userView.getPerson());
 
-		return process;
-	}
+        return process;
+    }
 
 }

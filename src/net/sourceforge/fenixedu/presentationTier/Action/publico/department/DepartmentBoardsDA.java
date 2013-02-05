@@ -8,26 +8,26 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteBoardsDA
 
 public abstract class DepartmentBoardsDA extends UnitSiteBoardsDA {
 
-	@Override
-	protected void setUnitContext(HttpServletRequest request) {
-		Department department = getDepartment(request);
-		if (department != null) {
-			request.setAttribute("department", department);
-		}
-	}
+    @Override
+    protected void setUnitContext(HttpServletRequest request) {
+        Department department = getDepartment(request);
+        if (department != null) {
+            request.setAttribute("department", department);
+        }
+    }
 
-	public Department getDepartment(HttpServletRequest request) {
-		Unit unit = getUnit(request);
-		if (unit == null) {
-			return null;
-		} else {
-			return unit.getDepartment();
-		}
-	}
+    public Department getDepartment(HttpServletRequest request) {
+        Unit unit = getUnit(request);
+        if (unit == null) {
+            return null;
+        } else {
+            return unit.getDepartment();
+        }
+    }
 
-	@Override
-	public String getContextParamName() {
-		return "selectedDepartmentUnitID";
-	}
+    @Override
+    public String getContextParamName() {
+        return "selectedDepartmentUnitID";
+    }
 
 }

@@ -30,27 +30,27 @@ import org.apache.struts.action.ActionMapping;
  */
 public class VoidAction extends Action {
 
-	/**
-	 * This Action is used when you want to just forward. This exists so that
-	 * even when you just forward from a link you check to see if the session is
-	 * valid
-	 */
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		String graduationType = (String) request.getAttribute("graduationType");
-		if (graduationType == null) {
-			graduationType = request.getParameter("graduationType");
-		}
-		request.setAttribute("graduationType", graduationType);
+    /**
+     * This Action is used when you want to just forward. This exists so that
+     * even when you just forward from a link you check to see if the session is
+     * valid
+     */
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        String graduationType = (String) request.getAttribute("graduationType");
+        if (graduationType == null) {
+            graduationType = request.getParameter("graduationType");
+        }
+        request.setAttribute("graduationType", graduationType);
 
-		if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
-			request.setAttribute(PresentationConstants.REQUESTER_NUMBER,
-					new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER)));
-		}
+        if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
+            request.setAttribute(PresentationConstants.REQUESTER_NUMBER,
+                    new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER)));
+        }
 
-		return mapping.findForward("Success");
+        return mapping.findForward("Success");
 
-	}
+    }
 
 }

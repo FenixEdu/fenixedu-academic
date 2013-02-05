@@ -18,34 +18,30 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/specialSeason/specialSeasonStatusTracker", module = "departmentAdmOffice")
 @Forwards({
-		@Forward(
-				name = "selectCourse",
-				path = "/departmentAdmOffice/lists/specialSeason/selectCourse.jsp",
-				tileProperties = @Tile(
-						title = "private.administrationofcreditsofdepartmentteachers.lists.enrollmentsinspecialseason")),
-		@Forward(
-				name = "listStudents",
-				path = "/departmentAdmOffice/lists/specialSeason/listStudents.jsp",
-				tileProperties = @Tile(
-						title = "private.administrationofcreditsofdepartmentteachers.lists.enrollmentsinspecialseason")) })
+        @Forward(name = "selectCourse", path = "/departmentAdmOffice/lists/specialSeason/selectCourse.jsp",
+                tileProperties = @Tile(
+                        title = "private.administrationofcreditsofdepartmentteachers.lists.enrollmentsinspecialseason")),
+        @Forward(name = "listStudents", path = "/departmentAdmOffice/lists/specialSeason/listStudents.jsp",
+                tileProperties = @Tile(
+                        title = "private.administrationofcreditsofdepartmentteachers.lists.enrollmentsinspecialseason")) })
 public class SpecialSeasonDepartmentStatusDA extends SpecialSeasonStatusTrackerDA {
 
-	@Override
-	public ActionForward selectCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		SpecialSeasonStatusTrackerBean bean = getRenderedObject();
-		if (bean == null) {
-			bean = new SpecialSeasonStatusTrackerBean();
-			bean.setDepartment(getDepartment());
-		}
-		request.setAttribute("bean", bean);
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("selectCourse");
-	}
+    @Override
+    public ActionForward selectCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+        if (bean == null) {
+            bean = new SpecialSeasonStatusTrackerBean();
+            bean.setDepartment(getDepartment());
+        }
+        request.setAttribute("bean", bean);
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("selectCourse");
+    }
 
-	@Override
-	protected Department getDepartment() {
-		return AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
-	}
+    @Override
+    protected Department getDepartment() {
+        return AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+    }
 
 }

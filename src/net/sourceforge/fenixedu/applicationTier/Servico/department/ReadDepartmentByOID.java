@@ -15,9 +15,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDepartmentByOID extends FenixService {
 
-	@Service
-	public static InfoDepartment run(Integer oid) throws FenixServiceException {
-		Department department = rootDomainObject.readDepartmentByOID(oid);
-		return InfoDepartment.newInfoFromDomain(department);
-	}
+    @Service
+    public static InfoDepartment run(Integer oid) throws FenixServiceException {
+        Department department = rootDomainObject.readDepartmentByOID(oid);
+        return InfoDepartment.newInfoFromDomain(department);
+    }
 }

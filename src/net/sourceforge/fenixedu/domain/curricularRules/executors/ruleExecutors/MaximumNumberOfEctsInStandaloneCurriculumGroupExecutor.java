@@ -11,62 +11,62 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGro
 
 public class MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor extends CurricularRuleExecutor {
 
-	@Override
-	protected boolean canBeEvaluated(final ICurricularRule curricularRule,
-			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-		return true;
-	}
+    @Override
+    protected boolean canBeEvaluated(final ICurricularRule curricularRule,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        return true;
+    }
 
-	@Override
-	protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-	}
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
 
-	@Override
-	protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
-			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+    @Override
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
-		final MaximumNumberOfEctsInStandaloneCurriculumGroup rule =
-				(MaximumNumberOfEctsInStandaloneCurriculumGroup) curricularRule;
-		final double total = calculateTotalEctsCredits(enrolmentContext) + calculateApprovedEcts(enrolmentContext);
-		if (!rule.allowEcts(total)) {
-			return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-					"curricularRules.ruleExecutors.MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor",
-					String.valueOf(rule.getMaximumEcts()), String.valueOf(total));
-		}
+        final MaximumNumberOfEctsInStandaloneCurriculumGroup rule =
+                (MaximumNumberOfEctsInStandaloneCurriculumGroup) curricularRule;
+        final double total = calculateTotalEctsCredits(enrolmentContext) + calculateApprovedEcts(enrolmentContext);
+        if (!rule.allowEcts(total)) {
+            return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                    "curricularRules.ruleExecutors.MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor",
+                    String.valueOf(rule.getMaximumEcts()), String.valueOf(total));
+        }
 
-		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-	}
+        return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
 
-	private double calculateTotalEctsCredits(final EnrolmentContext enrolmentContext) {
-		double accumulated = 0d;
-		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-			accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(enrolmentContext.getExecutionPeriod());
-		}
-		return accumulated;
-	}
+    private double calculateTotalEctsCredits(final EnrolmentContext enrolmentContext) {
+        double accumulated = 0d;
+        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+            accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(enrolmentContext.getExecutionPeriod());
+        }
+        return accumulated;
+    }
 
-	private double calculateApprovedEcts(final EnrolmentContext enrolmentContext) {
+    private double calculateApprovedEcts(final EnrolmentContext enrolmentContext) {
 
-		final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
-		final StandaloneCurriculumGroup group = enrolmentContext.getStudentCurricularPlan().getStandaloneCurriculumGroup();
+        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+        final StandaloneCurriculumGroup group = enrolmentContext.getStudentCurricularPlan().getStandaloneCurriculumGroup();
 
-		double approved = 0d;
+        double approved = 0d;
 
-		for (final CurriculumLine line : group.getChildCurriculumLines()) {
-			if (line.isApproved() && line.isValid(executionSemester)) {
-				approved += line.getAccumulatedEctsCredits(executionSemester);
-			}
-		}
+        for (final CurriculumLine line : group.getChildCurriculumLines()) {
+            if (line.isApproved() && line.isValid(executionSemester)) {
+                approved += line.getAccumulatedEctsCredits(executionSemester);
+            }
+        }
 
-		return approved;
-	}
+        return approved;
+    }
 
-	@Override
-	protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
-			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-		return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-	}
+    @Override
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+        return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+    }
 
 }

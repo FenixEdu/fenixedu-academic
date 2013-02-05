@@ -21,33 +21,33 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ReadUserProjects extends FenixService {
 
-	public List<InfoProject> run(String username, String costCenter, Boolean all, BackendInstance instance, String userNumber)
-			throws ExcepcaoPersistencia {
-		List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
+    public List<InfoProject> run(String username, String costCenter, Boolean all, BackendInstance instance, String userNumber)
+            throws ExcepcaoPersistencia {
+        List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
 
-		List<String> projectCodes = new ArrayList<String>();
-		List<Integer> costCenterCodes = new ArrayList<Integer>();
-		List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, instance);
-		for (ProjectAccess access : accesses) {
-			String keyProject = access.getKeyProject();
-			if (keyProject == null && access.getCostCenter() && !costCenterCodes.contains(access.getKeyProjectCoordinator())) {
-				costCenterCodes.add(access.getKeyProjectCoordinator());
-			} else if (!projectCodes.contains(keyProject)) {
-				projectCodes.add(keyProject);
-			}
-		}
-		PersistentProject persistentProject = new PersistentProject();
+        List<String> projectCodes = new ArrayList<String>();
+        List<Integer> costCenterCodes = new ArrayList<Integer>();
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, instance);
+        for (ProjectAccess access : accesses) {
+            String keyProject = access.getKeyProject();
+            if (keyProject == null && access.getCostCenter() && !costCenterCodes.contains(access.getKeyProjectCoordinator())) {
+                costCenterCodes.add(access.getKeyProjectCoordinator());
+            } else if (!projectCodes.contains(keyProject)) {
+                projectCodes.add(keyProject);
+            }
+        }
+        PersistentProject persistentProject = new PersistentProject();
 
-		if (StringUtils.isEmpty(costCenter) || costCenter.equals(userNumber)) {
-			infoProjectList = persistentProject.readByUserLogin(userNumber, instance);
-		}
+        if (StringUtils.isEmpty(costCenter) || costCenter.equals(userNumber)) {
+            infoProjectList = persistentProject.readByUserLogin(userNumber, instance);
+        }
 
-		if (all) {
-			infoProjectList.addAll(persistentProject.readByProjectsCodes(projectCodes, instance));
-			for (Integer ccCode : costCenterCodes) {
-				infoProjectList.addAll(persistentProject.readByCoordinatorAndNotProjectsCodes(ccCode, null, instance));
-			}
-		}
-		return infoProjectList;
-	}
+        if (all) {
+            infoProjectList.addAll(persistentProject.readByProjectsCodes(projectCodes, instance));
+            for (Integer ccCode : costCenterCodes) {
+                infoProjectList.addAll(persistentProject.readByCoordinatorAndNotProjectsCodes(ccCode, null, instance));
+            }
+        }
+        return infoProjectList;
+    }
 }

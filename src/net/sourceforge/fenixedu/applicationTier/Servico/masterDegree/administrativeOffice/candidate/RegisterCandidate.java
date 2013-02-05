@@ -43,152 +43,152 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RegisterCandidate extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
-			throws FenixServiceException {
-		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
+            throws FenixServiceException {
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-		Person person = masterDegreeCandidate.getPerson();
+        Person person = masterDegreeCandidate.getPerson();
 
-		checkCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());
+        checkCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());
 
-		// remove master degree candidate role
-		person.removeRoleByType(RoleType.MASTER_DEGREE_CANDIDATE);
+        // remove master degree candidate role
+        person.removeRoleByType(RoleType.MASTER_DEGREE_CANDIDATE);
 
-		// check if old student number is free
-		checkOldStudentNumber(studentNumber, person);
+        // check if old student number is free
+        checkOldStudentNumber(studentNumber, person);
 
-		// create new student
-		final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
-		Registration registration = createNewRegistration(person, studentNumber, executionDegree.getDegree());
+        // create new student
+        final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+        Registration registration = createNewRegistration(person, studentNumber, executionDegree.getDegree());
 
-		// person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+        // person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
-		StudentCurricularPlan studentCurricularPlan =
-				createNewStudentCurricularPlan(registration, branchID, masterDegreeCandidate);
+        StudentCurricularPlan studentCurricularPlan =
+                createNewStudentCurricularPlan(registration, branchID, masterDegreeCandidate);
 
-		// person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+        // person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
-		createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
+        createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
 
-		updateCandidateSituation(masterDegreeCandidate);
+        updateCandidateSituation(masterDegreeCandidate);
 
-		copyQualifications(masterDegreeCandidate, person);
+        copyQualifications(masterDegreeCandidate, person);
 
-		createGratuitySituation(masterDegreeCandidate, studentCurricularPlan);
+        createGratuitySituation(masterDegreeCandidate, studentCurricularPlan);
 
-		return createNewInfoCandidateRegistration(masterDegreeCandidate, studentCurricularPlan);
+        return createNewInfoCandidateRegistration(masterDegreeCandidate, studentCurricularPlan);
 
-	}
+    }
 
-	private static InfoCandidateRegistration createNewInfoCandidateRegistration(MasterDegreeCandidate masterDegreeCandidate,
-			StudentCurricularPlan studentCurricularPlan) {
-		InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
-		infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
-				.newInfoFromDomain(masterDegreeCandidate));
-		infoCandidateRegistration
-				.setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
-		infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
-		Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
-		while (iteratorSCPs.hasNext()) {
-			Enrolment enrolment = iteratorSCPs.next();
-			infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
-		}
-		return infoCandidateRegistration;
-	}
+    private static InfoCandidateRegistration createNewInfoCandidateRegistration(MasterDegreeCandidate masterDegreeCandidate,
+            StudentCurricularPlan studentCurricularPlan) {
+        InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
+        infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate));
+        infoCandidateRegistration
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+        infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
+        Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
+        while (iteratorSCPs.hasNext()) {
+            Enrolment enrolment = iteratorSCPs.next();
+            infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
+        }
+        return infoCandidateRegistration;
+    }
 
-	private static void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate,
-			StudentCurricularPlan studentCurricularPlan) throws GratuityValuesNotDefinedServiceException {
+    private static void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate,
+            StudentCurricularPlan studentCurricularPlan) throws GratuityValuesNotDefinedServiceException {
 
-		GratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
+        GratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 
-		if (gratuityValues == null) {
-			throw new GratuityValuesNotDefinedServiceException("error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
-		}
+        if (gratuityValues == null) {
+            throw new GratuityValuesNotDefinedServiceException("error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
+        }
 
-		new GratuitySituation(gratuityValues, studentCurricularPlan);
-	}
+        new GratuitySituation(gratuityValues, studentCurricularPlan);
+    }
 
-	private static void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
-		Qualification qualification = new Qualification();
-		if (masterDegreeCandidate.getAverage() != null) {
-			qualification.setMark(masterDegreeCandidate.getAverage().toString());
-		}
-		qualification.setPerson(person);
-		if (masterDegreeCandidate.getMajorDegreeSchool() == null) {
-			qualification.setSchool("");
-		} else {
-			qualification.setSchool(masterDegreeCandidate.getMajorDegreeSchool());
-		}
-		qualification.setTitle(masterDegreeCandidate.getMajorDegree());
+    private static void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
+        Qualification qualification = new Qualification();
+        if (masterDegreeCandidate.getAverage() != null) {
+            qualification.setMark(masterDegreeCandidate.getAverage().toString());
+        }
+        qualification.setPerson(person);
+        if (masterDegreeCandidate.getMajorDegreeSchool() == null) {
+            qualification.setSchool("");
+        } else {
+            qualification.setSchool(masterDegreeCandidate.getMajorDegreeSchool());
+        }
+        qualification.setTitle(masterDegreeCandidate.getMajorDegree());
 
-		Calendar calendar = Calendar.getInstance();
-		if (masterDegreeCandidate.getMajorDegreeYear() == null) {
-			qualification.setDate(calendar.getTime());
-		} else {
-			calendar.set(Calendar.YEAR, masterDegreeCandidate.getMajorDegreeYear().intValue());
-			qualification.setDate(calendar.getTime());
-		}
-		qualification.setDegree(masterDegreeCandidate.getMajorDegree());
-	}
+        Calendar calendar = Calendar.getInstance();
+        if (masterDegreeCandidate.getMajorDegreeYear() == null) {
+            qualification.setDate(calendar.getTime());
+        } else {
+            calendar.set(Calendar.YEAR, masterDegreeCandidate.getMajorDegreeYear().intValue());
+            qualification.setDate(calendar.getTime());
+        }
+        qualification.setDegree(masterDegreeCandidate.getMajorDegree());
+    }
 
-	private static void updateCandidateSituation(MasterDegreeCandidate masterDegreeCandidate) {
-		masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
+    private static void updateCandidateSituation(MasterDegreeCandidate masterDegreeCandidate) {
+        masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
 
-		CandidateSituation candidateSituation = new CandidateSituation();
-		candidateSituation.setDate(Calendar.getInstance().getTime());
-		candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
-		candidateSituation.setValidation(new State(State.ACTIVE));
-		candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
-	}
+        CandidateSituation candidateSituation = new CandidateSituation();
+        candidateSituation.setDate(Calendar.getInstance().getTime());
+        candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
+        candidateSituation.setValidation(new State(State.ACTIVE));
+        candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
+    }
 
-	private static void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
-			StudentCurricularPlan studentCurricularPlan) {
-		List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-		ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-		for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
-			new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,
-					EnrollmentCondition.FINAL, userView.getUtilizador());
-		}
-	}
+    private static void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
+            StudentCurricularPlan studentCurricularPlan) {
+        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+        for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
+            new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,
+                    EnrollmentCondition.FINAL, userView.getUtilizador());
+        }
+    }
 
-	private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
-			MasterDegreeCandidate masterDegreeCandidate) {
-		Branch branch = rootDomainObject.readBranchByOID(branchID);
-		DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
+    private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
+            MasterDegreeCandidate masterDegreeCandidate) {
+        Branch branch = rootDomainObject.readBranchByOID(branchID);
+        DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
 
-		StudentCurricularPlan studentCurricularPlan =
-				StudentCurricularPlan.createPreBolonhaMasterDegree(registration, degreecurricularPlan, new YearMonthDay(),
-						branch, masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
-		return studentCurricularPlan;
-	}
+        StudentCurricularPlan studentCurricularPlan =
+                StudentCurricularPlan.createPreBolonhaMasterDegree(registration, degreecurricularPlan, new YearMonthDay(),
+                        branch, masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
+        return studentCurricularPlan;
+    }
 
-	private static Registration createNewRegistration(Person person, Integer studentNumber, Degree degree) {
-		return new Registration(person, studentNumber, degree);
-	}
+    private static Registration createNewRegistration(Person person, Integer studentNumber, Degree degree) {
+        return new Registration(person, studentNumber, degree);
+    }
 
-	private static void checkOldStudentNumber(Integer studentNumber, Person person) throws ExistingServiceException {
-		if (studentNumber != null) {
+    private static void checkOldStudentNumber(Integer studentNumber, Person person) throws ExistingServiceException {
+        if (studentNumber != null) {
 
-			Registration existingStudent = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+            Registration existingStudent = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 
-			if (existingStudent != null && !existingStudent.getPerson().equals(person)) {
-				throw new ExistingServiceException();
-			}
-		}
-	}
+            if (existingStudent != null && !existingStudent.getPerson().equals(person)) {
+                throw new ExistingServiceException();
+            }
+        }
+    }
 
-	private static void checkCandidateSituation(CandidateSituation situation) throws InvalidChangeServiceException {
-		if (situation.getSituation().equals(SituationName.ADMITIDO_OBJ)
-				|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ)
-				|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ)
-				|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_OTHER_OBJ)
-				|| situation.getSituation().equals(SituationName.ADMITED_SPECIALIZATION_OBJ)) {
-			return;
-		}
+    private static void checkCandidateSituation(CandidateSituation situation) throws InvalidChangeServiceException {
+        if (situation.getSituation().equals(SituationName.ADMITIDO_OBJ)
+                || situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ)
+                || situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ)
+                || situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_OTHER_OBJ)
+                || situation.getSituation().equals(SituationName.ADMITED_SPECIALIZATION_OBJ)) {
+            return;
+        }
 
-		throw new InvalidChangeServiceException();
-	}
+        throw new InvalidChangeServiceException();
+    }
 
 }

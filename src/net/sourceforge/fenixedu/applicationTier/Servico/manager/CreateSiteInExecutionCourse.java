@@ -15,13 +15,13 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateSiteInExecutionCourse extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer executionCourseId) throws FenixServiceException {
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		if (executionCourse == null) {
-			throw new NonExistingServiceException("message.non.existing.execution.course", null);
-		}
-		executionCourse.createSite();
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer executionCourseId) throws FenixServiceException {
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        if (executionCourse == null) {
+            throw new NonExistingServiceException("message.non.existing.execution.course", null);
+        }
+        executionCourse.createSite();
+    }
 }

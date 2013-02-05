@@ -17,16 +17,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "teacher", path = "/tutorSection", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "tutorMenu", path = "/teacher/tutor/help.jsp", tileProperties = @Tile(
-		navLocal = "/teacher/commons/navigationBarIndex.jsp",
-		title = "private.teacher.managementmentoring")) })
+        navLocal = "/teacher/commons/navigationBarIndex.jsp", title = "private.teacher.managementmentoring")) })
 public class TutorshipManagementDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Person person = getLoggedPerson(request);
+        final Person person = getLoggedPerson(request);
 
-		request.setAttribute("tutor", person);
-		return mapping.findForward("tutorMenu");
-	}
+        request.setAttribute("tutor", person);
+        return mapping.findForward("tutorMenu");
+    }
 }

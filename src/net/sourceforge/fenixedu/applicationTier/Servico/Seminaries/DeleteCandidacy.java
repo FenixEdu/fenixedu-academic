@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class DeleteCandidacy extends FenixService {
 
-	public void run(Integer id) throws BDException {
-		SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
-		candidacy.delete();
-	}
+    public void run(Integer id) throws BDException {
+        SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
+        candidacy.delete();
+    }
 
 }

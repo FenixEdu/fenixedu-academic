@@ -4,64 +4,64 @@ import org.apache.commons.lang.StringUtils;
 
 public class EmptyGrade extends Grade {
 
-	protected EmptyGrade() {
-	}
+    protected EmptyGrade() {
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return true;
-	}
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
 
-	@Override
-	public String getValue() {
-		return null;
-	}
+    @Override
+    public String getValue() {
+        return null;
+    }
 
-	@Override
-	public Integer getIntegerValue() {
-		return null;
-	}
+    @Override
+    public Integer getIntegerValue() {
+        return null;
+    }
 
-	@Override
-	public GradeScale getGradeScale() {
-		return null;
-	}
+    @Override
+    public GradeScale getGradeScale() {
+        return null;
+    }
 
-	@Override
-	public int compareTo(Grade otherGrade) {
-		return otherGrade.isEmpty() ? 0 : -1;
-	}
+    @Override
+    public int compareTo(Grade otherGrade) {
+        return otherGrade.isEmpty() ? 0 : -1;
+    }
 
-	static protected boolean qualifiesAsEmpty(String value) {
-		if (value != null) {
-			value = value.trim();
-		}
-		return StringUtils.isEmpty(value) || value.equals("null");
-	}
+    static protected boolean qualifiesAsEmpty(String value) {
+        if (value != null) {
+            value = value.trim();
+        }
+        return StringUtils.isEmpty(value) || value.equals("null");
+    }
 
-	@Override
-	public String exportAsString() {
-		return StringUtils.EMPTY;
-	}
+    @Override
+    public String exportAsString() {
+        return StringUtils.EMPTY;
+    }
 
-	@Override
-	public boolean isNumeric() {
-		return false;
-	}
+    @Override
+    public boolean isNumeric() {
+        return false;
+    }
 
-	@Override
-	public boolean isApproved() {
-		return false;
-	}
+    @Override
+    public boolean isApproved() {
+        return false;
+    }
 
-	@Override
-	public boolean isNotApproved() {
-		return true;
-	}
+    @Override
+    public boolean isNotApproved() {
+        return true;
+    }
 
-	@Override
-	public boolean isNotEvaluated() {
-		return true;
-	}
+    @Override
+    public boolean isNotEvaluated() {
+        return true;
+    }
 
 }

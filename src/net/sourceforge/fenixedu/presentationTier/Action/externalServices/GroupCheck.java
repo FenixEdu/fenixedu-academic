@@ -16,49 +16,49 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/groupCheck", scope = "request", parameter = "method")
 public class GroupCheck extends ExternalInterfaceDispatchAction {
 
-	private static final String NON_EXISTING_GROUP_CODE = "NON_EXISTING_GROUP";
+    private static final String NON_EXISTING_GROUP_CODE = "NON_EXISTING_GROUP";
 
-	/**
-	 * Checks if the user belongs to the group specified in query.
-	 * 
-	 * The response has the following format: <RESPONSE_CODE>\n<BOOLEAN_VALUE>
-	 * 
-	 * 
-	 * 
-	 * <RESPONSE_CODE> = NON_EXISTING_GROUP | SUCESS | NOT_AUTHORIZED |
-	 * UNEXPECTED_ERROR
-	 * 
-	 * <BOOLEAN_VALUE> = true || false
-	 * 
-	 * 
-	 * 
-	 */
-	public ActionForward check(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final String query = request.getParameter("query");
+    /**
+     * Checks if the user belongs to the group specified in query.
+     * 
+     * The response has the following format: <RESPONSE_CODE>\n<BOOLEAN_VALUE>
+     * 
+     * 
+     * 
+     * <RESPONSE_CODE> = NON_EXISTING_GROUP | SUCESS | NOT_AUTHORIZED |
+     * UNEXPECTED_ERROR
+     * 
+     * <BOOLEAN_VALUE> = true || false
+     * 
+     * 
+     * 
+     */
+    public ActionForward check(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final String query = request.getParameter("query");
 
-		String responseMessage = "";
-		String responseCode;
+        String responseMessage = "";
+        String responseCode;
 
-		if (!HostAccessControl.isAllowed(this, request)) {
-			responseCode = NOT_AUTHORIZED_CODE;
-		} else {
-			try {
-				Boolean result = GroupCheckService.run(query);
+        if (!HostAccessControl.isAllowed(this, request)) {
+            responseCode = NOT_AUTHORIZED_CODE;
+        } else {
+            try {
+                Boolean result = GroupCheckService.run(query);
 
-				responseMessage = result.toString().toLowerCase();
-				responseCode = SUCCESS_CODE;
-			} catch (NonExistingServiceException e) {
-				responseCode = NON_EXISTING_GROUP_CODE;
-			} catch (Exception e) {
-				responseCode = UNEXPECTED_ERROR_CODE;
-			}
+                responseMessage = result.toString().toLowerCase();
+                responseCode = SUCCESS_CODE;
+            } catch (NonExistingServiceException e) {
+                responseCode = NON_EXISTING_GROUP_CODE;
+            } catch (Exception e) {
+                responseCode = UNEXPECTED_ERROR_CODE;
+            }
 
-		}
+        }
 
-		writeResponse(response, responseCode, responseMessage);
+        writeResponse(response, responseCode, responseMessage);
 
-		return null;
-	}
+        return null;
+    }
 
 }

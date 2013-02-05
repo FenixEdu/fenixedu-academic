@@ -23,27 +23,27 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PrepareEditGroupingMembers extends FenixService {
 
-	@Service
-	public static List run(Integer executionCourseCode, Integer groupingID) throws FenixServiceException {
-		final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
-		if (grouping == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+    @Service
+    public static List run(Integer executionCourseCode, Integer groupingID) throws FenixServiceException {
+        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+        if (grouping == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		final List<Attends> attends = new ArrayList<Attends>();
-		final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
+        final List<Attends> attends = new ArrayList<Attends>();
+        final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
 
-		for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
-			if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
-					|| exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
-				for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
-					if (!attends.contains(attend) && !grouping.getAttends().contains(attend)) {
-						attends.add(attend);
-						infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
-					}
-				}
-			}
-		}
-		return infoStudents;
-	}
+        for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
+            if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
+                    || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
+                for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
+                    if (!attends.contains(attend) && !grouping.getAttends().contains(attend)) {
+                        attends.add(attend);
+                        infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
+                    }
+                }
+            }
+        }
+        return infoStudents;
+    }
 }

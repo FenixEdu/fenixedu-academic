@@ -22,43 +22,43 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/guides", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
-		@Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
+        @Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
 public class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
-	@Override
-	public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Override
+    public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PaymentsManagementDTO managementDTO =
-				(PaymentsManagementDTO) RenderUtils.getViewState("paymentsManagementDTO").getMetaObject().getObject();
-		request.setAttribute("paymentsManagementDTO", managementDTO);
+        final PaymentsManagementDTO managementDTO =
+                (PaymentsManagementDTO) RenderUtils.getViewState("paymentsManagementDTO").getMetaObject().getObject();
+        request.setAttribute("paymentsManagementDTO", managementDTO);
 
-		if (managementDTO.getSelectedEntries().isEmpty()) {
-			addActionMessage("context", request, "error.payments.guide.entries.selection.is.required");
-			request.setAttribute("personId", managementDTO.getPerson().getIdInternal());
-			return mapping.findForward("showEvents");
-		} else {
-			return mapping.findForward("showGuide");
-		}
-	}
+        if (managementDTO.getSelectedEntries().isEmpty()) {
+            addActionMessage("context", request, "error.payments.guide.entries.selection.is.required");
+            request.setAttribute("personId", managementDTO.getPerson().getIdInternal());
+            return mapping.findForward("showEvents");
+        } else {
+            return mapping.findForward("showGuide");
+        }
+    }
 
-	public ActionForward printGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws IOException, JRException {
+    public ActionForward printGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, JRException {
 
-		PaymentsManagementDTO managementDTO =
-				(PaymentsManagementDTO) RenderUtils.getViewState("paymentsManagementDTO").getMetaObject().getObject();
+        PaymentsManagementDTO managementDTO =
+                (PaymentsManagementDTO) RenderUtils.getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
-		final GuideDocument document = new GuideDocument(managementDTO, getMessageResourceProvider(request));
-		final byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+        final GuideDocument document = new GuideDocument(managementDTO, getMessageResourceProvider(request));
+        final byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
 
-		response.setContentLength(data.length);
-		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+        response.setContentLength(data.length);
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
 
-		response.getOutputStream().write(data);
+        response.getOutputStream().write(data);
 
-		return null;
+        return null;
 
-	}
+    }
 
 }

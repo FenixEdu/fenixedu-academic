@@ -16,12 +16,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadTeacherServiceByTeacherIDAndExecutionPeriodID extends FenixService {
 
-	@Service
-	public static TeacherService run(Integer teacherID, Integer executionPeriodID) {
-		Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+    @Service
+    public static TeacherService run(Integer teacherID, Integer executionPeriodID) {
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-		return teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	}
+        return teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+    }
 
 }

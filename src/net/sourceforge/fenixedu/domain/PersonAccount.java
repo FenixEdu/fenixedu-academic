@@ -18,50 +18,50 @@ import net.sourceforge.fenixedu.domain.transactions.Transaction;
  */
 public class PersonAccount extends PersonAccount_Base {
 
-	public PersonAccount() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public PersonAccount() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public PersonAccount(Person person) {
-		this();
-		setPerson(person);
-		setBalance(new Double(0));
+    public PersonAccount(Person person) {
+        this();
+        setPerson(person);
+        setBalance(new Double(0));
 
-	}
+    }
 
-	public List getPaymentTransactions() {
+    public List getPaymentTransactions() {
 
-		List result = new ArrayList<PaymentTransaction>();
-		for (Transaction transaction : this.getTransactions()) {
-			if (transaction instanceof PaymentTransaction) {
-				result.add(transaction);
-			}
-		}
+        List result = new ArrayList<PaymentTransaction>();
+        for (Transaction transaction : this.getTransactions()) {
+            if (transaction instanceof PaymentTransaction) {
+                result.add(transaction);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public List getInsuranceTransactions() {
+    public List getInsuranceTransactions() {
 
-		List result = new ArrayList<InsuranceTransaction>();
-		for (Transaction transaction : this.getTransactions()) {
-			if (transaction instanceof InsuranceTransaction) {
-				result.add(transaction);
-			}
-		}
-		return result;
-	}
+        List result = new ArrayList<InsuranceTransaction>();
+        for (Transaction transaction : this.getTransactions()) {
+            if (transaction instanceof InsuranceTransaction) {
+                result.add(transaction);
+            }
+        }
+        return result;
+    }
 
-	public void delete() {
+    public void delete() {
 
-		if (getTransactionsCount() > 0) {
-			throw new DomainException("error.person.cannot.be.deleted");
-		}
+        if (getTransactionsCount() > 0) {
+            throw new DomainException("error.person.cannot.be.deleted");
+        }
 
-		removeRootDomainObject();
-		removePerson();
-		super.deleteDomainObject();
-	}
+        removeRootDomainObject();
+        removePerson();
+        super.deleteDomainObject();
+    }
 
 }

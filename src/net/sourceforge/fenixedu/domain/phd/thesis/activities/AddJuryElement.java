@@ -8,22 +8,22 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
 public class AddJuryElement extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-		if (process.isJuryValidated()) {
-			throw new PreConditionNotValidException();
-		}
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+        if (process.isJuryValidated()) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-		process.checkJuryReporterNotGuider((PhdThesisJuryElementBean) object);
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+        process.checkJuryReporterNotGuider((PhdThesisJuryElementBean) object);
 
-		ThesisJuryElement.create(process, (PhdThesisJuryElementBean) object);
-		return process;
-	}
+        ThesisJuryElement.create(process, (PhdThesisJuryElementBean) object);
+        return process;
+    }
 }

@@ -11,15 +11,15 @@ import net.sourceforge.fenixedu.domain.person.Gender;
  */
 public class String2Gender {
 
-	public static Gender convert(String genderString) {
+    public static Gender convert(String genderString) {
 
-		if (genderString.equalsIgnoreCase("M") || genderString.equalsIgnoreCase("MASCULINO")
-				|| genderString.equalsIgnoreCase("male")) {
-			return Gender.MALE;
-		} else {
-			return Gender.FEMALE;
-		}
+        if (genderString.equalsIgnoreCase("M") || genderString.equalsIgnoreCase("MASCULINO")
+                || genderString.equalsIgnoreCase("male")) {
+            return Gender.MALE;
+        } else {
+            return Gender.FEMALE;
+        }
 
-	}
+    }
 
 }

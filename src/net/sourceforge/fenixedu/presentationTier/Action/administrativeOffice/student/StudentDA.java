@@ -28,79 +28,77 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/student", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
-		@Forward(
-				name = "viewStudentDetails",
-				path = "/academicAdminOffice/student/viewStudentDetails.jsp",
-				tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-		@Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp", tileProperties = @Tile(
-				title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-		@Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp", tileProperties = @Tile(
-				title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-		@Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp", tileProperties = @Tile(
-				title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+        @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp",
+                tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+        @Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp", tileProperties = @Tile(
+                title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+        @Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp", tileProperties = @Tile(
+                title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+        @Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp", tileProperties = @Tile(
+                title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class StudentDA extends StudentRegistrationDA {
 
-	private Student getAndSetStudent(final HttpServletRequest request) {
-		final String studentID = getFromRequest(request, "studentID").toString();
-		final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
-		request.setAttribute("student", student);
-		request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
-		return student;
-	}
+    private Student getAndSetStudent(final HttpServletRequest request) {
+        final String studentID = getFromRequest(request, "studentID").toString();
+        final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
+        request.setAttribute("student", student);
+        request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
+        return student;
+    }
 
-	public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		final Student student = getAndSetStudent(request);
+    public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final Student student = getAndSetStudent(request);
 
-		final Employee employee = student.getPerson().getEmployee();
-		if (employee != null && employee.getCurrentWorkingContract() != null) {
-			addActionMessage(request, "message.student.personIsEmployee");
-			return mapping.findForward("viewStudentDetails");
-		}
+        final Employee employee = student.getPerson().getEmployee();
+        if (employee != null && employee.getCurrentWorkingContract() != null) {
+            addActionMessage(request, "message.student.personIsEmployee");
+            return mapping.findForward("viewStudentDetails");
+        }
 
-		request.setAttribute("personBean", new PersonBeanFactoryEditor(student.getPerson()));
-		return mapping.findForward("editPersonalData");
-	}
+        request.setAttribute("personBean", new PersonBeanFactoryEditor(student.getPerson()));
+        return mapping.findForward("editPersonalData");
+    }
 
-	public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		getAndSetStudent(request);
-		try {
-			executeFactoryMethod();
-			RenderUtils.invalidateViewState();
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getKey(), ex.getArgs());
+    public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        getAndSetStudent(request);
+        try {
+            executeFactoryMethod();
+            RenderUtils.invalidateViewState();
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
 
-			request.setAttribute("personBean", getRenderedObject());
-			return mapping.findForward("editPersonalData");
-		}
+            request.setAttribute("personBean", getRenderedObject());
+            return mapping.findForward("editPersonalData");
+        }
 
-		addActionMessage(request, "message.student.personDataEditedWithSuccess");
+        addActionMessage(request, "message.student.personDataEditedWithSuccess");
 
-		return mapping.findForward("viewStudentDetails");
-	}
+        return mapping.findForward("viewStudentDetails");
+    }
 
-	public ActionForward viewPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("personBean", new PersonBeanFactoryEditor(getAndSetStudent(request).getPerson()));
-		return mapping.findForward("viewPersonalData");
-	}
+        request.setAttribute("personBean", new PersonBeanFactoryEditor(getAndSetStudent(request).getPerson()));
+        return mapping.findForward("viewPersonalData");
+    }
 
-	public ActionForward visualizeStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		getAndSetStudent(request);
-		return mapping.findForward("viewStudentDetails");
-	}
+    public ActionForward visualizeStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        getAndSetStudent(request);
+        return mapping.findForward("viewStudentDetails");
+    }
 
-	public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		final Student student = getAndSetStudent(request);
+    public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final Student student = getAndSetStudent(request);
 
-		Person person = student.getPerson();
-		List<PersonInformationLog> logsList = person.getPersonInformationLogs();
-		request.setAttribute("person", person);
-		request.setAttribute("logsList", logsList);
-		return mapping.findForward("viewStudentLogChanges");
-	}
+        Person person = student.getPerson();
+        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        request.setAttribute("person", person);
+        request.setAttribute("logsList", logsList);
+        return mapping.findForward("viewStudentLogChanges");
+    }
 }

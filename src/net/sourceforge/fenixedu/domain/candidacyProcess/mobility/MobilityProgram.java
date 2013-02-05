@@ -14,82 +14,82 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MobilityProgram extends MobilityProgram_Base {
 
-	public static final Comparator<MobilityProgram> COMPARATOR_BY_REGISTRATION_AGREEMENT = new Comparator<MobilityProgram>() {
+    public static final Comparator<MobilityProgram> COMPARATOR_BY_REGISTRATION_AGREEMENT = new Comparator<MobilityProgram>() {
 
-		@Override
-		public int compare(MobilityProgram o1, MobilityProgram o2) {
-			return o1.getRegistrationAgreement().compareTo(o2.getRegistrationAgreement());
-		}
+        @Override
+        public int compare(MobilityProgram o1, MobilityProgram o2) {
+            return o1.getRegistrationAgreement().compareTo(o2.getRegistrationAgreement());
+        }
 
-	};
+    };
 
-	private MobilityProgram() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    private MobilityProgram() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public MobilityProgram(RegistrationAgreement agreement) {
-		this();
-		setRegistrationAgreement(agreement);
-	}
+    public MobilityProgram(RegistrationAgreement agreement) {
+        this();
+        setRegistrationAgreement(agreement);
+    }
 
-	public void delete() {
-		removeRootDomainObject();
-		getMobilityAgreements().clear();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeRootDomainObject();
+        getMobilityAgreements().clear();
+        deleteDomainObject();
+    }
 
-	public static List<MobilityProgram> getAllMobilityPrograms() {
-		List<MobilityProgram> result = new ArrayList<MobilityProgram>();
+    public static List<MobilityProgram> getAllMobilityPrograms() {
+        List<MobilityProgram> result = new ArrayList<MobilityProgram>();
 
-		List<Program> programs = RootDomainObject.getInstance().getPrograms();
+        List<Program> programs = RootDomainObject.getInstance().getPrograms();
 
-		for (Program program : programs) {
-			if (program.isMobility()) {
-				result.add((MobilityProgram) program);
-			}
-		}
+        for (Program program : programs) {
+            if (program.isMobility()) {
+                result.add((MobilityProgram) program);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public MultiLanguageString getName() {
-		RegistrationAgreement registrationAgreement = getRegistrationAgreement();
-		String englishDescription = registrationAgreement.getDescription(Locale.ENGLISH);
+    public MultiLanguageString getName() {
+        RegistrationAgreement registrationAgreement = getRegistrationAgreement();
+        String englishDescription = registrationAgreement.getDescription(Locale.ENGLISH);
 
-		Locale localePT = new Locale("pt", "PT");
-		String portugueseDescription = registrationAgreement.getDescription(localePT);
+        Locale localePT = new Locale("pt", "PT");
+        String portugueseDescription = registrationAgreement.getDescription(localePT);
 
-		return (new MultiLanguageString(Language.pt, portugueseDescription)).with(Language.en, englishDescription);
-	}
+        return (new MultiLanguageString(Language.pt, portugueseDescription)).with(Language.en, englishDescription);
+    }
 
-	@Override
-	public boolean isMobility() {
-		return true;
-	}
+    @Override
+    public boolean isMobility() {
+        return true;
+    }
 
-	public MobilityAgreement getMobilityAgreementByUniversityUnit(final UniversityUnit unit) {
-		List<MobilityAgreement> mobilityAgreements = getMobilityAgreements();
+    public MobilityAgreement getMobilityAgreementByUniversityUnit(final UniversityUnit unit) {
+        List<MobilityAgreement> mobilityAgreements = getMobilityAgreements();
 
-		for (MobilityAgreement mobilityAgreement : mobilityAgreements) {
-			if (mobilityAgreement.getUniversityUnit() == unit) {
-				return mobilityAgreement;
-			}
-		}
+        for (MobilityAgreement mobilityAgreement : mobilityAgreements) {
+            if (mobilityAgreement.getUniversityUnit() == unit) {
+                return mobilityAgreement;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public static MobilityProgram getByRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-		List<Program> programs = RootDomainObject.getInstance().getPrograms();
-		for (Program program : programs) {
-			if (program instanceof MobilityProgram) {
-				MobilityProgram mob = ((MobilityProgram) program);
-				if (mob.getRegistrationAgreement() == registrationAgreement) {
-					return mob;
-				}
-			}
-		}
-		return null;
-	}
+    public static MobilityProgram getByRegistrationAgreement(RegistrationAgreement registrationAgreement) {
+        List<Program> programs = RootDomainObject.getInstance().getPrograms();
+        for (Program program : programs) {
+            if (program instanceof MobilityProgram) {
+                MobilityProgram mob = ((MobilityProgram) program);
+                if (mob.getRegistrationAgreement() == registrationAgreement) {
+                    return mob;
+                }
+            }
+        }
+        return null;
+    }
 }

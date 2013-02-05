@@ -22,14 +22,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "departmentAdmOffice", path = "/exportCredits", scope = "request", parameter = "method")
 public class DepartmentAdmOfficeCreditsReportsDA extends CreditsReportsDA {
 
-	@Override
-	public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-		IUserView userView = UserView.getUser();
-		DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-		departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson()
-				.getManageableDepartmentCredits()));
-		request.setAttribute("departmentCreditsBean", departmentCreditsBean);
-		return mapping.findForward("exportDepartmentCourses");
-	}
+    @Override
+    public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+        IUserView userView = UserView.getUser();
+        DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
+        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson()
+                .getManageableDepartmentCredits()));
+        request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+        return mapping.findForward("exportDepartmentCourses");
+    }
 }

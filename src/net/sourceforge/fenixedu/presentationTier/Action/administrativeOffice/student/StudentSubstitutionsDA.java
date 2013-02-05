@@ -16,30 +16,30 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentSubstitutions", module = "academicAdministration", formBean = "studentDismissalForm")
 @Forwards({ @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
-		@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseSubstitutionEquivalents.jsp"),
-		@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
-		@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseSubstitutionEnrolments.jsp"),
-		@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateSubstitution.jsp"),
-		@Forward(name = "chooseNotNeedToEnrol", path = "/academicAdminOffice/dismissal/chooseSubstitutionNotNeedToEnrol.jsp")
+        @Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseSubstitutionEquivalents.jsp"),
+        @Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
+        @Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseSubstitutionEnrolments.jsp"),
+        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateSubstitution.jsp"),
+        @Forward(name = "chooseNotNeedToEnrol", path = "/academicAdminOffice/dismissal/chooseSubstitutionNotNeedToEnrol.jsp")
 
 })
 public class StudentSubstitutionsDA extends StudentDismissalsDA {
 
-	@Override
-	public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		DismissalBean dismissalBean = getRenderedObject("dismissalBean");
-		if (dismissalBean.getSelectedEnrolments().isEmpty()) {
-			addActionMessage(request, "error.createSubstitution.origin.cannot.be.empty");
-			return prepare(mapping, form, request, response);
-		}
+    @Override
+    public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        DismissalBean dismissalBean = getRenderedObject("dismissalBean");
+        if (dismissalBean.getSelectedEnrolments().isEmpty()) {
+            addActionMessage(request, "error.createSubstitution.origin.cannot.be.empty");
+            return prepare(mapping, form, request, response);
+        }
 
-		return super.chooseEquivalents(mapping, form, request, response);
-	}
+        return super.chooseEquivalents(mapping, form, request, response);
+    }
 
-	@Override
-	protected void executeCreateDismissalService(DismissalBean dismissalBean) {
-		CreateNewSubstitutionDismissal.run(dismissalBean);
-	}
+    @Override
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
+        CreateNewSubstitutionDismissal.run(dismissalBean);
+    }
 
 }

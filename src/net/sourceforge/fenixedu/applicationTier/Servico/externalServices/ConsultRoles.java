@@ -14,38 +14,38 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ConsultRoles extends FenixService {
 
-	public static class NotAuthorizedException extends FenixServiceException {
-	}
+    public static class NotAuthorizedException extends FenixServiceException {
+    }
 
-	private static final Set<String> allowedHosts = new HashSet<String>();
-	private static final String password;
-	static {
-		final String allowedHostString = PropertiesManager.getProperty("consult.roles.admin.allowed.hosts");
-		if (allowedHostString != null) {
-			final String[] allowedHostTokens = allowedHostString.split(",");
-			for (String allowedHostToken : allowedHostTokens) {
-				allowedHosts.add(allowedHostToken);
-			}
-		}
-		password = PropertiesManager.getProperty("consult.roles.admin.password");
-	}
+    private static final Set<String> allowedHosts = new HashSet<String>();
+    private static final String password;
+    static {
+        final String allowedHostString = PropertiesManager.getProperty("consult.roles.admin.allowed.hosts");
+        if (allowedHostString != null) {
+            final String[] allowedHostTokens = allowedHostString.split(",");
+            for (String allowedHostToken : allowedHostTokens) {
+                allowedHosts.add(allowedHostToken);
+            }
+        }
+        password = PropertiesManager.getProperty("consult.roles.admin.password");
+    }
 
-	public static boolean isAllowed(final String host, final String ip, final String password) {
-		return ConsultRoles.password != null && ConsultRoles.password.equals(password)
-				&& (allowedHosts.contains(host) || allowedHosts.contains(ip));
-	}
+    public static boolean isAllowed(final String host, final String ip, final String password) {
+        return ConsultRoles.password != null && ConsultRoles.password.equals(password)
+                && (allowedHosts.contains(host) || allowedHosts.contains(ip));
+    }
 
-	@Service
-	public static Set<Role> run(final String host, final String ip, final String password, final String userUId)
-			throws FenixServiceException {
-		if (isAllowed(host, ip, password)) {
-			final Login login = Login.readLoginByUsername(userUId);
-			final User user = login.getUser();
-			final Person person = user.getPerson();
-			return user == null ? null : person.getPersonRolesSet();
-		} else {
-			throw new NotAuthorizedException();
-		}
-	}
+    @Service
+    public static Set<Role> run(final String host, final String ip, final String password, final String userUId)
+            throws FenixServiceException {
+        if (isAllowed(host, ip, password)) {
+            final Login login = Login.readLoginByUsername(userUId);
+            final User user = login.getUser();
+            final Person person = user.getPerson();
+            return user == null ? null : person.getPersonRolesSet();
+        } else {
+            throw new NotAuthorizedException();
+        }
+    }
 
 }

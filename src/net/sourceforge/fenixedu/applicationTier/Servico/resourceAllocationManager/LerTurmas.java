@@ -15,29 +15,29 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerTurmas extends FenixService {
 
-	@Service
-	public static List<InfoClass> run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-			Integer curricularYear) {
+    @Service
+    public static List<InfoClass> run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+            Integer curricularYear) {
 
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-		final ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 
-		final Set<SchoolClass> classes;
-		if (curricularYear != null) {
-			classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, curricularYear);
-		} else {
-			classes = executionDegree.findSchoolClassesByExecutionPeriod(executionSemester);
-		}
+        final Set<SchoolClass> classes;
+        if (curricularYear != null) {
+            classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, curricularYear);
+        } else {
+            classes = executionDegree.findSchoolClassesByExecutionPeriod(executionSemester);
+        }
 
-		final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
+        final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
 
-		for (final SchoolClass schoolClass : classes) {
-			InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-			infoClassesList.add(infoClass);
-		}
+        for (final SchoolClass schoolClass : classes) {
+            InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+            infoClassesList.add(infoClass);
+        }
 
-		return infoClassesList;
-	}
+        return infoClassesList;
+    }
 
 }

@@ -20,77 +20,77 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExamsMap extends FenixService {
 
-	@Service
-	public static InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
-			InfoExecutionPeriod infoExecutionPeriod) {
+    @Service
+    public static InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
+            InfoExecutionPeriod infoExecutionPeriod) {
 
-		// Object to be returned
-		InfoExamsMap infoExamsMap = new InfoExamsMap();
+        // Object to be returned
+        InfoExamsMap infoExamsMap = new InfoExamsMap();
 
-		// Set Execution Degree
-		infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
+        // Set Execution Degree
+        infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
 
-		// Set List of Curricular Years
-		infoExamsMap.setCurricularYears(curricularYears);
+        // Set List of Curricular Years
+        infoExamsMap.setCurricularYears(curricularYears);
 
-		// Exam seasons hardcoded because this information
-		// is not yet available from the database
-		Calendar startSeason1 = Calendar.getInstance();
-		startSeason1.set(Calendar.YEAR, 2005);
-		startSeason1.set(Calendar.MONTH, Calendar.JANUARY);
-		startSeason1.set(Calendar.DAY_OF_MONTH, 3);
-		startSeason1.set(Calendar.HOUR_OF_DAY, 0);
-		startSeason1.set(Calendar.MINUTE, 0);
-		startSeason1.set(Calendar.SECOND, 0);
-		startSeason1.set(Calendar.MILLISECOND, 0);
-		Calendar endSeason2 = Calendar.getInstance();
-		endSeason2.set(Calendar.YEAR, 2005);
-		endSeason2.set(Calendar.MONTH, Calendar.FEBRUARY);
-		endSeason2.set(Calendar.DAY_OF_MONTH, 12);
-		endSeason2.set(Calendar.HOUR_OF_DAY, 0);
-		endSeason2.set(Calendar.MINUTE, 0);
-		endSeason2.set(Calendar.SECOND, 0);
-		endSeason2.set(Calendar.MILLISECOND, 0);
+        // Exam seasons hardcoded because this information
+        // is not yet available from the database
+        Calendar startSeason1 = Calendar.getInstance();
+        startSeason1.set(Calendar.YEAR, 2005);
+        startSeason1.set(Calendar.MONTH, Calendar.JANUARY);
+        startSeason1.set(Calendar.DAY_OF_MONTH, 3);
+        startSeason1.set(Calendar.HOUR_OF_DAY, 0);
+        startSeason1.set(Calendar.MINUTE, 0);
+        startSeason1.set(Calendar.SECOND, 0);
+        startSeason1.set(Calendar.MILLISECOND, 0);
+        Calendar endSeason2 = Calendar.getInstance();
+        endSeason2.set(Calendar.YEAR, 2005);
+        endSeason2.set(Calendar.MONTH, Calendar.FEBRUARY);
+        endSeason2.set(Calendar.DAY_OF_MONTH, 12);
+        endSeason2.set(Calendar.HOUR_OF_DAY, 0);
+        endSeason2.set(Calendar.MINUTE, 0);
+        endSeason2.set(Calendar.SECOND, 0);
+        endSeason2.set(Calendar.MILLISECOND, 0);
 
-		// Set Exam Season info
-		infoExamsMap.setStartSeason1(startSeason1);
-		infoExamsMap.setEndSeason1(null);
-		infoExamsMap.setStartSeason2(null);
-		infoExamsMap.setEndSeason2(endSeason2);
+        // Set Exam Season info
+        infoExamsMap.setStartSeason1(startSeason1);
+        infoExamsMap.setEndSeason1(null);
+        infoExamsMap.setStartSeason2(null);
+        infoExamsMap.setEndSeason2(endSeason2);
 
-		// List of execution courses
-		List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
+        // List of execution courses
+        List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 
-		DegreeCurricularPlan degreeCurricularPlan =
-				DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-						infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+        DegreeCurricularPlan degreeCurricularPlan =
+                DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 
-		if (degreeCurricularPlan != null) {
-			ExecutionSemester executionSemester =
-					rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-			// Obtain execution courses and associated information
-			// of the given execution degree for each curricular year
-			// persistentSupportecified
-			for (int i = 0; i < curricularYears.size(); i++) {
-				// Obtain list os execution courses
-				List<ExecutionCourse> executionCourses =
-						degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
-								(Integer) curricularYears.get(i), infoExecutionPeriod.getSemester());
+        if (degreeCurricularPlan != null) {
+            ExecutionSemester executionSemester =
+                    rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+            // Obtain execution courses and associated information
+            // of the given execution degree for each curricular year
+            // persistentSupportecified
+            for (int i = 0; i < curricularYears.size(); i++) {
+                // Obtain list os execution courses
+                List<ExecutionCourse> executionCourses =
+                        degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
+                                (Integer) curricularYears.get(i), infoExecutionPeriod.getSemester());
 
-				// For each execution course obtain curricular courses and
-				// exams
-				for (int j = 0; j < executionCourses.size(); j++) {
-					InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourses.get(j));
-					infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
+                // For each execution course obtain curricular courses and
+                // exams
+                for (int j = 0; j < executionCourses.size(); j++) {
+                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourses.get(j));
+                    infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
-					infoExecutionCourses.add(infoExecutionCourse);
-				}
-			}
-		}
+                    infoExecutionCourses.add(infoExecutionCourse);
+                }
+            }
+        }
 
-		infoExamsMap.setExecutionCourses(infoExecutionCourses);
+        infoExamsMap.setExecutionCourses(infoExecutionCourses);
 
-		return infoExamsMap;
-	}
+        return infoExamsMap;
+    }
 
 }

@@ -28,113 +28,113 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuityEvent_Base {
 
-	protected StandaloneEnrolmentGratuityEvent() {
-		super();
-	}
+    protected StandaloneEnrolmentGratuityEvent() {
+        super();
+    }
 
-	public StandaloneEnrolmentGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
-			StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+    public StandaloneEnrolmentGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
+            StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 
-		this();
+        this();
 
-		init(administrativeOffice, EventType.STANDALONE_ENROLMENT_GRATUITY, person, studentCurricularPlan, executionYear);
-	}
+        init(administrativeOffice, EventType.STANDALONE_ENROLMENT_GRATUITY, person, studentCurricularPlan, executionYear);
+    }
 
-	@Override
-	public Account getToAccount() {
-		return getAdministrativeOffice().getUnit().getInternalAccount();
-	}
+    @Override
+    public Account getToAccount() {
+        return getAdministrativeOffice().getUnit().getInternalAccount();
+    }
 
-	@Override
-	public boolean isOpen() {
-		if (isCancelled()) {
-			return false;
-		}
+    @Override
+    public boolean isOpen() {
+        if (isCancelled()) {
+            return false;
+        }
 
-		return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-	}
+        return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
+    }
 
-	@Override
-	public boolean isClosed() {
-		if (isCancelled()) {
-			return false;
-		}
+    @Override
+    public boolean isClosed() {
+        if (isCancelled()) {
+            return false;
+        }
 
-		return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-	}
+        return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
-				.appendLabel(getExecutionYear().getYear());
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
+                .appendLabel(getExecutionYear().getYear());
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	@Override
-	public boolean isDepositSupported() {
-		return true;
-	}
+    @Override
+    public boolean isDepositSupported() {
+        return true;
+    }
 
-	@Override
-	public Set<EntryType> getPossibleEntryTypesForDeposit() {
-		return Collections.singleton(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE);
-	}
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE);
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter result = new LabelFormatter();
-		result.appendLabel(getEventType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
-				.appendLabel(getExecutionYear().getYear());
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter result = new LabelFormatter();
+        result.appendLabel(getEventType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
+                .appendLabel(getExecutionYear().getYear());
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	protected List<AccountingEventPaymentCode> createPaymentCodes() {
-		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-		return Collections.singletonList(createPaymentCode(entryDTO));
-	}
+    @Override
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        return Collections.singletonList(createPaymentCode(entryDTO));
+    }
 
-	private AccountingEventPaymentCode createPaymentCode(final EntryDTO entryDTO) {
-		return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-				calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson());
-	}
+    private AccountingEventPaymentCode createPaymentCode(final EntryDTO entryDTO) {
+        return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+                calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson());
+    }
 
-	@Override
-	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+    @Override
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-		if (!getNonProcessedPaymentCodes().isEmpty()) {
-			getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-					entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
-		} else {
-			createPaymentCode(entryDTO);
-		}
+        if (!getNonProcessedPaymentCodes().isEmpty()) {
+            getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+                    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+        } else {
+            createPaymentCode(entryDTO);
+        }
 
-		return getNonProcessedPaymentCodes();
-	}
+        return getNonProcessedPaymentCodes();
+    }
 
-	private YearMonthDay calculatePaymentCodeEndDate() {
-		final LocalDate nextMonth = new LocalDate().plusMonths(1);
-		return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
-	}
+    private YearMonthDay calculatePaymentCodeEndDate() {
+        final LocalDate nextMonth = new LocalDate().plusMonths(1);
+        return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
+    }
 
-	/**
-	 * This method deposits amount to pay directly in event
-	 */
-	@Override
-	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-			SibsTransactionDetailDTO transactionDetail) {
-		final AccountingTransaction transaction =
-				depositAmount(responsibleUser, amountToPay, EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, transactionDetail);
-		return Collections.singleton(transaction.getToAccountEntry());
-	}
+    /**
+     * This method deposits amount to pay directly in event
+     */
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+            SibsTransactionDetailDTO transactionDetail) {
+        final AccountingTransaction transaction =
+                depositAmount(responsibleUser, amountToPay, EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, transactionDetail);
+        return Collections.singleton(transaction.getToAccountEntry());
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
 }

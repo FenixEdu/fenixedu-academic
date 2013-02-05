@@ -13,27 +13,27 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResultUnitAssociation extends FenixService {
 
-	@Service
-	public static void run(ResultUnitAssociationCreationBean bean) {
+    @Service
+    public static void run(ResultUnitAssociationCreationBean bean) {
 
-		if (bean.isSuggestion()) {
-			run(bean.getResult(), bean.getSuggestedUnits());
-		} else {
-			run(bean.getResult(), bean.getUnit());
-		}
-		ResearchResultMetaDataManager.updateMetaDataInStorageFor(bean.getResult());
-	}
+        if (bean.isSuggestion()) {
+            run(bean.getResult(), bean.getSuggestedUnits());
+        } else {
+            run(bean.getResult(), bean.getUnit());
+        }
+        ResearchResultMetaDataManager.updateMetaDataInStorageFor(bean.getResult());
+    }
 
-	private static void run(ResearchResult result, Unit unit) {
-		if (unit == null) {
-			throw new DomainException("error.label.invalidNameForInternalUnit");
-		}
-		result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
-	}
+    private static void run(ResearchResult result, Unit unit) {
+        if (unit == null) {
+            throw new DomainException("error.label.invalidNameForInternalUnit");
+        }
+        result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
+    }
 
-	private static void run(ResearchResult result, List<Unit> suggestedUnits) {
-		for (Unit unit : suggestedUnits) {
-			result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
-		}
-	}
+    private static void run(ResearchResult result, List<Unit> suggestedUnits) {
+        for (Unit unit : suggestedUnits) {
+            result.addUnitAssociation(unit, ResultUnitAssociationRole.getDefaultRole());
+        }
+    }
 }

@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteHoliday extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(final Holiday holiday) {
-		holiday.delete();
-	}
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(final Holiday holiday) {
+        holiday.delete();
+    }
 
 }

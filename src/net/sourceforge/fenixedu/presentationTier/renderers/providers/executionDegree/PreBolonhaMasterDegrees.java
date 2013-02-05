@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PreBolonhaMasterDegrees implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final List<Degree> result = new ArrayList<Degree>();
-		for (Degree degree : Degree.readNotEmptyDegrees()) {
-			if (degree.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-				result.add(degree);
-			}
-		}
-		Collections.sort(result, Degree.COMPARATOR_BY_NAME);
-		return result;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final List<Degree> result = new ArrayList<Degree>();
+        for (Degree degree : Degree.readNotEmptyDegrees()) {
+            if (degree.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+                result.add(degree);
+            }
+        }
+        Collections.sort(result, Degree.COMPARATOR_BY_NAME);
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

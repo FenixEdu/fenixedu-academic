@@ -12,40 +12,40 @@ package net.sourceforge.fenixedu.applicationTier.utils.exceptions;
  */
 public class SmsSendUtilException extends FenixUtilException {
 
-	/**
+    /**
      *  
      */
-	public SmsSendUtilException() {
-		super();
-	}
+    public SmsSendUtilException() {
+        super();
+    }
 
-	/**
-	 * @param arg0
-	 */
-	public SmsSendUtilException(String arg0) {
-		super(arg0);
-	}
+    /**
+     * @param arg0
+     */
+    public SmsSendUtilException(String arg0) {
+        super(arg0);
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public SmsSendUtilException(int errorType) {
-		super(errorType);
-	}
+    /**
+     * @param errorType
+     */
+    public SmsSendUtilException(int errorType) {
+        super(errorType);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public SmsSendUtilException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public SmsSendUtilException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public SmsSendUtilException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public SmsSendUtilException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

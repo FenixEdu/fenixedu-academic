@@ -10,17 +10,17 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class InvalidStructureException extends DomainException {
 
-	/**
-	 * Serialization id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serialization id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public InvalidStructureException(String message) {
-		super(message);
-	}
+    public InvalidStructureException(String message) {
+        super(message);
+    }
 
-	public InvalidStructureException(String message, Throwable e) {
-		super(message, e, e.getMessage());
-	}
+    public InvalidStructureException(String message, Throwable e) {
+        super(message, e, e.getMessage());
+    }
 
 }

@@ -20,56 +20,56 @@ import org.joda.time.DateTime;
  */
 public class ConcludedState extends ConcludedState_Base {
 
-	protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
-		super();
+    protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
+        super();
 
-		if (registration.isBolonha() && !registration.hasConcluded()) {
-			throw new DomainException("error.registration.is.not.concluded");
-		}
+        if (registration.isBolonha() && !registration.hasConcluded()) {
+            throw new DomainException("error.registration.is.not.concluded");
+        }
 
-		init(registration, person, dateTime);
-		registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
-		// if (registration.getStudent().getRegistrationsCount() == 1) {
-		// registration.getPerson().removeRoleByType(RoleType.STUDENT);
-		// }
-	}
+        init(registration, person, dateTime);
+        registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
+        // if (registration.getStudent().getRegistrationsCount() == 1) {
+        // registration.getPerson().removeRoleByType(RoleType.STUDENT);
+        // }
+    }
 
-	@Override
-	public void delete() {
-		checkRulesToDelete();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        checkRulesToDelete();
+        super.delete();
+    }
 
-	private void checkRulesToDelete() {
-		final Person person = AccessControl.getPerson();
-		if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.REPEAT_CONCLUSION_PROCESS).contains(
-				this.getRegistration().getDegree())) {
-			return;
-		}
+    private void checkRulesToDelete() {
+        final Person person = AccessControl.getPerson();
+        if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.REPEAT_CONCLUSION_PROCESS).contains(
+                this.getRegistration().getDegree())) {
+            return;
+        }
 
-		if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
-				.isEmpty()) {
-			throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
-		}
+        if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
+                .isEmpty()) {
+            throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
+        }
 
-		if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
-			throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
-		}
-	}
+        if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
+            throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
+        }
+    }
 
-	@Override
-	public void checkConditionsToForward(final StateBean bean) {
-		throw new DomainException("error.impossible.to.forward.from.concluded");
-	}
+    @Override
+    public void checkConditionsToForward(final StateBean bean) {
+        throw new DomainException("error.impossible.to.forward.from.concluded");
+    }
 
-	@Override
-	public IState nextState(final StateBean bean) {
-		throw new DomainException("error.impossible.to.forward.from.concluded");
-	}
+    @Override
+    public IState nextState(final StateBean bean) {
+        throw new DomainException("error.impossible.to.forward.from.concluded");
+    }
 
-	@Override
-	public RegistrationStateType getStateType() {
-		return RegistrationStateType.CONCLUDED;
-	}
+    @Override
+    public RegistrationStateType getStateType() {
+        return RegistrationStateType.CONCLUDED;
+    }
 
 }

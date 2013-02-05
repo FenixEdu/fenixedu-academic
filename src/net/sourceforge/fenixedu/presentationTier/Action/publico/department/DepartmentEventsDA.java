@@ -16,17 +16,17 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(module = "publico", path = "/department/events", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "department-view-event"),
-		@Forward(name = "listAnnouncements", path = "public-department-list-events") })
+        @Forward(name = "listAnnouncements", path = "public-department-list-events") })
 public class DepartmentEventsDA extends DepartmentBoardsDA {
 
-	@Override
-	protected MultiLanguageString getBoardName(HttpServletRequest request) {
-		return UnitSiteBoardsDA.EVENTS;
-	}
+    @Override
+    protected MultiLanguageString getBoardName(HttpServletRequest request) {
+        return UnitSiteBoardsDA.EVENTS;
+    }
 
-	public ActionForward viewEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return viewAnnouncements(mapping, form, request, response);
-	}
+    public ActionForward viewEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return viewAnnouncements(mapping, form, request, response);
+    }
 
 }

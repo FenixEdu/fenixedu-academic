@@ -12,18 +12,18 @@ import org.xml.sax.InputSource;
  * 
  */
 public class QuestionResolver implements EntityResolver {
-	private String path;
+    private String path;
 
-	private String xmlDocumentDtd = "WEB-INF/ims/qtiasiv1p2.dtd";
+    private String xmlDocumentDtd = "WEB-INF/ims/qtiasiv1p2.dtd";
 
-	public QuestionResolver(String dtdPath) {
-		this.path = dtdPath;
-	}
+    public QuestionResolver(String dtdPath) {
+        this.path = dtdPath;
+    }
 
-	@Override
-	public InputSource resolveEntity(String publicId, String systemId) {
-		return new InputSource("file:///" + path.concat(xmlDocumentDtd));
+    @Override
+    public InputSource resolveEntity(String publicId, String systemId) {
+        return new InputSource("file:///" + path.concat(xmlDocumentDtd));
 
-	}
+    }
 
 }

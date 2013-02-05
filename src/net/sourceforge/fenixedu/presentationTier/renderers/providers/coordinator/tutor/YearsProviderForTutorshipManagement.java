@@ -12,26 +12,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class YearsProviderForTutorshipManagement implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<Integer>();
 
-		YearMonthDay currentDate = new YearMonthDay();
+        YearMonthDay currentDate = new YearMonthDay();
 
-		int firstYear = currentDate.getYear() + 1;
-		int lastYear = Tutorship.getLastPossibleTutorshipYear();
+        int firstYear = currentDate.getYear() + 1;
+        int lastYear = Tutorship.getLastPossibleTutorshipYear();
 
-		while (firstYear <= lastYear) {
-			result.add(firstYear);
-			firstYear++;
-		}
+        while (firstYear <= lastYear) {
+            result.add(firstYear);
+            firstYear++;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 }

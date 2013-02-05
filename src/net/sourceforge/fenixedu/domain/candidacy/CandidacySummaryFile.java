@@ -11,22 +11,22 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CandidacySummaryFile extends CandidacySummaryFile_Base {
 
-	public CandidacySummaryFile(String fileName, byte[] fileByteArray, StudentCandidacy studentCandidacy) {
-		super();
-		init(getFilePath(), fileName, fileName, null, fileByteArray, createPermittedGroup(studentCandidacy.getPerson()));
-		setStudentCandidacy(studentCandidacy);
-	}
+    public CandidacySummaryFile(String fileName, byte[] fileByteArray, StudentCandidacy studentCandidacy) {
+        super();
+        init(getFilePath(), fileName, fileName, null, fileByteArray, createPermittedGroup(studentCandidacy.getPerson()));
+        setStudentCandidacy(studentCandidacy);
+    }
 
-	private VirtualPath getFilePath() {
-		final VirtualPath filePath = new VirtualPath();
-		filePath.addNode(new VirtualPathNode("FisrtYearFirstSemesterEnrollments", "FisrtYearFirstSemester Enrollments"));
-		filePath.addNode(new VirtualPathNode("CandidacySummaries", "Candidacy Summary files"));
-		return filePath;
-	}
+    private VirtualPath getFilePath() {
+        final VirtualPath filePath = new VirtualPath();
+        filePath.addNode(new VirtualPathNode("FisrtYearFirstSemesterEnrollments", "FisrtYearFirstSemester Enrollments"));
+        filePath.addNode(new VirtualPathNode("CandidacySummaries", "Candidacy Summary files"));
+        return filePath;
+    }
 
-	private Group createPermittedGroup(Person candidacyStudent) {
-		FixedSetGroup student = new FixedSetGroup(candidacyStudent);
-		RoleGroup admins = new RoleGroup(RoleType.ADMINISTRATOR);
-		return new GroupUnion(student, admins);
-	}
+    private Group createPermittedGroup(Person candidacyStudent) {
+        FixedSetGroup student = new FixedSetGroup(candidacyStudent);
+        RoleGroup admins = new RoleGroup(RoleType.ADMINISTRATOR);
+        return new GroupUnion(student, admins);
+    }
 }

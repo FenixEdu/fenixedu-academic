@@ -9,52 +9,52 @@ import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 
 public class AccessGroupPersonBean implements Serializable {
 
-	private PersistentGroupMembers persistentGroupMembersReference;
-	private SpaceAccessGroupType accessGroupType;
-	private Person personReference;
-	private Boolean maintainElements;
-	private RoleType roleType;
+    private PersistentGroupMembers persistentGroupMembersReference;
+    private SpaceAccessGroupType accessGroupType;
+    private Person personReference;
+    private Boolean maintainElements;
+    private RoleType roleType;
 
-	public AccessGroupPersonBean() {
-	}
+    public AccessGroupPersonBean() {
+    }
 
-	public Boolean getMaintainElements() {
-		return maintainElements;
-	}
+    public Boolean getMaintainElements() {
+        return maintainElements;
+    }
 
-	public void setMaintainElements(Boolean maintainElements) {
-		this.maintainElements = maintainElements;
-	}
+    public void setMaintainElements(Boolean maintainElements) {
+        this.maintainElements = maintainElements;
+    }
 
-	public Person getPerson() {
-		return this.personReference;
-	}
+    public Person getPerson() {
+        return this.personReference;
+    }
 
-	public void setPerson(Person Person) {
-		this.personReference = Person;
-	}
+    public void setPerson(Person Person) {
+        this.personReference = Person;
+    }
 
-	public PersistentGroupMembers getPersistentGroupMembers() {
-		return this.persistentGroupMembersReference;
-	}
+    public PersistentGroupMembers getPersistentGroupMembers() {
+        return this.persistentGroupMembersReference;
+    }
 
-	public void setPersistentGroupMembers(PersistentGroupMembers persistentGroupMembers) {
-		this.persistentGroupMembersReference = persistentGroupMembers;
-	}
+    public void setPersistentGroupMembers(PersistentGroupMembers persistentGroupMembers) {
+        this.persistentGroupMembersReference = persistentGroupMembers;
+    }
 
-	public SpaceAccessGroupType getAccessGroupType() {
-		return accessGroupType;
-	}
+    public SpaceAccessGroupType getAccessGroupType() {
+        return accessGroupType;
+    }
 
-	public void setAccessGroupType(SpaceAccessGroupType accessGroupType) {
-		this.accessGroupType = accessGroupType;
-	}
+    public void setAccessGroupType(SpaceAccessGroupType accessGroupType) {
+        this.accessGroupType = accessGroupType;
+    }
 
-	public RoleType getRoleType() {
-		return roleType;
-	}
+    public RoleType getRoleType() {
+        return roleType;
+    }
 
-	public void setRoleType(RoleType roleType) {
-		this.roleType = roleType;
-	}
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
 }

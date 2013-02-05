@@ -13,47 +13,47 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
  */
 public class InfoExternalPerson extends InfoObject {
 
-	private ExternalContract externalPersonDomainReference;
+    private ExternalContract externalPersonDomainReference;
 
-	public InfoExternalPerson(final ExternalContract externalPerson) {
-		externalPersonDomainReference = externalPerson;
-	}
+    public InfoExternalPerson(final ExternalContract externalPerson) {
+        externalPersonDomainReference = externalPerson;
+    }
 
-	public static InfoExternalPerson newInfoFromDomain(final ExternalContract externalPerson) {
-		return externalPerson == null ? null : new InfoExternalPerson(externalPerson);
-	}
+    public static InfoExternalPerson newInfoFromDomain(final ExternalContract externalPerson) {
+        return externalPerson == null ? null : new InfoExternalPerson(externalPerson);
+    }
 
-	private ExternalContract getExternalPerson() {
-		return externalPersonDomainReference;
-	}
+    private ExternalContract getExternalPerson() {
+        return externalPersonDomainReference;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof InfoExternalPerson && getExternalPerson() == ((InfoExternalPerson) obj).getExternalPerson();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof InfoExternalPerson && getExternalPerson() == ((InfoExternalPerson) obj).getExternalPerson();
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getExternalPerson().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getExternalPerson().getIdInternal();
+    }
 
-	@Override
-	public void setIdInternal(Integer integer) {
-		throw new Error("Method should not be called!");
-	}
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
 
-	/**
-	 * @return Returns the infoPerson.
-	 */
-	public InfoPerson getInfoPerson() {
-		return InfoPerson.newInfoFromDomain(getExternalPerson().getPerson());
-	}
+    /**
+     * @return Returns the infoPerson.
+     */
+    public InfoPerson getInfoPerson() {
+        return InfoPerson.newInfoFromDomain(getExternalPerson().getPerson());
+    }
 
-	/**
-	 * @return Returns the infoInstitution.
-	 */
-	public InfoInstitution getInfoInstitution() {
-		return InfoInstitution.newInfoFromDomain(getExternalPerson().getInstitutionUnit());
-	}
+    /**
+     * @return Returns the infoInstitution.
+     */
+    public InfoInstitution getInfoInstitution() {
+        return InfoInstitution.newInfoFromDomain(getExternalPerson().getInstitutionUnit());
+    }
 
 }

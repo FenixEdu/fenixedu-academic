@@ -16,24 +16,24 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchEmployeesAndTeachers extends FenixService implements AutoCompleteSearchService {
 
-	@Override
-	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-		List<Person> result = new ArrayList<Person>();
+    @Override
+    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+        List<Person> result = new ArrayList<Person>();
 
-		String slotName = arguments.get("slot");
+        String slotName = arguments.get("slot");
 
-		if (value == null) {
-			result = new ArrayList<Person>(Person.findInternalPerson(""));
-		} else {
-			for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value).toLowerCase())) {
-				if ((person.hasTeacher() && person.getTeacher().isActive())
-						|| (person.hasEmployee() && person.getEmployee().isActive())) {
-					result.add(person);
-				}
-			}
-		}
+        if (value == null) {
+            result = new ArrayList<Person>(Person.findInternalPerson(""));
+        } else {
+            for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value).toLowerCase())) {
+                if ((person.hasTeacher() && person.getTeacher().isActive())
+                        || (person.hasEmployee() && person.getEmployee().isActive())) {
+                    result.add(person);
+                }
+            }
+        }
 
-		Collections.sort(result, new BeanComparator(slotName));
-		return result;
-	}
+        Collections.sort(result, new BeanComparator(slotName));
+        return result;
+    }
 }

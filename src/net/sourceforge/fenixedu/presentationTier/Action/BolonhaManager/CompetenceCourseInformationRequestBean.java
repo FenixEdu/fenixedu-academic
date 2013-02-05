@@ -12,248 +12,248 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 
 public class CompetenceCourseInformationRequestBean implements Serializable {
 
-	private CompetenceCourse competenceCourse;
+    private CompetenceCourse competenceCourse;
 
-	private ExecutionSemester executionSemester;
+    private ExecutionSemester executionSemester;
 
-	private String justification;
+    private String justification;
 
-	private String name;
+    private String name;
 
-	private String nameEn;
+    private String nameEn;
 
-	private RegimeType regime;
+    private RegimeType regime;
 
-	private String objectives;
+    private String objectives;
 
-	private String objectivesEn;
+    private String objectivesEn;
 
-	private String program;
+    private String program;
 
-	private String programEn;
+    private String programEn;
 
-	private String evaluationMethod;
+    private String evaluationMethod;
 
-	private String evaluationMethodEn;
+    private String evaluationMethodEn;
 
-	private CompetenceCourseLevel competenceCourseLevel;
+    private CompetenceCourseLevel competenceCourseLevel;
 
-	private BibliographicReferences references;
+    private BibliographicReferences references;
 
-	private boolean showOldCompetenceCourses;
+    private boolean showOldCompetenceCourses;
 
-	public CompetenceCourseInformationRequestBean(CompetenceCourseInformationChangeRequest request) {
-		setCompetenceCourse(request.getCompetenceCourse());
-		setRegime(request.getRegime());
-		setObjectives(request.getObjectives());
-		setObjectivesEn(request.getObjectivesEn());
-		setProgram(request.getProgram());
-		setProgramEn(request.getProgramEn());
-		setEvaluationMethod(request.getEvaluationMethod());
-		setEvaluationMethodEn(request.getEvaluationMethodEn());
-		setCompetenceCourseLevel(request.getCompetenceCourseLevel());
-		setExecutionPeriod(request.getExecutionPeriod());
-		setReferences(request.getBibliographicReferences());
-		setName(request.getName());
-		setNameEn(request.getNameEn());
-	}
+    public CompetenceCourseInformationRequestBean(CompetenceCourseInformationChangeRequest request) {
+        setCompetenceCourse(request.getCompetenceCourse());
+        setRegime(request.getRegime());
+        setObjectives(request.getObjectives());
+        setObjectivesEn(request.getObjectivesEn());
+        setProgram(request.getProgram());
+        setProgramEn(request.getProgramEn());
+        setEvaluationMethod(request.getEvaluationMethod());
+        setEvaluationMethodEn(request.getEvaluationMethodEn());
+        setCompetenceCourseLevel(request.getCompetenceCourseLevel());
+        setExecutionPeriod(request.getExecutionPeriod());
+        setReferences(request.getBibliographicReferences());
+        setName(request.getName());
+        setNameEn(request.getNameEn());
+    }
 
-	public CompetenceCourseInformationRequestBean(CompetenceCourseInformation information) {
-		setCompetenceCourse(information.getCompetenceCourse());
-		setRegime(information.getRegime());
-		setObjectives(information.getObjectives());
-		setObjectivesEn(information.getObjectivesEn());
-		setProgram(information.getProgram());
-		setProgramEn(information.getProgramEn());
-		setEvaluationMethod(information.getEvaluationMethod());
-		setEvaluationMethodEn(information.getEvaluationMethodEn());
-		setCompetenceCourseLevel(information.getCompetenceCourseLevel());
-		setExecutionPeriod(information.getExecutionPeriod());
-		setReferences(information.getBibliographicReferences());
-		setName(information.getName());
-		setNameEn(information.getNameEn());
-	}
+    public CompetenceCourseInformationRequestBean(CompetenceCourseInformation information) {
+        setCompetenceCourse(information.getCompetenceCourse());
+        setRegime(information.getRegime());
+        setObjectives(information.getObjectives());
+        setObjectivesEn(information.getObjectivesEn());
+        setProgram(information.getProgram());
+        setProgramEn(information.getProgramEn());
+        setEvaluationMethod(information.getEvaluationMethod());
+        setEvaluationMethodEn(information.getEvaluationMethodEn());
+        setCompetenceCourseLevel(information.getCompetenceCourseLevel());
+        setExecutionPeriod(information.getExecutionPeriod());
+        setReferences(information.getBibliographicReferences());
+        setName(information.getName());
+        setNameEn(information.getNameEn());
+    }
 
-	public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionSemester period) {
-		setExecutionPeriod(period);
-		setCompetenceCourse(course);
-	}
+    public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionSemester period) {
+        setExecutionPeriod(period);
+        setCompetenceCourse(course);
+    }
 
-	public CompetenceCourseInformationRequestBean() {
-		this(null, null);
-	}
+    public CompetenceCourseInformationRequestBean() {
+        this(null, null);
+    }
 
-	public boolean isCompetenceCourseDefinedForExecutionPeriod() {
-		if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
-			return getCompetenceCourse().isCompetenceCourseInformationDefinedAtExecutionPeriod(getExecutionPeriod());
-		}
-		return false;
-	}
+    public boolean isCompetenceCourseDefinedForExecutionPeriod() {
+        if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
+            return getCompetenceCourse().isCompetenceCourseInformationDefinedAtExecutionPeriod(getExecutionPeriod());
+        }
+        return false;
+    }
 
-	public boolean isRequestDraftAvailable() {
-		if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
-			return getCompetenceCourse().isRequestDraftAvailable(getExecutionPeriod());
-		}
-		return false;
-	}
+    public boolean isRequestDraftAvailable() {
+        if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
+            return getCompetenceCourse().isRequestDraftAvailable(getExecutionPeriod());
+        }
+        return false;
+    }
 
-	public boolean isLoggedPersonAllowedToCreateChangeRequests() {
-		if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
-			return getCompetenceCourse().isLoggedPersonAllowedToCreateChangeRequests(getExecutionPeriod());
-		}
-		return false;
-	}
+    public boolean isLoggedPersonAllowedToCreateChangeRequests() {
+        if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
+            return getCompetenceCourse().isLoggedPersonAllowedToCreateChangeRequests(getExecutionPeriod());
+        }
+        return false;
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		return executionSemester;
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        return executionSemester;
+    }
 
-	public void setExecutionPeriod(ExecutionSemester period) {
-		executionSemester = period;
-	}
+    public void setExecutionPeriod(ExecutionSemester period) {
+        executionSemester = period;
+    }
 
-	public CompetenceCourse getCompetenceCourse() {
-		return competenceCourse;
-	}
+    public CompetenceCourse getCompetenceCourse() {
+        return competenceCourse;
+    }
 
-	public void setCompetenceCourse(CompetenceCourse course) {
-		competenceCourse = course;
-	}
+    public void setCompetenceCourse(CompetenceCourse course) {
+        competenceCourse = course;
+    }
 
-	public CompetenceCourseLevel getCompetenceCourseLevel() {
-		return competenceCourseLevel;
-	}
+    public CompetenceCourseLevel getCompetenceCourseLevel() {
+        return competenceCourseLevel;
+    }
 
-	public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
-		this.competenceCourseLevel = competenceCourseLevel;
-	}
+    public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
+        this.competenceCourseLevel = competenceCourseLevel;
+    }
 
-	public String getEvaluationMethod() {
-		return evaluationMethod;
-	}
+    public String getEvaluationMethod() {
+        return evaluationMethod;
+    }
 
-	public void setEvaluationMethod(String evaluationMethod) {
-		this.evaluationMethod = evaluationMethod;
-	}
+    public void setEvaluationMethod(String evaluationMethod) {
+        this.evaluationMethod = evaluationMethod;
+    }
 
-	public String getEvaluationMethodEn() {
-		return evaluationMethodEn;
-	}
+    public String getEvaluationMethodEn() {
+        return evaluationMethodEn;
+    }
 
-	public void setEvaluationMethodEn(String evaluationMethodEn) {
-		this.evaluationMethodEn = evaluationMethodEn;
-	}
+    public void setEvaluationMethodEn(String evaluationMethodEn) {
+        this.evaluationMethodEn = evaluationMethodEn;
+    }
 
-	public String getJustification() {
-		return justification;
-	}
+    public String getJustification() {
+        return justification;
+    }
 
-	public void setJustification(String justification) {
-		this.justification = justification;
-	}
+    public void setJustification(String justification) {
+        this.justification = justification;
+    }
 
-	public String getObjectives() {
-		return objectives;
-	}
+    public String getObjectives() {
+        return objectives;
+    }
 
-	public void setObjectives(String objectives) {
-		this.objectives = objectives;
-	}
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
+    }
 
-	public String getObjectivesEn() {
-		return objectivesEn;
-	}
+    public String getObjectivesEn() {
+        return objectivesEn;
+    }
 
-	public void setObjectivesEn(String objectivesEn) {
-		this.objectivesEn = objectivesEn;
-	}
+    public void setObjectivesEn(String objectivesEn) {
+        this.objectivesEn = objectivesEn;
+    }
 
-	public String getProgram() {
-		return program;
-	}
+    public String getProgram() {
+        return program;
+    }
 
-	public void setProgram(String program) {
-		this.program = program;
-	}
+    public void setProgram(String program) {
+        this.program = program;
+    }
 
-	public String getProgramEn() {
-		return programEn;
-	}
+    public String getProgramEn() {
+        return programEn;
+    }
 
-	public void setProgramEn(String programEn) {
-		this.programEn = programEn;
-	}
+    public void setProgramEn(String programEn) {
+        this.programEn = programEn;
+    }
 
-	public RegimeType getRegime() {
-		return regime;
-	}
+    public RegimeType getRegime() {
+        return regime;
+    }
 
-	public void setRegime(RegimeType regime) {
-		this.regime = regime;
-	}
+    public void setRegime(RegimeType regime) {
+        this.regime = regime;
+    }
 
-	public void update(CompetenceCourseInformation information) {
-		setObjectives(information.getObjectives());
-		setObjectivesEn(information.getObjectivesEn());
-		setProgram(information.getProgram());
-		setProgramEn(information.getProgramEn());
-		setEvaluationMethod(information.getEvaluationMethod());
-		setEvaluationMethodEn(information.getEvaluationMethodEn());
-		setCompetenceCourseLevel(information.getCompetenceCourseLevel());
-		setReferences(information.getBibliographicReferences());
-		setName(information.getName());
-		setNameEn(information.getNameEn());
-	}
+    public void update(CompetenceCourseInformation information) {
+        setObjectives(information.getObjectives());
+        setObjectivesEn(information.getObjectivesEn());
+        setProgram(information.getProgram());
+        setProgramEn(information.getProgramEn());
+        setEvaluationMethod(information.getEvaluationMethod());
+        setEvaluationMethodEn(information.getEvaluationMethodEn());
+        setCompetenceCourseLevel(information.getCompetenceCourseLevel());
+        setReferences(information.getBibliographicReferences());
+        setName(information.getName());
+        setNameEn(information.getNameEn());
+    }
 
-	public void reset() {
-		setObjectives(null);
-		setObjectivesEn(null);
-		setProgram(null);
-		setProgramEn(null);
-		setEvaluationMethod(null);
-		setEvaluationMethodEn(null);
-		setCompetenceCourseLevel(null);
-		setReferences(null);
-		setName(null);
-		setNameEn(null);
-	}
+    public void reset() {
+        setObjectives(null);
+        setObjectivesEn(null);
+        setProgram(null);
+        setProgramEn(null);
+        setEvaluationMethod(null);
+        setEvaluationMethodEn(null);
+        setCompetenceCourseLevel(null);
+        setReferences(null);
+        setName(null);
+        setNameEn(null);
+    }
 
-	public BibliographicReferences getReferences() {
-		if (references == null) {
-			references = new BibliographicReferences();
-		}
-		return references;
-	}
+    public BibliographicReferences getReferences() {
+        if (references == null) {
+            references = new BibliographicReferences();
+        }
+        return references;
+    }
 
-	public void setReferences(BibliographicReferences references) {
-		this.references = references;
-	}
+    public void setReferences(BibliographicReferences references) {
+        this.references = references;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getNameEn() {
-		return nameEn;
-	}
+    public String getNameEn() {
+        return nameEn;
+    }
 
-	public void setNameEn(String nameEn) {
-		this.nameEn = nameEn;
-	}
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
 
-	public void setShowOldCompetenceCourses(boolean showOldCompetenceCourses) {
-		this.showOldCompetenceCourses = showOldCompetenceCourses;
-	}
+    public void setShowOldCompetenceCourses(boolean showOldCompetenceCourses) {
+        this.showOldCompetenceCourses = showOldCompetenceCourses;
+    }
 
-	public boolean isShowOldCompetenceCourses() {
-		return showOldCompetenceCourses;
-	}
+    public boolean isShowOldCompetenceCourses() {
+        return showOldCompetenceCourses;
+    }
 
-	public boolean getIsShowOldCompetenceCourses() {
-		return isShowOldCompetenceCourses();
-	}
+    public boolean getIsShowOldCompetenceCourses() {
+        return isShowOldCompetenceCourses();
+    }
 }

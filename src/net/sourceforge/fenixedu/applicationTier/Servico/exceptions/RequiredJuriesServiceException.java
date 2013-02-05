@@ -7,28 +7,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class RequiredJuriesServiceException extends FenixServiceException {
 
-	public RequiredJuriesServiceException() {
-	}
+    public RequiredJuriesServiceException() {
+    }
 
-	public RequiredJuriesServiceException(String message) {
-		super(message);
-	}
+    public RequiredJuriesServiceException(String message) {
+        super(message);
+    }
 
-	public RequiredJuriesServiceException(Throwable cause) {
-		super(cause);
-	}
+    public RequiredJuriesServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	public RequiredJuriesServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public RequiredJuriesServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[RequiredJuriesServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[RequiredJuriesServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

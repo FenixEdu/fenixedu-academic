@@ -18,36 +18,36 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class GetCandidatesByPerson extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List<InfoMasterDegreeCandidate> run(Integer personID) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List<InfoMasterDegreeCandidate> run(Integer personID) throws FenixServiceException {
 
-		final Person person = (Person) rootDomainObject.readPartyByOID(personID);
-		final State activeCandidateSituationState = new State(State.ACTIVE);
+        final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        final State activeCandidateSituationState = new State(State.ACTIVE);
 
-		final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
+        final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
 
-		for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
+        for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
 
-			final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
-					InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
-			infoMasterDegreeCandidate.setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate
-					.getExecutionDegree()));
+            final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
+                    InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
+            infoMasterDegreeCandidate.setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate
+                    .getExecutionDegree()));
 
-			final List<InfoCandidateSituation> infoCandidateSituations = new ArrayList<InfoCandidateSituation>();
-			for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
-				final InfoCandidateSituation infoCandidateSituation =
-						InfoCandidateSituation.newInfoFromDomain(candidateSituation);
-				infoCandidateSituations.add(infoCandidateSituation);
+            final List<InfoCandidateSituation> infoCandidateSituations = new ArrayList<InfoCandidateSituation>();
+            for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
+                final InfoCandidateSituation infoCandidateSituation =
+                        InfoCandidateSituation.newInfoFromDomain(candidateSituation);
+                infoCandidateSituations.add(infoCandidateSituation);
 
-				if (candidateSituation.getValidation().equals(activeCandidateSituationState)) {
-					infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-				}
-			}
-			infoMasterDegreeCandidate.setSituationList(infoCandidateSituations);
-			result.add(infoMasterDegreeCandidate);
-		}
-		return result;
-	}
+                if (candidateSituation.getValidation().equals(activeCandidateSituationState)) {
+                    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+                }
+            }
+            infoMasterDegreeCandidate.setSituationList(infoCandidateSituations);
+            result.add(infoMasterDegreeCandidate);
+        }
+        return result;
+    }
 
 }

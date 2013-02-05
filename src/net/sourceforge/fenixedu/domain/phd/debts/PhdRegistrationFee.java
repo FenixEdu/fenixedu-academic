@@ -11,70 +11,70 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdRegistrationFee extends PhdRegistrationFee_Base {
 
-	private PhdRegistrationFee() {
-		super();
-	}
+    private PhdRegistrationFee() {
+        super();
+    }
 
-	public PhdRegistrationFee(final PhdIndividualProgramProcess process) {
-		this();
-		init(process.getAdministrativeOffice(), process.getPerson(), process);
-	}
+    public PhdRegistrationFee(final PhdIndividualProgramProcess process) {
+        this();
+        init(process.getAdministrativeOffice(), process.getPerson(), process);
+    }
 
-	private void init(AdministrativeOffice administrativeOffice, Person person, PhdIndividualProgramProcess process) {
-		super.init(administrativeOffice, EventType.PHD_REGISTRATION_FEE, person);
-		checkProcess(process);
-		super.setProcess(process);
-	}
+    private void init(AdministrativeOffice administrativeOffice, Person person, PhdIndividualProgramProcess process) {
+        super.init(administrativeOffice, EventType.PHD_REGISTRATION_FEE, person);
+        checkProcess(process);
+        super.setProcess(process);
+    }
 
-	private void checkProcess(PhdIndividualProgramProcess process) {
-		check(process, "error.PhdRegistrationFee.process.cannot.be.null");
+    private void checkProcess(PhdIndividualProgramProcess process) {
+        check(process, "error.PhdRegistrationFee.process.cannot.be.null");
 
-		if (process.getWhenFormalizedRegistration() == null) {
-			throw new DomainException("error.PhdRegistrationFee.process.no.registration.formalization.date");
-		}
+        if (process.getWhenFormalizedRegistration() == null) {
+            throw new DomainException("error.PhdRegistrationFee.process.no.registration.formalization.date");
+        }
 
-		if (process.hasRegistrationFee()) {
-			throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee");
-		}
-	}
+        if (process.hasRegistrationFee()) {
+            throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee");
+        }
+    }
 
-	@Override
-	protected void disconnect() {
-		removeProcess();
-		super.disconnect();
-	}
+    @Override
+    protected void disconnect() {
+        removeProcess();
+        super.disconnect();
+    }
 
-	@Override
-	protected PhdProgram getPhdProgram() {
-		return getProcess().getPhdProgram();
-	}
+    @Override
+    protected PhdProgram getPhdProgram() {
+        return getProcess().getPhdProgram();
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
-	public boolean hasPhdRegistrationFeePenaltyExemption() {
-		return getPhdRegistrationFeePenaltyExemption() != null;
-	}
+    public boolean hasPhdRegistrationFeePenaltyExemption() {
+        return getPhdRegistrationFeePenaltyExemption() != null;
+    }
 
-	public PhdRegistrationFeePenaltyExemption getPhdRegistrationFeePenaltyExemption() {
-		for (final Exemption exemption : getExemptionsSet()) {
-			if (exemption instanceof PhdRegistrationFeePenaltyExemption) {
-				return (PhdRegistrationFeePenaltyExemption) exemption;
-			}
-		}
+    public PhdRegistrationFeePenaltyExemption getPhdRegistrationFeePenaltyExemption() {
+        for (final Exemption exemption : getExemptionsSet()) {
+            if (exemption instanceof PhdRegistrationFeePenaltyExemption) {
+                return (PhdRegistrationFeePenaltyExemption) exemption;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Service
-	static public PhdRegistrationFee create(final PhdIndividualProgramProcess process) {
-		return new PhdRegistrationFee(process);
-	}
+    @Service
+    static public PhdRegistrationFee create(final PhdIndividualProgramProcess process) {
+        return new PhdRegistrationFee(process);
+    }
 
-	@Override
-	public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-		return getProcess();
-	}
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+        return getProcess();
+    }
 }

@@ -17,80 +17,80 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ConvokeByPoints extends Strategy {
 
-	public ConvokeByPoints() {
-		super();
-	}
+    public ConvokeByPoints() {
+        super();
+    }
 
-	@Override
-	public StrategySugestion sugest(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation) {
+    @Override
+    public StrategySugestion sugest(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation) {
 
-		List<VigilantWrapper> teachersSugestion = new ArrayList<VigilantWrapper>();
-		List<VigilantWrapper> vigilantSugestion = new ArrayList<VigilantWrapper>();
-		Set<Person> incompatiblePersons = new HashSet<Person>();
-		List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
+        List<VigilantWrapper> teachersSugestion = new ArrayList<VigilantWrapper>();
+        List<VigilantWrapper> vigilantSugestion = new ArrayList<VigilantWrapper>();
+        Set<Person> incompatiblePersons = new HashSet<Person>();
+        List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
 
-		if (writtenEvaluation.hasAnyVigilancies()) {
-			incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
-		}
+        if (writtenEvaluation.hasAnyVigilancies()) {
+            incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
+        }
 
-		final List<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
+        final List<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
 
-		for (VigilantWrapper vigilant : vigilants) {
+        for (VigilantWrapper vigilant : vigilants) {
 
-			Person vigilantPerson = vigilant.getPerson();
+            Person vigilantPerson = vigilant.getPerson();
 
-			if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
-					&& !incompatiblePersons.contains(vigilantPerson.getIncompatibleVigilantPerson())) {
+            if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
+                    && !incompatiblePersons.contains(vigilantPerson.getIncompatibleVigilantPerson())) {
 
-				if (vigilantPerson.teachesAny(executionCourses)) {
-					teachersSugestion.add(vigilant);
-					incompatiblePersons.add(vigilant.getPerson());
-				} else {
-					vigilantSugestion.add(vigilant);
-				}
+                if (vigilantPerson.teachesAny(executionCourses)) {
+                    teachersSugestion.add(vigilant);
+                    incompatiblePersons.add(vigilant.getPerson());
+                } else {
+                    vigilantSugestion.add(vigilant);
+                }
 
-			} else {
-				if (!vigilantIsAlreadyConvokedForThisExam(vigilant, writtenEvaluation)) {
-					UnavailableTypes reason;
-					if (incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
-						reason = UnavailableTypes.INCOMPATIBLE_PERSON;
-					} else {
-						reason = vigilant.getWhyIsUnavailabeFor(writtenEvaluation);
-					}
-					unavailableVigilants.add(new UnavailableInformation(vigilant, reason));
+            } else {
+                if (!vigilantIsAlreadyConvokedForThisExam(vigilant, writtenEvaluation)) {
+                    UnavailableTypes reason;
+                    if (incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
+                        reason = UnavailableTypes.INCOMPATIBLE_PERSON;
+                    } else {
+                        reason = vigilant.getWhyIsUnavailabeFor(writtenEvaluation);
+                    }
+                    unavailableVigilants.add(new UnavailableInformation(vigilant, reason));
 
-				}
-			}
-		}
+                }
+            }
+        }
 
-		ComparatorChain comparator = new ComparatorChain();
-		comparator.addComparator(VigilantWrapper.ESTIMATED_POINTS_COMPARATOR);
-		// comparator.addComparator(new ConvokeComparator());
-		comparator.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
-		comparator.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
+        ComparatorChain comparator = new ComparatorChain();
+        comparator.addComparator(VigilantWrapper.ESTIMATED_POINTS_COMPARATOR);
+        // comparator.addComparator(new ConvokeComparator());
+        comparator.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+        comparator.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
 
-		Collections.sort(vigilantSugestion, comparator);
-		Collections.sort(teachersSugestion, comparator);
-		return new StrategySugestion(teachersSugestion, vigilantSugestion, unavailableVigilants);
-	}
+        Collections.sort(vigilantSugestion, comparator);
+        Collections.sort(teachersSugestion, comparator);
+        return new StrategySugestion(teachersSugestion, vigilantSugestion, unavailableVigilants);
+    }
 
-	private boolean vigilantIsAlreadyConvokedForThisExam(VigilantWrapper vigilant, WrittenEvaluation writtenEvaluation) {
-		List<Vigilancy> convokes = vigilant.getVigilancies();
-		for (Vigilancy convoke : convokes) {
-			if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean vigilantIsAlreadyConvokedForThisExam(VigilantWrapper vigilant, WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> convokes = vigilant.getVigilancies();
+        for (Vigilancy convoke : convokes) {
+            if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
-		List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
-		List<Person> people = new ArrayList<Person>();
-		for (Vigilancy convoke : convokes) {
-			VigilantWrapper vigilant = convoke.getVigilantWrapper();
-			people.add(vigilant.getPerson());
-		}
-		return people;
-	}
+    private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
+        List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+        List<Person> people = new ArrayList<Person>();
+        for (Vigilancy convoke : convokes) {
+            VigilantWrapper vigilant = convoke.getVigilantWrapper();
+            people.add(vigilant.getPerson());
+        }
+        return people;
+    }
 }

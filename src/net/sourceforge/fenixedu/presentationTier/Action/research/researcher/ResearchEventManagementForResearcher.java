@@ -7,5 +7,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "researcher", path = "/showEvents", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showEvent", path = "/researcher/showEvent.jsp") })
 public class ResearchEventManagementForResearcher extends
-		net.sourceforge.fenixedu.presentationTier.Action.research.ResearchEventManagement {
+        net.sourceforge.fenixedu.presentationTier.Action.research.ResearchEventManagement {
 }

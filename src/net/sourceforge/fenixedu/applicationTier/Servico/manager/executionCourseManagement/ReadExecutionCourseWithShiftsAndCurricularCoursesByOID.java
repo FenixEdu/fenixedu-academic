@@ -18,17 +18,17 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static InfoExecutionCourse run(final Integer oid) {
-		InfoExecutionCourse infoExecutionCourse = null;
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static InfoExecutionCourse run(final Integer oid) {
+        InfoExecutionCourse infoExecutionCourse = null;
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
-		if (executionCourse != null) {
-			infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-		}
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
+        if (executionCourse != null) {
+            infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+        }
 
-		return infoExecutionCourse;
-	}
+        return infoExecutionCourse;
+    }
 
 }

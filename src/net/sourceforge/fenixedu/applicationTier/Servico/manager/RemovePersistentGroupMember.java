@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemovePersistentGroupMember extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Person person, PersistentGroupMembers persistentGroupMembers) {
-		if (person != null && persistentGroupMembers != null) {
-			persistentGroupMembers.removePersons(person);
-		}
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Person person, PersistentGroupMembers persistentGroupMembers) {
+        if (person != null && persistentGroupMembers != null) {
+            persistentGroupMembers.removePersons(person);
+        }
+    }
 }

@@ -29,89 +29,88 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/sendMailToTutoredStudents", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = { @Forward(
-		name = "chooseReceivers",
-		path = "/teacher/tutor/chooseReceivers.jsp",
-		tileProperties = @Tile(title = "private.teacher.managementmentoring.sendemail")) })
+        name = "chooseReceivers", path = "/teacher/tutor/chooseReceivers.jsp", tileProperties = @Tile(
+                title = "private.teacher.managementmentoring.sendemail")) })
 public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
-	public Teacher getTeacher(HttpServletRequest request) {
-		return getLoggedPerson(request).getTeacher();
-	}
+    public Teacher getTeacher(HttpServletRequest request) {
+        return getLoggedPerson(request).getTeacher();
+    }
 
-	protected List<Recipient> getRecipients(HttpServletRequest request) {
+    protected List<Recipient> getRecipients(HttpServletRequest request) {
 
-		StudentsByTutorBean receivers = (StudentsByTutorBean) request.getAttribute("receivers");
+        StudentsByTutorBean receivers = (StudentsByTutorBean) request.getAttribute("receivers");
 
-		List<Recipient> recipients = new ArrayList<Recipient>();
+        List<Recipient> recipients = new ArrayList<Recipient>();
 
-		if (receivers != null) {
-			for (Tutorship tutorship : receivers.getStudentsList()) {
-				Person person = tutorship.getStudent().getPerson();
-				recipients.add(Recipient.newInstance(person.getName(), new PersonGroup(person)));
-			}
-		}
+        if (receivers != null) {
+            for (Tutorship tutorship : receivers.getStudentsList()) {
+                Person person = tutorship.getStudent().getPerson();
+                recipients.add(Recipient.newInstance(person.getName(), new PersonGroup(person)));
+            }
+        }
 
-		return recipients;
-	}
+        return recipients;
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Teacher teacher = getTeacher(request);
+        final Teacher teacher = getTeacher(request);
 
-		if (!teacher.getActiveTutorships().isEmpty()) {
-			request.setAttribute("receiversBean", getOrCreateBean(teacher));
-		}
+        if (!teacher.getActiveTutorships().isEmpty()) {
+            request.setAttribute("receiversBean", getOrCreateBean(teacher));
+        }
 
-		request.setAttribute("tutor", teacher.getPerson());
-		return mapping.findForward("chooseReceivers");
-	}
+        request.setAttribute("tutor", teacher.getPerson());
+        return mapping.findForward("chooseReceivers");
+    }
 
-	public StudentsByTutorBean getOrCreateBean(Teacher teacher) {
-		StudentsByTutorBean receiversBean = getRenderedObject("receiversBean");
-		RenderUtils.invalidateViewState();
-		if (receiversBean == null) {
-			receiversBean = new StudentsByTutorBean(teacher);
-		}
+    public StudentsByTutorBean getOrCreateBean(Teacher teacher) {
+        StudentsByTutorBean receiversBean = getRenderedObject("receiversBean");
+        RenderUtils.invalidateViewState();
+        if (receiversBean == null) {
+            receiversBean = new StudentsByTutorBean(teacher);
+        }
 
-		return receiversBean;
-	}
+        return receiversBean;
+    }
 
-	public ActionForward prepareCreateMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Teacher teacher = getTeacher(request);
+    public ActionForward prepareCreateMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Teacher teacher = getTeacher(request);
 
-		StudentsByTutorBean receivers = null;
-		if (RenderUtils.getViewState("receivers") != null) {
-			receivers = (StudentsByTutorBean) RenderUtils.getViewState("receivers").getMetaObject().getObject();
+        StudentsByTutorBean receivers = null;
+        if (RenderUtils.getViewState("receivers") != null) {
+            receivers = (StudentsByTutorBean) RenderUtils.getViewState("receivers").getMetaObject().getObject();
 
-			if (request.getParameter("selectAll") != null) {
-				RenderUtils.invalidateViewState();
-				receivers.setStudentsList(teacher.getActiveTutorships());
-				request.setAttribute("receiversBean", receivers);
-			} else if (request.getParameter("reset") != null) {
-				RenderUtils.invalidateViewState();
-				receivers.setStudentsList(new ArrayList<Tutorship>());
-				request.setAttribute("receiversBean", receivers);
-			} else {
-				if (receivers.getStudentsList().isEmpty()) {
-					addActionMessage(request, "error.teacher.tutor.sendMail.chooseReceivers.mustSelectOne");
-					request.setAttribute("receiversBean", receivers);
-				} else {
-					request.setAttribute("receivers", receivers);
-					return createMail(mapping, actionForm, request, response);
-				}
-			}
-		}
+            if (request.getParameter("selectAll") != null) {
+                RenderUtils.invalidateViewState();
+                receivers.setStudentsList(teacher.getActiveTutorships());
+                request.setAttribute("receiversBean", receivers);
+            } else if (request.getParameter("reset") != null) {
+                RenderUtils.invalidateViewState();
+                receivers.setStudentsList(new ArrayList<Tutorship>());
+                request.setAttribute("receiversBean", receivers);
+            } else {
+                if (receivers.getStudentsList().isEmpty()) {
+                    addActionMessage(request, "error.teacher.tutor.sendMail.chooseReceivers.mustSelectOne");
+                    request.setAttribute("receiversBean", receivers);
+                } else {
+                    request.setAttribute("receivers", receivers);
+                    return createMail(mapping, actionForm, request, response);
+                }
+            }
+        }
 
-		request.setAttribute("tutor", teacher.getPerson());
-		return mapping.findForward("chooseReceivers");
-	}
+        request.setAttribute("tutor", teacher.getPerson());
+        return mapping.findForward("chooseReceivers");
+    }
 
-	public ActionForward createMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Person teacherPerson = getLoggedPerson(request);
-		Sender sender = PersonSender.newInstance(teacherPerson);
-		return EmailsDA.sendEmail(request, sender, getRecipients(request).toArray(new Recipient[] {}));
-	}
+    public ActionForward createMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Person teacherPerson = getLoggedPerson(request);
+        Sender sender = PersonSender.newInstance(teacherPerson);
+        return EmailsDA.sendEmail(request, sender, getRecipients(request).toArray(new Recipient[] {}));
+    }
 }

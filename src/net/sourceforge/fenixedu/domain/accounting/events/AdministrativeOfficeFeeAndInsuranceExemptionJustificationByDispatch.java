@@ -11,54 +11,54 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch extends
-		AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch_Base {
+        AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch_Base {
 
-	protected AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch() {
-		super();
-	}
+    protected AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch() {
+        super();
+    }
 
-	public AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch(final Exemption exemption,
-			final AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, final String reason,
-			final YearMonthDay dispatchDate) {
-		this();
-		init(exemption, justificationType, reason, dispatchDate);
+    public AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch(final Exemption exemption,
+            final AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, final String reason,
+            final YearMonthDay dispatchDate) {
+        this();
+        init(exemption, justificationType, reason, dispatchDate);
 
-	}
+    }
 
-	private void init(Exemption exemption, AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType,
-			String reason, YearMonthDay dispatchDate) {
-		checkParameters(exemption, justificationType, reason, dispatchDate);
+    private void init(Exemption exemption, AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType,
+            String reason, YearMonthDay dispatchDate) {
+        checkParameters(exemption, justificationType, reason, dispatchDate);
 
-		super.init(exemption, justificationType, reason);
+        super.init(exemption, justificationType, reason);
 
-		super.setDispatchDate(dispatchDate);
+        super.setDispatchDate(dispatchDate);
 
-	}
+    }
 
-	private void checkParameters(Exemption exemption,
-			AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
-			YearMonthDay dispatchDate) {
+    private void checkParameters(Exemption exemption,
+            AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
+            YearMonthDay dispatchDate) {
 
-		if (!exemption.isForAdministrativeOfficeFee()) {
-			throw new DomainException(
-					"error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch.exemption.must.be.form.administrativeOfficeFee.exemption");
-		}
+        if (!exemption.isForAdministrativeOfficeFee()) {
+            throw new DomainException(
+                    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch.exemption.must.be.form.administrativeOfficeFee.exemption");
+        }
 
-		if (dispatchDate == null || StringUtils.isEmpty(reason)) {
-			throw new DomainExceptionWithLabelFormatter(
-					"error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-					new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
-		}
-	}
+        if (dispatchDate == null || StringUtils.isEmpty(reason)) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
+                    new LabelFormatter(justificationType.getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES));
+        }
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
-		labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
-				.appendLabel(getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+                .appendLabel(getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
 }

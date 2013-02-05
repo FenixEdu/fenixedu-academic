@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReviseThesis extends FenixService {
 
-	@Service
-	public static void run(Thesis thesis) {
-		thesis.allowRevision();
-	}
+    @Service
+    public static void run(Thesis thesis) {
+        thesis.allowRevision();
+    }
 
 }

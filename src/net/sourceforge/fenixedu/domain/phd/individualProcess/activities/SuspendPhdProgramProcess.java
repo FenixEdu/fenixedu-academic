@@ -13,34 +13,34 @@ import org.joda.time.DateTime;
 
 public class SuspendPhdProgramProcess extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		// remove restrictions
-	}
+    @Override
+    protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        // remove restrictions
+    }
 
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcessState(userView)) {
-			throw new PreConditionNotValidException();
-		}
+    @Override
+    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcessState(userView)) {
+            throw new PreConditionNotValidException();
+        }
 
-	}
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
 
-		DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
-		PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.SUSPENDED,
-				userView.getPerson(), "", stateDate);
+        DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
+        PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.SUSPENDED,
+                userView.getPerson(), "", stateDate);
 
-		process.cancelDebts(userView.getPerson());
+        process.cancelDebts(userView.getPerson());
 
-		if (process.hasRegistration() && process.getRegistration().isActive()) {
-			RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
-					RegistrationStateType.INTERRUPTED);
-		}
+        if (process.hasRegistration() && process.getRegistration().isActive()) {
+            RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
+                    RegistrationStateType.INTERRUPTED);
+        }
 
-		return process;
-	}
+        return process;
+    }
 }

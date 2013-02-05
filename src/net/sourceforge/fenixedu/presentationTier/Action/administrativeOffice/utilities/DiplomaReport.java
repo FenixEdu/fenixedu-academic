@@ -9,42 +9,42 @@ import org.joda.time.YearMonthDay;
 
 abstract public class DiplomaReport extends FenixReport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected StudentDiplomaInformation studentDiplomaInformation;
+    protected StudentDiplomaInformation studentDiplomaInformation;
 
-	protected DiplomaReport(final StudentDiplomaInformation studentDiplomaInformation) {
-		super();
-		this.studentDiplomaInformation = studentDiplomaInformation;
+    protected DiplomaReport(final StudentDiplomaInformation studentDiplomaInformation) {
+        super();
+        this.studentDiplomaInformation = studentDiplomaInformation;
 
-		fillReport();
-	}
+        fillReport();
+    }
 
-	@Override
-	protected void fillReport() {
-		final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
-		addParameter("universityName", institutionsUniversityUnit.getName());
-		addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
-				.getValidatedName());
+    @Override
+    protected void fillReport() {
+        final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
+        addParameter("universityName", institutionsUniversityUnit.getName());
+        addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
+                .getValidatedName());
 
-		addParameter("name", StringFormatter.prettyPrint(this.studentDiplomaInformation.getName()));
-		addParameter("nameOfFather", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfFather()));
-		addParameter("nameOfMother", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfMother()));
-		addParameter("birthLocale", StringFormatter.prettyPrint(this.studentDiplomaInformation.getBirthLocale()));
+        addParameter("name", StringFormatter.prettyPrint(this.studentDiplomaInformation.getName()));
+        addParameter("nameOfFather", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfFather()));
+        addParameter("nameOfMother", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfMother()));
+        addParameter("birthLocale", StringFormatter.prettyPrint(this.studentDiplomaInformation.getBirthLocale()));
 
-		addParameter("conclusionDate", this.studentDiplomaInformation.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
-		addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-		addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
-		addParameter("dissertationTitle", this.studentDiplomaInformation.getDissertationTitle());
+        addParameter("conclusionDate", this.studentDiplomaInformation.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
+        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+        addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
+        addParameter("dissertationTitle", this.studentDiplomaInformation.getDissertationTitle());
 
-		fillReportSpecificParameters();
-	}
+        fillReportSpecificParameters();
+    }
 
-	@Override
-	public String getReportFileName() {
-		return this.studentDiplomaInformation.getFilename();
-	}
+    @Override
+    public String getReportFileName() {
+        return this.studentDiplomaInformation.getFilename();
+    }
 
-	abstract protected void fillReportSpecificParameters();
+    abstract protected void fillReportSpecificParameters();
 
 }

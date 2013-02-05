@@ -30,144 +30,143 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/importIdentificationCardData", module = "identificationCardManager", formBeanClass = FenixActionForm.class)
 @Forwards({
-		@Forward(
-				name = "showIdentificationCardImportForm",
-				path = "/identificationCardManager/cardGeneration/importIdentificationCard.jsp"),
-		@Forward(name = "showImportResults", path = "/identificationCardManager/cardGeneration/showImportResults.jsp") })
+        @Forward(name = "showIdentificationCardImportForm",
+                path = "/identificationCardManager/cardGeneration/importIdentificationCard.jsp"),
+        @Forward(name = "showImportResults", path = "/identificationCardManager/cardGeneration/showImportResults.jsp") })
 public class ImportIdentificationCardDataDA extends FenixDispatchAction {
 
-	public ActionForward prepareIdentificationCardDataImportation(final ActionMapping mapping, final ActionForm actionForm,
-			final HttpServletRequest request, final HttpServletResponse response) {
-		setImportDataBean(request);
-		RenderUtils.invalidateViewState();
+    public ActionForward prepareIdentificationCardDataImportation(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        setImportDataBean(request);
+        RenderUtils.invalidateViewState();
 
-		return mapping.findForward("showIdentificationCardImportForm");
-	}
+        return mapping.findForward("showIdentificationCardImportForm");
+    }
 
-	private void setImportDataBean(HttpServletRequest request) {
-		ImportIdentificationCardDataBean bean =
-				getImportDataBean() != null ? getImportDataBean() : new ImportIdentificationCardDataBean();
-		bean.setSourceData(null);
-		request.setAttribute("importIdentificationCardDataBean", bean);
-	}
+    private void setImportDataBean(HttpServletRequest request) {
+        ImportIdentificationCardDataBean bean =
+                getImportDataBean() != null ? getImportDataBean() : new ImportIdentificationCardDataBean();
+        bean.setSourceData(null);
+        request.setAttribute("importIdentificationCardDataBean", bean);
+    }
 
-	public ActionForward importIdentificationCardDataFromFile(final ActionMapping mapping, final ActionForm actionForm,
-			final HttpServletRequest request, final HttpServletResponse response) throws IOException {
-		ImportIdentificationCardDataBean importBean = getImportDataBean();
+    public ActionForward importIdentificationCardDataFromFile(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        ImportIdentificationCardDataBean importBean = getImportDataBean();
 
-		CardGenerationBatch cardGenerationBatch = importBean.getSelectedCardGenerationBatch();
+        CardGenerationBatch cardGenerationBatch = importBean.getSelectedCardGenerationBatch();
 
-		System.out.println("Current Encoding: " + Charset.defaultCharset().name());
+        System.out.println("Current Encoding: " + Charset.defaultCharset().name());
 
-		if (cardGenerationBatch == null) {
-			addActionMessage(request, "error.card.generation.batch.required");
-			return prepareIdentificationCardDataImportation(mapping, actionForm, request, response);
-		}
+        if (cardGenerationBatch == null) {
+            addActionMessage(request, "error.card.generation.batch.required");
+            return prepareIdentificationCardDataImportation(mapping, actionForm, request, response);
+        }
 
-		byte[] data = new byte[importBean.getFileSize().intValue()];
-		importBean.getSourceData().read(data);
+        byte[] data = new byte[importBean.getFileSize().intValue()];
+        importBean.getSourceData().read(data);
 
-		try {
-			CardGenerationBatch.ImportationReport report =
-					cardGenerationBatch.importCardIdentificationsFromFile(new String(data));
+        try {
+            CardGenerationBatch.ImportationReport report =
+                    cardGenerationBatch.importCardIdentificationsFromFile(new String(data));
 
-			request.setAttribute("import.identification.card.report", report);
-		} catch (DomainException exception) {
-			if (exception.getMessage().startsWith(CardGenerationBatch.ERROR_IMPORT_IDENTIFICATION_CARD_DESCRIPTION)) {
-				addActionMessage(request, "error.import.identification.card");
-				return prepareIdentificationCardDataImportation(mapping, actionForm, request, response);
-			}
-		}
+            request.setAttribute("import.identification.card.report", report);
+        } catch (DomainException exception) {
+            if (exception.getMessage().startsWith(CardGenerationBatch.ERROR_IMPORT_IDENTIFICATION_CARD_DESCRIPTION)) {
+                addActionMessage(request, "error.import.identification.card");
+                return prepareIdentificationCardDataImportation(mapping, actionForm, request, response);
+            }
+        }
 
-		return mapping.findForward("showImportResults");
-	}
+        return mapping.findForward("showImportResults");
+    }
 
-	private ImportIdentificationCardDataBean getImportDataBean() {
-		return (ImportIdentificationCardDataBean) this.getObjectFromViewState("import.data");
-	}
+    private ImportIdentificationCardDataBean getImportDataBean() {
+        return (ImportIdentificationCardDataBean) this.getObjectFromViewState("import.data");
+    }
 
-	public static class ImportIdentificationCardDataBean implements Serializable {
-		/**
+    public static class ImportIdentificationCardDataBean implements Serializable {
+        /**
 	 * 
 	 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private InputStream sourceData;
-		private Long fileSize;
-		private String fileName;
+        private InputStream sourceData;
+        private Long fileSize;
+        private String fileName;
 
-		private ExecutionYear selectedExecutionYear;
-		private CardGenerationBatch selectedCardGenerationBatch;
+        private ExecutionYear selectedExecutionYear;
+        private CardGenerationBatch selectedCardGenerationBatch;
 
-		public ImportIdentificationCardDataBean() {
+        public ImportIdentificationCardDataBean() {
 
-		}
+        }
 
-		public InputStream getSourceData() {
-			return sourceData;
-		}
+        public InputStream getSourceData() {
+            return sourceData;
+        }
 
-		public void setSourceData(InputStream sourceData) {
-			this.sourceData = sourceData;
-		}
+        public void setSourceData(InputStream sourceData) {
+            this.sourceData = sourceData;
+        }
 
-		public Long getFileSize() {
-			return fileSize;
-		}
+        public Long getFileSize() {
+            return fileSize;
+        }
 
-		public void setFileSize(Long fileSize) {
-			this.fileSize = fileSize;
-		}
+        public void setFileSize(Long fileSize) {
+            this.fileSize = fileSize;
+        }
 
-		public String getFileName() {
-			return fileName;
-		}
+        public String getFileName() {
+            return fileName;
+        }
 
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
 
-		public ExecutionYear getSelectedExecutionYear() {
-			return this.selectedExecutionYear;
-		}
+        public ExecutionYear getSelectedExecutionYear() {
+            return this.selectedExecutionYear;
+        }
 
-		public void setSelectedExecutionYear(ExecutionYear executionYear) {
-			this.selectedExecutionYear = (executionYear);
-		}
+        public void setSelectedExecutionYear(ExecutionYear executionYear) {
+            this.selectedExecutionYear = (executionYear);
+        }
 
-		public CardGenerationBatch getSelectedCardGenerationBatch() {
-			return this.selectedCardGenerationBatch;
-		}
+        public CardGenerationBatch getSelectedCardGenerationBatch() {
+            return this.selectedCardGenerationBatch;
+        }
 
-		public void setSelectedCardGenerationBatch(CardGenerationBatch cardGenerationBatch) {
-			this.selectedCardGenerationBatch = cardGenerationBatch;
-		}
-	}
+        public void setSelectedCardGenerationBatch(CardGenerationBatch cardGenerationBatch) {
+            this.selectedCardGenerationBatch = cardGenerationBatch;
+        }
+    }
 
-	private static final String PROBLEMS_GENERATION_BATCH_NAME = "Com Problemas";
+    private static final String PROBLEMS_GENERATION_BATCH_NAME = "Com Problemas";
 
-	public static class CardGenerationBatchProvider implements DataProvider {
+    public static class CardGenerationBatchProvider implements DataProvider {
 
-		@Override
-		public Converter getConverter() {
-			return new DomainObjectKeyConverter();
-		}
+        @Override
+        public Converter getConverter() {
+            return new DomainObjectKeyConverter();
+        }
 
-		@Override
-		public Object provide(Object source, Object currentValue) {
-			ImportIdentificationCardDataBean bean = (ImportIdentificationCardDataBean) source;
+        @Override
+        public Object provide(Object source, Object currentValue) {
+            ImportIdentificationCardDataBean bean = (ImportIdentificationCardDataBean) source;
 
-			if (bean.getSelectedExecutionYear() == null) {
-				return new java.util.ArrayList<CardGenerationBatch>();
-			}
+            if (bean.getSelectedExecutionYear() == null) {
+                return new java.util.ArrayList<CardGenerationBatch>();
+            }
 
-			return CollectionUtils.select(bean.getSelectedExecutionYear().getCardGenerationBatches(), new Predicate() {
+            return CollectionUtils.select(bean.getSelectedExecutionYear().getCardGenerationBatches(), new Predicate() {
 
-				@Override
-				public boolean evaluate(Object arg0) {
-					return !PROBLEMS_GENERATION_BATCH_NAME.equals(((CardGenerationBatch) arg0).getDescription());
-				}
-			});
-		}
-	}
+                @Override
+                public boolean evaluate(Object arg0) {
+                    return !PROBLEMS_GENERATION_BATCH_NAME.equals(((CardGenerationBatch) arg0).getDescription());
+                }
+            });
+        }
+    }
 }

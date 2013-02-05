@@ -22,76 +22,76 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/gratuityReports", module = "manager")
 @Forwards({ @Forward(name = "prepare-generate-report", path = "/manager/accounting/reports/gratuity/prepareGenerateReport.jsp"),
-		@Forward(name = "list-reports", path = "/manager/accounting/reports/gratuity/listReports.jsp") })
+        @Forward(name = "list-reports", path = "/manager/accounting/reports/gratuity/listReports.jsp") })
 public class GratuityReportsDA extends FenixDispatchAction {
 
-	public ActionForward listReports(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward listReports(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		GratuityReportBean bean = getGratuityReportBean();
+        GratuityReportBean bean = getGratuityReportBean();
 
-		if (bean == null) {
-			bean = new GratuityReportBean(ExecutionYear.readCurrentExecutionYear());
-		}
+        if (bean == null) {
+            bean = new GratuityReportBean(ExecutionYear.readCurrentExecutionYear());
+        }
 
-		RenderUtils.invalidateViewState("gratuity.report.bean");
+        RenderUtils.invalidateViewState("gratuity.report.bean");
 
-		request.setAttribute("gratuityReportBean", bean);
-		request.setAttribute("generatedReports", GratuityReportQueueJob.retrieveAllGeneratedReports(bean.getExecutionYear()));
-		request.setAttribute("eventReports", EventReportQueueJob.retrieveAllGeneratedReports());
-		request.setAttribute("notGeneratedReports", GratuityReportQueueJob.retrieveNotGeneratedReports(bean.getExecutionYear()));
-		request.setAttribute("canRequestReportGeneration", GratuityReportQueueJob.canRequestReportGeneration());
+        request.setAttribute("gratuityReportBean", bean);
+        request.setAttribute("generatedReports", GratuityReportQueueJob.retrieveAllGeneratedReports(bean.getExecutionYear()));
+        request.setAttribute("eventReports", EventReportQueueJob.retrieveAllGeneratedReports());
+        request.setAttribute("notGeneratedReports", GratuityReportQueueJob.retrieveNotGeneratedReports(bean.getExecutionYear()));
+        request.setAttribute("canRequestReportGeneration", GratuityReportQueueJob.canRequestReportGeneration());
 
-		return mapping.findForward("list-reports");
-	}
+        return mapping.findForward("list-reports");
+    }
 
-	private GratuityReportBean getGratuityReportBean() {
-		return getRenderedObject("gratuity.report.bean");
-	}
+    private GratuityReportBean getGratuityReportBean() {
+        return getRenderedObject("gratuity.report.bean");
+    }
 
-	public ActionForward prepareGenerateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		GratuityReportBean bean = new GratuityReportBean(ExecutionYear.readCurrentExecutionYear());
+    public ActionForward prepareGenerateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        GratuityReportBean bean = new GratuityReportBean(ExecutionYear.readCurrentExecutionYear());
 
-		request.setAttribute("gratuityReportBean", bean);
+        request.setAttribute("gratuityReportBean", bean);
 
-		return mapping.findForward("prepare-generate-report");
-	}
+        return mapping.findForward("prepare-generate-report");
+    }
 
-	public ActionForward prepareGenerateReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		GratuityReportBean bean = getGratuityReportBean();
-		request.setAttribute("gratuityReportBean", bean);
+    public ActionForward prepareGenerateReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        GratuityReportBean bean = getGratuityReportBean();
+        request.setAttribute("gratuityReportBean", bean);
 
-		RenderUtils.invalidateViewState("gratuity.report.bean");
+        RenderUtils.invalidateViewState("gratuity.report.bean");
 
-		return mapping.findForward("prepare-generate-report");
-	}
+        return mapping.findForward("prepare-generate-report");
+    }
 
-	public ActionForward generateReportPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		GratuityReportBean bean = getGratuityReportBean();
-		request.setAttribute("gratuityReportBean", bean);
+    public ActionForward generateReportPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        GratuityReportBean bean = getGratuityReportBean();
+        request.setAttribute("gratuityReportBean", bean);
 
-		RenderUtils.invalidateViewState("gratuity.report.bean");
+        RenderUtils.invalidateViewState("gratuity.report.bean");
 
-		return mapping.findForward("prepare-generate-report");
-	}
+        return mapping.findForward("prepare-generate-report");
+    }
 
-	public ActionForward generateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		GratuityReportBean bean = getGratuityReportBean();
-		GratuityReportQueueJobLaunchService.launchJob(bean);
+    public ActionForward generateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        GratuityReportBean bean = getGratuityReportBean();
+        GratuityReportQueueJobLaunchService.launchJob(bean);
 
-		return listReports(mapping, form, request, response);
-	}
+        return listReports(mapping, form, request, response);
+    }
 
-	public ActionForward cancelQueueJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		QueueJob job = getDomainObject(request, "queueJobId");
-		job.cancel();
+    public ActionForward cancelQueueJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        QueueJob job = getDomainObject(request, "queueJobId");
+        job.cancel();
 
-		return listReports(mapping, form, request, response);
-	}
+        return listReports(mapping, form, request, response);
+    }
 
 }

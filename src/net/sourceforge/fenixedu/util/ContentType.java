@@ -6,40 +6,40 @@ package net.sourceforge.fenixedu.util;
  */
 public enum ContentType {
 
-	JPG, PNG;
+    JPG, PNG;
 
-	public String getMimeType() {
+    public String getMimeType() {
 
-		ContentType type = valueOf(name());
+        ContentType type = valueOf(name());
 
-		switch (type) {
-		case JPG:
-			return "image/jpeg";
-		case PNG:
-			return "image/png";
-		default:
-			return "*/*";
-		}
+        switch (type) {
+        case JPG:
+            return "image/jpeg";
+        case PNG:
+            return "image/png";
+        default:
+            return "*/*";
+        }
 
-	}
+    }
 
-	public String getFileExtention() {
-		return name().toLowerCase();
-	}
+    public String getFileExtention() {
+        return name().toLowerCase();
+    }
 
-	public static ContentType getContentType(String httpContentType) {
+    public static ContentType getContentType(String httpContentType) {
 
-		String contentTypeInLowerCase = httpContentType.toLowerCase();
+        String contentTypeInLowerCase = httpContentType.toLowerCase();
 
-		if (contentTypeInLowerCase.equals("image/jpeg") || contentTypeInLowerCase.equals("image/jpg")
-				|| contentTypeInLowerCase.equals("image/pjpeg")) {
-			return JPG;
-		}
-		if (contentTypeInLowerCase.equals("image/png") || contentTypeInLowerCase.equals("image/x-png")) {
-			return PNG;
-		}
+        if (contentTypeInLowerCase.equals("image/jpeg") || contentTypeInLowerCase.equals("image/jpg")
+                || contentTypeInLowerCase.equals("image/pjpeg")) {
+            return JPG;
+        }
+        if (contentTypeInLowerCase.equals("image/png") || contentTypeInLowerCase.equals("image/x-png")) {
+            return PNG;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

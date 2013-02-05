@@ -15,26 +15,26 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
  */
 public class InfoExternalEvaluationInfo {
 
-	private String gradeValue;
+    private String gradeValue;
 
-	/**
-	 * @return Returns the grade.
-	 */
-	public String getGradeValue() {
-		return this.gradeValue;
-	}
+    /**
+     * @return Returns the grade.
+     */
+    public String getGradeValue() {
+        return this.gradeValue;
+    }
 
-	/**
-	 * @param grade
-	 *            The grade to set.
-	 */
-	public void setGradeValue(String grade) {
-		this.gradeValue = grade;
-	}
+    /**
+     * @param grade
+     *            The grade to set.
+     */
+    public void setGradeValue(String grade) {
+        this.gradeValue = grade;
+    }
 
-	public static InfoExternalEvaluationInfo newFromEvaluation(EnrolmentEvaluation evaluation) {
-		InfoExternalEvaluationInfo info = new InfoExternalEvaluationInfo();
-		info.setGradeValue(evaluation.getGradeValue());
-		return info;
-	}
+    public static InfoExternalEvaluationInfo newFromEvaluation(EnrolmentEvaluation evaluation) {
+        InfoExternalEvaluationInfo info = new InfoExternalEvaluationInfo();
+        info.setGradeValue(evaluation.getGradeValue());
+        return info;
+    }
 }

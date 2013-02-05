@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ListExecutionCourseTeachersToShowSummariesInDepartmentAdmOfficeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ExecutionCourse executionCourse = ((ShowSummariesBean) source).getExecutionCourse();
-		Professorship professorshipLogged = ((ShowSummariesBean) source).getProfessorshipLogged();
-		List<SummaryTeacherBean> teachers = new ArrayList<SummaryTeacherBean>();
-		if (executionCourse != null && professorshipLogged != null) {
-			teachers.add(teachers.size(), new SummaryTeacherBean(professorshipLogged));
-			teachers.add(teachers.size(), new SummaryTeacherBean(Boolean.TRUE));
-		}
-		return teachers;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ExecutionCourse executionCourse = ((ShowSummariesBean) source).getExecutionCourse();
+        Professorship professorshipLogged = ((ShowSummariesBean) source).getProfessorshipLogged();
+        List<SummaryTeacherBean> teachers = new ArrayList<SummaryTeacherBean>();
+        if (executionCourse != null && professorshipLogged != null) {
+            teachers.add(teachers.size(), new SummaryTeacherBean(professorshipLogged));
+            teachers.add(teachers.size(), new SummaryTeacherBean(Boolean.TRUE));
+        }
+        return teachers;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 }

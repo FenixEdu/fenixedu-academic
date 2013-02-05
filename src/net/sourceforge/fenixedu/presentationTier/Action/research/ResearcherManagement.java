@@ -16,20 +16,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/researcherManagement", module = "researcher")
 @Forwards({ @Forward(name = "viewDetails", path = "/researcher/expertDetails/viewResearcher.jsp"),
-		@Forward(name = "editDetails", path = "/researcher/expertDetails/editResearcher.jsp") })
+        @Forward(name = "editDetails", path = "/researcher/expertDetails/editResearcher.jsp") })
 public class ResearcherManagement extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		Person person = getLoggedPerson(request);
-		request.setAttribute("researcher", person.getResearcher());
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        Person person = getLoggedPerson(request);
+        request.setAttribute("researcher", person.getResearcher());
 
-		return mapping.findForward("viewDetails");
-	}
+        return mapping.findForward("viewDetails");
+    }
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		Person person = getLoggedPerson(request);
-		request.setAttribute("researcher", person.getResearcher());
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        Person person = getLoggedPerson(request);
+        request.setAttribute("researcher", person.getResearcher());
 
-		return mapping.findForward("editDetails");
-	}
+        return mapping.findForward("editDetails");
+    }
 }

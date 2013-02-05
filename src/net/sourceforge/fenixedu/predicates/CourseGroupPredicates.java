@@ -16,27 +16,27 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
  */
 public class CourseGroupPredicates {
 
-	public static final AccessControlPredicate<CourseGroup> curricularPlanMemberWritePredicate =
-			new AccessControlPredicate<CourseGroup>() {
+    public static final AccessControlPredicate<CourseGroup> curricularPlanMemberWritePredicate =
+            new AccessControlPredicate<CourseGroup>() {
 
-				@Override
-				public boolean evaluate(CourseGroup cg) {
+                @Override
+                public boolean evaluate(CourseGroup cg) {
 
-					final DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
-					if (!parentDegreeCurricularPlan.isBolonhaDegree()) {
-						return true;
-					}
+                    final DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
+                    if (!parentDegreeCurricularPlan.isBolonhaDegree()) {
+                        return true;
+                    }
 
-					final Person person = AccessControl.getPerson();
-					if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || person.hasRole(RoleType.MANAGER)
-							|| person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)
-							|| person.hasRole(RoleType.OPERATOR)) {
-						return true;
-					}
+                    final Person person = AccessControl.getPerson();
+                    if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || person.hasRole(RoleType.MANAGER)
+                            || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)
+                            || person.hasRole(RoleType.OPERATOR)) {
+                        return true;
+                    }
 
-					return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
-				}
+                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
+                }
 
-			};
+            };
 
 }

@@ -23,35 +23,35 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadStudentListByCurricularCourseScope extends FenixService {
 
-	public List run(IUserView userView, Integer curricularCourseScopeID) throws FenixServiceException {
-		CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
+    public List run(IUserView userView, Integer curricularCourseScopeID) throws FenixServiceException {
+        CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
 
-		final List<Enrolment> enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
-		if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
-			throw new NonExistingServiceException();
-		}
-		return cleanList(enrolmentList);
-	}
+        final List<Enrolment> enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
+        if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
+            throw new NonExistingServiceException();
+        }
+        return cleanList(enrolmentList);
+    }
 
-	private List cleanList(final List<Enrolment> enrolmentList) throws FenixServiceException {
+    private List cleanList(final List<Enrolment> enrolmentList) throws FenixServiceException {
 
-		if (enrolmentList.isEmpty()) {
-			throw new NonExistingServiceException();
-		}
+        if (enrolmentList.isEmpty()) {
+            throw new NonExistingServiceException();
+        }
 
-		Integer studentNumber = null;
-		final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-		for (final Enrolment enrolment : enrolmentList) {
+        Integer studentNumber = null;
+        final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
+        for (final Enrolment enrolment : enrolmentList) {
 
-			if (studentNumber == null
-					|| studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration().getNumber().intValue()) {
+            if (studentNumber == null
+                    || studentNumber.intValue() != enrolment.getStudentCurricularPlan().getRegistration().getNumber().intValue()) {
 
-				studentNumber = enrolment.getStudentCurricularPlan().getRegistration().getNumber();
-				result.add(InfoEnrolment.newInfoFromDomain(enrolment));
-			}
-		}
-		Collections.sort(result, new BeanComparator("infoStudentCurricularPlan.infoStudent.number"));
-		return result;
-	}
+                studentNumber = enrolment.getStudentCurricularPlan().getRegistration().getNumber();
+                result.add(InfoEnrolment.newInfoFromDomain(enrolment));
+            }
+        }
+        Collections.sort(result, new BeanComparator("infoStudentCurricularPlan.infoStudent.number"));
+        return result;
+    }
 
 }

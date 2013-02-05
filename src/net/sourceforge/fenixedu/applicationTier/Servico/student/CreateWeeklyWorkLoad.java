@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateWeeklyWorkLoad extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static void run(final Integer attendsID, final Integer contact, final Integer autonomousStudy, final Integer other) {
-		final Attends attends = rootDomainObject.readAttendsByOID(attendsID);
-		attends.createWeeklyWorkLoad(contact, autonomousStudy, other);
-	}
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(final Integer attendsID, final Integer contact, final Integer autonomousStudy, final Integer other) {
+        final Attends attends = rootDomainObject.readAttendsByOID(attendsID);
+        attends.createWeeklyWorkLoad(contact, autonomousStudy, other);
+    }
 
 }

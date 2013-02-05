@@ -16,41 +16,41 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGratuitySituationById extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
-		if (infoGratuitySituation == null) {
-			throw new FenixServiceException();
-		}
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
+        if (infoGratuitySituation == null) {
+            throw new FenixServiceException();
+        }
 
-		StudentCurricularPlan studentCurricularPlan =
-				rootDomainObject.readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
-						.getIdInternal());
+        StudentCurricularPlan studentCurricularPlan =
+                rootDomainObject.readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
+                        .getIdInternal());
 
-		GratuityValues gratuityValues =
-				rootDomainObject.readGratuityValuesByOID(infoGratuitySituation.getInfoGratuityValues().getIdInternal());
+        GratuityValues gratuityValues =
+                rootDomainObject.readGratuityValuesByOID(infoGratuitySituation.getInfoGratuityValues().getIdInternal());
 
-		final GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
+        final GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
-		if (gratuitySituation == null) {
-			throw new NonExistingServiceException("Gratuity Situation not exist yet.");
-		}
+        if (gratuitySituation == null) {
+            throw new NonExistingServiceException("Gratuity Situation not exist yet.");
+        }
 
-		// set employee who made register
-		final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
-		if (person != null) {
-			gratuitySituation.setEmployee(person.getEmployee());
-		}
+        // set employee who made register
+        final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
+        if (person != null) {
+            gratuitySituation.setEmployee(person.getEmployee());
+        }
 
-		gratuitySituation.setWhen(Calendar.getInstance().getTime());
-		gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
-		gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
-		gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
-		gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
+        gratuitySituation.setWhen(Calendar.getInstance().getTime());
+        gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
+        gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
+        gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
+        gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
 
-		gratuitySituation.updateValues();
+        gratuitySituation.updateValues();
 
-		return InfoGratuitySituationWithAll.newInfoFromDomain(gratuitySituation);
-	}
+        return InfoGratuitySituationWithAll.newInfoFromDomain(gratuitySituation);
+    }
 
 }

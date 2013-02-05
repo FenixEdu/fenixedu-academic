@@ -10,66 +10,66 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DocumentRequestSearchBean implements Serializable, IDocumentRequestBean {
 
-	private DocumentRequestType chosenDocumentRequestType;
+    private DocumentRequestType chosenDocumentRequestType;
 
-	private Registration registration;
+    private Registration registration;
 
-	private AcademicServiceRequestType academicServiceRequestType;
+    private AcademicServiceRequestType academicServiceRequestType;
 
-	private AcademicServiceRequestSituationType academicServiceRequestSituationType;
+    private AcademicServiceRequestSituationType academicServiceRequestSituationType;
 
-	private boolean urgentRequest;
+    private boolean urgentRequest;
 
-	public DocumentRequestSearchBean() {
-	}
+    public DocumentRequestSearchBean() {
+    }
 
-	@Override
-	public Registration getRegistration() {
-		return registration;
-	}
+    @Override
+    public Registration getRegistration() {
+        return registration;
+    }
 
-	public void setRegistration(Registration registration) {
-		this.registration = registration;
-	}
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
+    }
 
-	public DocumentRequestType getChosenDocumentRequestType() {
-		return chosenDocumentRequestType;
-	}
+    public DocumentRequestType getChosenDocumentRequestType() {
+        return chosenDocumentRequestType;
+    }
 
-	public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
-		this.chosenDocumentRequestType = chosenDocumentRequestType;
-	}
+    public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
+        this.chosenDocumentRequestType = chosenDocumentRequestType;
+    }
 
-	@Override
-	public boolean hasRegistration() {
-		return getRegistration() != null;
-	}
+    @Override
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
 
-	public AcademicServiceRequestType getAcademicServiceRequestType() {
-		return academicServiceRequestType;
-	}
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+        return academicServiceRequestType;
+    }
 
-	public void setAcademicServiceRequestType(AcademicServiceRequestType academicServiceRequestType) {
-		this.academicServiceRequestType = academicServiceRequestType;
-	}
+    public void setAcademicServiceRequestType(AcademicServiceRequestType academicServiceRequestType) {
+        this.academicServiceRequestType = academicServiceRequestType;
+    }
 
-	public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
-		return academicServiceRequestSituationType;
-	}
+    public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
+        return academicServiceRequestSituationType;
+    }
 
-	public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-		this.academicServiceRequestSituationType = academicServiceRequestSituationType;
-	}
+    public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+        this.academicServiceRequestSituationType = academicServiceRequestSituationType;
+    }
 
-	public boolean getUrgentRequest() {
-		return urgentRequest;
-	}
+    public boolean getUrgentRequest() {
+        return urgentRequest;
+    }
 
-	public void setUrgentRequest(boolean urgentRequest) {
-		this.urgentRequest = urgentRequest;
-	}
+    public void setUrgentRequest(boolean urgentRequest) {
+        this.urgentRequest = urgentRequest;
+    }
 
-	public boolean isUrgentRequest() {
-		return urgentRequest;
-	}
+    public boolean isUrgentRequest() {
+        return urgentRequest;
+    }
 }

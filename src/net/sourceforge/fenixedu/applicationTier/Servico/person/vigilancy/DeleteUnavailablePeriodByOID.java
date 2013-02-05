@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteUnavailablePeriodByOID extends FenixService {
 
-	@Service
-	public static void run(Integer idInternal) {
+    @Service
+    public static void run(Integer idInternal) {
 
-		UnavailablePeriod unavailablePeriod =
-				(UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+        UnavailablePeriod unavailablePeriod =
+                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
 
-		unavailablePeriod.delete();
+        unavailablePeriod.delete();
 
-	}
+    }
 
 }

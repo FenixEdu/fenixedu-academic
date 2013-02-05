@@ -11,42 +11,42 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class AllStudentsGroup extends Group {
 
-	public AllStudentsGroup() {
+    public AllStudentsGroup() {
 
-	}
+    }
 
-	@Override
-	public boolean equals(final Object other) {
-		boolean result = other != null;
+    @Override
+    public boolean equals(final Object other) {
+        boolean result = other != null;
 
-		if (result) {
-			result = this.getClass().equals(other.getClass());
-		}
+        if (result) {
+            result = this.getClass().equals(other.getClass());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public int hashCode() {
-		return getClass().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = new HashSet<Person>();
-		List<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = new HashSet<Person>();
+        List<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();
 
-		for (Person person : people) {
-			if (!person.getStudent().getActiveRegistrations().isEmpty()) {
-				elements.add(person);
-			}
-		}
-		return elements;
-	}
+        for (Person person : people) {
+            if (!person.getStudent().getActiveRegistrations().isEmpty()) {
+                elements.add(person);
+            }
+        }
+        return elements;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
 
 }

@@ -14,8 +14,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDomainSupportLessonByOID extends FenixService {
 
-	@Service
-	public static SupportLesson run(Integer supportLessonID) {
-		return rootDomainObject.readSupportLessonByOID(supportLessonID);
-	}
+    @Service
+    public static SupportLesson run(Integer supportLessonID) {
+        return rootDomainObject.readSupportLessonByOID(supportLessonID);
+    }
 }

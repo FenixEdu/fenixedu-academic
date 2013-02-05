@@ -23,47 +23,47 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
  */
 public class ExecutionCourseResponsiblesGroup extends Group {
 
-	private static final long serialVersionUID = -1670838873686375271L;
+    private static final long serialVersionUID = -1670838873686375271L;
 
-	@Override
-	public Set<Person> getElements() {
-		final Set<Person> elements = super.buildSet();
-		final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
-		for (final ExecutionYear executionYear : executionYears) {
-			if (executionYear.isCurrent()) {
-				for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-					for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
-						for (final Professorship professorship : executionCourse.getProfessorships()) {
-							if (professorship.getResponsibleFor().booleanValue()) {
-								final Person person = professorship.getPerson();
-								elements.add(person);
-							}
-						}
-					}
-				}
-				break;
-			}
-		}
-		return elements;
-	}
+    @Override
+    public Set<Person> getElements() {
+        final Set<Person> elements = super.buildSet();
+        final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
+        for (final ExecutionYear executionYear : executionYears) {
+            if (executionYear.isCurrent()) {
+                for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+                    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+                        for (final Professorship professorship : executionCourse.getProfessorships()) {
+                            if (professorship.getResponsibleFor().booleanValue()) {
+                                final Person person = professorship.getPerson();
+                                elements.add(person);
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return elements;
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		if (person != null && person.hasTeacher()) {
-			for (final Professorship professorship : person.getTeacher().getProfessorships(
-					ExecutionYear.readCurrentExecutionYear())) {
-				if (professorship.isResponsibleFor()) {
-					return true;
-				}
+    @Override
+    public boolean isMember(Person person) {
+        if (person != null && person.hasTeacher()) {
+            for (final Professorship professorship : person.getTeacher().getProfessorships(
+                    ExecutionYear.readCurrentExecutionYear())) {
+                if (professorship.isResponsibleFor()) {
+                    return true;
+                }
 
-			}
-		}
-		return false;
-	}
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
 
 }

@@ -5,21 +5,21 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class SantanderBatchSender extends SantanderBatchSender_Base {
 
-	private SantanderBatchSender() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    private SantanderBatchSender() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public SantanderBatchSender(Person sender) {
-		this();
-		setPerson(sender);
-	}
+    public SantanderBatchSender(Person sender) {
+        this();
+        setPerson(sender);
+    }
 
-	public void delete() {
-		removePerson();
-		removeSantanderBatch();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removePerson();
+        removeSantanderBatch();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
 }

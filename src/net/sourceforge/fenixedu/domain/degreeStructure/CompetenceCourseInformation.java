@@ -50,296 +50,296 @@ import net.sourceforge.fenixedu.util.StringFormatter;
  */
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
 
-	static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD =
-			new Comparator<CompetenceCourseInformation>() {
-				@Override
-				public int compare(CompetenceCourseInformation o1, CompetenceCourseInformation o2) {
-					return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
-				}
-			};
+    static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD =
+            new Comparator<CompetenceCourseInformation>() {
+                @Override
+                public int compare(CompetenceCourseInformation o1, CompetenceCourseInformation o2) {
+                    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+                }
+            };
 
-	public CompetenceCourseInformation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public CompetenceCourseInformation() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
-		this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(), existingInformation
-				.getRegime(), existingInformation.getCompetenceCourseLevel(), existingInformation.getExecutionPeriod(),
-				existingInformation.getCompetenceCourseGroupUnit());
-		setCompetenceCourse(existingInformation.getCompetenceCourse());
-		for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoads()) {
-			CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
-			addCompetenceCourseLoads(newLoad);
-		}
-		setAcronym(existingInformation.getAcronym());
-		setBibliographicReferences(existingInformation.getBibliographicReferences());
-		setEvaluationMethod(existingInformation.getEvaluationMethod());
-		setEvaluationMethodEn(existingInformation.getEvaluationMethodEn());
-		setObjectives(existingInformation.getObjectives());
-		setObjectivesEn(existingInformation.getObjectivesEn());
-		setProgram(existingInformation.getProgram());
-		setProgramEn(existingInformation.getProgramEn());
-	}
+    public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
+        this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(), existingInformation
+                .getRegime(), existingInformation.getCompetenceCourseLevel(), existingInformation.getExecutionPeriod(),
+                existingInformation.getCompetenceCourseGroupUnit());
+        setCompetenceCourse(existingInformation.getCompetenceCourse());
+        for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoads()) {
+            CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
+            addCompetenceCourseLoads(newLoad);
+        }
+        setAcronym(existingInformation.getAcronym());
+        setBibliographicReferences(existingInformation.getBibliographicReferences());
+        setEvaluationMethod(existingInformation.getEvaluationMethod());
+        setEvaluationMethodEn(existingInformation.getEvaluationMethodEn());
+        setObjectives(existingInformation.getObjectives());
+        setObjectivesEn(existingInformation.getObjectivesEn());
+        setProgram(existingInformation.getProgram());
+        setProgramEn(existingInformation.getProgramEn());
+    }
 
-	public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
-			CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period, CompetenceCourseGroupUnit unit) {
+    public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
+            CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period, CompetenceCourseGroupUnit unit) {
 
-		this();
-		checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel, unit);
-		setName(StringFormatter.prettyPrint(name));
-		setNameEn(StringFormatter.prettyPrint(nameEn));
-		setBasic(basic);
-		setRegime(regimeType);
-		setCompetenceCourseLevel(competenceCourseLevel);
-		setBibliographicReferences(new BibliographicReferences());
-		setExecutionPeriod(period);
-		setCompetenceCourseGroupUnit(unit);
-	}
+        this();
+        checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel, unit);
+        setName(StringFormatter.prettyPrint(name));
+        setNameEn(StringFormatter.prettyPrint(nameEn));
+        setBasic(basic);
+        setRegime(regimeType);
+        setCompetenceCourseLevel(competenceCourseLevel);
+        setBibliographicReferences(new BibliographicReferences());
+        setExecutionPeriod(period);
+        setCompetenceCourseGroupUnit(unit);
+    }
 
-	public ScientificAreaUnit getScientificAreaUnit() {
-		return getCompetenceCourseGroupUnit().getScientificAreaUnit();
-	}
+    public ScientificAreaUnit getScientificAreaUnit() {
+        return getCompetenceCourseGroupUnit().getScientificAreaUnit();
+    }
 
-	public DepartmentUnit getDepartmentUnit() {
-		return getCompetenceCourseGroupUnit().getDepartmentUnit();
-	}
+    public DepartmentUnit getDepartmentUnit() {
+        return getCompetenceCourseGroupUnit().getDepartmentUnit();
+    }
 
-	private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
-			CompetenceCourseLevel competenceCourseLevel) {
+    private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
+            CompetenceCourseLevel competenceCourseLevel) {
 
-		if (name == null || nameEn == null || basic == null || regimeType == null) {
-			throw new DomainException("competence.course.information.invalid.parameters");
-		}
-		if (competenceCourseLevel == null) {
-			competenceCourseLevel = CompetenceCourseLevel.UNKNOWN;
-		}
-	}
+        if (name == null || nameEn == null || basic == null || regimeType == null) {
+            throw new DomainException("competence.course.information.invalid.parameters");
+        }
+        if (competenceCourseLevel == null) {
+            competenceCourseLevel = CompetenceCourseLevel.UNKNOWN;
+        }
+    }
 
-	private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
-			CompetenceCourseLevel competenceCourseLevel, CompetenceCourseGroupUnit unit) {
+    private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
+            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseGroupUnit unit) {
 
-		checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
-		if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
-			throw new DomainException("competence.course.information.invalid.group.unit");
-		}
-	}
+        checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
+        if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
+            throw new DomainException("competence.course.information.invalid.group.unit");
+        }
+    }
 
-	public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
-			CompetenceCourseGroupUnit unit) {
-		checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, unit);
-		setName(StringFormatter.prettyPrint(name));
-		setNameEn(StringFormatter.prettyPrint(nameEn));
-		setBasic(basic);
-		setCompetenceCourseLevel(competenceCourseLevel);
-		setCompetenceCourseGroupUnit(unit);
-	}
+    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
+            CompetenceCourseGroupUnit unit) {
+        checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, unit);
+        setName(StringFormatter.prettyPrint(name));
+        setNameEn(StringFormatter.prettyPrint(nameEn));
+        setBasic(basic);
+        setCompetenceCourseLevel(competenceCourseLevel);
+        setCompetenceCourseGroupUnit(unit);
+    }
 
-	public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
-		checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
-		setName(StringFormatter.prettyPrint(name));
-		setNameEn(StringFormatter.prettyPrint(nameEn));
-		setBasic(basic);
-		setCompetenceCourseLevel(competenceCourseLevel);
-	}
+    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
+        checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
+        setName(StringFormatter.prettyPrint(name));
+        setNameEn(StringFormatter.prettyPrint(nameEn));
+        setBasic(basic);
+        setCompetenceCourseLevel(competenceCourseLevel);
+    }
 
-	public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
-			String evaluationMethodEn) {
-		setObjectives(objectives);
-		setProgram(program);
-		setEvaluationMethod(evaluationMethod);
-		setObjectivesEn(objectivesEn);
-		setProgramEn(programEn);
-		setEvaluationMethodEn(evaluationMethodEn);
-	}
+    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
+            String evaluationMethodEn) {
+        setObjectives(objectives);
+        setProgram(program);
+        setEvaluationMethod(evaluationMethod);
+        setObjectivesEn(objectivesEn);
+        setProgramEn(programEn);
+        setEvaluationMethodEn(evaluationMethodEn);
+    }
 
-	public void delete() {
-		removeExecutionPeriod();
-		removeCompetenceCourse();
-		removeCompetenceCourseGroupUnit();
-		for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete()) {
-			;
-		}
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removeExecutionPeriod();
+        removeCompetenceCourse();
+        removeCompetenceCourseGroupUnit();
+        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete()) {
+            ;
+        }
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
-	public BibliographicReference getBibliographicReference(Integer oid) {
-		return getBibliographicReferences().getBibliographicReference(oid);
-	}
+    public BibliographicReference getBibliographicReference(Integer oid) {
+        return getBibliographicReferences().getBibliographicReference(oid);
+    }
 
-	public Double getTheoreticalHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getTheoreticalHours();
-		}
-		return result;
-	}
+    public Double getTheoreticalHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getTheoreticalHours();
+        }
+        return result;
+    }
 
-	public Double getProblemsHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getProblemsHours();
-		}
-		return result;
-	}
+    public Double getProblemsHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getProblemsHours();
+        }
+        return result;
+    }
 
-	public Double getLaboratorialHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getLaboratorialHours();
-		}
-		return result;
-	}
+    public Double getLaboratorialHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getLaboratorialHours();
+        }
+        return result;
+    }
 
-	public Double getSeminaryHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getSeminaryHours();
-		}
-		return result;
-	}
+    public Double getSeminaryHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getSeminaryHours();
+        }
+        return result;
+    }
 
-	public Double getFieldWorkHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getFieldWorkHours();
-		}
-		return result;
-	}
+    public Double getFieldWorkHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getFieldWorkHours();
+        }
+        return result;
+    }
 
-	public Double getTrainingPeriodHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getTrainingPeriodHours();
-		}
-		return result;
-	}
+    public Double getTrainingPeriodHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getTrainingPeriodHours();
+        }
+        return result;
+    }
 
-	public Double getTutorialOrientationHours(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getTutorialOrientationHours();
-		}
-		return result;
-	}
+    public Double getTutorialOrientationHours(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getTutorialOrientationHours();
+        }
+        return result;
+    }
 
-	public Double getAutonomousWorkHours(Integer order) {
-		BigDecimal result = new BigDecimal(0.0);
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result = result.add(new BigDecimal(competenceCourseLoad.getAutonomousWorkHours()));
-		}
+    public Double getAutonomousWorkHours(Integer order) {
+        BigDecimal result = new BigDecimal(0.0);
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result = result.add(new BigDecimal(competenceCourseLoad.getAutonomousWorkHours()));
+        }
 
-		result = result.setScale(1, RoundingMode.HALF_EVEN);
-		return result.doubleValue();
-	}
+        result = result.setScale(1, RoundingMode.HALF_EVEN);
+        return result.doubleValue();
+    }
 
-	public Double getContactLoad(Integer order) {
-		BigDecimal result = new BigDecimal(0.0);
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result = result.add(new BigDecimal(competenceCourseLoad.getContactLoad()));
-		}
+    public Double getContactLoad(Integer order) {
+        BigDecimal result = new BigDecimal(0.0);
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result = result.add(new BigDecimal(competenceCourseLoad.getContactLoad()));
+        }
 
-		result = result.setScale(1, RoundingMode.HALF_EVEN);
-		return result.doubleValue();
-	}
+        result = result.setScale(1, RoundingMode.HALF_EVEN);
+        return result.doubleValue();
+    }
 
-	public Double getTotalLoad(Integer order) {
-		BigDecimal result = new BigDecimal(0.0);
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result = result.add(new BigDecimal(competenceCourseLoad.getTotalLoad()));
-		}
+    public Double getTotalLoad(Integer order) {
+        BigDecimal result = new BigDecimal(0.0);
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result = result.add(new BigDecimal(competenceCourseLoad.getTotalLoad()));
+        }
 
-		result = result.setScale(1, RoundingMode.HALF_EVEN);
-		return result.doubleValue();
-	}
+        result = result.setScale(1, RoundingMode.HALF_EVEN);
+        return result.doubleValue();
+    }
 
-	public double getEctsCredits(Integer order) {
-		double result = 0.0;
-		for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-			result += competenceCourseLoad.getEctsCredits();
-		}
+    public double getEctsCredits(Integer order) {
+        double result = 0.0;
+        for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
+            result += competenceCourseLoad.getEctsCredits();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private List<CompetenceCourseLoadBean> getCompetenceCourseLoadBeans(final Integer order) {
+    private List<CompetenceCourseLoadBean> getCompetenceCourseLoadBeans(final Integer order) {
 
-		if (isSemestrial()) {
-			return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().get(0)));
-		}
+        if (isSemestrial()) {
+            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().get(0)));
+        }
 
-		if (isAnual()) {
-			final List<CompetenceCourseLoadBean> result = new ArrayList<CompetenceCourseLoadBean>();
+        if (isAnual()) {
+            final List<CompetenceCourseLoadBean> result = new ArrayList<CompetenceCourseLoadBean>();
 
-			for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
-				result.add(new CompetenceCourseLoadBean(competenceCourseLoad));
-			}
+            for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+                result.add(new CompetenceCourseLoadBean(competenceCourseLoad));
+            }
 
-			if (getCompetenceCourseLoadsCount() == 1) { // hack
-				final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().get(0);
-				final CompetenceCourseLoadBean courseLoadBean = new CompetenceCourseLoadBean(courseLoad);
-				courseLoadBean.setLoadOrder(courseLoad.getLoadOrder() + 1);
-				result.add(courseLoadBean);
-			}
+            if (getCompetenceCourseLoadsCount() == 1) { // hack
+                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().get(0);
+                final CompetenceCourseLoadBean courseLoadBean = new CompetenceCourseLoadBean(courseLoad);
+                courseLoadBean.setLoadOrder(courseLoad.getLoadOrder() + 1);
+                result.add(courseLoadBean);
+            }
 
-			final Iterator<CompetenceCourseLoadBean> loads = result.iterator();
-			while (loads.hasNext()) {
-				final CompetenceCourseLoadBean courseLoadBean = loads.next();
-				if (order != null && !courseLoadBean.getLoadOrder().equals(order)) {
-					loads.remove();
-				}
-			}
-			return result;
-		}
+            final Iterator<CompetenceCourseLoadBean> loads = result.iterator();
+            while (loads.hasNext()) {
+                final CompetenceCourseLoadBean courseLoadBean = loads.next();
+                if (order != null && !courseLoadBean.getLoadOrder().equals(order)) {
+                    loads.remove();
+                }
+            }
+            return result;
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
-	public boolean isAnual() {
-		return getRegime() == RegimeType.ANUAL;
-	}
+    public boolean isAnual() {
+        return getRegime() == RegimeType.ANUAL;
+    }
 
-	public boolean isSemestrial() {
-		return getRegime() == RegimeType.SEMESTRIAL;
-	}
+    public boolean isSemestrial() {
+        return getRegime() == RegimeType.SEMESTRIAL;
+    }
 
-	public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
-		final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
-		for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse()
-				.getCompetenceCourseInformationChangeRequests()) {
-			if (request.getExecutionPeriod().equals(this.getExecutionPeriod())) {
-				requests.add(request);
-			}
-		}
-		return requests;
-	}
+    public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
+        final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
+        for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse()
+                .getCompetenceCourseInformationChangeRequests()) {
+            if (request.getExecutionPeriod().equals(this.getExecutionPeriod())) {
+                requests.add(request);
+            }
+        }
+        return requests;
+    }
 
-	public boolean isCompetenceCourseInformationChangeRequestDraftAvailable() {
-		for (final CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequest()) {
-			if (request.getApproved() == null) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isCompetenceCourseInformationChangeRequestDraftAvailable() {
+        for (final CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequest()) {
+            if (request.getApproved() == null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean isLoggedPersonAllowedToEdit() {
-		Person person = AccessControl.getPerson();
-		if (isCompetenceCourseInformationChangeRequestDraftAvailable()) {
-			return false;
-		}
-		if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
-			return true;
-		}
-		if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
-			return false;
-		}
-		return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
-	}
+    public boolean isLoggedPersonAllowedToEdit() {
+        Person person = AccessControl.getPerson();
+        if (isCompetenceCourseInformationChangeRequestDraftAvailable()) {
+            return false;
+        }
+        if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+            return true;
+        }
+        if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+            return false;
+        }
+        return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return getExecutionPeriod().getExecutionYear();
-	}
+    public ExecutionYear getExecutionYear() {
+        return getExecutionPeriod().getExecutionYear();
+    }
 
 }

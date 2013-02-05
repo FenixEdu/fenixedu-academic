@@ -28,33 +28,33 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateInsuranceTransaction extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer guideEntryID, IUserView userView) throws ExistingServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer guideEntryID, IUserView userView) throws ExistingServiceException {
 
-		GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
-		Guide guide = guideEntry.getGuide();
+        GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
+        Guide guide = guideEntry.getGuide();
 
-		Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
-		Person responsible = Person.readPersonByUsername(userView.getUtilizador());
+        Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+        Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
-		List insuranceTransactionList =
-				registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(guide.getExecutionDegree()
-						.getExecutionYear());
+        List insuranceTransactionList =
+                registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(guide.getExecutionDegree()
+                        .getExecutionYear());
 
-		if (insuranceTransactionList.isEmpty() == false) {
-			throw new ExistingServiceException("error.message.transaction.insuranceTransactionAlreadyExists");
-		}
+        if (insuranceTransactionList.isEmpty() == false) {
+            throw new ExistingServiceException("error.message.transaction.insuranceTransactionAlreadyExists");
+        }
 
-		PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
+        PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
 
-		if (personAccount == null) {
-			personAccount = new PersonAccount(guide.getPerson());
-		}
+        if (personAccount == null) {
+            personAccount = new PersonAccount(guide.getPerson());
+        }
 
-		new InsuranceTransaction(guideEntry.getPrice(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
-				guideEntry.getDescription(), guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT, Boolean.FALSE,
-				responsible, personAccount, guideEntry, guide.getExecutionDegree().getExecutionYear(), registration);
-	}
+        new InsuranceTransaction(guideEntry.getPrice(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
+                guideEntry.getDescription(), guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT, Boolean.FALSE,
+                responsible, personAccount, guideEntry, guide.getExecutionDegree().getExecutionYear(), registration);
+    }
 
 }

@@ -23,25 +23,25 @@ import org.apache.struts.action.DynaActionForm;
 
 public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDispatchAction {
 
-	public ActionForward getStudentAndDegreeTypeForThesisOperations(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getStudentAndDegreeTypeForThesisOperations(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		request.setAttribute("registrations", Registration.readByNumberAndDegreeType(
-				(Integer) ((DynaActionForm) form).get("studentNumber"), DegreeType.MASTER_DEGREE));
-		return mapping.findForward("chooseSCP");
-	}
+        request.setAttribute("registrations", Registration.readByNumberAndDegreeType(
+                (Integer) ((DynaActionForm) form).get("studentNumber"), DegreeType.MASTER_DEGREE));
+        return mapping.findForward("chooseSCP");
+    }
 
-	public ActionForward chooseSCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward chooseSCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		StudentCurricularPlan studentCurricularPlan =
-				rootDomainObject.readStudentCurricularPlanByOID((Integer) ((DynaActionForm) form).get("scpID"));
+        StudentCurricularPlan studentCurricularPlan =
+                rootDomainObject.readStudentCurricularPlanByOID((Integer) ((DynaActionForm) form).get("scpID"));
 
-		request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
-		request.setAttribute("scpID", studentCurricularPlan.getIdInternal());
-		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+        request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
+        request.setAttribute("scpID", studentCurricularPlan.getIdInternal());
+        request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
-		return studentCurricularPlan.getMasterDegreeThesis() != null ? mapping.findForward("success") : mapping
-				.findForward("createThesis");
-	}
+        return studentCurricularPlan.getMasterDegreeThesis() != null ? mapping.findForward("success") : mapping
+                .findForward("createThesis");
+    }
 }

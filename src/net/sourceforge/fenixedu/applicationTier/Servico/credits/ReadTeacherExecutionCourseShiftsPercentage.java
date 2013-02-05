@@ -36,70 +36,70 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadTeacherExecutionCourseShiftsPercentage extends FenixService {
 
-	@Service
-	public static TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher,
-			InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+    @Service
+    public static TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher,
+            InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 
-		TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
+        TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
 
-		List<InfoShiftPercentage> infoShiftPercentageList = new ArrayList<InfoShiftPercentage>();
+        List<InfoShiftPercentage> infoShiftPercentageList = new ArrayList<InfoShiftPercentage>();
 
-		ExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse);
-		Teacher teacher = readTeacher(infoTeacher);
+        ExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse);
+        Teacher teacher = readTeacher(infoTeacher);
 
-		result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-		result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
+        result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+        result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
 
-		Set<Shift> executionCourseShiftsList = executionCourse.getAssociatedShifts();
+        Set<Shift> executionCourseShiftsList = executionCourse.getAssociatedShifts();
 
-		Iterator<Shift> iterator = executionCourseShiftsList.iterator();
-		while (iterator.hasNext()) {
+        Iterator<Shift> iterator = executionCourseShiftsList.iterator();
+        while (iterator.hasNext()) {
 
-			Shift shift = iterator.next();
-			InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
-			final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-			infoShiftPercentage.setShift(infoShift);
-			double availablePercentage = 100;
-			InfoShiftProfessorship infoShiftProfessorship = null;
+            Shift shift = iterator.next();
+            InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
+            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            infoShiftPercentage.setShift(infoShift);
+            double availablePercentage = 100;
+            InfoShiftProfessorship infoShiftProfessorship = null;
 
-			Iterator<ShiftProfessorship> iter = shift.getAssociatedShiftProfessorship().iterator();
-			while (iter.hasNext()) {
-				ShiftProfessorship shiftProfessorship = iter.next();
-				/**
-				 * if shift's type is LABORATORIAL the shift professorship
-				 * percentage can exceed 100%
-				 */
-				if ((shift.getCourseLoadsCount() != 1 || !shift.containsType(ShiftType.LABORATORIAL))
-						&& shiftProfessorship.getProfessorship().getTeacher() != teacher) {
-					availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
-				}
-				infoShiftProfessorship = InfoShiftProfessorshipAndTeacher.newInfoFromDomain(shiftProfessorship);
-				infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
-			}
+            Iterator<ShiftProfessorship> iter = shift.getAssociatedShiftProfessorship().iterator();
+            while (iter.hasNext()) {
+                ShiftProfessorship shiftProfessorship = iter.next();
+                /**
+                 * if shift's type is LABORATORIAL the shift professorship
+                 * percentage can exceed 100%
+                 */
+                if ((shift.getCourseLoadsCount() != 1 || !shift.containsType(ShiftType.LABORATORIAL))
+                        && shiftProfessorship.getProfessorship().getTeacher() != teacher) {
+                    availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
+                }
+                infoShiftProfessorship = InfoShiftProfessorshipAndTeacher.newInfoFromDomain(shiftProfessorship);
+                infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
+            }
 
-			List<InfoLesson> infoLessons =
-					(List<InfoLesson>) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
-						@Override
-						public Object transform(Object input) {
-							Lesson lesson = (Lesson) input;
-							return InfoLesson.newInfoFromDomain(lesson);
-						}
-					});
+            List<InfoLesson> infoLessons =
+                    (List<InfoLesson>) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
+                        @Override
+                        public Object transform(Object input) {
+                            Lesson lesson = (Lesson) input;
+                            return InfoLesson.newInfoFromDomain(lesson);
+                        }
+                    });
 
-			infoShiftPercentage.setInfoLessons(infoLessons);
-			infoShiftPercentage.setAvailablePercentage(Double.valueOf(availablePercentage));
-			infoShiftPercentageList.add(infoShiftPercentage);
-		}
+            infoShiftPercentage.setInfoLessons(infoLessons);
+            infoShiftPercentage.setAvailablePercentage(Double.valueOf(availablePercentage));
+            infoShiftPercentageList.add(infoShiftPercentage);
+        }
 
-		result.setInfoShiftPercentageList(infoShiftPercentageList);
-		return result;
-	}
+        result.setInfoShiftPercentageList(infoShiftPercentageList);
+        return result;
+    }
 
-	private static Teacher readTeacher(InfoTeacher infoTeacher) {
-		return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
-	}
+    private static Teacher readTeacher(InfoTeacher infoTeacher) {
+        return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+    }
 
-	private static ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-		return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-	}
+    private static ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+        return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+    }
 }

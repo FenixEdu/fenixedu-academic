@@ -25,179 +25,179 @@ import org.joda.time.chrono.ISOChronology;
 
 public class AcademicChronology extends AssembledChronology {
 
-	private transient AcademicCalendarRootEntry academicCalendar;
+    private transient AcademicCalendarRootEntry academicCalendar;
 
-	// Duration Fields
-	private transient DurationField acAcademicYearsField;
+    // Duration Fields
+    private transient DurationField acAcademicYearsField;
 
-	private transient DurationField acAcademicSemestersField;
+    private transient DurationField acAcademicSemestersField;
 
-	private transient DurationField acAcademicTrimestersField;
+    private transient DurationField acAcademicTrimestersField;
 
-	// DateTime Fields
-	private transient DateTimeField acAcademicYear;
+    // DateTime Fields
+    private transient DateTimeField acAcademicYear;
 
-	private transient DateTimeField acAcademicSemester;
+    private transient DateTimeField acAcademicSemester;
 
-	private transient DateTimeField acAcademicSemesterOfAcademicYear;
+    private transient DateTimeField acAcademicSemesterOfAcademicYear;
 
-	private transient DateTimeField acDayOfAcademicSemester;
+    private transient DateTimeField acDayOfAcademicSemester;
 
-	private transient DateTimeField acAcademicTrimester;
+    private transient DateTimeField acAcademicTrimester;
 
-	// Static Variables
-	private static final ISOChronology ISO_INSTANCE;
-	static {
-		ISO_INSTANCE = ISOChronology.getInstance();
-	}
+    // Static Variables
+    private static final ISOChronology ISO_INSTANCE;
+    static {
+        ISO_INSTANCE = ISOChronology.getInstance();
+    }
 
-	// Override Methods
+    // Override Methods
 
-	public AcademicChronology(AcademicCalendarRootEntry academicCalendar) {
-		super(ISO_INSTANCE, null);
-		this.academicCalendar = academicCalendar;
-	}
+    public AcademicChronology(AcademicCalendarRootEntry academicCalendar) {
+        super(ISO_INSTANCE, null);
+        this.academicCalendar = academicCalendar;
+    }
 
-	@Override
-	protected void assemble(Fields fields) {
-		acAcademicYearsField = new AcademicYearsDurationField(this);
-		acAcademicYear = new AcademicYearDateTimeField(this);
+    @Override
+    protected void assemble(Fields fields) {
+        acAcademicYearsField = new AcademicYearsDurationField(this);
+        acAcademicYear = new AcademicYearDateTimeField(this);
 
-		acAcademicTrimester = new AcademicTrimesterDateTimeField(this);
-		acAcademicTrimestersField = new AcademicTrimesterDurationField(this);
+        acAcademicTrimester = new AcademicTrimesterDateTimeField(this);
+        acAcademicTrimestersField = new AcademicTrimesterDurationField(this);
 
-		acAcademicSemester = new AcademicSemesterDateTimeField(this);
-		acAcademicSemestersField = new AcademicSemestersDurationField(this);
-		acAcademicSemesterOfAcademicYear = new AcademicSemesterOfAcademicYearDateTimeField(this);
-		acDayOfAcademicSemester = new DayOfAcademicSemesterDateTimeField(this);
-	}
+        acAcademicSemester = new AcademicSemesterDateTimeField(this);
+        acAcademicSemestersField = new AcademicSemestersDurationField(this);
+        acAcademicSemesterOfAcademicYear = new AcademicSemesterOfAcademicYearDateTimeField(this);
+        acDayOfAcademicSemester = new DayOfAcademicSemesterDateTimeField(this);
+    }
 
-	@Override
-	public Chronology withUTC() {
-		return ISO_INSTANCE.getInstanceUTC();
-	}
+    @Override
+    public Chronology withUTC() {
+        return ISO_INSTANCE.getInstanceUTC();
+    }
 
-	@Override
-	public Chronology withZone(DateTimeZone zone) {
-		return ISO_INSTANCE.withZone(zone);
-	}
+    @Override
+    public Chronology withZone(DateTimeZone zone) {
+        return ISO_INSTANCE.withZone(zone);
+    }
 
-	@Override
-	public String toString() {
-		String str = "AcademicChronology";
-		DateTimeZone zone = getZone();
-		if (zone != null) {
-			str = str + '[' + zone.getID() + ']';
-		}
-		return str;
-	}
+    @Override
+    public String toString() {
+        String str = "AcademicChronology";
+        DateTimeZone zone = getZone();
+        if (zone != null) {
+            str = str + '[' + zone.getID() + ']';
+        }
+        return str;
+    }
 
-	// DateTime Fields
+    // DateTime Fields
 
-	public DateTimeField academicYear() {
-		return acAcademicYear;
-	}
+    public DateTimeField academicYear() {
+        return acAcademicYear;
+    }
 
-	public DateTimeField academicSemester() {
-		return acAcademicSemester;
-	}
+    public DateTimeField academicSemester() {
+        return acAcademicSemester;
+    }
 
-	public DateTimeField academicTrimester() {
-		return acAcademicTrimester;
-	}
+    public DateTimeField academicTrimester() {
+        return acAcademicTrimester;
+    }
 
-	public DateTimeField academicSemesterOfAcademicYear() {
-		return acAcademicSemesterOfAcademicYear;
-	}
+    public DateTimeField academicSemesterOfAcademicYear() {
+        return acAcademicSemesterOfAcademicYear;
+    }
 
-	public DateTimeField dayOfAcademicSemester() {
-		return acDayOfAcademicSemester;
-	}
+    public DateTimeField dayOfAcademicSemester() {
+        return acDayOfAcademicSemester;
+    }
 
-	// Duration Fields
+    // Duration Fields
 
-	public DurationField academicYears() {
-		return acAcademicYearsField;
-	}
+    public DurationField academicYears() {
+        return acAcademicYearsField;
+    }
 
-	public DurationField academicSemesters() {
-		return acAcademicSemestersField;
-	}
+    public DurationField academicSemesters() {
+        return acAcademicSemestersField;
+    }
 
-	public DurationField academicTrimesters() {
-		return acAcademicTrimestersField;
-	}
+    public DurationField academicTrimesters() {
+        return acAcademicTrimestersField;
+    }
 
-	// Auxiliar Methods
+    // Auxiliar Methods
 
-	public AcademicSemesterCE getAcademicSemesterIn(int index) {
-		return (AcademicSemesterCE) academicCalendar.getEntryByIndex(index, AcademicSemesterCE.class, AcademicYearCE.class);
-	}
+    public AcademicSemesterCE getAcademicSemesterIn(int index) {
+        return (AcademicSemesterCE) academicCalendar.getEntryByIndex(index, AcademicSemesterCE.class, AcademicYearCE.class);
+    }
 
-	public AcademicYearCE getAcademicYearIn(int index) {
-		return (AcademicYearCE) academicCalendar.getEntryByIndex(index, AcademicYearCE.class, AcademicCalendarRootEntry.class);
-	}
+    public AcademicYearCE getAcademicYearIn(int index) {
+        return (AcademicYearCE) academicCalendar.getEntryByIndex(index, AcademicYearCE.class, AcademicCalendarRootEntry.class);
+    }
 
-	public int getAcademicTrimester(long instant) {
-		Integer entryValueByInstant =
-				academicCalendar.getEntryIndexByInstant(instant, AcademicTrimesterCE.class, AcademicSemesterCE.class);
-		if (entryValueByInstant != null) {
-			return entryValueByInstant;
-		}
-		return 0;
-	}
+    public int getAcademicTrimester(long instant) {
+        Integer entryValueByInstant =
+                academicCalendar.getEntryIndexByInstant(instant, AcademicTrimesterCE.class, AcademicSemesterCE.class);
+        if (entryValueByInstant != null) {
+            return entryValueByInstant;
+        }
+        return 0;
+    }
 
-	public int getAcademicSemester(long instant) {
-		Integer entryValueByInstant =
-				academicCalendar.getEntryIndexByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
-		if (entryValueByInstant != null) {
-			return entryValueByInstant;
-		}
-		return 0;
-	}
+    public int getAcademicSemester(long instant) {
+        Integer entryValueByInstant =
+                academicCalendar.getEntryIndexByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+        if (entryValueByInstant != null) {
+            return entryValueByInstant;
+        }
+        return 0;
+    }
 
-	public int getAcademicYear(long instant) {
-		Integer entryValueByInstant =
-				academicCalendar.getEntryIndexByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
-		if (entryValueByInstant != null) {
-			return entryValueByInstant;
-		}
-		return 0;
-	}
+    public int getAcademicYear(long instant) {
+        Integer entryValueByInstant =
+                academicCalendar.getEntryIndexByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
+        if (entryValueByInstant != null) {
+            return entryValueByInstant;
+        }
+        return 0;
+    }
 
-	public int getDayOfAcademicSemester(long instant) {
-		AcademicCalendarEntry entryByInstant =
-				academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
-		if (entryByInstant != null) {
-			DateTime instantDateTime = new DateTime(instant);
-			Interval interval = new Interval(entryByInstant.getBegin(), instantDateTime);
-			int days = interval.toPeriod().getDays();
-			if (days > 0) {
-				return days;
-			}
-		}
-		return 0;
-	}
+    public int getDayOfAcademicSemester(long instant) {
+        AcademicCalendarEntry entryByInstant =
+                academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+        if (entryByInstant != null) {
+            DateTime instantDateTime = new DateTime(instant);
+            Interval interval = new Interval(entryByInstant.getBegin(), instantDateTime);
+            int days = interval.toPeriod().getDays();
+            if (days > 0) {
+                return days;
+            }
+        }
+        return 0;
+    }
 
-	public int getAcademicSemesterOfAcademicYear(long instant) {
-		AcademicSemesterCE entryByInstant =
-				(AcademicSemesterCE) academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
-		return entryByInstant.getAcademicSemesterOfAcademicYear(this);
-	}
+    public int getAcademicSemesterOfAcademicYear(long instant) {
+        AcademicSemesterCE entryByInstant =
+                (AcademicSemesterCE) academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+        return entryByInstant.getAcademicSemesterOfAcademicYear(this);
+    }
 
-	public int getMaximumValueForAcademicSemesterOfAcademicYear(long instant) {
-		int academicSemesterOfAcademicYear = getAcademicSemesterOfAcademicYear(instant);
-		if (academicSemesterOfAcademicYear == 0) {
-			return getMaximumValueForAcademicSemesterOfAcademicYear();
-		}
-		return getMaximumValueForAcademicSemesterOfAcademicYear() - academicSemesterOfAcademicYear;
-	}
+    public int getMaximumValueForAcademicSemesterOfAcademicYear(long instant) {
+        int academicSemesterOfAcademicYear = getAcademicSemesterOfAcademicYear(instant);
+        if (academicSemesterOfAcademicYear == 0) {
+            return getMaximumValueForAcademicSemesterOfAcademicYear();
+        }
+        return getMaximumValueForAcademicSemesterOfAcademicYear() - academicSemesterOfAcademicYear;
+    }
 
-	public int getMaximumValueForAcademicSemesterOfAcademicYear() {
-		return 2;
-	}
+    public int getMaximumValueForAcademicSemesterOfAcademicYear() {
+        return 2;
+    }
 
-	public AcademicCalendarEntry findSameEntry(final AcademicCalendarEntry entry) {
-		return entry.getEntryForCalendar(academicCalendar);
-	}
+    public AcademicCalendarEntry findSameEntry(final AcademicCalendarEntry entry) {
+        return entry.getEntryForCalendar(academicCalendar);
+    }
 }

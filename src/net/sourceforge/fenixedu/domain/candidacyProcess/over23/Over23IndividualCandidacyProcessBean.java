@@ -16,234 +16,234 @@ import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {
 
-	private Degree degreeToAdd;
+    private Degree degreeToAdd;
 
-	private List<Degree> selectedDegrees;
+    private List<Degree> selectedDegrees;
 
-	private String disabilities;
+    private String disabilities;
 
-	private String education;
+    private String education;
 
-	private String languages;
+    private String languages;
 
-	private String languagesRead;
-	private String languagesWrite;
-	private String languagesSpeak;
+    private String languagesRead;
+    private String languagesWrite;
+    private String languagesSpeak;
 
-	private List<CandidacyProcessDocumentUploadBean> habilitationCertificateList;
-	private List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList;
-	private CandidacyProcessDocumentUploadBean handicapProofDocument;
-	private CandidacyProcessDocumentUploadBean curriculumVitaeDocument;
+    private List<CandidacyProcessDocumentUploadBean> habilitationCertificateList;
+    private List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList;
+    private CandidacyProcessDocumentUploadBean handicapProofDocument;
+    private CandidacyProcessDocumentUploadBean curriculumVitaeDocument;
 
-	public Over23IndividualCandidacyProcessBean() {
-		setCandidacyDate(new LocalDate());
-		setSelectedDegrees(Collections.EMPTY_LIST);
-		setFormationConcludedBeanList(new ArrayList<FormationBean>());
-		setFormationNonConcludedBeanList(new ArrayList<FormationBean>());
-		initializeDocumentUploadBeans();
-		this.honorAgreement = false;
-	}
+    public Over23IndividualCandidacyProcessBean() {
+        setCandidacyDate(new LocalDate());
+        setSelectedDegrees(Collections.EMPTY_LIST);
+        setFormationConcludedBeanList(new ArrayList<FormationBean>());
+        setFormationNonConcludedBeanList(new ArrayList<FormationBean>());
+        initializeDocumentUploadBeans();
+        this.honorAgreement = false;
+    }
 
-	public Over23IndividualCandidacyProcessBean(Over23IndividualCandidacyProcess process) {
-		setIndividualCandidacyProcess(process);
-		setCandidacyDate(process.getCandidacyDate());
-		setSelectedDegrees(Collections.EMPTY_LIST);
-		addDegrees(process.getSelectedDegreesSortedByOrder());
-		setDisabilities(process.getDisabilities());
-		setEducation(process.getEducation());
-		setLanguages(process.getLanguages());
-		initializeFormation(process.getCandidacy().getFormations());
-		setLanguagesRead(process.getLanguagesRead());
-		setLanguagesWrite(process.getLanguagesWrite());
-		setLanguagesSpeak(process.getLanguagesSpeak());
-		setProcessChecked(process.getProcessChecked());
-	}
+    public Over23IndividualCandidacyProcessBean(Over23IndividualCandidacyProcess process) {
+        setIndividualCandidacyProcess(process);
+        setCandidacyDate(process.getCandidacyDate());
+        setSelectedDegrees(Collections.EMPTY_LIST);
+        addDegrees(process.getSelectedDegreesSortedByOrder());
+        setDisabilities(process.getDisabilities());
+        setEducation(process.getEducation());
+        setLanguages(process.getLanguages());
+        initializeFormation(process.getCandidacy().getFormations());
+        setLanguagesRead(process.getLanguagesRead());
+        setLanguagesWrite(process.getLanguagesWrite());
+        setLanguagesSpeak(process.getLanguagesSpeak());
+        setProcessChecked(process.getProcessChecked());
+    }
 
-	@Override
-	public Over23CandidacyProcess getCandidacyProcess() {
-		return (Over23CandidacyProcess) super.getCandidacyProcess();
-	}
+    @Override
+    public Over23CandidacyProcess getCandidacyProcess() {
+        return (Over23CandidacyProcess) super.getCandidacyProcess();
+    }
 
-	public Degree getDegreeToAdd() {
-		return this.degreeToAdd;
-	}
+    public Degree getDegreeToAdd() {
+        return this.degreeToAdd;
+    }
 
-	public void setDegreeToAdd(Degree degreeToAdd) {
-		this.degreeToAdd = degreeToAdd;
-	}
+    public void setDegreeToAdd(Degree degreeToAdd) {
+        this.degreeToAdd = degreeToAdd;
+    }
 
-	public boolean hasDegreeToAdd() {
-		return getDegreeToAdd() != null;
-	}
+    public boolean hasDegreeToAdd() {
+        return getDegreeToAdd() != null;
+    }
 
-	public void removeDegreeToAdd() {
-		degreeToAdd = null;
-	}
+    public void removeDegreeToAdd() {
+        degreeToAdd = null;
+    }
 
-	public List<Degree> getSelectedDegrees() {
-		final List<Degree> result = new ArrayList<Degree>();
-		for (final Degree degree : selectedDegrees) {
-			result.add(degree);
-		}
-		return result;
-	}
+    public List<Degree> getSelectedDegrees() {
+        final List<Degree> result = new ArrayList<Degree>();
+        for (final Degree degree : selectedDegrees) {
+            result.add(degree);
+        }
+        return result;
+    }
 
-	public void setSelectedDegrees(final List<Degree> degrees) {
-		selectedDegrees = new ArrayList<Degree>();
-		for (final Degree degree : degrees) {
-			selectedDegrees.add(degree);
-		}
-	}
+    public void setSelectedDegrees(final List<Degree> degrees) {
+        selectedDegrees = new ArrayList<Degree>();
+        for (final Degree degree : degrees) {
+            selectedDegrees.add(degree);
+        }
+    }
 
-	public void addDegree(final Degree degree) {
-		selectedDegrees.add(degree);
-	}
+    public void addDegree(final Degree degree) {
+        selectedDegrees.add(degree);
+    }
 
-	public void addDegrees(final Collection<Degree> degrees) {
-		for (final Degree degree : degrees) {
-			addDegree(degree);
-		}
-	}
+    public void addDegrees(final Collection<Degree> degrees) {
+        for (final Degree degree : degrees) {
+            addDegree(degree);
+        }
+    }
 
-	public void removeDegree(final Degree degree) {
-		final Iterator<Degree> iter = selectedDegrees.iterator();
-		while (iter.hasNext()) {
-			if (iter.next() == degree) {
-				iter.remove();
-				break;
-			}
-		}
-	}
+    public void removeDegree(final Degree degree) {
+        final Iterator<Degree> iter = selectedDegrees.iterator();
+        while (iter.hasNext()) {
+            if (iter.next() == degree) {
+                iter.remove();
+                break;
+            }
+        }
+    }
 
-	public boolean containsDegree(final Degree value) {
-		for (final Degree degree : getSelectedDegrees()) {
-			if (degree == value) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean containsDegree(final Degree value) {
+        for (final Degree degree : getSelectedDegrees()) {
+            if (degree == value) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public void removeSelectedDegrees() {
-		selectedDegrees.clear();
-	}
+    public void removeSelectedDegrees() {
+        selectedDegrees.clear();
+    }
 
-	public String getDisabilities() {
-		return disabilities;
-	}
+    public String getDisabilities() {
+        return disabilities;
+    }
 
-	public void setDisabilities(String disabilities) {
-		this.disabilities = disabilities;
-	}
+    public void setDisabilities(String disabilities) {
+        this.disabilities = disabilities;
+    }
 
-	public String getEducation() {
-		return education;
-	}
+    public String getEducation() {
+        return education;
+    }
 
-	public void setEducation(String education) {
-		this.education = education;
-	}
+    public void setEducation(String education) {
+        this.education = education;
+    }
 
-	public String getLanguages() {
-		return languages;
-	}
+    public String getLanguages() {
+        return languages;
+    }
 
-	public void setLanguages(String languages) {
-		this.languages = languages;
-	}
+    public void setLanguages(String languages) {
+        this.languages = languages;
+    }
 
-	public List<CandidacyProcessDocumentUploadBean> getHabilitationCertificateList() {
-		return habilitationCertificateList;
-	}
+    public List<CandidacyProcessDocumentUploadBean> getHabilitationCertificateList() {
+        return habilitationCertificateList;
+    }
 
-	public void setHabilitationCertificateList(List<CandidacyProcessDocumentUploadBean> habilitationCertificateList) {
-		this.habilitationCertificateList = habilitationCertificateList;
-	}
+    public void setHabilitationCertificateList(List<CandidacyProcessDocumentUploadBean> habilitationCertificateList) {
+        this.habilitationCertificateList = habilitationCertificateList;
+    }
 
-	public List<CandidacyProcessDocumentUploadBean> getReportOrWorkDocumentList() {
-		return reportOrWorkDocumentList;
-	}
+    public List<CandidacyProcessDocumentUploadBean> getReportOrWorkDocumentList() {
+        return reportOrWorkDocumentList;
+    }
 
-	public void setReportOrWorkDocumentList(List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList) {
-		this.reportOrWorkDocumentList = reportOrWorkDocumentList;
-	}
+    public void setReportOrWorkDocumentList(List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList) {
+        this.reportOrWorkDocumentList = reportOrWorkDocumentList;
+    }
 
-	public CandidacyProcessDocumentUploadBean getHandicapProofDocument() {
-		return handicapProofDocument;
-	}
+    public CandidacyProcessDocumentUploadBean getHandicapProofDocument() {
+        return handicapProofDocument;
+    }
 
-	public void setHandicapProofDocument(CandidacyProcessDocumentUploadBean handicapProofDocument) {
-		this.handicapProofDocument = handicapProofDocument;
-	}
+    public void setHandicapProofDocument(CandidacyProcessDocumentUploadBean handicapProofDocument) {
+        this.handicapProofDocument = handicapProofDocument;
+    }
 
-	public CandidacyProcessDocumentUploadBean getCurriculumVitaeDocument() {
-		return curriculumVitaeDocument;
-	}
+    public CandidacyProcessDocumentUploadBean getCurriculumVitaeDocument() {
+        return curriculumVitaeDocument;
+    }
 
-	public void setCurriculumVitaeDocument(CandidacyProcessDocumentUploadBean curriculumVitaeDocument) {
-		this.curriculumVitaeDocument = curriculumVitaeDocument;
-	}
+    public void setCurriculumVitaeDocument(CandidacyProcessDocumentUploadBean curriculumVitaeDocument) {
+        this.curriculumVitaeDocument = curriculumVitaeDocument;
+    }
 
-	public String getLanguagesRead() {
-		return this.languagesRead;
-	}
+    public String getLanguagesRead() {
+        return this.languagesRead;
+    }
 
-	public void setLanguagesRead(String value) {
-		this.languagesRead = value;
-	}
+    public void setLanguagesRead(String value) {
+        this.languagesRead = value;
+    }
 
-	public String getLanguagesWrite() {
-		return this.languagesWrite;
-	}
+    public String getLanguagesWrite() {
+        return this.languagesWrite;
+    }
 
-	public void setLanguagesWrite(String value) {
-		this.languagesWrite = value;
-	}
+    public void setLanguagesWrite(String value) {
+        this.languagesWrite = value;
+    }
 
-	public String getLanguagesSpeak() {
-		return this.languagesSpeak;
-	}
+    public String getLanguagesSpeak() {
+        return this.languagesSpeak;
+    }
 
-	public void setLanguagesSpeak(String value) {
-		this.languagesSpeak = value;
-	}
+    public void setLanguagesSpeak(String value) {
+        this.languagesSpeak = value;
+    }
 
-	public void addHabilitationCertificateDocument() {
-		this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(
-				IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
-	}
+    public void addHabilitationCertificateDocument() {
+        this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(
+                IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
+    }
 
-	public void removeHabilitationCertificateDocument(final int index) {
-		this.habilitationCertificateList.remove(index);
-	}
+    public void removeHabilitationCertificateDocument(final int index) {
+        this.habilitationCertificateList.remove(index);
+    }
 
-	public void addReportOrWorkDocument() {
-		this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(
-				IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT));
-	}
+    public void addReportOrWorkDocument() {
+        this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(
+                IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT));
+    }
 
-	public void removeReportOrWorkDocument(final int index) {
-		this.reportOrWorkDocumentList.remove(index);
-	}
+    public void removeReportOrWorkDocument(final int index) {
+        this.reportOrWorkDocumentList.remove(index);
+    }
 
-	@Override
-	protected void initializeDocumentUploadBeans() {
-		setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(
-				IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION));
-		setPaymentDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT));
-		setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT));
-		this.habilitationCertificateList = new ArrayList<CandidacyProcessDocumentUploadBean>();
-		addHabilitationCertificateDocument();
-		this.reportOrWorkDocumentList = new ArrayList<CandidacyProcessDocumentUploadBean>();
-		addReportOrWorkDocument();
-		this.handicapProofDocument =
-				new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HANDICAP_PROOF_DOCUMENT);
-		this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
-		setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
-	}
+    @Override
+    protected void initializeDocumentUploadBeans() {
+        setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(
+                IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION));
+        setPaymentDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT));
+        setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT));
+        this.habilitationCertificateList = new ArrayList<CandidacyProcessDocumentUploadBean>();
+        addHabilitationCertificateDocument();
+        this.reportOrWorkDocumentList = new ArrayList<CandidacyProcessDocumentUploadBean>();
+        addReportOrWorkDocument();
+        this.handicapProofDocument =
+                new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HANDICAP_PROOF_DOCUMENT);
+        this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+        setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
+    }
 
-	@Override
-	public boolean isOver23() {
-		return true;
-	}
+    @Override
+    public boolean isOver23() {
+        return true;
+    }
 }

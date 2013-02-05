@@ -19,129 +19,129 @@ import dml.runtime.RelationAdapter;
 
 public abstract class CompositeRule extends CompositeRule_Base {
 
-	static {
-		CurricularRuleCompositeRule.addListener(new RelationAdapter<CompositeRule, CurricularRule>() {
-			@Override
-			public void beforeAdd(CompositeRule compositeRule, CurricularRule curricularRule) {
-				if (curricularRule.getNotRule() != null) {
-					throw new DomainException("error.curricular.rule.invalid.state");
-				}
-			}
-		});
+    static {
+        CurricularRuleCompositeRule.addListener(new RelationAdapter<CompositeRule, CurricularRule>() {
+            @Override
+            public void beforeAdd(CompositeRule compositeRule, CurricularRule curricularRule) {
+                if (curricularRule.getNotRule() != null) {
+                    throw new DomainException("error.curricular.rule.invalid.state");
+                }
+            }
+        });
 
-	}
+    }
 
-	protected CompositeRule() {
-	}
+    protected CompositeRule() {
+    }
 
-	protected void initCompositeRule(CurricularRule... curricularRules) {
-		if (curricularRules.length < 2) {
-			throw new DomainException("curricular.rule.invalid.parameters");
-		}
+    protected void initCompositeRule(CurricularRule... curricularRules) {
+        if (curricularRules.length < 2) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        }
 
-		if (!haveAllSameDegreeModule(curricularRules)) {
-			throw new DomainException("curricular.rule.invalid.parameters");
-		}
+        if (!haveAllSameDegreeModule(curricularRules)) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        }
 
-		this.setDegreeModuleToApplyRule(curricularRules[0].getDegreeModuleToApplyRule());
+        this.setDegreeModuleToApplyRule(curricularRules[0].getDegreeModuleToApplyRule());
 
-		this.setBegin(getBeginExecutionPeriod(curricularRules));
-		this.setEnd(getEndExecutionPeriod(curricularRules));
+        this.setBegin(getBeginExecutionPeriod(curricularRules));
+        this.setEnd(getEndExecutionPeriod(curricularRules));
 
-		for (CurricularRule rule : curricularRules) {
-			rule.removeDegreeModuleToApplyRule();
-			rule.setParentCompositeRule(this);
-		}
-	}
+        for (CurricularRule rule : curricularRules) {
+            rule.removeDegreeModuleToApplyRule();
+            rule.setParentCompositeRule(this);
+        }
+    }
 
-	private ExecutionSemester getEndExecutionPeriod(CurricularRule[] curricularRules) {
-		ExecutionSemester executionSemester = null;
-		for (CurricularRule rule : curricularRules) {
-			if (rule.getEnd() == null) {
-				return null;
-			}
-			if (executionSemester == null || rule.getEnd().isAfter(executionSemester)) {
-				executionSemester = rule.getEnd();
-			}
-		}
-		return executionSemester;
-	}
+    private ExecutionSemester getEndExecutionPeriod(CurricularRule[] curricularRules) {
+        ExecutionSemester executionSemester = null;
+        for (CurricularRule rule : curricularRules) {
+            if (rule.getEnd() == null) {
+                return null;
+            }
+            if (executionSemester == null || rule.getEnd().isAfter(executionSemester)) {
+                executionSemester = rule.getEnd();
+            }
+        }
+        return executionSemester;
+    }
 
-	private ExecutionSemester getBeginExecutionPeriod(CurricularRule... curricularRules) {
-		ExecutionSemester executionSemester = null;
-		for (CurricularRule rule : curricularRules) {
-			if (executionSemester == null || rule.getBegin().isBefore(executionSemester)) {
-				executionSemester = rule.getBegin();
-			}
-		}
-		return executionSemester;
-	}
+    private ExecutionSemester getBeginExecutionPeriod(CurricularRule... curricularRules) {
+        ExecutionSemester executionSemester = null;
+        for (CurricularRule rule : curricularRules) {
+            if (executionSemester == null || rule.getBegin().isBefore(executionSemester)) {
+                executionSemester = rule.getBegin();
+            }
+        }
+        return executionSemester;
+    }
 
-	private boolean haveAllSameDegreeModule(CurricularRule... curricularRules) {
-		DegreeModule degreeModule = curricularRules[0].getDegreeModuleToApplyRule();
-		for (CurricularRule rule : curricularRules) {
-			if (!rule.getDegreeModuleToApplyRule().equals(degreeModule)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    private boolean haveAllSameDegreeModule(CurricularRule... curricularRules) {
+        DegreeModule degreeModule = curricularRules[0].getDegreeModuleToApplyRule();
+        for (CurricularRule rule : curricularRules) {
+            if (!rule.getDegreeModuleToApplyRule().equals(degreeModule)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	@Override
-	public abstract List<GenericPair<Object, Boolean>> getLabel();
+    @Override
+    public abstract List<GenericPair<Object, Boolean>> getLabel();
 
-	public List<GenericPair<Object, Boolean>> getLabel(final String operator) {
-		final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
-		labelList.add(new GenericPair<Object, Boolean>("( ", false));
-		final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().listIterator();
-		while (curricularRulesIterator.hasNext()) {
-			labelList.addAll(curricularRulesIterator.next().getLabel());
-			if (curricularRulesIterator.hasNext()) {
-				labelList.add(new GenericPair<Object, Boolean>(" ", false));
-				labelList.add(new GenericPair<Object, Boolean>(operator, true));
-				labelList.add(new GenericPair<Object, Boolean>(" ", false));
-			}
-		}
-		labelList.add(new GenericPair<Object, Boolean>(" )", false));
-		return labelList;
-	}
+    public List<GenericPair<Object, Boolean>> getLabel(final String operator) {
+        final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
+        labelList.add(new GenericPair<Object, Boolean>("( ", false));
+        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().listIterator();
+        while (curricularRulesIterator.hasNext()) {
+            labelList.addAll(curricularRulesIterator.next().getLabel());
+            if (curricularRulesIterator.hasNext()) {
+                labelList.add(new GenericPair<Object, Boolean>(" ", false));
+                labelList.add(new GenericPair<Object, Boolean>(operator, true));
+                labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            }
+        }
+        labelList.add(new GenericPair<Object, Boolean>(" )", false));
+        return labelList;
+    }
 
-	@Override
-	public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-		throw new DomainException("unsupported.composite.rule");
-	}
+    @Override
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        throw new DomainException("unsupported.composite.rule");
+    }
 
-	@Override
-	public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
-			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-		throw new DomainException("unsupported.composite.rule");
-	}
+    @Override
+    public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
+            DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+        throw new DomainException("unsupported.composite.rule");
+    }
 
-	@Override
-	public VerifyRuleExecutor createVerifyRuleExecutor() {
-		throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.curricularRules.CompositeRule.does.not.support.createVerifyRuleExecutor");
-	}
+    @Override
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+        throw new DomainException(
+                "error.net.sourceforge.fenixedu.domain.curricularRules.CompositeRule.does.not.support.createVerifyRuleExecutor");
+    }
 
-	@Override
-	public boolean appliesToContext(Context context) {
-		for (CurricularRule curricularRule : this.getCurricularRules()) {
-			if (!curricularRule.appliesToContext(context)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean appliesToContext(Context context) {
+        for (CurricularRule curricularRule : this.getCurricularRules()) {
+            if (!curricularRule.appliesToContext(context)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	@Override
-	protected void removeOwnParameters() {
-		for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete()) {
-			;
-		}
-	}
+    @Override
+    protected void removeOwnParameters() {
+        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete()) {
+            ;
+        }
+    }
 
-	@Override
-	public boolean isLeaf() {
-		return false;
-	}
+    @Override
+    public boolean isLeaf() {
+        return false;
+    }
 }

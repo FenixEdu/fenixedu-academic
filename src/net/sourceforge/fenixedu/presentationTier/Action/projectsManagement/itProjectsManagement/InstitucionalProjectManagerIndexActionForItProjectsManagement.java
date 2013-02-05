@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "itProjectsManagement", path = "/institucionalProjectIndex", scope = "session")
 @Forwards(value = { @Forward(name = "success", path = "/projectsManagement/firstPage.jsp", tileProperties = @Tile(
-		navLocal = "/projectsManagement/costCenterNavBar.jsp")) })
+        navLocal = "/projectsManagement/costCenterNavBar.jsp")) })
 public class InstitucionalProjectManagerIndexActionForItProjectsManagement extends
-		net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.InstitucionalProjectManagerIndexAction {
+        net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.InstitucionalProjectManagerIndexAction {
 }

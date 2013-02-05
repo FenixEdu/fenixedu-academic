@@ -20,156 +20,156 @@ import org.json.simple.JSONObject;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
-	public AdministrativeOffice() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public AdministrativeOffice() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	// static methods
-	@Deprecated
-	public static AdministrativeOffice readByAdministrativeOfficeType(AdministrativeOfficeType administrativeOfficeType) {
+    // static methods
+    @Deprecated
+    public static AdministrativeOffice readByAdministrativeOfficeType(AdministrativeOfficeType administrativeOfficeType) {
 
-		for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
+        for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
 
-			if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
-				return administrativeOffice;
-			}
+            if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
+                return administrativeOffice;
+            }
 
-		}
-		return null;
+        }
+        return null;
 
-	}
+    }
 
-	@Deprecated
-	public static AdministrativeOffice readDegreeAdministrativeOffice() {
-		return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-	}
+    @Deprecated
+    public static AdministrativeOffice readDegreeAdministrativeOffice() {
+        return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+    }
 
-	@Deprecated
-	public static AdministrativeOffice readMasterDegreeAdministrativeOffice() {
-		return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	}
+    @Deprecated
+    public static AdministrativeOffice readMasterDegreeAdministrativeOffice() {
+        return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+    }
 
-	public Set<DegreeType> getAdministratedDegreeTypes() {
-		Set<DegreeType> result = new HashSet<DegreeType>();
-		for (AcademicProgram program : getManagedAcademicProgramSet()) {
-			result.add(program.getDegreeType());
-		}
-		return result;
-	}
+    public Set<DegreeType> getAdministratedDegreeTypes() {
+        Set<DegreeType> result = new HashSet<DegreeType>();
+        for (AcademicProgram program : getManagedAcademicProgramSet()) {
+            result.add(program.getDegreeType());
+        }
+        return result;
+    }
 
-	public Set<CycleType> getAdministratedCycleTypes() {
-		Set<CycleType> result = new HashSet<CycleType>();
-		for (AcademicProgram program : getManagedAcademicProgramSet()) {
-			result.addAll(program.getCycleTypes());
-		}
-		return result;
-	}
+    public Set<CycleType> getAdministratedCycleTypes() {
+        Set<CycleType> result = new HashSet<CycleType>();
+        for (AcademicProgram program : getManagedAcademicProgramSet()) {
+            result.addAll(program.getCycleTypes());
+        }
+        return result;
+    }
 
-	public Set<Degree> getAdministratedDegrees() {
-		final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		for (AcademicProgram program : getManagedAcademicProgramSet()) {
-			if (program instanceof Degree) {
-				result.add((Degree) program);
-			}
-		}
-		return result;
-	}
+    public Set<Degree> getAdministratedDegrees() {
+        final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        for (AcademicProgram program : getManagedAcademicProgramSet()) {
+            if (program instanceof Degree) {
+                result.add((Degree) program);
+            }
+        }
+        return result;
+    }
 
-	public Set<Degree> getAdministratedBolonhaDegrees() {
-		Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		for (Degree degree : getAdministratedDegrees()) {
-			if (degree.isBolonhaMasterOrDegree()) {
-				result.add(degree);
-			}
-		}
-		return result;
-	}
+    public Set<Degree> getAdministratedBolonhaDegrees() {
+        Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        for (Degree degree : getAdministratedDegrees()) {
+            if (degree.isBolonhaMasterOrDegree()) {
+                result.add(degree);
+            }
+        }
+        return result;
+    }
 
-	@SuppressWarnings("unchecked")
-	public String getJSONAdministratedBolonhaDegrees() {
-		JSONArray degrees = new JSONArray();
-		for (Degree degree : getAdministratedDegrees()) {
-			if (degree.isBolonhaMasterOrDegree()) {
-				JSONObject degreeInfo = new JSONObject();
-				degreeInfo.put("degreeOid", degree.getExternalId());
-				degreeInfo.put("name", degree.getName());
-				degreeInfo.put("degreeType", degree.getDegreeTypeName());
-				degrees.add(degreeInfo);
-			}
-		}
-		return degrees.toJSONString();
-	}
+    @SuppressWarnings("unchecked")
+    public String getJSONAdministratedBolonhaDegrees() {
+        JSONArray degrees = new JSONArray();
+        for (Degree degree : getAdministratedDegrees()) {
+            if (degree.isBolonhaMasterOrDegree()) {
+                JSONObject degreeInfo = new JSONObject();
+                degreeInfo.put("degreeOid", degree.getExternalId());
+                degreeInfo.put("name", degree.getName());
+                degreeInfo.put("degreeType", degree.getDegreeTypeName());
+                degrees.add(degreeInfo);
+            }
+        }
+        return degrees.toJSONString();
+    }
 
-	public Set<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
-		final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		for (Degree degree : getAdministratedDegrees()) {
-			if (degree.getDegreeType().canCreateStudent() && !degree.getDegreeType().canCreateStudentOnlyWithCandidacy()) {
-				result.add(degree);
-			}
-		}
-		return result;
-	}
+    public Set<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
+        final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        for (Degree degree : getAdministratedDegrees()) {
+            if (degree.getDegreeType().canCreateStudent() && !degree.getDegreeType().canCreateStudentOnlyWithCandidacy()) {
+                result.add(degree);
+            }
+        }
+        return result;
+    }
 
-	public void delete() {
-		checkRulesToDelete();
+    public void delete() {
+        checkRulesToDelete();
 
-		removeUnit();
-		removeServiceAgreementTemplate();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+        removeUnit();
+        removeServiceAgreementTemplate();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	private void checkRulesToDelete() {
-		if (hasAnyAcademicServiceRequests()) {
-			throw new DomainException("error.AdministrativeOffice.cannot.delete");
-		}
-		if (hasAnyManagedAcademicProgram()) {
-			throw new DomainException("error.AdministrativeOffice.cannot.delete");
-		}
-		if (hasAnyRectorateSubmissionBatch()) {
-			throw new DomainException("error.AdministrativeOffice.cannot.delete");
-		}
-		if (hasAnyEvents()) {
-			throw new DomainException("error.AdministrativeOffice.cannot.delete");
-		}
-		if (hasAnyEventReportQueueJob()) {
-			throw new DomainException("error.AdministrativeOffice.cannot.delete");
-		}
-	}
+    private void checkRulesToDelete() {
+        if (hasAnyAcademicServiceRequests()) {
+            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+        }
+        if (hasAnyManagedAcademicProgram()) {
+            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+        }
+        if (hasAnyRectorateSubmissionBatch()) {
+            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+        }
+        if (hasAnyEvents()) {
+            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+        }
+        if (hasAnyEventReportQueueJob()) {
+            throw new DomainException("error.AdministrativeOffice.cannot.delete");
+        }
+    }
 
-	@Deprecated
-	public boolean isDegree() {
-		return getAdministrativeOfficeType().equals(AdministrativeOfficeType.DEGREE);
-	}
+    @Deprecated
+    public boolean isDegree() {
+        return getAdministrativeOfficeType().equals(AdministrativeOfficeType.DEGREE);
+    }
 
-	@Deprecated
-	public boolean isMasterDegree() {
-		return getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE;
-	}
+    @Deprecated
+    public boolean isMasterDegree() {
+        return getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE;
+    }
 
-	public RectorateSubmissionBatch getCurrentRectorateSubmissionBatch() {
-		DateTime last = null;
-		RectorateSubmissionBatch current = null;
-		for (RectorateSubmissionBatch bag : getRectorateSubmissionBatchSet()) {
-			if (!RectorateSubmissionState.UNSENT.equals(bag.getState())) {
-				continue;
-			}
+    public RectorateSubmissionBatch getCurrentRectorateSubmissionBatch() {
+        DateTime last = null;
+        RectorateSubmissionBatch current = null;
+        for (RectorateSubmissionBatch bag : getRectorateSubmissionBatchSet()) {
+            if (!RectorateSubmissionState.UNSENT.equals(bag.getState())) {
+                continue;
+            }
 
-			if (last == null || bag.getCreation().isAfter(last)) {
-				last = bag.getCreation();
-				current = bag;
-			}
-		}
-		return current;
-	}
+            if (last == null || bag.getCreation().isAfter(last)) {
+                last = bag.getCreation();
+                current = bag;
+            }
+        }
+        return current;
+    }
 
-	public boolean getHasAnyPhdProgram() {
-		for (AcademicProgram program : getManagedAcademicProgram()) {
-			if (program instanceof PhdProgram) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean getHasAnyPhdProgram() {
+        for (AcademicProgram program : getManagedAcademicProgram()) {
+            if (program instanceof PhdProgram) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

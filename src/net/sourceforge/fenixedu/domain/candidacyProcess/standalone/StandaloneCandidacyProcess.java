@@ -27,161 +27,161 @@ import com.google.common.collect.Sets;
 
 public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base {
 
-	static private final List<Activity> activities = new ArrayList<Activity>();
-	static {
-		activities.add(new EditCandidacyPeriod());
-		activities.add(new SendToCoordinator());
-		activities.add(new PrintCandidacies());
-	}
+    static private final List<Activity> activities = new ArrayList<Activity>();
+    static {
+        activities.add(new EditCandidacyPeriod());
+        activities.add(new SendToCoordinator());
+        activities.add(new PrintCandidacies());
+    }
 
-	private StandaloneCandidacyProcess() {
-		super();
-	}
+    private StandaloneCandidacyProcess() {
+        super();
+    }
 
-	public StandaloneCandidacyProcess(final ExecutionSemester executionSemester, final DateTime start, final DateTime end) {
-		this();
-		checkParameters(executionSemester, start, end);
-		setState(CandidacyProcessState.STAND_BY);
-		new StandaloneCandidacyPeriod(this, executionSemester, start, end);
-	}
+    public StandaloneCandidacyProcess(final ExecutionSemester executionSemester, final DateTime start, final DateTime end) {
+        this();
+        checkParameters(executionSemester, start, end);
+        setState(CandidacyProcessState.STAND_BY);
+        new StandaloneCandidacyPeriod(this, executionSemester, start, end);
+    }
 
-	private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
-		if (executionInterval == null) {
-			throw new DomainException("error.StandaloneCandidacyProcess.invalid.executionInterval");
-		}
+    private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+        if (executionInterval == null) {
+            throw new DomainException("error.StandaloneCandidacyProcess.invalid.executionInterval");
+        }
 
-		if (start == null || end == null || start.isAfter(end)) {
-			throw new DomainException("error.StandaloneCandidacyProcess.invalid.interval");
-		}
-	}
+        if (start == null || end == null || start.isAfter(end)) {
+            throw new DomainException("error.StandaloneCandidacyProcess.invalid.interval");
+        }
+    }
 
-	@Override
-	public boolean canExecuteActivity(final IUserView userView) {
-		return isAllowedToManageProcess(userView);
-	}
+    @Override
+    public boolean canExecuteActivity(final IUserView userView) {
+        return isAllowedToManageProcess(userView);
+    }
 
-	@Override
-	public List<Activity> getActivities() {
-		return activities;
-	}
+    @Override
+    public List<Activity> getActivities() {
+        return activities;
+    }
 
-	private void edit(final DateTime start, final DateTime end) {
-		checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
-		getCandidacyPeriod().edit(start, end);
-	}
+    private void edit(final DateTime start, final DateTime end) {
+        checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
+        getCandidacyPeriod().edit(start, end);
+    }
 
-	public List<StandaloneIndividualCandidacyProcess> getSortedStandaloneIndividualCandidaciesThatCanBeSendToJury() {
-		final List<StandaloneIndividualCandidacyProcess> result = new ArrayList<StandaloneIndividualCandidacyProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			if (child.isCandidacyValid()) {
-				result.add((StandaloneIndividualCandidacyProcess) child);
-			}
-		}
-		Collections.sort(result, StandaloneIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON);
-		return result;
-	}
+    public List<StandaloneIndividualCandidacyProcess> getSortedStandaloneIndividualCandidaciesThatCanBeSendToJury() {
+        final List<StandaloneIndividualCandidacyProcess> result = new ArrayList<StandaloneIndividualCandidacyProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            if (child.isCandidacyValid()) {
+                result.add((StandaloneIndividualCandidacyProcess) child);
+            }
+        }
+        Collections.sort(result, StandaloneIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON);
+        return result;
+    }
 
-	public List<StandaloneIndividualCandidacyProcess> getAcceptedStandaloneIndividualCandidacies() {
-		final List<StandaloneIndividualCandidacyProcess> result = new ArrayList<StandaloneIndividualCandidacyProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
-				result.add((StandaloneIndividualCandidacyProcess) child);
-			}
-		}
-		return result;
-	}
+    public List<StandaloneIndividualCandidacyProcess> getAcceptedStandaloneIndividualCandidacies() {
+        final List<StandaloneIndividualCandidacyProcess> result = new ArrayList<StandaloneIndividualCandidacyProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
+                result.add((StandaloneIndividualCandidacyProcess) child);
+            }
+        }
+        return result;
+    }
 
-	// static information
+    // static information
 
-	private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
-			DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-			DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-			DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
+            DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+            DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+            DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
-	static private boolean isAllowedToManageProcess(IUserView userView) {
-		for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-				AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
-			if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    static private boolean isAllowedToManageProcess(IUserView userView) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+            if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@StartActivity
-	static public class CreateCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
+    @StartActivity
+    static public class CreateCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
-			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-			return new StandaloneCandidacyProcess((ExecutionSemester) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
-		}
-	}
+        @Override
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+            final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+            return new StandaloneCandidacyProcess((ExecutionSemester) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+        }
+    }
 
-	static private class EditCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
+    static private class EditCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
-			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-			process.edit(bean.getStart(), bean.getEnd());
-			return process;
-		}
-	}
+        @Override
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+            final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+            process.edit(bean.getStart(), bean.getEnd());
+            return process;
+        }
+    }
 
-	static private class SendToCoordinator extends Activity<StandaloneCandidacyProcess> {
+    static private class SendToCoordinator extends Activity<StandaloneCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
+        @Override
+        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.isInStandBy()) {
-				throw new PreConditionNotValidException();
-			}
+            if (!process.isInStandBy()) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
-			process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
-			return process;
-		}
-	}
+        @Override
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+            process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
+            return process;
+        }
+    }
 
-	static private class PrintCandidacies extends Activity<StandaloneCandidacyProcess> {
+    static private class PrintCandidacies extends Activity<StandaloneCandidacyProcess> {
 
-		@Override
-		public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-			if (process.isInStandBy()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+            if (process.isInStandBy()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
-			return process; // for now, nothing to be done
-		}
-	}
+        @Override
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+            return process; // for now, nothing to be done
+        }
+    }
 
 }

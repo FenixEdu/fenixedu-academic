@@ -11,5 +11,5 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
  * 
  */
 public enum RecentBoardsTimeSpanSelection {
-	TS_TODAY, TS_ALL_ACTIVE, TS_YESTERDAY, TS_LAST_WEEK, TS_TWO_WEEKS, TS_ONE_MONTH, TS_TWO_MONTHS;
+    TS_TODAY, TS_ALL_ACTIVE, TS_YESTERDAY, TS_LAST_WEEK, TS_TWO_WEEKS, TS_ONE_MONTH, TS_TWO_MONTHS;
 }

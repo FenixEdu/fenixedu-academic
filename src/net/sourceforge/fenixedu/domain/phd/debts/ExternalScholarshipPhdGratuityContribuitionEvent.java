@@ -16,56 +16,56 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalScholarshipPhdGratuityContribuitionEvent_Base {
-	public ExternalScholarshipPhdGratuityContribuitionEvent(Party party) {
-		super();
-		init(EventType.EXTERNAL_SCOLARSHIP, party);
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public ExternalScholarshipPhdGratuityContribuitionEvent(Party party) {
+        super();
+        init(EventType.EXTERNAL_SCOLARSHIP, party);
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	@Override
-	protected void disconnect() {
-		PhdGratuityExternalScholarshipExemption exemption = getPhdGratuityExternalScholarshipExemption();
-		exemption.doDelete();
-		super.disconnect();
-	}
+    @Override
+    protected void disconnect() {
+        PhdGratuityExternalScholarshipExemption exemption = getPhdGratuityExternalScholarshipExemption();
+        exemption.doDelete();
+        super.disconnect();
+    }
 
-	public Money calculateAmountToPay() {
-		return calculateAmountToPay(new DateTime());
-	}
+    public Money calculateAmountToPay() {
+        return calculateAmountToPay(new DateTime());
+    }
 
-	public Money getTotalValue() {
-		return getPhdGratuityExternalScholarshipExemption().getValue();
-	}
+    public Money getTotalValue() {
+        return getPhdGratuityExternalScholarshipExemption().getValue();
+    }
 
-	@Override
-	protected Account getFromAccount() {
-		return getParty().getAccountBy(AccountType.EXTERNAL);
-	}
+    @Override
+    protected Account getFromAccount() {
+        return getParty().getAccountBy(AccountType.EXTERNAL);
+    }
 
-	@Override
-	public Account getToAccount() {
-		return ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getPhdProgramUnit()
-				.getAccountBy(AccountType.INTERNAL);
-	}
+    @Override
+    public Account getToAccount() {
+        return ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getPhdProgramUnit()
+                .getAccountBy(AccountType.INTERNAL);
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		return new LabelFormatter()
-				.appendLabel(entryType.name(), "enum")
-				.appendLabel(" (")
-				.appendLabel(
-						((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getName()
-								.getContent()).appendLabel(")");
-	}
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        return new LabelFormatter()
+                .appendLabel(entryType.name(), "enum")
+                .appendLabel(" (")
+                .appendLabel(
+                        ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getName()
+                                .getContent()).appendLabel(")");
+    }
 
-	@Override
-	public PostingRule getPostingRule() {
-		return AdministrativeOffice.readMasterDegreeAdministrativeOffice().getServiceAgreementTemplate()
-				.findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
-	}
+    @Override
+    public PostingRule getPostingRule() {
+        return AdministrativeOffice.readMasterDegreeAdministrativeOffice().getServiceAgreementTemplate()
+                .findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+    }
 
-	@Override
-	public Unit getOwnerUnit() {
-		return AdministrativeOffice.readMasterDegreeAdministrativeOffice().getUnit();
-	}
+    @Override
+    public Unit getOwnerUnit() {
+        return AdministrativeOffice.readMasterDegreeAdministrativeOffice().getUnit();
+    }
 }

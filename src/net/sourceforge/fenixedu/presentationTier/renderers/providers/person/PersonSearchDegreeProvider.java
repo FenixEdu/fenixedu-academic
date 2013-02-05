@@ -11,17 +11,17 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PersonSearchDegreeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		FindPersonBean bean = (FindPersonBean) source;
-		final DegreeType degreeType = bean.getDegreeType();
-		return new ArrayList<Degree>(Degree.readAllByDegreeType(degreeType));
-	}
+        FindPersonBean bean = (FindPersonBean) source;
+        final DegreeType degreeType = bean.getDegreeType();
+        return new ArrayList<Degree>(Degree.readAllByDegreeType(degreeType));
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

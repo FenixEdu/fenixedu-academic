@@ -17,21 +17,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "manager", path = "/reloadJasperReports", scope = "session")
 public class ReloadJasperReportsConfigurationAction extends Action {
-	private static final Logger logger = Logger.getLogger(ReloadJasperReportsConfigurationAction.class);
+    private static final Logger logger = Logger.getLogger(ReloadJasperReportsConfigurationAction.class);
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		ReportsUtils.getReportsMap().clear();
+        ReportsUtils.getReportsMap().clear();
 
-		ReportsUtils.getProperties().clear();
-		PropertiesManager.loadProperties(ReportsUtils.getProperties(), ReportsUtils.getReportsPropertiesFile());
+        ReportsUtils.getProperties().clear();
+        PropertiesManager.loadProperties(ReportsUtils.getProperties(), ReportsUtils.getReportsPropertiesFile());
 
-		if (LogLevel.INFO) {
-			logger.info("reloaded jasper reports configuration");
-		}
-		return null;
-	}
+        if (LogLevel.INFO) {
+            logger.info("reloaded jasper reports configuration");
+        }
+        return null;
+    }
 
 }

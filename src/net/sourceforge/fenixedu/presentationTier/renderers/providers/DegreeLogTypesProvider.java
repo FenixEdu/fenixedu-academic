@@ -6,15 +6,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeLogTypesProvider implements DataProvider {
 
-	@Override
-	public Object provide(final Object source, final Object currentValue) {
-		final SearchDegreeLogBean searchDegreeLogBean = (SearchDegreeLogBean) source;
-		return searchDegreeLogBean.getDegreeLogTypesAll();
-	}
+    @Override
+    public Object provide(final Object source, final Object currentValue) {
+        final SearchDegreeLogBean searchDegreeLogBean = (SearchDegreeLogBean) source;
+        return searchDegreeLogBean.getDegreeLogTypesAll();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

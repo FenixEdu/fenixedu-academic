@@ -12,106 +12,106 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequestElement_Base {
 
-	protected PhdCandidacyFeedbackRequestElement() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected PhdCandidacyFeedbackRequestElement() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected PhdCandidacyFeedbackRequestElement init(final PhdCandidacyFeedbackRequestProcess process,
-			PhdParticipant participant, PhdCandidacyFeedbackRequestElementBean bean) {
+    protected PhdCandidacyFeedbackRequestElement init(final PhdCandidacyFeedbackRequestProcess process,
+            PhdParticipant participant, PhdCandidacyFeedbackRequestElementBean bean) {
 
-		check(process, "error.PhdCandidacyFeedbackRequestElement.invalid.process");
-		checkParticipant(process, participant);
+        check(process, "error.PhdCandidacyFeedbackRequestElement.invalid.process");
+        checkParticipant(process, participant);
 
-		setProcess(process);
-		setParticipant(participant);
+        setProcess(process);
+        setParticipant(participant);
 
-		setMailSubject(bean.getMailSubject());
-		setMailBody(bean.getMailBody());
+        setMailSubject(bean.getMailSubject());
+        setMailBody(bean.getMailBody());
 
-		return this;
-	}
+        return this;
+    }
 
-	private void checkParticipant(final PhdCandidacyFeedbackRequestProcess process, final PhdParticipant participant) {
-		check(participant, "error.PhdCandidacyFeedbackRequestElement.participant.cannot.be.null");
+    private void checkParticipant(final PhdCandidacyFeedbackRequestProcess process, final PhdParticipant participant) {
+        check(participant, "error.PhdCandidacyFeedbackRequestElement.participant.cannot.be.null");
 
-		/*
-		 * Can not have more than one element for the same process
-		 */
-		for (final PhdCandidacyFeedbackRequestElement element : participant.getCandidacyFeedbackRequestElements()) {
-			if (element.hasProcess() && element.getProcess().equals(process)) {
-				throw new DomainException(
-						"error.PhdCandidacyFeedbackRequestElement.participant.already.has.jury.element.in.process");
-			}
-		}
-	}
+        /*
+         * Can not have more than one element for the same process
+         */
+        for (final PhdCandidacyFeedbackRequestElement element : participant.getCandidacyFeedbackRequestElements()) {
+            if (element.hasProcess() && element.getProcess().equals(process)) {
+                throw new DomainException(
+                        "error.PhdCandidacyFeedbackRequestElement.participant.already.has.jury.element.in.process");
+            }
+        }
+    }
 
-	public PhdProgramCandidacyProcess getCandidacyProcess() {
-		return getProcess().getCandidacyProcess();
-	}
+    public PhdProgramCandidacyProcess getCandidacyProcess() {
+        return getProcess().getCandidacyProcess();
+    }
 
-	@Service
-	public void delete() {
-		checkIfCanBeDeleted();
-		disconnect();
-		deleteDomainObject();
-	}
+    @Service
+    public void delete() {
+        checkIfCanBeDeleted();
+        disconnect();
+        deleteDomainObject();
+    }
 
-	private void checkIfCanBeDeleted() {
-		if (hasAnyFeedbackDocuments()) {
-			throw new DomainException("error.PhdCandidacyFeedbackRequestElement.has.feedback.documents");
-		}
-	}
+    private void checkIfCanBeDeleted() {
+        if (hasAnyFeedbackDocuments()) {
+            throw new DomainException("error.PhdCandidacyFeedbackRequestElement.has.feedback.documents");
+        }
+    }
 
-	private void disconnect() {
+    private void disconnect() {
 
-		final PhdParticipant participant = getParticipant();
-		removeParticipant();
-		participant.tryDelete();
+        final PhdParticipant participant = getParticipant();
+        removeParticipant();
+        participant.tryDelete();
 
-		removeProcess();
-		removeRootDomainObject();
-	}
+        removeProcess();
+        removeRootDomainObject();
+    }
 
-	public PhdCandidacyFeedbackRequestDocument getLastFeedbackDocument() {
-		return hasAnyFeedbackDocuments() ? Collections.max(getFeedbackDocumentsSet(),
-				PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
-	}
+    public PhdCandidacyFeedbackRequestDocument getLastFeedbackDocument() {
+        return hasAnyFeedbackDocuments() ? Collections.max(getFeedbackDocumentsSet(),
+                PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
+    }
 
-	public String getNameWithTitle() {
-		return getParticipant().getNameWithTitle();
-	}
+    public String getNameWithTitle() {
+        return getParticipant().getNameWithTitle();
+    }
 
-	public String getName() {
-		return getParticipant().getName();
-	}
+    public String getName() {
+        return getParticipant().getName();
+    }
 
-	public String getEmail() {
-		return getParticipant().getEmail();
-	}
+    public String getEmail() {
+        return getParticipant().getEmail();
+    }
 
-	public boolean isFeedbackSubmitted() {
-		return hasAnyFeedbackDocuments();
-	}
+    public boolean isFeedbackSubmitted() {
+        return hasAnyFeedbackDocuments();
+    }
 
-	public boolean isFor(PhdCandidacyFeedbackRequestProcess process) {
-		return getProcess().equals(process);
-	}
+    public boolean isFor(PhdCandidacyFeedbackRequestProcess process) {
+        return getProcess().equals(process);
+    }
 
-	public boolean isFor(Person person) {
-		return getParticipant().isFor(person);
-	}
+    public boolean isFor(Person person) {
+        return getParticipant().isFor(person);
+    }
 
-	static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
-			final PhdCandidacyFeedbackRequestElementBean bean) {
+    static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
+            final PhdCandidacyFeedbackRequestElementBean bean) {
 
-		return new PhdCandidacyFeedbackRequestElement().init(process,
-				PhdParticipant.getUpdatedOrCreate(process.getIndividualProgramProcess(), bean), bean);
-	}
+        return new PhdCandidacyFeedbackRequestElement().init(process,
+                PhdParticipant.getUpdatedOrCreate(process.getIndividualProgramProcess(), bean), bean);
+    }
 
-	static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
-			final PhdParticipant participant, final PhdCandidacyFeedbackRequestElementBean bean) {
-		return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
-	}
+    static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
+            final PhdParticipant participant, final PhdCandidacyFeedbackRequestElementBean bean) {
+        return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
+    }
 
 }

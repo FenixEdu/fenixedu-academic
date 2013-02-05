@@ -26,65 +26,65 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/pricesManagement", module = "academicAdministration")
 @Forwards({ @Forward(name = "viewPrices", path = "/academicAdminOffice/pricesManagement/viewPrices.jsp"),
-		@Forward(name = "editPrice", path = "/academicAdminOffice/pricesManagement/editPrice.jsp") })
+        @Forward(name = "editPrice", path = "/academicAdminOffice/pricesManagement/editPrice.jsp") })
 public class PricesManagementDispatchAction extends FenixDispatchAction {
 
-	public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(PostingRule.COMPARATOR_BY_EVENT_TYPE);
+        final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(PostingRule.COMPARATOR_BY_EVENT_TYPE);
 
-		final Set<AdministrativeOffice> offices =
-				AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PRICES);
+        final Set<AdministrativeOffice> offices =
+                AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PRICES);
 
-		for (AdministrativeOffice office : offices) {
-			sortedPostingRules.addAll(office.getServiceAgreementTemplate().getActiveVisiblePostingRules());
-		}
+        for (AdministrativeOffice office : offices) {
+            sortedPostingRules.addAll(office.getServiceAgreementTemplate().getActiveVisiblePostingRules());
+        }
 
-		request.setAttribute("postingRules", sortedPostingRules);
+        request.setAttribute("postingRules", sortedPostingRules);
 
-		return mapping.findForward("viewPrices");
-	}
+        return mapping.findForward("viewPrices");
+    }
 
-	public ActionForward prepareEditPrice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareEditPrice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("executionYearBean", new ExecutionYearBean(ExecutionYear.readCurrentExecutionYear()));
-		request.setAttribute("postingRule",
-				rootDomainObject.readPostingRuleByOID(getRequestParameterAsInteger(request, "postingRuleId")));
-		return mapping.findForward("editPrice");
-	}
+        request.setAttribute("executionYearBean", new ExecutionYearBean(ExecutionYear.readCurrentExecutionYear()));
+        request.setAttribute("postingRule",
+                rootDomainObject.readPostingRuleByOID(getRequestParameterAsInteger(request, "postingRuleId")));
+        return mapping.findForward("editPrice");
+    }
 
-	public ActionForward changeExecutionYearPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		ExecutionYearBean executionYearBean = (ExecutionYearBean) getObjectFromViewState("executionYearBean");
+    public ActionForward changeExecutionYearPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ExecutionYearBean executionYearBean = (ExecutionYearBean) getObjectFromViewState("executionYearBean");
 
-		PostingRule postingRule =
-				PartialRegistrationRegimeRequestPR
-						.readMostRecentPostingRuleForExecutionYear(executionYearBean.getExecutionYear());
+        PostingRule postingRule =
+                PartialRegistrationRegimeRequestPR
+                        .readMostRecentPostingRuleForExecutionYear(executionYearBean.getExecutionYear());
 
-		request.setAttribute("postingRule", postingRule);
-		request.setAttribute("executionYearBean", executionYearBean);
+        request.setAttribute("postingRule", postingRule);
+        request.setAttribute("executionYearBean", executionYearBean);
 
-		return mapping.findForward("editPrice");
-	}
+        return mapping.findForward("editPrice");
+    }
 
-	public static class ExecutionYearBean implements java.io.Serializable {
+    public static class ExecutionYearBean implements java.io.Serializable {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private ExecutionYear executionYear;
+        private ExecutionYear executionYear;
 
-		public ExecutionYearBean(ExecutionYear executionYear) {
-			this.executionYear = executionYear;
-		}
+        public ExecutionYearBean(ExecutionYear executionYear) {
+            this.executionYear = executionYear;
+        }
 
-		public ExecutionYear getExecutionYear() {
-			return executionYear;
-		}
+        public ExecutionYear getExecutionYear() {
+            return executionYear;
+        }
 
-		public void setExecutionYear(ExecutionYear executionYear) {
-			this.executionYear = executionYear;
-		}
-	}
+        public void setExecutionYear(ExecutionYear executionYear) {
+            this.executionYear = executionYear;
+        }
+    }
 }

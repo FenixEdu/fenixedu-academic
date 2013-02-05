@@ -9,6 +9,6 @@ package net.sourceforge.fenixedu.injectionCode;
  */
 public interface AccessControlPredicate<E> {
 
-	public boolean evaluate(E c);
+    public boolean evaluate(E c);
 
 }

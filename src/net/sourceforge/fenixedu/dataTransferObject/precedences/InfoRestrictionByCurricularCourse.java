@@ -9,38 +9,38 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse
 
 public class InfoRestrictionByCurricularCourse extends InfoRestriction {
 
-	protected InfoCurricularCourse precedentInfoCurricularCourse;
+    protected InfoCurricularCourse precedentInfoCurricularCourse;
 
-	public InfoRestrictionByCurricularCourse() {
-	}
+    public InfoRestrictionByCurricularCourse() {
+    }
 
-	public InfoCurricularCourse getPrecedentInfoCurricularCourse() {
-		return precedentInfoCurricularCourse;
-	}
+    public InfoCurricularCourse getPrecedentInfoCurricularCourse() {
+        return precedentInfoCurricularCourse;
+    }
 
-	public void setPrecedentInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.precedentInfoCurricularCourse = infoCurricularCourse;
-	}
+    public void setPrecedentInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.precedentInfoCurricularCourse = infoCurricularCourse;
+    }
 
-	public void copyFromDomain(RestrictionByCurricularCourse restriction) {
-		super.copyFromDomain(restriction);
-		this.setPrecedentInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(restriction.getPrecedentCurricularCourse()));
-	}
+    public void copyFromDomain(RestrictionByCurricularCourse restriction) {
+        super.copyFromDomain(restriction);
+        this.setPrecedentInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(restriction.getPrecedentCurricularCourse()));
+    }
 
-	public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
 
-		InfoRestrictionByCurricularCourse infoRestriction = null;
+        InfoRestrictionByCurricularCourse infoRestriction = null;
 
-		if (restriction != null) {
-			infoRestriction = new InfoRestrictionByCurricularCourse();
-			infoRestriction.copyFromDomain(restriction);
-		}
+        if (restriction != null) {
+            infoRestriction = new InfoRestrictionByCurricularCourse();
+            infoRestriction.copyFromDomain(restriction);
+        }
 
-		return infoRestriction;
-	}
+        return infoRestriction;
+    }
 
-	@Override
-	public String getArg() {
-		return precedentInfoCurricularCourse.getName();
-	}
+    @Override
+    public String getArg() {
+        return precedentInfoCurricularCourse.getName();
+    }
 }

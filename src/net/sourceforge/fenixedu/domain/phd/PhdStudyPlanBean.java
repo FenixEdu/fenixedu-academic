@@ -6,46 +6,46 @@ import net.sourceforge.fenixedu.domain.Degree;
 
 public class PhdStudyPlanBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Degree degree;
+    private Degree degree;
 
-	private PhdIndividualProgramProcess process;
+    private PhdIndividualProgramProcess process;
 
-	private boolean exempted = false;
+    private boolean exempted = false;
 
-	public PhdStudyPlanBean(final PhdIndividualProgramProcess process) {
-		setProcess(process);
-	}
+    public PhdStudyPlanBean(final PhdIndividualProgramProcess process) {
+        setProcess(process);
+    }
 
-	public PhdStudyPlanBean(final PhdStudyPlan studyPlan) {
-		setProcess(studyPlan.getProcess());
-		setDegree(studyPlan.getDegree());
-		setExempted(studyPlan.getExempted().booleanValue());
-	}
+    public PhdStudyPlanBean(final PhdStudyPlan studyPlan) {
+        setProcess(studyPlan.getProcess());
+        setDegree(studyPlan.getDegree());
+        setExempted(studyPlan.getExempted().booleanValue());
+    }
 
-	public Degree getDegree() {
-		return this.degree;
-	}
+    public Degree getDegree() {
+        return this.degree;
+    }
 
-	public void setDegree(Degree arg) {
-		this.degree = arg;
-	}
+    public void setDegree(Degree arg) {
+        this.degree = arg;
+    }
 
-	public PhdIndividualProgramProcess getProcess() {
-		return this.process;
-	}
+    public PhdIndividualProgramProcess getProcess() {
+        return this.process;
+    }
 
-	public void setProcess(PhdIndividualProgramProcess arg) {
-		this.process = arg;
-	}
+    public void setProcess(PhdIndividualProgramProcess arg) {
+        this.process = arg;
+    }
 
-	public boolean isExempted() {
-		return exempted;
-	}
+    public boolean isExempted() {
+        return exempted;
+    }
 
-	public void setExempted(boolean exempted) {
-		this.exempted = exempted;
-	}
+    public void setExempted(boolean exempted) {
+        this.exempted = exempted;
+    }
 
 }

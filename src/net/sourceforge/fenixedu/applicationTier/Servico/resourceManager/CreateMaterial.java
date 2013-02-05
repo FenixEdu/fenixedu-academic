@@ -10,32 +10,32 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateMaterial extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-	@Service
-	public static void run(MaterialBean bean) {
+    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
+    @Service
+    public static void run(MaterialBean bean) {
 
-		if (bean != null) {
+        if (bean != null) {
 
-			MaterialType materialType = bean.getMaterialType();
-			if (materialType != null) {
+            MaterialType materialType = bean.getMaterialType();
+            if (materialType != null) {
 
-				switch (materialType) {
+                switch (materialType) {
 
-				case EXTENSION:
-					new Extension(bean.getIdentification(), bean.getBarCodeNumber(), bean.getAcquisition(), bean.getCease(),
-							bean.getOwner());
-					break;
+                case EXTENSION:
+                    new Extension(bean.getIdentification(), bean.getBarCodeNumber(), bean.getAcquisition(), bean.getCease(),
+                            bean.getOwner());
+                    break;
 
-				case FIRE_EXTINGUISHER:
-					new FireExtinguisher(bean.getIdentification(), bean.getBarCodeNumber(), bean.getAcquisition(),
-							bean.getCease(), bean.getOwner(), bean.getDelivererEnterprise(), bean.getLoadedDate(),
-							bean.getToBeInspectedDate());
-					break;
+                case FIRE_EXTINGUISHER:
+                    new FireExtinguisher(bean.getIdentification(), bean.getBarCodeNumber(), bean.getAcquisition(),
+                            bean.getCease(), bean.getOwner(), bean.getDelivererEnterprise(), bean.getLoadedDate(),
+                            bean.getToBeInspectedDate());
+                    break;
 
-				default:
-					break;
-				}
-			}
-		}
-	}
+                default:
+                    break;
+                }
+            }
+        }
+    }
 }

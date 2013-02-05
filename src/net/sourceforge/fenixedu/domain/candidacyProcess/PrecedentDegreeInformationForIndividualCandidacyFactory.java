@@ -13,240 +13,240 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 
-	/* CREATE */
+    /* CREATE */
 
-	public static PrecedentDegreeInformation create(final IndividualCandidacy individualCandidacy,
-			final IndividualCandidacyProcessBean processBean) {
+    public static PrecedentDegreeInformation create(final IndividualCandidacy individualCandidacy,
+            final IndividualCandidacyProcessBean processBean) {
 
-		if (processBean.isStandalone()) {
-			return null;
-		}
+        if (processBean.isStandalone()) {
+            return null;
+        }
 
-		PrecedentDegreeInformation pid = null;
-		if (processBean.isDegreeChange() || processBean.isDegreeTransfer()) {
-			pid = createForDegreeTransferOrDegreeChange(processBean);
-		} else if (processBean.isSecondCycle() || processBean.isDegreeCandidacyForGraduatedPerson()) {
-			pid = createForSecondCycleOrDegreeCandidacyForGraduatedPerson(processBean);
-		} else if (processBean.isOver23()) {
-			pid = createForOver23(processBean);
-		} else if (processBean.isErasmus()) {
-			pid = createForErasmus(processBean);
-		}
+        PrecedentDegreeInformation pid = null;
+        if (processBean.isDegreeChange() || processBean.isDegreeTransfer()) {
+            pid = createForDegreeTransferOrDegreeChange(processBean);
+        } else if (processBean.isSecondCycle() || processBean.isDegreeCandidacyForGraduatedPerson()) {
+            pid = createForSecondCycleOrDegreeCandidacyForGraduatedPerson(processBean);
+        } else if (processBean.isOver23()) {
+            pid = createForOver23(processBean);
+        } else if (processBean.isErasmus()) {
+            pid = createForErasmus(processBean);
+        }
 
-		pid.setIndividualCandidacy(individualCandidacy);
+        pid.setIndividualCandidacy(individualCandidacy);
 
-		return pid;
-	}
+        return pid;
+    }
 
-	private static PrecedentDegreeInformation createForErasmus(final IndividualCandidacyProcessBean processBean) {
-		MobilityIndividualApplicationProcessBean erasmusBean = (MobilityIndividualApplicationProcessBean) processBean;
-		MobilityStudentDataBean erasmusStudentDataBean = erasmusBean.getMobilityStudentDataBean();
+    private static PrecedentDegreeInformation createForErasmus(final IndividualCandidacyProcessBean processBean) {
+        MobilityIndividualApplicationProcessBean erasmusBean = (MobilityIndividualApplicationProcessBean) processBean;
+        MobilityStudentDataBean erasmusStudentDataBean = erasmusBean.getMobilityStudentDataBean();
 
-		PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
-		pdi.setCandidacyInternal(false);
+        PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
+        pdi.setCandidacyInternal(false);
 
-		pdi.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
-		pdi.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
+        pdi.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
+        pdi.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
 
-		if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
-			pdi.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
-			pdi.setConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
-		}
+        if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
+            pdi.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
+            pdi.setConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
+        }
 
-		return pdi;
-	}
+        return pdi;
+    }
 
-	private static PrecedentDegreeInformation createForOver23(IndividualCandidacyProcessBean processBean) {
-		Over23IndividualCandidacyProcessBean over23Bean = (Over23IndividualCandidacyProcessBean) processBean;
+    private static PrecedentDegreeInformation createForOver23(IndividualCandidacyProcessBean processBean) {
+        Over23IndividualCandidacyProcessBean over23Bean = (Over23IndividualCandidacyProcessBean) processBean;
 
-		if (!over23Bean.getFormationConcludedBeanList().isEmpty()) {
-			PrecedentDegreeInformation pid = new PrecedentDegreeInformation();
-			pid.setCandidacyInternal(false);
-			FormationBean formationBean = over23Bean.getFormationConcludedBeanList().get(0);
+        if (!over23Bean.getFormationConcludedBeanList().isEmpty()) {
+            PrecedentDegreeInformation pid = new PrecedentDegreeInformation();
+            pid.setCandidacyInternal(false);
+            FormationBean formationBean = over23Bean.getFormationConcludedBeanList().get(0);
 
-			pid.setDegreeDesignation(formationBean.getDesignation());
-			pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
-			pid.setConclusionYear(formationBean.getConclusionExecutionYear().getEndCivilYear());
+            pid.setDegreeDesignation(formationBean.getDesignation());
+            pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
+            pid.setConclusionYear(formationBean.getConclusionExecutionYear().getEndCivilYear());
 
-			return pid;
-		} else if (!over23Bean.getFormationNonConcludedBeanList().isEmpty()) {
-			PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
-			pdi.setCandidacyInternal(false);
-			FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().get(0);
+            return pid;
+        } else if (!over23Bean.getFormationNonConcludedBeanList().isEmpty()) {
+            PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
+            pdi.setCandidacyInternal(false);
+            FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().get(0);
 
-			pdi.setDegreeDesignation(formationBean.getDesignation());
-			pdi.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
+            pdi.setDegreeDesignation(formationBean.getDesignation());
+            pdi.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
 
-			return pdi;
-		}
+            return pdi;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private static PrecedentDegreeInformation createForDegreeTransferOrDegreeChange(IndividualCandidacyProcessBean processBean) {
-		IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPDIBean =
-				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
-		PrecedentDegreeInformationBean bean = candidacyProcessWithPDIBean.getPrecedentDegreeInformation();
+    private static PrecedentDegreeInformation createForDegreeTransferOrDegreeChange(IndividualCandidacyProcessBean processBean) {
+        IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPDIBean =
+                (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
+        PrecedentDegreeInformationBean bean = candidacyProcessWithPDIBean.getPrecedentDegreeInformation();
 
-		PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
-		pdi.setPrecedentDegreeDesignation(bean.getDegreeDesignation());
-		pdi.setNumberOfEnroledCurricularCourses(bean.getNumberOfEnroledCurricularCourses());
-		pdi.setNumberOfApprovedCurricularCourses(bean.getNumberOfApprovedCurricularCourses());
-		pdi.setGradeSum(bean.getGradeSum());
-		pdi.setApprovedEcts(bean.getApprovedEcts());
-		pdi.setEnroledEcts(bean.getEnroledEcts());
+        PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
+        pdi.setPrecedentDegreeDesignation(bean.getDegreeDesignation());
+        pdi.setNumberOfEnroledCurricularCourses(bean.getNumberOfEnroledCurricularCourses());
+        pdi.setNumberOfApprovedCurricularCourses(bean.getNumberOfApprovedCurricularCourses());
+        pdi.setGradeSum(bean.getGradeSum());
+        pdi.setApprovedEcts(bean.getApprovedEcts());
+        pdi.setEnroledEcts(bean.getEnroledEcts());
 
-		if (candidacyProcessWithPDIBean.isExternalPrecedentDegreeType()) {
-			pdi.setPrecedentInstitution(getOrCreateInstitution(bean));
-			pdi.setNumberOfEnrolmentsInPreviousDegrees(candidacyProcessWithPDIBean
-					.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
-			pdi.setCandidacyInternal(false);
-		} else {
-			pdi.setCandidacyInternal(true);
-			final StudentCurricularPlan studentCurricularPlan = candidacyProcessWithPDIBean.getPrecedentStudentCurricularPlan();
+        if (candidacyProcessWithPDIBean.isExternalPrecedentDegreeType()) {
+            pdi.setPrecedentInstitution(getOrCreateInstitution(bean));
+            pdi.setNumberOfEnrolmentsInPreviousDegrees(candidacyProcessWithPDIBean
+                    .getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
+            pdi.setCandidacyInternal(false);
+        } else {
+            pdi.setCandidacyInternal(true);
+            final StudentCurricularPlan studentCurricularPlan = candidacyProcessWithPDIBean.getPrecedentStudentCurricularPlan();
 
-			if (studentCurricularPlan == null) {
-				throw new DomainException("error.IndividualCandidacy.invalid.precedentDegreeInformation");
-			}
+            if (studentCurricularPlan == null) {
+                throw new DomainException("error.IndividualCandidacy.invalid.precedentDegreeInformation");
+            }
 
-			pdi.setStudentCurricularPlan(studentCurricularPlan);
-		}
+            pdi.setStudentCurricularPlan(studentCurricularPlan);
+        }
 
-		return pdi;
-	}
+        return pdi;
+    }
 
-	private static PrecedentDegreeInformation createForSecondCycleOrDegreeCandidacyForGraduatedPerson(
-			IndividualCandidacyProcessBean processBean) {
-		IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPrecedentDegreeInformationBean =
-				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
+    private static PrecedentDegreeInformation createForSecondCycleOrDegreeCandidacyForGraduatedPerson(
+            IndividualCandidacyProcessBean processBean) {
+        IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPrecedentDegreeInformationBean =
+                (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
 
-		PrecedentDegreeInformationBean bean = candidacyProcessWithPrecedentDegreeInformationBean.getPrecedentDegreeInformation();
+        PrecedentDegreeInformationBean bean = candidacyProcessWithPrecedentDegreeInformationBean.getPrecedentDegreeInformation();
 
-		PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
-		pdi.setCandidacyInternal(false);
-		pdi.setDegreeDesignation(bean.getDegreeDesignation());
-		pdi.setInstitution(getOrCreateInstitution(bean));
-		pdi.setCountry(bean.getCountry());
-		pdi.setConclusionDate(bean.getConclusionDate());
+        PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
+        pdi.setCandidacyInternal(false);
+        pdi.setDegreeDesignation(bean.getDegreeDesignation());
+        pdi.setInstitution(getOrCreateInstitution(bean));
+        pdi.setCountry(bean.getCountry());
+        pdi.setConclusionDate(bean.getConclusionDate());
 
-		if (bean.getConclusionDate() != null) {
-			pdi.setConclusionYear(bean.getConclusionDate().getYear());
-		}
+        if (bean.getConclusionDate() != null) {
+            pdi.setConclusionYear(bean.getConclusionDate().getYear());
+        }
 
-		pdi.setConclusionGrade(bean.getConclusionGrade());
+        pdi.setConclusionGrade(bean.getConclusionGrade());
 
-		return pdi;
-	}
+        return pdi;
+    }
 
-	private static Unit getOrCreateInstitution(final PrecedentDegreeInformationBean bean) {
-		if (bean.getInstitution() != null) {
-			return bean.getInstitution();
-		}
-		return getOrCreateInstitution(bean.getInstitutionName());
-	}
+    private static Unit getOrCreateInstitution(final PrecedentDegreeInformationBean bean) {
+        if (bean.getInstitution() != null) {
+            return bean.getInstitution();
+        }
+        return getOrCreateInstitution(bean.getInstitutionName());
+    }
 
-	private static Unit getOrCreateInstitution(final String institutionName) {
-		if (institutionName == null || institutionName.isEmpty()) {
-			throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
-		}
+    private static Unit getOrCreateInstitution(final String institutionName) {
+        if (institutionName == null || institutionName.isEmpty()) {
+            throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
+        }
 
-		final Unit unit = Unit.findFirstExternalUnitByName(institutionName);
-		return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(institutionName);
-	}
+        final Unit unit = Unit.findFirstExternalUnitByName(institutionName);
+        return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(institutionName);
+    }
 
-	/* EDIT */
+    /* EDIT */
 
-	public static final void edit(final IndividualCandidacyProcessBean processBean) {
-		if (processBean.isDegreeChange() || processBean.isDegreeTransfer()) {
-			editForDegreeTransferOrDegreeChange(processBean);
-		} else if (processBean.isSecondCycle() || processBean.isDegreeCandidacyForGraduatedPerson()) {
-			editForSecondCycleOrDegreeCandidacyForGraduatedPerson(processBean);
-		} else if (processBean.isOver23()) {
-			editForOver23(processBean);
-		} else if (processBean.isErasmus()) {
-			editForErasmus(processBean);
-		}
-	}
+    public static final void edit(final IndividualCandidacyProcessBean processBean) {
+        if (processBean.isDegreeChange() || processBean.isDegreeTransfer()) {
+            editForDegreeTransferOrDegreeChange(processBean);
+        } else if (processBean.isSecondCycle() || processBean.isDegreeCandidacyForGraduatedPerson()) {
+            editForSecondCycleOrDegreeCandidacyForGraduatedPerson(processBean);
+        } else if (processBean.isOver23()) {
+            editForOver23(processBean);
+        } else if (processBean.isErasmus()) {
+            editForErasmus(processBean);
+        }
+    }
 
-	private static void editForErasmus(IndividualCandidacyProcessBean processBean) {
-		MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) processBean;
-		MobilityStudentDataBean erasmusStudentDataBean = bean.getMobilityStudentDataBean();
+    private static void editForErasmus(IndividualCandidacyProcessBean processBean) {
+        MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) processBean;
+        MobilityStudentDataBean erasmusStudentDataBean = bean.getMobilityStudentDataBean();
 
-		MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess =
-				(MobilityIndividualApplicationProcess) processBean.getIndividualCandidacyProcess();
-		MobilityIndividualApplication erasmusCandidacy = erasmusIndividualCandidacyProcess.getCandidacy();
+        MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess =
+                (MobilityIndividualApplicationProcess) processBean.getIndividualCandidacyProcess();
+        MobilityIndividualApplication erasmusCandidacy = erasmusIndividualCandidacyProcess.getCandidacy();
 
-		PrecedentDegreeInformation pid = erasmusCandidacy.getRefactoredPrecedentDegreeInformation();
+        PrecedentDegreeInformation pid = erasmusCandidacy.getRefactoredPrecedentDegreeInformation();
 
-		pid.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
-		pid.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
+        pid.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
+        pid.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
 
-		if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
-			pid.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
-			pid.setConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
-		}
-	}
+        if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
+            pid.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
+            pid.setConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
+        }
+    }
 
-	private static void editForOver23(IndividualCandidacyProcessBean processBean) {
-		Over23IndividualCandidacyProcessBean over23Bean = (Over23IndividualCandidacyProcessBean) processBean;
+    private static void editForOver23(IndividualCandidacyProcessBean processBean) {
+        Over23IndividualCandidacyProcessBean over23Bean = (Over23IndividualCandidacyProcessBean) processBean;
 
-		IndividualCandidacyProcess individualCandidacyProcess = processBean.getIndividualCandidacyProcess();
-		IndividualCandidacy candidacy = individualCandidacyProcess.getCandidacy();
-		PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
+        IndividualCandidacyProcess individualCandidacyProcess = processBean.getIndividualCandidacyProcess();
+        IndividualCandidacy candidacy = individualCandidacyProcess.getCandidacy();
+        PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
 
-		if (!over23Bean.getFormationConcludedBeanList().isEmpty()) {
-			FormationBean formationBean = over23Bean.getFormationConcludedBeanList().get(0);
+        if (!over23Bean.getFormationConcludedBeanList().isEmpty()) {
+            FormationBean formationBean = over23Bean.getFormationConcludedBeanList().get(0);
 
-			pid.setDegreeDesignation(formationBean.getDesignation());
-			pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
-			pid.setConclusionYear(formationBean.getConclusionExecutionYear().getEndCivilYear());
-		} else if (over23Bean.getFormationNonConcludedBeanList().isEmpty()) {
-			FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().get(0);
+            pid.setDegreeDesignation(formationBean.getDesignation());
+            pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
+            pid.setConclusionYear(formationBean.getConclusionExecutionYear().getEndCivilYear());
+        } else if (over23Bean.getFormationNonConcludedBeanList().isEmpty()) {
+            FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().get(0);
 
-			pid.setDegreeDesignation(formationBean.getDesignation());
-			pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
-		}
+            pid.setDegreeDesignation(formationBean.getDesignation());
+            pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
+        }
 
-	}
+    }
 
-	private static void editForSecondCycleOrDegreeCandidacyForGraduatedPerson(IndividualCandidacyProcessBean processBean) {
-		IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPrecedentDegreeInformationBean =
-				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
-		IndividualCandidacyProcess individualCandidacyProcess = processBean.getIndividualCandidacyProcess();
-		IndividualCandidacy candidacy = individualCandidacyProcess.getCandidacy();
-		PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
+    private static void editForSecondCycleOrDegreeCandidacyForGraduatedPerson(IndividualCandidacyProcessBean processBean) {
+        IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPrecedentDegreeInformationBean =
+                (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
+        IndividualCandidacyProcess individualCandidacyProcess = processBean.getIndividualCandidacyProcess();
+        IndividualCandidacy candidacy = individualCandidacyProcess.getCandidacy();
+        PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
 
-		PrecedentDegreeInformationBean bean = candidacyProcessWithPrecedentDegreeInformationBean.getPrecedentDegreeInformation();
+        PrecedentDegreeInformationBean bean = candidacyProcessWithPrecedentDegreeInformationBean.getPrecedentDegreeInformation();
 
-		pid.setDegreeDesignation(bean.getDegreeDesignation());
-		pid.setInstitution(getOrCreateInstitution(bean));
-		pid.setCountry(bean.getCountry());
-		pid.setConclusionDate(bean.getConclusionDate());
+        pid.setDegreeDesignation(bean.getDegreeDesignation());
+        pid.setInstitution(getOrCreateInstitution(bean));
+        pid.setCountry(bean.getCountry());
+        pid.setConclusionDate(bean.getConclusionDate());
 
-		if (bean.getConclusionDate() != null) {
-			pid.setConclusionYear(bean.getConclusionDate().getYear());
-		}
+        if (bean.getConclusionDate() != null) {
+            pid.setConclusionYear(bean.getConclusionDate().getYear());
+        }
 
-		pid.setConclusionGrade(bean.getConclusionGrade());
+        pid.setConclusionGrade(bean.getConclusionGrade());
 
-	}
+    }
 
-	private static void editForDegreeTransferOrDegreeChange(IndividualCandidacyProcessBean processBean) {
-		IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPrecedentDegreeInformationBean =
-				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
-		PrecedentDegreeInformationBean bean = candidacyProcessWithPrecedentDegreeInformationBean.getPrecedentDegreeInformation();
+    private static void editForDegreeTransferOrDegreeChange(IndividualCandidacyProcessBean processBean) {
+        IndividualCandidacyProcessWithPrecedentDegreeInformationBean candidacyProcessWithPrecedentDegreeInformationBean =
+                (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) processBean;
+        PrecedentDegreeInformationBean bean = candidacyProcessWithPrecedentDegreeInformationBean.getPrecedentDegreeInformation();
 
-		IndividualCandidacyProcess individualCandidacyProcess = processBean.getIndividualCandidacyProcess();
-		IndividualCandidacy candidacy = individualCandidacyProcess.getCandidacy();
-		PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
+        IndividualCandidacyProcess individualCandidacyProcess = processBean.getIndividualCandidacyProcess();
+        IndividualCandidacy candidacy = individualCandidacyProcess.getCandidacy();
+        PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
 
-		pid.setPrecedentDegreeDesignation(bean.getDegreeDesignation());
-		pid.setPrecedentInstitution(getOrCreateInstitution(bean));
-		pid.setNumberOfEnroledCurricularCourses(bean.getNumberOfEnroledCurricularCourses());
-		pid.setNumberOfApprovedCurricularCourses(bean.getNumberOfApprovedCurricularCourses());
-		pid.setGradeSum(bean.getGradeSum());
-		pid.setApprovedEcts(bean.getApprovedEcts());
-		pid.setEnroledEcts(bean.getEnroledEcts());
-	}
+        pid.setPrecedentDegreeDesignation(bean.getDegreeDesignation());
+        pid.setPrecedentInstitution(getOrCreateInstitution(bean));
+        pid.setNumberOfEnroledCurricularCourses(bean.getNumberOfEnroledCurricularCourses());
+        pid.setNumberOfApprovedCurricularCourses(bean.getNumberOfApprovedCurricularCourses());
+        pid.setGradeSum(bean.getGradeSum());
+        pid.setApprovedEcts(bean.getApprovedEcts());
+        pid.setEnroledEcts(bean.getEnroledEcts());
+    }
 
 }

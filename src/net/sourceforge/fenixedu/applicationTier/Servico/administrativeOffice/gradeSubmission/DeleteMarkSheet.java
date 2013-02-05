@@ -10,12 +10,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteMarkSheet {
 
-	@Service
-	public static void run(Integer markSheetID) {
-		MarkSheet markSheet = RootDomainObject.getInstance().readMarkSheetByOID(markSheetID);
-		if (markSheet == null) {
-			throw new DomainException("error.noMarkSheet");
-		}
-		markSheet.delete();
-	}
+    @Service
+    public static void run(Integer markSheetID) {
+        MarkSheet markSheet = RootDomainObject.getInstance().readMarkSheetByOID(markSheetID);
+        if (markSheet == null) {
+            throw new DomainException("error.noMarkSheet");
+        }
+        markSheet.delete();
+    }
 }

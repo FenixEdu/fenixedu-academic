@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.SimpleStudentCurriculu
 
 public class StudentCurriculum extends SimpleStudentCurriculum {
 
-	public StudentCurriculum(final Registration registration, final ExecutionYear executionYear) {
-		super(registration, executionYear);
-	}
+    public StudentCurriculum(final Registration registration, final ExecutionYear executionYear) {
+        super(registration, executionYear);
+    }
 
 }

@@ -4,18 +4,18 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class NewPermissionUnit extends NewPermissionUnit_Base {
 
-	public NewPermissionUnit() {
-		super();
+    public NewPermissionUnit() {
+        super();
 
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		this.removeParty();
-		this.removeQuestion();
-		this.removeRootDomainObject();
+    public void delete() {
+        this.removeParty();
+        this.removeQuestion();
+        this.removeRootDomainObject();
 
-		super.deleteDomainObject();
-	}
+        super.deleteDomainObject();
+    }
 
 }

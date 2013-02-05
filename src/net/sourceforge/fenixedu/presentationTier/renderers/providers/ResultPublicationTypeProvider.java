@@ -12,34 +12,34 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ResultPublicationTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		List<ResultPublicationType> types = new ArrayList<ResultPublicationType>();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        List<ResultPublicationType> types = new ArrayList<ResultPublicationType>();
 
-		for (ResultPublicationType type : ResultPublicationType.values()) {
-			types.add(type);
-		}
-		Collections.sort(types, new Comparator<ResultPublicationType>() {
+        for (ResultPublicationType type : ResultPublicationType.values()) {
+            types.add(type);
+        }
+        Collections.sort(types, new Comparator<ResultPublicationType>() {
 
-			@Override
-			public int compare(ResultPublicationType o1, ResultPublicationType o2) {
-				return RenderUtils.getEnumString(o1).compareTo(RenderUtils.getEnumString(o2));
-			}
-		});
+            @Override
+            public int compare(ResultPublicationType o1, ResultPublicationType o2) {
+                return RenderUtils.getEnumString(o1).compareTo(RenderUtils.getEnumString(o2));
+            }
+        });
 
-		return types;
-	}
+        return types;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new Converter() {
+    @Override
+    public Converter getConverter() {
+        return new Converter() {
 
-			@Override
-			public Object convert(Class type, Object value) {
-				return ResultPublicationType.valueOf((String) value);
+            @Override
+            public Object convert(Class type, Object value) {
+                return ResultPublicationType.valueOf((String) value);
 
-			}
+            }
 
-		};
-	}
+        };
+    }
 }

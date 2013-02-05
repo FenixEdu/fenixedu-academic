@@ -15,24 +15,24 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGuideEntry extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description,
-			Double price, Integer quantity) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description,
+            Double price, Integer quantity) {
 
-		Guide guide = rootDomainObject.readGuideByOID(guideID);
+        Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-		GuideEntry guideEntry = new GuideEntry();
+        GuideEntry guideEntry = new GuideEntry();
 
-		guideEntry.setDescription(description);
-		guideEntry.setDocumentType(documentType);
-		guideEntry.setGraduationType(graduationType);
-		guideEntry.setGuide(guide);
-		guideEntry.setPrice(price);
-		guideEntry.setQuantity(quantity);
+        guideEntry.setDescription(description);
+        guideEntry.setDocumentType(documentType);
+        guideEntry.setGraduationType(graduationType);
+        guideEntry.setGuide(guide);
+        guideEntry.setPrice(price);
+        guideEntry.setQuantity(quantity);
 
-		// update guide's total value
-		guide.updateTotalValue();
-	}
+        // update guide's total value
+        guide.updateTotalValue();
+    }
 
 }

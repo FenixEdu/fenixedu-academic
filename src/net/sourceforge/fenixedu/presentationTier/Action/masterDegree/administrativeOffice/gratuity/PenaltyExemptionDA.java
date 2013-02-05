@@ -24,23 +24,23 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/penaltyExemption", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "return", path = "/studentSituation.do?page=0&method=readStudent", tileProperties = @Tile(
-				title = "teste59")),
-		@Forward(name = "edit", path = "gratuity.penaltyExemption.edit", tileProperties = @Tile(title = "teste60")) })
+        @Forward(name = "return", path = "/studentSituation.do?page=0&method=readStudent", tileProperties = @Tile(
+                title = "teste59")),
+        @Forward(name = "edit", path = "gratuity.penaltyExemption.edit", tileProperties = @Tile(title = "teste60")) })
 public class PenaltyExemptionDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-		GratuitySituation gratuitySituation = getRenderedObject();
-		if (gratuitySituation != null) {
-			request.setAttribute("degreeType", "MASTER_DEGREE");
-			request.setAttribute("studentNumber", gratuitySituation.getStudentCurricularPlan().getRegistration().getNumber());
-			return mapping.findForward("return");
-		}
+        GratuitySituation gratuitySituation = getRenderedObject();
+        if (gratuitySituation != null) {
+            request.setAttribute("degreeType", "MASTER_DEGREE");
+            request.setAttribute("studentNumber", gratuitySituation.getStudentCurricularPlan().getRegistration().getNumber());
+            return mapping.findForward("return");
+        }
 
-		request.setAttribute("gratuitySituation",
-				rootDomainObject.readGratuitySituationByOID(getIntegerFromRequest(request, "gratuitySituationID")));
-		return mapping.findForward("edit");
-	}
+        request.setAttribute("gratuitySituation",
+                rootDomainObject.readGratuitySituationByOID(getIntegerFromRequest(request, "gratuitySituationID")));
+        return mapping.findForward("edit");
+    }
 
 }

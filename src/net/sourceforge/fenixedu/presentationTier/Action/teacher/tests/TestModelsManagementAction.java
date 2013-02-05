@@ -43,400 +43,395 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 
-@Mapping(
-		module = "teacher",
-		path = "/tests/testModels",
-		attribute = "testForm",
-		formBean = "testForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "teacher", path = "/tests/testModels", attribute = "testForm", formBean = "testForm", scope = "request",
+        parameter = "method")
 @Forwards(value = {
-		@Forward(name = "editPreCondition", path = "editPreConditionModelPage"),
-		@Forward(name = "editTestModel", path = "/teacher/tests/testModels/editTestModel.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "manageTestModels", path = "/teacher/tests/testModels/manageTestModels.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "generateTests", path = "/teacher/tests/testModels/generateTests.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "deleteTestModel", path = "/teacher/tests/testModels/deleteTestModel.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "editModelGroup", path = "/teacher/tests/testModels/editModelGroup.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "sortTestModel", path = "/teacher/tests/testModels/sortTestModel.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")),
-		@Forward(name = "selectQuestions", path = "/teacher/tests/testModels/selectQuestions.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
+        @Forward(name = "editPreCondition", path = "editPreConditionModelPage"),
+        @Forward(name = "editTestModel", path = "/teacher/tests/testModels/editTestModel.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "manageTestModels", path = "/teacher/tests/testModels/manageTestModels.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "generateTests", path = "/teacher/tests/testModels/generateTests.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "deleteTestModel", path = "/teacher/tests/testModels/deleteTestModel.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "editModelGroup", path = "/teacher/tests/testModels/editModelGroup.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "sortTestModel", path = "/teacher/tests/testModels/sortTestModel.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+        @Forward(name = "selectQuestions", path = "/teacher/tests/testModels/selectQuestions.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
 public class TestModelsManagementAction extends FenixDispatchAction {
 
-	public ActionForward manageTestModels(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Teacher teacher = getPerson(request).getTeacher();
+    public ActionForward manageTestModels(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Teacher teacher = getPerson(request).getTeacher();
 
-		List<NewTestModel> testModels = new ArrayList<NewTestModel>(teacher.getTestModels());
-		request.setAttribute("testModels", testModels);
+        List<NewTestModel> testModels = new ArrayList<NewTestModel>(teacher.getTestModels());
+        request.setAttribute("testModels", testModels);
 
-		List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
+        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
 
-		for (NewTestGroup testGroup : teacher.getTestGroups()) {
-			testGroups.add(testGroup);
-		}
+        for (NewTestGroup testGroup : teacher.getTestGroups()) {
+            testGroups.add(testGroup);
+        }
 
-		request.setAttribute("testGroups", testGroups);
+        request.setAttribute("testGroups", testGroups);
 
-		return mapping.findForward("manageTestModels");
-	}
+        return mapping.findForward("manageTestModels");
+    }
 
-	public ActionForward createTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		// RenderUtils.invalidateViewState("create-test-model");
+    public ActionForward createTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        // RenderUtils.invalidateViewState("create-test-model");
 
-		return this.manageTestModels(mapping, form, request, response);
-	}
+        return this.manageTestModels(mapping, form, request, response);
+    }
 
-	public ActionForward createModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
+    public ActionForward createModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
 
-		CreateModelGroup.run(bean.getModelGroup(), bean.getName());
+        CreateModelGroup.run(bean.getModelGroup(), bean.getName());
 
-		request.setAttribute("oid", bean.getTestModel().getIdInternal());
+        request.setAttribute("oid", bean.getTestModel().getIdInternal());
 
-		RenderUtils.invalidateViewState("create-model-group");
+        RenderUtils.invalidateViewState("create-model-group");
 
-		return this.editTestModel(mapping, form, request, response);
-	}
+        return this.editTestModel(mapping, form, request, response);
+    }
 
-	public ActionForward invalidCreateModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
+    public ActionForward invalidCreateModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
 
-		request.setAttribute("testModel", bean.getTestModel());
-		request.setAttribute("bean", bean);
+        request.setAttribute("testModel", bean.getTestModel());
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editTestModel");
-	}
+        return mapping.findForward("editTestModel");
+    }
 
-	public ActionForward selectAtomicQuestionRestrictions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("select-atomic-questions");
+    public ActionForward selectAtomicQuestionRestrictions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("select-atomic-questions");
 
-		NewModelGroup modelGroup = bean.getModelGroup();
-		NewTestModel testModel = bean.getTestModel();
+        NewModelGroup modelGroup = bean.getModelGroup();
+        NewTestModel testModel = bean.getTestModel();
 
-		request.setAttribute("testModel", testModel);
-		request.setAttribute("bean", bean);
+        request.setAttribute("testModel", testModel);
+        request.setAttribute("bean", bean);
 
-		List<NewModelRestriction> modelRestrictions = validateSelectAtomicQuestionRestriction(request);
+        List<NewModelRestriction> modelRestrictions = validateSelectAtomicQuestionRestriction(request);
 
-		SelectAtomicQuestionRestrictions.run(testModel, modelRestrictions, modelGroup, bean.getValue());
+        SelectAtomicQuestionRestrictions.run(testModel, modelRestrictions, modelGroup, bean.getValue());
 
-		return mapping.findForward("selectQuestions");
-	}
+        return mapping.findForward("selectQuestions");
+    }
 
-	public ActionForward invalidSelectAtomicQuestionRestrictions(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("select-atomic-questions");
+    public ActionForward invalidSelectAtomicQuestionRestrictions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("select-atomic-questions");
 
-		request.setAttribute("testModel", bean.getTestModel());
-		request.setAttribute("bean", bean);
+        request.setAttribute("testModel", bean.getTestModel());
+        request.setAttribute("bean", bean);
 
-		validateSelectAtomicQuestionRestriction(request);
+        validateSelectAtomicQuestionRestriction(request);
 
-		return mapping.findForward("selectQuestions");
-	}
+        return mapping.findForward("selectQuestions");
+    }
 
-	private List<NewModelRestriction> validateSelectAtomicQuestionRestriction(HttpServletRequest request) {
-		String[] modelRestrictionIds = request.getParameterValues("selectedAtomicQuestionRestrictions");
+    private List<NewModelRestriction> validateSelectAtomicQuestionRestriction(HttpServletRequest request) {
+        String[] modelRestrictionIds = request.getParameterValues("selectedAtomicQuestionRestrictions");
 
-		List<NewModelRestriction> modelRestrictions = new ArrayList<NewModelRestriction>();
+        List<NewModelRestriction> modelRestrictions = new ArrayList<NewModelRestriction>();
 
-		if (modelRestrictionIds != null) {
-			for (String atomicRestrictionIdParameter : modelRestrictionIds) {
-				Integer atomicRestrictionId = Integer.parseInt(atomicRestrictionIdParameter);
-				NewModelRestriction atomicRestriction =
-						(NewModelRestriction) rootDomainObject.readNewTestElementByOID(atomicRestrictionId);
-				modelRestrictions.add(atomicRestriction);
-			}
-		}
+        if (modelRestrictionIds != null) {
+            for (String atomicRestrictionIdParameter : modelRestrictionIds) {
+                Integer atomicRestrictionId = Integer.parseInt(atomicRestrictionIdParameter);
+                NewModelRestriction atomicRestriction =
+                        (NewModelRestriction) rootDomainObject.readNewTestElementByOID(atomicRestrictionId);
+                modelRestrictions.add(atomicRestriction);
+            }
+        }
 
-		request.setAttribute("selectedAtomicQuestions", modelRestrictions);
+        request.setAttribute("selectedAtomicQuestions", modelRestrictions);
 
-		return modelRestrictions;
-	}
+        return modelRestrictions;
+    }
 
-	public ActionForward selectQuestionGroupRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("select-question-group.model-group");
+    public ActionForward selectQuestionGroupRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("select-question-group.model-group");
 
-		NewTestModel testModel = bean.getTestModel();
+        NewTestModel testModel = bean.getTestModel();
 
-		request.setAttribute("testModel", testModel);
-		request.setAttribute("bean", bean);
+        request.setAttribute("testModel", testModel);
+        request.setAttribute("bean", bean);
 
-		NewModelRestriction modelRestriction = validateSelectQuestionGroupRestriction(request);
+        NewModelRestriction modelRestriction = validateSelectQuestionGroupRestriction(request);
 
-		if (modelRestriction == null) {
-			return mapping.findForward("selectQuestions");
-		}
+        if (modelRestriction == null) {
+            return mapping.findForward("selectQuestions");
+        }
 
-		SelectQuestionGroupRestriction.run(testModel, modelRestriction, bean.getModelGroup(), bean.getCount(), bean.getValue());
+        SelectQuestionGroupRestriction.run(testModel, modelRestriction, bean.getModelGroup(), bean.getCount(), bean.getValue());
 
-		RenderUtils.invalidateViewState("select-question-group.model-group");
+        RenderUtils.invalidateViewState("select-question-group.model-group");
 
-		return mapping.findForward("selectQuestions");
-	}
+        return mapping.findForward("selectQuestions");
+    }
 
-	public ActionForward invalidSelectQuestionGroupRestriction(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("select-question-group.model-group");
+    public ActionForward invalidSelectQuestionGroupRestriction(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("select-question-group.model-group");
 
-		request.setAttribute("testModel", bean.getTestModel());
-		request.setAttribute("bean", bean);
+        request.setAttribute("testModel", bean.getTestModel());
+        request.setAttribute("bean", bean);
 
-		NewModelRestriction modelRestriction = validateSelectQuestionGroupRestriction(request);
+        NewModelRestriction modelRestriction = validateSelectQuestionGroupRestriction(request);
 
-		if (modelRestriction == null) {
-			return mapping.findForward("selectQuestions");
-		}
+        if (modelRestriction == null) {
+            return mapping.findForward("selectQuestions");
+        }
 
-		request.setAttribute("selectedQuestionGroupRestriction", modelRestriction);
+        request.setAttribute("selectedQuestionGroupRestriction", modelRestriction);
 
-		return mapping.findForward("selectQuestions");
-	}
+        return mapping.findForward("selectQuestions");
+    }
 
-	private NewModelRestriction validateSelectQuestionGroupRestriction(HttpServletRequest request) {
-		Integer modelRestrictionId = getCodeFromRequest(request, "selectedQuestionGroup");
+    private NewModelRestriction validateSelectQuestionGroupRestriction(HttpServletRequest request) {
+        Integer modelRestrictionId = getCodeFromRequest(request, "selectedQuestionGroup");
 
-		if (modelRestrictionId == null) {
-			createMessage(request, "selectedQuestionGroup", "validation.questionGroupRestriction.choose");
+        if (modelRestrictionId == null) {
+            createMessage(request, "selectedQuestionGroup", "validation.questionGroupRestriction.choose");
 
-			return null;
-		}
+            return null;
+        }
 
-		return (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
-	}
+        return (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+    }
 
-	public ActionForward unselectRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer modelRestrictionId = getCodeFromRequest(request, "oid");
+    public ActionForward unselectRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
-		NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
 
-		UnselectRestriction.run(modelRestriction);
+        UnselectRestriction.run(modelRestriction);
 
-		NewTestModel testModel = modelRestriction.getTestModel();
+        NewTestModel testModel = modelRestriction.getTestModel();
 
-		request.setAttribute("testModel", testModel);
-		request.setAttribute("bean", new TestModelBean(testModel));
+        request.setAttribute("testModel", testModel);
+        request.setAttribute("bean", new TestModelBean(testModel));
 
-		return mapping.findForward("editTestModel");
-	}
+        return mapping.findForward("editTestModel");
+    }
 
-	public ActionForward prepareDeleteTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testModelId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareDeleteTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testModelId = getCodeFromRequest(request, "oid");
 
-		NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-		request.setAttribute("testModel", testModel);
+        request.setAttribute("testModel", testModel);
 
-		return mapping.findForward("deleteTestModel");
-	}
+        return mapping.findForward("deleteTestModel");
+    }
 
-	public ActionForward editTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testModelId = getCodeFromRequest(request, "oid");
+    public ActionForward editTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testModelId = getCodeFromRequest(request, "oid");
 
-		NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-		request.setAttribute("testModel", testModel);
-		request.setAttribute("bean", new TestModelBean(testModel));
+        request.setAttribute("testModel", testModel);
+        request.setAttribute("bean", new TestModelBean(testModel));
 
-		return mapping.findForward("editTestModel");
-	}
+        return mapping.findForward("editTestModel");
+    }
 
-	public ActionForward selectQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testModelId = getCodeFromRequest(request, "oid");
+    public ActionForward selectQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testModelId = getCodeFromRequest(request, "oid");
 
-		NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-		request.setAttribute("testModel", testModel);
-		request.setAttribute("bean", new TestModelBean(testModel));
+        request.setAttribute("testModel", testModel);
+        request.setAttribute("bean", new TestModelBean(testModel));
 
-		return mapping.findForward("selectQuestions");
-	}
+        return mapping.findForward("selectQuestions");
+    }
 
-	public ActionForward sortTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testModelId = getCodeFromRequest(request, "oid");
+    public ActionForward sortTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testModelId = getCodeFromRequest(request, "oid");
 
-		NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-		request.setAttribute("testModel", testModel);
+        request.setAttribute("testModel", testModel);
 
-		return mapping.findForward("sortTestModel");
-	}
+        return mapping.findForward("sortTestModel");
+    }
 
-	public ActionForward switchModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer modelRestrictionId = getCodeFromRequest(request, "oid");
-		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
+    public ActionForward switchModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer modelRestrictionId = getCodeFromRequest(request, "oid");
+        Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
 
-		SwitchPosition.run(modelRestriction, relativePosition);
+        SwitchPosition.run(modelRestriction, relativePosition);
 
-		request.setAttribute("testModel", modelRestriction.getTestModel());
+        request.setAttribute("testModel", modelRestriction.getTestModel());
 
-		return mapping.findForward("sortTestModel");
-	}
+        return mapping.findForward("sortTestModel");
+    }
 
-	public ActionForward editModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer modelGroupId = getCodeFromRequest(request, "oid");
+    public ActionForward editModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer modelGroupId = getCodeFromRequest(request, "oid");
 
-		NewModelGroup modelGroup = (NewModelGroup) rootDomainObject.readNewTestElementByOID(modelGroupId);
+        NewModelGroup modelGroup = (NewModelGroup) rootDomainObject.readNewTestElementByOID(modelGroupId);
 
-		request.setAttribute("modelGroup", modelGroup);
+        request.setAttribute("modelGroup", modelGroup);
 
-		return mapping.findForward("editModelGroup");
-	}
+        return mapping.findForward("editModelGroup");
+    }
 
-	public ActionForward editModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer modelRestrictionId = getCodeFromRequest(request, "oid");
+    public ActionForward editModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
-		NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
 
-		NewTestModel testModel = modelRestriction.getTestModel();
+        NewTestModel testModel = modelRestriction.getTestModel();
 
-		request.setAttribute("testModel", testModel);
-		request.setAttribute("bean", new TestModelBean(testModel));
+        request.setAttribute("testModel", testModel);
+        request.setAttribute("bean", new TestModelBean(testModel));
 
-		return mapping.findForward("editTestModel");
-	}
+        return mapping.findForward("editTestModel");
+    }
 
-	public ActionForward deleteTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testModelId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testModelId = getCodeFromRequest(request, "oid");
 
-		NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-		DeleteModelRestriction.run(testModel);
+        DeleteModelRestriction.run(testModel);
 
-		return this.manageTestModels(mapping, form, request, response);
-	}
+        return this.manageTestModels(mapping, form, request, response);
+    }
 
-	public ActionForward deleteModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer modelRestrictionId = getCodeFromRequest(request, "oid");
+    public ActionForward deleteModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
-		NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
 
-		NewTestModel testModel = modelRestriction.getTestModel();
+        NewTestModel testModel = modelRestriction.getTestModel();
 
-		DeleteModelRestriction.run(modelRestriction);
+        DeleteModelRestriction.run(modelRestriction);
 
-		return new ActionForward(request.getParameter("returnTo") + "&oid=" + testModel.getIdInternal(), true);
-	}
+        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testModel.getIdInternal(), true);
+    }
 
-	public ActionForward prepareGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		Integer testModelId = getCodeFromRequest(request, "oid");
+    public ActionForward prepareGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        Integer testModelId = getCodeFromRequest(request, "oid");
 
-		NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
 
-		request.setAttribute("firstStep", true);
-		request.setAttribute("bean", new TestModelBean(testModel, testModel.getName()));
+        request.setAttribute("firstStep", true);
+        request.setAttribute("bean", new TestModelBean(testModel, testModel.getName()));
 
-		return mapping.findForward("generateTests");
-	}
+        return mapping.findForward("generateTests");
+    }
 
-	public ActionForward continueGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
+    public ActionForward continueGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
-		request.setAttribute("secondStep", true);
-		request.setAttribute("bean", bean);
+        request.setAttribute("secondStep", true);
+        request.setAttribute("bean", bean);
 
-		if (bean.isUseFinalDate() && bean.isUseVariations()) {
-			RenderUtils.invalidateViewState("generate-tests");
-			request.setAttribute("useBoth", true);
-			return mapping.findForward("generateTests");
-		} else if (bean.isUseFinalDate()) {
-			RenderUtils.invalidateViewState("generate-tests");
-			request.setAttribute("useFinalDate", true);
-			return mapping.findForward("generateTests");
-		} else if (bean.isUseVariations()) {
-			RenderUtils.invalidateViewState("generate-tests");
-			request.setAttribute("useVariations", true);
-			return mapping.findForward("generateTests");
-		} else {
-			return generateTests(mapping, form, request, response);
-		}
-	}
+        if (bean.isUseFinalDate() && bean.isUseVariations()) {
+            RenderUtils.invalidateViewState("generate-tests");
+            request.setAttribute("useBoth", true);
+            return mapping.findForward("generateTests");
+        } else if (bean.isUseFinalDate()) {
+            RenderUtils.invalidateViewState("generate-tests");
+            request.setAttribute("useFinalDate", true);
+            return mapping.findForward("generateTests");
+        } else if (bean.isUseVariations()) {
+            RenderUtils.invalidateViewState("generate-tests");
+            request.setAttribute("useVariations", true);
+            return mapping.findForward("generateTests");
+        } else {
+            return generateTests(mapping, form, request, response);
+        }
+    }
 
-	public ActionForward invalidGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
+    public ActionForward invalidGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
-		request.setAttribute("secondStep", true);
-		request.setAttribute("bean", bean);
+        request.setAttribute("secondStep", true);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("generateTests");
-	}
+        return mapping.findForward("generateTests");
+    }
 
-	public ActionForward generateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
+    public ActionForward generateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
-		GenerateTests.run(bean.getTestModel(), bean.getName(), bean.getExecutionCourse(), bean.getVariations(),
-				bean.getFinalDate());
+        GenerateTests.run(bean.getTestModel(), bean.getName(), bean.getExecutionCourse(), bean.getVariations(),
+                bean.getFinalDate());
 
-		return this.manageTestModels(mapping, form, request, response);
-	}
+        return this.manageTestModels(mapping, form, request, response);
+    }
 
-	private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
-		Integer code = null;
-		Object objectCode = request.getAttribute(codeString);
+    private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
+        Integer code = null;
+        Object objectCode = request.getAttribute(codeString);
 
-		if (objectCode != null) {
-			if (objectCode instanceof String) {
-				code = new Integer((String) objectCode);
-			} else if (objectCode instanceof Integer) {
-				code = (Integer) objectCode;
-			}
-		} else {
-			String thisCodeString = request.getParameter(codeString);
-			if (thisCodeString != null) {
-				code = new Integer(thisCodeString);
-			}
-		}
+        if (objectCode != null) {
+            if (objectCode instanceof String) {
+                code = new Integer((String) objectCode);
+            } else if (objectCode instanceof Integer) {
+                code = (Integer) objectCode;
+            }
+        } else {
+            String thisCodeString = request.getParameter(codeString);
+            if (thisCodeString != null) {
+                code = new Integer(thisCodeString);
+            }
+        }
 
-		return code;
-	}
+        return code;
+    }
 
-	private Person getPerson(HttpServletRequest request) {
-		IUserView userView = getUserView(request);
+    private Person getPerson(HttpServletRequest request) {
+        IUserView userView = getUserView(request);
 
-		return userView.getPerson();
-	}
+        return userView.getPerson();
+    }
 
-	private Object getMetaObject(String key) {
-		IViewState viewState = RenderUtils.getViewState(key);
+    private Object getMetaObject(String key) {
+        IViewState viewState = RenderUtils.getViewState(key);
 
-		if (viewState == null) {
-			return null;
-		}
+        if (viewState == null) {
+            return null;
+        }
 
-		return viewState.getMetaObject().getObject();
-	}
+        return viewState.getMetaObject().getObject();
+    }
 
-	private void createMessage(HttpServletRequest request, String name, String key) {
-		ActionMessages messages = getMessages(request);
-		messages.add(name, new ActionMessage(key, true));
-		saveMessages(request, messages);
-	}
+    private void createMessage(HttpServletRequest request, String name, String key) {
+        ActionMessages messages = getMessages(request);
+        messages.add(name, new ActionMessage(key, true));
+        saveMessages(request, messages);
+    }
 
 }

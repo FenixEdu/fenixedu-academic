@@ -9,23 +9,23 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DuplicateRequestEvent extends DuplicateRequestEvent_Base {
 
-	protected DuplicateRequestEvent() {
-		super();
-	}
+    protected DuplicateRequestEvent() {
+        super();
+    }
 
-	public DuplicateRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final RegistrationAcademicServiceRequest academicServiceRequest) {
-		this();
+    public DuplicateRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final RegistrationAcademicServiceRequest academicServiceRequest) {
+        this();
 
-		super.init(administrativeOffice, EventType.DUPLICATE_REQUEST, person, academicServiceRequest);
-	}
+        super.init(administrativeOffice, EventType.DUPLICATE_REQUEST, person, academicServiceRequest);
+    }
 
-	@Override
-	final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+    @Override
+    final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
 }

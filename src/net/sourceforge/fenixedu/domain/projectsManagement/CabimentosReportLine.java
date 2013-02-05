@@ -12,51 +12,51 @@ import java.io.Serializable;
  */
 public class CabimentosReportLine implements Serializable, ICabimentosReportLine {
 
-	private String projectCode;
+    private String projectCode;
 
-	private Double cabimentos;
+    private Double cabimentos;
 
-	private Double justifications;
+    private Double justifications;
 
-	private Double total;
+    private Double total;
 
-	@Override
-	public Double getCabimentos() {
-		return cabimentos;
-	}
+    @Override
+    public Double getCabimentos() {
+        return cabimentos;
+    }
 
-	@Override
-	public void setCabimentos(Double cabimentos) {
-		this.cabimentos = cabimentos;
-	}
+    @Override
+    public void setCabimentos(Double cabimentos) {
+        this.cabimentos = cabimentos;
+    }
 
-	@Override
-	public Double getJustifications() {
-		return justifications;
-	}
+    @Override
+    public Double getJustifications() {
+        return justifications;
+    }
 
-	@Override
-	public void setJustifications(Double justifications) {
-		this.justifications = justifications;
-	}
+    @Override
+    public void setJustifications(Double justifications) {
+        this.justifications = justifications;
+    }
 
-	@Override
-	public String getProjectCode() {
-		return projectCode;
-	}
+    @Override
+    public String getProjectCode() {
+        return projectCode;
+    }
 
-	@Override
-	public void setProjectCode(String projectCode) {
-		this.projectCode = projectCode;
-	}
+    @Override
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
+    }
 
-	@Override
-	public Double getTotal() {
-		return total;
-	}
+    @Override
+    public Double getTotal() {
+        return total;
+    }
 
-	@Override
-	public void setTotal(Double total) {
-		this.total = total;
-	}
+    @Override
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

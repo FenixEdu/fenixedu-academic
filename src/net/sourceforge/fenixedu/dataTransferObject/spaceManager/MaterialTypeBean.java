@@ -6,27 +6,27 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 
 public class MaterialTypeBean extends MaterialBean {
 
-	private SpaceInformation spaceInformationReference;
+    private SpaceInformation spaceInformationReference;
 
-	private Material materialReference;
+    private Material materialReference;
 
-	public MaterialTypeBean(SpaceInformation spaceInformationReference) {
-		setSpaceInformation(spaceInformationReference);
-	}
+    public MaterialTypeBean(SpaceInformation spaceInformationReference) {
+        setSpaceInformation(spaceInformationReference);
+    }
 
-	public void setSpaceInformation(SpaceInformation spaceInformationReference) {
-		this.spaceInformationReference = spaceInformationReference;
-	}
+    public void setSpaceInformation(SpaceInformation spaceInformationReference) {
+        this.spaceInformationReference = spaceInformationReference;
+    }
 
-	public SpaceInformation getSpaceInformation() {
-		return this.spaceInformationReference;
-	}
+    public SpaceInformation getSpaceInformation() {
+        return this.spaceInformationReference;
+    }
 
-	public void setMaterial(Material material) {
-		this.materialReference = material;
-	}
+    public void setMaterial(Material material) {
+        this.materialReference = material;
+    }
 
-	public Material getMaterial() {
-		return this.materialReference;
-	}
+    public Material getMaterial() {
+        return this.materialReference;
+    }
 }

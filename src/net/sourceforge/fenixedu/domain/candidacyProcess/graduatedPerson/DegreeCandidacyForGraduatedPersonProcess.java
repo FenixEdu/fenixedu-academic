@@ -39,296 +39,296 @@ import dml.runtime.RelationAdapter;
 
 public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyForGraduatedPersonProcess_Base {
 
-	static {
-		CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
-			@Override
-			public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
-				super.beforeAdd(candidacyProcess, candidacyPeriod);
+    static {
+        CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
+            @Override
+            public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
+                super.beforeAdd(candidacyProcess, candidacyPeriod);
 
-				if (candidacyProcess != null && candidacyPeriod != null
-						&& candidacyPeriod instanceof DegreeCandidacyForGraduatedPersonCandidacyPeriod) {
-					if (candidacyPeriod.hasAnyCandidacyProcesses()) {
-						throw new DomainException(
-								"error.DegreeCandidacyForGraduatedPersonProcess.candidacy.period.already.has.process");
-					}
-				}
-			}
-		});
-	}
+                if (candidacyProcess != null && candidacyPeriod != null
+                        && candidacyPeriod instanceof DegreeCandidacyForGraduatedPersonCandidacyPeriod) {
+                    if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+                        throw new DomainException(
+                                "error.DegreeCandidacyForGraduatedPersonProcess.candidacy.period.already.has.process");
+                    }
+                }
+            }
+        });
+    }
 
-	static private List<Activity> activities = new ArrayList<Activity>();
-	static {
-		activities.add(new EditCandidacyPeriod());
-		activities.add(new SendToCoordinator());
-		activities.add(new SendToScientificCouncil());
-		activities.add(new PrintCandidacies());
-		activities.add(new ExportCandidacies());
-		activities.add(new SelectAvailableDegrees());
-	}
+    static private List<Activity> activities = new ArrayList<Activity>();
+    static {
+        activities.add(new EditCandidacyPeriod());
+        activities.add(new SendToCoordinator());
+        activities.add(new SendToScientificCouncil());
+        activities.add(new PrintCandidacies());
+        activities.add(new ExportCandidacies());
+        activities.add(new SelectAvailableDegrees());
+    }
 
-	private DegreeCandidacyForGraduatedPersonProcess() {
-		super();
-	}
+    private DegreeCandidacyForGraduatedPersonProcess() {
+        super();
+    }
 
-	private DegreeCandidacyForGraduatedPersonProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
-		this();
-		checkParameters(executionYear, start, end);
-		setState(CandidacyProcessState.STAND_BY);
-		new DegreeCandidacyForGraduatedPersonCandidacyPeriod(this, executionYear, start, end);
-	}
+    private DegreeCandidacyForGraduatedPersonProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
+        this();
+        checkParameters(executionYear, start, end);
+        setState(CandidacyProcessState.STAND_BY);
+        new DegreeCandidacyForGraduatedPersonCandidacyPeriod(this, executionYear, start, end);
+    }
 
-	private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
-		if (executionInterval == null) {
-			throw new DomainException("error.DegreeCandidacyForGraduatedPersonProcess.invalid.executionInterval");
-		}
+    private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+        if (executionInterval == null) {
+            throw new DomainException("error.DegreeCandidacyForGraduatedPersonProcess.invalid.executionInterval");
+        }
 
-		if (start == null || end == null || start.isAfter(end)) {
-			throw new DomainException("error.DegreeCandidacyForGraduatedPersonProcess.invalid.interval");
-		}
-	}
+        if (start == null || end == null || start.isAfter(end)) {
+            throw new DomainException("error.DegreeCandidacyForGraduatedPersonProcess.invalid.interval");
+        }
+    }
 
-	private void edit(final DateTime start, final DateTime end) {
-		checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
-		getCandidacyPeriod().edit(start, end);
-	}
+    private void edit(final DateTime start, final DateTime end) {
+        checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
+        getCandidacyPeriod().edit(start, end);
+    }
 
-	@Override
-	public boolean canExecuteActivity(IUserView userView) {
-		return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
-	}
+    @Override
+    public boolean canExecuteActivity(IUserView userView) {
+        return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
+    }
 
-	@Override
-	public List<Activity> getActivities() {
-		return activities;
-	}
+    @Override
+    public List<Activity> getActivities() {
+        return activities;
+    }
 
-	public Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> getValidDegreeCandidaciesForGraduatedPersonsByDegree() {
-		final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result =
-				new TreeMap<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>>(
-						Degree.COMPARATOR_BY_NAME_AND_ID);
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			final DegreeCandidacyForGraduatedPersonIndividualProcess process =
-					(DegreeCandidacyForGraduatedPersonIndividualProcess) child;
-			if (process.isCandidacyValid() && process.canExecuteActivity(AccessControl.getUserView())) {
-				addCandidacy(result, process);
-			}
-		}
-		return result;
-	}
+    public Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> getValidDegreeCandidaciesForGraduatedPersonsByDegree() {
+        final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result =
+                new TreeMap<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>>(
+                        Degree.COMPARATOR_BY_NAME_AND_ID);
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            final DegreeCandidacyForGraduatedPersonIndividualProcess process =
+                    (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
+            if (process.isCandidacyValid() && process.canExecuteActivity(AccessControl.getUserView())) {
+                addCandidacy(result, process);
+            }
+        }
+        return result;
+    }
 
-	private void addCandidacy(final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result,
-			final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
-		SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess> values = result.get(process.getCandidacySelectedDegree());
-		if (values == null) {
-			result.put(process.getCandidacySelectedDegree(), values =
-					new TreeSet<DegreeCandidacyForGraduatedPersonIndividualProcess>(
-							DegreeCandidacyForGraduatedPersonIndividualProcess.COMPARATOR_BY_CANDIDACY_PERSON));
-		}
-		values.add(process);
-	}
+    private void addCandidacy(final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result,
+            final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
+        SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess> values = result.get(process.getCandidacySelectedDegree());
+        if (values == null) {
+            result.put(process.getCandidacySelectedDegree(), values =
+                    new TreeSet<DegreeCandidacyForGraduatedPersonIndividualProcess>(
+                            DegreeCandidacyForGraduatedPersonIndividualProcess.COMPARATOR_BY_CANDIDACY_PERSON));
+        }
+        values.add(process);
+    }
 
-	public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies() {
-		final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result =
-				new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
-				result.add((DegreeCandidacyForGraduatedPersonIndividualProcess) child);
-			}
-		}
-		return result;
-	}
+    public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies() {
+        final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result =
+                new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
+                result.add((DegreeCandidacyForGraduatedPersonIndividualProcess) child);
+            }
+        }
+        return result;
+    }
 
-	public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getValidDegreeCandidaciesForGraduatedPersons(
-			final Degree degree) {
+    public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getValidDegreeCandidaciesForGraduatedPersons(
+            final Degree degree) {
 
-		if (degree == null) {
-			return Collections.emptyList();
-		}
+        if (degree == null) {
+            return Collections.emptyList();
+        }
 
-		final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result =
-				new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
-		for (final IndividualCandidacyProcess child : getChildProcesses()) {
-			final DegreeCandidacyForGraduatedPersonIndividualProcess process =
-					(DegreeCandidacyForGraduatedPersonIndividualProcess) child;
-			if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
-				result.add(process);
-			}
-		}
-		return result;
-	}
+        final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result =
+                new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
+        for (final IndividualCandidacyProcess child : getChildProcesses()) {
+            final DegreeCandidacyForGraduatedPersonIndividualProcess process =
+                    (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
+            if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
+                result.add(process);
+            }
+        }
+        return result;
+    }
 
-	// static methods
+    // static methods
 
-	private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
-			DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
+            DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-	static private boolean isAllowedToManageProcess(IUserView userView) {
-		for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-				AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
-			if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    static private boolean isAllowedToManageProcess(IUserView userView) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+            if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@StartActivity
-	static public class CreateCandidacyPeriod extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    @StartActivity
+    static public class CreateCandidacyPeriod extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-			return new DegreeCandidacyForGraduatedPersonProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(),
-					bean.getEnd());
-		}
-	}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+            return new DegreeCandidacyForGraduatedPersonProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(),
+                    bean.getEnd());
+        }
+    }
 
-	static private class EditCandidacyPeriod extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    static private class EditCandidacyPeriod extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-			process.edit(bean.getStart(), bean.getEnd());
-			return process;
-		}
-	}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+            process.edit(bean.getStart(), bean.getEnd());
+            return process;
+        }
+    }
 
-	static private class SendToCoordinator extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    static private class SendToCoordinator extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.isInStandBy() && !process.isSentToScientificCouncil()) {
-				throw new PreConditionNotValidException();
-			}
+            if (!process.isInStandBy() && !process.isSentToScientificCouncil()) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
-			return process;
-		}
-	}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
+            return process;
+        }
+    }
 
-	static private class SendToScientificCouncil extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    static private class SendToScientificCouncil extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.isInStandBy() && !process.isSentToCoordinator()) {
-				throw new PreConditionNotValidException();
-			}
+            if (!process.isInStandBy() && !process.isSentToCoordinator()) {
+                throw new PreConditionNotValidException();
+            }
 
-			if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+            if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
-			return process;
-		}
-	}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
+            return process;
+        }
+    }
 
-	static private class PrintCandidacies extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    static private class PrintCandidacies extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-			if (process.isInStandBy()) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+            if (process.isInStandBy()) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			return process; // for now, nothing to be done
-		}
-	}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            return process; // for now, nothing to be done
+        }
+    }
 
-	static private class ExportCandidacies extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    static private class ExportCandidacies extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			return process; // for now, nothing to be done
-		}
-	}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            return process; // for now, nothing to be done
+        }
+    }
 
-	static private class SelectAvailableDegrees extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+    static private class SelectAvailableDegrees extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
 
-		@Override
-		public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
-			if (!isAllowedToManageProcess(userView)) {
-				throw new PreConditionNotValidException();
-			}
-		}
+        @Override
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
 
-		@Override
-		protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
-				IUserView userView, Object object) {
-			final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
-			final List<Degree> degrees = bean.getDegrees();
-			process.getDegreeSet().addAll(degrees);
-			process.getDegreeSet().retainAll(degrees);
-			return process;
-		}
+        @Override
+        protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+                IUserView userView, Object object) {
+            final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
+            final List<Degree> degrees = bean.getDegrees();
+            process.getDegreeSet().addAll(degrees);
+            process.getDegreeSet().retainAll(degrees);
+            return process;
+        }
 
-		@Override
-		public Boolean isVisibleForCoordinator() {
-			return Boolean.FALSE;
-		}
+        @Override
+        public Boolean isVisibleForCoordinator() {
+            return Boolean.FALSE;
+        }
 
-		@Override
-		public Boolean isVisibleForGriOffice() {
-			return Boolean.FALSE;
-		}
+        @Override
+        public Boolean isVisibleForGriOffice() {
+            return Boolean.FALSE;
+        }
 
-	}
+    }
 
-	public List<Degree> getAvailableDegrees() {
-		final Set<Degree> degrees = getDegreeSet();
-		return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
-				DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
-	}
+    public List<Degree> getAvailableDegrees() {
+        final Set<Degree> degrees = getDegreeSet();
+        return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
+                DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
+    }
 
 }

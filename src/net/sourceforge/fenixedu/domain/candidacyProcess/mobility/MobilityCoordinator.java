@@ -8,51 +8,51 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class MobilityCoordinator extends MobilityCoordinator_Base {
 
-	private MobilityCoordinator() {
-		super();
+    private MobilityCoordinator() {
+        super();
 
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public MobilityCoordinator(final MobilityApplicationProcess applicationProcess, final ErasmusCoordinatorBean bean) {
-		this(applicationProcess, bean.getTeacher(), bean.getDegree());
-	}
+    public MobilityCoordinator(final MobilityApplicationProcess applicationProcess, final ErasmusCoordinatorBean bean) {
+        this(applicationProcess, bean.getTeacher(), bean.getDegree());
+    }
 
-	public MobilityCoordinator(final MobilityApplicationProcess applicationProcess, final Teacher teacher, final Degree degree) {
-		this();
+    public MobilityCoordinator(final MobilityApplicationProcess applicationProcess, final Teacher teacher, final Degree degree) {
+        this();
 
-		check(applicationProcess, teacher, degree);
+        check(applicationProcess, teacher, degree);
 
-		this.setMobilityApplicationProcess(applicationProcess);
-		this.setTeacher(teacher);
-		this.setDegree(degree);
-	}
+        this.setMobilityApplicationProcess(applicationProcess);
+        this.setTeacher(teacher);
+        this.setDegree(degree);
+    }
 
-	private void check(final MobilityApplicationProcess applicationProcess, final Teacher teacher, final Degree degree) {
-		if (applicationProcess == null) {
-			throw new DomainException("error.erasmus.coordinator.candidacyProcess.must.not.be.null");
-		}
+    private void check(final MobilityApplicationProcess applicationProcess, final Teacher teacher, final Degree degree) {
+        if (applicationProcess == null) {
+            throw new DomainException("error.erasmus.coordinator.candidacyProcess.must.not.be.null");
+        }
 
-		if (teacher == null) {
-			throw new DomainException("error.erasmus.coordinator.teacher.must.not.be.null");
-		}
+        if (teacher == null) {
+            throw new DomainException("error.erasmus.coordinator.teacher.must.not.be.null");
+        }
 
-		if (degree == null) {
-			throw new DomainException("error.erasmus.coordinator.degree.must.not.be.null");
-		}
+        if (degree == null) {
+            throw new DomainException("error.erasmus.coordinator.degree.must.not.be.null");
+        }
 
-		if (applicationProcess.isTeacherErasmusCoordinatorForDegree(teacher, degree)) {
-			throw new DomainException("error.erasmus.coordinator.teacher.is.assigned.for.process.and.degree");
-		}
-	}
+        if (applicationProcess.isTeacherErasmusCoordinatorForDegree(teacher, degree)) {
+            throw new DomainException("error.erasmus.coordinator.teacher.is.assigned.for.process.and.degree");
+        }
+    }
 
-	public void delete() {
-		removeDegree();
-		removeMobilityApplicationProcess();
-		removeTeacher();
-		removeRootDomainObject();
+    public void delete() {
+        removeDegree();
+        removeMobilityApplicationProcess();
+        removeTeacher();
+        removeRootDomainObject();
 
-		super.deleteDomainObject();
-	}
+        super.deleteDomainObject();
+    }
 
 }

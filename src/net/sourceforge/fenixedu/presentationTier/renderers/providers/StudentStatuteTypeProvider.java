@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class StudentStatuteTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(StudentStatuteType.values());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(StudentStatuteType.values());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

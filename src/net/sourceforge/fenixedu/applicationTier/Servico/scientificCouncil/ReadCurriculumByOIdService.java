@@ -21,15 +21,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurriculumByOIdService extends FenixService {
 
-	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-	@Service
-	public static SiteView run(Integer curriculumId) throws FenixServiceException {
-		Curriculum curriculum = rootDomainObject.readCurriculumByOID(curriculumId);
-		InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
-		SiteView siteView = new SiteView(infoCurriculum);
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static SiteView run(Integer curriculumId) throws FenixServiceException {
+        Curriculum curriculum = rootDomainObject.readCurriculumByOID(curriculumId);
+        InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
+        SiteView siteView = new SiteView(infoCurriculum);
 
-		return siteView;
+        return siteView;
 
-	}
+    }
 
 }

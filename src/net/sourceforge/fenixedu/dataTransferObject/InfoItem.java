@@ -16,173 +16,173 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class InfoItem extends InfoObject implements Comparable {
 
-	// Serializable
-	private String information;
+    // Serializable
+    private String information;
 
-	private String name;
+    private String name;
 
-	private Integer itemOrder;
+    private Integer itemOrder;
 
-	private InfoSection infoSection;
+    private InfoSection infoSection;
 
-	private List<InfoFileContent> infoFileItems;
+    private List<InfoFileContent> infoFileItems;
 
-	/**
-	 * Constructor
-	 */
-	public InfoItem() {
-	}
+    /**
+     * Constructor
+     */
+    public InfoItem() {
+    }
 
-	/**
-	 * Constructor
-	 */
-	public InfoItem(String information, String name, Integer itemOrder, InfoSection infoSection) {
+    /**
+     * Constructor
+     */
+    public InfoItem(String information, String name, Integer itemOrder, InfoSection infoSection) {
 
-		this.information = information;
-		this.name = name;
-		this.itemOrder = itemOrder;
-		this.infoSection = infoSection;
-	}
+        this.information = information;
+        this.name = name;
+        this.itemOrder = itemOrder;
+        this.infoSection = infoSection;
+    }
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoItem) {
-			InfoItem infoItem = (InfoItem) obj;
-			resultado =
-					getInformation().equals(infoItem.getInformation()) && getName().equals(infoItem.getName())
-							&& getItemOrder().equals(infoItem.getItemOrder())
-							&& getInfoSection().equals(infoItem.getInfoSection());
-		}
-		return resultado;
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoItem) {
+            InfoItem infoItem = (InfoItem) obj;
+            resultado =
+                    getInformation().equals(infoItem.getInformation()) && getName().equals(infoItem.getName())
+                            && getItemOrder().equals(infoItem.getItemOrder())
+                            && getInfoSection().equals(infoItem.getInfoSection());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String result = "[INFOITEM";
-		result += ", name=" + name;
-		result += ", itemOrder=" + itemOrder;
-		result += ", infoSection=" + infoSection;
-		result += "]";
-		return result;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        String result = "[INFOITEM";
+        result += ", name=" + name;
+        result += ", itemOrder=" + itemOrder;
+        result += ", infoSection=" + infoSection;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getInformation() {
-		return information;
-	}
+    /**
+     * @return String
+     */
+    public String getInformation() {
+        return information;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return String
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getItemOrder() {
-		return itemOrder;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getItemOrder() {
+        return itemOrder;
+    }
 
-	/**
-	 * @return InfoSection
-	 */
-	public InfoSection getInfoSection() {
-		return infoSection;
-	}
+    /**
+     * @return InfoSection
+     */
+    public InfoSection getInfoSection() {
+        return infoSection;
+    }
 
-	/**
-	 * Sets the information.
-	 * 
-	 * @param information
-	 *            The information to set
-	 */
-	public void setInformation(String information) {
-		this.information = information;
-	}
+    /**
+     * Sets the information.
+     * 
+     * @param information
+     *            The information to set
+     */
+    public void setInformation(String information) {
+        this.information = information;
+    }
 
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name
-	 *            The name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            The name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Sets the itemOrder.
-	 * 
-	 * @param itemOrder
-	 *            The itemOrder to set
-	 */
-	public void setItemOrder(Integer itemOrder) {
-		this.itemOrder = itemOrder;
-	}
+    /**
+     * Sets the itemOrder.
+     * 
+     * @param itemOrder
+     *            The itemOrder to set
+     */
+    public void setItemOrder(Integer itemOrder) {
+        this.itemOrder = itemOrder;
+    }
 
-	/**
-	 * Sets the infoSection.
-	 * 
-	 * @param infoSection
-	 *            The infoSection to set
-	 */
-	public void setInfoSection(InfoSection infoSection) {
-		this.infoSection = infoSection;
-	}
+    /**
+     * Sets the infoSection.
+     * 
+     * @param infoSection
+     *            The infoSection to set
+     */
+    public void setInfoSection(InfoSection infoSection) {
+        this.infoSection = infoSection;
+    }
 
-	@Override
-	public int compareTo(Object arg0) {
+    @Override
+    public int compareTo(Object arg0) {
 
-		return this.getItemOrder().intValue() - ((InfoItem) arg0).getItemOrder().intValue();
-	}
+        return this.getItemOrder().intValue() - ((InfoItem) arg0).getItemOrder().intValue();
+    }
 
-	public void copyFromDomain(Item item) {
-		super.copyFromDomain(item);
-		if (item != null) {
-			setInformation(item.getBody().getContent(Language.pt));
-			setItemOrder(item.getItemOrder());
-			setName(item.getName().getContent(Language.pt));
+    public void copyFromDomain(Item item) {
+        super.copyFromDomain(item);
+        if (item != null) {
+            setInformation(item.getBody().getContent(Language.pt));
+            setItemOrder(item.getItemOrder());
+            setName(item.getName().getContent(Language.pt));
 
-			List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
+            List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
 
-			for (FileContent fileItem : item.getFileItems()) {
-				infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
-			}
+            for (FileContent fileItem : item.getFileItems()) {
+                infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
+            }
 
-			Collections.sort(infoFileItems, InfoFileContent.COMPARATOR_BY_DISPLAY_NAME);
-			setInfoFileItems(infoFileItems);
-		}
-	}
+            Collections.sort(infoFileItems, InfoFileContent.COMPARATOR_BY_DISPLAY_NAME);
+            setInfoFileItems(infoFileItems);
+        }
+    }
 
-	/**
-	 * @param item
-	 * @return
-	 */
-	public static InfoItem newInfoFromDomain(Item item) {
-		InfoItem infoItem = null;
-		if (item != null) {
-			infoItem = new InfoItem();
-			infoItem.copyFromDomain(item);
-		}
-		return infoItem;
-	}
+    /**
+     * @param item
+     * @return
+     */
+    public static InfoItem newInfoFromDomain(Item item) {
+        InfoItem infoItem = null;
+        if (item != null) {
+            infoItem = new InfoItem();
+            infoItem.copyFromDomain(item);
+        }
+        return infoItem;
+    }
 
-	public void setInfoFileItems(List<InfoFileContent> infoFileItems) {
-		this.infoFileItems = infoFileItems;
-	}
+    public void setInfoFileItems(List<InfoFileContent> infoFileItems) {
+        this.infoFileItems = infoFileItems;
+    }
 
-	public List<InfoFileContent> getInfoFileItems() {
-		return this.infoFileItems;
-	}
+    public List<InfoFileContent> getInfoFileItems() {
+        return this.infoFileItems;
+    }
 }

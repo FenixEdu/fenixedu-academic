@@ -13,49 +13,49 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class ModelRestrictionDetailsRenderer extends Renderer {
 
-	// Our very own polymorphic key finding hashtable... niiiice
-	private static Map<Class, String> templateMap = new HashMap<Class, String>() {
-		@Override
-		public String get(Object key) {
-			Class type = (Class) key;
+    // Our very own polymorphic key finding hashtable... niiiice
+    private static Map<Class, String> templateMap = new HashMap<Class, String>() {
+        @Override
+        public String get(Object key) {
+            Class type = (Class) key;
 
-			while (true) {
-				// Found none, return a nice null
-				if (type == null) {
-					return null;
-				}
+            while (true) {
+                // Found none, return a nice null
+                if (type == null) {
+                    return null;
+                }
 
-				// Evaluate current type
-				String value = super.get(type);
-				if (value != null) {
-					return value;
-				}
+                // Evaluate current type
+                String value = super.get(type);
+                if (value != null) {
+                    return value;
+                }
 
-				// Not found, try the superclass
-				type = type.getSuperclass();
-			}
-		}
-	};
+                // Not found, try the superclass
+                type = type.getSuperclass();
+            }
+        }
+    };
 
-	static {
-		templateMap.put(NewModelGroup.class, "/teacher/tests/templates/testModel/model/modelGroup.jsp");
-		templateMap.put(NewModelRestriction.class, "/teacher/tests/templates/testModel/model/modelRestriction.jsp");
-		templateMap.put(NewTestModel.class, "/teacher/tests/templates/testModel/model/testModel.jsp");
-	}
+    static {
+        templateMap.put(NewModelGroup.class, "/teacher/tests/templates/testModel/model/modelGroup.jsp");
+        templateMap.put(NewModelRestriction.class, "/teacher/tests/templates/testModel/model/modelRestriction.jsp");
+        templateMap.put(NewTestModel.class, "/teacher/tests/templates/testModel/model/testModel.jsp");
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				Properties properties = new Properties();
-				properties.setProperty("template", templateMap.get(object.getClass()));
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
+                Properties properties = new Properties();
+                properties.setProperty("template", templateMap.get(object.getClass()));
 
-				return renderValue(object, type, null, "template", properties);
-			}
+                return renderValue(object, type, null, "template", properties);
+            }
 
-		};
-	}
+        };
+    }
 
 }

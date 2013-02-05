@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class DegreeTypeProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		return Arrays.asList(DegreeType.values());
-	}
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        return Arrays.asList(DegreeType.values());
+    }
 
 }

@@ -10,27 +10,27 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
  * @author jpvl
  */
 public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends AbstractTeacherDepartmentAuthorization {
-	public final static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization filter =
-			new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
+    public final static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization filter =
+            new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
 
-	public static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization getInstance() {
-		return filter;
-	}
+    public static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization getInstance() {
+        return filter;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization
-	 * #getTeacherId(java.lang.Object[])
-	 */
-	@Override
-	protected Integer getTeacherId(Object[] arguments) {
-		Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization
+     * #getTeacherId(java.lang.Object[])
+     */
+    @Override
+    protected Integer getTeacherId(Object[] arguments) {
+        Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
 
-		TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
-				rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
-		return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher().getIdInternal() : null;
-	}
+        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
+                rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
+        return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher().getIdInternal() : null;
+    }
 
 }

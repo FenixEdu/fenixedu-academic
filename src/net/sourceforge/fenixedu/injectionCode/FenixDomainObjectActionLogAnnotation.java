@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target({ METHOD, CONSTRUCTOR })
 public @interface FenixDomainObjectActionLogAnnotation {
-	String actionName();
+    String actionName();
 
-	String[] parameters();
+    String[] parameters();
 }

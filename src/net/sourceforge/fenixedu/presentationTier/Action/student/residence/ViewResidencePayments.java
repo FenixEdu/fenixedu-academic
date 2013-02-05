@@ -19,34 +19,34 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewResidencePayments", module = "student")
 @Forwards({
-		@Forward(name = "showEvents", path = "/student/residenceServices/showResidenceEvents.jsp", tileProperties = @Tile(
-				title = "private.student.view.paymentsofresidence")),
-		@Forward(name = "eventDetails", path = "/student/residenceServices/showDetails.jsp", tileProperties = @Tile(
-				title = "private.student.view.paymentsofresidence")) })
+        @Forward(name = "showEvents", path = "/student/residenceServices/showResidenceEvents.jsp", tileProperties = @Tile(
+                title = "private.student.view.paymentsofresidence")),
+        @Forward(name = "eventDetails", path = "/student/residenceServices/showDetails.jsp", tileProperties = @Tile(
+                title = "private.student.view.paymentsofresidence")) })
 public class ViewResidencePayments extends FenixDispatchAction {
 
-	public ActionForward listEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward listEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Person person = getLoggedPerson(request);
-		request.setAttribute("person", person);
-		request.setAttribute("payedEntries", person.getPayments(ResidenceEvent.class));
-		request.setAttribute("notPayedEvents", person.getNotPayedEventsPayableOn(null, ResidenceEvent.class, false));
+        Person person = getLoggedPerson(request);
+        request.setAttribute("person", person);
+        request.setAttribute("payedEntries", person.getPayments(ResidenceEvent.class));
+        request.setAttribute("notPayedEvents", person.getNotPayedEventsPayableOn(null, ResidenceEvent.class, false));
 
-		return mapping.findForward("showEvents");
-	}
+        return mapping.findForward("showEvents");
+    }
 
-	public ActionForward showEventDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showEventDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		long eventOID = Long.parseLong(request.getParameter("event"));
-		ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(eventOID);
+        long eventOID = Long.parseLong(request.getParameter("event"));
+        ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(eventOID);
 
-		request.setAttribute("person", getLoggedPerson(request));
-		request.setAttribute("event", residenceEvent);
-		request.setAttribute("entryDTOs", residenceEvent.calculateEntries());
-		request.setAttribute("accountingEventPaymentCodes", residenceEvent.getNonProcessedPaymentCodes());
+        request.setAttribute("person", getLoggedPerson(request));
+        request.setAttribute("event", residenceEvent);
+        request.setAttribute("entryDTOs", residenceEvent.calculateEntries());
+        request.setAttribute("accountingEventPaymentCodes", residenceEvent.getNonProcessedPaymentCodes());
 
-		return mapping.findForward("eventDetails");
-	}
+        return mapping.findForward("eventDetails");
+    }
 }

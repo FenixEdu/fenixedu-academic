@@ -17,34 +17,34 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPublicExecutionDegreeByDCPID extends FenixService {
 
-	@Service
-	public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+    @Service
+    public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-		List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
-		for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-			result.add(copyExecutionDegree2InfoExecutionDegree(executionDegree));
-		}
+        List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
+        for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+            result.add(copyExecutionDegree2InfoExecutionDegree(executionDegree));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Service
-	public static InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+    @Service
+    public static InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-		ExecutionDegree executionDegree =
-				ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
-		if (executionDegree == null) {
-			return null;
-		}
+        ExecutionDegree executionDegree =
+                ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
+        if (executionDegree == null) {
+            return null;
+        }
 
-		return copyExecutionDegree2InfoExecutionDegree(executionDegree);
-	}
+        return copyExecutionDegree2InfoExecutionDegree(executionDegree);
+    }
 
-	protected static InfoExecutionDegree copyExecutionDegree2InfoExecutionDegree(ExecutionDegree executionDegree) {
-		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	}
+    protected static InfoExecutionDegree copyExecutionDegree2InfoExecutionDegree(ExecutionDegree executionDegree) {
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    }
 
 }

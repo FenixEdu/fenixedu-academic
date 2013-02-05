@@ -21,8 +21,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class PartyContactValidationReminderAction extends FenixDispatchAction {
 
-	public ActionForward showReminder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("showReminder");
-	}
+    public ActionForward showReminder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("showReminder");
+    }
 }

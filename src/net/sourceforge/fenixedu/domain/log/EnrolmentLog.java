@@ -14,24 +14,24 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  */
 public class EnrolmentLog extends EnrolmentLog_Base {
 
-	protected EnrolmentLog() {
-		super();
-	}
+    protected EnrolmentLog() {
+        super();
+    }
 
-	public EnrolmentLog(final EnrolmentAction action, final Registration registration, final CurricularCourse curricularCourse,
-			final ExecutionSemester executionSemester, final String who) {
-		this();
-		init(action, registration, curricularCourse, executionSemester, who);
-	}
+    public EnrolmentLog(final EnrolmentAction action, final Registration registration, final CurricularCourse curricularCourse,
+            final ExecutionSemester executionSemester, final String who) {
+        this();
+        init(action, registration, curricularCourse, executionSemester, who);
+    }
 
-	@Override
-	public CurricularCourse getDegreeModule() {
-		return (CurricularCourse) super.getDegreeModule();
-	}
+    @Override
+    public CurricularCourse getDegreeModule() {
+        return (CurricularCourse) super.getDegreeModule();
+    }
 
-	@Override
-	public String getDescription() {
-		return getDegreeModule().getName(getExecutionPeriod());
-	}
+    @Override
+    public String getDescription() {
+        return getDegreeModule().getName(getExecutionPeriod());
+    }
 
 }

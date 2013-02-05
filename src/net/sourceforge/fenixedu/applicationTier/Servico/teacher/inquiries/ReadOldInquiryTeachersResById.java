@@ -19,21 +19,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadOldInquiryTeachersResById extends FenixService {
 
-	@Checked("RolePredicates.TEACHER_PREDICATE")
-	@Service
-	public static InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException {
-		InfoOldInquiriesTeachersRes oldInquiriesTeachersRes = null;
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException {
+        InfoOldInquiriesTeachersRes oldInquiriesTeachersRes = null;
 
-		OldInquiriesTeachersRes oits = rootDomainObject.readOldInquiriesTeachersResByOID(internalId);
-		if (oits == null) {
-			throw new FenixServiceException("nullInternalId");
-		}
+        OldInquiriesTeachersRes oits = rootDomainObject.readOldInquiriesTeachersResByOID(internalId);
+        if (oits == null) {
+            throw new FenixServiceException("nullInternalId");
+        }
 
-		oldInquiriesTeachersRes = new InfoOldInquiriesTeachersRes();
-		oldInquiriesTeachersRes.copyFromDomain(oits);
+        oldInquiriesTeachersRes = new InfoOldInquiriesTeachersRes();
+        oldInquiriesTeachersRes.copyFromDomain(oits);
 
-		return oldInquiriesTeachersRes;
-	}
+        return oldInquiriesTeachersRes;
+    }
 
 }

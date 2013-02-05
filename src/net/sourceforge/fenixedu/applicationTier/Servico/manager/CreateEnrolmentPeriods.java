@@ -22,82 +22,82 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateEnrolmentPeriods {
 
-	@Service
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	public static void run(ExecutionSemester executionSemester, DegreeType degreeType, EnrolmentPeriodType enrolmentPeriodType,
-			DateTime start, DateTime end, List<DegreeCurricularPlan> dcps) {
-		final Date startDate = start.toDate();
-		final Date endDate = end.toDate();
-		/*
-		 * Allow pre-bolonha degrees to create reingression periods
-		 */
-		if (!degreeType.isBolonhaType() && enrolmentPeriodType.isReingressionPeriod()) {
-			createReingressionPeriodsForPreBolonhaDegrees(executionSemester, degreeType, startDate, endDate, dcps);
-		} else if (degreeType.isEmpty()) {
-			createEnrolmentPeriodsForEmptyDegree(executionSemester, enrolmentPeriodType, startDate, endDate);
-		} else {
-			createEnrolmentPeriodsForBolonhaDegrees(executionSemester, degreeType, enrolmentPeriodType, startDate, endDate, dcps);
-		}
-	}
+    @Service
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    public static void run(ExecutionSemester executionSemester, DegreeType degreeType, EnrolmentPeriodType enrolmentPeriodType,
+            DateTime start, DateTime end, List<DegreeCurricularPlan> dcps) {
+        final Date startDate = start.toDate();
+        final Date endDate = end.toDate();
+        /*
+         * Allow pre-bolonha degrees to create reingression periods
+         */
+        if (!degreeType.isBolonhaType() && enrolmentPeriodType.isReingressionPeriod()) {
+            createReingressionPeriodsForPreBolonhaDegrees(executionSemester, degreeType, startDate, endDate, dcps);
+        } else if (degreeType.isEmpty()) {
+            createEnrolmentPeriodsForEmptyDegree(executionSemester, enrolmentPeriodType, startDate, endDate);
+        } else {
+            createEnrolmentPeriodsForBolonhaDegrees(executionSemester, degreeType, enrolmentPeriodType, startDate, endDate, dcps);
+        }
+    }
 
-	private static void createReingressionPeriodsForPreBolonhaDegrees(final ExecutionSemester executionSemester,
-			final DegreeType degreeType, final Date startDate, final Date endDate, final List<DegreeCurricularPlan> dcpList) {
-		for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
-			new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
-		}
-	}
+    private static void createReingressionPeriodsForPreBolonhaDegrees(final ExecutionSemester executionSemester,
+            final DegreeType degreeType, final Date startDate, final Date endDate, final List<DegreeCurricularPlan> dcpList) {
+        for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
+            new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
+        }
+    }
 
-	private static void createEnrolmentPeriodsForEmptyDegree(ExecutionSemester executionSemester,
-			EnrolmentPeriodType enrolmentPeriodType, Date startDate, Date endDate) {
-		createPeriod(enrolmentPeriodType, startDate, endDate, executionSemester,
-				DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
-	}
+    private static void createEnrolmentPeriodsForEmptyDegree(ExecutionSemester executionSemester,
+            EnrolmentPeriodType enrolmentPeriodType, Date startDate, Date endDate) {
+        createPeriod(enrolmentPeriodType, startDate, endDate, executionSemester,
+                DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
+    }
 
-	private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
-			final DegreeType degreeType, final EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
-			final List<DegreeCurricularPlan> dcpList) {
+    private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
+            final DegreeType degreeType, final EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
+            final List<DegreeCurricularPlan> dcpList) {
 
-		for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
+        for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
 
-			if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
-				createPeriod(enrolmentPeriodType, startDate, endDate, executionSemester, degreeCurricularPlan);
-			}
-		}
-	}
+            if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
+                createPeriod(enrolmentPeriodType, startDate, endDate, executionSemester, degreeCurricularPlan);
+            }
+        }
+    }
 
-	private static void createPeriod(EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
-			final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan) {
+    private static void createPeriod(EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
+            final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan) {
 
-		if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CLASSES.equals(enrolmentPeriodType)) {
+        if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CLASSES.equals(enrolmentPeriodType)) {
 
-			new EnrolmentPeriodInClasses(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new EnrolmentPeriodInClasses(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES.equals(enrolmentPeriodType)) {
+        } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES.equals(enrolmentPeriodType)) {
 
-			new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_SPECIAL_SEASON_EVALUATIONS.equals(enrolmentPeriodType)) {
+        } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_SPECIAL_SEASON_EVALUATIONS.equals(enrolmentPeriodType)) {
 
-			new EnrolmentPeriodInSpecialSeasonEvaluations(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new EnrolmentPeriodInSpecialSeasonEvaluations(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_SPECIAL_SEASON.equals(enrolmentPeriodType)) {
+        } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_SPECIAL_SEASON.equals(enrolmentPeriodType)) {
 
-			new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_FLUNKED_SEASON.equals(enrolmentPeriodType)) {
+        } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_FLUNKED_SEASON.equals(enrolmentPeriodType)) {
 
-			new EnrolmentPeriodInCurricularCoursesFlunkedSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new EnrolmentPeriodInCurricularCoursesFlunkedSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_IMPROVEMENT_OF_APPROVED_ENROLMENT.equals(enrolmentPeriodType)) {
+        } else if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_IMPROVEMENT_OF_APPROVED_ENROLMENT.equals(enrolmentPeriodType)) {
 
-			new EnrolmentPeriodInImprovementOfApprovedEnrolment(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new EnrolmentPeriodInImprovementOfApprovedEnrolment(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else if (enrolmentPeriodType.isReingressionPeriod()) {
+        } else if (enrolmentPeriodType.isReingressionPeriod()) {
 
-			new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
+            new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-		} else {
-			throw new Error("error.invalid.enrolment.period.class.name");
-		}
-	}
+        } else {
+            throw new Error("error.invalid.enrolment.period.class.name");
+        }
+    }
 }

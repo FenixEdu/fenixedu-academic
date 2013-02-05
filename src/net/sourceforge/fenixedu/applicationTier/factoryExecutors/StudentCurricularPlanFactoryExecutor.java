@@ -22,59 +22,59 @@ import org.joda.time.YearMonthDay;
  */
 public class StudentCurricularPlanFactoryExecutor {
 
-	@SuppressWarnings("serial")
-	public static class StudentCurricularPlanCreator implements FactoryExecutor, Serializable {
+    @SuppressWarnings("serial")
+    public static class StudentCurricularPlanCreator implements FactoryExecutor, Serializable {
 
-		private Registration registration;
+        private Registration registration;
 
-		private DegreeCurricularPlan degreeCurricularPlan;
+        private DegreeCurricularPlan degreeCurricularPlan;
 
-		private CycleType cycleType;
+        private CycleType cycleType;
 
-		public StudentCurricularPlanCreator(Registration registration) {
-			super();
-			this.registration = registration;
-		}
+        public StudentCurricularPlanCreator(Registration registration) {
+            super();
+            this.registration = registration;
+        }
 
-		@Override
-		public Object execute() {
+        @Override
+        public Object execute() {
 
-			if (getRegistration().getStudentCurricularPlan(getDegreeCurricularPlan()) != null) {
-				throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
-			}
+            if (getRegistration().getStudentCurricularPlan(getDegreeCurricularPlan()) != null) {
+                throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
+            }
 
-			return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(), getDegreeCurricularPlan(),
-					new YearMonthDay(), ExecutionSemester.readActualExecutionSemester(), getCycleType());
-		}
+            return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(), getDegreeCurricularPlan(),
+                    new YearMonthDay(), ExecutionSemester.readActualExecutionSemester(), getCycleType());
+        }
 
-		public DegreeCurricularPlan getDegreeCurricularPlan() {
-			return this.degreeCurricularPlan;
-		}
+        public DegreeCurricularPlan getDegreeCurricularPlan() {
+            return this.degreeCurricularPlan;
+        }
 
-		public Registration getRegistration() {
-			return this.registration;
-		}
+        public Registration getRegistration() {
+            return this.registration;
+        }
 
-		public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-			this.degreeCurricularPlan = degreeCurricularPlan;
-		}
+        public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+            this.degreeCurricularPlan = degreeCurricularPlan;
+        }
 
-		public void setRegistration(Registration registration) {
-			this.registration = registration;
-		}
+        public void setRegistration(Registration registration) {
+            this.registration = registration;
+        }
 
-		public Degree getDegree() {
-			return getRegistration().getDegree();
-		}
+        public Degree getDegree() {
+            return getRegistration().getDegree();
+        }
 
-		public CycleType getCycleType() {
-			return cycleType;
-		}
+        public CycleType getCycleType() {
+            return cycleType;
+        }
 
-		public void setCycleType(CycleType cycleType) {
-			this.cycleType = cycleType;
-		}
+        public void setCycleType(CycleType cycleType) {
+            this.cycleType = cycleType;
+        }
 
-	}
+    }
 
 }

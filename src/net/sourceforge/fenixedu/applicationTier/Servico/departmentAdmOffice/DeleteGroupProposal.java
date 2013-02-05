@@ -6,11 +6,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteGroupProposal extends FenixService {
 
-	@Service
-	public static void run(final GroupProposal groupProposal) {
-		if (groupProposal != null) {
-			groupProposal.delete();
-		}
-	}
+    @Service
+    public static void run(final GroupProposal groupProposal) {
+        if (groupProposal != null) {
+            groupProposal.delete();
+        }
+    }
 
 }

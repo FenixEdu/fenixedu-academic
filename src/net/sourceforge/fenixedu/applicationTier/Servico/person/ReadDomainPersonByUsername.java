@@ -19,15 +19,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDomainPersonByUsername extends FenixService {
 
-	@Service
-	public static Person run(String username) throws ExcepcaoInexistente {
-		Person person = Person.readPersonByUsername(username);
+    @Service
+    public static Person run(String username) throws ExcepcaoInexistente {
+        Person person = Person.readPersonByUsername(username);
 
-		if (person == null) {
-			throw new ExcepcaoInexistente("Unknown Person !!");
-		}
+        if (person == null) {
+            throw new ExcepcaoInexistente("Unknown Person !!");
+        }
 
-		return person; // I'm predictiong the future here were we won't
-		// have interfaces anymore
-	}
+        return person; // I'm predictiong the future here were we won't
+        // have interfaces anymore
+    }
 }

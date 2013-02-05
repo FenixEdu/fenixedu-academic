@@ -10,15 +10,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllDistricts extends FenixService {
 
-	@Service
-	public static List<InfoDistrict> run() {
-		List<InfoDistrict> result = new ArrayList<InfoDistrict>();
+    @Service
+    public static List<InfoDistrict> run() {
+        List<InfoDistrict> result = new ArrayList<InfoDistrict>();
 
-		for (District district : rootDomainObject.getDistricts()) {
-			result.add(InfoDistrict.newInfoFromDomain(district));
-		}
+        for (District district : rootDomainObject.getDistricts()) {
+            result.add(InfoDistrict.newInfoFromDomain(district));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

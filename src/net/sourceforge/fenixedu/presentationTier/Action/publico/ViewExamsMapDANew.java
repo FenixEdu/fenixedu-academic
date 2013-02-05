@@ -43,97 +43,89 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-@Mapping(
-		module = "publico",
-		path = "/viewExamsMapNew",
-		input = "/notFound.do",
-		attribute = "examForm",
-		formBean = "examForm",
-		scope = "request",
-		validate = false,
-		parameter = "method")
+@Mapping(module = "publico", path = "/viewExamsMapNew", input = "/notFound.do", attribute = "examForm", formBean = "examForm",
+        scope = "request", validate = false, parameter = "method")
 @Forwards(value = { @Forward(name = "viewExecutionCourseByCode", path = "/siteViewer.do?method=executionCourseViewer"),
-		@Forward(name = "viewExamsMap", path = "viewExamsMap") })
+        @Forward(name = "viewExamsMap", path = "viewExamsMap") })
 @Exceptions(
-		value = { @ExceptionHandling(
-				type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class,
-				key = "error.exams.period.undefined",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request") })
+        value = { @ExceptionHandling(
+                type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class,
+                key = "error.exams.period.undefined",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
-	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixServiceException, FenixFilterException {
-		// inEnglish
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		request.setAttribute("inEnglish", inEnglish);
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixServiceException, FenixFilterException {
+        // inEnglish
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
 
-		// index
-		Integer index = getFromRequest("index", request);
-		request.setAttribute("index", index);
+        // index
+        Integer index = getFromRequest("index", request);
+        request.setAttribute("index", index);
 
-		// degreeID
-		Integer degreeId = getFromRequest("degreeID", request);
-		request.setAttribute("degreeID", degreeId);
+        // degreeID
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
-		// degreeCurricularPlanID
-		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+        // degreeCurricularPlanID
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-		// curricularYearList
-		List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
-		if (curricularYears == null) {
-			curricularYears = rootDomainObject.readDegreeByOID(degreeId).buildFullCurricularYearList();
-		}
-		request.setAttribute("curricularYearList", curricularYears);
+        // curricularYearList
+        List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
+        if (curricularYears == null) {
+            curricularYears = rootDomainObject.readDegreeByOID(degreeId).buildFullCurricularYearList();
+        }
+        request.setAttribute("curricularYearList", curricularYears);
 
-		// lista
-		List lista = (List) request.getAttribute("lista");
-		request.setAttribute("lista", lista);
+        // lista
+        List lista = (List) request.getAttribute("lista");
+        request.setAttribute("lista", lista);
 
-		InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-		infoExecutionDegree =
-				infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan) : infoExecutionDegree;
-		if (infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null) {
-			request.setAttribute("infoDegreeCurricularPlan", "");
-		} else {
-			request.setAttribute("infoDegreeCurricularPlan", new InfoDegreeCurricularPlan(degreeCurricularPlan));
-		}
-		request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+        InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        infoExecutionDegree =
+                infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan) : infoExecutionDegree;
+        if (infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null) {
+            request.setAttribute("infoDegreeCurricularPlan", "");
+        } else {
+            request.setAttribute("infoDegreeCurricularPlan", new InfoDegreeCurricularPlan(degreeCurricularPlan));
+        }
+        request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
-		// indice
-		Integer indice = getFromRequest("indice", request);
-		request.setAttribute("indice", indice);
+        // indice
+        Integer indice = getFromRequest("indice", request);
+        request.setAttribute("indice", indice);
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-		request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-		request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
-		// executionDegreeID
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
+        // executionDegreeID
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
 
-		request.removeAttribute(PresentationConstants.INFO_EXAMS_MAP);
-		try {
-			final IUserView userView = getUserView(request);
-			final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-			final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
-			request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
-		} catch (NonExistingServiceException e) {
-			return mapping.findForward("viewExamsMap");
-		}
+        request.removeAttribute(PresentationConstants.INFO_EXAMS_MAP);
+        try {
+            final IUserView userView = getUserView(request);
+            final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+            final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
+            request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
+        } catch (NonExistingServiceException e) {
+            return mapping.findForward("viewExamsMap");
+        }
 
-		return mapping.findForward("viewExamsMap");
-	}
+        return mapping.findForward("viewExamsMap");
+    }
 
-	private InfoExecutionDegree findLatestInfoExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
-		final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
-		final ExecutionDegree executionDegree =
-				Collections.max(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-		return new InfoExecutionDegree(executionDegree);
-	}
+    private InfoExecutionDegree findLatestInfoExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
+        final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
+        final ExecutionDegree executionDegree =
+                Collections.max(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+        return new InfoExecutionDegree(executionDegree);
+    }
 
 }

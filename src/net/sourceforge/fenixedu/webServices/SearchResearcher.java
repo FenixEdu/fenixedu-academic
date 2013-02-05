@@ -20,104 +20,104 @@ import org.codehaus.xfire.MessageContext;
 
 public class SearchResearcher implements ISearchResearcher {
 
-	private static final String storedPassword;
-	private static final String storedUsername;
+    private static final String storedPassword;
+    private static final String storedUsername;
 
-	static {
-		storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-		storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
-	}
+    static {
+        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+    }
 
-	@Override
-	public ResearcherDTO[] searchByName(String username, String password, String name, MessageContext context)
-			throws NotAuthorizedException {
-		checkPermissions(username, password, context);
+    @Override
+    public ResearcherDTO[] searchByName(String username, String password, String name, MessageContext context)
+            throws NotAuthorizedException {
+        checkPermissions(username, password, context);
 
-		Collection<Person> result = Person.findInternalPersonByNameAndRole(name, RoleType.RESEARCHER);
+        Collection<Person> result = Person.findInternalPersonByNameAndRole(name, RoleType.RESEARCHER);
 
-		List<Researcher> results = new ArrayList<Researcher>();
-		for (Person person : result) {
-			results.add(person.getResearcher());
-		}
-		Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
+        List<Researcher> results = new ArrayList<Researcher>();
+        for (Person person : result) {
+            results.add(person.getResearcher());
+        }
+        Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
 
-		return getArrayFromResearchersList(results);
-	}
+        return getArrayFromResearchersList(results);
+    }
 
-	@Override
-	public ResearcherDTO[] searchByKeyword(String username, String password, String keywords, MessageContext context)
-			throws NotAuthorizedException {
-		checkPermissions(username, password, context);
+    @Override
+    public ResearcherDTO[] searchByKeyword(String username, String password, String keywords, MessageContext context)
+            throws NotAuthorizedException {
+        checkPermissions(username, password, context);
 
-		if (keywords != null) {
-			String[] keywordsArray = filterKeywords(keywords.split(" "));
+        if (keywords != null) {
+            String[] keywordsArray = filterKeywords(keywords.split(" "));
 
-			List<Researcher> results = new ArrayList<Researcher>();
-			for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
-				if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
-					results.add(researcher);
-				}
-			}
-			Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
-			return getArrayFromResearchersList(results);
-		}
+            List<Researcher> results = new ArrayList<Researcher>();
+            for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
+                if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
+                    results.add(researcher);
+                }
+            }
+            Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
+            return getArrayFromResearchersList(results);
+        }
 
-		return new ResearcherDTO[0];
-	}
+        return new ResearcherDTO[0];
+    }
 
-	@Override
-	public ResearcherDTO[] getAvailableResearchers(String username, String password, MessageContext context)
-			throws NotAuthorizedException {
-		checkPermissions(username, password, context);
+    @Override
+    public ResearcherDTO[] getAvailableResearchers(String username, String password, MessageContext context)
+            throws NotAuthorizedException {
+        checkPermissions(username, password, context);
 
-		List<Researcher> results = new ArrayList<Researcher>();
-		for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
-			if (researcher.getPerson() != null && researcher.getAllowsToBeSearched()) {
-				results.add(researcher);
-			}
-		}
-		Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
-		return getArrayFromResearchersList(results);
+        List<Researcher> results = new ArrayList<Researcher>();
+        for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
+            if (researcher.getPerson() != null && researcher.getAllowsToBeSearched()) {
+                results.add(researcher);
+            }
+        }
+        Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
+        return getArrayFromResearchersList(results);
 
-	}
+    }
 
-	private static final int MIN_KEYWORD_LENGTH = 1;
+    private static final int MIN_KEYWORD_LENGTH = 1;
 
-	private String[] filterKeywords(String[] keywords) {
-		Collection<String> keywordsList = Arrays.asList(keywords);
-		CollectionUtils.filter(keywordsList, new Predicate() {
+    private String[] filterKeywords(String[] keywords) {
+        Collection<String> keywordsList = Arrays.asList(keywords);
+        CollectionUtils.filter(keywordsList, new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				return ((String) arg0).length() > MIN_KEYWORD_LENGTH;
-			}
-		});
+            @Override
+            public boolean evaluate(Object arg0) {
+                return ((String) arg0).length() > MIN_KEYWORD_LENGTH;
+            }
+        });
 
-		return keywordsList.toArray(new String[0]);
-	}
+        return keywordsList.toArray(new String[0]);
+    }
 
-	private ResearcherDTO[] getArrayFromResearchersList(List<Researcher> results) {
-		ResearcherDTO[] returnResults = new ResearcherDTO[results.size()];
-		int i = 0;
-		for (Researcher researcher : results) {
-			returnResults[i++] = new ResearcherDTO(researcher);
-		}
+    private ResearcherDTO[] getArrayFromResearchersList(List<Researcher> results) {
+        ResearcherDTO[] returnResults = new ResearcherDTO[results.size()];
+        int i = 0;
+        for (Researcher researcher : results) {
+            returnResults[i++] = new ResearcherDTO(researcher);
+        }
 
-		return returnResults;
-	}
+        return returnResults;
+    }
 
-	private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
-		// check user/pass
-		if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
-			throw new NotAuthorizedException();
-		}
+    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
+        // check user/pass
+        if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
+            throw new NotAuthorizedException();
+        }
 
-		// check hosts accessing this service
-		// FIXME Anil: Its urgent to access this webservice for tests
-		// if (!HostAccessControl.isAllowed(this, (ServletRequest)
-		// context.getProperty("XFireServletController.httpServletRequest"))) {
-		// throw new NotAuthorizedException();
-		// }
-	}
+        // check hosts accessing this service
+        // FIXME Anil: Its urgent to access this webservice for tests
+        // if (!HostAccessControl.isAllowed(this, (ServletRequest)
+        // context.getProperty("XFireServletController.httpServletRequest"))) {
+        // throw new NotAuthorizedException();
+        // }
+    }
 
 }

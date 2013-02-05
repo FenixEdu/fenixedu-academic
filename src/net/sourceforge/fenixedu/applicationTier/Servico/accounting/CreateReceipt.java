@@ -11,13 +11,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateReceipt {
 
-	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-	@Service
-	public static Receipt run(final Person responsible, final Person person, final Party contributor,
-			final String contributorName, final Integer year, final List<Entry> entries) {
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+    @Service
+    public static Receipt run(final Person responsible, final Person person, final Party contributor,
+            final String contributorName, final Integer year, final List<Entry> entries) {
 
-		return Receipt.createWithContributorPartyOrContributorName(responsible, person, contributor, contributorName, year,
-				entries);
-	}
+        return Receipt.createWithContributorPartyOrContributorName(responsible, person, contributor, contributorName, year,
+                entries);
+    }
 
 }

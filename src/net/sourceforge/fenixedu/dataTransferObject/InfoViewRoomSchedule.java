@@ -14,44 +14,44 @@ import java.util.List;
  */
 
 public class InfoViewRoomSchedule extends InfoObject {
-	protected InfoRoom infoRoom;
+    protected InfoRoom infoRoom;
 
-	protected List roomLessons;
+    protected List roomLessons;
 
-	public InfoViewRoomSchedule() {
-	}
+    public InfoViewRoomSchedule() {
+    }
 
-	public InfoViewRoomSchedule(InfoRoom infoRoom, List roomLessons) {
-		setInfoRoom(infoRoom);
-		setRoomLessons(roomLessons);
-	}
+    public InfoViewRoomSchedule(InfoRoom infoRoom, List roomLessons) {
+        setInfoRoom(infoRoom);
+        setRoomLessons(roomLessons);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoViewRoomSchedule) {
-			InfoViewRoomSchedule infoViewClassSchedule = (InfoViewRoomSchedule) obj;
-			resultado =
-					getInfoRoom().equals(infoViewClassSchedule.getInfoRoom())
-							&& getRoomLessons().size() == infoViewClassSchedule.getRoomLessons().size();
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoViewRoomSchedule) {
+            InfoViewRoomSchedule infoViewClassSchedule = (InfoViewRoomSchedule) obj;
+            resultado =
+                    getInfoRoom().equals(infoViewClassSchedule.getInfoRoom())
+                            && getRoomLessons().size() == infoViewClassSchedule.getRoomLessons().size();
+        }
+        return resultado;
+    }
 
-	public InfoRoom getInfoRoom() {
-		return infoRoom;
-	}
+    public InfoRoom getInfoRoom() {
+        return infoRoom;
+    }
 
-	public List getRoomLessons() {
-		return roomLessons;
-	}
+    public List getRoomLessons() {
+        return roomLessons;
+    }
 
-	public void setInfoRoom(InfoRoom class1) {
-		infoRoom = class1;
-	}
+    public void setInfoRoom(InfoRoom class1) {
+        infoRoom = class1;
+    }
 
-	public void setRoomLessons(List list) {
-		roomLessons = list;
-	}
+    public void setRoomLessons(List list) {
+        roomLessons = list;
+    }
 
 }

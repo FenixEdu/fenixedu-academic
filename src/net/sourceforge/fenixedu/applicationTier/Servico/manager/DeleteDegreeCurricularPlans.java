@@ -20,25 +20,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteDegreeCurricularPlans extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static List run(List degreeCurricularPlansIds) throws FenixServiceException {
-		Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static List run(List degreeCurricularPlansIds) throws FenixServiceException {
+        Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
-		List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
+        List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
 
-		while (iter.hasNext()) {
+        while (iter.hasNext()) {
 
-			Integer degreeCurricularPlanId = iter.next();
-			DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            Integer degreeCurricularPlanId = iter.next();
+            DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-			try {
-				degreeCurricularPlan.delete();
-			} catch (DomainException e) {
-				undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
-			}
-		}
+            try {
+                degreeCurricularPlan.delete();
+            } catch (DomainException e) {
+                undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+            }
+        }
 
-		return undeletedDegreeCurricularPlansNames;
-	}
+        return undeletedDegreeCurricularPlansNames;
+    }
 }

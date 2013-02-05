@@ -19,17 +19,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDegreeCurricularPlansByDegree extends FenixService {
 
-	@Service
-	public static List run(Integer idDegree) throws FenixServiceException {
-		final Degree degree = rootDomainObject.readDegreeByOID(idDegree);
+    @Service
+    public static List run(Integer idDegree) throws FenixServiceException {
+        final Degree degree = rootDomainObject.readDegreeByOID(idDegree);
 
-		List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
+        List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 
-		for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-			result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
-		}
+        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

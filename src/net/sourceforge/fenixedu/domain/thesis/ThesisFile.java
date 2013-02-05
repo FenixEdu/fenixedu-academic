@@ -12,55 +12,55 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ThesisFile extends ThesisFile_Base {
 
-	public ThesisFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-			byte[] content, Group group) {
-		super();
-		init(path, filename, displayName, metadata, content, group);
-	}
+    public ThesisFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+            byte[] content, Group group) {
+        super();
+        init(path, filename, displayName, metadata, content, group);
+    }
 
-	@Override
-	public void delete() {
-		Thesis thesis = getDissertationThesis();
-		if (thesis == null) {
-			thesis = getAbstractThesis();
-		}
+    @Override
+    public void delete() {
+        Thesis thesis = getDissertationThesis();
+        if (thesis == null) {
+            thesis = getAbstractThesis();
+        }
 
-		if (!thesis.isWaitingConfirmation()) {
-			throw new DomainException("thesis.file.delete.notAllowed");
-		}
+        if (!thesis.isWaitingConfirmation()) {
+            throw new DomainException("thesis.file.delete.notAllowed");
+        }
 
-		deleteWithoutStateCheck();
-	}
+        deleteWithoutStateCheck();
+    }
 
-	public void deleteWithoutStateCheck() {
-		Thesis thesis = getDissertationThesis();
-		if (thesis == null) {
-			thesis = getAbstractThesis();
-		}
+    public void deleteWithoutStateCheck() {
+        Thesis thesis = getDissertationThesis();
+        if (thesis == null) {
+            thesis = getAbstractThesis();
+        }
 
-		removeDissertationThesis();
-		removeAbstractThesis();
+        removeDissertationThesis();
+        removeAbstractThesis();
 
-		super.delete();
-	}
+        super.delete();
+    }
 
-	boolean areThesisFilesReadable() {
-		final Group group = getPermittedGroup();
-		return areThesisFilesReadable(group);
-	}
+    boolean areThesisFilesReadable() {
+        final Group group = getPermittedGroup();
+        return areThesisFilesReadable(group);
+    }
 
-	private boolean areThesisFilesReadable(final IGroup group) {
-		if (group instanceof GroupUnion) {
-			final GroupUnion groupUnion = (GroupUnion) group;
-			for (IGroup child : groupUnion.getChildren()) {
-				if (areThesisFilesReadable(child)) {
-					return true;
-				}
-			}
-		} else if (group instanceof ThesisFileReadersGroup) {
-			return true;
-		}
-		return false;
-	}
+    private boolean areThesisFilesReadable(final IGroup group) {
+        if (group instanceof GroupUnion) {
+            final GroupUnion groupUnion = (GroupUnion) group;
+            for (IGroup child : groupUnion.getChildren()) {
+                if (areThesisFilesReadable(child)) {
+                    return true;
+                }
+            }
+        } else if (group instanceof ThesisFileReadersGroup) {
+            return true;
+        }
+        return false;
+    }
 
 }

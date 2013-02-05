@@ -19,25 +19,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CriarTurma extends FenixService {
 
-	@Service
-	public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
-			final AcademicInterval academicInterval) throws ExistingServiceException {
+    @Service
+    public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
+            final AcademicInterval academicInterval) throws ExistingServiceException {
 
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-		final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
-		return InfoClass.newInfoFromDomain(schoolClass);
-	}
+        final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
+        return InfoClass.newInfoFromDomain(schoolClass);
+    }
 
-	@Service
-	public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
-			final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
+    @Service
+    public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
+            final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-		final ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 
-		final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
-		return InfoClass.newInfoFromDomain(schoolClass);
-	}
+        final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
+        return InfoClass.newInfoFromDomain(schoolClass);
+    }
 }

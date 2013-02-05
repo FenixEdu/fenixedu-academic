@@ -15,99 +15,99 @@ import java.util.List;
  * 
  */
 public class StudentGroupAttendacyInformation extends InfoObject {
-	private Integer groupNumber;
+    private Integer groupNumber;
 
-	private String shiftName;
+    private String shiftName;
 
-	private List lessons;
+    private List lessons;
 
-	private List degreesNames;
+    private List degreesNames;
 
-	private List groupAttends;
+    private List groupAttends;
 
-	/**
-	 * @return
-	 */
-	public Integer getGroupNumber() {
-		return groupNumber;
-	}
+    /**
+     * @return
+     */
+    public Integer getGroupNumber() {
+        return groupNumber;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getShiftName() {
-		return shiftName;
-	}
+    /**
+     * @return
+     */
+    public String getShiftName() {
+        return shiftName;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setGroupNumber(Integer integer) {
-		groupNumber = integer;
-	}
+    /**
+     * @param integer
+     */
+    public void setGroupNumber(Integer integer) {
+        groupNumber = integer;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setShiftName(String string) {
-		shiftName = string;
-	}
+    /**
+     * @param string
+     */
+    public void setShiftName(String string) {
+        shiftName = string;
+    }
 
-	/**
-	 * @param string
-	 */
+    /**
+     * @param string
+     */
 
-	@Override
-	public String toString() {
-		String result = "[StudentGroupAttendacyInformation ";
-		result += "GroupNumber: " + this.getGroupNumber() + ";";
-		result += "GroupAttends:: " + this.getGroupAttends() + ";";
-		result += "ShiftName: " + this.getShiftName() + ";";
-		result += "Lessons:" + this.getLessons() + "]";
+    @Override
+    public String toString() {
+        String result = "[StudentGroupAttendacyInformation ";
+        result += "GroupNumber: " + this.getGroupNumber() + ";";
+        result += "GroupAttends:: " + this.getGroupAttends() + ";";
+        result += "ShiftName: " + this.getShiftName() + ";";
+        result += "Lessons:" + this.getLessons() + "]";
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getLessons() {
-		return lessons;
-	}
+    /**
+     * @return
+     */
+    public List getLessons() {
+        return lessons;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setLessons(List list) {
-		lessons = list;
-	}
+    /**
+     * @param list
+     */
+    public void setLessons(List list) {
+        lessons = list;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getDegreesNames() {
-		return degreesNames;
-	}
+    /**
+     * @return
+     */
+    public List getDegreesNames() {
+        return degreesNames;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setDegreesNames(List list) {
-		degreesNames = list;
-	}
+    /**
+     * @param list
+     */
+    public void setDegreesNames(List list) {
+        degreesNames = list;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getGroupAttends() {
-		return groupAttends;
-	}
+    /**
+     * @return
+     */
+    public List getGroupAttends() {
+        return groupAttends;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setGroupAttends(List list) {
-		groupAttends = list;
-	}
+    /**
+     * @param list
+     */
+    public void setGroupAttends(List list) {
+        groupAttends = list;
+    }
 
 }

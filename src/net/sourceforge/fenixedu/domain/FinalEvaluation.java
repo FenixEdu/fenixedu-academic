@@ -14,92 +14,92 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public class FinalEvaluation extends FinalEvaluation_Base {
 
-	public FinalEvaluation() {
-		super();
-		this.setGradeScale(GradeScale.TYPE20);
-	}
+    public FinalEvaluation() {
+        super();
+        this.setGradeScale(GradeScale.TYPE20);
+    }
 
-	public Integer getGradesListVersion() {
-		int lastVersion = 0;
-		for (Mark mark : getMarks()) {
-			FinalMark finalMark = (FinalMark) mark;
-			if (finalMark.getGradeListVersion() > lastVersion) {
-				lastVersion = finalMark.getGradeListVersion();
-			}
-		}
-		if (lastVersion == 99) {
-			throw new DomainException("grades list version cannot be higher than 99");
-		}
-		return Integer.valueOf(++lastVersion);
-	}
+    public Integer getGradesListVersion() {
+        int lastVersion = 0;
+        for (Mark mark : getMarks()) {
+            FinalMark finalMark = (FinalMark) mark;
+            if (finalMark.getGradeListVersion() > lastVersion) {
+                lastVersion = finalMark.getGradeListVersion();
+            }
+        }
+        if (lastVersion == 99) {
+            throw new DomainException("grades list version cannot be higher than 99");
+        }
+        return Integer.valueOf(++lastVersion);
+    }
 
-	@Override
-	public FinalMark addNewMark(Attends attends, String markValue) {
-		if (attends.getMarkByEvaluation(this) != null) {
-			throw new DomainException("error.Evaluation.attend.already.has.mark.for.evaluation");
-		}
-		return new FinalMark(attends, this, markValue);
-	}
+    @Override
+    public FinalMark addNewMark(Attends attends, String markValue) {
+        if (attends.getMarkByEvaluation(this) != null) {
+            throw new DomainException("error.Evaluation.attend.already.has.mark.for.evaluation");
+        }
+        return new FinalMark(attends, this, markValue);
+    }
 
-	@Override
-	public EvaluationType getEvaluationType() {
-		return EvaluationType.FINAL_TYPE;
-	}
+    @Override
+    public EvaluationType getEvaluationType() {
+        return EvaluationType.FINAL_TYPE;
+    }
 
-	public List<FinalMark> getAlreadySubmitedMarks(ExecutionCourse executionCourse) {
-		List<FinalMark> result = new ArrayList<FinalMark>();
-		for (Mark mark : getMarks()) {
-			FinalMark finalMark = (FinalMark) mark;
-			if (finalMark.getAttend().getExecutionCourse().equals(executionCourse) && finalMark.getGradeListVersion() != 0
-					&& finalMark.getSubmitedMark() != null) {
-				result.add(finalMark);
-			}
-		}
-		return result;
-	}
+    public List<FinalMark> getAlreadySubmitedMarks(ExecutionCourse executionCourse) {
+        List<FinalMark> result = new ArrayList<FinalMark>();
+        for (Mark mark : getMarks()) {
+            FinalMark finalMark = (FinalMark) mark;
+            if (finalMark.getAttend().getExecutionCourse().equals(executionCourse) && finalMark.getGradeListVersion() != 0
+                    && finalMark.getSubmitedMark() != null) {
+                result.add(finalMark);
+            }
+        }
+        return result;
+    }
 
-	public List<Attends> getNotSubmitedMarkAttends(ExecutionCourse executionCourse) {
-		List<Attends> result = new ArrayList<Attends>();
+    public List<Attends> getNotSubmitedMarkAttends(ExecutionCourse executionCourse) {
+        List<Attends> result = new ArrayList<Attends>();
 
-		for (Attends attends : executionCourse.getAttends()) {
-			if (attends.getEnrolment() != null && attends.getRegistration().getDegreeType().equals(DegreeType.DEGREE)) {
-				FinalMark mark = getFinalMark(attends);
-				if (mark == null || (mark.getGradeListVersion() == 0 && mark.getSubmitedMark() == null)) {
-					result.add(attends);
-				}
-			}
-		}
-		return result;
-	}
+        for (Attends attends : executionCourse.getAttends()) {
+            if (attends.getEnrolment() != null && attends.getRegistration().getDegreeType().equals(DegreeType.DEGREE)) {
+                FinalMark mark = getFinalMark(attends);
+                if (mark == null || (mark.getGradeListVersion() == 0 && mark.getSubmitedMark() == null)) {
+                    result.add(attends);
+                }
+            }
+        }
+        return result;
+    }
 
-	private FinalMark getFinalMark(Attends attends) {
-		for (Mark mark : attends.getAssociatedMarks()) {
-			if (mark.getEvaluation().equals(this)) {
-				return (FinalMark) mark;
-			}
-		}
-		return null;
-	}
+    private FinalMark getFinalMark(Attends attends) {
+        for (Mark mark : attends.getAssociatedMarks()) {
+            if (mark.getEvaluation().equals(this)) {
+                return (FinalMark) mark;
+            }
+        }
+        return null;
+    }
 
-	private void checkRulesToDelete() {
-		if (hasAnyMarks()) {
-			throw new DomainException("error.existing.marks");
-		}
-	}
+    private void checkRulesToDelete() {
+        if (hasAnyMarks()) {
+            throw new DomainException("error.existing.marks");
+        }
+    }
 
-	@Override
-	public void delete() {
-		checkRulesToDelete();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        checkRulesToDelete();
+        super.delete();
+    }
 
-	@Override
-	public boolean isFinal() {
-		return true;
-	}
+    @Override
+    public boolean isFinal() {
+        return true;
+    }
 
-	@Override
-	public String getPresentationName() {
-		return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.final.evaluation");
-	}
+    @Override
+    public String getPresentationName() {
+        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.final.evaluation");
+    }
 }

@@ -20,29 +20,29 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateCourseReports extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(Integer executionPeriodID) {
-		Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(Integer executionPeriodID) {
+        Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
 
-		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-		List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
 
-		for (ExecutionCourse executionCourse : executionCourses) {
-			if (executionCourse.getCourseReport() == null) {
-				for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-					if (evaluation instanceof FinalEvaluation) {
+        for (ExecutionCourse executionCourse : executionCourses) {
+            if (executionCourse.getCourseReport() == null) {
+                for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                    if (evaluation instanceof FinalEvaluation) {
 
-						if (courseReportsExecutionCoursesIDs.add(executionCourse.getIdInternal())) {
-							CourseReport courseReport = new CourseReport();
-							courseReport.setExecutionCourse(executionCourse);
-						}
+                        if (courseReportsExecutionCoursesIDs.add(executionCourse.getIdInternal())) {
+                            CourseReport courseReport = new CourseReport();
+                            courseReport.setExecutionCourse(executionCourse);
+                        }
 
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
-	}
+    }
 
 }

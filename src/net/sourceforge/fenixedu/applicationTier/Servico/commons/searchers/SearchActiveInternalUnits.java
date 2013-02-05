@@ -10,20 +10,20 @@ import org.joda.time.YearMonthDay;
 
 public class SearchActiveInternalUnits extends SearchInternalUnits {
 
-	@Override
-	protected Collection search(String value, int size) {
-		Collection<UnitName> units = super.search(value, size);
+    @Override
+    protected Collection search(String value, int size) {
+        Collection<UnitName> units = super.search(value, size);
 
-		List<UnitName> result = new ArrayList<UnitName>();
-		YearMonthDay now = new YearMonthDay();
+        List<UnitName> result = new ArrayList<UnitName>();
+        YearMonthDay now = new YearMonthDay();
 
-		for (UnitName unitName : units) {
-			if (unitName.getUnit().isActive(now)) {
-				result.add(unitName);
-			}
-		}
+        for (UnitName unitName : units) {
+            if (unitName.getUnit().isActive(now)) {
+                result.add(unitName);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

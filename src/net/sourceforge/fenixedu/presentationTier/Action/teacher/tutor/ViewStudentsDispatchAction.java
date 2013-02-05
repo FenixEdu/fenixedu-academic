@@ -22,45 +22,45 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewStudentsByTutor", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-		@Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp", tileProperties = @Tile(
-				title = "private.teacher.managementmentoring.seetutorandos")),
-		@Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp", tileProperties = @Tile(
-				title = "private.teacher.managementmentoring.seetutorandos")) })
+        @Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp", tileProperties = @Tile(
+                title = "private.teacher.managementmentoring.seetutorandos")),
+        @Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp", tileProperties = @Tile(
+                title = "private.teacher.managementmentoring.seetutorandos")) })
 public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchAction {
 
-	public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final Person person = getLoggedPerson(request);
-		final Teacher teacher = person.getTeacher();
+        final Person person = getLoggedPerson(request);
+        final Teacher teacher = person.getTeacher();
 
-		getTutorships(request, teacher);
+        getTutorships(request, teacher);
 
-		request.setAttribute("performanceBean", getOrCreateBean(teacher));
-		request.setAttribute("tutor", person);
-		return mapping.findForward("viewStudentsByTutor");
-	}
+        request.setAttribute("performanceBean", getOrCreateBean(teacher));
+        request.setAttribute("tutor", person);
+        return mapping.findForward("viewStudentsByTutor");
+    }
 
-	public StudentsPerformanceInfoNullEntryYearBean getOrCreateBean(Teacher teacher) {
-		StudentsPerformanceInfoNullEntryYearBean performanceBean = getRenderedObject("performanceBean");
-		if (performanceBean == null) {
-			performanceBean = StudentsPerformanceInfoNullEntryYearBean.create(teacher);
-		}
+    public StudentsPerformanceInfoNullEntryYearBean getOrCreateBean(Teacher teacher) {
+        StudentsPerformanceInfoNullEntryYearBean performanceBean = getRenderedObject("performanceBean");
+        if (performanceBean == null) {
+            performanceBean = StudentsPerformanceInfoNullEntryYearBean.create(teacher);
+        }
 
-		return performanceBean;
-	}
+        return performanceBean;
+    }
 
-	public ActionForward editStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
+    public ActionForward editStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
 
-		Registration registration =
-				rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationID")));
-		TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
+        Registration registration =
+                rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationID")));
+        TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
 
-		request.setAttribute("tutor", getLoggedPerson(request));
-		request.setAttribute("student", student);
-		request.setAttribute("tutorshipLog", tutorshipLog);
-		return mapping.findForward("editStudent");
-	}
+        request.setAttribute("tutor", getLoggedPerson(request));
+        request.setAttribute("student", student);
+        request.setAttribute("tutorshipLog", tutorshipLog);
+        return mapping.findForward("editStudent");
+    }
 }

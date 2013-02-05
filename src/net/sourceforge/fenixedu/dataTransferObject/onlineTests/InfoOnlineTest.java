@@ -19,76 +19,76 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
 
-	private InfoDistributedTest infoDistributedTest;
+    private InfoDistributedTest infoDistributedTest;
 
-	private List associatedExecutionCourse;
+    private List associatedExecutionCourse;
 
-	private String publishmentMessage;
+    private String publishmentMessage;
 
-	public InfoOnlineTest() {
-	}
+    public InfoOnlineTest() {
+    }
 
-	public List getAssociatedExecutionCourse() {
-		return associatedExecutionCourse;
-	}
+    public List getAssociatedExecutionCourse() {
+        return associatedExecutionCourse;
+    }
 
-	public InfoDistributedTest getInfoDistributedTest() {
-		return infoDistributedTest;
-	}
+    public InfoDistributedTest getInfoDistributedTest() {
+        return infoDistributedTest;
+    }
 
-	@Override
-	public String getPublishmentMessage() {
-		return publishmentMessage;
-	}
+    @Override
+    public String getPublishmentMessage() {
+        return publishmentMessage;
+    }
 
-	public void setAssociatedExecutionCourse(List list) {
-		associatedExecutionCourse = list;
-	}
+    public void setAssociatedExecutionCourse(List list) {
+        associatedExecutionCourse = list;
+    }
 
-	public void setInfoDistributedTest(InfoDistributedTest test) {
-		infoDistributedTest = test;
-	}
+    public void setInfoDistributedTest(InfoDistributedTest test) {
+        infoDistributedTest = test;
+    }
 
-	@Override
-	public void setPublishmentMessage(String string) {
-		publishmentMessage = string;
-	}
+    @Override
+    public void setPublishmentMessage(String string) {
+        publishmentMessage = string;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoExam) {
-			InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoExam) {
+            InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
 
-			result =
-					getIdInternal().equals(infoOnlineTest.getIdInternal())
-							&& getInfoDistributedTest().equals(infoOnlineTest.getInfoDistributedTest())
-							&& getPublishmentMessage().equals(infoOnlineTest.getPublishmentMessage())
-							&& getAssociatedExecutionCourse().containsAll(infoOnlineTest.getAssociatedExecutionCourse())
-							&& infoOnlineTest.getAssociatedExecutionCourse().containsAll(getAssociatedExecutionCourse());
-		}
-		return result;
-	}
+            result =
+                    getIdInternal().equals(infoOnlineTest.getIdInternal())
+                            && getInfoDistributedTest().equals(infoOnlineTest.getInfoDistributedTest())
+                            && getPublishmentMessage().equals(infoOnlineTest.getPublishmentMessage())
+                            && getAssociatedExecutionCourse().containsAll(infoOnlineTest.getAssociatedExecutionCourse())
+                            && infoOnlineTest.getAssociatedExecutionCourse().containsAll(getAssociatedExecutionCourse());
+        }
+        return result;
+    }
 
-	public void copyFromDomain(OnlineTest onlineTest) {
-		super.copyFromDomain(onlineTest);
-		if (onlineTest != null) {
-			setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
-			setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(onlineTest.getDistributedTest()));
-		}
-	}
+    public void copyFromDomain(OnlineTest onlineTest) {
+        super.copyFromDomain(onlineTest);
+        if (onlineTest != null) {
+            setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+            setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(onlineTest.getDistributedTest()));
+        }
+    }
 
-	/**
-	 * @param onlineTest
-	 * @return
-	 */
-	public static InfoOnlineTest newInfoFromDomain(OnlineTest onlineTest) {
-		InfoOnlineTest infoOnlineTest = null;
-		if (onlineTest != null) {
-			infoOnlineTest = new InfoOnlineTest();
-			infoOnlineTest.copyFromDomain(onlineTest);
-		}
-		return infoOnlineTest;
-	}
+    /**
+     * @param onlineTest
+     * @return
+     */
+    public static InfoOnlineTest newInfoFromDomain(OnlineTest onlineTest) {
+        InfoOnlineTest infoOnlineTest = null;
+        if (onlineTest != null) {
+            infoOnlineTest = new InfoOnlineTest();
+            infoOnlineTest.copyFromDomain(onlineTest);
+        }
+        return infoOnlineTest;
+    }
 
 }

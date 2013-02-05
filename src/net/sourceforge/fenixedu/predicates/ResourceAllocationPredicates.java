@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ResourceAllocationPredicates {
 
-	public static final AccessControlPredicate<VehicleAllocation> checkPermissionsToManageVehicleAllocations =
-			new AccessControlPredicate<VehicleAllocation>() {
-				@Override
-				public boolean evaluate(VehicleAllocation allocation) {
-					Person loggedPerson = AccessControl.getPerson();
-					if (!loggedPerson.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
-						throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-					}
-					return true;
-				}
-			};
+    public static final AccessControlPredicate<VehicleAllocation> checkPermissionsToManageVehicleAllocations =
+            new AccessControlPredicate<VehicleAllocation>() {
+                @Override
+                public boolean evaluate(VehicleAllocation allocation) {
+                    Person loggedPerson = AccessControl.getPerson();
+                    if (!loggedPerson.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+                        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+                    }
+                    return true;
+                }
+            };
 
 }

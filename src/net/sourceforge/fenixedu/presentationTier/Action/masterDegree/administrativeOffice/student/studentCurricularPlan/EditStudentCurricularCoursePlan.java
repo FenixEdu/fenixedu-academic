@@ -32,109 +32,109 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
-		Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
-		IUserView userView = getUserView(request);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
+        Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
+        IUserView userView = getUserView(request);
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById.run(studentCurricularPlanId);
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById.run(studentCurricularPlanId);
 
-		List branchList = null;
+        List branchList = null;
 
-		try {
-			branchList =
-					ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
-							.getIdInternal());
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            branchList =
+                    ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
+                            .getIdInternal());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		// put request
-		request.setAttribute(PresentationConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
-		request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
+        // put request
+        request.setAttribute(PresentationConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
+        request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
 
-		request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
-		request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+        request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
+        request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 
-		editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan.getSpecialization().toString());
+        editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan.getSpecialization().toString());
 
-		if (infoStudentCurricularPlan.getInfoBranch() != null) {
-			editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getIdInternal());
-		}
+        if (infoStudentCurricularPlan.getInfoBranch() != null) {
+            editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getIdInternal());
+        }
 
-		editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState().toString());
-		editStudentCurricularPlanForm.set(
-				"credits",
-				(infoStudentCurricularPlan.getGivenCredits() == null) ? "0.0" : String.valueOf(infoStudentCurricularPlan
-						.getGivenCredits()));
-		editStudentCurricularPlanForm.set("startDate", infoStudentCurricularPlan.getStartDateFormatted());
-		String[] formValues = new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
-		int i = 0;
-		for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
-			Object enrollment = iter.next();
-			if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
-				Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getIdInternal();
-				formValues[i] = enrollmentId.toString();
-			}
-			i++;
-		}
-		DynaActionForm coursesForm = (DynaActionForm) form;
-		coursesForm.set("extraCurricularCourses", formValues);
-		return mapping.findForward("editStudentCurricularCoursePlan");
-	}
+        editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState().toString());
+        editStudentCurricularPlanForm.set(
+                "credits",
+                (infoStudentCurricularPlan.getGivenCredits() == null) ? "0.0" : String.valueOf(infoStudentCurricularPlan
+                        .getGivenCredits()));
+        editStudentCurricularPlanForm.set("startDate", infoStudentCurricularPlan.getStartDateFormatted());
+        String[] formValues = new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
+        int i = 0;
+        for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
+            Object enrollment = iter.next();
+            if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
+                Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getIdInternal();
+                formValues[i] = enrollmentId.toString();
+            }
+            i++;
+        }
+        DynaActionForm coursesForm = (DynaActionForm) form;
+        coursesForm.set("extraCurricularCourses", formValues);
+        return mapping.findForward("editStudentCurricularCoursePlan");
+    }
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final IUserView userView = getUserView(request);
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final IUserView userView = getUserView(request);
 
-		final Integer scpOID = getIntegerFromRequest(request, "studentCurricularPlanId");
-		request.setAttribute("studentCurricularPlanId", scpOID);
+        final Integer scpOID = getIntegerFromRequest(request, "studentCurricularPlanId");
+        request.setAttribute("studentCurricularPlanId", scpOID);
 
-		final DynaActionForm editForm = (DynaActionForm) form;
-		final String currentState = (String) editForm.get("currentState");
-		final Integer branchOID = (Integer) editForm.get("branch");
-		final String specialization = (String) editForm.get("specialization");
-		final String startDate = (String) editForm.get("startDate");
-		final String observations = (String) editForm.get("observations");
+        final DynaActionForm editForm = (DynaActionForm) form;
+        final String currentState = (String) editForm.get("currentState");
+        final Integer branchOID = (Integer) editForm.get("branch");
+        final String specialization = (String) editForm.get("specialization");
+        final String startDate = (String) editForm.get("startDate");
+        final String observations = (String) editForm.get("observations");
 
-		final Object creditsObj = editForm.get("credits");
-		final Double credits =
-				(creditsObj != null && ((String) creditsObj).length() > 0) ? (Double.valueOf((String) creditsObj)) : null;
+        final Object creditsObj = editForm.get("credits");
+        final Double credits =
+                (creditsObj != null && ((String) creditsObj).length() > 0) ? (Double.valueOf((String) creditsObj)) : null;
 
-		final List<Integer> extraCurricularOIDs = new ArrayList<Integer>();
-		for (final String extraCurricular : Arrays.asList((String[]) editForm.get("extraCurricularCourses"))) {
-			extraCurricularOIDs.add(Integer.valueOf(extraCurricular));
-		}
+        final List<Integer> extraCurricularOIDs = new ArrayList<Integer>();
+        for (final String extraCurricular : Arrays.asList((String[]) editForm.get("extraCurricularCourses"))) {
+            extraCurricularOIDs.add(Integer.valueOf(extraCurricular));
+        }
 
-		try {
-			EditPosGradStudentCurricularPlanStateAndCredits.run(userView, scpOID, currentState, credits, startDate,
-					extraCurricularOIDs, observations, branchOID, specialization);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            EditPosGradStudentCurricularPlanStateAndCredits.run(userView, scpOID, currentState, credits, startDate,
+                    extraCurricularOIDs, observations, branchOID, specialization);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("ShowStudentCurricularCoursePlan");
-	}
+        return mapping.findForward("ShowStudentCurricularCoursePlan");
+    }
 
-	public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		Enrolment enrolment =
-				(Enrolment) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
-		SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
+        Enrolment enrolment =
+                (Enrolment) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
+        SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
-		request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
+        request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = request.getAttribute(parameter).toString();
-		}
-		return parameterString;
-	}
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = request.getAttribute(parameter).toString();
+        }
+        return parameterString;
+    }
 }

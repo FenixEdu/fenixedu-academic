@@ -12,19 +12,19 @@ import org.joda.time.YearMonthDay;
 
 public class CandidacyFactory {
 
-	public static Candidacy newCandidacy(DegreeType degreeType, Person person, ExecutionDegree executionDegree,
-			YearMonthDay startDate) throws DomainException {
+    public static Candidacy newCandidacy(DegreeType degreeType, Person person, ExecutionDegree executionDegree,
+            YearMonthDay startDate) throws DomainException {
 
-		switch (degreeType) {
-		case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
-			// TODO: remove this after PHD Program candidacy is completed and
-			// data migrated
-			return new PHDProgramCandidacy(person, executionDegree);
-		case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-			return new DFACandidacy(person, executionDegree, startDate);
+        switch (degreeType) {
+        case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+            // TODO: remove this after PHD Program candidacy is completed and
+            // data migrated
+            return new PHDProgramCandidacy(person, executionDegree);
+        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+            return new DFACandidacy(person, executionDegree, startDate);
 
-		default:
-			throw new DomainException("error.candidacyFactory.invalid.degree.type");
-		}
-	}
+        default:
+            throw new DomainException("error.candidacyFactory.invalid.degree.type");
+        }
+    }
 }

@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "gep", path = "/protocols", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "search-protocols", path = "/protocols/searchProtocols.jsp", tileProperties = @Tile(
-		title = "private.gep.protocols.search")) })
+        title = "private.gep.protocols.search")) })
 public class ProtocolsDispatchActionForGep extends
-		net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction {
+        net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction {
 }

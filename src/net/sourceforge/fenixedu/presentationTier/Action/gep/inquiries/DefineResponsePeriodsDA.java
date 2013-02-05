@@ -19,69 +19,63 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(
-		module = "gep",
-		path = "/defineResponsePeriods",
-		input = "/defineResponsePeriods.do?method=prepare&page=0",
-		attribute = "defineResponsePeriodsForm",
-		formBean = "defineResponsePeriodsForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "gep", path = "/defineResponsePeriods", input = "/defineResponsePeriods.do?method=prepare&page=0",
+        attribute = "defineResponsePeriodsForm", formBean = "defineResponsePeriodsForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showForm", path = "/gep/inquiries/defineResponsePeriods.jsp", tileProperties = @Tile(
-		title = "private.gep.surveys.setperiodsofresponse")) })
+        title = "private.gep.surveys.setperiodsofresponse")) })
 public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InquiryDefinitionPeriodBean definitionPeriodBean = getRenderedObject("inquiryResponsePeriod");
+        InquiryDefinitionPeriodBean definitionPeriodBean = getRenderedObject("inquiryResponsePeriod");
 
-		if (definitionPeriodBean == null) {
-			definitionPeriodBean = new InquiryDefinitionPeriodBean();
-			definitionPeriodBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
-		}
+        if (definitionPeriodBean == null) {
+            definitionPeriodBean = new InquiryDefinitionPeriodBean();
+            definitionPeriodBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
+        }
 
-		InquiryTemplate inquiryTemplate =
-				InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(definitionPeriodBean.getExecutionPeriod(),
-						definitionPeriodBean.getResponsePeriodType());
+        InquiryTemplate inquiryTemplate =
+                InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(definitionPeriodBean.getExecutionPeriod(),
+                        definitionPeriodBean.getResponsePeriodType());
 
-		RenderUtils.invalidateViewState();
-		if (inquiryTemplate == null) {
-			RenderUtils.invalidateViewState();
-			request.setAttribute("inquiryDoesntExist", "true");
-		} else {
-			definitionPeriodBean.setMessage(inquiryTemplate.getInquiryMessage());
-			definitionPeriodBean.setBegin(inquiryTemplate.getResponsePeriodBegin());
-			definitionPeriodBean.setEnd(inquiryTemplate.getResponsePeriodEnd());
-			definitionPeriodBean.setInquiryTemplate(inquiryTemplate);
-		}
-		request.setAttribute("definitionPeriodBean", definitionPeriodBean);
-		return mapping.findForward("showForm");
-	}
+        RenderUtils.invalidateViewState();
+        if (inquiryTemplate == null) {
+            RenderUtils.invalidateViewState();
+            request.setAttribute("inquiryDoesntExist", "true");
+        } else {
+            definitionPeriodBean.setMessage(inquiryTemplate.getInquiryMessage());
+            definitionPeriodBean.setBegin(inquiryTemplate.getResponsePeriodBegin());
+            definitionPeriodBean.setEnd(inquiryTemplate.getResponsePeriodEnd());
+            definitionPeriodBean.setInquiryTemplate(inquiryTemplate);
+        }
+        request.setAttribute("definitionPeriodBean", definitionPeriodBean);
+        return mapping.findForward("showForm");
+    }
 
-	public ActionForward changeLanguage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		InquiryDefinitionPeriodBean inquiryResponsePeriodMessage = getRenderedObject("inquiryResponsePeriodMessage");
+    public ActionForward changeLanguage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        InquiryDefinitionPeriodBean inquiryResponsePeriodMessage = getRenderedObject("inquiryResponsePeriodMessage");
 
-		RenderUtils.invalidateViewState("inquiryResponsePeriodMessage");
-		request.setAttribute("definitionPeriodBean", inquiryResponsePeriodMessage);
-		return mapping.findForward("showForm");
-	}
+        RenderUtils.invalidateViewState("inquiryResponsePeriodMessage");
+        request.setAttribute("definitionPeriodBean", inquiryResponsePeriodMessage);
+        return mapping.findForward("showForm");
+    }
 
-	public ActionForward define(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward define(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InquiryDefinitionPeriodBean inquiryResponsePeriodMessage = getRenderedObject("inquiryResponsePeriodMessage");
+        InquiryDefinitionPeriodBean inquiryResponsePeriodMessage = getRenderedObject("inquiryResponsePeriodMessage");
 
-		try {
-			inquiryResponsePeriodMessage.writePeriodAndMessage();
-		} catch (DomainException e) {
-			addErrorMessage(request, "error", e.getKey());
-			return prepare(mapping, actionForm, request, response);
-		}
+        try {
+            inquiryResponsePeriodMessage.writePeriodAndMessage();
+        } catch (DomainException e) {
+            addErrorMessage(request, "error", e.getKey());
+            return prepare(mapping, actionForm, request, response);
+        }
 
-		addActionMessage(request, "message.inquiry.response.period.defined");
+        addActionMessage(request, "message.inquiry.response.period.defined");
 
-		return prepare(mapping, actionForm, request, response);
-	}
+        return prepare(mapping, actionForm, request, response);
+    }
 }

@@ -10,63 +10,63 @@ import org.joda.time.YearMonthDay;
 
 public class AdministrativeOfficeFeeAndInsuranceExemptionBean implements Serializable {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent;
+    private AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent;
 
-	private AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
+    private AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
 
-	private String reason;
+    private String reason;
 
-	private YearMonthDay dispatchDate;
+    private YearMonthDay dispatchDate;
 
-	private AdministrativeOfficeExemptionAppliance applyExemptionOn;
+    private AdministrativeOfficeExemptionAppliance applyExemptionOn;
 
-	public AdministrativeOfficeFeeAndInsuranceExemptionBean(final AdministrativeOfficeFeeAndInsuranceEvent event) {
-		setAdministrativeOfficeFeeAndInsuranceEvent(event);
-	}
+    public AdministrativeOfficeFeeAndInsuranceExemptionBean(final AdministrativeOfficeFeeAndInsuranceEvent event) {
+        setAdministrativeOfficeFeeAndInsuranceEvent(event);
+    }
 
-	public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeAndInsuranceEvent() {
-		return this.administrativeOfficeFeeAndInsuranceEvent;
-	}
+    public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeAndInsuranceEvent() {
+        return this.administrativeOfficeFeeAndInsuranceEvent;
+    }
 
-	public void setAdministrativeOfficeFeeAndInsuranceEvent(
-			AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent) {
-		this.administrativeOfficeFeeAndInsuranceEvent = administrativeOfficeFeeAndInsuranceEvent;
-	}
+    public void setAdministrativeOfficeFeeAndInsuranceEvent(
+            AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent) {
+        this.administrativeOfficeFeeAndInsuranceEvent = administrativeOfficeFeeAndInsuranceEvent;
+    }
 
-	public AdministrativeOfficeFeeAndInsuranceExemptionJustificationType getJustificationType() {
-		return justificationType;
-	}
+    public AdministrativeOfficeFeeAndInsuranceExemptionJustificationType getJustificationType() {
+        return justificationType;
+    }
 
-	public void setJustificationType(AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType) {
-		this.justificationType = justificationType;
-	}
+    public void setJustificationType(AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType) {
+        this.justificationType = justificationType;
+    }
 
-	public String getReason() {
-		return reason;
-	}
+    public String getReason() {
+        return reason;
+    }
 
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
-	public YearMonthDay getDispatchDate() {
-		return dispatchDate;
-	}
+    public YearMonthDay getDispatchDate() {
+        return dispatchDate;
+    }
 
-	public void setDispatchDate(YearMonthDay dispatchDate) {
-		this.dispatchDate = dispatchDate;
-	}
+    public void setDispatchDate(YearMonthDay dispatchDate) {
+        this.dispatchDate = dispatchDate;
+    }
 
-	public AdministrativeOfficeExemptionAppliance getApplyExemptionOn() {
-		return applyExemptionOn;
-	}
+    public AdministrativeOfficeExemptionAppliance getApplyExemptionOn() {
+        return applyExemptionOn;
+    }
 
-	public void setApplyExemptionOn(AdministrativeOfficeExemptionAppliance applyExemptionOn) {
-		this.applyExemptionOn = applyExemptionOn;
-	}
+    public void setApplyExemptionOn(AdministrativeOfficeExemptionAppliance applyExemptionOn) {
+        this.applyExemptionOn = applyExemptionOn;
+    }
 }

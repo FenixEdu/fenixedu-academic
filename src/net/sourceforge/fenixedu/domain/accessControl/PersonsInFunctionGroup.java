@@ -20,56 +20,56 @@ import org.joda.time.YearMonthDay;
  */
 public class PersonsInFunctionGroup extends DomainBackedGroup<Function> {
 
-	/**
-	 * Serial version id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serial version id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	public PersonsInFunctionGroup(Function object) {
-		super(object);
-	}
+    public PersonsInFunctionGroup(Function object) {
+        super(object);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> set = buildSet();
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> set = buildSet();
 
-		YearMonthDay today = new YearMonthDay();
-		for (PersonFunction function : getObject().getPersonFunctions()) {
-			if (function.isActive(today)) {
-				set.add(function.getPerson());
-			}
-		}
+        YearMonthDay today = new YearMonthDay();
+        for (PersonFunction function : getObject().getPersonFunctions()) {
+            if (function.isActive(today)) {
+                set.add(function.getPerson());
+            }
+        }
 
-		return set;
-	}
+        return set;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()) };
+    }
 
-	@Override
-	public String[] getPresentationNameKeyArgs() {
-		return new String[] { getObject().getName(), getObject().getUnit().getName() };
-	}
+    @Override
+    public String[] getPresentationNameKeyArgs() {
+        return new String[] { getObject().getName(), getObject().getUnit().getName() };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			return new PersonsInFunctionGroup((Function) arguments[0]);
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            return new PersonsInFunctionGroup((Function) arguments[0]);
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-	}
+    }
 
 }

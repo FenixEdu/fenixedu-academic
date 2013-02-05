@@ -9,20 +9,20 @@ import org.joda.time.DateTime;
 
 public class DiplomaRequestPR extends DiplomaRequestPR_Base {
 
-	protected DiplomaRequestPR() {
-		super();
-	}
+    protected DiplomaRequestPR() {
+        super();
+    }
 
-	public DiplomaRequestPR(final EntryType entryType, final EventType eventType, final DateTime startDate,
-			final DateTime endDate, final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
-		super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
-	}
+    public DiplomaRequestPR(final EntryType entryType, final EventType eventType, final DateTime startDate,
+            final DateTime endDate, final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
+        super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
+    }
 
-	@Override
-	final public DiplomaRequestPR edit(final Money fixedAmount) {
-		deactivate();
-		return new DiplomaRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
-				getServiceAgreementTemplate(), fixedAmount);
-	}
+    @Override
+    final public DiplomaRequestPR edit(final Money fixedAmount) {
+        deactivate();
+        return new DiplomaRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
+                getServiceAgreementTemplate(), fixedAmount);
+    }
 
 }

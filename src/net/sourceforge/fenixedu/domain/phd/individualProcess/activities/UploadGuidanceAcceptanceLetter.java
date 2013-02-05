@@ -10,23 +10,23 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 
 public class UploadGuidanceAcceptanceLetter extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+    @Override
+    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		PhdParticipantBean guidingBean = (PhdParticipantBean) object;
-		PhdParticipant guiding = guidingBean.getParticipant();
-		PhdProgramDocumentUploadBean acceptanceLetter = guidingBean.getGuidingAcceptanceLetter();
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        PhdParticipantBean guidingBean = (PhdParticipantBean) object;
+        PhdParticipant guiding = guidingBean.getParticipant();
+        PhdProgramDocumentUploadBean acceptanceLetter = guidingBean.getGuidingAcceptanceLetter();
 
-		new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", acceptanceLetter.getFileContent(),
-				acceptanceLetter.getFilename(), userView.getPerson());
+        new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", acceptanceLetter.getFileContent(),
+                acceptanceLetter.getFilename(), userView.getPerson());
 
-		return process;
-	}
+        return process;
+    }
 
 }

@@ -7,5 +7,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "student", path = "/prices", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewPrices", path = "prices.viewPrices") })
 public class StudentPricesDispatchActionForStudent extends
-		net.sourceforge.fenixedu.presentationTier.Action.student.prices.StudentPricesDispatchAction {
+        net.sourceforge.fenixedu.presentationTier.Action.student.prices.StudentPricesDispatchAction {
 }

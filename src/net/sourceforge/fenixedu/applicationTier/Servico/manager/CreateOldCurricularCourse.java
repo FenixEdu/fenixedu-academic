@@ -15,53 +15,53 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateOldCurricularCourse extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
-			final String acronym, final Integer minimumValueForAcumulatedEnrollments,
-			final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
-			final Double credits, final Double ectsCredits, final Integer year, final Integer semester,
-			final Integer beginExecutionPeriodId, final Integer endExecutionPeriodId, final GradeScale gradeScale)
-			throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
+            final String acronym, final Integer minimumValueForAcumulatedEnrollments,
+            final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
+            final Double credits, final Double ectsCredits, final Integer year, final Integer semester,
+            final Integer beginExecutionPeriodId, final Integer endExecutionPeriodId, final GradeScale gradeScale)
+            throws FenixServiceException {
 
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
-		if (degreeCurricularPlan == null) {
-			throw new FenixServiceException("error.createOldCurricularCourse.no.degreeCurricularPlan");
-		}
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
+        if (degreeCurricularPlan == null) {
+            throw new FenixServiceException("error.createOldCurricularCourse.no.degreeCurricularPlan");
+        }
 
-		final CourseGroup courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(cgId);
-		if (courseGroup == null) {
-			throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
-		}
+        final CourseGroup courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(cgId);
+        if (courseGroup == null) {
+            throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
+        }
 
-		final CurricularCourse curricularCourse =
-				degreeCurricularPlan.createCurricularCourse(name, code, acronym, Boolean.TRUE, CurricularStage.APPROVED);
-		// hack to use dcp method
-		curricularCourse.removeDegreeCurricularPlan();
+        final CurricularCourse curricularCourse =
+                degreeCurricularPlan.createCurricularCourse(name, code, acronym, Boolean.TRUE, CurricularStage.APPROVED);
+        // hack to use dcp method
+        curricularCourse.removeDegreeCurricularPlan();
 
-		curricularCourse.setNameEn(nameEn);
-		curricularCourse.setWeigth(weigth);
-		curricularCourse.setEnrollmentWeigth(enrolmentWeigth);
-		curricularCourse.setMinimumValueForAcumulatedEnrollments(minimumValueForAcumulatedEnrollments);
-		curricularCourse.setMaximumValueForAcumulatedEnrollments(maximumValueForAcumulatedEnrollments);
-		curricularCourse.setCredits(credits);
-		curricularCourse.setEctsCredits(ectsCredits);
-		curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
-		curricularCourse.setGradeScale(gradeScale);
+        curricularCourse.setNameEn(nameEn);
+        curricularCourse.setWeigth(weigth);
+        curricularCourse.setEnrollmentWeigth(enrolmentWeigth);
+        curricularCourse.setMinimumValueForAcumulatedEnrollments(minimumValueForAcumulatedEnrollments);
+        curricularCourse.setMaximumValueForAcumulatedEnrollments(maximumValueForAcumulatedEnrollments);
+        curricularCourse.setCredits(credits);
+        curricularCourse.setEctsCredits(ectsCredits);
+        curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
+        curricularCourse.setGradeScale(gradeScale);
 
-		final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
-		final ExecutionSemester beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodId);
-		final ExecutionSemester endExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodId);
+        final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
+        final ExecutionSemester beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodId);
+        final ExecutionSemester endExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodId);
 
-		courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-	}
+        courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+    }
 
-	private static CurricularPeriod getCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final Integer year,
-			final Integer semester) {
-		CurricularPeriod curricularPeriod = degreeCurricularPlan.getCurricularPeriodFor(year, semester);
-		if (curricularPeriod == null) {
-			curricularPeriod = degreeCurricularPlan.createCurricularPeriodFor(year, semester);
-		}
-		return curricularPeriod;
-	}
+    private static CurricularPeriod getCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final Integer year,
+            final Integer semester) {
+        CurricularPeriod curricularPeriod = degreeCurricularPlan.getCurricularPeriodFor(year, semester);
+        if (curricularPeriod == null) {
+            curricularPeriod = degreeCurricularPlan.createCurricularPeriodFor(year, semester);
+        }
+        return curricularPeriod;
+    }
 }

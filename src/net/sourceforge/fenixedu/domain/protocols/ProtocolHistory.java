@@ -7,26 +7,26 @@ import org.joda.time.YearMonthDay;
 
 public class ProtocolHistory extends ProtocolHistory_Base {
 
-	public ProtocolHistory(YearMonthDay beginDate, YearMonthDay endDate) {
-		super();
-		if (endDate != null && beginDate.isAfter(endDate)) {
-			throw new DomainException("error.protocols.beginDateBiggerThenEnd");
-		}
-		setRootDomainObject(RootDomainObject.getInstance());
-		setBeginDate(beginDate);
-		setEndDate(endDate);
-	}
+    public ProtocolHistory(YearMonthDay beginDate, YearMonthDay endDate) {
+        super();
+        if (endDate != null && beginDate.isAfter(endDate)) {
+            throw new DomainException("error.protocols.beginDateBiggerThenEnd");
+        }
+        setRootDomainObject(RootDomainObject.getInstance());
+        setBeginDate(beginDate);
+        setEndDate(endDate);
+    }
 
-	public ProtocolHistory(YearMonthDay beginDate, YearMonthDay endDate, boolean script) {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setBeginDate(beginDate);
-		setEndDate(endDate);
-	}
+    public ProtocolHistory(YearMonthDay beginDate, YearMonthDay endDate, boolean script) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setBeginDate(beginDate);
+        setEndDate(endDate);
+    }
 
-	public void delete() {
-		removeRootDomainObject();
-		removeProtocol();
-		deleteDomainObject();
-	}
+    public void delete() {
+        removeRootDomainObject();
+        removeProtocol();
+        deleteDomainObject();
+    }
 }

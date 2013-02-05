@@ -31,49 +31,49 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "manager", path = "/reloadStruts", scope = "session")
 @Forwards(value = { @Forward(name = "firstPage", path = "/index") })
 public class ReloadStrutsAction extends Action {
-	private static final Logger logger = Logger.getLogger(ReloadStrutsAction.class);
+    private static final Logger logger = Logger.getLogger(ReloadStrutsAction.class);
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		ActionServlet servlet = getServlet();
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        ActionServlet servlet = getServlet();
 
-		if (servlet == null) {
-			if (LogLevel.WARN) {
-				logger.warn("action servlet is null, could not reload configuration");
-			}
-			return null;
-		}
+        if (servlet == null) {
+            if (LogLevel.WARN) {
+                logger.warn("action servlet is null, could not reload configuration");
+            }
+            return null;
+        }
 
-		servlet.destroy();
+        servlet.destroy();
 
-		// clear struts and tiles state
-		ServletContext context = servlet.getServletContext();
-		Enumeration names = context.getAttributeNames();
-		while (names.hasMoreElements()) {
-			String name = (String) names.nextElement();
+        // clear struts and tiles state
+        ServletContext context = servlet.getServletContext();
+        Enumeration names = context.getAttributeNames();
+        while (names.hasMoreElements()) {
+            String name = (String) names.nextElement();
 
-			if (name.startsWith(Globals.REQUEST_PROCESSOR_KEY)) {
-				context.removeAttribute(name);
-			}
+            if (name.startsWith(Globals.REQUEST_PROCESSOR_KEY)) {
+                context.removeAttribute(name);
+            }
 
-			if (name.startsWith(TilesUtilImpl.DEFINITIONS_FACTORY)) {
-				context.removeAttribute(name);
-			}
-		}
+            if (name.startsWith(TilesUtilImpl.DEFINITIONS_FACTORY)) {
+                context.removeAttribute(name);
+            }
+        }
 
-		try {
-			servlet.init();
-		} catch (ServletException e) {
-			if (LogLevel.ERROR) {
-				logger.error("could not reload configuration, please redeploy the application");
-			}
-			e.printStackTrace();
-		}
+        try {
+            servlet.init();
+        } catch (ServletException e) {
+            if (LogLevel.ERROR) {
+                logger.error("could not reload configuration, please redeploy the application");
+            }
+            e.printStackTrace();
+        }
 
-		if (LogLevel.INFO) {
-			logger.info("reloaded configuration");
-		}
-		return mapping.findForward("df.page.main-page");
-	}
+        if (LogLevel.INFO) {
+            logger.info("reloaded configuration");
+        }
+        return mapping.findForward("df.page.main-page");
+    }
 }

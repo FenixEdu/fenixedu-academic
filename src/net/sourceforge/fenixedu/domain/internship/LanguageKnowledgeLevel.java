@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.internship;
 
 public enum LanguageKnowledgeLevel {
-	NONE, FAIR, GOOD, EXCELENT;
+    NONE, FAIR, GOOD, EXCELENT;
 
-	public String getQualifiedKey() {
-		return "LanguageKnowledgeLevel." + name();
-	}
+    public String getQualifiedKey() {
+        return "LanguageKnowledgeLevel." + name();
+    }
 }

@@ -8,41 +8,41 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 
 public class FirstTimeInstitutionStudentsPaymentPlanRule implements PaymentPlanRule {
 
-	FirstTimeInstitutionStudentsPaymentPlanRule() {
-	}
+    FirstTimeInstitutionStudentsPaymentPlanRule() {
+    }
 
-	@Override
-	public boolean isEvaluatedInNotSpecificPaymentRules() {
-		return true;
-	}
+    @Override
+    public boolean isEvaluatedInNotSpecificPaymentRules() {
+        return true;
+    }
 
-	@Override
-	public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+    @Override
+    public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
 
-		if (studentCurricularPlan.getRegistration().getStartExecutionYear() != executionYear) {
-			return false;
-		}
+        if (studentCurricularPlan.getRegistration().getStartExecutionYear() != executionYear) {
+            return false;
+        }
 
-		final Student student = studentCurricularPlan.getRegistration().getStudent();
-		return hasOnlyOneValidRegistration(student, studentCurricularPlan.getRegistration());
-	}
+        final Student student = studentCurricularPlan.getRegistration().getStudent();
+        return hasOnlyOneValidRegistration(student, studentCurricularPlan.getRegistration());
+    }
 
-	private boolean hasOnlyOneValidRegistration(final Student student, final Registration current) {
+    private boolean hasOnlyOneValidRegistration(final Student student, final Registration current) {
 
-		if (student.getRegistrationsCount() > 1) {
+        if (student.getRegistrationsCount() > 1) {
 
-			for (final Registration registration : student.getRegistrations()) {
+            for (final Registration registration : student.getRegistrations()) {
 
-				if (registration != current) {
+                if (registration != current) {
 
-					if (registration.getActiveStateType() != RegistrationStateType.CANCELED) {
-						return false;
-					}
-				}
-			}
-		}
+                    if (registration.getActiveStateType() != RegistrationStateType.CANCELED) {
+                        return false;
+                    }
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 }

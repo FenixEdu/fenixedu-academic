@@ -27,43 +27,36 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Pica
  */
 
-@Mapping(
-		module = "facultyAdmOffice",
-		path = "/manageGrantOwner",
-		input = "/manageGrantOwner.do?page=0&method=prepareManageGrantOwnerForm",
-		attribute = "voidForm",
-		formBean = "voidForm",
-		scope = "request",
-		parameter = "method")
-@Forwards(value = { @Forward(
-		name = "manage-grant-owner",
-		path = "/facultyAdmOffice/grant/owner/manageGrantOwner.jsp",
-		tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantOwner",
+        input = "/manageGrantOwner.do?page=0&method=prepareManageGrantOwnerForm", attribute = "voidForm", formBean = "voidForm",
+        scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-owner", path = "/facultyAdmOffice/grant/owner/manageGrantOwner.jsp",
+        tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
 public class ManageGrantOwnerAction extends FenixDispatchAction {
-	public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Integer idInternal = null;
-		if (verifyParameterInRequest(request, "idInternal")) {
-			idInternal = new Integer(request.getParameter("idInternal"));
-		} else if ((Integer) request.getAttribute("idInternal") != null) {
-			idInternal = (Integer) request.getAttribute("idInternal");
-		}
+        Integer idInternal = null;
+        if (verifyParameterInRequest(request, "idInternal")) {
+            idInternal = new Integer(request.getParameter("idInternal"));
+        } else if ((Integer) request.getAttribute("idInternal") != null) {
+            idInternal = (Integer) request.getAttribute("idInternal");
+        }
 
-		if (idInternal == null) {
-			throw new Exception();
-		}
+        if (idInternal == null) {
+            throw new Exception();
+        }
 
-		// Read Grant Owner
-		Object[] args = { idInternal };
-		IUserView userView = UserView.getUser();
-		InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", args);
+        // Read Grant Owner
+        Object[] args = { idInternal };
+        IUserView userView = UserView.getUser();
+        InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", args);
 
-		if (infoGrantOwner == null) {
-			throw new Exception();
-		}
+        if (infoGrantOwner == null) {
+            throw new Exception();
+        }
 
-		request.setAttribute("infoGrantOwner", infoGrantOwner);
-		return mapping.findForward("manage-grant-owner");
-	}
+        request.setAttribute("infoGrantOwner", infoGrantOwner);
+        return mapping.findForward("manage-grant-owner");
+    }
 }

@@ -24,49 +24,49 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "publico", path = "/department/theses", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showThesisDetails", path = "department-showDegreeThesisDetails"),
-		@Forward(name = "showTheses", path = "department-showDegreeTheses") })
+        @Forward(name = "showTheses", path = "department-showDegreeTheses") })
 public class DepartmentShowThesesDA extends PublicShowThesesDA {
 
-	private Unit getUnit(HttpServletRequest request) {
-		UnitSite site = (UnitSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
-		Unit unit = site.getUnit();
+    private Unit getUnit(HttpServletRequest request) {
+        UnitSite site = (UnitSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+        Unit unit = site.getUnit();
 
-		if (unit == null) {
-			Integer id = getIntegerFromRequest(request, "selectedDepartmentUnitID");
-			unit = (Unit) RootDomainObject.getInstance().readPartyByOID(id);
-		}
+        if (unit == null) {
+            Integer id = getIntegerFromRequest(request, "selectedDepartmentUnitID");
+            unit = (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+        }
 
-		return unit;
-	}
+        return unit;
+    }
 
-	private Department getDepartment(HttpServletRequest request) {
-		Unit unit = getUnit(request);
-		if (unit == null) {
-			return null;
-		} else {
-			return unit.getDepartment();
-		}
-	}
+    private Department getDepartment(HttpServletRequest request) {
+        Unit unit = getUnit(request);
+        if (unit == null) {
+            return null;
+        } else {
+            return unit.getDepartment();
+        }
+    }
 
-	@Override
-	protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
-		ThesisFilterBean bean = super.getFilterBean(request);
+    @Override
+    protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
+        ThesisFilterBean bean = super.getFilterBean(request);
 
-		Department department = getDepartment(request);
+        Department department = getDepartment(request);
 
-		bean.setDepartment(department);
-		bean.setDegreeOptions(new ArrayList<Degree>(department.getDegrees()));
+        bean.setDepartment(department);
+        bean.setDegreeOptions(new ArrayList<Degree>(department.getDegrees()));
 
-		return bean;
-	}
+        return bean;
+    }
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		request.setAttribute("unit", getUnit(request));
-		request.setAttribute("department", getDepartment(request));
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("unit", getUnit(request));
+        request.setAttribute("department", getDepartment(request));
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
 }

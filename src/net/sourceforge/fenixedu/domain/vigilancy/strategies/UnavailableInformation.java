@@ -7,19 +7,19 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 public class UnavailableInformation implements Serializable {
 
-	private VigilantWrapper vigilant;
-	private UnavailableTypes unavailableReason;
+    private VigilantWrapper vigilant;
+    private UnavailableTypes unavailableReason;
 
-	UnavailableInformation(VigilantWrapper vigilant, UnavailableTypes unavailableReason) {
-		this.vigilant = vigilant;
-		this.unavailableReason = unavailableReason;
-	}
+    UnavailableInformation(VigilantWrapper vigilant, UnavailableTypes unavailableReason) {
+        this.vigilant = vigilant;
+        this.unavailableReason = unavailableReason;
+    }
 
-	public VigilantWrapper getVigilant() {
-		return this.vigilant;
-	}
+    public VigilantWrapper getVigilant() {
+        return this.vigilant;
+    }
 
-	public UnavailableTypes getReason() {
-		return this.unavailableReason;
-	}
+    public UnavailableTypes getReason() {
+        return this.unavailableReason;
+    }
 }

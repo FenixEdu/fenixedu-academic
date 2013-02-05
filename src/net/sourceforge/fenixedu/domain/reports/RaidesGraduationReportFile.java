@@ -24,109 +24,109 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base {
 
-	public RaidesGraduationReportFile() {
-		super();
-	}
+    public RaidesGraduationReportFile() {
+        super();
+    }
 
-	@Override
-	public String getJobName() {
-		return "Listagem RAIDES - Graduação";
-	}
+    @Override
+    public String getJobName() {
+        return "Listagem RAIDES - Graduação";
+    }
 
-	@Override
-	protected String getPrefix() {
-		return "graduationRAIDES";
-	}
+    @Override
+    protected String getPrefix() {
+        return "graduationRAIDES";
+    }
 
-	@Override
-	public void renderReport(Spreadsheet spreadsheet) throws Exception {
-		ExecutionYear executionYear = getExecutionYear();
-		createHeaders(spreadsheet);
+    @Override
+    public void renderReport(Spreadsheet spreadsheet) throws Exception {
+        ExecutionYear executionYear = getExecutionYear();
+        createHeaders(spreadsheet);
 
-		System.out.println("BEGIN report for " + getDegreeType().name());
-		int count = 0;
+        System.out.println("BEGIN report for " + getDegreeType().name());
+        int count = 0;
 
-		for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
-			final Registration registration = studentCurricularPlan.getRegistration();
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
+            final Registration registration = studentCurricularPlan.getRegistration();
 
-			if (registration != null && !registration.isTransition() && !registration.isSchoolPartConcluded()) {
+            if (registration != null && !registration.isTransition() && !registration.isSchoolPartConcluded()) {
 
-				for (final CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
-					final CycleCurriculumGroup cycleCGroup = studentCurricularPlan.getRoot().getCycleCurriculumGroup(cycleType);
-					if (cycleCGroup != null && !cycleCGroup.isExternal()) {
+                for (final CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
+                    final CycleCurriculumGroup cycleCGroup = studentCurricularPlan.getRoot().getCycleCurriculumGroup(cycleType);
+                    if (cycleCGroup != null && !cycleCGroup.isExternal()) {
 
-						final RegistrationConclusionBean registrationConclusionBean =
-								new RegistrationConclusionBean(registration, cycleCGroup);
+                        final RegistrationConclusionBean registrationConclusionBean =
+                                new RegistrationConclusionBean(registration, cycleCGroup);
 
-						if (cycleCGroup.isConcluded()) {
-							final ExecutionYear conclusionYear = registrationConclusionBean.getConclusionYear();
+                        if (cycleCGroup.isConcluded()) {
+                            final ExecutionYear conclusionYear = registrationConclusionBean.getConclusionYear();
 
-							if (conclusionYear != executionYear && conclusionYear != executionYear.getPreviousExecutionYear()) {
-								continue;
-							}
+                            if (conclusionYear != executionYear && conclusionYear != executionYear.getPreviousExecutionYear()) {
+                                continue;
+                            }
 
-						}
+                        }
 
-						LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
-						for (RegistrationState state : registration.getRegistrationStates()) {
-							if (!state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateMidnight())) {
-								states.add(state);
-							}
-						}
-						Collections.sort(states, RegistrationState.DATE_COMPARATOR);
-						RegistrationStateType lastState =
-								states.isEmpty() ? RegistrationStateType.REGISTERED : states.getLast().getStateType();
+                        LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
+                        for (RegistrationState state : registration.getRegistrationStates()) {
+                            if (!state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateMidnight())) {
+                                states.add(state);
+                            }
+                        }
+                        Collections.sort(states, RegistrationState.DATE_COMPARATOR);
+                        RegistrationStateType lastState =
+                                states.isEmpty() ? RegistrationStateType.REGISTERED : states.getLast().getStateType();
 
-						if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
-								&& (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
-							reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
-									cycleType, true, registrationConclusionBean.getConclusionDate(),
-									registrationConclusionBean.getAverage());
-						} else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
-								&& registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
-							reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
-									cycleType, false, null, registrationConclusionBean.getAverage());
-						}
-					}
-				}
-				count++;
-			}
-		}
+                        if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
+                                && (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
+                            reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
+                                    cycleType, true, registrationConclusionBean.getConclusionDate(),
+                                    registrationConclusionBean.getAverage());
+                        } else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
+                                && registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
+                            reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
+                                    cycleType, false, null, registrationConclusionBean.getAverage());
+                        }
+                    }
+                }
+                count++;
+            }
+        }
 
-		System.out.println("END report for " + getDegreeType().name());
-	}
+        System.out.println("END report for " + getDegreeType().name());
+    }
 
-	private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {
-		final Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
+    private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {
+        final Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
 
-		collectStudentCurricularPlansFor(executionYear, result);
+        collectStudentCurricularPlansFor(executionYear, result);
 
-		if (executionYear.getPreviousExecutionYear() != null) {
-			collectStudentCurricularPlansFor(executionYear.getPreviousExecutionYear(), result);
-		}
+        if (executionYear.getPreviousExecutionYear() != null) {
+            collectStudentCurricularPlansFor(executionYear.getPreviousExecutionYear(), result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
-		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-			for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
-					.getStudentCurricularPlans()) {
-				if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
-					result.add(studentCurricularPlan);
-				}
-			}
-		}
-	}
+    private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
+            for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
+                    .getStudentCurricularPlans()) {
+                if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
+                    result.add(studentCurricularPlan);
+                }
+            }
+        }
+    }
 
-	private void createHeaders(final Spreadsheet spreadsheet) {
-		RaidesCommonReportFieldsWrapper.createHeaders(spreadsheet);
-	}
+    private void createHeaders(final Spreadsheet spreadsheet) {
+        RaidesCommonReportFieldsWrapper.createHeaders(spreadsheet);
+    }
 
-	private void reportRaidesGraduate(final Spreadsheet sheet, final Registration registration,
-			List<Registration> registrationPath, ExecutionYear executionYear, final CycleType cycleType, final boolean concluded,
-			final YearMonthDay conclusionDate, BigDecimal average) {
-		RaidesCommonReportFieldsWrapper.reportRaidesFields(sheet, registration, registrationPath, executionYear, cycleType,
-				concluded, conclusionDate, average, true);
-	}
+    private void reportRaidesGraduate(final Spreadsheet sheet, final Registration registration,
+            List<Registration> registrationPath, ExecutionYear executionYear, final CycleType cycleType, final boolean concluded,
+            final YearMonthDay conclusionDate, BigDecimal average) {
+        RaidesCommonReportFieldsWrapper.reportRaidesFields(sheet, registration, registrationPath, executionYear, cycleType,
+                concluded, conclusionDate, average, true);
+    }
 }

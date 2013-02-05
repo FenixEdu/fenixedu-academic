@@ -14,28 +14,24 @@ import org.apache.struts.actions.ForwardAction;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "publico",
-		path = "/degreeSite/showCourseSite",
-		attribute = "chooseContextDegreeForm",
-		formBean = "chooseContextDegreeForm",
-		scope = "request",
-		parameter = "/publico/showCourseSite.do?method=showCurricularCourseSite")
+@Mapping(module = "publico", path = "/degreeSite/showCourseSite", attribute = "chooseContextDegreeForm",
+        formBean = "chooseContextDegreeForm", scope = "request",
+        parameter = "/publico/showCourseSite.do?method=showCurricularCourseSite")
 public class FenixForwardAction extends ForwardAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		return super.execute(mapping, actionForm, request, response);
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	protected static IUserView getUserView(HttpServletRequest request) {
-		return UserView.getUser();
-	}
+    protected static IUserView getUserView(HttpServletRequest request) {
+        return UserView.getUser();
+    }
 
-	protected Person getLoggedPerson(HttpServletRequest request) {
-		return getUserView(request).getPerson();
-	}
+    protected Person getLoggedPerson(HttpServletRequest request) {
+        return getUserView(request).getPerson();
+    }
 
 }

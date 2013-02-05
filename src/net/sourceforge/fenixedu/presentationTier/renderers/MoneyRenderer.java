@@ -17,36 +17,36 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public class MoneyRenderer extends OutputRenderer {
 
-	private String format;
+    private String format;
 
-	private static final String DEFAULT_FORMAT = "######0.00";
+    private static final String DEFAULT_FORMAT = "######0.00";
 
-	public MoneyRenderer() {
-		setFormat(DEFAULT_FORMAT);
-	}
+    public MoneyRenderer() {
+        setFormat(DEFAULT_FORMAT);
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
-				if (object != null) {
-					final Number number = ((Money) object).getAmount();
-					return new HtmlText(new DecimalFormat(getFormat()).format(number));
-				} else {
-					return new HtmlText("");
-				}
-			}
-		};
-	}
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
+                if (object != null) {
+                    final Number number = ((Money) object).getAmount();
+                    return new HtmlText(new DecimalFormat(getFormat()).format(number));
+                } else {
+                    return new HtmlText("");
+                }
+            }
+        };
+    }
 
-	public String getFormat() {
-		return format;
-	}
+    public String getFormat() {
+        return format;
+    }
 
-	public void setFormat(String format) {
-		this.format = format;
-	}
+    public void setFormat(String format) {
+        this.format = format;
+    }
 
 }

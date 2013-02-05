@@ -12,28 +12,28 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
  */
 public class InfoGratuitySituationWithAll extends InfoGratuitySituation {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seenet.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation#
-	 * copyFromDomain(Dominio.GratuitySituation)
-	 */
-	@Override
-	public void copyFromDomain(GratuitySituation gratuitySituation) {
-		super.copyFromDomain(gratuitySituation);
-		if (gratuitySituation != null) {
-			setInfoStudentCurricularPlan(InfoStudentCurricularPlan
-					.newInfoFromDomain(gratuitySituation.getStudentCurricularPlan()));
-			setInfoGratuityValues(InfoGratuityValues.newInfoFromDomain(gratuitySituation.getGratuityValues()));
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @seenet.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation#
+     * copyFromDomain(Dominio.GratuitySituation)
+     */
+    @Override
+    public void copyFromDomain(GratuitySituation gratuitySituation) {
+        super.copyFromDomain(gratuitySituation);
+        if (gratuitySituation != null) {
+            setInfoStudentCurricularPlan(InfoStudentCurricularPlan
+                    .newInfoFromDomain(gratuitySituation.getStudentCurricularPlan()));
+            setInfoGratuityValues(InfoGratuityValues.newInfoFromDomain(gratuitySituation.getGratuityValues()));
+        }
+    }
 
-	public static InfoGratuitySituation newInfoFromDomain(GratuitySituation gratuitySituation) {
-		InfoGratuitySituationWithAll infoGratuitySituation = new InfoGratuitySituationWithAll();
-		if (gratuitySituation != null) {
-			infoGratuitySituation = new InfoGratuitySituationWithAll();
-			infoGratuitySituation.copyFromDomain(gratuitySituation);
-		}
-		return infoGratuitySituation;
-	}
+    public static InfoGratuitySituation newInfoFromDomain(GratuitySituation gratuitySituation) {
+        InfoGratuitySituationWithAll infoGratuitySituation = new InfoGratuitySituationWithAll();
+        if (gratuitySituation != null) {
+            infoGratuitySituation = new InfoGratuitySituationWithAll();
+            infoGratuitySituation.copyFromDomain(gratuitySituation);
+        }
+        return infoGratuitySituation;
+    }
 }

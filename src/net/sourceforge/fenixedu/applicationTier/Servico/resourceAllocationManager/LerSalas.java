@@ -11,13 +11,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerSalas extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static Object run() {
-		final List<InfoRoom> infoSalas = new ArrayList<InfoRoom>();
-		for (final AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducation()) {
-			infoSalas.add(InfoRoom.newInfoFromDomain(room));
-		}
-		return infoSalas;
-	}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static Object run() {
+        final List<InfoRoom> infoSalas = new ArrayList<InfoRoom>();
+        for (final AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducation()) {
+            infoSalas.add(InfoRoom.newInfoFromDomain(room));
+        }
+        return infoSalas;
+    }
 }

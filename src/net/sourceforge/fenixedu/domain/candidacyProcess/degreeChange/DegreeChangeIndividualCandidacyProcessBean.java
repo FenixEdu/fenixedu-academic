@@ -20,96 +20,96 @@ import org.joda.time.LocalDate;
 
 public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandidacyProcessWithPrecedentDegreeInformationBean {
 
-	private Degree selectDegree;
+    private Degree selectDegree;
 
-	public DegreeChangeIndividualCandidacyProcessBean() {
-		setCandidacyDate(new LocalDate());
-		initializeDocumentUploadBeans();
-		setObservations("");
-	}
+    public DegreeChangeIndividualCandidacyProcessBean() {
+        setCandidacyDate(new LocalDate());
+        initializeDocumentUploadBeans();
+        setObservations("");
+    }
 
-	public DegreeChangeIndividualCandidacyProcessBean(final DegreeChangeIndividualCandidacyProcess process) {
-		setIndividualCandidacyProcess(process);
-		setCandidacyProcess(process.getCandidacyProcess());
-		setCandidacyDate(process.getCandidacyDate());
-		setSelectedDegree(process.getCandidacySelectedDegree());
-		setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
-		setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
-		initializeFormation(process.getCandidacy().getFormations());
-		setObservations(process.getCandidacy().getObservations());
-		setUtlStudent(process.getCandidacy().getUtlStudent());
-	}
+    public DegreeChangeIndividualCandidacyProcessBean(final DegreeChangeIndividualCandidacyProcess process) {
+        setIndividualCandidacyProcess(process);
+        setCandidacyProcess(process.getCandidacyProcess());
+        setCandidacyDate(process.getCandidacyDate());
+        setSelectedDegree(process.getCandidacySelectedDegree());
+        setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
+        setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
+        initializeFormation(process.getCandidacy().getFormations());
+        setObservations(process.getCandidacy().getObservations());
+        setUtlStudent(process.getCandidacy().getUtlStudent());
+    }
 
-	@Override
-	protected List<CycleType> getValidPrecedentCycleTypes() {
-		return Collections.singletonList(CycleType.FIRST_CYCLE);
-	}
+    @Override
+    protected List<CycleType> getValidPrecedentCycleTypes() {
+        return Collections.singletonList(CycleType.FIRST_CYCLE);
+    }
 
-	@Override
-	protected boolean isPreBolonhaPrecedentDegreeAllowed() {
-		return true;
-	}
+    @Override
+    protected boolean isPreBolonhaPrecedentDegreeAllowed() {
+        return true;
+    }
 
-	@Override
-	public ExecutionYear getCandidacyExecutionInterval() {
-		return (ExecutionYear) super.getCandidacyExecutionInterval();
-	}
+    @Override
+    public ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
+    }
 
-	@Override
-	public List<StudentCurricularPlan> getPrecedentStudentCurricularPlans() {
-		final Student student = getStudent();
-		if (student == null) {
-			return Collections.emptyList();
-		}
+    @Override
+    public List<StudentCurricularPlan> getPrecedentStudentCurricularPlans() {
+        final Student student = getStudent();
+        if (student == null) {
+            return Collections.emptyList();
+        }
 
-		final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-		for (final Registration registration : student.getRegistrations()) {
+        final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+        for (final Registration registration : student.getRegistrations()) {
 
-			if (registration.isBolonha()) {
-				final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+            if (registration.isBolonha()) {
+                final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
-				for (final CycleType cycleType : getValidPrecedentCycleTypes()) {
-					if (studentCurricularPlan.hasCycleCurriculumGroup(cycleType)) {
-						final CycleCurriculumGroup cycle = studentCurricularPlan.getCycle(cycleType);
+                for (final CycleType cycleType : getValidPrecedentCycleTypes()) {
+                    if (studentCurricularPlan.hasCycleCurriculumGroup(cycleType)) {
+                        final CycleCurriculumGroup cycle = studentCurricularPlan.getCycle(cycleType);
 
-						if (!cycle.isConclusionProcessed() && !cycle.isConcluded()) {
-							studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
-							break;
-						}
-					}
-				}
+                        if (!cycle.isConclusionProcessed() && !cycle.isConcluded()) {
+                            studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
+                            break;
+                        }
+                    }
+                }
 
-			} else if (isPreBolonhaPrecedentDegreeAllowed()) {
-				if (!registration.isConcluded() && !registration.isRegistrationConclusionProcessed()) {
-					studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
-				}
-			}
-		}
+            } else if (isPreBolonhaPrecedentDegreeAllowed()) {
+                if (!registration.isConcluded() && !registration.isRegistrationConclusionProcessed()) {
+                    studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
+                }
+            }
+        }
 
-		return studentCurricularPlans;
-	}
+        return studentCurricularPlans;
+    }
 
-	@Override
-	public DegreeChangeCandidacyProcess getCandidacyProcess() {
-		return (DegreeChangeCandidacyProcess) super.getCandidacyProcess();
-	}
+    @Override
+    public DegreeChangeCandidacyProcess getCandidacyProcess() {
+        return (DegreeChangeCandidacyProcess) super.getCandidacyProcess();
+    }
 
-	public Degree getSelectedDegree() {
-		return this.selectDegree;
-	}
+    public Degree getSelectedDegree() {
+        return this.selectDegree;
+    }
 
-	public void setSelectedDegree(final Degree selectDegree) {
-		this.selectDegree = selectDegree;
-	}
+    public void setSelectedDegree(final Degree selectDegree) {
+        this.selectDegree = selectDegree;
+    }
 
-	@Override
-	protected void initializeDocumentUploadBeans() {
-		setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
-	}
+    @Override
+    protected void initializeDocumentUploadBeans() {
+        setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
+    }
 
-	@Override
-	public boolean isDegreeChange() {
-		return true;
-	}
+    @Override
+    public boolean isDegreeChange() {
+        return true;
+    }
 
 }

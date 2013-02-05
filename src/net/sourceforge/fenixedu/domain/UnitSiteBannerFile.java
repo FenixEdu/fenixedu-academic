@@ -8,21 +8,21 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
 
-	public UnitSiteBannerFile() {
-		super();
-	}
+    public UnitSiteBannerFile() {
+        super();
+    }
 
-	public UnitSiteBannerFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-			byte[] content, Group group) {
-		this();
-		init(path, filename, displayName, metadata, content, group);
-	}
+    public UnitSiteBannerFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+            byte[] content, Group group) {
+        this();
+        init(path, filename, displayName, metadata, content, group);
+    }
 
-	@Override
-	public void delete() {
-		removeBackgroundBanner();
-		removeMainBanner();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        removeBackgroundBanner();
+        removeMainBanner();
+        super.delete();
+    }
 
 }

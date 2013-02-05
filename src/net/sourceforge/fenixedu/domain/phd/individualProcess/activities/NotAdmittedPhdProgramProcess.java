@@ -13,34 +13,34 @@ import org.joda.time.DateTime;
 
 public class NotAdmittedPhdProgramProcess extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		// remove restrictions
-	}
+    @Override
+    protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        // remove restrictions
+    }
 
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcessState(userView)) {
-			throw new PreConditionNotValidException();
-		}
+    @Override
+    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcessState(userView)) {
+            throw new PreConditionNotValidException();
+        }
 
-	}
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
-		DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+        DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
 
-		PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.NOT_ADMITTED,
-				userView.getPerson(), "", stateDate);
+        PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.NOT_ADMITTED,
+                userView.getPerson(), "", stateDate);
 
-		process.cancelDebts(userView.getPerson());
+        process.cancelDebts(userView.getPerson());
 
-		if (process.hasRegistration() && process.getRegistration().isActive()) {
-			RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
-					RegistrationStateType.CANCELED);
-		}
+        if (process.hasRegistration() && process.getRegistration().isActive()) {
+            RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
+                    RegistrationStateType.CANCELED);
+        }
 
-		return process;
-	}
+        return process;
+    }
 }

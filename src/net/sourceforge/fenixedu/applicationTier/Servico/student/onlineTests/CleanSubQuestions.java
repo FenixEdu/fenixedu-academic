@@ -22,34 +22,34 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CleanSubQuestions extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
-			String path) throws FenixServiceException {
-		if (distributedTest == null) {
-			throw new FenixServiceException();
-		}
-		Set<StudentTestQuestion> studentTestQuestionList =
-				StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
-		for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-			if (studentTestQuestion.getQuestion().getIdInternal().equals(exerciseCode)) {
-				ParseSubQuestion parse = new ParseSubQuestion();
-				try {
-					parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
-				} catch (Exception e) {
-					throw new FenixServiceException(e);
-				}
-				SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().get(0);
-				if (subQuestion.getItemId().equals(studentTestQuestion.getItemId())) {
-					// e a 1ª
-					studentTestQuestion.setResponse(null);
-				} else {
-					studentTestQuestion.delete();
-				}
-			}
-		}
-		new StudentTestLog(distributedTest, registration, "Apagou resposta da pergunta/alínea: " + itemCode);
-		return;
-	}
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
+            String path) throws FenixServiceException {
+        if (distributedTest == null) {
+            throw new FenixServiceException();
+        }
+        Set<StudentTestQuestion> studentTestQuestionList =
+                StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+            if (studentTestQuestion.getQuestion().getIdInternal().equals(exerciseCode)) {
+                ParseSubQuestion parse = new ParseSubQuestion();
+                try {
+                    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                } catch (Exception e) {
+                    throw new FenixServiceException(e);
+                }
+                SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().get(0);
+                if (subQuestion.getItemId().equals(studentTestQuestion.getItemId())) {
+                    // e a 1ª
+                    studentTestQuestion.setResponse(null);
+                } else {
+                    studentTestQuestion.delete();
+                }
+            }
+        }
+        new StudentTestLog(distributedTest, registration, "Apagou resposta da pergunta/alínea: " + itemCode);
+        return;
+    }
 
 }

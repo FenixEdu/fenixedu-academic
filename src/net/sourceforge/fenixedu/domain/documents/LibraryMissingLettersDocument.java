@@ -16,34 +16,34 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument_Base {
 
-	public LibraryMissingLettersDocument() {
-		super();
-	}
+    public LibraryMissingLettersDocument() {
+        super();
+    }
 
-	public LibraryMissingLettersDocument(List<LibraryCard> source, Person operator, String filename, byte[] content,
-			boolean forStudents) {
-		super();
-		for (LibraryCard card : source) {
-			addSource(card);
-		}
-		setLibraryDocument(new LibraryDocument());
-		init(forStudents ? GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS : GeneratedDocumentType.LIBRARY_MISSING_LETTERS,
-				operator, operator, filename, content);
+    public LibraryMissingLettersDocument(List<LibraryCard> source, Person operator, String filename, byte[] content,
+            boolean forStudents) {
+        super();
+        for (LibraryCard card : source) {
+            addSource(card);
+        }
+        setLibraryDocument(new LibraryDocument());
+        init(forStudents ? GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS : GeneratedDocumentType.LIBRARY_MISSING_LETTERS,
+                operator, operator, filename, content);
 
-	}
+    }
 
-	@Override
-	protected Group computePermittedGroup() {
-		return new RoleGroup(RoleType.LIBRARY);
-	}
+    @Override
+    protected Group computePermittedGroup() {
+        return new RoleGroup(RoleType.LIBRARY);
+    }
 
-	@Service
-	public static void store(List<LibraryCard> source, Person operator, byte[] content, boolean forStudents) {
-		if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
-			DateTime time = new DateTime();
-			new LibraryMissingLettersDocument(source, operator, "missing_letters_" + time.toString("yMd_kms") + ".pdf", content,
-					forStudents);
-		}
-	}
+    @Service
+    public static void store(List<LibraryCard> source, Person operator, byte[] content, boolean forStudents) {
+        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+            DateTime time = new DateTime();
+            new LibraryMissingLettersDocument(source, operator, "missing_letters_" + time.toString("yMd_kms") + ".pdf", content,
+                    forStudents);
+        }
+    }
 
 }

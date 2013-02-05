@@ -31,129 +31,129 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
-	private Boolean previousOrEqualSemester = false;
+    private Boolean previousOrEqualSemester = false;
 
-	public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-		DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
-		request.setAttribute("degreeBean", degreeBean);
-		RenderUtils.invalidateViewState();
+    public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+        DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
+        request.setAttribute("degreeBean", degreeBean);
+        RenderUtils.invalidateViewState();
 
-		AcademicInterval choosedSemester = degreeBean.getAcademicInterval();
-		AcademicInterval actualSemester = ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
+        AcademicInterval choosedSemester = degreeBean.getAcademicInterval();
+        AcademicInterval actualSemester = ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
 
-		previousOrEqualSemester = choosedSemester.isBefore(actualSemester) || choosedSemester.isEqualOrEquivalent(actualSemester);
+        previousOrEqualSemester = choosedSemester.isBefore(actualSemester) || choosedSemester.isEqualOrEquivalent(actualSemester);
 
-		request.setAttribute("previousOrEqualSemester", previousOrEqualSemester);
+        request.setAttribute("previousOrEqualSemester", previousOrEqualSemester);
 
-		if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()
-				&& degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
-			addActionMessage("error", request, "message.merge.execution.courses.degreesHasNoCourses");
-			return mapping.findForward("chooseDegreesAndExecutionPeriod");
-		} else {
-			if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
-				addActionMessage("error", request, "message.merge.execution.courses.destinationDegreeHasNoCourses");
-				return mapping.findForward("chooseDegreesAndExecutionPeriod");
-			} else {
-				if (degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
-					addActionMessage("error", request, "message.merge.execution.courses.sourceDegreeHasNoCourses");
-					return mapping.findForward("chooseDegreesAndExecutionPeriod");
-				}
-			}
-		}
-		return mapping.findForward("chooseExecutionCourses");
-	}
+        if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()
+                && degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+            addActionMessage("error", request, "message.merge.execution.courses.degreesHasNoCourses");
+            return mapping.findForward("chooseDegreesAndExecutionPeriod");
+        } else {
+            if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+                addActionMessage("error", request, "message.merge.execution.courses.destinationDegreeHasNoCourses");
+                return mapping.findForward("chooseDegreesAndExecutionPeriod");
+            } else {
+                if (degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+                    addActionMessage("error", request, "message.merge.execution.courses.sourceDegreeHasNoCourses");
+                    return mapping.findForward("chooseDegreesAndExecutionPeriod");
+                }
+            }
+        }
+        return mapping.findForward("chooseExecutionCourses");
+    }
 
-	public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-		DegreesMergeBean degreeBean = new DegreesMergeBean();
-		request.setAttribute("degreeBean", degreeBean);
-		return mapping.findForward("chooseDegreesAndExecutionPeriod");
-	}
+    public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+        DegreesMergeBean degreeBean = new DegreesMergeBean();
+        request.setAttribute("degreeBean", degreeBean);
+        return mapping.findForward("chooseDegreesAndExecutionPeriod");
+    }
 
-	public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+    public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-		DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
-		RenderUtils.invalidateViewState();
+        DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
+        RenderUtils.invalidateViewState();
 
-		ExecutionCourse sourceExecutionCourse = degreeBean.getSourceExecutionCourse();
-		ExecutionCourse destinationExecutionCourse = degreeBean.getDestinationExecutionCourse();
+        ExecutionCourse sourceExecutionCourse = degreeBean.getSourceExecutionCourse();
+        ExecutionCourse destinationExecutionCourse = degreeBean.getDestinationExecutionCourse();
 
-		Integer sourceExecutionCourseId = sourceExecutionCourse.getIdInternal();
+        Integer sourceExecutionCourseId = sourceExecutionCourse.getIdInternal();
 
-		Integer destinationExecutionCourseId = destinationExecutionCourse.getIdInternal();
+        Integer destinationExecutionCourseId = destinationExecutionCourse.getIdInternal();
 
-		Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
+        Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
 
-		Boolean error = false;
+        Boolean error = false;
 
-		try {
-			ServiceUtils.executeService("MergeExecutionCourses", args);
-		} catch (FenixServiceException fse) {
-			error = true;
-			addActionMessageLiteral("errorFenixException", request, fse.getMessage());
-		}
+        try {
+            ServiceUtils.executeService("MergeExecutionCourses", args);
+        } catch (FenixServiceException fse) {
+            error = true;
+            addActionMessageLiteral("errorFenixException", request, fse.getMessage());
+        }
 
-		if (!error) {
-			addActionMessage("success", request, "message.merge.execution.courses.success");
-		}
-		return mapping.findForward("sucess");
-	}
+        if (!error) {
+            addActionMessage("success", request, "message.merge.execution.courses.success");
+        }
+        return mapping.findForward("sucess");
+    }
 
-	public static class DegreesMergeBean implements Serializable {
+    public static class DegreesMergeBean implements Serializable {
 
-		private static final long serialVersionUID = -5030417665530169855L;
+        private static final long serialVersionUID = -5030417665530169855L;
 
-		private Degree sourceDegree;
+        private Degree sourceDegree;
 
-		private Degree destinationDegree;
+        private Degree destinationDegree;
 
-		private ExecutionCourse sourceExecutionCourse;
+        private ExecutionCourse sourceExecutionCourse;
 
-		private ExecutionCourse destinationExecutionCourse;
+        private ExecutionCourse destinationExecutionCourse;
 
-		private AcademicInterval academicInterval;
+        private AcademicInterval academicInterval;
 
-		public ExecutionCourse getSourceExecutionCourse() {
-			return sourceExecutionCourse;
-		}
+        public ExecutionCourse getSourceExecutionCourse() {
+            return sourceExecutionCourse;
+        }
 
-		public void setSourceExecutionCourse(ExecutionCourse sourceExecutionCourse) {
-			this.sourceExecutionCourse = sourceExecutionCourse;
-		}
+        public void setSourceExecutionCourse(ExecutionCourse sourceExecutionCourse) {
+            this.sourceExecutionCourse = sourceExecutionCourse;
+        }
 
-		public ExecutionCourse getDestinationExecutionCourse() {
-			return destinationExecutionCourse;
-		}
+        public ExecutionCourse getDestinationExecutionCourse() {
+            return destinationExecutionCourse;
+        }
 
-		public void setDestinationExecutionCourse(ExecutionCourse destinationExecutionCourse) {
-			this.destinationExecutionCourse = destinationExecutionCourse;
-		}
+        public void setDestinationExecutionCourse(ExecutionCourse destinationExecutionCourse) {
+            this.destinationExecutionCourse = destinationExecutionCourse;
+        }
 
-		public AcademicInterval getAcademicInterval() {
-			return academicInterval;
-		}
+        public AcademicInterval getAcademicInterval() {
+            return academicInterval;
+        }
 
-		public void setAcademicInterval(AcademicInterval academicInterval) {
-			this.academicInterval = academicInterval;
-		}
+        public void setAcademicInterval(AcademicInterval academicInterval) {
+            this.academicInterval = academicInterval;
+        }
 
-		public Degree getSourceDegree() {
-			return sourceDegree;
-		}
+        public Degree getSourceDegree() {
+            return sourceDegree;
+        }
 
-		public void setSourceDegree(Degree sourceDegree) {
-			this.sourceDegree = sourceDegree;
-		}
+        public void setSourceDegree(Degree sourceDegree) {
+            this.sourceDegree = sourceDegree;
+        }
 
-		public Degree getDestinationDegree() {
-			return destinationDegree;
-		}
+        public Degree getDestinationDegree() {
+            return destinationDegree;
+        }
 
-		public void setDestinationDegree(Degree destinationDegree) {
-			this.destinationDegree = destinationDegree;
-		}
-	}
+        public void setDestinationDegree(Degree destinationDegree) {
+            this.destinationDegree = destinationDegree;
+        }
+    }
 
 }

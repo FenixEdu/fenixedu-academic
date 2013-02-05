@@ -13,24 +13,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class UnitsWithAnnouncementsProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		Set<Unit> result = new HashSet<Unit>();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        Set<Unit> result = new HashSet<Unit>();
 
-		for (final Content content : RootDomainObject.getInstance().getContentsSet()) {
-			if (!(content instanceof UnitAnnouncementBoard)) {
-				continue;
-			}
-			UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) content;
-			result.add(unitBoard.getUnit());
-		}
+        for (final Content content : RootDomainObject.getInstance().getContentsSet()) {
+            if (!(content instanceof UnitAnnouncementBoard)) {
+                continue;
+            }
+            UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) content;
+            result.add(unitBoard.getUnit());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

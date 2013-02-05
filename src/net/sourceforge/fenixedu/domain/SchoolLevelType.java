@@ -8,250 +8,250 @@ import com.google.common.collect.Lists;
 
 public enum SchoolLevelType {
 
-	UNKNOWN(false, false, false),
+    UNKNOWN(false, false, false),
 
-	DONT_KNOW_HOW_TO_READ_OR_WRITE(false, true, false),
+    DONT_KNOW_HOW_TO_READ_OR_WRITE(false, true, false),
 
-	KNOWS_HOW_TO_READ_WITHOUT_OLD_FOURTH_YEAR(false, true, false),
+    KNOWS_HOW_TO_READ_WITHOUT_OLD_FOURTH_YEAR(false, true, false),
 
-	FIRST_CYCLE_BASIC_SCHOOL(true, true, false),
+    FIRST_CYCLE_BASIC_SCHOOL(true, true, false),
 
-	SECOND_CYCLE_BASIC_SCHOOL(true, true, false),
+    SECOND_CYCLE_BASIC_SCHOOL(true, true, false),
 
-	THIRD_CYCLE_BASIC_SCHOOL(true, true, false),
+    THIRD_CYCLE_BASIC_SCHOOL(true, true, false),
 
-	HIGH_SCHOOL_OR_EQUIVALENT(true, true, false) {
-		@Override
-		public boolean isHighSchoolOrEquivalent() {
-			return true;
-		}
-	},
+    HIGH_SCHOOL_OR_EQUIVALENT(true, true, false) {
+        @Override
+        public boolean isHighSchoolOrEquivalent() {
+            return true;
+        }
+    },
 
-	TECHNICAL_SPECIALIZATION(true, true, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    TECHNICAL_SPECIALIZATION(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("C", "C0");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("C", "C0");
+        }
+    },
 
-	MEDIUM_EDUCATION(false, true, false),
+    MEDIUM_EDUCATION(false, true, false),
 
-	BACHELOR_DEGREE(true, true, true) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    BACHELOR_DEGREE(true, true, true) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("A", "B", "BC", "DB", "EB", "MD");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("A", "B", "BC", "DB", "EB", "MD");
+        }
+    },
 
-	BACHELOR_DEGREE_PRE_BOLOGNA(true, true, true) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    BACHELOR_DEGREE_PRE_BOLOGNA(true, true, true) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("BL", "LB", "PB");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("BL", "LB", "PB");
+        }
+    },
 
-	DEGREE(true, true, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    DEGREE(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("L1", "PM", "LI");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("L1", "PM", "LI");
+        }
+    },
 
-	DEGREE_PRE_BOLOGNA(true, true, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    DEGREE_PRE_BOLOGNA(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("DD", "DL", "EL", "L", "LT", "P");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("DD", "DL", "EL", "L", "LT", "P");
+        }
+    },
 
-	DEGREE_TERMINAL_PART(true, true, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    DEGREE_TERMINAL_PART(true, true, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("LT");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("LT");
+        }
+    },
 
-	MASTER_DEGREE(true, true, true) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    MASTER_DEGREE(true, true, true) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("M2");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("M2");
+        }
+    },
 
-	MASTER_DEGREE_INTEGRATED(true, false, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    MASTER_DEGREE_INTEGRATED(true, false, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("MI", "MT");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("MI", "MT");
+        }
+    },
 
-	MASTER_DEGREE_PRE_BOLOGNA(true, false, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    MASTER_DEGREE_PRE_BOLOGNA(true, false, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("M");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("M");
+        }
+    },
 
-	DOCTORATE_DEGREE(true, true, true) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    DOCTORATE_DEGREE(true, true, true) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("D3");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("D3");
+        }
+    },
 
-	DOCTORATE_DEGREE_PRE_BOLOGNA(true, false, false) {
-		@Override
-		public boolean isHigherEducation() {
-			return true;
-		}
+    DOCTORATE_DEGREE_PRE_BOLOGNA(true, false, false) {
+        @Override
+        public boolean isHigherEducation() {
+            return true;
+        }
 
-		@Override
-		public List<String> getEquivalentDegreeClassifications() {
-			return Lists.newArrayList("D");
-		}
-	},
+        @Override
+        public List<String> getEquivalentDegreeClassifications() {
+            return Lists.newArrayList("D");
+        }
+    },
 
-	OTHER(true, false, true),
+    OTHER(true, false, true),
 
-	OTHER_SITUATION(false, true, false);
+    OTHER_SITUATION(false, true, false);
 
-	private boolean forStudent;
+    private boolean forStudent;
 
-	private boolean forStudentHousehold;
+    private boolean forStudentHousehold;
 
-	private boolean forMobilityStudent;
+    private boolean forMobilityStudent;
 
-	private SchoolLevelType(boolean forStudent, boolean forStudentHousehold, boolean forMobilityStudent) {
-		this.forStudent = forStudent;
-		this.forStudentHousehold = forStudentHousehold;
-		this.forMobilityStudent = forMobilityStudent;
-	}
+    private SchoolLevelType(boolean forStudent, boolean forStudentHousehold, boolean forMobilityStudent) {
+        this.forStudent = forStudent;
+        this.forStudentHousehold = forStudentHousehold;
+        this.forMobilityStudent = forMobilityStudent;
+    }
 
-	public boolean isHighSchoolOrEquivalent() {
-		return false;
-	}
+    public boolean isHighSchoolOrEquivalent() {
+        return false;
+    }
 
-	public boolean isHigherEducation() {
-		return false;
-	}
+    public boolean isHigherEducation() {
+        return false;
+    }
 
-	public List<String> getEquivalentDegreeClassifications() {
-		return new ArrayList<String>();
-	}
+    public List<String> getEquivalentDegreeClassifications() {
+        return new ArrayList<String>();
+    }
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public String getQualifiedName() {
-		return SchoolLevelType.class.getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return SchoolLevelType.class.getSimpleName() + "." + name();
+    }
 
-	public String getFullyQualifiedName() {
-		return SchoolLevelType.class.getName() + "." + name();
-	}
+    public String getFullyQualifiedName() {
+        return SchoolLevelType.class.getName() + "." + name();
+    }
 
-	public boolean isForStudent() {
-		return forStudent;
-	}
+    public boolean isForStudent() {
+        return forStudent;
+    }
 
-	public boolean isForStudentHousehold() {
-		return forStudentHousehold;
-	}
+    public boolean isForStudentHousehold() {
+        return forStudentHousehold;
+    }
 
-	public boolean isForMobilityStudent() {
-		return forMobilityStudent;
-	}
+    public boolean isForMobilityStudent() {
+        return forMobilityStudent;
+    }
 
-	static public List<SchoolLevelType> getTypesForStudent() {
-		final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
+    static public List<SchoolLevelType> getTypesForStudent() {
+        final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
 
-		for (final SchoolLevelType each : values()) {
-			if (each.isForStudent()) {
-				result.add(each);
-			}
-		}
+        for (final SchoolLevelType each : values()) {
+            if (each.isForStudent()) {
+                result.add(each);
+            }
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	static public List<SchoolLevelType> getTypesForMobilityStudent() {
-		final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
+    static public List<SchoolLevelType> getTypesForMobilityStudent() {
+        final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
 
-		for (final SchoolLevelType each : values()) {
-			if (each.isForMobilityStudent()) {
-				result.add(each);
-			}
-		}
+        for (final SchoolLevelType each : values()) {
+            if (each.isForMobilityStudent()) {
+                result.add(each);
+            }
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	static public List<SchoolLevelType> getTypesForStudentHousehold() {
-		final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
+    static public List<SchoolLevelType> getTypesForStudentHousehold() {
+        final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
 
-		for (final SchoolLevelType each : values()) {
-			if (each.isForStudentHousehold()) {
-				result.add(each);
-			}
-		}
+        for (final SchoolLevelType each : values()) {
+            if (each.isForStudentHousehold()) {
+                result.add(each);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public String getLocalizedName() {
-		return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
-	}
+    public String getLocalizedName() {
+        return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
+    }
 }

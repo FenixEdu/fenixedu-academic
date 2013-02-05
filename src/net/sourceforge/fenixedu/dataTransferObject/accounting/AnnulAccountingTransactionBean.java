@@ -11,53 +11,53 @@ import org.joda.time.DateTime;
 
 public class AnnulAccountingTransactionBean implements Serializable {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1104560585375265754L;
+    private static final long serialVersionUID = 1104560585375265754L;
 
-	private AccountingTransaction transaction;
+    private AccountingTransaction transaction;
 
-	private String reason;
+    private String reason;
 
-	public AnnulAccountingTransactionBean(final AccountingTransaction transaction) {
-		setTransaction(transaction);
-	}
+    public AnnulAccountingTransactionBean(final AccountingTransaction transaction) {
+        setTransaction(transaction);
+    }
 
-	public AccountingTransaction getTransaction() {
-		return this.transaction;
-	}
+    public AccountingTransaction getTransaction() {
+        return this.transaction;
+    }
 
-	public void setTransaction(AccountingTransaction transaction) {
-		this.transaction = transaction;
-	}
+    public void setTransaction(AccountingTransaction transaction) {
+        this.transaction = transaction;
+    }
 
-	public String getReason() {
-		return reason;
-	}
+    public String getReason() {
+        return reason;
+    }
 
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
-	public DateTime getWhenRegistered() {
-		return getTransaction().getTransactionDetail().getWhenRegistered();
-	}
+    public DateTime getWhenRegistered() {
+        return getTransaction().getTransactionDetail().getWhenRegistered();
+    }
 
-	public DateTime getWhenProcessed() {
-		return getTransaction().getTransactionDetail().getWhenProcessed();
-	}
+    public DateTime getWhenProcessed() {
+        return getTransaction().getTransactionDetail().getWhenProcessed();
+    }
 
-	public PaymentMode getPaymentMode() {
-		return getTransaction().getTransactionDetail().getPaymentMode();
-	}
+    public PaymentMode getPaymentMode() {
+        return getTransaction().getTransactionDetail().getPaymentMode();
+    }
 
-	public Money getAmountWithAdjustment() {
-		return getTransaction().getAmountWithAdjustment();
-	}
+    public Money getAmountWithAdjustment() {
+        return getTransaction().getAmountWithAdjustment();
+    }
 
-	public Person getPerson() {
-		return getTransaction().getEvent().getPerson();
-	}
+    public Person getPerson() {
+        return getTransaction().getEvent().getPerson();
+    }
 
 }

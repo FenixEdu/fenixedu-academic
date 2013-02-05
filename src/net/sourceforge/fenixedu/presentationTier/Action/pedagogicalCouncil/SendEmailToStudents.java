@@ -29,79 +29,79 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "pedagogicalCouncil", path = "/sendEmailToStudents", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showDegrees", path = "/pedagogicalCouncil/sendEmailToStudents.jsp", tileProperties = @Tile(
-				title = "private.pedagogiccouncil.communication.sendemailtostudents")),
-		@Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", tileProperties = @Tile(
-				title = "private.pedagogiccouncil.communication.sendemailtostudents"), contextRelative = true) })
+        @Forward(name = "showDegrees", path = "/pedagogicalCouncil/sendEmailToStudents.jsp", tileProperties = @Tile(
+                title = "private.pedagogiccouncil.communication.sendemailtostudents")),
+        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", tileProperties = @Tile(
+                title = "private.pedagogiccouncil.communication.sendemailtostudents"), contextRelative = true) })
 public class SendEmailToStudents extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-		ElectionPeriodBean bean = new ElectionPeriodBean();
-		bean.setDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE); // default
-		bean.setExecutionYear(currentExecutionYear); // default
+        ElectionPeriodBean bean = new ElectionPeriodBean();
+        bean.setDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE); // default
+        bean.setExecutionYear(currentExecutionYear); // default
 
-		return selectDegreeType(mapping, actionForm, request, response, bean);
-	}
+        return selectDegreeType(mapping, actionForm, request, response, bean);
+    }
 
-	public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response, ElectionPeriodBean electionPeriodBean) throws Exception {
-		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-		request.setAttribute("currentExecutionYear", currentExecutionYear);
-		if (electionPeriodBean == null) {
-			Integer degreeOID = Integer.parseInt(request.getParameter("degreeOID"));
-			final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
+    public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response, ElectionPeriodBean electionPeriodBean) throws Exception {
+        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        request.setAttribute("currentExecutionYear", currentExecutionYear);
+        if (electionPeriodBean == null) {
+            Integer degreeOID = Integer.parseInt(request.getParameter("degreeOID"));
+            final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
-			electionPeriodBean = new ElectionPeriodBean();
-			electionPeriodBean.setDegree(degree);
-			electionPeriodBean.setDegreeType(degree.getDegreeType());
-			electionPeriodBean.setExecutionYear(currentExecutionYear); // default
-		} else {
-			if (electionPeriodBean.getExecutionYear() == null) {
-				electionPeriodBean.setExecutionYear(currentExecutionYear); // default
-			}
-			if (electionPeriodBean.getDegreeType() == null) {
-				electionPeriodBean.setDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE); // default
-			}
-		}
+            electionPeriodBean = new ElectionPeriodBean();
+            electionPeriodBean.setDegree(degree);
+            electionPeriodBean.setDegreeType(degree.getDegreeType());
+            electionPeriodBean.setExecutionYear(currentExecutionYear); // default
+        } else {
+            if (electionPeriodBean.getExecutionYear() == null) {
+                electionPeriodBean.setExecutionYear(currentExecutionYear); // default
+            }
+            if (electionPeriodBean.getDegreeType() == null) {
+                electionPeriodBean.setDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE); // default
+            }
+        }
 
-		request.setAttribute("electionPeriodBean", electionPeriodBean);
-		request.setAttribute("currentExecutionYear", currentExecutionYear);
-		request.setAttribute("degrees", Degree.readAllByDegreeType(electionPeriodBean.getDegreeType()));
-		return mapping.findForward("showDegrees");
-	}
+        request.setAttribute("electionPeriodBean", electionPeriodBean);
+        request.setAttribute("currentExecutionYear", currentExecutionYear);
+        request.setAttribute("degrees", Degree.readAllByDegreeType(electionPeriodBean.getDegreeType()));
+        return mapping.findForward("showDegrees");
+    }
 
-	public ActionForward selectDegreeTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ElectionPeriodBean periodBean = getRenderedObject();
-		RenderUtils.invalidateViewState();
+    public ActionForward selectDegreeTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ElectionPeriodBean periodBean = getRenderedObject();
+        RenderUtils.invalidateViewState();
 
-		return selectDegreeType(mapping, actionForm, request, response, periodBean);
+        return selectDegreeType(mapping, actionForm, request, response, periodBean);
 
-	}
+    }
 
-	public ActionForward sendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(request.getParameter("executionYear"));
-		CurricularYear curricularYear = CurricularYear.readByYear(Integer.valueOf(request.getParameter("curricularYear")));
-		Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(request.getParameter("degreeId")));
+    public ActionForward sendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(request.getParameter("executionYear"));
+        CurricularYear curricularYear = CurricularYear.readByYear(Integer.valueOf(request.getParameter("curricularYear")));
+        Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(request.getParameter("degreeId")));
 
-		StudentsByDegreeAndCurricularYear studentsByDegreeAndCurricularYear =
-				new StudentsByDegreeAndCurricularYear(degree, curricularYear, executionYear);
+        StudentsByDegreeAndCurricularYear studentsByDegreeAndCurricularYear =
+                new StudentsByDegreeAndCurricularYear(degree, curricularYear, executionYear);
 
-		String message =
-				MessageResources.getMessageResources("resources.PedagogicalCouncilResources").getMessage(
-						"label.mail.student.year.degree", curricularYear.getYear().toString(), degree.getSigla());
+        String message =
+                MessageResources.getMessageResources("resources.PedagogicalCouncilResources").getMessage(
+                        "label.mail.student.year.degree", curricularYear.getYear().toString(), degree.getSigla());
 
-		Recipient recipient = Recipient.newInstance(message, studentsByDegreeAndCurricularYear);
-		EmailBean bean = new EmailBean();
-		bean.setRecipients(Collections.singletonList(recipient));
-		bean.setSender(PedagogicalCouncilUnit.getPedagogicalCouncilUnit().getUnitBasedSender().iterator().next());
+        Recipient recipient = Recipient.newInstance(message, studentsByDegreeAndCurricularYear);
+        EmailBean bean = new EmailBean();
+        bean.setRecipients(Collections.singletonList(recipient));
+        bean.setSender(PedagogicalCouncilUnit.getPedagogicalCouncilUnit().getUnitBasedSender().iterator().next());
 
-		request.setAttribute("emailBean", bean);
+        request.setAttribute("emailBean", bean);
 
-		return mapping.findForward("sendEmail");
-	}
+        return mapping.findForward("sendEmail");
+    }
 }

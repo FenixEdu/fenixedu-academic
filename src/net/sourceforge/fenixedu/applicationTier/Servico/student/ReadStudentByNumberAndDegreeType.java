@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentByNumberAndDegreeType extends FenixService {
 
-	@Service
-	public static Object run(Integer number, DegreeType degreeType) {
+    @Service
+    public static Object run(Integer number, DegreeType degreeType) {
 
-		final Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
+        final Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
 
-		if (registration != null) {
-			return InfoStudent.newInfoFromDomain(registration);
-		}
+        if (registration != null) {
+            return InfoStudent.newInfoFromDomain(registration);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

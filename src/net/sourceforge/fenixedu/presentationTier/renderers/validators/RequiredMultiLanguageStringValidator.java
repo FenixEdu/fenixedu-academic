@@ -8,34 +8,34 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 
 public class RequiredMultiLanguageStringValidator extends MultiLanguageStringValidator {
 
-	public RequiredMultiLanguageStringValidator() {
-		super();
-	}
+    public RequiredMultiLanguageStringValidator() {
+        super();
+    }
 
-	public RequiredMultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
-		super(htmlChainValidator);
+    public RequiredMultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
+        super(htmlChainValidator);
 
-		setMessage("renderers.validator.language.required");
-	}
+        setMessage("renderers.validator.language.required");
+    }
 
-	@Override
-	public void performValidation() {
-		super.performValidation();
+    @Override
+    public void performValidation() {
+        super.performValidation();
 
-		if (!isValid()) {
-			return;
-		}
+        if (!isValid()) {
+            return;
+        }
 
-		HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
-		Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
+        HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
+        Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
 
-		for (LanguageBean bean : beans) {
-			if (bean.value != null && bean.value.length() > 0) {
-				setValid(true);
-				return;
-			}
-		}
+        for (LanguageBean bean : beans) {
+            if (bean.value != null && bean.value.length() > 0) {
+                setValid(true);
+                return;
+            }
+        }
 
-		setValid(false);
-	}
+        setValid(false);
+    }
 }

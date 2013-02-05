@@ -14,12 +14,12 @@ import org.apache.struts.action.ActionMapping;
 
 public class SiteMapAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		final TreeSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		degrees.addAll(Degree.readNotEmptyDegrees());
-		request.setAttribute("degrees", degrees);
-		return mapping.findForward("site-map");
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        final TreeSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        degrees.addAll(Degree.readNotEmptyDegrees());
+        request.setAttribute("degrees", degrees);
+        return mapping.findForward("site-map");
+    }
 
 }

@@ -7,28 +7,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class ExistingServiceException extends FenixServiceException {
 
-	public ExistingServiceException() {
-	}
+    public ExistingServiceException() {
+    }
 
-	public ExistingServiceException(String message) {
-		super(message);
-	}
+    public ExistingServiceException(String message) {
+        super(message);
+    }
 
-	public ExistingServiceException(Throwable cause) {
-		super(cause);
-	}
+    public ExistingServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	public ExistingServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public ExistingServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[ExistingServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[ExistingServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

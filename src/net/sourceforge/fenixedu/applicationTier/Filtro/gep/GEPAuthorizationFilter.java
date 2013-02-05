@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * 
  */
 public class GEPAuthorizationFilter extends AuthorizationByRoleFilter {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#
-	 * getRoleType()
-	 */
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.GEP;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @seeServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#
+     * getRoleType()
+     */
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.GEP;
+    }
 }

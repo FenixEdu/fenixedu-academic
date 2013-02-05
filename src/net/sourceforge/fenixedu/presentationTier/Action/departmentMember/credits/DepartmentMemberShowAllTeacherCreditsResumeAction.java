@@ -18,15 +18,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "departmentMember", path = "/showAllTeacherCreditsResume", scope = "request", parameter = "method")
 @Forwards(
-		value = { @Forward(name = "show-all-credits-resume", path = "/departmentMember/credits/listAllTeacherCreditsResume.jsp") })
+        value = { @Forward(name = "show-all-credits-resume", path = "/departmentMember/credits/listAllTeacherCreditsResume.jsp") })
 public class DepartmentMemberShowAllTeacherCreditsResumeAction extends ShowAllTeacherCreditsResumeAction {
 
-	public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = UserView.getUser();
-		Teacher teacher = userView.getPerson().getTeacher();
-		readAllTeacherCredits(request, teacher);
-		return mapping.findForward("show-all-credits-resume");
-	}
+        IUserView userView = UserView.getUser();
+        Teacher teacher = userView.getPerson().getTeacher();
+        readAllTeacherCredits(request, teacher);
+        return mapping.findForward("show-all-credits-resume");
+    }
 }

@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseHasProposals extends FenixService {
 
-	public Boolean run(Integer executionCourseCode) throws FenixServiceException {
-		boolean result = false;
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+    public Boolean run(Integer executionCourseCode) throws FenixServiceException {
+        boolean result = false;
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-		result = executionCourse.hasProposals();
+        result = executionCourse.hasProposals();
 
-		return result;
+        return result;
 
-	}
+    }
 }

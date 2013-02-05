@@ -8,8 +8,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInstitutionByName extends FenixService {
 
-	@Service
-	public static Unit run(String institutionName) throws FenixServiceException {
-		return UnitUtils.readExternalInstitutionUnitByName(institutionName);
-	}
+    @Service
+    public static Unit run(String institutionName) throws FenixServiceException {
+        return UnitUtils.readExternalInstitutionUnitByName(institutionName);
+    }
 }

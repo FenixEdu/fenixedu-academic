@@ -16,88 +16,88 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModule_Base {
 
-	private RestrictionEnroledDegreeModule(final CurricularCourse toBeEnroled) {
-		super();
-		if (toBeEnroled == null) {
-			throw new DomainException("curricular.rule.invalid.parameters");
-		}
-		setPrecedenceDegreeModule(toBeEnroled);
-		setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
-	}
+    private RestrictionEnroledDegreeModule(final CurricularCourse toBeEnroled) {
+        super();
+        if (toBeEnroled == null) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        }
+        setPrecedenceDegreeModule(toBeEnroled);
+        setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
+    }
 
-	protected RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toBeEnroled,
-			final CourseGroup contextCourseGroup, final CurricularPeriodInfoDTO curricularPeriodInfoDTO,
-			final ExecutionSemester begin, final ExecutionSemester end) {
+    protected RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toBeEnroled,
+            final CourseGroup contextCourseGroup, final CurricularPeriodInfoDTO curricularPeriodInfoDTO,
+            final ExecutionSemester begin, final ExecutionSemester end) {
 
-		this(toBeEnroled);
-		init(toApplyRule, contextCourseGroup, begin, end);
+        this(toBeEnroled);
+        init(toApplyRule, contextCourseGroup, begin, end);
 
-		if (curricularPeriodInfoDTO != null) {
-			setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
-			setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
-		}
-	}
+        if (curricularPeriodInfoDTO != null) {
+            setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
+            setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+        }
+    }
 
-	protected void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup,
-			CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
-		setPrecedenceDegreeModule(enroledDegreeModule);
-		setContextCourseGroup(contextCourseGroup);
-		setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
-		setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
-	}
+    protected void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup,
+            CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
+        setPrecedenceDegreeModule(enroledDegreeModule);
+        setContextCourseGroup(contextCourseGroup);
+        setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
+        setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+    }
 
-	@Override
-	public CurricularCourse getDegreeModuleToApplyRule() {
-		return (CurricularCourse) super.getDegreeModuleToApplyRule();
-	}
+    @Override
+    public CurricularCourse getDegreeModuleToApplyRule() {
+        return (CurricularCourse) super.getDegreeModuleToApplyRule();
+    }
 
-	@Override
-	public CurricularCourse getPrecedenceDegreeModule() {
-		return (CurricularCourse) super.getPrecedenceDegreeModule();
-	}
+    @Override
+    public CurricularCourse getPrecedenceDegreeModule() {
+        return (CurricularCourse) super.getPrecedenceDegreeModule();
+    }
 
-	@Override
-	public List<GenericPair<Object, Boolean>> getLabel() {
-		List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel() {
+        List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
-		if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
-			labelList.add(new GenericPair<Object, Boolean>("label.precedenceNotEnrolled", true));
-		} else {
-			labelList.add(new GenericPair<Object, Boolean>("label.precedenceEnrolled", true));
-		}
+        if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
+            labelList.add(new GenericPair<Object, Boolean>("label.precedenceNotEnrolled", true));
+        } else {
+            labelList.add(new GenericPair<Object, Boolean>("label.precedenceEnrolled", true));
+        }
 
-		labelList.add(new GenericPair<Object, Boolean>(": ", false));
+        labelList.add(new GenericPair<Object, Boolean>(": ", false));
 
-		// getting full name only for course groups
-		String precedenceDegreeModule =
-				(getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule()
-						.getOneFullName();
-		labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
+        // getting full name only for course groups
+        String precedenceDegreeModule =
+                (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule()
+                        .getOneFullName();
+        labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
 
-		if (getContextCourseGroup() != null) {
-			labelList.add(new GenericPair<Object, Boolean>(", ", false));
-			labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
-			labelList.add(new GenericPair<Object, Boolean>(" ", false));
-			labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
-		}
+        if (getContextCourseGroup() != null) {
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+        }
 
-		if (!hasNoCurricularPeriodOrder()) {
-			labelList.add(new GenericPair<Object, Boolean>(" ", false));
-			labelList.add(new GenericPair<Object, Boolean>("label.and", true));
-			labelList.add(new GenericPair<Object, Boolean>(" ", false));
-			labelList.add(new GenericPair<Object, Boolean>("label.in", true));
-			labelList.add(new GenericPair<Object, Boolean>(" ", false));
-			labelList.add(new GenericPair<Object, Boolean>(getAcademicPeriod().getName(), true));
-			labelList.add(new GenericPair<Object, Boolean>(" ", false));
-			labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
-		}
+        if (!hasNoCurricularPeriodOrder()) {
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.and", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.in", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getAcademicPeriod().getName(), true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
+        }
 
-		return labelList;
-	}
+        return labelList;
+    }
 
-	@Override
-	public VerifyRuleExecutor createVerifyRuleExecutor() {
-		return new RestrictionEnroledDegreeModuleVerifier();
-	}
+    @Override
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+        return new RestrictionEnroledDegreeModuleVerifier();
+    }
 
 }

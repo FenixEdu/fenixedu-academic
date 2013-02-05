@@ -21,62 +21,62 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
-	public ExecutionCourseResponsibleForTeacherAuthorizationFilter() {
+    public ExecutionCourseResponsibleForTeacherAuthorizationFilter() {
 
-	}
+    }
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.TEACHER;
+    }
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView id = getRemoteUser(request);
-		Object[] arguments = getServiceCallArguments(request);
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
 
-		try {
-			if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-					|| !isResponsibleForExecutionCourse(id, arguments)) {
-				throw new NotAuthorizedFilterException();
-			}
-		} catch (RuntimeException e) {
-			throw new NotAuthorizedFilterException();
-		}
-	}
+        try {
+            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+                    || !isResponsibleForExecutionCourse(id, arguments)) {
+                throw new NotAuthorizedFilterException();
+            }
+        } catch (RuntimeException e) {
+            throw new NotAuthorizedFilterException();
+        }
+    }
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos) {
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos) {
 
-		InfoExecutionCourse infoExecutionCourse = null;
-		ExecutionCourse executionCourse = null;
-		Professorship responsibleFor = null;
-		if (argumentos == null) {
-			return false;
-		}
-		try {
-			if (argumentos[0] instanceof InfoExecutionCourse) {
-				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-				executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-			} else {
-				executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
-			}
+        InfoExecutionCourse infoExecutionCourse = null;
+        ExecutionCourse executionCourse = null;
+        Professorship responsibleFor = null;
+        if (argumentos == null) {
+            return false;
+        }
+        try {
+            if (argumentos[0] instanceof InfoExecutionCourse) {
+                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+                executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+            } else {
+                executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
+            }
 
-			Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-			responsibleFor = teacher.isResponsibleFor(executionCourse);
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            responsibleFor = teacher.isResponsibleFor(executionCourse);
 
-		} catch (Exception e) {
-			return false;
-		}
-		if (responsibleFor == null) {
-			return false;
-		}
-		return true;
+        } catch (Exception e) {
+            return false;
+        }
+        if (responsibleFor == null) {
+            return false;
+        }
+        return true;
 
-	}
+    }
 
 }

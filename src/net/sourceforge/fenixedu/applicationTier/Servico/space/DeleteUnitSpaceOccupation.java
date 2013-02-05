@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteUnitSpaceOccupation extends FenixService {
 
-	@Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
-	@Service
-	public static void run(UnitSpaceOccupation unitSpaceOccupation) {
-		if (unitSpaceOccupation != null) {
-			unitSpaceOccupation.delete();
-		}
-	}
+    @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
+    @Service
+    public static void run(UnitSpaceOccupation unitSpaceOccupation) {
+        if (unitSpaceOccupation != null) {
+            unitSpaceOccupation.delete();
+        }
+    }
 }

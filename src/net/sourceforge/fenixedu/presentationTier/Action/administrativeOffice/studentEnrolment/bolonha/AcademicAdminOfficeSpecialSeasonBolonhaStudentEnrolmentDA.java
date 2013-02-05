@@ -27,127 +27,123 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/specialSeasonBolonhaStudentEnrollment",
-		module = "academicAdministration",
-		formBean = "bolonhaStudentEnrollmentForm")
+@Mapping(path = "/specialSeasonBolonhaStudentEnrollment", module = "academicAdministration",
+        formBean = "bolonhaStudentEnrollmentForm")
 @Forwards({
-		@Forward(
-				name = "showDegreeModulesToEnrol",
-				path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
-		@Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules"),
-		@Forward(
-				name = "changeSpecialSeasonCode",
-				path = "/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp") })
+        @Forward(name = "showDegreeModulesToEnrol",
+                path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
+        @Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules"),
+        @Forward(name = "changeSpecialSeasonCode",
+                path = "/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp") })
 public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
 
-	@Override
-	protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
-		return CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT;
-	}
+    @Override
+    protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
+        return CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT;
+    }
 
-	@Override
-	protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
-		request.setAttribute("action", getAction());
-		request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
-				executionSemester));
+    @Override
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+        request.setAttribute("action", getAction());
+        request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
+                executionSemester));
 
-		addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+        addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 
-		return mapping.findForward("showDegreeModulesToEnrol");
-	}
+        return mapping.findForward("showDegreeModulesToEnrol");
+    }
 
-	@Override
-	protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,
-			final HttpServletRequest request) {
+    @Override
+    protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,
+            final HttpServletRequest request) {
 
-		if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, executionSemester.getExecutionYear())) {
-			addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");
-		}
+        if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, executionSemester.getExecutionYear())) {
+            addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");
+        }
 
-		if (hasAnyGratuityDebt(student, executionSemester.getExecutionYear())) {
-			addActionMessage("warning", request, "registration.has.not.payed.gratuities");
-		}
-	}
+        if (hasAnyGratuityDebt(student, executionSemester.getExecutionYear())) {
+            addActionMessage("warning", request, "registration.has.not.payed.gratuities");
+        }
+    }
 
-	protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
-		for (final Event event : student.getPerson().getEvents()) {
+    protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
+        for (final Event event : student.getPerson().getEvents()) {
 
-			if (event instanceof AnnualEvent) {
-				final AnnualEvent annualEvent = (AnnualEvent) event;
-				if (annualEvent.getExecutionYear().isAfter(executionYear)) {
-					continue;
-				}
-			}
+            if (event instanceof AnnualEvent) {
+                final AnnualEvent annualEvent = (AnnualEvent) event;
+                if (annualEvent.getExecutionYear().isAfter(executionYear)) {
+                    continue;
+                }
+            }
 
-			if ((event instanceof AdministrativeOfficeFeeAndInsuranceEvent || event instanceof InsuranceEvent) && event.isOpen()) {
-				return true;
-			}
-		}
+            if ((event instanceof AdministrativeOfficeFeeAndInsuranceEvent || event instanceof InsuranceEvent) && event.isOpen()) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
-		for (final Registration registration : student.getRegistrations()) {
-			for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-				for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {
-					if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
+        for (final Registration registration : student.getRegistrations()) {
+            for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {
+                    if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected String getAction() {
-		return "/specialSeasonBolonhaStudentEnrollment.do";
-	}
+    @Override
+    protected String getAction() {
+        return "/specialSeasonBolonhaStudentEnrollment.do";
+    }
 
-	public ActionForward checkPermission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward checkPermission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-		ExecutionSemester executionSemester = getExecutionPeriod(request);
+        StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+        ExecutionSemester executionSemester = getExecutionPeriod(request);
 
-		if (!hasStatute(studentCurricularPlan.getRegistration().getStudent(), executionSemester,
-				studentCurricularPlan.getRegistration())) {
-			if (!studentCurricularPlan.getRegistration().isSeniorStatuteApplicable(executionSemester.getExecutionYear())) {
-				addActionMessage(request, "error.special.season.not.granted");
-				request.setAttribute("studentCurricularPlan", studentCurricularPlan);
-				request.setAttribute("executionPeriod", executionSemester);
+        if (!hasStatute(studentCurricularPlan.getRegistration().getStudent(), executionSemester,
+                studentCurricularPlan.getRegistration())) {
+            if (!studentCurricularPlan.getRegistration().isSeniorStatuteApplicable(executionSemester.getExecutionYear())) {
+                addActionMessage(request, "error.special.season.not.granted");
+                request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+                request.setAttribute("executionPeriod", executionSemester);
 
-				return mapping.findForward("showStudentEnrollmentMenu");
-			}
-			studentCurricularPlan.getRegistration().grantSeniorStatute(executionSemester.getExecutionYear());
-		}
+                return mapping.findForward("showStudentEnrollmentMenu");
+            }
+            studentCurricularPlan.getRegistration().grantSeniorStatute(executionSemester.getExecutionYear());
+        }
 
-		request.setAttribute("action", getAction());
-		request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
-				executionSemester));
+        request.setAttribute("action", getAction());
+        request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
+                executionSemester));
 
-		addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
-		return mapping.findForward("showDegreeModulesToEnrol");
+        addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+        return mapping.findForward("showDegreeModulesToEnrol");
 
-	}
+    }
 
-	protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
-		List<StudentStatute> statutes = student.getStudentStatutes();
-		for (StudentStatute statute : statutes) {
-			if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
-				continue;
-			}
-			if (!statute.isValidInExecutionPeriod(executionSemester)) {
-				continue;
-			}
+    protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
+        List<StudentStatute> statutes = student.getStudentStatutes();
+        for (StudentStatute statute : statutes) {
+            if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
+                continue;
+            }
+            if (!statute.isValidInExecutionPeriod(executionSemester)) {
+                continue;
+            }
 
-			return true;
+            return true;
 
-		}
-		return false;
-	}
+        }
+        return false;
+    }
 
 }

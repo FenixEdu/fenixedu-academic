@@ -43,132 +43,132 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
-	protected void getAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
-			throws ParseException {
-		getRequestAllTeacherCredits(request, executionSemester, teacher);
-		CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
-		request.setAttribute("creditLineDTO", creditLineDTO);
-	}
+    protected void getAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
+            throws ParseException {
+        getRequestAllTeacherCredits(request, executionSemester, teacher);
+        CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
+        request.setAttribute("creditLineDTO", creditLineDTO);
+    }
 
-	private void setMasterDegreeServices(HttpServletRequest request, TeacherService teacherService) {
-		if (!teacherService.getMasterDegreeServices().isEmpty()) {
-			request.setAttribute("masterDegreeServices", teacherService.getMasterDegreeServices());
-		}
-	}
+    private void setMasterDegreeServices(HttpServletRequest request, TeacherService teacherService) {
+        if (!teacherService.getMasterDegreeServices().isEmpty()) {
+            request.setAttribute("masterDegreeServices", teacherService.getMasterDegreeServices());
+        }
+    }
 
-	private void setTeachingServicesAndSupportLessons(HttpServletRequest request, Teacher teacher,
-			ExecutionSemester executionSemester) {
+    private void setTeachingServicesAndSupportLessons(HttpServletRequest request, Teacher teacher,
+            ExecutionSemester executionSemester) {
 
-		List<Professorship> professorships = teacher.getDegreeProfessorshipsByExecutionPeriod(executionSemester);
+        List<Professorship> professorships = teacher.getDegreeProfessorshipsByExecutionPeriod(executionSemester);
 
-		if (!professorships.isEmpty()) {
-			Collections.sort(professorships, new BeanComparator("executionCourse.nome"));
-			request.setAttribute("professorships", professorships);
-		}
-	}
+        if (!professorships.isEmpty()) {
+            Collections.sort(professorships, new BeanComparator("executionCourse.nome"));
+            request.setAttribute("professorships", professorships);
+        }
+    }
 
-	private void setInstitutionWorkTimes(HttpServletRequest request, TeacherService teacherService) {
-		if (!teacherService.getInstitutionWorkTimes().isEmpty()) {
-			ComparatorChain comparatorChain = new ComparatorChain();
-			BeanComparator weekDayComparator = new BeanComparator("weekDay");
-			BeanComparator startTimeComparator = new BeanComparator("startTime");
-			comparatorChain.addComparator(weekDayComparator);
-			comparatorChain.addComparator(startTimeComparator);
+    private void setInstitutionWorkTimes(HttpServletRequest request, TeacherService teacherService) {
+        if (!teacherService.getInstitutionWorkTimes().isEmpty()) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            BeanComparator weekDayComparator = new BeanComparator("weekDay");
+            BeanComparator startTimeComparator = new BeanComparator("startTime");
+            comparatorChain.addComparator(weekDayComparator);
+            comparatorChain.addComparator(startTimeComparator);
 
-			List<InstitutionWorkTime> institutionWorkingTimes = new ArrayList(teacherService.getInstitutionWorkTimes());
-			Collections.sort(institutionWorkingTimes, comparatorChain);
-			request.setAttribute("institutionWorkTimeList", institutionWorkingTimes);
-		}
-	}
+            List<InstitutionWorkTime> institutionWorkingTimes = new ArrayList(teacherService.getInstitutionWorkTimes());
+            Collections.sort(institutionWorkingTimes, comparatorChain);
+            request.setAttribute("institutionWorkTimeList", institutionWorkingTimes);
+        }
+    }
 
-	private void setAdviseServices(HttpServletRequest request, TeacherService teacherService) {
-		if (!teacherService.getTeacherAdviseServices().isEmpty()) {
-			List<TeacherAdviseService> tfcAdvises =
-					(List<TeacherAdviseService>) CollectionUtils.select(teacherService.getTeacherAdviseServices(),
-							new Predicate() {
-								@Override
-								public boolean evaluate(Object arg0) {
-									TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
-									return teacherAdviseService.getAdvise().getAdviseType().equals(AdviseType.FINAL_WORK_DEGREE);
-								}
-							});
-			Collections.sort(tfcAdvises, new BeanComparator("advise.student.number"));
-			request.setAttribute("adviseServices", tfcAdvises);
-		}
-	}
+    private void setAdviseServices(HttpServletRequest request, TeacherService teacherService) {
+        if (!teacherService.getTeacherAdviseServices().isEmpty()) {
+            List<TeacherAdviseService> tfcAdvises =
+                    (List<TeacherAdviseService>) CollectionUtils.select(teacherService.getTeacherAdviseServices(),
+                            new Predicate() {
+                                @Override
+                                public boolean evaluate(Object arg0) {
+                                    TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
+                                    return teacherAdviseService.getAdvise().getAdviseType().equals(AdviseType.FINAL_WORK_DEGREE);
+                                }
+                            });
+            Collections.sort(tfcAdvises, new BeanComparator("advise.student.number"));
+            request.setAttribute("adviseServices", tfcAdvises);
+        }
+    }
 
-	protected void showLinks(HttpServletRequest request, ExecutionSemester executionSemester, RoleType roleType) {
-		boolean showLinks = true;
-		try {
-			executionSemester.checkValidCreditsPeriod(roleType);
-		} catch (DomainException e) {
-			showLinks = false;
-		}
-		request.setAttribute("showLinks", showLinks);
-	}
+    protected void showLinks(HttpServletRequest request, ExecutionSemester executionSemester, RoleType roleType) {
+        boolean showLinks = true;
+        try {
+            executionSemester.checkValidCreditsPeriod(roleType);
+        } catch (DomainException e) {
+            showLinks = false;
+        }
+        request.setAttribute("showLinks", showLinks);
+    }
 
-	protected void getRequestAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
-			throws ParseException {
-		request.setAttribute("teacher", teacher);
+    protected void getRequestAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
+            throws ParseException {
+        request.setAttribute("teacher", teacher);
 
-		ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
-		String professionalCategory = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
+        ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+        String professionalCategory = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
 
-		request.setAttribute("teacherCategory", professionalCategory);
-		request.setAttribute("executionPeriod", executionSemester);
+        request.setAttribute("teacherCategory", professionalCategory);
+        request.setAttribute("executionPeriod", executionSemester);
 
-		setTeachingServicesAndSupportLessons(request, teacher, executionSemester);
+        setTeachingServicesAndSupportLessons(request, teacher, executionSemester);
 
-		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-		if (teacherService != null) {
-			setMasterDegreeServices(request, teacherService);
-			setAdviseServices(request, teacherService);
-			setInstitutionWorkTimes(request, teacherService);
-			request.setAttribute("otherServices", teacherService.getOtherServices());
-			request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
-		}
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        if (teacherService != null) {
+            setMasterDegreeServices(request, teacherService);
+            setAdviseServices(request, teacherService);
+            setInstitutionWorkTimes(request, teacherService);
+            request.setAttribute("otherServices", teacherService.getOtherServices());
+            request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
+        }
 
-		Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
+        Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
 
-		if (!serviceExemptions.isEmpty()) {
-			request.setAttribute("serviceExemptions", serviceExemptions);
-		}
+        if (!serviceExemptions.isEmpty()) {
+            request.setAttribute("serviceExemptions", serviceExemptions);
+        }
 
-		List<PersonFunction> personFuntions =
-				teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
-						executionSemester.getEndDateYearMonthDay());
+        List<PersonFunction> personFuntions =
+                teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
+                        executionSemester.getEndDateYearMonthDay());
 
-		if (!personFuntions.isEmpty()) {
-			Iterator<PersonFunction> orderedPersonFuntions =
-					new OrderedIterator<PersonFunction>(personFuntions.iterator(), new BeanComparator("beginDate"));
-			request.setAttribute("personFunctions", orderedPersonFuntions);
-		}
+        if (!personFuntions.isEmpty()) {
+            Iterator<PersonFunction> orderedPersonFuntions =
+                    new OrderedIterator<PersonFunction>(personFuntions.iterator(), new BeanComparator("beginDate"));
+            request.setAttribute("personFunctions", orderedPersonFuntions);
+        }
 
-		Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants =
-				teacher.getPerson().getThesisEvaluationParticipants(executionSemester);
-		Collection<ThesisEvaluationParticipant> teacherThesisEvaluationParticipants =
-				new ArrayList<ThesisEvaluationParticipant>();
-		for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
-			if (participant.getCreditsDistribution() > 0) {
-				teacherThesisEvaluationParticipants.add(participant);
-			}
-		}
+        Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants =
+                teacher.getPerson().getThesisEvaluationParticipants(executionSemester);
+        Collection<ThesisEvaluationParticipant> teacherThesisEvaluationParticipants =
+                new ArrayList<ThesisEvaluationParticipant>();
+        for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
+            if (participant.getCreditsDistribution() > 0) {
+                teacherThesisEvaluationParticipants.add(participant);
+            }
+        }
 
-		if (!teacherThesisEvaluationParticipants.isEmpty()) {
-			request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
-		}
-	}
+        if (!teacherThesisEvaluationParticipants.isEmpty()) {
+            request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
+        }
+    }
 
-	protected CreditLineDTO simulateCalcCreditLine(Teacher teacher, ExecutionSemester executionSemester) throws ParseException {
+    protected CreditLineDTO simulateCalcCreditLine(Teacher teacher, ExecutionSemester executionSemester) throws ParseException {
 
-		double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-		double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionSemester);
-		double thesesCredits = teacher.getThesesCredits(executionSemester);
-		double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
-		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-		return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionCredits,
-				mandatoryLessonHours, teacher, thesesCredits);
+        double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionSemester);
+        double thesesCredits = teacher.getThesesCredits(executionSemester);
+        double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+        return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionCredits,
+                mandatoryLessonHours, teacher, thesesCredits);
 
-	}
+    }
 
 }

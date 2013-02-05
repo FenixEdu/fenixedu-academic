@@ -22,55 +22,50 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "departmentMember",
-		path = "/manageCreditsNotes",
-		attribute = "creditsNotesForm",
-		formBean = "creditsNotesForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "departmentMember", path = "/manageCreditsNotes", attribute = "creditsNotesForm",
+        formBean = "creditsNotesForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-note", path = "/credits/notes/listCreditsNotes.jsp"),
-		@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0"),
-		@Forward(name = "edit-note", path = "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&page=0") })
+        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0"),
+        @Forward(name = "edit-note", path = "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&page=0") })
 public class DepartmentMemberManageCreditsNotes extends ManageCreditsNotes {
 
-	public ActionForward viewNote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward viewNote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Teacher teacher = DomainObject.fromExternalId(request.getParameter("teacherId"));
-		String executionPeriodId = request.getParameter("executionPeriodId");
-		String noteType = request.getParameter("noteType");
+        Teacher teacher = DomainObject.fromExternalId(request.getParameter("teacherId"));
+        String executionPeriodId = request.getParameter("executionPeriodId");
+        String noteType = request.getParameter("noteType");
 
-		if (teacher == null || teacher != getLoggedTeacher(request)) {
-			createNewActionMessage(request);
-			return mapping.findForward("teacher-not-found");
-		}
+        if (teacher == null || teacher != getLoggedTeacher(request)) {
+            createNewActionMessage(request);
+            return mapping.findForward("teacher-not-found");
+        }
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
-		getNote(actionForm, teacher, executionSemester, noteType);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+        getNote(actionForm, teacher, executionSemester, noteType);
 
-		return mapping.findForward("show-note");
-	}
+        return mapping.findForward("show-note");
+    }
 
-	public ActionForward editNote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward editNote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-		Teacher teacher = DomainObject.fromExternalId((String) dynaActionForm.get("teacherId"));
-		Integer executionPeriodId = (Integer) dynaActionForm.get("executionPeriodId");
-		String noteType = dynaActionForm.getString("noteType");
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        Teacher teacher = DomainObject.fromExternalId((String) dynaActionForm.get("teacherId"));
+        Integer executionPeriodId = (Integer) dynaActionForm.get("executionPeriodId");
+        String noteType = dynaActionForm.getString("noteType");
 
-		return editNote(request, dynaActionForm, teacher, executionPeriodId, RoleType.DEPARTMENT_MEMBER, mapping, noteType);
-	}
+        return editNote(request, dynaActionForm, teacher, executionPeriodId, RoleType.DEPARTMENT_MEMBER, mapping, noteType);
+    }
 
-	private Teacher getLoggedTeacher(HttpServletRequest request) {
-		IUserView userView = UserView.getUser();
-		return userView.getPerson().getTeacher();
-	}
+    private Teacher getLoggedTeacher(HttpServletRequest request) {
+        IUserView userView = UserView.getUser();
+        return userView.getPerson().getTeacher();
+    }
 
-	private void createNewActionMessage(HttpServletRequest request) {
-		ActionMessages actionMessages = new ActionMessages();
-		actionMessages.add("", new ActionMessage("message.invalid.teacher"));
-		saveMessages(request, actionMessages);
-	}
+    private void createNewActionMessage(HttpServletRequest request) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("", new ActionMessage("message.invalid.teacher"));
+        saveMessages(request, actionMessages);
+    }
 }

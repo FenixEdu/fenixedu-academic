@@ -19,46 +19,46 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "index", path = "/academicAdministration/degree/execution/index.jsp") })
 public class ExecutionDegreeManagement extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		DegreeFilterBean bean = new DegreeFilterBean();
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        DegreeFilterBean bean = new DegreeFilterBean();
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("index");
-	}
+        return mapping.findForward("index");
+    }
 
-	public ActionForward chooseDegreeTypePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward chooseDegreeTypePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		DegreeFilterBean bean = getBean();
+        DegreeFilterBean bean = getBean();
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("index");
-	}
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("index");
+    }
 
-	public ActionForward chooseDegreePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward chooseDegreePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		DegreeFilterBean bean = getBean();
-		request.setAttribute("bean", bean);
+        DegreeFilterBean bean = getBean();
+        request.setAttribute("bean", bean);
 
-		if (bean.getDegree() != null) {
-			request.setAttribute("executionDegrees", ExecutionDegree.getAllByDegree(bean.getDegree()));
-		}
+        if (bean.getDegree() != null) {
+            request.setAttribute("executionDegrees", ExecutionDegree.getAllByDegree(bean.getDegree()));
+        }
 
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("index");
-	}
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("index");
+    }
 
-	public ActionForward prepareCreateNewExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return null;
-	}
+    public ActionForward prepareCreateNewExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return null;
+    }
 
-	private DegreeFilterBean getBean() {
-		return getRenderedObject("bean");
-	}
+    private DegreeFilterBean getBean() {
+        return getRenderedObject("bean");
+    }
 
 }

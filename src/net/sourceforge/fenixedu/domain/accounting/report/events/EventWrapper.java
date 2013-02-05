@@ -14,172 +14,172 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EventWrapper implements Wrapper {
-	private final Event event;
+    private final Event event;
 
-	public EventWrapper(Event event) {
-		this.event = event;
-	}
+    public EventWrapper(Event event) {
+        this.event = event;
+    }
 
-	@Override
-	public String getStudentNumber() {
-		if (event.getParty().isPerson()) {
-			if (event.getPerson().hasStudent()) {
-				return event.getPerson().getStudent().getNumber().toString();
-			}
-		}
+    @Override
+    public String getStudentNumber() {
+        if (event.getParty().isPerson()) {
+            if (event.getPerson().hasStudent()) {
+                return event.getPerson().getStudent().getNumber().toString();
+            }
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getStudentName() {
-		return event.getParty().getName();
-	}
+    @Override
+    public String getStudentName() {
+        return event.getParty().getName();
+    }
 
-	@Override
-	public String getStudentEmail() {
-		return event.getParty().getDefaultEmailAddressValue();
-	}
+    @Override
+    public String getStudentEmail() {
+        return event.getParty().getDefaultEmailAddressValue();
+    }
 
-	@Override
-	public String getRegistrationStartDate() {
-		return "-";
-	}
+    @Override
+    public String getRegistrationStartDate() {
+        return "-";
+    }
 
-	@Override
-	public String getExecutionYear() {
-		ExecutionYear executionYear = getForExecutionYear();
-		return executionYear.getName();
-	}
+    @Override
+    public String getExecutionYear() {
+        ExecutionYear executionYear = getForExecutionYear();
+        return executionYear.getName();
+    }
 
-	@Override
-	public ExecutionYear getForExecutionYear() {
+    @Override
+    public ExecutionYear getForExecutionYear() {
 
-		ExecutionYear executionYear = null;
-		if (event.isDfaRegistrationEvent()) {
-			executionYear = ((DfaRegistrationEvent) event).getExecutionYear();
-		} else if (event.isEnrolmentOutOfPeriod()) {
-			executionYear = ((EnrolmentOutOfPeriodEvent) event).getExecutionPeriod().getExecutionYear();
-		} else if (event.isAnnual()) {
-			executionYear = ((AnnualEvent) event).getExecutionYear();
-		} else {
-			executionYear = ExecutionYear.readByDateTime(event.getWhenOccured());
-		}
+        ExecutionYear executionYear = null;
+        if (event.isDfaRegistrationEvent()) {
+            executionYear = ((DfaRegistrationEvent) event).getExecutionYear();
+        } else if (event.isEnrolmentOutOfPeriod()) {
+            executionYear = ((EnrolmentOutOfPeriodEvent) event).getExecutionPeriod().getExecutionYear();
+        } else if (event.isAnnual()) {
+            executionYear = ((AnnualEvent) event).getExecutionYear();
+        } else {
+            executionYear = ExecutionYear.readByDateTime(event.getWhenOccured());
+        }
 
-		return executionYear;
-	}
+        return executionYear;
+    }
 
-	@Override
-	public String getDegreeName() {
-		if (hasRegistration()) {
-			return getRegistration().getDegree().getNameI18N().getContent(Language.pt);
-		}
+    @Override
+    public String getDegreeName() {
+        if (hasRegistration()) {
+            return getRegistration().getDegree().getNameI18N().getContent(Language.pt);
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getDegreeType() {
-		if (hasRegistration()) {
-			return getRegistration().getDegreeType().getLocalizedName();
-		}
+    @Override
+    public String getDegreeType() {
+        if (hasRegistration()) {
+            return getRegistration().getDegreeType().getLocalizedName();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getPhdProgramName() {
-		return "-";
-	}
+    @Override
+    public String getPhdProgramName() {
+        return "-";
+    }
 
-	@Override
-	public String getEnrolledECTS() {
-		if (hasRegistration()) {
-			return new BigDecimal(getRegistration().getLastStudentCurricularPlan()
-					.getEnrolmentsEctsCredits(getForExecutionYear())).toString();
-		}
+    @Override
+    public String getEnrolledECTS() {
+        if (hasRegistration()) {
+            return new BigDecimal(getRegistration().getLastStudentCurricularPlan()
+                    .getEnrolmentsEctsCredits(getForExecutionYear())).toString();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getRegime() {
-		if (hasRegistration()) {
-			return getRegistration().getRegimeType(getForExecutionYear()).getLocalizedName();
-		}
+    @Override
+    public String getRegime() {
+        if (hasRegistration()) {
+            return getRegistration().getRegimeType(getForExecutionYear()).getLocalizedName();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getEnrolmentModel() {
-		if (!hasRegistration()) {
-			return "-";
-		}
+    @Override
+    public String getEnrolmentModel() {
+        if (!hasRegistration()) {
+            return "-";
+        }
 
-		EnrolmentModel enrolmentModelForExecutionYear =
-				getRegistration().getEnrolmentModelForExecutionYear(getForExecutionYear());
-		if (enrolmentModelForExecutionYear != null) {
-			return enrolmentModelForExecutionYear.getLocalizedName();
-		}
+        EnrolmentModel enrolmentModelForExecutionYear =
+                getRegistration().getEnrolmentModelForExecutionYear(getForExecutionYear());
+        if (enrolmentModelForExecutionYear != null) {
+            return enrolmentModelForExecutionYear.getLocalizedName();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getResidenceYear() {
-		return "-";
-	}
+    @Override
+    public String getResidenceYear() {
+        return "-";
+    }
 
-	@Override
-	public String getResidenceMonth() {
-		return "-";
-	}
+    @Override
+    public String getResidenceMonth() {
+        return "-";
+    }
 
-	@Override
-	public String getStudiesType() {
-		if (hasRegistration()) {
-			return "Curso";
-		}
+    @Override
+    public String getStudiesType() {
+        if (hasRegistration()) {
+            return "Curso";
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	private Registration getRegistration() {
-		if (event.isDfaRegistrationEvent()) {
-			return ((DfaRegistrationEvent) event).getRegistration();
-		} else if (event.isEnrolmentOutOfPeriod()) {
-			return ((EnrolmentOutOfPeriodEvent) event).getStudentCurricularPlan().getRegistration();
-		} else if (event.isSpecializationDegreeRegistrationEvent()) {
-			return ((SpecializationDegreeRegistrationEvent) event).getRegistration();
-		}
+    private Registration getRegistration() {
+        if (event.isDfaRegistrationEvent()) {
+            return ((DfaRegistrationEvent) event).getRegistration();
+        } else if (event.isEnrolmentOutOfPeriod()) {
+            return ((EnrolmentOutOfPeriodEvent) event).getStudentCurricularPlan().getRegistration();
+        } else if (event.isSpecializationDegreeRegistrationEvent()) {
+            return ((SpecializationDegreeRegistrationEvent) event).getRegistration();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private boolean hasRegistration() {
-		return getRegistration() != null;
-	}
+    private boolean hasRegistration() {
+        return getRegistration() != null;
+    }
 
-	@Override
-	public String getTotalDiscount() {
-		return event.getTotalDiscount().toPlainString();
-	}
+    @Override
+    public String getTotalDiscount() {
+        return event.getTotalDiscount().toPlainString();
+    }
 
-	@Override
-	public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
-		return !getForExecutionYear().isBefore(executionYear);
-	}
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+        return !getForExecutionYear().isBefore(executionYear);
+    }
 
-	@Override
-	public AdministrativeOffice getRelatedAcademicOffice() {
-		Registration registration = getRegistration();
+    @Override
+    public AdministrativeOffice getRelatedAcademicOffice() {
+        Registration registration = getRegistration();
 
-		if (registration == null) {
-			return null;
-		}
+        if (registration == null) {
+            return null;
+        }
 
-		return registration.getDegree().getAdministrativeOffice();
-	}
+        return registration.getDegree().getAdministrativeOffice();
+    }
 
 }

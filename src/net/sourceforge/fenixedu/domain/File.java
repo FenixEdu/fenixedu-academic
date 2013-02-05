@@ -29,158 +29,158 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public abstract class File extends File_Base {
 
-	protected File() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected File() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	protected void init(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-			byte[] content, Group group) {
-		setFilename(FileUtils.getFilenameOnly(filename));
-		setDisplayName(FileUtils.getFilenameOnly(displayName));
-		new FileLocalContent(this, path, metadata, content);
-		setMimeType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filename));
-		setSize(content == null ? 0 : content.length);
-		setPermittedGroup(group);
-		setUploadTime(new DateTime());
-		setChecksum(DigestUtils.shaHex(content));
-		setChecksumAlgorithm("SHA");
-	}
+    protected void init(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+            byte[] content, Group group) {
+        setFilename(FileUtils.getFilenameOnly(filename));
+        setDisplayName(FileUtils.getFilenameOnly(displayName));
+        new FileLocalContent(this, path, metadata, content);
+        setMimeType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filename));
+        setSize(content == null ? 0 : content.length);
+        setPermittedGroup(group);
+        setUploadTime(new DateTime());
+        setChecksum(DigestUtils.shaHex(content));
+        setChecksumAlgorithm("SHA");
+    }
 
-	public void storeToContentManager() {
-		final FileDescriptor fileDescriptor =
-				FileManagerFactory
-						.getFactoryInstance()
-						.getFileManager()
-						.saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
-								new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
-		setMimeType(fileDescriptor.getMimeType());
-		setChecksum(fileDescriptor.getChecksum());
-		setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
-		setSize(fileDescriptor.getSize());
-		setExternalStorageIdentification(fileDescriptor.getUniqueId());
-		getLocalContent().delete();
-	}
+    public void storeToContentManager() {
+        final FileDescriptor fileDescriptor =
+                FileManagerFactory
+                        .getFactoryInstance()
+                        .getFileManager()
+                        .saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
+                                new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
+        setMimeType(fileDescriptor.getMimeType());
+        setChecksum(fileDescriptor.getChecksum());
+        setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
+        setSize(fileDescriptor.getSize());
+        setExternalStorageIdentification(fileDescriptor.getUniqueId());
+        getLocalContent().delete();
+    }
 
-	public boolean isPrivate() {
-		if (getPermittedGroup() == null) {
-			return false;
-		}
-		if (getPermittedGroup() instanceof EveryoneGroup) {
-			return false;
-		}
-		return true;
-	}
+    public boolean isPrivate() {
+        if (getPermittedGroup() == null) {
+            return false;
+        }
+        if (getPermittedGroup() instanceof EveryoneGroup) {
+            return false;
+        }
+        return true;
+    }
 
-	public InputStream getStream() {
-		if (hasLocalContent()) {
-			return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
-		}
-		return FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
-	}
+    public InputStream getStream() {
+        if (hasLocalContent()) {
+            return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
+        }
+        return FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
+    }
 
-	public byte[] getContents() {
-		if (hasLocalContent()) {
-			return getLocalContent().getContent().getBytes();
-		}
-		InputStream inputStream = null;
-		try {
-			inputStream =
-					FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
-			return ByteArray.toBytes(inputStream);
-		} catch (IOException e) {
-			throw new Error(e);
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					throw new Error(e);
-				}
-			}
-		}
-	}
+    public byte[] getContents() {
+        if (hasLocalContent()) {
+            return getLocalContent().getContent().getBytes();
+        }
+        InputStream inputStream = null;
+        try {
+            inputStream =
+                    FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(getExternalStorageIdentification());
+            return ByteArray.toBytes(inputStream);
+        } catch (IOException e) {
+            throw new Error(e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    throw new Error(e);
+                }
+            }
+        }
+    }
 
-	private static final String ACTION_PATH = PropertiesManager.getProperty("file.download.url.local.content");
+    private static final String ACTION_PATH = PropertiesManager.getProperty("file.download.url.local.content");
 
-	/**
-	 * @return returns a public url that can be used by a client to download the
-	 *         associated file from the external file storage
-	 */
-	public String getDownloadUrl() {
-		if (hasLocalContent()) {
-			return ACTION_PATH + getExternalId();
-		}
+    /**
+     * @return returns a public url that can be used by a client to download the
+     *         associated file from the external file storage
+     */
+    public String getDownloadUrl() {
+        if (hasLocalContent()) {
+            return ACTION_PATH + getExternalId();
+        }
 
-		return FileManagerFactory.getFactoryInstance().getFileManager()
-				.formatDownloadUrl(getExternalStorageIdentification(), getFilename());
-	}
+        return FileManagerFactory.getFactoryInstance().getFileManager()
+                .formatDownloadUrl(getExternalStorageIdentification(), getFilename());
+    }
 
-	public void delete() {
-		disconnect();
-		deleteDomainObject();
-	}
+    public void delete() {
+        disconnect();
+        deleteDomainObject();
+    }
 
-	protected void disconnect() {
-		if (hasLocalContent()) {
-			getLocalContent().delete();
-		} else {
-			createDeleteFileRequest();
-		}
-		removeRootDomainObject();
-	}
+    protected void disconnect() {
+        if (hasLocalContent()) {
+            getLocalContent().delete();
+        } else {
+            createDeleteFileRequest();
+        }
+        removeRootDomainObject();
+    }
 
-	protected void createDeleteFileRequest() {
-		new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification(), deletItemOnDelete());
-	}
+    protected void createDeleteFileRequest() {
+        new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification(), deletItemOnDelete());
+    }
 
-	protected Boolean deletItemOnDelete() {
-		return Boolean.TRUE;
-	}
+    protected Boolean deletItemOnDelete() {
+        return Boolean.TRUE;
+    }
 
-	public boolean isPersonAllowedToAccess(Person person) {
-		final Group group = this.getPermittedGroup();
-		return group == null || group.isMember(person);
-	}
+    public boolean isPersonAllowedToAccess(Person person) {
+        final Group group = this.getPermittedGroup();
+        return group == null || group.isMember(person);
+    }
 
-	// -------------------------------------------------------------
-	// read static methods
-	// -------------------------------------------------------------
-	public static File readByExternalStorageIdentification(String externalStorageIdentification) {
-		// For performance reasons...
-		PreparedStatement stmt = null;
-		try {
-			final Connection connection = Transaction.getCurrentJdbcConnection();
-			stmt = connection.prepareStatement("SELECT ID_INTERNAL FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
+    // -------------------------------------------------------------
+    // read static methods
+    // -------------------------------------------------------------
+    public static File readByExternalStorageIdentification(String externalStorageIdentification) {
+        // For performance reasons...
+        PreparedStatement stmt = null;
+        try {
+            final Connection connection = Transaction.getCurrentJdbcConnection();
+            stmt = connection.prepareStatement("SELECT ID_INTERNAL FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
 
-			stmt.setString(1, externalStorageIdentification);
-			final ResultSet resultSet = stmt.executeQuery();
-			if (resultSet.next()) {
-				return RootDomainObject.getInstance().readFileByOID(resultSet.getInt(1));
-			}
+            stmt.setString(1, externalStorageIdentification);
+            final ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return RootDomainObject.getInstance().readFileByOID(resultSet.getInt(1));
+            }
 
-			return null;
-		} catch (SQLException e) {
-			throw new Error(e);
-		} finally {
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					throw new Error(e);
-				}
-			}
-		}
-	}
+            return null;
+        } catch (SQLException e) {
+            throw new Error(e);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    throw new Error(e);
+                }
+            }
+        }
+    }
 
-	@Override
-	public void setPermittedGroup(Group permittedGroup) {
-		super.setPermittedGroup(permittedGroup);
-		if (!hasLocalContent()) {
-			final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
-			FileManagerFactory.getFactoryInstance().getContentFileManager()
-					.changeFilePermissions(getExternalStorageIdentification(), !isPublic);
-		}
-	}
+    @Override
+    public void setPermittedGroup(Group permittedGroup) {
+        super.setPermittedGroup(permittedGroup);
+        if (!hasLocalContent()) {
+            final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
+            FileManagerFactory.getFactoryInstance().getContentFileManager()
+                    .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
+        }
+    }
 
 }

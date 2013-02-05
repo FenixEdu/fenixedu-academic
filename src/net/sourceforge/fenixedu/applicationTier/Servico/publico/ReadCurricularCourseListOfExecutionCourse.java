@@ -18,32 +18,32 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCourseListOfExecutionCourse extends FenixService {
 
-	@Service
-	public static Object run(InfoExecutionCourse infoExecCourse) {
-		final ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID(infoExecCourse.getInfoExecutionPeriod().getIdInternal());
-		ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecCourse.getSigla());
+    @Service
+    public static Object run(InfoExecutionCourse infoExecCourse) {
+        final ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID(infoExecCourse.getInfoExecutionPeriod().getIdInternal());
+        ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecCourse.getSigla());
 
-		List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
-		if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
+        List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
+        if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
 
-			for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-				InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-				// curricular course scope list
-				List<InfoCurricularCourseScope> infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
-				for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-					InfoCurricularCourseScope infoCurricularCourseScope =
-							InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
-					infoCurricularCourseScopeList.add(infoCurricularCourseScope);
-				}
-				infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+                // curricular course scope list
+                List<InfoCurricularCourseScope> infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                    InfoCurricularCourseScope infoCurricularCourseScope =
+                            InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
+                    infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+                }
+                infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
 
-				infoCurricularCourseList.add(infoCurricularCourse);
-			}
-		}
+                infoCurricularCourseList.add(infoCurricularCourse);
+            }
+        }
 
-		return infoCurricularCourseList;
-	}
+        return infoCurricularCourseList;
+    }
 
 }

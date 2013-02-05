@@ -24,48 +24,48 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class Archive {
 
-	private HttpServletResponse response;
-	private String name;
+    private HttpServletResponse response;
+    private String name;
 
-	public Archive(HttpServletResponse response, String name) {
-		super();
+    public Archive(HttpServletResponse response, String name) {
+        super();
 
-		this.response = response;
-		this.name = name;
-	}
+        this.response = response;
+        this.name = name;
+    }
 
-	public HttpServletResponse getResponse() {
-		return this.response;
-	}
+    public HttpServletResponse getResponse() {
+        return this.response;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	protected void setName(String name) {
-		this.name = name;
-	}
+    protected void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Obtains a new stream that can use to store the resource. In this
-	 * operation the resource name is important but each archive may process the
-	 * name differently. As a general rule, the resource name should use a path
-	 * like format that does not start with <tt>'/'</tt> like <tt>"file"</tt> or <tt>"dira/dirb/file"</tt>.
-	 * 
-	 * @param resource
-	 *            the target resource
-	 * @return a stream where the resource's contents should be written
-	 * 
-	 * @throws IOException
-	 *             when an io error occurs
-	 */
-	public abstract OutputStream getStream(Resource resource) throws IOException;
+    /**
+     * Obtains a new stream that can use to store the resource. In this
+     * operation the resource name is important but each archive may process the
+     * name differently. As a general rule, the resource name should use a path
+     * like format that does not start with <tt>'/'</tt> like <tt>"file"</tt> or <tt>"dira/dirb/file"</tt>.
+     * 
+     * @param resource
+     *            the target resource
+     * @return a stream where the resource's contents should be written
+     * 
+     * @throws IOException
+     *             when an io error occurs
+     */
+    public abstract OutputStream getStream(Resource resource) throws IOException;
 
-	/**
-	 * Finishes the archive ensuring that all content is written to the response
-	 * and terminating any pending resources.
-	 * 
-	 * @throws IOException
-	 */
-	public abstract void finish() throws IOException;
+    /**
+     * Finishes the archive ensuring that all content is written to the response
+     * and terminating any pending resources.
+     * 
+     * @throws IOException
+     */
+    public abstract void finish() throws IOException;
 }

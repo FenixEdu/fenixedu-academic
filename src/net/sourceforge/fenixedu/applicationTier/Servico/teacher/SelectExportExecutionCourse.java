@@ -17,31 +17,31 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SelectExportExecutionCourse extends FenixService {
 
-	@Service
-	public static Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-			Integer curricularYear) {
+    @Service
+    public static Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+            Integer curricularYear) {
 
-		List infoExecutionCourseList = new ArrayList();
+        List infoExecutionCourseList = new ArrayList();
 
-		DegreeCurricularPlan degreeCurricularPlan =
-				DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-						infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-		if (degreeCurricularPlan != null) {
-			ExecutionSemester executionSemester =
-					rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-			List<ExecutionCourse> executionCourseList =
-					degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
-							curricularYear, infoExecutionPeriod.getSemester());
+        DegreeCurricularPlan degreeCurricularPlan =
+                DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+        if (degreeCurricularPlan != null) {
+            ExecutionSemester executionSemester =
+                    rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+            List<ExecutionCourse> executionCourseList =
+                    degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
+                            curricularYear, infoExecutionPeriod.getSemester());
 
-			for (int i = 0; i < executionCourseList.size(); i++) {
-				ExecutionCourse aux = executionCourseList.get(i);
-				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
-				infoExecutionCourseList.add(infoExecutionCourse);
-			}
-		}
+            for (int i = 0; i < executionCourseList.size(); i++) {
+                ExecutionCourse aux = executionCourseList.get(i);
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
+                infoExecutionCourseList.add(infoExecutionCourse);
+            }
+        }
 
-		return infoExecutionCourseList;
+        return infoExecutionCourseList;
 
-	}
+    }
 
 }

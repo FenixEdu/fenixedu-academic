@@ -33,235 +33,234 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/professionalInformation", module = "manager")
-@Forwards({ @Forward(
-		name = "showProfessionalInformation",
-		path = "/manager/personManagement/contracts/showProfessionalInformation.jsp") })
+@Forwards({ @Forward(name = "showProfessionalInformation",
+        path = "/manager/personManagement/contracts/showProfessionalInformation.jsp") })
 public class ProfessionalInformationDA extends FenixDispatchAction {
 
-	public ActionForward showProfessioanlData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showProfessioanlData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		if (person.getPersonProfessionalData() != null) {
-			request.setAttribute("professionalData", person.getPersonProfessionalData());
-		}
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        if (person.getPersonProfessionalData() != null) {
+            request.setAttribute("professionalData", person.getPersonProfessionalData());
+        }
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showSituations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showSituations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonContractSituation> situations = new ArrayList<PersonContractSituation>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituations()) {
-					if (personContractSituation.getAnulationDate() == null) {
-						situations.add(personContractSituation);
-					}
-				}
-			}
-		}
-		request.setAttribute("situations", situations);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonContractSituation> situations = new ArrayList<PersonContractSituation>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituations()) {
+                    if (personContractSituation.getAnulationDate() == null) {
+                        situations.add(personContractSituation);
+                    }
+                }
+            }
+        }
+        request.setAttribute("situations", situations);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showCategories(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showCategories(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalCategory> categories = new ArrayList<PersonProfessionalCategory>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData
-						.getPersonProfessionalCategories()) {
-					if (personProfessionalCategory.getAnulationDate() == null) {
-						categories.add(personProfessionalCategory);
-					}
-				}
-			}
-		}
-		request.setAttribute("categories", categories);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalCategory> categories = new ArrayList<PersonProfessionalCategory>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData
+                        .getPersonProfessionalCategories()) {
+                    if (personProfessionalCategory.getAnulationDate() == null) {
+                        categories.add(personProfessionalCategory);
+                    }
+                }
+            }
+        }
+        request.setAttribute("categories", categories);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showRegimes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showRegimes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalRegime> regimes = new ArrayList<PersonProfessionalRegime>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalRegime personProfessionalRegime : giafProfessionalData.getPersonProfessionalRegimes()) {
-					if (personProfessionalRegime.getAnulationDate() == null) {
-						regimes.add(personProfessionalRegime);
-					}
-				}
-			}
-		}
-		request.setAttribute("regimes", regimes);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalRegime> regimes = new ArrayList<PersonProfessionalRegime>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalRegime personProfessionalRegime : giafProfessionalData.getPersonProfessionalRegimes()) {
+                    if (personProfessionalRegime.getAnulationDate() == null) {
+                        regimes.add(personProfessionalRegime);
+                    }
+                }
+            }
+        }
+        request.setAttribute("regimes", regimes);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showRelations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showRelations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalRelation> relations = new ArrayList<PersonProfessionalRelation>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalRelation personProfessionalRelation : giafProfessionalData
-						.getPersonProfessionalRelations()) {
-					if (personProfessionalRelation.getAnulationDate() == null) {
-						relations.add(personProfessionalRelation);
-					}
-				}
-			}
-		}
-		request.setAttribute("relations", relations);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalRelation> relations = new ArrayList<PersonProfessionalRelation>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalRelation personProfessionalRelation : giafProfessionalData
+                        .getPersonProfessionalRelations()) {
+                    if (personProfessionalRelation.getAnulationDate() == null) {
+                        relations.add(personProfessionalRelation);
+                    }
+                }
+            }
+        }
+        request.setAttribute("relations", relations);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showContracts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showContracts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalContract> contracts = new ArrayList<PersonProfessionalContract>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalContract personProfessionalContract : giafProfessionalData
-						.getPersonProfessionalContracts()) {
-					if (personProfessionalContract.getAnulationDate() == null) {
-						contracts.add(personProfessionalContract);
-					}
-				}
-			}
-		}
-		request.setAttribute("contracts", contracts);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalContract> contracts = new ArrayList<PersonProfessionalContract>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalContract personProfessionalContract : giafProfessionalData
+                        .getPersonProfessionalContracts()) {
+                    if (personProfessionalContract.getAnulationDate() == null) {
+                        contracts.add(personProfessionalContract);
+                    }
+                }
+            }
+        }
+        request.setAttribute("contracts", contracts);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showFunctionsAccumulations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showFunctionsAccumulations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonFunctionsAccumulation> functionsAccumulations = new ArrayList<PersonFunctionsAccumulation>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonFunctionsAccumulation employeeFunctionsAccumulation : giafProfessionalData
-						.getPersonFunctionsAccumulations()) {
-					if (employeeFunctionsAccumulation.getAnulationDate() == null) {
-						functionsAccumulations.add(employeeFunctionsAccumulation);
-					}
-				}
-			}
-		}
-		request.setAttribute("functionsAccumulations", functionsAccumulations);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonFunctionsAccumulation> functionsAccumulations = new ArrayList<PersonFunctionsAccumulation>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonFunctionsAccumulation employeeFunctionsAccumulation : giafProfessionalData
+                        .getPersonFunctionsAccumulations()) {
+                    if (employeeFunctionsAccumulation.getAnulationDate() == null) {
+                        functionsAccumulations.add(employeeFunctionsAccumulation);
+                    }
+                }
+            }
+        }
+        request.setAttribute("functionsAccumulations", functionsAccumulations);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showSabbaticals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showSabbaticals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalExemption> sabbaticals = new ArrayList<PersonProfessionalExemption>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-						.getPersonProfessionalExemptions()) {
-					if (personProfessionalExemption instanceof PersonSabbatical
-							&& personProfessionalExemption.getAnulationDate() == null) {
-						sabbaticals.add(personProfessionalExemption);
-					}
-				}
-			}
-		}
-		request.setAttribute("sabbaticals", sabbaticals);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalExemption> sabbaticals = new ArrayList<PersonProfessionalExemption>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+                        .getPersonProfessionalExemptions()) {
+                    if (personProfessionalExemption instanceof PersonSabbatical
+                            && personProfessionalExemption.getAnulationDate() == null) {
+                        sabbaticals.add(personProfessionalExemption);
+                    }
+                }
+            }
+        }
+        request.setAttribute("sabbaticals", sabbaticals);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showServiceExemptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showServiceExemptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalExemption> serviceExemptions = new ArrayList<PersonProfessionalExemption>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-						.getPersonProfessionalExemptions()) {
-					if (personProfessionalExemption instanceof PersonServiceExemption
-							&& personProfessionalExemption.getAnulationDate() == null) {
-						serviceExemptions.add(personProfessionalExemption);
-					}
-				}
-			}
-		}
-		request.setAttribute("serviceExemptions", serviceExemptions);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalExemption> serviceExemptions = new ArrayList<PersonProfessionalExemption>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+                        .getPersonProfessionalExemptions()) {
+                    if (personProfessionalExemption instanceof PersonServiceExemption
+                            && personProfessionalExemption.getAnulationDate() == null) {
+                        serviceExemptions.add(personProfessionalExemption);
+                    }
+                }
+            }
+        }
+        request.setAttribute("serviceExemptions", serviceExemptions);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showGrantOwnerEquivalences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showGrantOwnerEquivalences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalExemption> grantOwnerEquivalences = new ArrayList<PersonProfessionalExemption>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-						.getPersonProfessionalExemptions()) {
-					if (personProfessionalExemption instanceof PersonGrantOwnerEquivalent
-							&& personProfessionalExemption.getAnulationDate() == null) {
-						grantOwnerEquivalences.add(personProfessionalExemption);
-					}
-				}
-			}
-		}
-		request.setAttribute("grantOwnerEquivalences", grantOwnerEquivalences);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalExemption> grantOwnerEquivalences = new ArrayList<PersonProfessionalExemption>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+                        .getPersonProfessionalExemptions()) {
+                    if (personProfessionalExemption instanceof PersonGrantOwnerEquivalent
+                            && personProfessionalExemption.getAnulationDate() == null) {
+                        grantOwnerEquivalences.add(personProfessionalExemption);
+                    }
+                }
+            }
+        }
+        request.setAttribute("grantOwnerEquivalences", grantOwnerEquivalences);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showAbsences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+    public ActionForward showAbsences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
-		List<PersonProfessionalExemption> absences = new ArrayList<PersonProfessionalExemption>();
-		if (person.getPersonProfessionalData() != null) {
-			for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
-				for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
-						.getPersonProfessionalExemptions()) {
-					if (personProfessionalExemption instanceof PersonAbsence
-							&& personProfessionalExemption.getAnulationDate() == null) {
-						absences.add(personProfessionalExemption);
-					}
-				}
-			}
-		}
-		request.setAttribute("absences", absences);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+        List<PersonProfessionalExemption> absences = new ArrayList<PersonProfessionalExemption>();
+        if (person.getPersonProfessionalData() != null) {
+            for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+                for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+                        .getPersonProfessionalExemptions()) {
+                    if (personProfessionalExemption instanceof PersonAbsence
+                            && personProfessionalExemption.getAnulationDate() == null) {
+                        absences.add(personProfessionalExemption);
+                    }
+                }
+            }
+        }
+        request.setAttribute("absences", absences);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
-	public ActionForward showEmployeeWorkingUnits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
-		List<Contract> workingUnits = new ArrayList<Contract>();
-		Employee employee = person.getEmployee();
-		if (employee != null) {
-			workingUnits.addAll(employee.getWorkingContracts());
-		}
-		request.setAttribute("workingUnits", workingUnits);
-		request.setAttribute("person", person);
-		return mapping.findForward("showProfessionalInformation");
-	}
+    public ActionForward showEmployeeWorkingUnits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+        List<Contract> workingUnits = new ArrayList<Contract>();
+        Employee employee = person.getEmployee();
+        if (employee != null) {
+            workingUnits.addAll(employee.getWorkingContracts());
+        }
+        request.setAttribute("workingUnits", workingUnits);
+        request.setAttribute("person", person);
+        return mapping.findForward("showProfessionalInformation");
+    }
 
 }

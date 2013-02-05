@@ -6,10 +6,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteSpace extends FenixService {
 
-	@Service
-	public static void run(final Space space) {
-		if (space != null) {
-			space.delete();
-		}
-	}
+    @Service
+    public static void run(final Space space) {
+        if (space != null) {
+            space.delete();
+        }
+    }
 }

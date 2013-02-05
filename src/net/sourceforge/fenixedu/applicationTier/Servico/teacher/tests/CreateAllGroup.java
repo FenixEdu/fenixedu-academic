@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateAllGroup extends FenixService {
-	@Service
-	public static NewAllGroup run(NewQuestionGroup parentQuestionGroup) throws FenixServiceException {
-		return new NewAllGroup(parentQuestionGroup);
-	}
+    @Service
+    public static NewAllGroup run(NewQuestionGroup parentQuestionGroup) throws FenixServiceException {
+        return new NewAllGroup(parentQuestionGroup);
+    }
 }

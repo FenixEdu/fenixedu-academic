@@ -12,43 +12,43 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-		if (!process.isJuryValidated()) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.isJuryValidated()) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (process.isAllowedToManageProcess(userView)) {
-			return;
-		}
+        if (process.isAllowedToManageProcess(userView)) {
+            return;
+        }
 
-		if (!process.isParticipant(userView.getPerson())) {
-			throw new PreConditionNotValidException();
-		}
+        if (!process.isParticipant(userView.getPerson())) {
+            throw new PreConditionNotValidException();
+        }
 
-		final ThesisJuryElement element = process.getThesisJuryElement(userView.getPerson());
-		if (element == null || !element.getReporter().booleanValue()) {
-			throw new PreConditionNotValidException();
-		}
-	}
+        final ThesisJuryElement element = process.getThesisJuryElement(userView.getPerson());
+        if (element == null || !element.getReporter().booleanValue()) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+        final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
-		for (final PhdProgramDocumentUploadBean documentBean : bean.getDocuments()) {
-			if (documentBean.hasAnyInformation()) {
-				new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getRemarks(),
-						documentBean.getFileContent(), documentBean.getFilename(), AccessControl.getPerson());
-			}
-		}
+        for (final PhdProgramDocumentUploadBean documentBean : bean.getDocuments()) {
+            if (documentBean.hasAnyInformation()) {
+                new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getRemarks(),
+                        documentBean.getFileContent(), documentBean.getFilename(), AccessControl.getPerson());
+            }
+        }
 
-		return process;
-	}
+        return process;
+    }
 
 }

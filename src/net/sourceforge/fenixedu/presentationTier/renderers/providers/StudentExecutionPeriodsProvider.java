@@ -12,15 +12,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class StudentExecutionPeriodsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		return ((ManageStudentStatuteBean) source).getStudent().getEnroledExecutionPeriods();
-	}
+        return ((ManageStudentStatuteBean) source).getStudent().getEnroledExecutionPeriods();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

@@ -22,49 +22,49 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCandidateList extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
-			Integer candidateNumber, String executionYearString) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
+            Integer candidateNumber, String executionYearString) {
 
-		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degreeName));
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degreeName));
 
-		final Set<MasterDegreeCandidate> result;
-		if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {
-			result = new HashSet<MasterDegreeCandidate>();
-			for (final ExecutionDegree executionDegreeIter : executionYear.getExecutionDegreesSet()) {
-				result.addAll(executionDegreeIter.getMasterDegreeCandidatesSet());
-			}
-		} else {
-			result =
-					MasterDegreeCandidate.readByExecutionDegreeOrSpecializationOrCandidateNumberOrSituationName(executionDegree,
-							degreeType, candidateNumber, candidateSituation);
-		}
+        final Set<MasterDegreeCandidate> result;
+        if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {
+            result = new HashSet<MasterDegreeCandidate>();
+            for (final ExecutionDegree executionDegreeIter : executionYear.getExecutionDegreesSet()) {
+                result.addAll(executionDegreeIter.getMasterDegreeCandidatesSet());
+            }
+        } else {
+            result =
+                    MasterDegreeCandidate.readByExecutionDegreeOrSpecializationOrCandidateNumberOrSituationName(executionDegree,
+                            degreeType, candidateNumber, candidateSituation);
+        }
 
-		final List candidateList = new ArrayList();
-		final Iterator iterator = result.iterator();
-		while (iterator.hasNext()) {
-			final MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) iterator.next();
-			final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
-					InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
+        final List candidateList = new ArrayList();
+        final Iterator iterator = result.iterator();
+        while (iterator.hasNext()) {
+            final MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) iterator.next();
+            final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
+                    InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
 
-			final Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
-			final List situations = new ArrayList();
-			while (situationIterator.hasNext()) {
-				final InfoCandidateSituation infoCandidateSituation =
-						InfoCandidateSituation.newInfoFromDomain((CandidateSituation) situationIterator.next());
-				situations.add(infoCandidateSituation);
-			}
-			infoMasterDegreeCandidate.setSituationList(situations);
+            final Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+            final List situations = new ArrayList();
+            while (situationIterator.hasNext()) {
+                final InfoCandidateSituation infoCandidateSituation =
+                        InfoCandidateSituation.newInfoFromDomain((CandidateSituation) situationIterator.next());
+                situations.add(infoCandidateSituation);
+            }
+            infoMasterDegreeCandidate.setSituationList(situations);
 
-			executionDegree = masterDegreeCandidate.getExecutionDegree();
-			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-			infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+            executionDegree = masterDegreeCandidate.getExecutionDegree();
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
-			candidateList.add(infoMasterDegreeCandidate);
-		}
+            candidateList.add(infoMasterDegreeCandidate);
+        }
 
-		return candidateList;
-	}
+        return candidateList;
+    }
 }

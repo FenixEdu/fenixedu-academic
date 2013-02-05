@@ -8,23 +8,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EmailAddressThread extends Thread {
 
-	final Group group;
-	final Set<String> emailAddresses;
+    final Group group;
+    final Set<String> emailAddresses;
 
-	public EmailAddressThread(final Group group, final Set<String> emailAddresses) {
-		this.group = group;
-		this.emailAddresses = emailAddresses;
-	}
+    public EmailAddressThread(final Group group, final Set<String> emailAddresses) {
+        this.group = group;
+        this.emailAddresses = emailAddresses;
+    }
 
-	@Override
-	@Service
-	public void run() {
-		for (final Person person : group.getElements()) {
-			final String emailAddress = person.getEmail();
-			if (emailAddress != null && !emailAddress.isEmpty()) {
-				emailAddresses.add(emailAddress);
-			}
-		}
-	}
+    @Override
+    @Service
+    public void run() {
+        for (final Person person : group.getElements()) {
+            final String emailAddress = person.getEmail();
+            if (emailAddress != null && !emailAddress.isEmpty()) {
+                emailAddresses.add(emailAddress);
+            }
+        }
+    }
 
 }

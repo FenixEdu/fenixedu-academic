@@ -9,32 +9,32 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 
 public class RestrictionDoneDegreeModuleVerifier extends VerifyRuleExecutor {
 
-	@Override
-	protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+    @Override
+    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+            DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
-		final RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
+        final RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
 
-		if (isApproved(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)) {
-			return RuleResult.createTrue(degreeModuleToVerify);
-		}
+        if (isApproved(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)) {
+            return RuleResult.createTrue(degreeModuleToVerify);
+        }
 
-		return RuleResult.createFalse(degreeModuleToVerify);
-	}
+        return RuleResult.createFalse(degreeModuleToVerify);
+    }
 
-	@Override
-	protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-		final RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
+    @Override
+    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+            DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+        final RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
 
-		if (isApproved(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)
-				|| hasEnrolmentWithEnroledState(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(),
-						enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod())) {
-			return RuleResult.createTrue(degreeModuleToVerify);
-		}
+        if (isApproved(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)
+                || hasEnrolmentWithEnroledState(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(),
+                        enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod())) {
+            return RuleResult.createTrue(degreeModuleToVerify);
+        }
 
-		return RuleResult.createFalse(degreeModuleToVerify);
+        return RuleResult.createFalse(degreeModuleToVerify);
 
-	}
+    }
 
 }

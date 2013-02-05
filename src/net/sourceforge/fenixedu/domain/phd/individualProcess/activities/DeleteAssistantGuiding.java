@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 
 public class DeleteAssistantGuiding extends PhdIndividualProgramProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
+    @Override
+    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
 
-	}
+    }
 
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-		return process.deleteAssistantGuiding((PhdParticipant) object);
-	}
+    @Override
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+        return process.deleteAssistantGuiding((PhdParticipant) object);
+    }
 }

@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditLibraryCard extends FenixService {
 
-	@Checked("RolePredicates.LIBRARY_PREDICATE")
-	@Service
-	public static LibraryCard run(LibraryCardDTO libraryCardDTO) {
-		libraryCardDTO.getLibraryCard().edit(libraryCardDTO);
-		return libraryCardDTO.getLibraryCard();
-	}
+    @Checked("RolePredicates.LIBRARY_PREDICATE")
+    @Service
+    public static LibraryCard run(LibraryCardDTO libraryCardDTO) {
+        libraryCardDTO.getLibraryCard().edit(libraryCardDTO);
+        return libraryCardDTO.getLibraryCard();
+    }
 }

@@ -6,45 +6,45 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TSDProfessorship extends TSDProfessorship_Base {
 
-	private TSDProfessorship() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    private TSDProfessorship() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public TSDProfessorship(TSDCourse tsdCourse, TSDTeacher tsdTeacher, ShiftType type) {
-		this();
+    public TSDProfessorship(TSDCourse tsdCourse, TSDTeacher tsdTeacher, ShiftType type) {
+        this();
 
-		this.setTSDCourse(tsdCourse);
-		this.setTSDTeacher(tsdTeacher);
-		this.setType(type);
-	}
+        this.setTSDCourse(tsdCourse);
+        this.setTSDTeacher(tsdTeacher);
+        this.setType(type);
+    }
 
-	public Double getHours() {
-		if (getHoursType() == TSDValueType.MANUAL_VALUE) {
-			return super.getHoursManual();
-		} else if (getHoursType() == TSDValueType.LAST_YEAR_REAL_VALUE) {
-			return getTSDTeacher().getRealHoursByShiftTypeAndExecutionCourses(getType(),
-					getTSDCourse().getAssociatedExecutionCoursesLastYear());
-		} else if (getHoursType() == TSDValueType.REAL_VALUE) {
-			return getTSDTeacher().getRealHoursByShiftTypeAndExecutionCourses(getType(),
-					getTSDCourse().getAssociatedExecutionCourses());
-		}
+    public Double getHours() {
+        if (getHoursType() == TSDValueType.MANUAL_VALUE) {
+            return super.getHoursManual();
+        } else if (getHoursType() == TSDValueType.LAST_YEAR_REAL_VALUE) {
+            return getTSDTeacher().getRealHoursByShiftTypeAndExecutionCourses(getType(),
+                    getTSDCourse().getAssociatedExecutionCoursesLastYear());
+        } else if (getHoursType() == TSDValueType.REAL_VALUE) {
+            return getTSDTeacher().getRealHoursByShiftTypeAndExecutionCourses(getType(),
+                    getTSDCourse().getAssociatedExecutionCourses());
+        }
 
-		return 0d;
-	}
+        return 0d;
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		return getTSDCourse().getExecutionPeriod();
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        return getTSDCourse().getExecutionPeriod();
+    }
 
-	public Boolean getIsActive() {
-		return getTSDCourse().getIsActive();
-	}
+    public Boolean getIsActive() {
+        return getTSDCourse().getIsActive();
+    }
 
-	public void delete() {
-		removeTSDCourse();
-		removeTSDTeacher();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removeTSDCourse();
+        removeTSDTeacher();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 }

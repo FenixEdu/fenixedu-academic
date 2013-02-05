@@ -19,25 +19,25 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadEmptyRoomsForExam extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static List run(InfoExam infoExam) throws FenixServiceException {
-		List availableInfoRooms = null;
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List run(InfoExam infoExam) throws FenixServiceException {
+        List availableInfoRooms = null;
 
-		Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
-			@Override
-			public Object transform(Object input) {
-				return InfoRoom.newInfoFromDomain((AllocatableSpace) input);
-			}
-		};
+        Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
+            @Override
+            public Object transform(Object input) {
+                return InfoRoom.newInfoFromDomain((AllocatableSpace) input);
+            }
+        };
 
-		// TODO : checkthis
-		throw new NotImplementedException();
-		// List availableRooms =
-		// persistentRoom.readAvailableRooms(infoExam.getIdInternal());
-		// availableInfoRooms = (List) CollectionUtils.collect(availableRooms,
-		// TRANSFORM_TO_INFOROOM);
-		// return availableInfoRooms;
-	}
+        // TODO : checkthis
+        throw new NotImplementedException();
+        // List availableRooms =
+        // persistentRoom.readAvailableRooms(infoExam.getIdInternal());
+        // availableInfoRooms = (List) CollectionUtils.collect(availableRooms,
+        // TRANSFORM_TO_INFOROOM);
+        // return availableInfoRooms;
+    }
 
 }

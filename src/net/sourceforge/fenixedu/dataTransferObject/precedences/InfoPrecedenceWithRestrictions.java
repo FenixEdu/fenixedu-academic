@@ -22,78 +22,78 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 
 public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
 
-	protected List infoRestrictions;
+    protected List infoRestrictions;
 
-	public List getInfoRestrictions() {
-		return infoRestrictions;
-	}
+    public List getInfoRestrictions() {
+        return infoRestrictions;
+    }
 
-	public void setInfoRestrictions(List infoRestrictions) {
-		this.infoRestrictions = infoRestrictions;
-	}
+    public void setInfoRestrictions(List infoRestrictions) {
+        this.infoRestrictions = infoRestrictions;
+    }
 
-	@Override
-	public void copyFromDomain(Precedence precedence) {
-		super.copyFromDomain(precedence);
-		this.setInfoRestrictions(getInfoRestrictionsList(precedence.getRestrictions()));
-	}
+    @Override
+    public void copyFromDomain(Precedence precedence) {
+        super.copyFromDomain(precedence);
+        this.setInfoRestrictions(getInfoRestrictionsList(precedence.getRestrictions()));
+    }
 
-	public static InfoPrecedence newInfoFromDomain(Precedence precedence) {
-		InfoPrecedenceWithRestrictions infoPrecedenceWithRestrictions = null;
+    public static InfoPrecedence newInfoFromDomain(Precedence precedence) {
+        InfoPrecedenceWithRestrictions infoPrecedenceWithRestrictions = null;
 
-		if (precedence != null) {
-			infoPrecedenceWithRestrictions = new InfoPrecedenceWithRestrictions();
-			infoPrecedenceWithRestrictions.copyFromDomain(precedence);
-		}
+        if (precedence != null) {
+            infoPrecedenceWithRestrictions = new InfoPrecedenceWithRestrictions();
+            infoPrecedenceWithRestrictions.copyFromDomain(precedence);
+        }
 
-		return infoPrecedenceWithRestrictions;
-	}
+        return infoPrecedenceWithRestrictions;
+    }
 
-	private List getInfoRestrictionsList(List<Restriction> restrictions) {
-		List<InfoRestriction> infoRestrictions = new ArrayList();
+    private List getInfoRestrictionsList(List<Restriction> restrictions) {
+        List<InfoRestriction> infoRestrictions = new ArrayList();
 
-		for (Restriction restriction : restrictions) {
-			if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
-				InfoRestrictionByNumberOfCurricularCourses infoRestriction =
-						InfoRestrictionByNumberOfDoneCurricularCourses
-								.newInfoFromDomain((RestrictionByNumberOfCurricularCourses) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
-				InfoRestrictionByCurricularCourse infoRestriction =
-						InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse
-								.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse) {
-				InfoRestrictionByCurricularCourse infoRestriction =
-						InfoRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse
-								.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse) {
-				InfoRestrictionByCurricularCourse infoRestriction =
-						InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse
-								.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionNotEnrolledInCurricularCourse) {
-				InfoRestrictionByCurricularCourse infoRestriction =
-						InfoRestrictionNotEnrolledInCurricularCourse
-								.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionDoneCurricularCourse) {
-				InfoRestrictionByCurricularCourse infoRestriction =
-						InfoRestrictionDoneCurricularCourse.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionNotDoneCurricularCourse) {
-				InfoRestrictionByCurricularCourse infoRestriction =
-						InfoRestrictionNotDoneCurricularCourse.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
-				infoRestrictions.add(infoRestriction);
-			} else if (restriction instanceof RestrictionPeriodToApply) {
-				InfoRestrictionPeriodToApply infoRestriction =
-						InfoRestrictionPeriodToApply.newInfoFromDomain((RestrictionPeriodToApply) restriction);
-				infoRestrictions.add(infoRestriction);
-			}
-		}
+        for (Restriction restriction : restrictions) {
+            if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
+                InfoRestrictionByNumberOfCurricularCourses infoRestriction =
+                        InfoRestrictionByNumberOfDoneCurricularCourses
+                                .newInfoFromDomain((RestrictionByNumberOfCurricularCourses) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction =
+                        InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse
+                                .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction =
+                        InfoRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse
+                                .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction =
+                        InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse
+                                .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionNotEnrolledInCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction =
+                        InfoRestrictionNotEnrolledInCurricularCourse
+                                .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionDoneCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction =
+                        InfoRestrictionDoneCurricularCourse.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionNotDoneCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction =
+                        InfoRestrictionNotDoneCurricularCourse.newInfoFromDomain((RestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionPeriodToApply) {
+                InfoRestrictionPeriodToApply infoRestriction =
+                        InfoRestrictionPeriodToApply.newInfoFromDomain((RestrictionPeriodToApply) restriction);
+                infoRestrictions.add(infoRestriction);
+            }
+        }
 
-		return infoRestrictions;
-	}
+        return infoRestrictions;
+    }
 
 }

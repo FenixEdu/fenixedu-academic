@@ -13,33 +13,33 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
  */
 public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
 
-	protected AvailabilityPolicy() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setContentId(UUID.randomUUID().toString());
-	}
+    protected AvailabilityPolicy() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setContentId(UUID.randomUUID().toString());
+    }
 
-	/**
-	 * Determines if this policy allows the functionality to be available in the
-	 * given context.
-	 * 
-	 * @param context
-	 *            the context of the functionality
-	 * 
-	 * @return <code>true</code> if the functionality is available
-	 * 
-	 * @see Functionality#isAvailable(FunctionalityContext)
-	 */
-	public abstract boolean isAvailable(FunctionalityContext context);
+    /**
+     * Determines if this policy allows the functionality to be available in the
+     * given context.
+     * 
+     * @param context
+     *            the context of the functionality
+     * 
+     * @return <code>true</code> if the functionality is available
+     * 
+     * @see Functionality#isAvailable(FunctionalityContext)
+     */
+    public abstract boolean isAvailable(FunctionalityContext context);
 
-	/**
-	 * Deletes this object from persistent storage.
-	 */
-	public void delete() {
-		removeContent();
-		removeRootDomainObject();
-		deleteDomainObject();
-	}
+    /**
+     * Deletes this object from persistent storage.
+     */
+    public void delete() {
+        removeContent();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
-	public abstract Group getTargetGroup();
+    public abstract Group getTargetGroup();
 }

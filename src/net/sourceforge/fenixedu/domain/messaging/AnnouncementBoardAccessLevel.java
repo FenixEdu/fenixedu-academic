@@ -11,5 +11,5 @@ package net.sourceforge.fenixedu.domain.messaging;
  * 
  */
 public enum AnnouncementBoardAccessLevel {
-	ABAL_ALL, ABAL_MANAGE, ABAL_READ, ABAL_WRITE;
+    ABAL_ALL, ABAL_MANAGE, ABAL_READ, ABAL_WRITE;
 }

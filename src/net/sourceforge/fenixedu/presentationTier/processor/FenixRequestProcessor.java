@@ -18,15 +18,15 @@ import org.apache.struts.action.RequestProcessor;
  */
 public class FenixRequestProcessor extends RequestProcessor {
 
-	@Override
-	protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding(PropertiesManager.DEFAULT_CHARSET);
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
+    @Override
+    protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.setCharacterEncoding(PropertiesManager.DEFAULT_CHARSET);
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 }

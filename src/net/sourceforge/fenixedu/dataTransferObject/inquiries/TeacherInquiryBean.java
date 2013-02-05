@@ -30,179 +30,179 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class TeacherInquiryBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<TeacherShiftTypeResultsBean> teachersResults;
-	private Set<InquiryBlockDTO> teacherInquiryBlocks;
-	private Professorship professorship;
+    private List<TeacherShiftTypeResultsBean> teachersResults;
+    private Set<InquiryBlockDTO> teacherInquiryBlocks;
+    private Professorship professorship;
 
-	public TeacherInquiryBean(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship) {
-		setProfessorship(professorship);
-		initTeachersResults(professorship, professorship.getPerson());
-		initTeacherInquiry(teacherInquiryTemplate, professorship);
-		setGroupsVisibility();
-	}
+    public TeacherInquiryBean(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship) {
+        setProfessorship(professorship);
+        initTeachersResults(professorship, professorship.getPerson());
+        initTeacherInquiry(teacherInquiryTemplate, professorship);
+        setGroupsVisibility();
+    }
 
-	private void initTeacherInquiry(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship) {
-		setTeacherInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-		for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
-			getTeacherInquiryBlocks().add(new InquiryBlockDTO(getInquiryTeacherAnswer(), inquiryBlock));
-		}
+    private void initTeacherInquiry(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship) {
+        setTeacherInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
+        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+            getTeacherInquiryBlocks().add(new InquiryBlockDTO(getInquiryTeacherAnswer(), inquiryBlock));
+        }
 
-	}
+    }
 
-	private void initTeachersResults(Professorship professorship, Person person) {
-		setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
-		List<InquiryResult> professorshipResults = professorship.getInquiryResults();
-		if (!professorshipResults.isEmpty()) {
-			for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-				List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
-				if (!teacherShiftResults.isEmpty()) {
-					getTeachersResults().add(
-							new TeacherShiftTypeResultsBean(professorship, shiftType, professorship.getExecutionCourse()
-									.getExecutionPeriod(), teacherShiftResults, person, ResultPersonCategory.TEACHER));
-				}
-			}
-		}
-		Collections.sort(getTeachersResults(), new BeanComparator("professorship.person.name"));
-		Collections.sort(getTeachersResults(), new BeanComparator("shiftType"));
-	}
+    private void initTeachersResults(Professorship professorship, Person person) {
+        setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
+        List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        if (!professorshipResults.isEmpty()) {
+            for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
+                List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
+                if (!teacherShiftResults.isEmpty()) {
+                    getTeachersResults().add(
+                            new TeacherShiftTypeResultsBean(professorship, shiftType, professorship.getExecutionCourse()
+                                    .getExecutionPeriod(), teacherShiftResults, person, ResultPersonCategory.TEACHER));
+                }
+            }
+        }
+        Collections.sort(getTeachersResults(), new BeanComparator("professorship.person.name"));
+        Collections.sort(getTeachersResults(), new BeanComparator("shiftType"));
+    }
 
-	private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
-		Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
-		for (InquiryResult inquiryResult : professorshipResults) {
-			shiftTypes.add(inquiryResult.getShiftType());
-		}
-		return shiftTypes;
-	}
+    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+        Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
+        for (InquiryResult inquiryResult : professorshipResults) {
+            shiftTypes.add(inquiryResult.getShiftType());
+        }
+        return shiftTypes;
+    }
 
-	public void setGroupsVisibility() {
-		for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
-			Set<InquiryGroupQuestionBean> groups = inquiryBlockDTO.getInquiryGroups();
-			for (InquiryGroupQuestionBean group : groups) {
-				setGroupVisibility(getTeacherInquiryBlocks(), group);
-			}
-		}
-	}
+    public void setGroupsVisibility() {
+        for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
+            Set<InquiryGroupQuestionBean> groups = inquiryBlockDTO.getInquiryGroups();
+            for (InquiryGroupQuestionBean group : groups) {
+                setGroupVisibility(getTeacherInquiryBlocks(), group);
+            }
+        }
+    }
 
-	private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
-		for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
-			if (questionCondition instanceof MandatoryCondition) {
-				MandatoryCondition condition = (MandatoryCondition) questionCondition;
-				InquiryQuestionDTO inquiryDependentQuestionBean =
-						getInquiryQuestionBean(condition.getInquiryDependentQuestion(), inquiryBlocks);
-				boolean isMandatory =
-						inquiryDependentQuestionBean.getFinalValue() == null ? false : condition.getConditionValuesAsList()
-								.contains(inquiryDependentQuestionBean.getFinalValue());
-				if (isMandatory) {
-					groupQuestionBean.setVisible(true);
-				} else {
-					groupQuestionBean.setVisible(false);
-					for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-						questionDTO.setResponseValue(null);
-					}
-				}
-			}
-		}
-	}
+    private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
+        for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
+            if (questionCondition instanceof MandatoryCondition) {
+                MandatoryCondition condition = (MandatoryCondition) questionCondition;
+                InquiryQuestionDTO inquiryDependentQuestionBean =
+                        getInquiryQuestionBean(condition.getInquiryDependentQuestion(), inquiryBlocks);
+                boolean isMandatory =
+                        inquiryDependentQuestionBean.getFinalValue() == null ? false : condition.getConditionValuesAsList()
+                                .contains(inquiryDependentQuestionBean.getFinalValue());
+                if (isMandatory) {
+                    groupQuestionBean.setVisible(true);
+                } else {
+                    groupQuestionBean.setVisible(false);
+                    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+                        questionDTO.setResponseValue(null);
+                    }
+                }
+            }
+        }
+    }
 
-	private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
-		for (InquiryBlockDTO blockDTO : inquiryBlocks) {
-			for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-				for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
-					if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
-						return inquiryQuestionDTO;
-					}
-				}
-			}
-		}
-		return null;
-	}
+    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+        for (InquiryBlockDTO blockDTO : inquiryBlocks) {
+            for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+                for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+                    if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
+                        return inquiryQuestionDTO;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-	public List<TeacherShiftTypeResultsBean> getTeachersResults() {
-		return teachersResults;
-	}
+    public List<TeacherShiftTypeResultsBean> getTeachersResults() {
+        return teachersResults;
+    }
 
-	public void setTeachersResults(List<TeacherShiftTypeResultsBean> teachersResults) {
-		this.teachersResults = teachersResults;
-	}
+    public void setTeachersResults(List<TeacherShiftTypeResultsBean> teachersResults) {
+        this.teachersResults = teachersResults;
+    }
 
-	public String validateInquiry() {
-		String validationResult = null;
-		for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
-			validationResult = inquiryBlockDTO.validateMandatoryConditions(getTeacherInquiryBlocks());
-			if (!Boolean.valueOf(validationResult)) {
-				return validationResult;
-			}
-		}
-		return Boolean.toString(true);
-	}
+    public String validateInquiry() {
+        String validationResult = null;
+        for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
+            validationResult = inquiryBlockDTO.validateMandatoryConditions(getTeacherInquiryBlocks());
+            if (!Boolean.valueOf(validationResult)) {
+                return validationResult;
+            }
+        }
+        return Boolean.toString(true);
+    }
 
-	@Service
-	public void saveChanges(Person person, ResultPersonCategory teacher) {
-		for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : getTeachersResults()) {
-			saveComments(person, teacher, teacherShiftTypeResultsBean.getBlockResults());
-		}
-		for (InquiryBlockDTO blockDTO : getTeacherInquiryBlocks()) {
-			for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-				for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-					if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
-						if (questionDTO.getQuestionAnswer() != null) {
-							questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
-							questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
-						} else {
-							if (getInquiryTeacherAnswer() == null) {
-								new InquiryTeacherAnswer(getProfessorship());
-							}
-							new QuestionAnswer(getInquiryTeacherAnswer(), questionDTO.getInquiryQuestion(),
-									questionDTO.getFinalValue());
-							getInquiryTeacherAnswer().setResponseDateTime(new DateTime());
-						}
-					}
-				}
-			}
-		}
-	}
+    @Service
+    public void saveChanges(Person person, ResultPersonCategory teacher) {
+        for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : getTeachersResults()) {
+            saveComments(person, teacher, teacherShiftTypeResultsBean.getBlockResults());
+        }
+        for (InquiryBlockDTO blockDTO : getTeacherInquiryBlocks()) {
+            for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+                for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+                    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
+                        if (questionDTO.getQuestionAnswer() != null) {
+                            questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
+                            questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
+                        } else {
+                            if (getInquiryTeacherAnswer() == null) {
+                                new InquiryTeacherAnswer(getProfessorship());
+                            }
+                            new QuestionAnswer(getInquiryTeacherAnswer(), questionDTO.getInquiryQuestion(),
+                                    questionDTO.getFinalValue());
+                            getInquiryTeacherAnswer().setResponseDateTime(new DateTime());
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	private void saveComments(Person person, ResultPersonCategory teacher, List<BlockResultsSummaryBean> blocksResults) {
-		for (BlockResultsSummaryBean blockResultsSummaryBean : blocksResults) {
-			for (GroupResultsSummaryBean groupResultsSummaryBean : blockResultsSummaryBean.getGroupsResults()) {
-				for (QuestionResultsSummaryBean questionResultsSummaryBean : groupResultsSummaryBean.getQuestionsResults()) {
-					InquiryResult questionResult = questionResultsSummaryBean.getQuestionResult();
-					if (questionResult != null) {
-						InquiryResultComment inquiryResultComment =
-								questionResultsSummaryBean.getQuestionResult().getInquiryResultComment(person, teacher);
-						if (!StringUtils.isEmpty(questionResultsSummaryBean.getEditableComment()) || inquiryResultComment != null) {
-							if (inquiryResultComment == null) {
-								inquiryResultComment =
-										new InquiryResultComment(questionResult, person, teacher, questionResultsSummaryBean
-												.getQuestionResult().getInquiryResultComments().size() + 1);
-							}
-							inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
-						}
-					}
-				}
-			}
-		}
-	}
+    private void saveComments(Person person, ResultPersonCategory teacher, List<BlockResultsSummaryBean> blocksResults) {
+        for (BlockResultsSummaryBean blockResultsSummaryBean : blocksResults) {
+            for (GroupResultsSummaryBean groupResultsSummaryBean : blockResultsSummaryBean.getGroupsResults()) {
+                for (QuestionResultsSummaryBean questionResultsSummaryBean : groupResultsSummaryBean.getQuestionsResults()) {
+                    InquiryResult questionResult = questionResultsSummaryBean.getQuestionResult();
+                    if (questionResult != null) {
+                        InquiryResultComment inquiryResultComment =
+                                questionResultsSummaryBean.getQuestionResult().getInquiryResultComment(person, teacher);
+                        if (!StringUtils.isEmpty(questionResultsSummaryBean.getEditableComment()) || inquiryResultComment != null) {
+                            if (inquiryResultComment == null) {
+                                inquiryResultComment =
+                                        new InquiryResultComment(questionResult, person, teacher, questionResultsSummaryBean
+                                                .getQuestionResult().getInquiryResultComments().size() + 1);
+                            }
+                            inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	public void setProfessorship(Professorship professorship) {
-		this.professorship = professorship;
-	}
+    public void setProfessorship(Professorship professorship) {
+        this.professorship = professorship;
+    }
 
-	public Professorship getProfessorship() {
-		return professorship;
-	}
+    public Professorship getProfessorship() {
+        return professorship;
+    }
 
-	public void setTeacherInquiryBlocks(Set<InquiryBlockDTO> teacherInquiryBlocks) {
-		this.teacherInquiryBlocks = teacherInquiryBlocks;
-	}
+    public void setTeacherInquiryBlocks(Set<InquiryBlockDTO> teacherInquiryBlocks) {
+        this.teacherInquiryBlocks = teacherInquiryBlocks;
+    }
 
-	public Set<InquiryBlockDTO> getTeacherInquiryBlocks() {
-		return teacherInquiryBlocks;
-	}
+    public Set<InquiryBlockDTO> getTeacherInquiryBlocks() {
+        return teacherInquiryBlocks;
+    }
 
-	public InquiryTeacherAnswer getInquiryTeacherAnswer() {
-		return getProfessorship().getInquiryTeacherAnswer();
-	}
+    public InquiryTeacherAnswer getInquiryTeacherAnswer() {
+        return getProfessorship().getInquiryTeacherAnswer();
+    }
 }

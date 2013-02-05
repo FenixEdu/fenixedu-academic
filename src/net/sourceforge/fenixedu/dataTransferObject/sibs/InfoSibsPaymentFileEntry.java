@@ -14,102 +14,102 @@ import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntr
  */
 public class InfoSibsPaymentFileEntry extends InfoObject {
 
-	private Integer year;
+    private Integer year;
 
-	private Integer studentNumber;
+    private Integer studentNumber;
 
-	private SibsPaymentType paymentType;
+    private SibsPaymentType paymentType;
 
-	private Timestamp transactionDate;
+    private Timestamp transactionDate;
 
-	private Double payedValue;
+    private Double payedValue;
 
-	private SibsPaymentStatus paymentStatus;
+    private SibsPaymentStatus paymentStatus;
 
-	/**
+    /**
      *  
      */
-	public InfoSibsPaymentFileEntry() {
-		super();
-	}
+    public InfoSibsPaymentFileEntry() {
+        super();
+    }
 
-	/**
-	 * @param idInternal
-	 */
-	public InfoSibsPaymentFileEntry(Integer idInternal) {
-		super(idInternal);
-	}
+    /**
+     * @param idInternal
+     */
+    public InfoSibsPaymentFileEntry(Integer idInternal) {
+        super(idInternal);
+    }
 
-	public Double getPayedValue() {
-		return payedValue;
-	}
+    public Double getPayedValue() {
+        return payedValue;
+    }
 
-	public void setPayedValue(Double payedValue) {
-		this.payedValue = payedValue;
-	}
+    public void setPayedValue(Double payedValue) {
+        this.payedValue = payedValue;
+    }
 
-	public SibsPaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
+    public SibsPaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
 
-	public void setPaymentStatus(SibsPaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
+    public void setPaymentStatus(SibsPaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
-	public SibsPaymentType getPaymentType() {
-		return paymentType;
-	}
+    public SibsPaymentType getPaymentType() {
+        return paymentType;
+    }
 
-	public void setPaymentType(SibsPaymentType paymentType) {
-		this.paymentType = paymentType;
-	}
+    public void setPaymentType(SibsPaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
 
-	public Integer getStudentNumber() {
-		return studentNumber;
-	}
+    public Integer getStudentNumber() {
+        return studentNumber;
+    }
 
-	public void setStudentNumber(Integer studentNumber) {
-		this.studentNumber = studentNumber;
-	}
+    public void setStudentNumber(Integer studentNumber) {
+        this.studentNumber = studentNumber;
+    }
 
-	public Timestamp getTransactionDate() {
-		return transactionDate;
-	}
+    public Timestamp getTransactionDate() {
+        return transactionDate;
+    }
 
-	public void setTransactionDate(Timestamp transactionDate) {
-		this.transactionDate = transactionDate;
-	}
+    public void setTransactionDate(Timestamp transactionDate) {
+        this.transactionDate = transactionDate;
+    }
 
-	public Integer getYear() {
-		return year;
-	}
+    public Integer getYear() {
+        return year;
+    }
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
-	public void copyFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
+    public void copyFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
 
-		setPayedValue(sibsPaymentFileEntry.getPayedValue());
-		setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
-		setPaymentType(sibsPaymentFileEntry.getPaymentType());
-		setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
-		if (sibsPaymentFileEntry.getTransactionDate() != null) {
-			this.setTransactionDate(new Timestamp(sibsPaymentFileEntry.getTransactionDate().getTime()));
-		}
-		setYear(sibsPaymentFileEntry.getYear());
-		setIdInternal(sibsPaymentFileEntry.getIdInternal());
+        setPayedValue(sibsPaymentFileEntry.getPayedValue());
+        setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
+        setPaymentType(sibsPaymentFileEntry.getPaymentType());
+        setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
+        if (sibsPaymentFileEntry.getTransactionDate() != null) {
+            this.setTransactionDate(new Timestamp(sibsPaymentFileEntry.getTransactionDate().getTime()));
+        }
+        setYear(sibsPaymentFileEntry.getYear());
+        setIdInternal(sibsPaymentFileEntry.getIdInternal());
 
-	}
+    }
 
-	public static InfoSibsPaymentFileEntry newInfoFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
-		InfoSibsPaymentFileEntry infoSibsPaymentFileEntry = null;
+    public static InfoSibsPaymentFileEntry newInfoFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
+        InfoSibsPaymentFileEntry infoSibsPaymentFileEntry = null;
 
-		if (sibsPaymentFileEntry != null) {
-			infoSibsPaymentFileEntry = new InfoSibsPaymentFileEntry();
-			infoSibsPaymentFileEntry.copyFromDomain(sibsPaymentFileEntry);
-		}
+        if (sibsPaymentFileEntry != null) {
+            infoSibsPaymentFileEntry = new InfoSibsPaymentFileEntry();
+            infoSibsPaymentFileEntry.copyFromDomain(sibsPaymentFileEntry);
+        }
 
-		return infoSibsPaymentFileEntry;
-	}
+        return infoSibsPaymentFileEntry;
+    }
 }

@@ -10,17 +10,17 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class SpaceAdministratorAuthorizationFilter extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView userView = getRemoteUser(request);
-		if (userView != null) {
-			Person person = userView.getPerson();
-			if (!AllocatableSpace.personIsSpacesAdministrator(person)) {
-				throw new NotAuthorizedFilterException();
-			}
-		} else {
-			throw new NotAuthorizedFilterException();
-		}
-	}
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView userView = getRemoteUser(request);
+        if (userView != null) {
+            Person person = userView.getPerson();
+            if (!AllocatableSpace.personIsSpacesAdministrator(person)) {
+                throw new NotAuthorizedFilterException();
+            }
+        } else {
+            throw new NotAuthorizedFilterException();
+        }
+    }
 
 }

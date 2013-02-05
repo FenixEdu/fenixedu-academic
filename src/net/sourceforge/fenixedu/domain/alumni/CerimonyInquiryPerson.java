@@ -5,23 +5,23 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
 
-	public CerimonyInquiryPerson(final CerimonyInquiry cerimonyInquiry, final Person person) {
-		setRootDomainObject(RootDomainObject.getInstance());
-		setCerimonyInquiry(cerimonyInquiry);
-		setPerson(person);
-	}
+    public CerimonyInquiryPerson(final CerimonyInquiry cerimonyInquiry, final Person person) {
+        setRootDomainObject(RootDomainObject.getInstance());
+        setCerimonyInquiry(cerimonyInquiry);
+        setPerson(person);
+    }
 
-	public void delete() {
-		if (!hasCerimonyInquiryAnswer()) {
-			removeCerimonyInquiry();
-			removePerson();
-			removeRootDomainObject();
-			deleteDomainObject();
-		}
-	}
+    public void delete() {
+        if (!hasCerimonyInquiryAnswer()) {
+            removeCerimonyInquiry();
+            removePerson();
+            removeRootDomainObject();
+            deleteDomainObject();
+        }
+    }
 
-	public boolean isPendingResponse() {
-		return !hasCerimonyInquiryAnswer() && getCerimonyInquiry().isOpen();
-	}
+    public boolean isPendingResponse() {
+        return !hasCerimonyInquiryAnswer() && getCerimonyInquiry().isOpen();
+    }
 
 }

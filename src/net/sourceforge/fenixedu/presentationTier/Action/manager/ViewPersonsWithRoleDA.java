@@ -21,54 +21,54 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRoles());
-		return mapping.findForward("SelectRole");
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRoles());
+        return mapping.findForward("SelectRole");
+    }
 
-	public ActionForward searchWithRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Role role = rootDomainObject.readRoleByOID(Integer.valueOf(request.getParameter("roleID")));
-		request.setAttribute("persons", role.getAssociatedPersons());
-		request.setAttribute("roleID", request.getParameter("roleID"));
-		return mapping.findForward("ShowPersons");
-	}
+    public ActionForward searchWithRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Role role = rootDomainObject.readRoleByOID(Integer.valueOf(request.getParameter("roleID")));
+        request.setAttribute("persons", role.getAssociatedPersons());
+        request.setAttribute("roleID", request.getParameter("roleID"));
+        return mapping.findForward("ShowPersons");
+    }
 
-	public ActionForward removePersonFromRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Role role = rootDomainObject.readRoleByOID(Integer.valueOf(request.getParameter("roleID")));
-		Person person = Person.readPersonByUsername(request.getParameter("personUsername"));
-		removePersonFromRole(person, role);
-		return searchWithRole(mapping, form, request, response);
-	}
+    public ActionForward removePersonFromRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Role role = rootDomainObject.readRoleByOID(Integer.valueOf(request.getParameter("roleID")));
+        Person person = Person.readPersonByUsername(request.getParameter("personUsername"));
+        removePersonFromRole(person, role);
+        return searchWithRole(mapping, form, request, response);
+    }
 
-	@Service
-	public void removePersonFromRole(Person person, Role role) {
-		person.removePersonRoles(role);
-	}
+    @Service
+    public void removePersonFromRole(Person person, Role role) {
+        person.removePersonRoles(role);
+    }
 
-	public ActionForward showRoleOperationLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Integer roleID = Integer.valueOf((String) getFromRequest(request, "roleID"));
+    public ActionForward showRoleOperationLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Integer roleID = Integer.valueOf((String) getFromRequest(request, "roleID"));
 
-		final String pageNumberString = (String) getFromRequest(request, "pageNumber");
-		final Integer pageNumber =
-				!StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+        final String pageNumberString = (String) getFromRequest(request, "pageNumber");
+        final Integer pageNumber =
+                !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
 
-		final Role role = rootDomainObject.readRoleByOID(roleID);
+        final Role role = rootDomainObject.readRoleByOID(roleID);
 
-		ArrayList<RoleOperationLog> listOfRoleOperationLog = role.getRoleOperationLogArrayListOrderedByDate();
-		CollectionPager<RoleOperationLog> collectionPager =
-				new CollectionPager<RoleOperationLog>(
-						listOfRoleOperationLog != null ? listOfRoleOperationLog : new ArrayList<RoleOperationLog>(), 25);
+        ArrayList<RoleOperationLog> listOfRoleOperationLog = role.getRoleOperationLogArrayListOrderedByDate();
+        CollectionPager<RoleOperationLog> collectionPager =
+                new CollectionPager<RoleOperationLog>(
+                        listOfRoleOperationLog != null ? listOfRoleOperationLog : new ArrayList<RoleOperationLog>(), 25);
 
-		request.setAttribute("pageNumber", pageNumber);
-		request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
-		request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
-		request.setAttribute("roleID", roleID);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
+        request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+        request.setAttribute("roleID", roleID);
 
-		return mapping.findForward("ShowRoleOperationLogs");
-	}
+        return mapping.findForward("ShowRoleOperationLogs");
+    }
 
 }

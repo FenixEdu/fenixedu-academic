@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 
 public class DeleteEquivalencePlanEntry extends FenixService {
 
-	public void run(final EquivalencePlanEntry EquivalencePlanEntry) {
-		if (EquivalencePlanEntry != null) {
-			EquivalencePlanEntry.delete();
-		}
-	}
+    public void run(final EquivalencePlanEntry EquivalencePlanEntry) {
+        if (EquivalencePlanEntry != null) {
+            EquivalencePlanEntry.delete();
+        }
+    }
 
 }

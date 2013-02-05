@@ -21,50 +21,50 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SubmitStudentSpentTimeInPeriod extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
-			ExecutionSemester executionSemester) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
+            ExecutionSemester executionSemester) {
 
-		if (!checkTotalPercentageDistribution(courses)) {
-			throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
-		}
+        if (!checkTotalPercentageDistribution(courses)) {
+            throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
+        }
 
-		if (!checkTotalStudyDaysSpentInExamsSeason(courses)) {
-			throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
-		}
+        if (!checkTotalStudyDaysSpentInExamsSeason(courses)) {
+            throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
+        }
 
-		//TODO remove this classes at the end of the new QUC model implementation
-		InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = null;//student.getInquiriesStudentExecutionPeriod(executionSemester);
-		if (inquiriesStudentExecutionPeriod == null) {
-			inquiriesStudentExecutionPeriod = new InquiriesStudentExecutionPeriod(student, executionSemester);
-		}
-		inquiriesStudentExecutionPeriod.setWeeklyHoursSpentInClassesSeason(weeklySpentHours);
+        //TODO remove this classes at the end of the new QUC model implementation
+        InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = null;//student.getInquiriesStudentExecutionPeriod(executionSemester);
+        if (inquiriesStudentExecutionPeriod == null) {
+            inquiriesStudentExecutionPeriod = new InquiriesStudentExecutionPeriod(student, executionSemester);
+        }
+        inquiriesStudentExecutionPeriod.setWeeklyHoursSpentInClassesSeason(weeklySpentHours);
 
-		for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
-			InquiriesRegistry inquiriesRegistry = null;//curricularCourseInquiriesRegistryDTO.getInquiriesRegistry();
-			//	    inquiriesRegistry.setStudyDaysSpentInExamsSeason(curricularCourseInquiriesRegistryDTO
-			//		    .getStudyDaysSpentInExamsSeason());
-			inquiriesRegistry.setWeeklyHoursSpentPercentage(curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage());
-		}
+        for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
+            InquiriesRegistry inquiriesRegistry = null;//curricularCourseInquiriesRegistryDTO.getInquiriesRegistry();
+            //	    inquiriesRegistry.setStudyDaysSpentInExamsSeason(curricularCourseInquiriesRegistryDTO
+            //		    .getStudyDaysSpentInExamsSeason());
+            inquiriesRegistry.setWeeklyHoursSpentPercentage(curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage());
+        }
 
-	}
+    }
 
-	public static boolean checkTotalPercentageDistribution(List<CurricularCourseInquiriesRegistryDTO> courses) {
-		Integer totalPercentage = 0;
-		for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
-			totalPercentage += curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage();
-		}
+    public static boolean checkTotalPercentageDistribution(List<CurricularCourseInquiriesRegistryDTO> courses) {
+        Integer totalPercentage = 0;
+        for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
+            totalPercentage += curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage();
+        }
 
-		return totalPercentage == 100;
-	}
+        return totalPercentage == 100;
+    }
 
-	public static boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
-		double totalDays = 0;
-		for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
-			//totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();
-		}
+    public static boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
+        double totalDays = 0;
+        for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
+            //totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();
+        }
 
-		return totalDays <= 42;
-	}
+        return totalDays <= 42;
+    }
 }

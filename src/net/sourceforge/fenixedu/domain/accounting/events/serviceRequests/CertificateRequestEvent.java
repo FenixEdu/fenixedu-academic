@@ -9,59 +9,59 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 
-	protected CertificateRequestEvent() {
-		super();
-	}
+    protected CertificateRequestEvent() {
+        super();
+    }
 
-	public CertificateRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
-			final Person person, final CertificateRequest certificateRequest) {
-		this();
-		super.init(administrativeOffice, eventType, person, certificateRequest);
-	}
+    public CertificateRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
+            final Person person, final CertificateRequest certificateRequest) {
+        this();
+        super.init(administrativeOffice, eventType, person, certificateRequest);
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter result = super.getDescription();
-		fillDescription(result);
-		return result;
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter result = super.getDescription();
+        fillDescription(result);
+        return result;
+    }
 
-	@Override
-	final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 
-		fillDescription(labelFormatter);
+        fillDescription(labelFormatter);
 
-		if (getAcademicServiceRequest().hasExecutionYear()) {
-			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-		}
+        if (getAcademicServiceRequest().hasExecutionYear()) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	protected void fillDescription(final LabelFormatter labelFormatter) {
-		labelFormatter.appendLabel(" (");
-		labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
-		labelFormatter.appendLabel(" ");
-		labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
-		labelFormatter.appendLabel(")");
-	}
+    protected void fillDescription(final LabelFormatter labelFormatter) {
+        labelFormatter.appendLabel(" (");
+        labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+        labelFormatter.appendLabel(" ");
+        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+        labelFormatter.appendLabel(")");
+    }
 
-	final public Integer getNumberOfUnits() {
-		return ((CertificateRequest) getAcademicServiceRequest()).getNumberOfUnits();
-	}
+    final public Integer getNumberOfUnits() {
+        return ((CertificateRequest) getAcademicServiceRequest()).getNumberOfUnits();
+    }
 
-	final public Integer getNumberOfPages() {
-		return ((CertificateRequest) getAcademicServiceRequest()).getNumberOfPages();
-	}
+    final public Integer getNumberOfPages() {
+        return ((CertificateRequest) getAcademicServiceRequest()).getNumberOfPages();
+    }
 
-	@Override
-	public boolean isExemptionAppliable() {
-		return true;
-	}
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 
 }

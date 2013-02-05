@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "departmentAdmOffice", path = "/teacherServiceComments", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "editTeacherServiceComment", path = "/credits/degreeTeachingService/editTeacherServiceComment.jsp"),
-		@Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits") })
+        @Forward(name = "editTeacherServiceComment", path = "/credits/degreeTeachingService/editTeacherServiceComment.jsp"),
+        @Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits") })
 public class DepartmentAdmOfficeManageTeacherServiceCommentsDispatchAction extends ManageTeacherServiceCommentsDispatchAction {
 }

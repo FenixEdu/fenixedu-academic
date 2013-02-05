@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PhdProgramsFilteredProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object current) {
-		return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-				AcademicOperationType.MANAGE_PHD_PROCESSES);
-	}
+    @Override
+    public Object provide(Object source, Object current) {
+        return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_PHD_PROCESSES);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

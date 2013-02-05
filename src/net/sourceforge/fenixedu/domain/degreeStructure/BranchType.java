@@ -7,28 +7,28 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum BranchType {
 
-	MAJOR,
+    MAJOR,
 
-	MINOR;
+    MINOR;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public String getQualifiedName() {
-		return this.getClass().getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return this.getClass().getSimpleName() + "." + name();
+    }
 
-	public String getFullyQualifiedName() {
-		return getClass().getName() + "." + name();
-	}
+    public String getFullyQualifiedName() {
+        return getClass().getName() + "." + name();
+    }
 
-	public String getDescription() {
-		return getDescription(Language.getLocale());
-	}
+    public String getDescription() {
+        return getDescription(Language.getLocale());
+    }
 
-	public String getDescription(final Locale locale) {
-		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-	}
+    public String getDescription(final Locale locale) {
+        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+    }
 
 }

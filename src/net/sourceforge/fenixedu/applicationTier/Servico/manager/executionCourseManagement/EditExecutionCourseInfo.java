@@ -10,19 +10,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExecutionCourseInfo extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws InvalidArgumentsServiceException {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws InvalidArgumentsServiceException {
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-		if (executionCourse == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        if (executionCourse == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
-				infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission(),
-				infoExecutionCourse.getEntryPhase());
+        executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
+                infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission(),
+                infoExecutionCourse.getEntryPhase());
 
-		return new InfoExecutionCourse(executionCourse);
-	}
+        return new InfoExecutionCourse(executionCourse);
+    }
 }

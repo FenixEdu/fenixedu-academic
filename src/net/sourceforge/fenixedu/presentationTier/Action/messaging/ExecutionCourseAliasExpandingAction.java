@@ -30,87 +30,87 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/expandAlias", scope = "request", validate = false, parameter = "method")
 public class ExecutionCourseAliasExpandingAction extends FenixAction {
 
-	public static String emailAddressPrefix = "course-";
+    public static String emailAddressPrefix = "course-";
 
-	private static Properties properties;
+    private static Properties properties;
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException {
-		String result = "400 Error: Email alias expanding service did not run";
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        String result = "400 Error: Email alias expanding service did not run";
 
-		if (HostAccessControl.isAllowed(this, request)) {
+        if (HostAccessControl.isAllowed(this, request)) {
 
-			String address = request.getParameter("address");
+            String address = request.getParameter("address");
 
-			try {
-				ExpandExecutionCourseMailAlias.ForwardMailsReport report =
-						ExpandExecutionCourseMailAlias.run(address, emailAddressPrefix, mailingListDomainConfiguration());
+            try {
+                ExpandExecutionCourseMailAlias.ForwardMailsReport report =
+                        ExpandExecutionCourseMailAlias.run(address, emailAddressPrefix, mailingListDomainConfiguration());
 
-				switch (report.getStatus()) {
-				case OK: {
-					StringBuilder buffer = new StringBuilder();
-					buffer.append("200 ");
-					boolean firstAddress = true;
-					for (String currentAddress : report.getExpandedAddresses()) {
-						if (!firstAddress) {
-							buffer.append(",");
-						}
-						buffer.append(currentAddress);
-						firstAddress = false;
-					}
-					buffer.append("\n");
-					result = buffer.toString();
-					break;
-				}
-				case DYNAMIC_MAIL_DELIVERY_DISABLE: {
-					result = "500 Target course has dynamic mail distribution in the DISABLED state\n";
-					break;
-				}
-				case EC_SITE_NOT_AVAILABLE: {
-					result = "500 Target course does not exist\n";
-					break;
-				}
-				case INVALID_ADDRESS: {
-					result = "500 Invalid address\n";
-					break;
-				}
-				case INVALID_HOST: {
-					result = "500 Invalid host\n";
-					break;
-				}
-				case UNKNOWN_EXECUTION_COURSE: {
-					result = "500 Target execution course does not exist\n";
-					break;
-				}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				result = "400 Got an exception when trying to send email: " + e.getClass().getName() + "\n";
-			}
-		} else {
-			result = "500 requester not allowed\n";
-		}
-		try {
-			sendAnswer(response, result);
-		} catch (IOException e) {
-			throw new FenixActionException(e);
-		}
+                switch (report.getStatus()) {
+                case OK: {
+                    StringBuilder buffer = new StringBuilder();
+                    buffer.append("200 ");
+                    boolean firstAddress = true;
+                    for (String currentAddress : report.getExpandedAddresses()) {
+                        if (!firstAddress) {
+                            buffer.append(",");
+                        }
+                        buffer.append(currentAddress);
+                        firstAddress = false;
+                    }
+                    buffer.append("\n");
+                    result = buffer.toString();
+                    break;
+                }
+                case DYNAMIC_MAIL_DELIVERY_DISABLE: {
+                    result = "500 Target course has dynamic mail distribution in the DISABLED state\n";
+                    break;
+                }
+                case EC_SITE_NOT_AVAILABLE: {
+                    result = "500 Target course does not exist\n";
+                    break;
+                }
+                case INVALID_ADDRESS: {
+                    result = "500 Invalid address\n";
+                    break;
+                }
+                case INVALID_HOST: {
+                    result = "500 Invalid host\n";
+                    break;
+                }
+                case UNKNOWN_EXECUTION_COURSE: {
+                    result = "500 Target execution course does not exist\n";
+                    break;
+                }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = "400 Got an exception when trying to send email: " + e.getClass().getName() + "\n";
+            }
+        } else {
+            result = "500 requester not allowed\n";
+        }
+        try {
+            sendAnswer(response, result);
+        } catch (IOException e) {
+            throw new FenixActionException(e);
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	public static String mailingListDomainConfiguration() {
-		return PropertiesManager.getProperty("mailingList.host.name");
-	}
+    public static String mailingListDomainConfiguration() {
+        return PropertiesManager.getProperty("mailingList.host.name");
+    }
 
-	private void sendAnswer(HttpServletResponse response, String result) throws IOException {
-		ServletOutputStream writer = response.getOutputStream();
-		response.setContentType("text/plain");
-		writer.print(result);
-		writer.flush();
-		response.flushBuffer();
-	}
+    private void sendAnswer(HttpServletResponse response, String result) throws IOException {
+        ServletOutputStream writer = response.getOutputStream();
+        response.setContentType("text/plain");
+        writer.print(result);
+        writer.flush();
+        response.flushBuffer();
+    }
 
 }

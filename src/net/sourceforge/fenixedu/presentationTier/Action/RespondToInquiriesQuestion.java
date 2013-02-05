@@ -12,46 +12,46 @@ import org.apache.struts.action.ActionMapping;
 
 public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
-	public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
-		request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
+        final StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+        request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
 
-		return mapping.findForward("respondToInquiriesQuestion");
-	}
+        return mapping.findForward("respondToInquiriesQuestion");
+    }
 
-	public final ActionForward showTeacherQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public final ActionForward showTeacherQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
-		request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
+        final StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+        request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
 
-		return mapping.findForward("respondToTeacherInquiriesQuestion");
-	}
+        return mapping.findForward("respondToTeacherInquiriesQuestion");
+    }
 
-	private ActionForward forward(final String path) {
-		final ActionForward actionForward = new ActionForward();
-		actionForward.setPath(path);
-		actionForward.setRedirect(true);
-		return actionForward;
-	}
+    private ActionForward forward(final String path) {
+        final ActionForward actionForward = new ActionForward();
+        actionForward.setPath(path);
+        actionForward.setRedirect(true);
+        return actionForward;
+    }
 
-	public final ActionForward registerStudentResponseRespondLater(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return forward("/home.do");
-	}
+    public final ActionForward registerStudentResponseRespondLater(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return forward("/home.do");
+    }
 
-	public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final String path =
-				"/student/studentInquiry.do?method=showCoursesToAnswer&page=0&"
-						+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-						+ "=/estudante/estudante";
-		return forward(path
-				+ "&_request_checksum_="
-				+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
-						.getContextPath() + path));
-	}
+    public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final String path =
+                "/student/studentInquiry.do?method=showCoursesToAnswer&page=0&"
+                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+                        + "=/estudante/estudante";
+        return forward(path
+                + "&_request_checksum_="
+                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
+                        .getContextPath() + path));
+    }
 
 }

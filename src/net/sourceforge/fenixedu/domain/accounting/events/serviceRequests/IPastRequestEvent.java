@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.util.Money;
 
 public interface IPastRequestEvent {
 
-	public void setPastAmount(Money pastAmount);
+    public void setPastAmount(Money pastAmount);
 
-	public AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
-			final AccountingTransactionDetailDTO transactionDetailDTO);
+    public AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
+            final AccountingTransactionDetailDTO transactionDetailDTO);
 
 }

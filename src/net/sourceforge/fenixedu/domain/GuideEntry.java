@@ -11,66 +11,66 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 
 public class GuideEntry extends GuideEntry_Base {
 
-	public GuideEntry() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public GuideEntry() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public GuideEntry(GraduationType graduationType, DocumentType documentType, String description, Integer quantity,
-			BigDecimal price, Guide guide) {
-		this();
-		this.setDescription(description);
-		this.setGuide(guide);
-		this.setDocumentType(documentType);
-		this.setGraduationType(graduationType);
-		this.setPriceBigDecimal(price);
-		this.setQuantity(quantity);
+    public GuideEntry(GraduationType graduationType, DocumentType documentType, String description, Integer quantity,
+            BigDecimal price, Guide guide) {
+        this();
+        this.setDescription(description);
+        this.setGuide(guide);
+        this.setDocumentType(documentType);
+        this.setGraduationType(graduationType);
+        this.setPriceBigDecimal(price);
+        this.setQuantity(quantity);
 
-	}
+    }
 
-	public void delete() {
-		if (canBeDeleted()) {
-			if (hasPaymentTransaction()) {
-				getPaymentTransaction().delete();
-			}
+    public void delete() {
+        if (canBeDeleted()) {
+            if (hasPaymentTransaction()) {
+                getPaymentTransaction().delete();
+            }
 
-			Guide guide = getGuide();
-			removeGuide();
-			guide.updateTotalValue();
+            Guide guide = getGuide();
+            removeGuide();
+            guide.updateTotalValue();
 
-			removeRootDomainObject();
+            removeRootDomainObject();
 
-			deleteDomainObject();
-		} else {
-			throw new DomainException("guide.entry.cannot.be.deleted");
-		}
-	}
+            deleteDomainObject();
+        } else {
+            throw new DomainException("guide.entry.cannot.be.deleted");
+        }
+    }
 
-	public boolean canBeDeleted() {
-		return !hasAnyReimbursementGuideEntries();
-	}
+    public boolean canBeDeleted() {
+        return !hasAnyReimbursementGuideEntries();
+    }
 
-	@Deprecated
-	public Double getPrice() {
-		return getPriceBigDecimal().doubleValue();
-	}
+    @Deprecated
+    public Double getPrice() {
+        return getPriceBigDecimal().doubleValue();
+    }
 
-	@Deprecated
-	public void setPrice(Double price) {
-		setPriceBigDecimal(BigDecimal.valueOf(price));
-	}
+    @Deprecated
+    public void setPrice(Double price) {
+        setPriceBigDecimal(BigDecimal.valueOf(price));
+    }
 
-	public BigDecimal getValueWithAdjustment() {
+    public BigDecimal getValueWithAdjustment() {
 
-		BigDecimal reimbursedValue = BigDecimal.ZERO;
-		for (final ReimbursementGuideEntry reimbursementGuideEntry : getReimbursementGuideEntries()) {
-			if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
-				reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
-			}
-		}
+        BigDecimal reimbursedValue = BigDecimal.ZERO;
+        for (final ReimbursementGuideEntry reimbursementGuideEntry : getReimbursementGuideEntries()) {
+            if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
+                reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
+            }
+        }
 
-		return getPriceBigDecimal().subtract(reimbursedValue);
+        return getPriceBigDecimal().subtract(reimbursedValue);
 
-	}
+    }
 
 }

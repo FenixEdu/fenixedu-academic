@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class AddCandidacyReferees extends PhdProgramCandidacyProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	}
+    @Override
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-		for (final PhdCandidacyRefereeBean bean : (List<PhdCandidacyRefereeBean>) object) {
-			process.addCandidacyReferees(new PhdCandidacyReferee(process, bean));
-		}
-		return process;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        for (final PhdCandidacyRefereeBean bean : (List<PhdCandidacyRefereeBean>) object) {
+            process.addCandidacyReferees(new PhdCandidacyReferee(process, bean));
+        }
+        return process;
+    }
 
 }

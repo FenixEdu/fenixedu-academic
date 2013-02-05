@@ -11,20 +11,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class VigilantGroupsOfExamCoordinator implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		VigilantGroupBean bean = (VigilantGroupBean) source;
+        VigilantGroupBean bean = (VigilantGroupBean) source;
 
-		ExamCoordinator coordinator = bean.getExamCoordinator();
-		List<VigilantGroup> vigilantGroups = (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
+        ExamCoordinator coordinator = bean.getExamCoordinator();
+        List<VigilantGroup> vigilantGroups = (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
 
-		return vigilantGroups;
-	}
+        return vigilantGroups;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

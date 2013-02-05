@@ -6,17 +6,17 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 public class OrderDegreeModule extends FenixService {
 
-	public void run(final Integer contextID, final Integer position) throws FenixServiceException {
-		if (contextID == null) {
-			throw new FenixServiceException();
-		}
+    public void run(final Integer contextID, final Integer position) throws FenixServiceException {
+        if (contextID == null) {
+            throw new FenixServiceException();
+        }
 
-		final Context context = rootDomainObject.readContextByOID(contextID);
-		if (context == null) {
-			throw new FenixServiceException("error.noContext");
-		}
+        final Context context = rootDomainObject.readContextByOID(contextID);
+        if (context == null) {
+            throw new FenixServiceException("error.noContext");
+        }
 
-		context.getParentCourseGroup().orderChild(context, position);
-	}
+        context.getParentCourseGroup().orderChild(context, position);
+    }
 
 }

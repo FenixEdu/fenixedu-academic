@@ -18,34 +18,34 @@ import com.google.common.collect.Collections2;
 
 public class DegreeChangeIndividualCandidacyDegreesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final Set<AcademicProgram> programs =
-				AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-						AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final Set<AcademicProgram> programs =
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
-		return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
-			@Override
-			public boolean apply(Degree degree) {
-				return programs.contains(degree);
-			}
-		});
-	}
+        return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
+            @Override
+            public boolean apply(Degree degree) {
+                return programs.contains(degree);
+            }
+        });
+    }
 
-	private Collection<Degree> getDegrees(Object source) {
-		IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean =
-				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
+    private Collection<Degree> getDegrees(Object source) {
+        IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean =
+                (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
 
-		if (bean.getCandidacyProcess() != null) {
-			return bean.getCandidacyProcess().getDegree();
-		} else {
-			return bean.getIndividualCandidacyProcess().getCandidacyProcess().getDegree();
-		}
-	}
+        if (bean.getCandidacyProcess() != null) {
+            return bean.getCandidacyProcess().getDegree();
+        } else {
+            return bean.getIndividualCandidacyProcess().getCandidacyProcess().getDegree();
+        }
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

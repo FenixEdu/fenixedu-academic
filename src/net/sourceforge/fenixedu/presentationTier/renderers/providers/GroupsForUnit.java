@@ -11,27 +11,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class GroupsForUnit implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		Unit unit = null;
-		try {
-			unit = (Unit) MethodUtils.invokeMethod(source, "getUnit", null);
-			if (unit == null) {
-				return Collections.EMPTY_LIST;
-			} else {
-				return MethodUtils.invokeMethod(unit, "getGroups", null);
-			}
+        Unit unit = null;
+        try {
+            unit = (Unit) MethodUtils.invokeMethod(source, "getUnit", null);
+            if (unit == null) {
+                return Collections.EMPTY_LIST;
+            } else {
+                return MethodUtils.invokeMethod(unit, "getGroups", null);
+            }
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-	}
+    }
 
 }

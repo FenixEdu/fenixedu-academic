@@ -10,58 +10,58 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AuditSelectPersonsECBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ExecutionCourse executionCourse;
-	private Person student;
-	private Person teacher;
+    private ExecutionCourse executionCourse;
+    private Person student;
+    private Person teacher;
 
-	public AuditSelectPersonsECBean(ExecutionCourse executionCourse) {
-		setExecutionCourse(executionCourse);
-	}
+    public AuditSelectPersonsECBean(ExecutionCourse executionCourse) {
+        setExecutionCourse(executionCourse);
+    }
 
-	public AuditSelectPersonsECBean(ExecutionCourseAudit executionCourseAudit) {
-		setExecutionCourse(executionCourseAudit.getExecutionCourse());
-		setStudent(executionCourseAudit.getStudentAuditor().getPerson());
-		setTeacher(executionCourseAudit.getTeacherAuditor().getPerson());
-	}
+    public AuditSelectPersonsECBean(ExecutionCourseAudit executionCourseAudit) {
+        setExecutionCourse(executionCourseAudit.getExecutionCourse());
+        setStudent(executionCourseAudit.getStudentAuditor().getPerson());
+        setTeacher(executionCourseAudit.getTeacherAuditor().getPerson());
+    }
 
-	public Person getStudent() {
-		return student;
-	}
+    public Person getStudent() {
+        return student;
+    }
 
-	public void setStudent(Person student) {
-		this.student = student;
-	}
+    public void setStudent(Person student) {
+        this.student = student;
+    }
 
-	public Person getTeacher() {
-		return teacher;
-	}
+    public Person getTeacher() {
+        return teacher;
+    }
 
-	public void setTeacher(Person teacher) {
-		this.teacher = teacher;
-	}
+    public void setTeacher(Person teacher) {
+        this.teacher = teacher;
+    }
 
-	public void setExecutionCourse(ExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
 
-	public ExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public ExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	@Service
-	public void savePersons() {
-		if (getTeacher() == null) {
-			throw new DomainException("error.inquiry.audit.mandatoryTeacher");
-		}
-		if (getStudent() == null) {
-			throw new DomainException("error.inquiry.audit.mandatoryStudent");
-		}
-		ExecutionCourseAudit executionCourseAudit = getExecutionCourse().getExecutionCourseAudit();
-		if (executionCourseAudit == null) {
-			executionCourseAudit = new ExecutionCourseAudit(getExecutionCourse());
-		}
-		executionCourseAudit.edit(getTeacher(), getStudent());
-	}
+    @Service
+    public void savePersons() {
+        if (getTeacher() == null) {
+            throw new DomainException("error.inquiry.audit.mandatoryTeacher");
+        }
+        if (getStudent() == null) {
+            throw new DomainException("error.inquiry.audit.mandatoryStudent");
+        }
+        ExecutionCourseAudit executionCourseAudit = getExecutionCourse().getExecutionCourseAudit();
+        if (executionCourseAudit == null) {
+            executionCourseAudit = new ExecutionCourseAudit(getExecutionCourse());
+        }
+        executionCourseAudit.edit(getTeacher(), getStudent());
+    }
 }

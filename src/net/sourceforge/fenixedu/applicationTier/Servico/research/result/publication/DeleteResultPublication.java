@@ -7,12 +7,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResultPublication extends FenixService {
 
-	@Service
-	public static void run(Integer oid) throws FenixServiceException {
-		ResearchResultPublication publication = (ResearchResultPublication) rootDomainObject.readResearchResultByOID(oid);
-		if (publication == null) {
-			throw new FenixServiceException();
-		}
-		publication.delete();
-	}
+    @Service
+    public static void run(Integer oid) throws FenixServiceException {
+        ResearchResultPublication publication = (ResearchResultPublication) rootDomainObject.readResearchResultByOID(oid);
+        if (publication == null) {
+            throw new FenixServiceException();
+        }
+        publication.delete();
+    }
 }

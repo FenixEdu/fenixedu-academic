@@ -12,14 +12,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentByUsername extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static Registration run(String studentUsername) throws FenixServiceException {
-		final Registration registration = Registration.readByUsername(studentUsername);
-		if (registration == null) {
-			throw new FenixServiceException("error.noStudent");
-		}
-		return registration;
-	}
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Registration run(String studentUsername) throws FenixServiceException {
+        final Registration registration = Registration.readByUsername(studentUsername);
+        if (registration == null) {
+            throw new FenixServiceException("error.noStudent");
+        }
+        return registration;
+    }
 
 }

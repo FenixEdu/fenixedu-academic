@@ -17,29 +17,29 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class OptionalDegreeModuleToEnrolKeyConverter extends Converter {
 
-	@Override
-	public Object convert(Class type, Object value) {
-		if (value == null) {
-			return null;
-		}
+    @Override
+    public Object convert(Class type, Object value) {
+        if (value == null) {
+            return null;
+        }
 
-		final pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter converter =
-				new pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter();
-		final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
-		final String[] values = (String[]) value;
-		for (String key : values) {
-			String[] parts = key.split(",");
-			if (parts.length < 3) {
-				throw new ConversionException("invalid key format: " + key);
-			}
+        final pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter converter =
+                new pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter();
+        final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+        final String[] values = (String[]) value;
+        for (String key : values) {
+            String[] parts = key.split(",");
+            if (parts.length < 3) {
+                throw new ConversionException("invalid key format: " + key);
+            }
 
-			final Context context = (Context) converter.convert(type, parts[0]);
-			final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
-			final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[2]);
-			final CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type, parts[3]);
-			result.add(new OptionalDegreeModuleToEnrol(curriculumGroup, context, executionSemester, curricularCourse));
-		}
+            final Context context = (Context) converter.convert(type, parts[0]);
+            final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
+            final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[2]);
+            final CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type, parts[3]);
+            result.add(new OptionalDegreeModuleToEnrol(curriculumGroup, context, executionSemester, curricularCourse));
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

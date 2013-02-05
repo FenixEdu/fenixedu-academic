@@ -18,18 +18,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourseByCodeAndExecutionPeriodId extends FenixService {
 
-	@Service
-	public static InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente,
-			FenixServiceException {
-		InfoExecutionCourse infoExecCourse = null;
-		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);
+    @Service
+    public static InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente,
+            FenixServiceException {
+        InfoExecutionCourse infoExecCourse = null;
+        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);
 
-		if (iExecCourse != null) {
-			infoExecCourse = InfoExecutionCourse.newInfoFromDomain(iExecCourse);
-		}
+        if (iExecCourse != null) {
+            infoExecCourse = InfoExecutionCourse.newInfoFromDomain(iExecCourse);
+        }
 
-		return infoExecCourse;
-	}
+        return infoExecCourse;
+    }
 
 }

@@ -16,28 +16,28 @@ import org.apache.commons.collections.Transformer;
  * 
  */
 public class InfoCandidacyWithCaseStudyChoices extends InfoCandidacy {
-	@Override
-	public void copyFromDomain(SeminaryCandidacy candidacy) {
-		super.copyFromDomain(candidacy);
-		if (candidacy != null && candidacy.getCaseStudyChoices() != null) {
+    @Override
+    public void copyFromDomain(SeminaryCandidacy candidacy) {
+        super.copyFromDomain(candidacy);
+        if (candidacy != null && candidacy.getCaseStudyChoices() != null) {
 
-			setCaseStudyChoices((List) CollectionUtils.collect(candidacy.getCaseStudyChoices(), new Transformer() {
+            setCaseStudyChoices((List) CollectionUtils.collect(candidacy.getCaseStudyChoices(), new Transformer() {
 
-				@Override
-				public Object transform(Object arg0) {
-					return InfoCaseStudyChoice.newInfoFromDomain((CaseStudyChoice) arg0);
-				}
-			}));
-		}
-	}
+                @Override
+                public Object transform(Object arg0) {
+                    return InfoCaseStudyChoice.newInfoFromDomain((CaseStudyChoice) arg0);
+                }
+            }));
+        }
+    }
 
-	public static InfoCandidacy newInfoFromDomain(SeminaryCandidacy candidacy) {
-		InfoCandidacyWithCaseStudyChoices infoCandidacy = null;
-		if (candidacy != null) {
-			infoCandidacy = new InfoCandidacyWithCaseStudyChoices();
-			infoCandidacy.copyFromDomain(candidacy);
-		}
-		return infoCandidacy;
-	}
+    public static InfoCandidacy newInfoFromDomain(SeminaryCandidacy candidacy) {
+        InfoCandidacyWithCaseStudyChoices infoCandidacy = null;
+        if (candidacy != null) {
+            infoCandidacy = new InfoCandidacyWithCaseStudyChoices();
+            infoCandidacy.copyFromDomain(candidacy);
+        }
+        return infoCandidacy;
+    }
 
 }

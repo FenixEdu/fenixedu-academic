@@ -8,28 +8,28 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public abstract class StudentCurriculumModuleBean implements Serializable {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	private CurriculumModule curriculumModule;
+    private CurriculumModule curriculumModule;
 
-	public StudentCurriculumModuleBean(final CurriculumModule curriculumModule) {
-		super();
-		setCurriculumModule(curriculumModule);
-	}
+    public StudentCurriculumModuleBean(final CurriculumModule curriculumModule) {
+        super();
+        setCurriculumModule(curriculumModule);
+    }
 
-	public CurriculumModule getCurriculumModule() {
-		return this.curriculumModule;
-	}
+    public CurriculumModule getCurriculumModule() {
+        return this.curriculumModule;
+    }
 
-	private void setCurriculumModule(CurriculumModule curriculumModule) {
-		this.curriculumModule = curriculumModule;
-	}
+    private void setCurriculumModule(CurriculumModule curriculumModule) {
+        this.curriculumModule = curriculumModule;
+    }
 
-	protected StudentCurricularPlan getStudentCurricularPlan() {
-		return curriculumModule.getStudentCurricularPlan();
-	}
+    protected StudentCurricularPlan getStudentCurricularPlan() {
+        return curriculumModule.getStudentCurricularPlan();
+    }
 
-	protected Registration getRegistration() {
-		return getStudentCurricularPlan().getRegistration();
-	}
+    protected Registration getRegistration() {
+        return getStudentCurricularPlan().getRegistration();
+    }
 }

@@ -34,78 +34,78 @@ import org.apache.struts.action.ActionMapping;
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		try {
-			super.execute(mapping, form, request, response);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        try {
+            super.execute(mapping, form, request, response);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 
-		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-		ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-		readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
+        String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
+        readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-		InfoExecutionDegree infoExecutionDegree =
-				RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod.getInfoExecutionYear());
+        InfoExecutionDegree infoExecutionDegree =
+                RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod.getInfoExecutionYear());
 
-		Integer curricularYear = (Integer) request.getAttribute("curYear");
+        Integer curricularYear = (Integer) request.getAttribute("curYear");
 
-		List infoExecutionCourses =
-				(List) SelectExportExecutionCourse.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
-		Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-		request.setAttribute("exeCourseList", infoExecutionCourses);
-		return mapping.findForward("sucess");
-	}
+        List infoExecutionCourses =
+                (List) SelectExportExecutionCourse.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
+        Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
+        request.setAttribute("exeCourseList", infoExecutionCourses);
+        return mapping.findForward("sucess");
+    }
 
-	private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
-			Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
+    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
+            Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		Integer objectCode = null;
-		if (infoExecutionCourseCode == null) {
-			objectCode = getObjectCode(request);
-			infoExecutionCourseCode = objectCode;
-		}
+        Integer objectCode = null;
+        if (infoExecutionCourseCode == null) {
+            objectCode = getObjectCode(request);
+            infoExecutionCourseCode = objectCode;
+        }
 
-		ISiteComponent commonComponent = new InfoSiteCommon();
-		Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
+        ISiteComponent commonComponent = new InfoSiteCommon();
+        Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
 
-		try {
-			TeacherAdministrationSiteView siteView =
-					(TeacherAdministrationSiteView) ServiceUtils
-							.executeService("TeacherAdministrationSiteComponentService", args);
-			request.setAttribute("siteView", siteView);
-			request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-					.getIdInternal());
-			if (siteView.getComponent() instanceof InfoSiteSection) {
-				request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
-			}
+        try {
+            TeacherAdministrationSiteView siteView =
+                    (TeacherAdministrationSiteView) ServiceUtils
+                            .executeService("TeacherAdministrationSiteComponentService", args);
+            request.setAttribute("siteView", siteView);
+            request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
+                    .getIdInternal());
+            if (siteView.getComponent() instanceof InfoSiteSection) {
+                request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
+            }
 
-			return siteView;
+            return siteView;
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-	}
+    }
 
-	private Integer getObjectCode(HttpServletRequest request) {
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		if (objectCodeString != null) {
-			objectCode = new Integer(objectCodeString);
-		}
-		return objectCode;
-	}
+    private Integer getObjectCode(HttpServletRequest request) {
+        Integer objectCode = null;
+        String objectCodeString = request.getParameter("objectCode");
+        if (objectCodeString == null) {
+            objectCodeString = (String) request.getAttribute("objectCode");
+        }
+        if (objectCodeString != null) {
+            objectCode = new Integer(objectCodeString);
+        }
+        return objectCode;
+    }
 
 }

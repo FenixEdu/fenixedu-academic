@@ -21,48 +21,48 @@ import javax.servlet.jsp.tagext.TagSupport;
  * 
  */
 public class ComputeDateTag extends TagSupport {
-	private String _format = "dd-MM-yyyy 'às' HH:mm";
+    private String _format = "dd-MM-yyyy 'às' HH:mm";
 
-	/**
-	 * Constructor for ComputeDateTag.
-	 */
-	public ComputeDateTag() {
-		super();
-	}
+    /**
+     * Constructor for ComputeDateTag.
+     */
+    public ComputeDateTag() {
+        super();
+    }
 
-	@Override
-	public int doStartTag() throws JspException {
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat(_format);
+    @Override
+    public int doStartTag() throws JspException {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat(_format);
 
-			Date date = new Date();
-			String dateStr = formatter.format(date);
+            Date date = new Date();
+            String dateStr = formatter.format(date);
 
-			pageContext.getOut().print(dateStr);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new JspException(e);
-		}
-		return SKIP_BODY;
-	}
+            pageContext.getOut().print(dateStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new JspException(e);
+        }
+        return SKIP_BODY;
+    }
 
-	/**
-	 * Returns the dateFormat.
-	 * 
-	 * @return String
-	 */
-	public String getFormat() {
-		return _format;
-	}
+    /**
+     * Returns the dateFormat.
+     * 
+     * @return String
+     */
+    public String getFormat() {
+        return _format;
+    }
 
-	/**
-	 * Sets the dateFormat.
-	 * 
-	 * @param dateFormat
-	 *            The dateFormat to set
-	 */
-	public void setFormat(String dateFormat) {
-		_format = dateFormat;
-	}
+    /**
+     * Sets the dateFormat.
+     * 
+     * @param dateFormat
+     *            The dateFormat to set
+     */
+    public void setFormat(String dateFormat) {
+        _format = dateFormat;
+    }
 
 }

@@ -40,156 +40,156 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		Integer degreeId = getFromRequest("degreeID", request);
-		request.setAttribute("degreeID", degreeId);
-		request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
+        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));
 
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
 
-		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-		List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
-		if (executionPeriodsLabelValueList.size() > 1) {
-			request.setAttribute("lista", executionPeriodsLabelValueList);
-		} else {
-			request.removeAttribute("lista");
-		}
+        List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
+        if (executionPeriodsLabelValueList.size() > 1) {
+            request.setAttribute("lista", executionPeriodsLabelValueList);
+        } else {
+            request.removeAttribute("lista");
+        }
 
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		if (inEnglish == null) {
-			inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
-		}
-		request.setAttribute("inEnglish", inEnglish);
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        if (inEnglish == null) {
+            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+        }
+        request.setAttribute("inEnglish", inEnglish);
 
-		request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
+        request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 
-		return mapping.findForward("prepare");
-	}
+        return mapping.findForward("prepare");
+    }
 
-	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		final ActionErrors errors = new ActionErrors();
-		final DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        final ActionErrors errors = new ActionErrors();
+        final DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
 
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		if (inEnglish == null) {
-			inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
-		}
-		request.setAttribute("inEnglish", inEnglish);
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        if (inEnglish == null) {
+            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+        }
+        request.setAttribute("inEnglish", inEnglish);
 
-		// index
-		Integer indexValue = getFromRequest("index", request);
-		request.setAttribute("index", indexValue);
+        // index
+        Integer indexValue = getFromRequest("index", request);
+        request.setAttribute("index", indexValue);
 
-		// degreeID
-		Integer degreeId = (Integer) chooseExamContextoForm.get("degreeID");
-		request.setAttribute("degreeID", degreeId);
-		final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-		request.setAttribute("degree", degree);
+        // degreeID
+        Integer degreeId = (Integer) chooseExamContextoForm.get("degreeID");
+        request.setAttribute("degreeID", degreeId);
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        request.setAttribute("degree", degree);
 
-		// curricularYearList
-		final Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
-		final List<Integer> curricularYears = buildCurricularYearList(selectAllCurricularYears, degree, chooseExamContextoForm);
-		request.setAttribute("curricularYearList", curricularYears);
+        // curricularYearList
+        final Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
+        final List<Integer> curricularYears = buildCurricularYearList(selectAllCurricularYears, degree, chooseExamContextoForm);
+        request.setAttribute("curricularYearList", curricularYears);
 
-		// degreeCurricularPlanID
-		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		final DegreeCurricularPlan degreeCurricularPlan;
-		if (degreeCurricularPlanId == null) {
-			degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
-		} else {
-			degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-		}
+        // degreeCurricularPlanID
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        final DegreeCurricularPlan degreeCurricularPlan;
+        if (degreeCurricularPlanId == null) {
+            degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
+        } else {
+            degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        }
 
-		if (degreeCurricularPlan != null) {
-			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
+        if (degreeCurricularPlan != null) {
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
 
-			if (!degreeCurricularPlan.getDegree().getIdInternal().equals(degreeId)) {
-				throw new FenixActionException();
-			}
+            if (!degreeCurricularPlan.getDegree().getIdInternal().equals(degreeId)) {
+                throw new FenixActionException();
+            }
 
-			// lista
-			List<LabelValueBean> executionPeriodsLabelValueList =
-					buildExecutionPeriodsLabelValueList(degreeCurricularPlan.getIdInternal());
-			if (executionPeriodsLabelValueList.size() > 1) {
-				request.setAttribute("lista", executionPeriodsLabelValueList);
-			} else {
-				request.removeAttribute("lista");
-			}
+            // lista
+            List<LabelValueBean> executionPeriodsLabelValueList =
+                    buildExecutionPeriodsLabelValueList(degreeCurricularPlan.getIdInternal());
+            if (executionPeriodsLabelValueList.size() > 1) {
+                request.setAttribute("lista", executionPeriodsLabelValueList);
+            } else {
+                request.removeAttribute("lista");
+            }
 
-			// infoDegreeCurricularPlan
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-			request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-		}
+            // infoDegreeCurricularPlan
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        }
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-		Integer executionPeriodID = (Integer) chooseExamContextoForm.get("indice");
-		if (executionPeriodID != null) {
-			infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
-		}
-		request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-		chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
-		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-		request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-		request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        Integer executionPeriodID = (Integer) chooseExamContextoForm.get("indice");
+        if (executionPeriodID != null) {
+            infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
+        }
+        request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
+        chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+        RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
-		final ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-		ExecutionDegree executionDegree = null;
+        final ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionDegree executionDegree = null;
 
-		if (degreeCurricularPlan != null) {
-			executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
-			if (executionDegree == null) {
-				executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+        if (degreeCurricularPlan != null) {
+            executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
+            if (executionDegree == null) {
+                executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
-				if (executionDegree != null) {
-					infoExecutionPeriod =
-							InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear().getExecutionSemesterFor(1));
-					request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-					chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
-					RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-					request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-					request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal()
-							.toString());
-				}
-			}
-		}
+                if (executionDegree != null) {
+                    infoExecutionPeriod =
+                            InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear().getExecutionSemesterFor(1));
+                    request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
+                    chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+                    RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+                    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+                    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal()
+                            .toString());
+                }
+            }
+        }
 
-		if (executionDegree != null) {
-			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-			request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-			request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
-			RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
-		} else {
-			return mapping.findForward("viewExamsMap");
-		}
+        if (executionDegree != null) {
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
+            RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
+        } else {
+            return mapping.findForward("viewExamsMap");
+        }
 
-		return mapping.findForward("showExamsMap");
-	}
+        return mapping.findForward("showExamsMap");
+    }
 
-	private List<Integer> buildCurricularYearList(Boolean allCurricularYears, Degree degree, DynaActionForm chooseExamContextoForm) {
-		if (allCurricularYears == null || allCurricularYears) {
-			return degree.buildFullCurricularYearList();
-		} else {
-			return buildSelectedList(chooseExamContextoForm);
-		}
-	}
+    private List<Integer> buildCurricularYearList(Boolean allCurricularYears, Degree degree, DynaActionForm chooseExamContextoForm) {
+        if (allCurricularYears == null || allCurricularYears) {
+            return degree.buildFullCurricularYearList();
+        } else {
+            return buildSelectedList(chooseExamContextoForm);
+        }
+    }
 
-	private List<Integer> buildSelectedList(DynaActionForm chooseExamContextoForm) {
-		String[] selectedCurricularYears = (String[]) chooseExamContextoForm.get("selectedCurricularYears");
+    private List<Integer> buildSelectedList(DynaActionForm chooseExamContextoForm) {
+        String[] selectedCurricularYears = (String[]) chooseExamContextoForm.get("selectedCurricularYears");
 
-		List<Integer> result = new ArrayList<Integer>(selectedCurricularYears.length);
-		for (String selectedCurricularYear : selectedCurricularYears) {
-			result.add(Integer.valueOf(selectedCurricularYear));
-		}
+        List<Integer> result = new ArrayList<Integer>(selectedCurricularYears.length);
+        for (String selectedCurricularYear : selectedCurricularYears) {
+            result.add(Integer.valueOf(selectedCurricularYear));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

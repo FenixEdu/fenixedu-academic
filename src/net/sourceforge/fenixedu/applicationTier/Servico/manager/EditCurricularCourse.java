@@ -22,98 +22,98 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EditCurricularCourse extends FenixService {
 
-	public EditCurricularCourse() {
-	}
+    public EditCurricularCourse() {
+    }
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
-		CurricularCourse oldCurricularCourse = null;
-		String newName = null;
-		String newNameEn = null;
-		String newCode = null;
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
+        CurricularCourse oldCurricularCourse = null;
+        String newName = null;
+        String newNameEn = null;
+        String newCode = null;
 
-		oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
+        oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
 
-		newName = newInfoCurricularCourse.getName();
-		newNameEn = newInfoCurricularCourse.getNameEn();
-		newCode = newInfoCurricularCourse.getCode();
-		final String newAcronym = newInfoCurricularCourse.getAcronym();
+        newName = newInfoCurricularCourse.getName();
+        newNameEn = newInfoCurricularCourse.getNameEn();
+        newCode = newInfoCurricularCourse.getCode();
+        final String newAcronym = newInfoCurricularCourse.getAcronym();
 
-		if (oldCurricularCourse == null) {
-			throw new NonExistingServiceException();
-		}
+        if (oldCurricularCourse == null) {
+            throw new NonExistingServiceException();
+        }
 
-		List curricularCourses = null;
-		curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
+        List curricularCourses = null;
+        curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
 
-		CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
+        CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
 
-			@Override
-			public boolean evaluate(Object arg0) {
-				CurricularCourse curricularCourse = (CurricularCourse) arg0;
-				if (newAcronym.equalsIgnoreCase(curricularCourse.getAcronym())) {
-					return true;
-				}
-				return false;
-			}
-		});
+            @Override
+            public boolean evaluate(Object arg0) {
+                CurricularCourse curricularCourse = (CurricularCourse) arg0;
+                if (newAcronym.equalsIgnoreCase(curricularCourse.getAcronym())) {
+                    return true;
+                }
+                return false;
+            }
+        });
 
-		if (cCourse == null || newAcronym.equalsIgnoreCase(oldCurricularCourse.getAcronym())) {
+        if (cCourse == null || newAcronym.equalsIgnoreCase(oldCurricularCourse.getAcronym())) {
 
-			oldCurricularCourse.setName(newName);
-			oldCurricularCourse.setNameEn(newNameEn);
-			oldCurricularCourse.setCode(newCode);
-			oldCurricularCourse.setAcronym(newInfoCurricularCourse.getAcronym());
-			oldCurricularCourse.setType(newInfoCurricularCourse.getType());
-			oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
-			oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
-			oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
-			oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
-			oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
-			oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
-			oldCurricularCourse.setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse
-					.getMaximumValueForAcumulatedEnrollments());
-			oldCurricularCourse.setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse
-					.getMinimumValueForAcumulatedEnrollments());
-			oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
-			oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
-			oldCurricularCourse.setWeigth(newInfoCurricularCourse.getWeigth());
-			oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
-			oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
-			oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
-			oldCurricularCourse.setGradeScale(newInfoCurricularCourse.getGradeScale());
-			oldCurricularCourse.setRegimeType(newInfoCurricularCourse.getRegimeType());
-		} else {
-			throw new ExistingAcronymException();
-		}
-	}
+            oldCurricularCourse.setName(newName);
+            oldCurricularCourse.setNameEn(newNameEn);
+            oldCurricularCourse.setCode(newCode);
+            oldCurricularCourse.setAcronym(newInfoCurricularCourse.getAcronym());
+            oldCurricularCourse.setType(newInfoCurricularCourse.getType());
+            oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
+            oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
+            oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
+            oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
+            oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
+            oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
+            oldCurricularCourse.setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse
+                    .getMaximumValueForAcumulatedEnrollments());
+            oldCurricularCourse.setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse
+                    .getMinimumValueForAcumulatedEnrollments());
+            oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
+            oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
+            oldCurricularCourse.setWeigth(newInfoCurricularCourse.getWeigth());
+            oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
+            oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
+            oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
+            oldCurricularCourse.setGradeScale(newInfoCurricularCourse.getGradeScale());
+            oldCurricularCourse.setRegimeType(newInfoCurricularCourse.getRegimeType());
+        } else {
+            throw new ExistingAcronymException();
+        }
+    }
 
-	public static class ExistingAcronymException extends FenixServiceException {
+    public static class ExistingAcronymException extends FenixServiceException {
 
-		public ExistingAcronymException() {
-		}
+        public ExistingAcronymException() {
+        }
 
-		public ExistingAcronymException(String message) {
-			super(message);
-		}
+        public ExistingAcronymException(String message) {
+            super(message);
+        }
 
-		public ExistingAcronymException(Throwable cause) {
-			super(cause);
-		}
+        public ExistingAcronymException(Throwable cause) {
+            super(cause);
+        }
 
-		public ExistingAcronymException(String message, Throwable cause) {
-			super(message, cause);
-		}
+        public ExistingAcronymException(String message, Throwable cause) {
+            super(message, cause);
+        }
 
-		@Override
-		public String toString() {
-			String result = "[ExistingAcronymException\n";
-			result += "message" + this.getMessage() + "\n";
-			result += "cause" + this.getCause() + "\n";
-			result += "]";
-			return result;
-		}
+        @Override
+        public String toString() {
+            String result = "[ExistingAcronymException\n";
+            result += "message" + this.getMessage() + "\n";
+            result += "cause" + this.getCause() + "\n";
+            result += "]";
+            return result;
+        }
 
-	}
+    }
 }

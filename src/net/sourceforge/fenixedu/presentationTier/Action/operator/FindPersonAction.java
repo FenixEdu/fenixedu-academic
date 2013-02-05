@@ -32,62 +32,62 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * 
  */
 public class FindPersonAction extends FenixDispatchAction {
-	public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("choosePerson");
-	}
+    public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("choosePerson");
+    }
 
-	public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ActionErrors errors = new ActionErrors();
+    public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		DynaActionForm findPersonForm = (DynaActionForm) actionForm;
-		String username = null;
-		if (findPersonForm.get("username") != null) {
-			username = (String) findPersonForm.get("username");
-			request.setAttribute("username", username);
-		}
-		String documentIdNumber = null;
-		if (findPersonForm.get("documentIdNumber") != null) {
-			documentIdNumber = (String) findPersonForm.get("documentIdNumber");
-			request.setAttribute("documentIdNumber", documentIdNumber);
-		}
+        DynaActionForm findPersonForm = (DynaActionForm) actionForm;
+        String username = null;
+        if (findPersonForm.get("username") != null) {
+            username = (String) findPersonForm.get("username");
+            request.setAttribute("username", username);
+        }
+        String documentIdNumber = null;
+        if (findPersonForm.get("documentIdNumber") != null) {
+            documentIdNumber = (String) findPersonForm.get("documentIdNumber");
+            request.setAttribute("documentIdNumber", documentIdNumber);
+        }
 
-		SearchParameters searchParameters =
-				new SearchPerson.SearchParameters(null, null, username, documentIdNumber, null, null, null, null, null,
-						Boolean.TRUE, null, null, (String) null);
+        SearchParameters searchParameters =
+                new SearchPerson.SearchParameters(null, null, username, documentIdNumber, null, null, null, null, null,
+                        Boolean.TRUE, null, null, (String) null);
 
-		SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+        SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-		Object[] args = { searchParameters, predicate };
+        Object[] args = { searchParameters, predicate };
 
-		CollectionPager<Person> result = null;
-		try {
-			result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
+        CollectionPager<Person> result = null;
+        try {
+            result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-		}
-		if (result == null) {
-			errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-		}
-		if (!errors.isEmpty()) {
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+        }
+        if (result == null) {
+            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+        }
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
 
-		final String pageNumberString = request.getParameter("pageNumber");
-		final Integer pageNumber =
-				!StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+        final String pageNumberString = request.getParameter("pageNumber");
+        final Integer pageNumber =
+                !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
 
-		request.setAttribute("pageNumber", pageNumber);
-		request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
-		request.setAttribute("totalFindedPersons", result.getCollection().size());
-		request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
+        request.setAttribute("totalFindedPersons", result.getCollection().size());
+        request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
 
-		return mapping.findForward("confirmPasswordChange");
-	}
+        return mapping.findForward("confirmPasswordChange");
+    }
 }

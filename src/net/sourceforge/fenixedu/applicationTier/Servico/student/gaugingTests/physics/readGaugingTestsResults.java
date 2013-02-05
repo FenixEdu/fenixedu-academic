@@ -13,22 +13,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class readGaugingTestsResults extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
 
-		Person person = Person.readPersonByUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
 
-		Registration registration = person.readStudentByDegreeType(DegreeType.DEGREE);
-		if (registration == null) {
-			return null;
-		}
+        Registration registration = person.readStudentByDegreeType(DegreeType.DEGREE);
+        if (registration == null) {
+            return null;
+        }
 
-		GaugingTestResult gaugingTestsResult = registration.getAssociatedGaugingTestResult();
-		if (gaugingTestsResult != null) {
-			return InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
-		}
+        GaugingTestResult gaugingTestsResult = registration.getAssociatedGaugingTestResult();
+        if (gaugingTestsResult != null) {
+            return InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

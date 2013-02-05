@@ -14,15 +14,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class FixSibsEntryByID extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static void run(Integer sibsEntryId) throws FenixServiceException {
-		SibsPaymentFileEntry sibsPaymentFileEntry = rootDomainObject.readSibsPaymentFileEntryByOID(sibsEntryId);
-		if (sibsPaymentFileEntry == null) {
-			throw new FenixServiceException();
-		}
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Integer sibsEntryId) throws FenixServiceException {
+        SibsPaymentFileEntry sibsPaymentFileEntry = rootDomainObject.readSibsPaymentFileEntryByOID(sibsEntryId);
+        if (sibsPaymentFileEntry == null) {
+            throw new FenixServiceException();
+        }
 
-		sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
-	}
+        sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
+    }
 
 }

@@ -11,15 +11,15 @@ import java.io.Serializable;
  * 
  */
 public interface IRubric extends Serializable {
-	public abstract String getCode();
+    public abstract String getCode();
 
-	public abstract void setCode(String code);
+    public abstract void setCode(String code);
 
-	public abstract String getDescription();
+    public abstract String getDescription();
 
-	public abstract void setDescription(String description);
+    public abstract void setDescription(String description);
 
-	public abstract Double getValue();
+    public abstract Double getValue();
 
-	public abstract void setValue(Double value);
+    public abstract void setValue(Double value);
 }

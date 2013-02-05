@@ -10,26 +10,26 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public interface GanttDiagramEvent {
 
-	public List<Interval> getGanttDiagramEventSortedIntervals();
+    public List<Interval> getGanttDiagramEventSortedIntervals();
 
-	public MultiLanguageString getGanttDiagramEventName();
+    public MultiLanguageString getGanttDiagramEventName();
 
-	public int getGanttDiagramEventOffset();
+    public int getGanttDiagramEventOffset();
 
-	public String getGanttDiagramEventPeriod();
+    public String getGanttDiagramEventPeriod();
 
-	public String getGanttDiagramEventObservations();
+    public String getGanttDiagramEventObservations();
 
-	public String getGanttDiagramEventIdentifier();
+    public String getGanttDiagramEventIdentifier();
 
-	public Integer getGanttDiagramEventMonth();
+    public Integer getGanttDiagramEventMonth();
 
-	public String getGanttDiagramEventUrlAddOns();
+    public String getGanttDiagramEventUrlAddOns();
 
-	public boolean isGanttDiagramEventIntervalsLongerThanOneDay();
+    public boolean isGanttDiagramEventIntervalsLongerThanOneDay();
 
-	public boolean isGanttDiagramEventToMarkWeekendsAndHolidays();
+    public boolean isGanttDiagramEventToMarkWeekendsAndHolidays();
 
-	public DayType getGanttDiagramEventDayType(Interval interval);
+    public DayType getGanttDiagramEventDayType(Interval interval);
 
 }

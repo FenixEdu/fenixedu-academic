@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PublishAprovedFinalDegreeWorkProposals {
-	@Service
-	public static void run(ExecutionDegree executionDegree) throws FenixServiceException {
-		if (executionDegree != null) {
-			Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();
+    @Service
+    public static void run(ExecutionDegree executionDegree) throws FenixServiceException {
+        if (executionDegree != null) {
+            Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();
 
-			if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {
-				for (Proposal proposal : aprovedFinalDegreeWorkProposals) {
-					proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
-				}
-			}
-		}
-	}
+            if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {
+                for (Proposal proposal : aprovedFinalDegreeWorkProposals) {
+                    proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
+                }
+            }
+        }
+    }
 
 }

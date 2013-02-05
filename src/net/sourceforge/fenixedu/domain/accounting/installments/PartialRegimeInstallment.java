@@ -23,173 +23,173 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 
-	protected PartialRegimeInstallment() {
-		super();
-	}
+    protected PartialRegimeInstallment() {
+        super();
+    }
 
-	public PartialRegimeInstallment(final FullGratuityPaymentPlanForPartialRegime paymentPlan, final Money amount,
-			final YearMonthDay startDate, final YearMonthDay endDate, final BigDecimal ectsForAmount,
-			final List<ExecutionSemester> executionSemesters) {
-		this();
-		init(paymentPlan, amount, startDate, endDate, false, null, null, null, ectsForAmount, executionSemesters);
-	}
+    public PartialRegimeInstallment(final FullGratuityPaymentPlanForPartialRegime paymentPlan, final Money amount,
+            final YearMonthDay startDate, final YearMonthDay endDate, final BigDecimal ectsForAmount,
+            final List<ExecutionSemester> executionSemesters) {
+        this();
+        init(paymentPlan, amount, startDate, endDate, false, null, null, null, ectsForAmount, executionSemesters);
+    }
 
-	private void init(FullGratuityPaymentPlanForPartialRegime paymentPlan, Money amount, YearMonthDay startDate,
-			YearMonthDay endDate, boolean penaltyAppliable, BigDecimal penaltyPercentage, YearMonthDay whenStartToApplyPenalty,
-			Integer maxMonthsToApplyPenalty, BigDecimal ectsForAmount, List<ExecutionSemester> executionSemesters) {
+    private void init(FullGratuityPaymentPlanForPartialRegime paymentPlan, Money amount, YearMonthDay startDate,
+            YearMonthDay endDate, boolean penaltyAppliable, BigDecimal penaltyPercentage, YearMonthDay whenStartToApplyPenalty,
+            Integer maxMonthsToApplyPenalty, BigDecimal ectsForAmount, List<ExecutionSemester> executionSemesters) {
 
-		if (penaltyAppliable) {
-			super.init(paymentPlan, amount, startDate, endDate, penaltyPercentage, whenStartToApplyPenalty,
-					maxMonthsToApplyPenalty);
-		} else {
-			super.init(paymentPlan, amount, startDate, endDate);
-		}
+        if (penaltyAppliable) {
+            super.init(paymentPlan, amount, startDate, endDate, penaltyPercentage, whenStartToApplyPenalty,
+                    maxMonthsToApplyPenalty);
+        } else {
+            super.init(paymentPlan, amount, startDate, endDate);
+        }
 
-		checkParameters(ectsForAmount, executionSemesters);
+        checkParameters(ectsForAmount, executionSemesters);
 
-		super.setPenaltyAppliable(penaltyAppliable);
-		super.setEctsForAmount(ectsForAmount);
+        super.setPenaltyAppliable(penaltyAppliable);
+        super.setEctsForAmount(ectsForAmount);
 
-		for (final ExecutionSemester executionSemester : executionSemesters) {
-			super.addExecutionSemesters(executionSemester);
-		}
-	}
+        for (final ExecutionSemester executionSemester : executionSemesters) {
+            super.addExecutionSemesters(executionSemester);
+        }
+    }
 
-	private void checkParameters(final BigDecimal ectsForAmount, final List<ExecutionSemester> executionSemesters) {
-		if (ectsForAmount == null) {
-			throw new DomainException(
-					"error.net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment.ectsForAmount.cannot.be.null");
-		}
+    private void checkParameters(final BigDecimal ectsForAmount, final List<ExecutionSemester> executionSemesters) {
+        if (ectsForAmount == null) {
+            throw new DomainException(
+                    "error.net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment.ectsForAmount.cannot.be.null");
+        }
 
-		if (executionSemesters == null || executionSemesters.isEmpty()) {
-			throw new DomainException(
-					"error.net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment.executionSemesters.cannot.be.null.or.empty");
-		}
-	}
+        if (executionSemesters == null || executionSemesters.isEmpty()) {
+            throw new DomainException(
+                    "error.net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment.executionSemesters.cannot.be.null.or.empty");
+        }
+    }
 
-	public PartialRegimeInstallment(FullGratuityPaymentPlanForPartialRegime paymentPlan, Money amount, YearMonthDay startDate,
-			YearMonthDay endDate, BigDecimal penaltyPercentage, YearMonthDay whenStartToApplyPenalty,
-			Integer maxMonthsToApplyPenalty, BigDecimal ectsForAmount, List<ExecutionSemester> executionSemesters) {
-		this();
-		init(paymentPlan, amount, startDate, endDate, true, penaltyPercentage, whenStartToApplyPenalty, maxMonthsToApplyPenalty,
-				ectsForAmount, executionSemesters);
-	}
+    public PartialRegimeInstallment(FullGratuityPaymentPlanForPartialRegime paymentPlan, Money amount, YearMonthDay startDate,
+            YearMonthDay endDate, BigDecimal penaltyPercentage, YearMonthDay whenStartToApplyPenalty,
+            Integer maxMonthsToApplyPenalty, BigDecimal ectsForAmount, List<ExecutionSemester> executionSemesters) {
+        this();
+        init(paymentPlan, amount, startDate, endDate, true, penaltyPercentage, whenStartToApplyPenalty, maxMonthsToApplyPenalty,
+                ectsForAmount, executionSemesters);
+    }
 
-	/**
-	 * Formula: 0.5 x Amount x (1 + EnroledEcts / ectsForAmount)
-	 */
-	@Override
-	protected Money calculateBaseAmount(Event event) {
-		final BigDecimal enroledEcts = getEnroledEcts((GratuityEvent) event);
-		if (enroledEcts.compareTo(BigDecimal.ZERO) == 0) {
-			return Money.ZERO;
-		}
+    /**
+     * Formula: 0.5 x Amount x (1 + EnroledEcts / ectsForAmount)
+     */
+    @Override
+    protected Money calculateBaseAmount(Event event) {
+        final BigDecimal enroledEcts = getEnroledEcts((GratuityEvent) event);
+        if (enroledEcts.compareTo(BigDecimal.ZERO) == 0) {
+            return Money.ZERO;
+        }
 
-		final BigDecimal proporcionToPay = enroledEcts.divide(getEctsForAmount());
-		// TODO: Fix Money limitation of scale = 2 to prevent this type of
-		// coding
-		final BigDecimal amount = getAmount().getAmount().setScale(10);
+        final BigDecimal proporcionToPay = enroledEcts.divide(getEctsForAmount());
+        // TODO: Fix Money limitation of scale = 2 to prevent this type of
+        // coding
+        final BigDecimal amount = getAmount().getAmount().setScale(10);
 
-		return new Money(amount.multiply(new BigDecimal("0.5")).multiply(BigDecimal.ONE.add(proporcionToPay)));
+        return new Money(amount.multiply(new BigDecimal("0.5")).multiply(BigDecimal.ONE.add(proporcionToPay)));
 
-	}
+    }
 
-	@Override
-	protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage) {
-		if (isPenaltyAppliable()) {
-			return super.calculatePenaltyAmount(event, when, discountPercentage);
-		}
+    @Override
+    protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage) {
+        if (isPenaltyAppliable()) {
+            return super.calculatePenaltyAmount(event, when, discountPercentage);
+        }
 
-		return Money.ZERO;
-	}
+        return Money.ZERO;
+    }
 
-	private BigDecimal getEnroledEcts(GratuityEvent gratuityEvent) {
+    private BigDecimal getEnroledEcts(GratuityEvent gratuityEvent) {
 
-		BigDecimal total = BigDecimal.ZERO;
+        BigDecimal total = BigDecimal.ZERO;
 
-		for (final Enrolment enrolment : collectEnrolments(gratuityEvent)) {
-			total = total.add(enrolment.getEctsCreditsForCurriculum());
-		}
+        for (final Enrolment enrolment : collectEnrolments(gratuityEvent)) {
+            total = total.add(enrolment.getEctsCreditsForCurriculum());
+        }
 
-		return total;
+        return total;
 
-	}
+    }
 
-	private Set<Enrolment> collectEnrolments(GratuityEvent gratuityEvent) {
-		final Set<Enrolment> result = new HashSet<Enrolment>();
+    private Set<Enrolment> collectEnrolments(GratuityEvent gratuityEvent) {
+        final Set<Enrolment> result = new HashSet<Enrolment>();
 
-		for (final ExecutionSemester executionSemester : getExecutionSemesters()) {
-			for (final CycleCurriculumGroup cycleCurriculumGroup : gratuityEvent.getStudentCurricularPlan()
-					.getCycleCurriculumGroups()) {
-				for (final Enrolment enrolment : cycleCurriculumGroup.getEnrolmentsBy(executionSemester)) {
-					result.add(enrolment);
-				}
-			}
-		}
+        for (final ExecutionSemester executionSemester : getExecutionSemesters()) {
+            for (final CycleCurriculumGroup cycleCurriculumGroup : gratuityEvent.getStudentCurricularPlan()
+                    .getCycleCurriculumGroups()) {
+                for (final Enrolment enrolment : cycleCurriculumGroup.getEnrolmentsBy(executionSemester)) {
+                    result.add(enrolment);
+                }
+            }
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	@Override
-	public FullGratuityPaymentPlanForPartialRegime getPaymentPlan() {
-		return (FullGratuityPaymentPlanForPartialRegime) super.getPaymentPlan();
-	}
+    @Override
+    public FullGratuityPaymentPlanForPartialRegime getPaymentPlan() {
+        return (FullGratuityPaymentPlanForPartialRegime) super.getPaymentPlan();
+    }
 
-	public boolean isPenaltyAppliable() {
-		return getPenaltyAppliable().booleanValue();
-	}
+    public boolean isPenaltyAppliable() {
+        return getPenaltyAppliable().booleanValue();
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		if (isPenaltyAppliable()) {
-			labelFormatter.appendLabel("application", "label.PartialRegimeInstallment.description.with.penalty",
-					getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
-							.toString(DateFormatUtil.DEFAULT_DATE_FORMAT), buildExecutionSemesterDescription(),
-					getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
-					getWhenStartToApplyPenalty().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
-		} else {
-			labelFormatter.appendLabel("application", "label.PartialRegimeInstallment.description.without.penalty",
-					getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
-							.toString(DateFormatUtil.DEFAULT_DATE_FORMAT), buildExecutionSemesterDescription());
-		}
+        if (isPenaltyAppliable()) {
+            labelFormatter.appendLabel("application", "label.PartialRegimeInstallment.description.with.penalty",
+                    getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
+                            .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), buildExecutionSemesterDescription(),
+                    getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
+                    getWhenStartToApplyPenalty().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+        } else {
+            labelFormatter.appendLabel("application", "label.PartialRegimeInstallment.description.without.penalty",
+                    getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
+                            .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), buildExecutionSemesterDescription());
+        }
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	private String buildExecutionSemesterDescription() {
-		final StringBuilder result = new StringBuilder();
-		for (final ExecutionSemester executionSemester : getExecutionSemesters()) {
-			result.append(executionSemester.getName()).append(", ");
-		}
+    private String buildExecutionSemesterDescription() {
+        final StringBuilder result = new StringBuilder();
+        for (final ExecutionSemester executionSemester : getExecutionSemesters()) {
+            result.append(executionSemester.getName()).append(", ");
+        }
 
-		if (result.length() > 0 && result.toString().endsWith(", ")) {
-			result.delete(result.length() - 2, result.length());
-		}
+        if (result.length() > 0 && result.toString().endsWith(", ")) {
+            result.delete(result.length() - 2, result.length());
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	@Override
-	public void delete() {
-		getExecutionSemesters().clear();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        getExecutionSemesters().clear();
+        super.delete();
+    }
 
-	@Override
-	public void edit(InstallmentBean bean) {
-		List<ExecutionSemester> executionSemesters = bean.getExecutionSemesters();
-		BigDecimal ectsForAmount = bean.getEctsForAmount();
+    @Override
+    public void edit(InstallmentBean bean) {
+        List<ExecutionSemester> executionSemesters = bean.getExecutionSemesters();
+        BigDecimal ectsForAmount = bean.getEctsForAmount();
 
-		checkParameters(ectsForAmount, executionSemesters);
+        checkParameters(ectsForAmount, executionSemesters);
 
-		for (ExecutionSemester executionSemester : executionSemesters) {
-			super.addExecutionSemesters(executionSemester);
-		}
+        for (ExecutionSemester executionSemester : executionSemesters) {
+            super.addExecutionSemesters(executionSemester);
+        }
 
-		super.setEctsForAmount(ectsForAmount);
-		super.edit(bean);
-	}
+        super.setEctsForAmount(ectsForAmount);
+        super.edit(bean);
+    }
 }

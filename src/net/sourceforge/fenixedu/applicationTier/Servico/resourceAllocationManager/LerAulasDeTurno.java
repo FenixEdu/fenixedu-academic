@@ -19,18 +19,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerAulasDeTurno extends FenixService {
 
-	@Service
-	public static List run(ShiftKey shiftKey) {
+    @Service
+    public static List run(ShiftKey shiftKey) {
 
-		final ExecutionCourse executionCourse =
-				rootDomainObject.readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
-		final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
+        final ExecutionCourse executionCourse =
+                rootDomainObject.readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
+        final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
-		final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
-		for (final Lesson lesson : shift.getAssociatedLessons()) {
-			infoAulas.add(InfoLesson.newInfoFromDomain(lesson));
-		}
-		return infoAulas;
-	}
+        final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
+        for (final Lesson lesson : shift.getAssociatedLessons()) {
+            infoAulas.add(InfoLesson.newInfoFromDomain(lesson));
+        }
+        return infoAulas;
+    }
 
 }

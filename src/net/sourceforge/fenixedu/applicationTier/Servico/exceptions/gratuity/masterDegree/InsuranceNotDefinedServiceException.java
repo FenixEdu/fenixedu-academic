@@ -12,41 +12,41 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class InsuranceNotDefinedServiceException extends FenixServiceException {
 
-	/**
+    /**
      *  
      */
-	public InsuranceNotDefinedServiceException() {
-		super();
-	}
+    public InsuranceNotDefinedServiceException() {
+        super();
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public InsuranceNotDefinedServiceException(String message) {
-		super(message);
-	}
+    /**
+     * @param errorType
+     */
+    public InsuranceNotDefinedServiceException(String message) {
+        super(message);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InsuranceNotDefinedServiceException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public InsuranceNotDefinedServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InsuranceNotDefinedServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public InsuranceNotDefinedServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public String toString() {
-		String result = "[InsuranceNotDefinedServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[InsuranceNotDefinedServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

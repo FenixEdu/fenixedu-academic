@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
  */
 public abstract class DegreeCurricularPlanGroup extends DomainBackedGroup<DegreeCurricularPlan> {
 
-	private static final long serialVersionUID = 5503741043940549135L;
+    private static final long serialVersionUID = 5503741043940549135L;
 
-	public DegreeCurricularPlanGroup(DegreeCurricularPlan degreeCurricularPlan) {
-		super(degreeCurricularPlan);
-	}
+    public DegreeCurricularPlanGroup(DegreeCurricularPlan degreeCurricularPlan) {
+        super(degreeCurricularPlan);
+    }
 
-	public DegreeCurricularPlan getDegreeCurricularPlan() {
-		return getObject();
-	}
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return getObject();
+    }
 
 }

@@ -17,58 +17,58 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
-	@Override
-	public Object provide(Object source, Object current) {
-		ChooseRegistrationOrPhd chooseRegistrationOrPhd = (ChooseRegistrationOrPhd) source;
-		Student student = chooseRegistrationOrPhd.getStudent();
-		Set<PhdRegistrationWrapper> phdRegistrationWrapperResult = new HashSet<PhdRegistrationWrapper>();
-		ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+    @Override
+    public Object provide(Object source, Object current) {
+        ChooseRegistrationOrPhd chooseRegistrationOrPhd = (ChooseRegistrationOrPhd) source;
+        Student student = chooseRegistrationOrPhd.getStudent();
+        Set<PhdRegistrationWrapper> phdRegistrationWrapperResult = new HashSet<PhdRegistrationWrapper>();
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-		for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-			if (!phdProcess.isAllowedToManageProcess(AccessControl.getUserView())) {
-				continue;
-			}
-			if ((phdProcess.isProcessActive() && student.hasValidInsuranceEvent())) {
-				phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
-			} else if (phdProcess.isConcluded()) {
-				ExecutionYear conclusionYear = phdProcess.getConclusionYear();
-				if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
-					phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
-				}
-			}
-		}
-		for (Registration registration : student.getActiveRegistrations()) {
-			if (!registration.getDegreeType().isEmpty() && registration.isAllowedToManageRegistration()) {
-				phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
-			}
-		}
+        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
+            if (!phdProcess.isAllowedToManageProcess(AccessControl.getUserView())) {
+                continue;
+            }
+            if ((phdProcess.isProcessActive() && student.hasValidInsuranceEvent())) {
+                phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
+            } else if (phdProcess.isConcluded()) {
+                ExecutionYear conclusionYear = phdProcess.getConclusionYear();
+                if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
+                    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
+                }
+            }
+        }
+        for (Registration registration : student.getActiveRegistrations()) {
+            if (!registration.getDegreeType().isEmpty() && registration.isAllowedToManageRegistration()) {
+                phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
+            }
+        }
 
-		for (Registration registration : student.getConcludedRegistrations()) {
-			if (!registration.getDegreeType().isEmpty() && registration.isBolonha()
-					&& registration.isAllowedToManageRegistration()) {
-				RegistrationConclusionBean conclusionBean = null;
-				CycleType cycleType = registration.getDegreeType().getLastOrderedCycleType();
-				if (cycleType != null) {
-					conclusionBean = new RegistrationConclusionBean(registration, cycleType);
-				} else {
-					conclusionBean = new RegistrationConclusionBean(registration);
-				}
-				ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
-				if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
-					phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
-				}
-			}
-		}
-		return phdRegistrationWrapperResult;
-	}
+        for (Registration registration : student.getConcludedRegistrations()) {
+            if (!registration.getDegreeType().isEmpty() && registration.isBolonha()
+                    && registration.isAllowedToManageRegistration()) {
+                RegistrationConclusionBean conclusionBean = null;
+                CycleType cycleType = registration.getDegreeType().getLastOrderedCycleType();
+                if (cycleType != null) {
+                    conclusionBean = new RegistrationConclusionBean(registration, cycleType);
+                } else {
+                    conclusionBean = new RegistrationConclusionBean(registration);
+                }
+                ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
+                if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
+                    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
+                }
+            }
+        }
+        return phdRegistrationWrapperResult;
+    }
 
-	private boolean matchesRecentExecutionYear(ExecutionYear currentExecutionYear, ExecutionYear conclusionYear) {
-		return conclusionYear == currentExecutionYear || conclusionYear == currentExecutionYear.getPreviousExecutionYear()
-				|| conclusionYear == currentExecutionYear.getPreviousExecutionYear().getPreviousExecutionYear();
-	}
+    private boolean matchesRecentExecutionYear(ExecutionYear currentExecutionYear, ExecutionYear conclusionYear) {
+        return conclusionYear == currentExecutionYear || conclusionYear == currentExecutionYear.getPreviousExecutionYear()
+                || conclusionYear == currentExecutionYear.getPreviousExecutionYear().getPreviousExecutionYear();
+    }
 }

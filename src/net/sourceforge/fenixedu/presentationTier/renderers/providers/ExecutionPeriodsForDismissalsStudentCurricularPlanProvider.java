@@ -17,19 +17,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsForDismissalsStudentCurricularPlanProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-		final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
-		result.addAll(ExecutionSemester.readExecutionPeriodsInTimePeriod(studentCurricularPlan.getStartDate(), Calendar
-				.getInstance().getTime()));
-		Collections.sort(result, new ReverseComparator());
-		return result;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+        final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
+        result.addAll(ExecutionSemester.readExecutionPeriodsInTimePeriod(studentCurricularPlan.getStartDate(), Calendar
+                .getInstance().getTime()));
+        Collections.sort(result, new ReverseComparator());
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

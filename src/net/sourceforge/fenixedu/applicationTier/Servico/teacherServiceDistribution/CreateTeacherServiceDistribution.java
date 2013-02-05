@@ -9,15 +9,15 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class CreateTeacherServiceDistribution extends FenixService {
-	public TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {
-		TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
-		TeacherServiceDistribution fatherTeacherServiceDistribution =
-				rootDomainObject.readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
+    public TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {
+        TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+        TeacherServiceDistribution fatherTeacherServiceDistribution =
+                rootDomainObject.readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
 
-		TeacherServiceDistribution tsd =
-				new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution,
-						new ArrayList<TSDTeacher>(), new ArrayList<TSDCourse>(), null, null, null, null);
+        TeacherServiceDistribution tsd =
+                new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution,
+                        new ArrayList<TSDTeacher>(), new ArrayList<TSDCourse>(), null, null, null, null);
 
-		return tsd;
-	}
+        return tsd;
+    }
 }

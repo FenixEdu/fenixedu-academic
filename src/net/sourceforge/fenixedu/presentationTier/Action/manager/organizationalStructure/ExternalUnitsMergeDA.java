@@ -24,121 +24,116 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		module = "manager",
-		path = "/unitsMerge",
-		attribute = "unitsMergeForm",
-		formBean = "unitsMergeForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "manager", path = "/unitsMerge", attribute = "unitsMergeForm", formBean = "unitsMergeForm", scope = "request",
+        parameter = "method")
 @Forwards(value = {
-		@Forward(name = "chooseUnit", path = "/manager/organizationalStructureManagament/mergeUnits/chooseUnitToStart.jsp"),
-		@Forward(name = "seeChoosedUnit", path = "/manager/organizationalStructureManagament/mergeUnits/choosedUnit.jsp"),
-		@Forward(name = "goToConfirmation", path = "/manager/organizationalStructureManagament/mergeUnits/confirmation.jsp") })
+        @Forward(name = "chooseUnit", path = "/manager/organizationalStructureManagament/mergeUnits/chooseUnitToStart.jsp"),
+        @Forward(name = "seeChoosedUnit", path = "/manager/organizationalStructureManagament/mergeUnits/choosedUnit.jsp"),
+        @Forward(name = "goToConfirmation", path = "/manager/organizationalStructureManagament/mergeUnits/confirmation.jsp") })
 public class ExternalUnitsMergeDA extends FenixDispatchAction {
 
-	public ActionForward chooseUnitToStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward chooseUnitToStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-		request.setAttribute("externalInstitutionUnit", externalInstitutionUnit);
-		return mapping.findForward("chooseUnit");
-	}
+        Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+        request.setAttribute("externalInstitutionUnit", externalInstitutionUnit);
+        return mapping.findForward("chooseUnit");
+    }
 
-	public ActionForward seeChoosedUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward seeChoosedUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		Unit externalUnit = getDestinationUnitFromParameter(request);
-		if (externalUnit != null) {
-			Unit earthUnit = UnitUtils.readEarthUnit();
-			Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-			request.setAttribute("externalInstitutionUnit", externalInstitutionUnit);
-			request.setAttribute("externalUnit", externalUnit);
-			request.setAttribute("earthUnit", earthUnit);
-		}
+        Unit externalUnit = getDestinationUnitFromParameter(request);
+        if (externalUnit != null) {
+            Unit earthUnit = UnitUtils.readEarthUnit();
+            Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+            request.setAttribute("externalInstitutionUnit", externalInstitutionUnit);
+            request.setAttribute("externalUnit", externalUnit);
+            request.setAttribute("earthUnit", earthUnit);
+        }
 
-		return mapping.findForward("seeChoosedUnit");
-	}
+        return mapping.findForward("seeChoosedUnit");
+    }
 
-	public ActionForward mergeWithOfficial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward mergeWithOfficial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		readAndSetUnitsToMerge(request);
-		request.setAttribute("official", true);
-		return mapping.findForward("goToConfirmation");
-	}
+        readAndSetUnitsToMerge(request);
+        request.setAttribute("official", true);
+        return mapping.findForward("goToConfirmation");
+    }
 
-	public ActionForward mergeWithNoOfficialUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward mergeWithNoOfficialUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		readAndSetUnitsToMerge(request);
-		request.setAttribute("official", false);
-		return mapping.findForward("goToConfirmation");
-	}
+        readAndSetUnitsToMerge(request);
+        request.setAttribute("official", false);
+        return mapping.findForward("goToConfirmation");
+    }
 
-	public ActionForward mergeUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward mergeUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		Unit fromUnit = null, destinationUnit = null;
-		IViewState viewState = RenderUtils.getViewState("noOfficialMerge");
+        Unit fromUnit = null, destinationUnit = null;
+        IViewState viewState = RenderUtils.getViewState("noOfficialMerge");
 
-		if (viewState != null) {
-			fromUnit = getFromUnitFromParameter(request);
-			destinationUnit = getDestinationUnitFromParameter(request);
-		} else {
-			DynaActionForm dynaActionForm = (DynaActionForm) form;
-			Integer fromUnitID = (Integer) dynaActionForm.get("fromUnitID");
-			Integer destinationUnitID = (Integer) dynaActionForm.get("destinationUnitID");
-			fromUnit = (Unit) rootDomainObject.readPartyByOID(fromUnitID);
-			destinationUnit = (Unit) rootDomainObject.readPartyByOID(destinationUnitID);
-		}
+        if (viewState != null) {
+            fromUnit = getFromUnitFromParameter(request);
+            destinationUnit = getDestinationUnitFromParameter(request);
+        } else {
+            DynaActionForm dynaActionForm = (DynaActionForm) form;
+            Integer fromUnitID = (Integer) dynaActionForm.get("fromUnitID");
+            Integer destinationUnitID = (Integer) dynaActionForm.get("destinationUnitID");
+            fromUnit = (Unit) rootDomainObject.readPartyByOID(fromUnitID);
+            destinationUnit = (Unit) rootDomainObject.readPartyByOID(destinationUnitID);
+        }
 
-		try {
-			MergeExternalUnits.run(fromUnit, destinationUnit, Boolean.TRUE);
-		} catch (DomainException e) {
-			saveMessages(request, e);
-			return returnToConfirmationPage(mapping, request, fromUnit, destinationUnit);
-		}
+        try {
+            MergeExternalUnits.run(fromUnit, destinationUnit, Boolean.TRUE);
+        } catch (DomainException e) {
+            saveMessages(request, e);
+            return returnToConfirmationPage(mapping, request, fromUnit, destinationUnit);
+        }
 
-		return chooseUnitToStart(mapping, form, request, response);
-	}
+        return chooseUnitToStart(mapping, form, request, response);
+    }
 
-	// Private methods
+    // Private methods
 
-	private ActionForward returnToConfirmationPage(ActionMapping mapping, HttpServletRequest request, Unit fromUnit,
-			Unit destinationUnit) {
-		request.setAttribute("fromUnit", fromUnit);
-		request.setAttribute("destinationUnit", destinationUnit);
-		if (destinationUnit.isNoOfficialExternal()) {
-			request.setAttribute("official", false);
-		} else {
-			request.setAttribute("official", false);
-		}
-		return mapping.findForward("goToConfirmation");
-	}
+    private ActionForward returnToConfirmationPage(ActionMapping mapping, HttpServletRequest request, Unit fromUnit,
+            Unit destinationUnit) {
+        request.setAttribute("fromUnit", fromUnit);
+        request.setAttribute("destinationUnit", destinationUnit);
+        if (destinationUnit.isNoOfficialExternal()) {
+            request.setAttribute("official", false);
+        } else {
+            request.setAttribute("official", false);
+        }
+        return mapping.findForward("goToConfirmation");
+    }
 
-	private void readAndSetUnitsToMerge(HttpServletRequest request) {
-		Unit fromUnit = getFromUnitFromParameter(request);
-		Unit destinationUnit = getDestinationUnitFromParameter(request);
-		request.setAttribute("fromUnit", fromUnit);
-		request.setAttribute("destinationUnit", destinationUnit);
-	}
+    private void readAndSetUnitsToMerge(HttpServletRequest request) {
+        Unit fromUnit = getFromUnitFromParameter(request);
+        Unit destinationUnit = getDestinationUnitFromParameter(request);
+        request.setAttribute("fromUnit", fromUnit);
+        request.setAttribute("destinationUnit", destinationUnit);
+    }
 
-	private Unit getFromUnitFromParameter(final HttpServletRequest request) {
-		final String unitIDString = request.getParameter("fromUnitID");
-		final Integer uniID = Integer.valueOf(unitIDString);
-		return (Unit) rootDomainObject.readPartyByOID(uniID);
-	}
+    private Unit getFromUnitFromParameter(final HttpServletRequest request) {
+        final String unitIDString = request.getParameter("fromUnitID");
+        final Integer uniID = Integer.valueOf(unitIDString);
+        return (Unit) rootDomainObject.readPartyByOID(uniID);
+    }
 
-	private Unit getDestinationUnitFromParameter(final HttpServletRequest request) {
-		final String unitIDString = request.getParameter("unitID");
-		final Integer uniID = Integer.valueOf(unitIDString);
-		return (Unit) rootDomainObject.readPartyByOID(uniID);
-	}
+    private Unit getDestinationUnitFromParameter(final HttpServletRequest request) {
+        final String unitIDString = request.getParameter("unitID");
+        final Integer uniID = Integer.valueOf(unitIDString);
+        return (Unit) rootDomainObject.readPartyByOID(uniID);
+    }
 
-	private void saveMessages(HttpServletRequest request, DomainException e) {
-		ActionMessages actionMessages = new ActionMessages();
-		actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
-		saveMessages(request, actionMessages);
-	}
+    private void saveMessages(HttpServletRequest request, DomainException e) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
+        saveMessages(request, actionMessages);
+    }
 }

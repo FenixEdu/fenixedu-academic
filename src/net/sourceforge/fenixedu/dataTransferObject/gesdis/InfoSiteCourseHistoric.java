@@ -15,41 +15,41 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
  * 
  */
 public class InfoSiteCourseHistoric extends DataTranferObject {
-	List infoCourseHistorics;
+    List infoCourseHistorics;
 
-	InfoCurricularCourse infoCurricularCourse;
+    InfoCurricularCourse infoCurricularCourse;
 
-	public InfoSiteCourseHistoric() {
-	}
+    public InfoSiteCourseHistoric() {
+    }
 
-	/**
-	 * @return Returns the infoCourseHistorics.
-	 */
-	public List getInfoCourseHistorics() {
-		return infoCourseHistorics;
-	}
+    /**
+     * @return Returns the infoCourseHistorics.
+     */
+    public List getInfoCourseHistorics() {
+        return infoCourseHistorics;
+    }
 
-	/**
-	 * @param infoCourseHistorics
-	 *            The infoCourseHistorics to set.
-	 */
-	public void setInfoCourseHistorics(List infoCourseHistorics) {
-		this.infoCourseHistorics = infoCourseHistorics;
-	}
+    /**
+     * @param infoCourseHistorics
+     *            The infoCourseHistorics to set.
+     */
+    public void setInfoCourseHistorics(List infoCourseHistorics) {
+        this.infoCourseHistorics = infoCourseHistorics;
+    }
 
-	/**
-	 * @return Returns the infoCurricularCourse.
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    /**
+     * @return Returns the infoCurricularCourse.
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	/**
-	 * @param infoCurricularCourse
-	 *            The infoCurricularCourse to set.
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @param infoCurricularCourse
+     *            The infoCurricularCourse to set.
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
 }

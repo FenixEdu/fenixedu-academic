@@ -34,111 +34,105 @@ import dml.Role;
 /**
  * @author Luis Crus & Sara Ribeiro
  */
-@Mapping(
-		module = "manager",
-		path = "/manageCache",
-		input = "/manageCache.do?method=prepare",
-		attribute = "cacheForm",
-		formBean = "cacheForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "manager", path = "/manageCache", input = "/manageCache.do?method=prepare", attribute = "cacheForm",
+        formBean = "cacheForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "Manage", path = "/manager/manageCache_bd.jsp"),
-		@Forward(name = "CacheCleared", path = "/manageCache.do?method=prepare") })
+        @Forward(name = "CacheCleared", path = "/manageCache.do?method=prepare") })
 public class ManageCacheDA extends FenixDispatchAction {
 
-	/**
-	 * Prepare information to show existing execution periods and working areas.
-	 */
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    /**
+     * Prepare information to show existing execution periods and working areas.
+     */
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		Profiler.getInstance();
-		Profiler.report();
-		Profiler.resetInstance();
+        Profiler.getInstance();
+        Profiler.report();
+        Profiler.resetInstance();
 
-		// IUserView userView = UserView.getUser();
+        // IUserView userView = UserView.getUser();
 
-		Integer numberCachedItems = ReadNumberCachedItems.run();
+        Integer numberCachedItems = ReadNumberCachedItems.run();
 
-		request.setAttribute(PresentationConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
+        request.setAttribute(PresentationConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
 
-		return mapping.findForward("Manage");
-	}
+        return mapping.findForward("Manage");
+    }
 
-	/**
-	 * Prepare information to show existing execution periods and working areas.
-	 */
-	public ActionForward clearCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("CacheCleared");
-	}
+    /**
+     * Prepare information to show existing execution periods and working areas.
+     */
+    public ActionForward clearCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("CacheCleared");
+    }
 
-	public ActionForward clearResponseCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("CacheCleared");
-	}
+    public ActionForward clearResponseCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("CacheCleared");
+    }
 
-	public ActionForward setResponseRefreshTimeout(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("CacheCleared");
-	}
+    public ActionForward setResponseRefreshTimeout(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return mapping.findForward("CacheCleared");
+    }
 
-	public ActionForward loadAllObjectsToCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward loadAllObjectsToCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final DomainModel domainModel = FenixFramework.getDomainModel();
+        final DomainModel domainModel = FenixFramework.getDomainModel();
 
-		final long startTime = System.currentTimeMillis();
-		long numberOfReadDomainObjects = 0;
-		try {
-			for (final Iterator<DomainRelation> domainRelationIterator = domainModel.getRelations(); domainRelationIterator
-					.hasNext();) {
+        final long startTime = System.currentTimeMillis();
+        long numberOfReadDomainObjects = 0;
+        try {
+            for (final Iterator<DomainRelation> domainRelationIterator = domainModel.getRelations(); domainRelationIterator
+                    .hasNext();) {
 
-				final DomainRelation domainRelation = domainRelationIterator.next();
-				final Role firstRole = domainRelation.getFirstRole();
-				final Role secondRole = domainRelation.getSecondRole();
+                final DomainRelation domainRelation = domainRelationIterator.next();
+                final Role firstRole = domainRelation.getFirstRole();
+                final Role secondRole = domainRelation.getSecondRole();
 
-				if (firstRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
-					numberOfReadDomainObjects += loadDomainObjects(secondRole);
-				} else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
-					numberOfReadDomainObjects += loadDomainObjects(firstRole);
-				}
-				final Integer numberCachedItems = ReadNumberCachedItems.run();
-				final Runtime runtime = Runtime.getRuntime();
-				System.out.println("   total read: " + numberOfReadDomainObjects + " in cache: " + numberCachedItems
-						+ " free memory: " + runtime.freeMemory() + " total memory: " + runtime.totalMemory() + " max memory: "
-						+ runtime.maxMemory());
-			}
-		} finally {
-			final long endTime = System.currentTimeMillis();
-			System.out
-					.println("Read all " + numberOfReadDomainObjects + " domain objects took: " + (endTime - startTime) + "ms.");
-		}
+                if (firstRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
+                    numberOfReadDomainObjects += loadDomainObjects(secondRole);
+                } else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
+                    numberOfReadDomainObjects += loadDomainObjects(firstRole);
+                }
+                final Integer numberCachedItems = ReadNumberCachedItems.run();
+                final Runtime runtime = Runtime.getRuntime();
+                System.out.println("   total read: " + numberOfReadDomainObjects + " in cache: " + numberCachedItems
+                        + " free memory: " + runtime.freeMemory() + " total memory: " + runtime.totalMemory() + " max memory: "
+                        + runtime.maxMemory());
+            }
+        } finally {
+            final long endTime = System.currentTimeMillis();
+            System.out
+                    .println("Read all " + numberOfReadDomainObjects + " domain objects took: " + (endTime - startTime) + "ms.");
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
-	private int loadDomainObjects(final Role role) throws Exception {
-		final String roleName = role.getName();
-		final String methodName = "get" + Character.toUpperCase(roleName.charAt(0)) + roleName.substring(1);
-		int numberOfReadDomainObjects = 0;
-		try {
-			final Method method = RootDomainObject.class.getMethod(methodName, (Class[]) null);
-			final Collection<DomainObject> domainObjects =
-					(Collection<DomainObject>) method.invoke(rootDomainObject, (Object[]) null);
-			numberOfReadDomainObjects = domainObjects.size();
-			System.out.println("Read " + numberOfReadDomainObjects + " objects from method: " + methodName);
-		} catch (Throwable t) {
-			System.out.println("Unable to load objects with method: " + methodName);
-		}
-		return numberOfReadDomainObjects;
-	}
+    private int loadDomainObjects(final Role role) throws Exception {
+        final String roleName = role.getName();
+        final String methodName = "get" + Character.toUpperCase(roleName.charAt(0)) + roleName.substring(1);
+        int numberOfReadDomainObjects = 0;
+        try {
+            final Method method = RootDomainObject.class.getMethod(methodName, (Class[]) null);
+            final Collection<DomainObject> domainObjects =
+                    (Collection<DomainObject>) method.invoke(rootDomainObject, (Object[]) null);
+            numberOfReadDomainObjects = domainObjects.size();
+            System.out.println("Read " + numberOfReadDomainObjects + " objects from method: " + methodName);
+        } catch (Throwable t) {
+            System.out.println("Unable to load objects with method: " + methodName);
+        }
+        return numberOfReadDomainObjects;
+    }
 
-	public ActionForward dumpThreadTrace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Custodian.registerPID();
-		Custodian.dumpThreadTrace();
-		return prepare(mapping, form, request, response);
-	}
+    public ActionForward dumpThreadTrace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Custodian.registerPID();
+        Custodian.dumpThreadTrace();
+        return prepare(mapping, form, request, response);
+    }
 
 }

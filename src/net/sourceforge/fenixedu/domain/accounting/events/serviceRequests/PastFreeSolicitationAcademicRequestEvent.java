@@ -10,32 +10,32 @@ import net.sourceforge.fenixedu.util.Money;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastFreeSolicitationAcademicRequestEvent extends PastFreeSolicitationAcademicRequestEvent_Base implements
-		IPastRequestEvent {
+        IPastRequestEvent {
 
-	protected PastFreeSolicitationAcademicRequestEvent() {
-		super();
-	}
+    protected PastFreeSolicitationAcademicRequestEvent() {
+        super();
+    }
 
-	public PastFreeSolicitationAcademicRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-			final FreeSolicitationAcademicRequest request) {
-		this();
-		super.init(administrativeOffice, EventType.PAST_FREE_SOLICITATION_ACADEMIC_REQUEST, person, request);
-	}
+    public PastFreeSolicitationAcademicRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+            final FreeSolicitationAcademicRequest request) {
+        this();
+        super.init(administrativeOffice, EventType.PAST_FREE_SOLICITATION_ACADEMIC_REQUEST, person, request);
+    }
 
-	@Override
-	public void setPastAmount(Money amount) {
-		throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
-	}
+    @Override
+    public void setPastAmount(Money amount) {
+        throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
+    }
 
-	@Override
-	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
 
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		if (getAcademicServiceRequest().hasExecutionYear()) {
-			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-		}
-		return labelFormatter;
-	}
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        if (getAcademicServiceRequest().hasExecutionYear()) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
+        return labelFormatter;
+    }
 
 }

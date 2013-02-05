@@ -21,24 +21,24 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadStudentCurricularInformation extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static List run(final Integer studentNumber, final DegreeType degreeType) {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static List run(final Integer studentNumber, final DegreeType degreeType) {
 
-		final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
+        final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
-		for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
-			for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-				infoStudentCurricularPlans.add(constructInfoStudentCurricularPlan(studentCurricularPlan));
-			}
-		}
+        for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
+            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+                infoStudentCurricularPlans.add(constructInfoStudentCurricularPlan(studentCurricularPlan));
+            }
+        }
 
-		return infoStudentCurricularPlans;
-	}
+        return infoStudentCurricularPlans;
+    }
 
-	protected static InfoStudentCurricularPlan constructInfoStudentCurricularPlan(
-			final StudentCurricularPlan studentCurricularPlan) {
-		return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
-	}
+    protected static InfoStudentCurricularPlan constructInfoStudentCurricularPlan(
+            final StudentCurricularPlan studentCurricularPlan) {
+        return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+    }
 
 }

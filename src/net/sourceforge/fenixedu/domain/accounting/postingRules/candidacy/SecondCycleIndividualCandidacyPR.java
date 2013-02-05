@@ -17,56 +17,56 @@ import org.joda.time.DateTime;
 
 public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandidacyPR_Base {
 
-	protected SecondCycleIndividualCandidacyPR() {
-		super();
-	}
+    protected SecondCycleIndividualCandidacyPR() {
+        super();
+    }
 
-	public SecondCycleIndividualCandidacyPR(final DateTime startDate, final DateTime endDate,
-			final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
-		this();
-		init(EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, startDate, endDate,
-				serviceAgreementTemplate, fixedAmount);
-	}
+    public SecondCycleIndividualCandidacyPR(final DateTime startDate, final DateTime endDate,
+            final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
+        this();
+        init(EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, startDate, endDate,
+                serviceAgreementTemplate, fixedAmount);
+    }
 
-	@Override
-	public SecondCycleIndividualCandidacyPR edit(final Money fixedAmount) {
-		deactivate();
-		return new SecondCycleIndividualCandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
-	}
+    @Override
+    public SecondCycleIndividualCandidacyPR edit(final Money fixedAmount) {
+        deactivate();
+        return new SecondCycleIndividualCandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
+    }
 
-	@Override
-	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-		SecondCycleIndividualCandidacyEvent secondCycleEvent = (SecondCycleIndividualCandidacyEvent) event;
-		return super.doCalculationForAmountToPay(event, when, applyDiscount).multiply(
-				((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegrees().size());
-	}
+    @Override
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        SecondCycleIndividualCandidacyEvent secondCycleEvent = (SecondCycleIndividualCandidacyEvent) event;
+        return super.doCalculationForAmountToPay(event, when, applyDiscount).multiply(
+                ((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegrees().size());
+    }
 
-	@Override
-	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-		final SecondCycleIndividualCandidacyEvent candidacyEvent = (SecondCycleIndividualCandidacyEvent) event;
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+        final SecondCycleIndividualCandidacyEvent candidacyEvent = (SecondCycleIndividualCandidacyEvent) event;
 
-		if (candidacyEvent.hasSecondCycleIndividualCandidacyExemption()) {
-			return Money.ZERO;
-		}
+        if (candidacyEvent.hasSecondCycleIndividualCandidacyExemption()) {
+            return Money.ZERO;
+        }
 
-		return amountToPay;
-	}
+        return amountToPay;
+    }
 
-	@Override
-	public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
-		return PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS;
-	}
+    @Override
+    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
+        return PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS;
+    }
 
-	@Override
-	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-		final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-		final Money payedAmount = event.getPayedAmount(when);
-		return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, payedAmount, totalAmountToPay,
-				event.getDescriptionForEntryType(getEntryType()), totalAmountToPay.subtract(payedAmount)));
-	}
+    @Override
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+        final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
+        final Money payedAmount = event.getPayedAmount(when);
+        return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, payedAmount, totalAmountToPay,
+                event.getDescriptionForEntryType(getEntryType()), totalAmountToPay.subtract(payedAmount)));
+    }
 
-	@Override
-	protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
-	}
+    @Override
+    protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
+    }
 
 }

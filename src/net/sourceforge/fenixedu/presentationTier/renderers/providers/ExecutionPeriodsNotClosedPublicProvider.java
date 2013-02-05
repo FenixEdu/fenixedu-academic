@@ -15,23 +15,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsNotClosedPublicProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 
-		for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-			if (executionSemester.isAfterOrEquals(ExecutionSemester.readMarkSheetManagmentExecutionPeriod())) {
-				result.add(executionSemester);
-			}
-		}
+        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionSemester.isAfterOrEquals(ExecutionSemester.readMarkSheetManagmentExecutionPeriod())) {
+                result.add(executionSemester);
+            }
+        }
 
-		Collections.sort(result, new ReverseComparator());
-		return result;
-	}
+        Collections.sort(result, new ReverseComparator());
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

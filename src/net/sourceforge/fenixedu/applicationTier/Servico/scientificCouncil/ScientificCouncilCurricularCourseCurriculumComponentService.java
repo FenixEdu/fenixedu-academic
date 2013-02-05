@@ -21,18 +21,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ScientificCouncilCurricularCourseCurriculumComponentService extends FenixService {
 
-	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-	@Service
-	public static SiteView run(ISiteComponent bodyComponent, Integer curricularCourseId, Integer curriculumId)
-			throws FenixServiceException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static SiteView run(ISiteComponent bodyComponent, Integer curricularCourseId, Integer curriculumId)
+            throws FenixServiceException {
 
-		ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder =
-				ScientificCouncilCurricularCourseCurriculumComponentBuilder.getInstance();
-		bodyComponent = componentBuilder.getComponent(bodyComponent, curricularCourseId, curriculumId);
-		SiteView siteView = new SiteView();
-		siteView.setComponent(bodyComponent);
+        ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder =
+                ScientificCouncilCurricularCourseCurriculumComponentBuilder.getInstance();
+        bodyComponent = componentBuilder.getComponent(bodyComponent, curricularCourseId, curriculumId);
+        SiteView siteView = new SiteView();
+        siteView.setComponent(bodyComponent);
 
-		return siteView;
-	}
+        return siteView;
+    }
 
 }

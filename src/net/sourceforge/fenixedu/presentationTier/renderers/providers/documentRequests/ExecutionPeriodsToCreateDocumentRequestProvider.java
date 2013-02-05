@@ -9,20 +9,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsToCreateDocumentRequestProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
-		if (documentRequestCreateBean.getExecutionYear() != null) {
-			return documentRequestCreateBean.getExecutionYear().getExecutionPeriods();
-		}
+        if (documentRequestCreateBean.getExecutionYear() != null) {
+            return documentRequestCreateBean.getExecutionYear().getExecutionPeriods();
+        }
 
-		return Collections.EMPTY_LIST;
-	}
+        return Collections.EMPTY_LIST;
+    }
 
 }

@@ -8,62 +8,62 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjecti
 
 public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
 
-	public static final Comparator<UnitAnnouncementBoard> BY_UNIT_DEPTH_AND_NAME = new Comparator<UnitAnnouncementBoard>() {
-		@Override
-		public int compare(UnitAnnouncementBoard o1, UnitAnnouncementBoard o2) {
-			Unit unit1 = o1.getParty();
-			Unit unit2 = o2.getParty();
+    public static final Comparator<UnitAnnouncementBoard> BY_UNIT_DEPTH_AND_NAME = new Comparator<UnitAnnouncementBoard>() {
+        @Override
+        public int compare(UnitAnnouncementBoard o1, UnitAnnouncementBoard o2) {
+            Unit unit1 = o1.getParty();
+            Unit unit2 = o2.getParty();
 
-			int result = unit1.getUnitDepth() - unit2.getUnitDepth();
+            int result = unit1.getUnitDepth() - unit2.getUnitDepth();
 
-			if (result == 0) {
-				result = o1.getName().compareTo(o2.getName());
-				return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
-			} else {
-				return (result <= 0) ? -1 : 1;
-			}
-		}
-	};
+            if (result == 0) {
+                result = o1.getName().compareTo(o2.getName());
+                return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+            } else {
+                return (result <= 0) ? -1 : 1;
+            }
+        }
+    };
 
-	public UnitAnnouncementBoard(Unit unit) {
-		super();
+    public UnitAnnouncementBoard(Unit unit) {
+        super();
 
-		setUnit(unit);
-	}
+        setUnit(unit);
+    }
 
-	@Override
-	public void setParty(Party party) {
-		super.setParty(party);
-	}
+    @Override
+    public void setParty(Party party) {
+        super.setParty(party);
+    }
 
-	@Override
-	public Unit getParty() {
-		return (Unit) super.getParty();
-	}
+    @Override
+    public Unit getParty() {
+        return (Unit) super.getParty();
+    }
 
-	public void setUnit(Unit unit) {
-		this.setParty(unit);
-	}
+    public void setUnit(Unit unit) {
+        this.setParty(unit);
+    }
 
-	public Unit getUnit() {
-		return getParty();
-	}
+    public Unit getUnit() {
+        return getParty();
+    }
 
-	@Override
-	public Boolean getInitialAnnouncementsApprovedState() {
-		return isCurrentUserApprover();
-	}
+    @Override
+    public Boolean getInitialAnnouncementsApprovedState() {
+        return isCurrentUserApprover();
+    }
 
-	@Override
-	public String getSiteParamForAnnouncementBoard(Announcement announcement) {
-		String base = super.getSiteParamForAnnouncementBoard(announcement);
+    @Override
+    public String getSiteParamForAnnouncementBoard(Announcement announcement) {
+        String base = super.getSiteParamForAnnouncementBoard(announcement);
 
-		StringBuffer actionPath = new StringBuffer();
-		actionPath.append("&");
-		actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-		actionPath.append("=");
-		actionPath.append(this.getUnit().getSite().getReversePath());
+        StringBuffer actionPath = new StringBuffer();
+        actionPath.append("&");
+        actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+        actionPath.append("=");
+        actionPath.append(this.getUnit().getSite().getReversePath());
 
-		return base + actionPath.toString();
-	}
+        return base + actionPath.toString();
+    }
 }

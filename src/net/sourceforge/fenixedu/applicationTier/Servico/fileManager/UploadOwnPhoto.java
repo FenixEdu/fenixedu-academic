@@ -19,27 +19,27 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class UploadOwnPhoto extends FenixService {
 
-	@Checked("RolePredicates.PERSON_PREDICATE")
-	@Service
-	static public void run(byte[] contents, byte[] compressed, ContentType contentType) {
-		Person person = AccessControl.getPerson();
-		person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed), PhotoType.USER));
-	}
+    @Checked("RolePredicates.PERSON_PREDICATE")
+    @Service
+    static public void run(byte[] contents, byte[] compressed, ContentType contentType) {
+        Person person = AccessControl.getPerson();
+        person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed), PhotoType.USER));
+    }
 
-	/**
-	 * 
-	 * Service used in public candidacies, so person may not have Person role
-	 * yet
-	 * 
-	 * @param photo
-	 * @param person
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	@Service
-	static public void upload(final PhotographUploadBean photo, final Person person) throws FileNotFoundException, IOException {
-		person.setPersonalPhoto(new Photograph(ContentType.getContentType(photo.getContentType()), new ByteArray(photo
-				.getFileInputStream()), new ByteArray(photo.getCompressedInputStream()), PhotoType.USER));
+    /**
+     * 
+     * Service used in public candidacies, so person may not have Person role
+     * yet
+     * 
+     * @param photo
+     * @param person
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    @Service
+    static public void upload(final PhotographUploadBean photo, final Person person) throws FileNotFoundException, IOException {
+        person.setPersonalPhoto(new Photograph(ContentType.getContentType(photo.getContentType()), new ByteArray(photo
+                .getFileInputStream()), new ByteArray(photo.getCompressedInputStream()), PhotoType.USER));
 
-	}
+    }
 }

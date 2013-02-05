@@ -10,53 +10,53 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DegreeStudentsGroup extends DegreeGroup {
 
-	private static final long serialVersionUID = -2591751862204681731L;
+    private static final long serialVersionUID = -2591751862204681731L;
 
-	public DegreeStudentsGroup(Degree object) {
-		super(object);
-	}
+    public DegreeStudentsGroup(Degree object) {
+        super(object);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = super.buildSet();
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
 
-		for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
-			for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
-				if (studentCurricularPlan.isActive()) {
-					elements.add(studentCurricularPlan.getRegistration().getPerson());
-				}
-			}
-		}
+        for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
+            for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+                if (studentCurricularPlan.isActive()) {
+                    elements.add(studentCurricularPlan.getRegistration().getPerson());
+                }
+            }
+        }
 
-		return super.freezeSet(elements);
-	}
+        return super.freezeSet(elements);
+    }
 
-	@Override
-	public boolean isMember(final Person person) {
-		if (person != null && person.hasStudent()) {
-			for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-				if (registration.isActive()) {
-					final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-					if (studentCurricularPlan != null && studentCurricularPlan.getDegree() == getDegree()) {
-						return true;
-					}
-				}
-			}
-		}
+    @Override
+    public boolean isMember(final Person person) {
+        if (person != null && person.hasStudent()) {
+            for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+                if (registration.isActive()) {
+                    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+                    if (studentCurricularPlan != null && studentCurricularPlan.getDegree() == getDegree()) {
+                        return true;
+                    }
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public String[] getPresentationNameKeyArgs() {
-		return new String[] { getObject().getPresentationName() };
-	}
+    @Override
+    public String[] getPresentationNameKeyArgs() {
+        return new String[] { getObject().getPresentationName() };
+    }
 
-	public static class Builder extends DegreeGroup.DegreeGroupBuilder {
-		@Override
-		public Group build(Object[] arguments) {
-			return new DegreeStudentsGroup(getDegree(arguments));
-		}
-	}
+    public static class Builder extends DegreeGroup.DegreeGroupBuilder {
+        @Override
+        public Group build(Object[] arguments) {
+            return new DegreeStudentsGroup(getDegree(arguments));
+        }
+    }
 
 }

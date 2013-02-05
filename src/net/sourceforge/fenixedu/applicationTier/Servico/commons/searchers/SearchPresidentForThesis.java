@@ -17,35 +17,35 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 public class SearchPresidentForThesis extends FenixService implements AutoCompleteSearchService {
 
-	@Override
-	public Collection<PersonName> run(final Class type, final String value, final int limit, final Map<String, String> arguments) {
-		if (type != PersonName.class) {
-			return null;
-		}
+    @Override
+    public Collection<PersonName> run(final Class type, final String value, final int limit, final Map<String, String> arguments) {
+        if (type != PersonName.class) {
+            return null;
+        }
 
-		final String thesisIdString = arguments.get("thesis");
-		if (thesisIdString == null) {
-			return null;
-		}
+        final String thesisIdString = arguments.get("thesis");
+        if (thesisIdString == null) {
+            return null;
+        }
 
-		final Integer thesisId = new Integer(thesisIdString);
-		final Thesis thesis = rootDomainObject.readThesisByOID(thesisId);
-		if (thesis == null) {
-			return null;
-		}
+        final Integer thesisId = new Integer(thesisIdString);
+        final Thesis thesis = rootDomainObject.readThesisByOID(thesisId);
+        if (thesis == null) {
+            return null;
+        }
 
-		final List<PersonName> result = new ArrayList<PersonName>();
-		final Enrolment enrolment = thesis.getEnrolment();
-		final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfDegreeModule();
-		final ExecutionYear executionYear = enrolment.getExecutionYear();
-		final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
-		if (executionDegree != null) {
-			for (ScientificCommission member : executionDegree.getScientificCommissionMembersSet()) {
-				result.add(member.getPerson().getPersonName());
-			}
-		}
+        final List<PersonName> result = new ArrayList<PersonName>();
+        final Enrolment enrolment = thesis.getEnrolment();
+        final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfDegreeModule();
+        final ExecutionYear executionYear = enrolment.getExecutionYear();
+        final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+        if (executionDegree != null) {
+            for (ScientificCommission member : executionDegree.getScientificCommissionMembersSet()) {
+                result.add(member.getPerson().getPersonName());
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

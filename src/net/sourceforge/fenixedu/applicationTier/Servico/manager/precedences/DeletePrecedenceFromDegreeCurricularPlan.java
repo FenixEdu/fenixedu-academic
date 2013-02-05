@@ -8,13 +8,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePrecedenceFromDegreeCurricularPlan extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static void run(Integer precedenceID) throws FenixServiceException {
-		Precedence precedence = rootDomainObject.readPrecedenceByOID(precedenceID);
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static void run(Integer precedenceID) throws FenixServiceException {
+        Precedence precedence = rootDomainObject.readPrecedenceByOID(precedenceID);
 
-		if (precedence != null) {
-			precedence.delete();
-		}
-	}
+        if (precedence != null) {
+            precedence.delete();
+        }
+    }
 }

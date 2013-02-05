@@ -7,15 +7,15 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 
 public class JuryDocumentsDownload extends ExternalAccessPhdActivity<PhdThesisProcess> {
 
-	@Override
-	public void checkPreConditions(PhdThesisProcess process, IUserView userView) {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void checkPreConditions(PhdThesisProcess process, IUserView userView) {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView, PhdExternalOperationBean bean) {
+    @Override
+    protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView, PhdExternalOperationBean bean) {
 
-		return process;
-	}
+        return process;
+    }
 
 }

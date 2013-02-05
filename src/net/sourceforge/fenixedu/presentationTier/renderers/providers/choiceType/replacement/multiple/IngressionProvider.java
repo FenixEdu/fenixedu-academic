@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class IngressionProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(Ingression.values());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(Ingression.values());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumArrayConverter(Ingression.class);
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumArrayConverter(Ingression.class);
+    }
 
 }

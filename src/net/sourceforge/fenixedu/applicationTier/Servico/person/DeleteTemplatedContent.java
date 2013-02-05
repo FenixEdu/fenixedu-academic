@@ -11,26 +11,26 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteTemplatedContent extends FenixService {
 
-	@Service
-	public static void run(MetaDomainObjectPortal portal, Content content) {
+    @Service
+    public static void run(MetaDomainObjectPortal portal, Content content) {
 
-		portal.removePool(content);
-		List<Node> nodesToDelete = new ArrayList<Node>();
+        portal.removePool(content);
+        List<Node> nodesToDelete = new ArrayList<Node>();
 
-		for (Node parentNode : content.getParents()) {
-			if (portal.equals(parentNode.getParent().getPortal())) {
-				nodesToDelete.add(parentNode);
-			}
-		}
+        for (Node parentNode : content.getParents()) {
+            if (portal.equals(parentNode.getParent().getPortal())) {
+                nodesToDelete.add(parentNode);
+            }
+        }
 
-		for (; !nodesToDelete.isEmpty();) {
-			final Node node = nodesToDelete.get(0);
-			final Content child = node.getChild();
-			if (child.getParentsSet().isEmpty()) {
-				child.delete();
-			}
-			node.delete();
-		}
+        for (; !nodesToDelete.isEmpty();) {
+            final Node node = nodesToDelete.get(0);
+            final Content child = node.getChild();
+            if (child.getParentsSet().isEmpty()) {
+                child.delete();
+            }
+            node.delete();
+        }
 
-	}
+    }
 }

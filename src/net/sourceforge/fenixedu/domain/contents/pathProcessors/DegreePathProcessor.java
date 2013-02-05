@@ -7,28 +7,28 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 
 public class DegreePathProcessor extends AbstractPathProcessor {
 
-	private String getDegreeName(String path) {
-		final int indexOfSlash = path.indexOf('/');
-		return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
-	}
+    private String getDegreeName(String path) {
+        final int indexOfSlash = path.indexOf('/');
+        return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
+    }
 
-	@Override
-	public Content processPath(String path) {
-		final String unitAcronym = getDegreeName(path);
-		final Degree degree = Degree.readBySigla(unitAcronym);
-		if (degree != null) {
-			return degree.getSite();
-		}
+    @Override
+    public Content processPath(String path) {
+        final String unitAcronym = getDegreeName(path);
+        final Degree degree = Degree.readBySigla(unitAcronym);
+        if (degree != null) {
+            return degree.getSite();
+        }
 
-		for (final Degree otherDegree : Degree.readNotEmptyDegrees()) {
-			final DegreeUnit otherDegreeUnit = otherDegree.getUnit();
-			if (otherDegreeUnit != null && otherDegreeUnit.getAcronym().equalsIgnoreCase(unitAcronym)) {
-				final Site site = otherDegreeUnit.getSite();
-				return site == null || !site.isAvailable() ? null : site;
-			}
-		}
+        for (final Degree otherDegree : Degree.readNotEmptyDegrees()) {
+            final DegreeUnit otherDegreeUnit = otherDegree.getUnit();
+            if (otherDegreeUnit != null && otherDegreeUnit.getAcronym().equalsIgnoreCase(unitAcronym)) {
+                final Site site = otherDegreeUnit.getSite();
+                return site == null || !site.isAvailable() ? null : site;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

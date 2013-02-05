@@ -21,52 +21,45 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(
-		module = "student",
-		path = "/viewEnroledExecutionCourses",
-		attribute = "enroledExecutionCoursesForm",
-		formBean = "enroledExecutionCoursesForm",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "student", path = "/viewEnroledExecutionCourses", attribute = "enroledExecutionCoursesForm",
+        formBean = "enroledExecutionCoursesForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(
-				name = "showEnroledExecutionCourses",
-				path = "/student/viewEnroledExecutionCourses_bd.jsp",
-				tileProperties = @Tile(title = "private.student.subscribe.groups")),
-		@Forward(name = "showActiveRegistrations", path = "/student/viewActiveRegistrations.jsp") })
+        @Forward(name = "showEnroledExecutionCourses", path = "/student/viewEnroledExecutionCourses_bd.jsp",
+                tileProperties = @Tile(title = "private.student.subscribe.groups")),
+        @Forward(name = "showActiveRegistrations", path = "/student/viewActiveRegistrations.jsp") })
 public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final Student student = getLoggedPerson(request).getStudent();
-		final List<Registration> registrations = student.getActiveRegistrations();
+        final Student student = getLoggedPerson(request).getStudent();
+        final List<Registration> registrations = student.getActiveRegistrations();
 
-		if (registrations.size() == 1) {
-			request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registrations.get(0)));
-			return mapping.findForward("showEnroledExecutionCourses");
+        if (registrations.size() == 1) {
+            request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registrations.get(0)));
+            return mapping.findForward("showEnroledExecutionCourses");
 
-		} else {
-			request.setAttribute("registrations", registrations);
-			return mapping.findForward("showActiveRegistrations");
-		}
-	}
+        } else {
+            request.setAttribute("registrations", registrations);
+            return mapping.findForward("showActiveRegistrations");
+        }
+    }
 
-	public ActionForward select(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward select(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final Registration registration =
-				getRegistrationByID(getLoggedPerson(request).getStudent(), getIntegerFromRequest(request, "registrationId"));
-		request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registration));
-		return mapping.findForward("showEnroledExecutionCourses");
-	}
+        final Registration registration =
+                getRegistrationByID(getLoggedPerson(request).getStudent(), getIntegerFromRequest(request, "registrationId"));
+        request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registration));
+        return mapping.findForward("showEnroledExecutionCourses");
+    }
 
-	private Registration getRegistrationByID(final Student student, final Integer registrationId) {
-		for (final Registration registration : student.getActiveRegistrations()) {
-			if (registration.getIdInternal().equals(registrationId)) {
-				return registration;
-			}
-		}
-		return null;
-	}
+    private Registration getRegistrationByID(final Student student, final Integer registrationId) {
+        for (final Registration registration : student.getActiveRegistrations()) {
+            if (registration.getIdInternal().equals(registrationId)) {
+                return registration;
+            }
+        }
+        return null;
+    }
 }

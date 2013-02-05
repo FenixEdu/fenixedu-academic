@@ -16,16 +16,16 @@ import net.sourceforge.fenixedu.domain.Guide;
  */
 public class ReadGuide extends FenixService {
 
-	public InfoGuide run(Integer guideId) throws FenixServiceException {
-		Guide guide;
-		InfoGuide infoGuide = null;
-		guide = rootDomainObject.readGuideByOID(guideId);
-		if (guide == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
+    public InfoGuide run(Integer guideId) throws FenixServiceException {
+        Guide guide;
+        InfoGuide infoGuide = null;
+        guide = rootDomainObject.readGuideByOID(guideId);
+        if (guide == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+        infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 
-		return infoGuide;
-	}
+        return infoGuide;
+    }
 
 }

@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class OccupationTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Arrays.asList(OccupationType.values());
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Arrays.asList(OccupationType.values());
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumArrayConverter(OccupationType.class);
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumArrayConverter(OccupationType.class);
+    }
 
 }

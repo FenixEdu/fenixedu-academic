@@ -30,50 +30,50 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "showEditIngression", path = "/academicAdminOffice/manageIngression.jsp") })
 public class ManageIngressionDA extends FenixDispatchAction {
 
-	private Registration getRegistration(final HttpServletRequest request) {
-		return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
-	}
+    private Registration getRegistration(final HttpServletRequest request) {
+        return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+    }
 
-	private RegistrationIngressionEditor getRegistrationIngressionEditor() {
-		return getRenderedObject();
-	}
+    private RegistrationIngressionEditor getRegistrationIngressionEditor() {
+        return getRenderedObject();
+    }
 
-	@Input
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("ingressionBean", new RegistrationIngressionEditor(getRegistration(request)));
-		return mapping.findForward("showEditIngression");
-	}
+    @Input
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("ingressionBean", new RegistrationIngressionEditor(getRegistration(request)));
+        return mapping.findForward("showEditIngression");
+    }
 
-	public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		RegistrationIngressionEditor ingressionInformationBean = getRegistrationIngressionEditor();
-		if (!ingressionInformationBean.hasRegistrationAgreement()
-				|| ingressionInformationBean.getRegistrationAgreement().isNormal()) {
-			ingressionInformationBean.setAgreementInformation(null);
-		}
+        RegistrationIngressionEditor ingressionInformationBean = getRegistrationIngressionEditor();
+        if (!ingressionInformationBean.hasRegistrationAgreement()
+                || ingressionInformationBean.getRegistrationAgreement().isNormal()) {
+            ingressionInformationBean.setAgreementInformation(null);
+        }
 
-		RenderUtils.invalidateViewState();
-		request.setAttribute("ingressionBean", ingressionInformationBean);
-		return mapping.findForward("showEditIngression");
-	}
+        RenderUtils.invalidateViewState();
+        request.setAttribute("ingressionBean", ingressionInformationBean);
+        return mapping.findForward("showEditIngression");
+    }
 
-	public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		try {
-			executeFactoryMethod();
-		} catch (final DomainException e) {
-			request.setAttribute("ingressionBean", getRegistrationIngressionEditor());
-			RenderUtils.invalidateViewState();
-			addActionMessage(request, e.getKey());
-			return mapping.findForward("showEditIngression");
-		}
+    public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        try {
+            executeFactoryMethod();
+        } catch (final DomainException e) {
+            request.setAttribute("ingressionBean", getRegistrationIngressionEditor());
+            RenderUtils.invalidateViewState();
+            addActionMessage(request, e.getKey());
+            return mapping.findForward("showEditIngression");
+        }
 
-		addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
-		request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
+        addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
+        request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
 
-		return prepare(mapping, actionForm, request, response);
-	}
+        return prepare(mapping, actionForm, request, response);
+    }
 
 }

@@ -18,24 +18,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "messaging", path = "/announcements/boards", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "search", path = "/messaging/announcements/searchBoards.jsp", tileProperties = @Tile(
-		title = "private.messaging.announcements.announcementboards")) })
+        title = "private.messaging.announcements.announcementboards")) })
 public class BoardsDA extends FenixDispatchAction {
 
-	public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		BoardSearchBean boardSearchBean = getBoardSearchBean(request);
-		RenderUtils.invalidateViewState();
-		if (boardSearchBean == null) {
-			boardSearchBean = new BoardSearchBean();
-		}
-		request.setAttribute("boardSearchBean", boardSearchBean);
-		request.setAttribute("boards", boardSearchBean.getSearchResult());
-		return mapping.findForward("search");
-	}
+    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        BoardSearchBean boardSearchBean = getBoardSearchBean(request);
+        RenderUtils.invalidateViewState();
+        if (boardSearchBean == null) {
+            boardSearchBean = new BoardSearchBean();
+        }
+        request.setAttribute("boardSearchBean", boardSearchBean);
+        request.setAttribute("boards", boardSearchBean.getSearchResult());
+        return mapping.findForward("search");
+    }
 
-	private BoardSearchBean getBoardSearchBean(HttpServletRequest request) {
-		final BoardSearchBean boardSearchBean = getRenderedObject();
-		return boardSearchBean == null ? (BoardSearchBean) request.getAttribute("boardSearchBean") : boardSearchBean;
-	}
+    private BoardSearchBean getBoardSearchBean(HttpServletRequest request) {
+        final BoardSearchBean boardSearchBean = getRenderedObject();
+        return boardSearchBean == null ? (BoardSearchBean) request.getAttribute("boardSearchBean") : boardSearchBean;
+    }
 
 }

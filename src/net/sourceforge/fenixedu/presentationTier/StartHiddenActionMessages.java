@@ -14,6 +14,6 @@ import org.apache.struts.action.ActionMessages;
  *          $
  */
 public class StartHiddenActionMessages extends ActionMessages {
-	private static final long serialVersionUID = 3415933365175130119L;
+    private static final long serialVersionUID = 3415933365175130119L;
 
 }

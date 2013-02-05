@@ -23,18 +23,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetAllModalities extends FenixService {
 
-	public List run() throws BDException {
-		List infoCases = new LinkedList();
+    public List run() throws BDException {
+        List infoCases = new LinkedList();
 
-		List cases = Modality.getAllModalities();
+        List cases = Modality.getAllModalities();
 
-		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			Modality modality = (Modality) iterator.next();
+        for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+            Modality modality = (Modality) iterator.next();
 
-			infoCases.add(InfoModality.newInfoFromDomain(modality));
-		}
+            infoCases.add(InfoModality.newInfoFromDomain(modality));
+        }
 
-		return infoCases;
-	}
+        return infoCases;
+    }
 
 }

@@ -15,27 +15,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class CycleTypeProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		if (source instanceof ExecutionDegreeBean) {
-			ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
-			if (executionDegreeBean.getDegree() != null) {
-				return executionDegreeBean.getDegree().getDegreeType().getCycleTypes();
-			}
-		} else if (source instanceof StudentCurricularPlanCreator) {
-			StudentCurricularPlanCreator studentCurricularPlanCreator = (StudentCurricularPlanCreator) source;
-			if (studentCurricularPlanCreator.getDegree() != null) {
-				return studentCurricularPlanCreator.getDegree().getDegreeType().getCycleTypes();
-			}
-		}
+        if (source instanceof ExecutionDegreeBean) {
+            ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
+            if (executionDegreeBean.getDegree() != null) {
+                return executionDegreeBean.getDegree().getDegreeType().getCycleTypes();
+            }
+        } else if (source instanceof StudentCurricularPlanCreator) {
+            StudentCurricularPlanCreator studentCurricularPlanCreator = (StudentCurricularPlanCreator) source;
+            if (studentCurricularPlanCreator.getDegree() != null) {
+                return studentCurricularPlanCreator.getDegree().getDegreeType().getCycleTypes();
+            }
+        }
 
-		return new ArrayList<CycleType>();
-	}
+        return new ArrayList<CycleType>();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

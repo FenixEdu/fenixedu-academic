@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 
 public abstract class Restriction extends Restriction_Base {
 
-	public Restriction() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public Restriction() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		removePrecedence();
-		removeRootDomainObject();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removePrecedence();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
-	public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
+    public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
 }

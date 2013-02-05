@@ -17,19 +17,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCPlanFromChosenMasterDegree extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List run(Integer idInternal) throws FenixServiceException {
-		Degree degree = rootDomainObject.readDegreeByOID(idInternal);
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer idInternal) throws FenixServiceException {
+        Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
-		List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
-		for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-			if (!dcp.isBolonhaDegree()) {
-				result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
-			}
-		}
+        List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
+        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            if (!dcp.isBolonhaDegree()) {
+                result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

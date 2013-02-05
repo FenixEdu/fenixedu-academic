@@ -7,74 +7,74 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class InfoRoomOccupationEditor extends InfoObject {
 
-	protected Calendar startTime;
+    protected Calendar startTime;
 
-	protected Calendar endTime;
+    protected Calendar endTime;
 
-	protected DiaSemana dayOfWeek;
+    protected DiaSemana dayOfWeek;
 
-	protected InfoRoom infoRoom;
+    protected InfoRoom infoRoom;
 
-	protected InfoPeriod infoPeriod;
+    protected InfoPeriod infoPeriod;
 
-	protected FrequencyType frequency;
+    protected FrequencyType frequency;
 
-	protected Integer weekOfQuinzenalStart;
+    protected Integer weekOfQuinzenalStart;
 
-	public FrequencyType getFrequency() {
-		return frequency;
-	}
+    public FrequencyType getFrequency() {
+        return frequency;
+    }
 
-	public void setFrequency(FrequencyType frequency) {
-		this.frequency = frequency;
-	}
+    public void setFrequency(FrequencyType frequency) {
+        this.frequency = frequency;
+    }
 
-	public Integer getWeekOfQuinzenalStart() {
-		return weekOfQuinzenalStart;
-	}
+    public Integer getWeekOfQuinzenalStart() {
+        return weekOfQuinzenalStart;
+    }
 
-	public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
-		this.weekOfQuinzenalStart = weekOfQuinzenalStart;
-	}
+    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
+        this.weekOfQuinzenalStart = weekOfQuinzenalStart;
+    }
 
-	public DiaSemana getDayOfWeek() {
-		return dayOfWeek;
-	}
+    public DiaSemana getDayOfWeek() {
+        return dayOfWeek;
+    }
 
-	public Calendar getEndTime() {
-		return endTime;
-	}
+    public Calendar getEndTime() {
+        return endTime;
+    }
 
-	public Calendar getStartTime() {
-		return startTime;
-	}
+    public Calendar getStartTime() {
+        return startTime;
+    }
 
-	public void setDayOfWeek(DiaSemana semana) {
-		dayOfWeek = semana;
-	}
+    public void setDayOfWeek(DiaSemana semana) {
+        dayOfWeek = semana;
+    }
 
-	public void setEndTime(Calendar calendar) {
-		endTime = calendar;
-	}
+    public void setEndTime(Calendar calendar) {
+        endTime = calendar;
+    }
 
-	public void setStartTime(Calendar calendar) {
-		startTime = calendar;
-	}
+    public void setStartTime(Calendar calendar) {
+        startTime = calendar;
+    }
 
-	public InfoPeriod getInfoPeriod() {
-		return infoPeriod;
-	}
+    public InfoPeriod getInfoPeriod() {
+        return infoPeriod;
+    }
 
-	public void setInfoPeriod(InfoPeriod infoPeriod) {
-		this.infoPeriod = infoPeriod;
-	}
+    public void setInfoPeriod(InfoPeriod infoPeriod) {
+        this.infoPeriod = infoPeriod;
+    }
 
-	public InfoRoom getInfoRoom() {
-		return infoRoom;
-	}
+    public InfoRoom getInfoRoom() {
+        return infoRoom;
+    }
 
-	public void setInfoRoom(InfoRoom infoRoom) {
-		this.infoRoom = infoRoom;
-	}
+    public void setInfoRoom(InfoRoom infoRoom) {
+        this.infoRoom = infoRoom;
+    }
 
 }

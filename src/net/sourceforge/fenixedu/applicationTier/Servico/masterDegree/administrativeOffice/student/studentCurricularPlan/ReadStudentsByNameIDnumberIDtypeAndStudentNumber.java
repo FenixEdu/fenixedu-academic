@@ -20,61 +20,61 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends FenixService {
 
-	private static class SearchSet extends HashSet<Registration> {
+    private static class SearchSet extends HashSet<Registration> {
 
-		private final String studentName;
-		private final String idNumber;
-		private final Integer studentNumber;
+        private final String studentName;
+        private final String idNumber;
+        private final Integer studentNumber;
 
-		private SearchSet(final String studentName, final String idNumber, final Integer studentNumber) {
-			this.studentName = studentName == null ? null : studentName.replaceAll("%", ".*").toLowerCase();
-			this.idNumber = idNumber;
-			this.studentNumber = studentNumber;
-		}
+        private SearchSet(final String studentName, final String idNumber, final Integer studentNumber) {
+            this.studentName = studentName == null ? null : studentName.replaceAll("%", ".*").toLowerCase();
+            this.idNumber = idNumber;
+            this.studentNumber = studentNumber;
+        }
 
-		@Override
-		public boolean add(final Registration registration) {
-			return matchesCriteria(registration) && super.add(registration);
-		}
+        @Override
+        public boolean add(final Registration registration) {
+            return matchesCriteria(registration) && super.add(registration);
+        }
 
-		private boolean matchesCriteria(final Registration registration) {
-			final Student student = registration.getStudent();
-			final Person person = student.getPerson();
-			if (studentName != null && !person.getName().toLowerCase().matches(studentName)) {
-				return false;
-			}
-			if (idNumber != null) {
-				boolean hasMatch = false;
-				for (final IdDocument idDocument : person.getIdDocumentsSet()) {
-					if (idDocument.getValue().equalsIgnoreCase(idNumber)) {
-						hasMatch = true;
-					}
-				}
-				if (!hasMatch) {
-					return false;
-				}
-			}
-			if (studentNumber != null && studentNumber.intValue() != registration.getNumber().intValue()
-					&& studentNumber.intValue() != student.getNumber().intValue()) {
-				return false;
-			}
-			return true;
-		}
+        private boolean matchesCriteria(final Registration registration) {
+            final Student student = registration.getStudent();
+            final Person person = student.getPerson();
+            if (studentName != null && !person.getName().toLowerCase().matches(studentName)) {
+                return false;
+            }
+            if (idNumber != null) {
+                boolean hasMatch = false;
+                for (final IdDocument idDocument : person.getIdDocumentsSet()) {
+                    if (idDocument.getValue().equalsIgnoreCase(idNumber)) {
+                        hasMatch = true;
+                    }
+                }
+                if (!hasMatch) {
+                    return false;
+                }
+            }
+            if (studentNumber != null && studentNumber.intValue() != registration.getNumber().intValue()
+                    && studentNumber.intValue() != student.getNumber().intValue()) {
+                return false;
+            }
+            return true;
+        }
 
-	}
+    }
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
-		final SearchSet searchSet = new SearchSet(studentName, idNumber, studentNumber);
-		Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(searchSet, studentName, idNumber, idType,
-				studentNumber);
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
+        final SearchSet searchSet = new SearchSet(studentName, idNumber, studentNumber);
+        Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(searchSet, studentName, idNumber, idType,
+                studentNumber);
 
-		final List<InfoStudent> result = new ArrayList<InfoStudent>();
-		for (final Registration registration : searchSet) {
-			result.add(InfoStudent.newInfoFromDomain(registration));
-		}
-		return result;
-	}
+        final List<InfoStudent> result = new ArrayList<InfoStudent>();
+        for (final Registration registration : searchSet) {
+            result.add(InfoStudent.newInfoFromDomain(registration));
+        }
+        return result;
+    }
 
 }

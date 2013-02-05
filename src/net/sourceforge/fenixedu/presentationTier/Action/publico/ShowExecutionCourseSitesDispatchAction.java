@@ -34,112 +34,112 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "show-exeution-course-site-list", path = "df.page.showDegreeCurricularPlanSites") })
 public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ContextUtils.setExecutionPeriodContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ContextUtils.setExecutionPeriodContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final Degree degree = ShowDegreeSiteAction.getDegree(request);
+    public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Degree degree = ShowDegreeSiteAction.getDegree(request);
 
-		// degreeID
-		final Integer degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
-		getDegreeAndSetInfoDegree(request, degreeOID);
-		final List<ExecutionCourseView> executionCourseViews = getExecutionCourseViews(request, degree);
-		final InfoExecutionPeriod infoExecutionPeriod = getPreviousExecutionPeriod(request);
+        // degreeID
+        final Integer degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
+        getDegreeAndSetInfoDegree(request, degreeOID);
+        final List<ExecutionCourseView> executionCourseViews = getExecutionCourseViews(request, degree);
+        final InfoExecutionPeriod infoExecutionPeriod = getPreviousExecutionPeriod(request);
 
-		organizeExecutionCourseViews(request, executionCourseViews, infoExecutionPeriod);
+        organizeExecutionCourseViews(request, executionCourseViews, infoExecutionPeriod);
 
-		return mapping.findForward("show-exeution-course-site-list");
-	}
+        return mapping.findForward("show-exeution-course-site-list");
+    }
 
-	private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, Integer degreeOID) {
-		final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
+    private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, Integer degreeOID) {
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
-		final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-		request.setAttribute("infoDegree", infoDegree);
+        final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+        request.setAttribute("infoDegree", infoDegree);
 
-		return degree;
-	}
+        return degree;
+    }
 
-	private InfoExecutionPeriod getPreviousExecutionPeriod(HttpServletRequest request) {
-		final InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+    private InfoExecutionPeriod getPreviousExecutionPeriod(HttpServletRequest request) {
+        final InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-		final ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
-		final ExecutionSemester nextExecutionSemester = executionSemester.getNextExecutionPeriod();
-		final InfoExecutionPeriod previousInfoExecutionPeriod;
-		if (nextExecutionSemester != null && nextExecutionSemester.getState().equals(PeriodState.OPEN)) {
-			previousInfoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(nextExecutionSemester);
-		} else {
-			previousInfoExecutionPeriod = infoExecutionPeriod.getPreviousInfoExecutionPeriod();
-		}
+        final ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
+        final ExecutionSemester nextExecutionSemester = executionSemester.getNextExecutionPeriod();
+        final InfoExecutionPeriod previousInfoExecutionPeriod;
+        if (nextExecutionSemester != null && nextExecutionSemester.getState().equals(PeriodState.OPEN)) {
+            previousInfoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(nextExecutionSemester);
+        } else {
+            previousInfoExecutionPeriod = infoExecutionPeriod.getPreviousInfoExecutionPeriod();
+        }
 
-		request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
-		return previousInfoExecutionPeriod;
-	}
+        request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
+        return previousInfoExecutionPeriod;
+    }
 
-	private List<ExecutionCourseView> getExecutionCourseViews(HttpServletRequest request, Degree degree)
-			throws FenixServiceException, FenixFilterException {
+    private List<ExecutionCourseView> getExecutionCourseViews(HttpServletRequest request, Degree degree)
+            throws FenixServiceException, FenixFilterException {
 
-		List<ExecutionCourseView> result = new ArrayList(ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree.run(degree));
-		Collections.sort(result, ExecutionCourseView.COMPARATOR_BY_NAME);
+        List<ExecutionCourseView> result = new ArrayList(ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree.run(degree));
+        Collections.sort(result, ExecutionCourseView.COMPARATOR_BY_NAME);
 
-		return result;
-	}
+        return result;
+    }
 
-	private void organizeExecutionCourseViews(HttpServletRequest request, List<ExecutionCourseView> executionCourseViews,
-			InfoExecutionPeriod previousExecutionPeriod) {
-		Table executionCourseViewsTableCurrent1_2 = new Table(2);
-		Table executionCourseViewsTableCurrent3_4 = new Table(2);
-		Table executionCourseViewsTableCurrent5 = new Table(1);
-		Table executionCourseViewsTablePrevious1_2 = new Table(2);
-		Table executionCourseViewsTablePrevious3_4 = new Table(2);
-		Table executionCourseViewsTablePrevious5 = new Table(1);
+    private void organizeExecutionCourseViews(HttpServletRequest request, List<ExecutionCourseView> executionCourseViews,
+            InfoExecutionPeriod previousExecutionPeriod) {
+        Table executionCourseViewsTableCurrent1_2 = new Table(2);
+        Table executionCourseViewsTableCurrent3_4 = new Table(2);
+        Table executionCourseViewsTableCurrent5 = new Table(1);
+        Table executionCourseViewsTablePrevious1_2 = new Table(2);
+        Table executionCourseViewsTablePrevious3_4 = new Table(2);
+        Table executionCourseViewsTablePrevious5 = new Table(1);
 
-		for (ExecutionCourseView executionCourseView : executionCourseViews) {
-			int curricularYear = executionCourseView.getCurricularYear();
-			boolean previousExecPeriod =
-					previousExecutionPeriod != null
-							&& executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
+        for (ExecutionCourseView executionCourseView : executionCourseViews) {
+            int curricularYear = executionCourseView.getCurricularYear();
+            boolean previousExecPeriod =
+                    previousExecutionPeriod != null
+                            && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
 
-			switch (curricularYear) {
-			case 1:
-			case 2:
-				if (previousExecPeriod) {
-					executionCourseViewsTablePrevious1_2.appendToColumn(curricularYear - 1, executionCourseView);
-				} else {
-					executionCourseViewsTableCurrent1_2.appendToColumn(curricularYear - 1, executionCourseView);
-				}
-				break;
-			case 3:
-			case 4:
-				if (previousExecPeriod) {
-					executionCourseViewsTablePrevious3_4.appendToColumn(curricularYear - 3, executionCourseView);
-				} else {
-					executionCourseViewsTableCurrent3_4.appendToColumn(curricularYear - 3, executionCourseView);
-				}
-				break;
-			case 5:
-				if (previousExecPeriod) {
-					executionCourseViewsTablePrevious5.appendToColumn(curricularYear - 5, executionCourseView);
-				} else {
-					executionCourseViewsTableCurrent5.appendToColumn(curricularYear - 5, executionCourseView);
-				}
-				break;
-			}
-		}
+            switch (curricularYear) {
+            case 1:
+            case 2:
+                if (previousExecPeriod) {
+                    executionCourseViewsTablePrevious1_2.appendToColumn(curricularYear - 1, executionCourseView);
+                } else {
+                    executionCourseViewsTableCurrent1_2.appendToColumn(curricularYear - 1, executionCourseView);
+                }
+                break;
+            case 3:
+            case 4:
+                if (previousExecPeriod) {
+                    executionCourseViewsTablePrevious3_4.appendToColumn(curricularYear - 3, executionCourseView);
+                } else {
+                    executionCourseViewsTableCurrent3_4.appendToColumn(curricularYear - 3, executionCourseView);
+                }
+                break;
+            case 5:
+                if (previousExecPeriod) {
+                    executionCourseViewsTablePrevious5.appendToColumn(curricularYear - 5, executionCourseView);
+                } else {
+                    executionCourseViewsTableCurrent5.appendToColumn(curricularYear - 5, executionCourseView);
+                }
+                break;
+            }
+        }
 
-		request.setAttribute("executionCourseViewsTableCurrent1_2", executionCourseViewsTableCurrent1_2);
-		request.setAttribute("executionCourseViewsTableCurrent3_4", executionCourseViewsTableCurrent3_4);
-		request.setAttribute("executionCourseViewsTableCurrent5", executionCourseViewsTableCurrent5);
+        request.setAttribute("executionCourseViewsTableCurrent1_2", executionCourseViewsTableCurrent1_2);
+        request.setAttribute("executionCourseViewsTableCurrent3_4", executionCourseViewsTableCurrent3_4);
+        request.setAttribute("executionCourseViewsTableCurrent5", executionCourseViewsTableCurrent5);
 
-		request.setAttribute("executionCourseViewsTablePrevious1_2", executionCourseViewsTablePrevious1_2);
-		request.setAttribute("executionCourseViewsTablePrevious3_4", executionCourseViewsTablePrevious3_4);
-		request.setAttribute("executionCourseViewsTablePrevious5", executionCourseViewsTablePrevious5);
-	}
+        request.setAttribute("executionCourseViewsTablePrevious1_2", executionCourseViewsTablePrevious1_2);
+        request.setAttribute("executionCourseViewsTablePrevious3_4", executionCourseViewsTablePrevious3_4);
+        request.setAttribute("executionCourseViewsTablePrevious5", executionCourseViewsTablePrevious5);
+    }
 
 }

@@ -30,101 +30,99 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(
-		path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess",
-		module = "coordinator",
-		formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+@Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "coordinator",
+        formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards({
-		@Forward(name = "intro", path = "/coordinator/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(
-				title = "private.coordinator.management.courses.applicationprocesses.graduates")),
-		@Forward(name = "view-candidacy-results", path = "/coordinator/candidacy/graduatedPerson/viewCandidacyResults.jsp") })
+        @Forward(name = "intro", path = "/coordinator/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(
+                title = "private.coordinator.management.courses.applicationprocesses.graduates")),
+        @Forward(name = "view-candidacy-results", path = "/coordinator/candidacy/graduatedPerson/viewCandidacyResults.jsp") })
 public class DegreeCandidacyForGraduatedPersonProcessDA extends
-		net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA {
+        net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CoordinatedDegreeInfo.setCoordinatorContext(request);
-		return super.execute(mapping, actionForm, request, response);
-	}
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
-	List<ExecutionInterval> readExecutionIntervalFilteredByCoordinatorTeam(final HttpServletRequest request) {
-		final List<ExecutionInterval> returnExecutionIntervals = new ArrayList<ExecutionInterval>();
+    List<ExecutionInterval> readExecutionIntervalFilteredByCoordinatorTeam(final HttpServletRequest request) {
+        final List<ExecutionInterval> returnExecutionIntervals = new ArrayList<ExecutionInterval>();
 
-		final List<ExecutionInterval> executionIntervals =
-				ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+        final List<ExecutionInterval> executionIntervals =
+                ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
 
-		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-		for (ExecutionInterval interval : executionIntervals) {
-			final ExecutionYear executionYear =
-					(interval instanceof ExecutionYear) ? (ExecutionYear) interval : ((ExecutionSemester) interval)
-							.getExecutionYear();
-			final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        for (ExecutionInterval interval : executionIntervals) {
+            final ExecutionYear executionYear =
+                    (interval instanceof ExecutionYear) ? (ExecutionYear) interval : ((ExecutionSemester) interval)
+                            .getExecutionYear();
+            final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 
-			for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-				if (coordinator.getPerson() == AccessControl.getPerson()) {
-					returnExecutionIntervals.add(interval);
-					break;
-				}
-			}
-		}
+            for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+                if (coordinator.getPerson() == AccessControl.getPerson()) {
+                    returnExecutionIntervals.add(interval);
+                    break;
+                }
+            }
+        }
 
-		return returnExecutionIntervals;
-	}
+        return returnExecutionIntervals;
+    }
 
-	@Override
-	protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
-		final DegreeCandidacyForGraduatedPersonProcess process = getProcess(request);
-		final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
-		for (final DegreeCandidacyForGraduatedPersonIndividualProcess child : process
-				.getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies()) {
-			candidacyDegreeBeans.add(new DegreeCandidacyForGraduatedPersonDegreeBean(child));
-		}
-		Collections.sort(candidacyDegreeBeans);
-		return candidacyDegreeBeans;
-	}
+    @Override
+    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
+        final DegreeCandidacyForGraduatedPersonProcess process = getProcess(request);
+        final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
+        for (final DegreeCandidacyForGraduatedPersonIndividualProcess child : process
+                .getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies()) {
+            candidacyDegreeBeans.add(new DegreeCandidacyForGraduatedPersonDegreeBean(child));
+        }
+        Collections.sort(candidacyDegreeBeans);
+        return candidacyDegreeBeans;
+    }
 
-	@Override
-	protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-		List<IndividualCandidacyProcess> processes = process.getChildProcesses();
-		List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
-				new ArrayList<IndividualCandidacyProcess>();
-		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+    @Override
+    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
+                new ArrayList<IndividualCandidacyProcess>();
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 
-		for (IndividualCandidacyProcess child : processes) {
-			if (((DegreeCandidacyForGraduatedPersonIndividualProcess) child).getCandidacy().getSelectedDegree() == degreeCurricularPlan
-					.getDegree()) {
-				selectedDegreesIndividualCandidacyProcesses.add(child);
-			}
-		}
+        for (IndividualCandidacyProcess child : processes) {
+            if (((DegreeCandidacyForGraduatedPersonIndividualProcess) child).getCandidacy().getSelectedDegree() == degreeCurricularPlan
+                    .getDegree()) {
+                selectedDegreesIndividualCandidacyProcesses.add(child);
+            }
+        }
 
-		return selectedDegreesIndividualCandidacyProcesses;
-	}
+        return selectedDegreesIndividualCandidacyProcesses;
+    }
 
-	public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-		final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+    public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
-		if (degreeCurricularPlanOID != null) {
-			return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
-		}
+        if (degreeCurricularPlanOID != null) {
+            return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		if (!hasExecutionInterval(request)) {
-			final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
-			if (executionIntervals.size() == 1) {
-				setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
-			} else {
-				request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-				request.setAttribute("executionIntervals", executionIntervals);
-			}
-		} else {
-			setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
-		}
-	}
+    @Override
+    protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        if (!hasExecutionInterval(request)) {
+            final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
+            if (executionIntervals.size() == 1) {
+                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
+            } else {
+                request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+                request.setAttribute("executionIntervals", executionIntervals);
+            }
+        } else {
+            setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
+        }
+    }
 
 }

@@ -19,67 +19,67 @@ import javax.mail.event.TransportListener;
  * 
  */
 public class EmailReporter extends FenixUtil implements TransportListener {
-	private List invalid;
+    private List invalid;
 
-	private List validUndelivered;
+    private List validUndelivered;
 
-	private List delivered;
+    private List delivered;
 
-	//
-	//
-	public EmailReporter() {
-		invalid = new LinkedList();
-		validUndelivered = new LinkedList();
-		delivered = new LinkedList();
-	}
+    //
+    //
+    public EmailReporter() {
+        invalid = new LinkedList();
+        validUndelivered = new LinkedList();
+        delivered = new LinkedList();
+    }
 
-	//
-	//
-	private void fillLists(TransportEvent e) {
-		for (int i = 0; i < e.getInvalidAddresses().length; i++) {
-			this.invalid.add(e.getInvalidAddresses()[i]);
-		}
-		for (int i = 0; i < e.getValidUnsentAddresses().length; i++) {
-			this.validUndelivered.add(e.getValidUnsentAddresses()[i]);
-		}
-		for (int i = 0; i < e.getValidSentAddresses().length; i++) {
-			this.delivered.add(e.getValidSentAddresses()[i]);
-		}
-	}
+    //
+    //
+    private void fillLists(TransportEvent e) {
+        for (int i = 0; i < e.getInvalidAddresses().length; i++) {
+            this.invalid.add(e.getInvalidAddresses()[i]);
+        }
+        for (int i = 0; i < e.getValidUnsentAddresses().length; i++) {
+            this.validUndelivered.add(e.getValidUnsentAddresses()[i]);
+        }
+        for (int i = 0; i < e.getValidSentAddresses().length; i++) {
+            this.delivered.add(e.getValidSentAddresses()[i]);
+        }
+    }
 
-	@Override
-	public void messageDelivered(TransportEvent arg0) {
-		this.fillLists(arg0);
-	}
+    @Override
+    public void messageDelivered(TransportEvent arg0) {
+        this.fillLists(arg0);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.mail.event.TransportListener#messageNotDelivered(javax.mail.event
-	 * .TransportEvent)
-	 */
-	@Override
-	public void messageNotDelivered(TransportEvent arg0) {
-		this.fillLists(arg0);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.mail.event.TransportListener#messageNotDelivered(javax.mail.event
+     * .TransportEvent)
+     */
+    @Override
+    public void messageNotDelivered(TransportEvent arg0) {
+        this.fillLists(arg0);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.mail.event.TransportListener#messagePartiallyDelivered(javax.mail
-	 * .event.TransportEvent)
-	 */
-	@Override
-	public void messagePartiallyDelivered(TransportEvent arg0) {
-		this.fillLists(arg0);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * javax.mail.event.TransportListener#messagePartiallyDelivered(javax.mail
+     * .event.TransportEvent)
+     */
+    @Override
+    public void messagePartiallyDelivered(TransportEvent arg0) {
+        this.fillLists(arg0);
+    }
 
-	public List getAllUndelivered() {
-		List allUndelivered = new LinkedList();
-		allUndelivered.addAll(this.invalid);
-		allUndelivered.addAll(this.validUndelivered);
-		return allUndelivered;
-	}
+    public List getAllUndelivered() {
+        List allUndelivered = new LinkedList();
+        allUndelivered.addAll(this.invalid);
+        allUndelivered.addAll(this.validUndelivered);
+        return allUndelivered;
+    }
 }

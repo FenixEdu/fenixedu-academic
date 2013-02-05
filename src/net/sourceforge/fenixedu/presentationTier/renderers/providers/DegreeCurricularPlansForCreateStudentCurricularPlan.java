@@ -17,25 +17,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class DegreeCurricularPlansForCreateStudentCurricularPlan implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final StudentCurricularPlanCreator creator = (StudentCurricularPlanCreator) source;
-		final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_NAME);
-		if (creator.getDegree() != null) {
-			Set<DegreeCurricularPlan> degreeCurricularPlans = creator.getRegistration().getDegreeCurricularPlans();
-			for (DegreeCurricularPlan degreeCurricularPlan : creator.getDegree().getDegreeCurricularPlansSet()) {
-				if (!degreeCurricularPlans.contains(degreeCurricularPlan)) {
-					result.add(degreeCurricularPlan);
-				}
-			}
-		}
-		return result;
-	}
+        final StudentCurricularPlanCreator creator = (StudentCurricularPlanCreator) source;
+        final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_NAME);
+        if (creator.getDegree() != null) {
+            Set<DegreeCurricularPlan> degreeCurricularPlans = creator.getRegistration().getDegreeCurricularPlans();
+            for (DegreeCurricularPlan degreeCurricularPlan : creator.getDegree().getDegreeCurricularPlansSet()) {
+                if (!degreeCurricularPlans.contains(degreeCurricularPlan)) {
+                    result.add(degreeCurricularPlan);
+                }
+            }
+        }
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

@@ -14,21 +14,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class BagsForTeacher implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		IUserView userView = AccessControl.getUserView();
-		Teacher teacher = userView.getPerson().getTeacher();
-		List<NewTestModel> testModels = teacher.getTestModels();
-		List<NewModelGroup> modelGroups = new ArrayList<NewModelGroup>();
-		for (NewTestModel testModel : testModels) {
-			modelGroups.add(testModel.getBag());
-		}
-		return modelGroups;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        IUserView userView = AccessControl.getUserView();
+        Teacher teacher = userView.getPerson().getTeacher();
+        List<NewTestModel> testModels = teacher.getTestModels();
+        List<NewModelGroup> modelGroups = new ArrayList<NewModelGroup>();
+        for (NewTestModel testModel : testModels) {
+            modelGroups.add(testModel.getBag());
+        }
+        return modelGroups;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

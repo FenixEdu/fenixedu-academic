@@ -22,15 +22,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllGrantPaymentEntitiesByClassName extends FenixService {
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public static List run(String className) throws FenixServiceException {
-		final Set<GrantPaymentEntity> grantPaymentEntities = GrantPaymentEntity.findGrantPaymentEntityByConcreteClass(className);
-		final List<InfoGrantPaymentEntity> infoGrantPaymentEntities = new ArrayList<InfoGrantPaymentEntity>();
-		for (final GrantPaymentEntity grantPaymentEntity : grantPaymentEntities) {
-			infoGrantPaymentEntities.add(InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity));
-		}
-		return infoGrantPaymentEntities;
-	}
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(String className) throws FenixServiceException {
+        final Set<GrantPaymentEntity> grantPaymentEntities = GrantPaymentEntity.findGrantPaymentEntityByConcreteClass(className);
+        final List<InfoGrantPaymentEntity> infoGrantPaymentEntities = new ArrayList<InfoGrantPaymentEntity>();
+        for (final GrantPaymentEntity grantPaymentEntity : grantPaymentEntities) {
+            infoGrantPaymentEntities.add(InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity));
+        }
+        return infoGrantPaymentEntities;
+    }
 
 }

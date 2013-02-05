@@ -10,68 +10,68 @@ import pt.ist.fenixframework.pstm.MissingObjectException;
 
 public class DeleteExecutionCourseResultsBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long executionCourseOID;
-	private Long executionDegreeOID;
-	private Long inquiryQuestionOID;
+    private Long executionCourseOID;
+    private Long executionDegreeOID;
+    private Long inquiryQuestionOID;
 
-	public boolean deleteResults() {
-		ExecutionCourse executionCourse = null;
-		try {
-			executionCourse = ExecutionCourse.fromExternalId(getExecutionCourseOID().toString());
-		} catch (ClassCastException cce) {
-			throw new DomainException("error.executionCourse.dontExist", cce.getCause());
-		} catch (MissingObjectException moe) {
-			throw new DomainException("error.executionCourse.dontExist", moe.getCause());
-		}
-		if (getExecutionDegreeOID() != null) {
-			ExecutionDegree executionDegree = null;
-			try {
-				executionDegree = ExecutionDegree.fromExternalId(getExecutionDegreeOID().toString());
-			} catch (ClassCastException cce) {
-				throw new DomainException("error.executionDegree.dontExist", cce.getCause());
-			} catch (MissingObjectException moe) {
-				throw new DomainException("error.executionDegree.dontExist", moe.getCause());
-			}
-			InquiryQuestion inquiryQuestion = null;
-			if (getInquiryQuestionOID() != null) {
-				try {
-					inquiryQuestion = InquiryQuestion.fromExternalId(getInquiryQuestionOID().toString());
-				} catch (ClassCastException cce) {
-					throw new DomainException("error.inquiryQuestion.dontExist", cce.getCause());
-				} catch (MissingObjectException moe) {
-					throw new DomainException("error.inquiryQuestion.dontExist", moe.getCause());
-				}
-			}
-			return executionCourse.deleteInquiryResults(executionDegree, inquiryQuestion);
-		} else {
-			setInquiryQuestionOID(null);
-			return executionCourse.deleteInquiryResults();
-		}
-	}
+    public boolean deleteResults() {
+        ExecutionCourse executionCourse = null;
+        try {
+            executionCourse = ExecutionCourse.fromExternalId(getExecutionCourseOID().toString());
+        } catch (ClassCastException cce) {
+            throw new DomainException("error.executionCourse.dontExist", cce.getCause());
+        } catch (MissingObjectException moe) {
+            throw new DomainException("error.executionCourse.dontExist", moe.getCause());
+        }
+        if (getExecutionDegreeOID() != null) {
+            ExecutionDegree executionDegree = null;
+            try {
+                executionDegree = ExecutionDegree.fromExternalId(getExecutionDegreeOID().toString());
+            } catch (ClassCastException cce) {
+                throw new DomainException("error.executionDegree.dontExist", cce.getCause());
+            } catch (MissingObjectException moe) {
+                throw new DomainException("error.executionDegree.dontExist", moe.getCause());
+            }
+            InquiryQuestion inquiryQuestion = null;
+            if (getInquiryQuestionOID() != null) {
+                try {
+                    inquiryQuestion = InquiryQuestion.fromExternalId(getInquiryQuestionOID().toString());
+                } catch (ClassCastException cce) {
+                    throw new DomainException("error.inquiryQuestion.dontExist", cce.getCause());
+                } catch (MissingObjectException moe) {
+                    throw new DomainException("error.inquiryQuestion.dontExist", moe.getCause());
+                }
+            }
+            return executionCourse.deleteInquiryResults(executionDegree, inquiryQuestion);
+        } else {
+            setInquiryQuestionOID(null);
+            return executionCourse.deleteInquiryResults();
+        }
+    }
 
-	public void setExecutionCourseOID(Long executionCourseOID) {
-		this.executionCourseOID = executionCourseOID;
-	}
+    public void setExecutionCourseOID(Long executionCourseOID) {
+        this.executionCourseOID = executionCourseOID;
+    }
 
-	public Long getExecutionCourseOID() {
-		return executionCourseOID;
-	}
+    public Long getExecutionCourseOID() {
+        return executionCourseOID;
+    }
 
-	public void setExecutionDegreeOID(Long executionDegreeOID) {
-		this.executionDegreeOID = executionDegreeOID;
-	}
+    public void setExecutionDegreeOID(Long executionDegreeOID) {
+        this.executionDegreeOID = executionDegreeOID;
+    }
 
-	public Long getExecutionDegreeOID() {
-		return executionDegreeOID;
-	}
+    public Long getExecutionDegreeOID() {
+        return executionDegreeOID;
+    }
 
-	public Long getInquiryQuestionOID() {
-		return inquiryQuestionOID;
-	}
+    public Long getInquiryQuestionOID() {
+        return inquiryQuestionOID;
+    }
 
-	public void setInquiryQuestionOID(Long inquiryQuestionOID) {
-		this.inquiryQuestionOID = inquiryQuestionOID;
-	}
+    public void setInquiryQuestionOID(Long inquiryQuestionOID) {
+        this.inquiryQuestionOID = inquiryQuestionOID;
+    }
 }

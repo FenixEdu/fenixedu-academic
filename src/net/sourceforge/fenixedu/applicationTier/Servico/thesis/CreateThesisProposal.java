@@ -12,16 +12,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateThesisProposal extends FenixService {
 
-	@Service
-	public static Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, MultiLanguageString title, String comment)
-			throws NotAuthorizedFilterException {
-		final Degree degree = degreeCurricularPlan.getDegree();
-		final Enrolment enrolment = student.getDissertationEnrolment(degreeCurricularPlan);
+    @Service
+    public static Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, MultiLanguageString title, String comment)
+            throws NotAuthorizedFilterException {
+        final Degree degree = degreeCurricularPlan.getDegree();
+        final Enrolment enrolment = student.getDissertationEnrolment(degreeCurricularPlan);
 
-		final Thesis thesis = new Thesis(degree, enrolment, title);
-		thesis.checkIsScientificCommission();
-		thesis.setComment(comment);
-		return thesis;
-	}
+        final Thesis thesis = new Thesis(degree, enrolment, title);
+        thesis.checkIsScientificCommission();
+        thesis.setComment(comment);
+        return thesis;
+    }
 
 }

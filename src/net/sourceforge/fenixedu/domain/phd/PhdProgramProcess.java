@@ -19,207 +19,207 @@ import com.google.common.base.Predicate;
 
 abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
-	protected PhdProgramProcess() {
-		super();
-	}
+    protected PhdProgramProcess() {
+        super();
+    }
 
-	public PhdProgramProcessDocument addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
-		return new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
-				responsible);
-	}
+    public PhdProgramProcessDocument addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
+        return new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
+                responsible);
+    }
 
-	protected void addDocuments(List<PhdProgramDocumentUploadBean> documents, Person responsible) {
-		for (final PhdProgramDocumentUploadBean each : documents) {
-			addDocument(each, responsible);
-		}
-	}
+    protected void addDocuments(List<PhdProgramDocumentUploadBean> documents, Person responsible) {
+        for (final PhdProgramDocumentUploadBean each : documents) {
+            addDocument(each, responsible);
+        }
+    }
 
-	private Set<PhdProgramProcessDocument> getDocumentsByType(PhdIndividualProgramDocumentType type) {
-		final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
+    private Set<PhdProgramProcessDocument> getDocumentsByType(PhdIndividualProgramDocumentType type) {
+        final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
-		for (final PhdProgramProcessDocument document : getDocumentsSet()) {
-			if (document.getDocumentType() == type) {
-				result.add(document);
-			}
-		}
+        for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+            if (document.getDocumentType() == type) {
+                result.add(document);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected Set<PhdProgramProcessDocument> filterLatestDocumentVersions(Collection<PhdProgramProcessDocument> documentsToFilter) {
-		final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
+    protected Set<PhdProgramProcessDocument> filterLatestDocumentVersions(Collection<PhdProgramProcessDocument> documentsToFilter) {
+        final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
-		for (final PhdProgramProcessDocument document : documentsToFilter) {
-			if (!document.getDocumentAccepted()) {
-				continue;
-			}
+        for (final PhdProgramProcessDocument document : documentsToFilter) {
+            if (!document.getDocumentAccepted()) {
+                continue;
+            }
 
-			result.add(document.getLastVersion());
-		}
+            result.add(document.getLastVersion());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public Set<PhdProgramProcessDocument> getLatestDocumentsByType(PhdIndividualProgramDocumentType type) {
-		final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
-		for (final PhdProgramProcessDocument document : getDocumentsSet()) {
-			if (document.getDocumentType() == type) {
-				documents.add(document);
-			}
-		}
+    public Set<PhdProgramProcessDocument> getLatestDocumentsByType(PhdIndividualProgramDocumentType type) {
+        final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
+        for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+            if (document.getDocumentType() == type) {
+                documents.add(document);
+            }
+        }
 
-		return filterLatestDocumentVersions(documents);
-	}
+        return filterLatestDocumentVersions(documents);
+    }
 
-	public Integer getLastVersionNumber(PhdIndividualProgramDocumentType type) {
-		Set<PhdProgramProcessDocument> documentsByType = getDocumentsByType(type);
+    public Integer getLastVersionNumber(PhdIndividualProgramDocumentType type) {
+        Set<PhdProgramProcessDocument> documentsByType = getDocumentsByType(type);
 
-		return documentsByType.isEmpty() ? 0 : documentsByType.size();
-	}
+        return documentsByType.isEmpty() ? 0 : documentsByType.size();
+    }
 
-	public Set<PhdProgramProcessDocument> getAllDocumentVersionsOfType(PhdIndividualProgramDocumentType type) {
-		return getDocumentsByType(type);
-	}
+    public Set<PhdProgramProcessDocument> getAllDocumentVersionsOfType(PhdIndividualProgramDocumentType type) {
+        return getDocumentsByType(type);
+    }
 
-	public PhdProgramProcessDocument getLatestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
-		if (!type.isVersioned()) {
-			throw new DomainException("error.PhdProgramProcess.latest.document.version.method.only.for.versioned.types");
-		}
+    public PhdProgramProcessDocument getLatestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
+        if (!type.isVersioned()) {
+            throw new DomainException("error.PhdProgramProcess.latest.document.version.method.only.for.versioned.types");
+        }
 
-		final SortedSet<PhdProgramProcessDocument> documents =
-				new TreeSet<PhdProgramProcessDocument>(PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
+        final SortedSet<PhdProgramProcessDocument> documents =
+                new TreeSet<PhdProgramProcessDocument>(PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
 
-		for (PhdProgramProcessDocument document : getDocumentsByType(type)) {
-			if (document.getDocumentAccepted()) {
-				documents.add(document);
-			}
-		}
+        for (PhdProgramProcessDocument document : getDocumentsByType(type)) {
+            if (document.getDocumentAccepted()) {
+                documents.add(document);
+            }
+        }
 
-		return documents.isEmpty() ? null : documents.iterator().next();
-	}
+        return documents.isEmpty() ? null : documents.iterator().next();
+    }
 
-	public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
-		return filterLatestDocumentVersions(getDocumentsSet());
-	}
+    public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
+        return filterLatestDocumentVersions(getDocumentsSet());
+    }
 
-	public Set<PhdProgramProcessDocument> getLatestDocumentVersionsAvailableToStudent() {
+    public Set<PhdProgramProcessDocument> getLatestDocumentVersionsAvailableToStudent() {
 
-		final Collection<PhdIndividualProgramDocumentType> documentTypesVisibleToStudent =
-				PhdIndividualProgramDocumentType.getDocumentTypesVisibleToStudent();
+        final Collection<PhdIndividualProgramDocumentType> documentTypesVisibleToStudent =
+                PhdIndividualProgramDocumentType.getDocumentTypesVisibleToStudent();
 
-		final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
-		for (final PhdProgramProcessDocument document : getDocumentsSet()) {
-			if (documentTypesVisibleToStudent.contains(document.getDocumentType())) {
-				documents.add(document);
-			}
-		}
+        final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
+        for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+            if (documentTypesVisibleToStudent.contains(document.getDocumentType())) {
+                documents.add(document);
+            }
+        }
 
-		return filterLatestDocumentVersions(documents);
-	}
+        return filterLatestDocumentVersions(documents);
+    }
 
-	static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
-		return process.isAllowedToManageProcess(userView)
-				|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
-				|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
-				|| process.getIndividualProgramProcess().getPerson() == userView.getPerson()
-				|| process.getIndividualProgramProcess().isParticipant(userView.getPerson());
-	}
+    static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
+        return process.isAllowedToManageProcess(userView)
+                || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
+                || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
+                || process.getIndividualProgramProcess().getPerson() == userView.getPerson()
+                || process.getIndividualProgramProcess().isParticipant(userView.getPerson());
+    }
 
-	public PhdProcessState getMostRecentState() {
-		return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
-	}
+    public PhdProcessState getMostRecentState() {
+        return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+    }
 
-	abstract public boolean hasAnyStates();
+    abstract public boolean hasAnyStates();
 
-	abstract public Collection<? extends PhdProcessState> getStates();
+    abstract public Collection<? extends PhdProcessState> getStates();
 
-	public Collection<? extends PhdProcessState> getOrderedStates() {
-		List<? extends PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
-		Collections.sort(states, PhdProcessState.COMPARATOR_BY_DATE);
+    public Collection<? extends PhdProcessState> getOrderedStates() {
+        List<? extends PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
+        Collections.sort(states, PhdProcessState.COMPARATOR_BY_DATE);
 
-		return states;
-	}
+        return states;
+    }
 
-	public List<PhdProcessState> getOrderedStatesByType(final PhdProcessStateType type) {
-		List<PhdProcessState> result = new ArrayList<PhdProcessState>();
+    public List<PhdProcessState> getOrderedStatesByType(final PhdProcessStateType type) {
+        List<PhdProcessState> result = new ArrayList<PhdProcessState>();
 
-		Collection<? extends PhdProcessState> orderedStates = getOrderedStates();
+        Collection<? extends PhdProcessState> orderedStates = getOrderedStates();
 
-		for (PhdProcessState phdProcessState : orderedStates) {
-			if (type.equals(phdProcessState.getType())) {
-				result.add(phdProcessState);
-			}
-		}
+        for (PhdProcessState phdProcessState : orderedStates) {
+            if (type.equals(phdProcessState.getType())) {
+                result.add(phdProcessState);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public PhdProcessState getMostRecentStateByType(final PhdProcessStateType type) {
-		List<PhdProcessState> orderedStatesByType = getOrderedStatesByType(type);
-		Collections.reverse(orderedStatesByType);
+    public PhdProcessState getMostRecentStateByType(final PhdProcessStateType type) {
+        List<PhdProcessState> orderedStatesByType = getOrderedStatesByType(type);
+        Collections.reverse(orderedStatesByType);
 
-		if (orderedStatesByType.isEmpty()) {
-			return null;
-		}
+        if (orderedStatesByType.isEmpty()) {
+            return null;
+        }
 
-		return orderedStatesByType.iterator().next();
-	}
+        return orderedStatesByType.iterator().next();
+    }
 
-	public PhdProcessStateType getActiveState() {
-		final PhdProcessState state = getMostRecentState();
-		return state != null ? state.getType() : null;
-	}
+    public PhdProcessStateType getActiveState() {
+        final PhdProcessState state = getMostRecentState();
+        return state != null ? state.getType() : null;
+    }
 
-	public String getActiveStateRemarks() {
-		return getMostRecentState().getRemarks();
-	}
+    public String getActiveStateRemarks() {
+        return getMostRecentState().getRemarks();
+    }
 
-	public boolean hasState(PhdProcessStateType type) {
-		final List<PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
-		Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
+    public boolean hasState(PhdProcessStateType type) {
+        final List<PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
+        Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
 
-		for (final PhdProcessState state : states) {
-			if (state.getType().equals(type)) {
-				return true;
-			}
-		}
+        for (final PhdProcessState state : states) {
+            if (state.getType().equals(type)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
+    abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
 
-	abstract protected Person getPerson();
+    abstract protected Person getPerson();
 
-	/**
-	 * Used to determine whether the specified person is allowed to manage the
-	 * Process, according to the Rule system.
-	 * 
-	 * @see AcademicOperationType
-	 */
-	abstract protected boolean isAllowedToManageProcess(IUserView userView);
+    /**
+     * Used to determine whether the specified person is allowed to manage the
+     * Process, according to the Rule system.
+     * 
+     * @see AcademicOperationType
+     */
+    abstract protected boolean isAllowedToManageProcess(IUserView userView);
 
-	public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
-		@Override
-		public boolean apply(PhdProgramProcess process) {
-			return process.isAllowedToManageProcess(AccessControl.getUserView());
-		}
-	};
+    public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
+        @Override
+        public boolean apply(PhdProgramProcess process) {
+            return process.isAllowedToManageProcess(AccessControl.getUserView());
+        }
+    };
 
-	public boolean isProcessCandidacy() {
-		return false;
-	}
+    public boolean isProcessCandidacy() {
+        return false;
+    }
 
-	public boolean isProcessIndividualProgram() {
-		return false;
-	}
+    public boolean isProcessIndividualProgram() {
+        return false;
+    }
 
-	public boolean isProcessThesis() {
-		return false;
-	}
+    public boolean isProcessThesis() {
+        return false;
+    }
 
-	public boolean isProcessPublicPresentationSeminar() {
-		return false;
-	}
+    public boolean isProcessPublicPresentationSeminar() {
+        return false;
+    }
 
 }

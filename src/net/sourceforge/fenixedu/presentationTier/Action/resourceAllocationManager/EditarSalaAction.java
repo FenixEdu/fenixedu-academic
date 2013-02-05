@@ -29,51 +29,51 @@ import org.apache.struts.action.DynaActionForm;
 
 public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		super.execute(mapping, form, request, response);
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        super.execute(mapping, form, request, response);
 
-		List edificios = Util.readExistingBuldings("*", null);
-		List tipos = Util.readTypesOfRooms("*", null);
+        List edificios = Util.readExistingBuldings("*", null);
+        List tipos = Util.readTypesOfRooms("*", null);
 
-		request.setAttribute("publico.buildings", edificios);
-		request.setAttribute("publico.types", tipos);
+        request.setAttribute("publico.buildings", edificios);
+        request.setAttribute("publico.types", tipos);
 
-		// Get selected room to edit
-		List listaSalasBean = (ArrayList) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
-		Integer index = (Integer) request.getAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
-		InfoRoom roomToEdit = null;
-		if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
-			Collections.sort(listaSalasBean);
-			roomToEdit = (InfoRoom) listaSalasBean.get(index.intValue());
-		}
+        // Get selected room to edit
+        List listaSalasBean = (ArrayList) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
+        Integer index = (Integer) request.getAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
+        InfoRoom roomToEdit = null;
+        if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
+            Collections.sort(listaSalasBean);
+            roomToEdit = (InfoRoom) listaSalasBean.get(index.intValue());
+        }
 
-		// Read edited values from form
-		IUserView userView = getUserView(request);
-		DynaActionForm salaBean = (DynaActionForm) form;
+        // Read edited values from form
+        IUserView userView = getUserView(request);
+        DynaActionForm salaBean = (DynaActionForm) form;
 
-		InfoRoomEditor editedRoom =
-				new InfoRoomEditor(new Integer((String) salaBean.get("capacityNormal")), new Integer(
-						(String) salaBean.get("capacityExame")), roomToEdit.getRoom());
+        InfoRoomEditor editedRoom =
+                new InfoRoomEditor(new Integer((String) salaBean.get("capacityNormal")), new Integer(
+                        (String) salaBean.get("capacityExame")), roomToEdit.getRoom());
 
-		// Edit room
+        // Edit room
 
-		try {
-			EditarSala.run(editedRoom);
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException("A Room", e);
-		}
+        try {
+            EditarSala.run(editedRoom);
+        } catch (ExistingServiceException e) {
+            throw new ExistingActionException("A Room", e);
+        }
 
-		// Update selectedRooms in request
-		listaSalasBean.set(index.intValue(), editedRoom);
-		if (listaSalasBean.isEmpty()) {
-			// request.removeAttribute()
-		}
+        // Update selectedRooms in request
+        listaSalasBean.set(index.intValue(), editedRoom);
+        if (listaSalasBean.isEmpty()) {
+            // request.removeAttribute()
+        }
 
-		request.removeAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
+        request.removeAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
 
-		return mapping.findForward("Sucesso");
-	}
+        return mapping.findForward("Sucesso");
+    }
 
 }

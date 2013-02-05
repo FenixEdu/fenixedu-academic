@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionCoursesForTestModel implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		TestModelBean testModelBean = (TestModelBean) source;
-		NewTestModel testModel = testModelBean.getTestModel();
-		return testModel.getCreator().getCurrentExecutionCourses();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        TestModelBean testModelBean = (TestModelBean) source;
+        NewTestModel testModel = testModelBean.getTestModel();
+        return testModel.getCreator().getCurrentExecutionCourses();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

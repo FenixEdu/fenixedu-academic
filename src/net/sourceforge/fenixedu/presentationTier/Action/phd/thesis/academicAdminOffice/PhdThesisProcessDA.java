@@ -121,959 +121,959 @@ import pt.utl.ist.fenix.tools.util.Pair;
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
-	// Begin thesis jury elements management
-
-	public ActionForward prepareRequestJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		request.setAttribute("thesisProcessBean", bean);
-		return mapping.findForward("requestJuryElements");
-	}
-
-	public ActionForward requestJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-
-			ExecuteProcessActivity.run(getProcess(request), RequestJuryElements.class, getRenderedObject("thesisProcessBean"));
-			addSuccessMessage(request, "message.thesis.jury.elements.requested.with.success");
-
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
-			return mapping.findForward("requestJuryElements");
-		}
-
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
-
-	public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT));
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_DECLARATION));
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL));
-
-		return prepareSubmitJuryElementsDocument(mapping, actionForm, request, response, bean);
-	}
-
-	public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response, PhdThesisProcessBean bean) {
-		request.setAttribute("thesisProcessBean", bean);
-
-		return mapping.findForward("submitJuryElementsDocument");
-	}
-
-	public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
-		return mapping.findForward("submitJuryElementsDocument");
-	}
-
-	public ActionForward submitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-
-			final IViewState viewState = RenderUtils.getViewState("thesisProcessBean.edit.documents");
-			if (!viewState.isValid()) {
-				RenderUtils.invalidateViewState("thesisProcessBean.edit.documents");
-				return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
-			}
-			ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class,
-					getRenderedObject("thesisProcessBean"));
-			addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
-
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			RenderUtils.invalidateViewState("thesisProcessBean.edit.documents");
-			return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
-		}
-
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
-
-	public ActionForward manageThesisJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("manageThesisJuryElements");
-	}
-
-	public ActionForward prepareAddJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request)));
-		return mapping.findForward("addJuryElement");
-	}
-
-	public ActionForward prepareAddJuryElementInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
-		return mapping.findForward("addJuryElement");
-	}
-
-	public ActionForward prepareAddJuryElementPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("addJuryElement");
-	}
-
-	public ActionForward addJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try {
-			ExecuteProcessActivity.run(getProcess(request), AddJuryElement.class, getRenderedObject("thesisJuryElementBean"));
-			addSuccessMessage(request, "message.thesis.added.jury.with.success");
-
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return prepareAddJuryElementInvalid(mapping, actionForm, request, response);
-		}
-
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
-
-	static public class ExistingPhdParticipantsEvenInPhdThesisProcess implements DataProvider {
-
-		@Override
-		public Converter getConverter() {
-			return new DomainObjectKeyConverter();
-		}
-
-		@Override
-		public Object provide(Object source, Object currentValue) {
-			final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) source;
-			return bean.getExistingParticipants();
-		}
-	}
-
-	public ActionForward prepareEditJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request), getJuryElement(request)));
-		return mapping.findForward("editJuryElement");
-	}
-
-	public ActionForward editJuryElementInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
-		return mapping.findForward("editJuryElement");
-	}
-
-	public ActionForward editJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try {
-			ExecuteProcessActivity.run(getProcess(request), EditJuryElement.class, getRenderedObject("thesisJuryElementBean"));
-
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return editJuryElementInvalid(mapping, actionForm, request, response);
-		}
-
-		return redirect(String.format("/phdThesisProcess.do?method=manageThesisJuryElements&processId=%s", getProcess(request)
-				.getExternalId()), request);
-	}
-
-	public ActionForward deleteJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try {
-			ExecuteProcessActivity.run(getProcess(request), DeleteJuryElement.class, getJuryElement(request));
-			addSuccessMessage(request, "message.thesis.jury.removed");
-
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-		}
-
-		return redirect(String.format("/phdThesisProcess.do?method=manageThesisJuryElements&processId=%s", getProcess(request)
-				.getExternalId()), request);
-	}
-
-	private ThesisJuryElement getJuryElement(HttpServletRequest request) {
-		return getDomainObject(request, "juryElementId");
-	}
-
-	private void swapJuryElements(HttpServletRequest request, ThesisJuryElement e1, ThesisJuryElement e2) {
-		try {
-			ExecuteProcessActivity.run(getProcess(request), SwapJuryElementsOrder.class,
-					new Pair<ThesisJuryElement, ThesisJuryElement>(e1, e2));
-			addSuccessMessage(request, "message.thesis.jury.element.swapped");
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			throw e;
-		}
-	}
-
-	private void moveElement(HttpServletRequest request, ThesisJuryElement element, Integer position) {
-		try {
-			ExecuteProcessActivity.run(getProcess(request), MoveJuryElementOrder.class, new Pair<ThesisJuryElement, Integer>(
-					element, position));
-			addSuccessMessage(request, "message.thesis.jury.element.swapped");
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-		}
-	}
-
-	public ActionForward moveUp(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		final PhdThesisProcess process = getProcess(request);
-		final ThesisJuryElement juryElement = getJuryElement(request);
-		final ThesisJuryElement lower = process.getOrderedThesisJuryElements().lower(juryElement);
-
-		if (lower != null) {
-			swapJuryElements(request, juryElement, lower);
-		}
-
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
-
-	public ActionForward moveDown(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		final PhdThesisProcess process = getProcess(request);
-		final ThesisJuryElement juryElement = getJuryElement(request);
-		final ThesisJuryElement higher = process.getOrderedThesisJuryElements().higher(juryElement);
-
-		if (higher != null) {
-			swapJuryElements(request, juryElement, higher);
-		}
-
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
-
-	public ActionForward moveTop(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		final PhdThesisProcess process = getProcess(request);
-		final ThesisJuryElement juryElement = getJuryElement(request);
-		final ThesisJuryElement first = process.getOrderedThesisJuryElements().first();
-
-		if (juryElement != first) {
-			moveElement(request, juryElement, first.getElementOrder() - 1);
-		}
-
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
-
-	public ActionForward moveBottom(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		final PhdThesisProcess process = getProcess(request);
-		final ThesisJuryElement juryElement = getJuryElement(request);
-		final ThesisJuryElement last = process.getOrderedThesisJuryElements().last();
-
-		if (juryElement != last) {
-			moveElement(request, juryElement, last.getElementOrder() - 1);
-		}
-
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
+    // Begin thesis jury elements management
+
+    public ActionForward prepareRequestJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        request.setAttribute("thesisProcessBean", bean);
+        return mapping.findForward("requestJuryElements");
+    }
+
+    public ActionForward requestJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            ExecuteProcessActivity.run(getProcess(request), RequestJuryElements.class, getRenderedObject("thesisProcessBean"));
+            addSuccessMessage(request, "message.thesis.jury.elements.requested.with.success");
+
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
+            return mapping.findForward("requestJuryElements");
+        }
+
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT));
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_DECLARATION));
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL));
+
+        return prepareSubmitJuryElementsDocument(mapping, actionForm, request, response, bean);
+    }
+
+    public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response, PhdThesisProcessBean bean) {
+        request.setAttribute("thesisProcessBean", bean);
+
+        return mapping.findForward("submitJuryElementsDocument");
+    }
+
+    public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
+        return mapping.findForward("submitJuryElementsDocument");
+    }
+
+    public ActionForward submitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            final IViewState viewState = RenderUtils.getViewState("thesisProcessBean.edit.documents");
+            if (!viewState.isValid()) {
+                RenderUtils.invalidateViewState("thesisProcessBean.edit.documents");
+                return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
+            }
+            ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class,
+                    getRenderedObject("thesisProcessBean"));
+            addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
+
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            RenderUtils.invalidateViewState("thesisProcessBean.edit.documents");
+            return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
+        }
+
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    public ActionForward manageThesisJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("manageThesisJuryElements");
+    }
+
+    public ActionForward prepareAddJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request)));
+        return mapping.findForward("addJuryElement");
+    }
+
+    public ActionForward prepareAddJuryElementInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+        return mapping.findForward("addJuryElement");
+    }
+
+    public ActionForward prepareAddJuryElementPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("addJuryElement");
+    }
+
+    public ActionForward addJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        try {
+            ExecuteProcessActivity.run(getProcess(request), AddJuryElement.class, getRenderedObject("thesisJuryElementBean"));
+            addSuccessMessage(request, "message.thesis.added.jury.with.success");
+
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return prepareAddJuryElementInvalid(mapping, actionForm, request, response);
+        }
+
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
+    static public class ExistingPhdParticipantsEvenInPhdThesisProcess implements DataProvider {
+
+        @Override
+        public Converter getConverter() {
+            return new DomainObjectKeyConverter();
+        }
+
+        @Override
+        public Object provide(Object source, Object currentValue) {
+            final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) source;
+            return bean.getExistingParticipants();
+        }
+    }
+
+    public ActionForward prepareEditJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request), getJuryElement(request)));
+        return mapping.findForward("editJuryElement");
+    }
+
+    public ActionForward editJuryElementInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+        return mapping.findForward("editJuryElement");
+    }
+
+    public ActionForward editJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        try {
+            ExecuteProcessActivity.run(getProcess(request), EditJuryElement.class, getRenderedObject("thesisJuryElementBean"));
+
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return editJuryElementInvalid(mapping, actionForm, request, response);
+        }
+
+        return redirect(String.format("/phdThesisProcess.do?method=manageThesisJuryElements&processId=%s", getProcess(request)
+                .getExternalId()), request);
+    }
+
+    public ActionForward deleteJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        try {
+            ExecuteProcessActivity.run(getProcess(request), DeleteJuryElement.class, getJuryElement(request));
+            addSuccessMessage(request, "message.thesis.jury.removed");
+
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+        }
+
+        return redirect(String.format("/phdThesisProcess.do?method=manageThesisJuryElements&processId=%s", getProcess(request)
+                .getExternalId()), request);
+    }
+
+    private ThesisJuryElement getJuryElement(HttpServletRequest request) {
+        return getDomainObject(request, "juryElementId");
+    }
+
+    private void swapJuryElements(HttpServletRequest request, ThesisJuryElement e1, ThesisJuryElement e2) {
+        try {
+            ExecuteProcessActivity.run(getProcess(request), SwapJuryElementsOrder.class,
+                    new Pair<ThesisJuryElement, ThesisJuryElement>(e1, e2));
+            addSuccessMessage(request, "message.thesis.jury.element.swapped");
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            throw e;
+        }
+    }
+
+    private void moveElement(HttpServletRequest request, ThesisJuryElement element, Integer position) {
+        try {
+            ExecuteProcessActivity.run(getProcess(request), MoveJuryElementOrder.class, new Pair<ThesisJuryElement, Integer>(
+                    element, position));
+            addSuccessMessage(request, "message.thesis.jury.element.swapped");
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+        }
+    }
+
+    public ActionForward moveUp(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        final PhdThesisProcess process = getProcess(request);
+        final ThesisJuryElement juryElement = getJuryElement(request);
+        final ThesisJuryElement lower = process.getOrderedThesisJuryElements().lower(juryElement);
+
+        if (lower != null) {
+            swapJuryElements(request, juryElement, lower);
+        }
+
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward moveDown(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        final PhdThesisProcess process = getProcess(request);
+        final ThesisJuryElement juryElement = getJuryElement(request);
+        final ThesisJuryElement higher = process.getOrderedThesisJuryElements().higher(juryElement);
+
+        if (higher != null) {
+            swapJuryElements(request, juryElement, higher);
+        }
+
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward moveTop(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        final PhdThesisProcess process = getProcess(request);
+        final ThesisJuryElement juryElement = getJuryElement(request);
+        final ThesisJuryElement first = process.getOrderedThesisJuryElements().first();
+
+        if (juryElement != first) {
+            moveElement(request, juryElement, first.getElementOrder() - 1);
+        }
+
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward moveBottom(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        final PhdThesisProcess process = getProcess(request);
+        final ThesisJuryElement juryElement = getJuryElement(request);
+        final ThesisJuryElement last = process.getOrderedThesisJuryElements().last();
+
+        if (juryElement != last) {
+            moveElement(request, juryElement, last.getElementOrder() - 1);
+        }
+
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareAddPresidentJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request)));
-		return mapping.findForward("addPresidentJuryElement");
-	}
+    public ActionForward prepareAddPresidentJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request)));
+        return mapping.findForward("addPresidentJuryElement");
+    }
 
-	public ActionForward prepareAddPresidentJuryElementInvalid(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
-		return mapping.findForward("addPresidentJuryElement");
-	}
+    public ActionForward prepareAddPresidentJuryElementInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+        return mapping.findForward("addPresidentJuryElement");
+    }
 
-	public ActionForward prepareAddPresidentJuryElementPostback(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("addPresidentJuryElement");
-	}
+    public ActionForward prepareAddPresidentJuryElementPostback(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("addPresidentJuryElement");
+    }
 
-	public ActionForward addPresidentJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward addPresidentJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), AddPresidentJuryElement.class,
-					getRenderedObject("thesisJuryElementBean"));
-			addSuccessMessage(request, "message.thesis.added.jury.with.success");
+        try {
+            ExecuteProcessActivity.run(getProcess(request), AddPresidentJuryElement.class,
+                    getRenderedObject("thesisJuryElementBean"));
+            addSuccessMessage(request, "message.thesis.added.jury.with.success");
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return prepareAddPresidentJuryElementInvalid(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return prepareAddPresidentJuryElementInvalid(mapping, actionForm, request, response);
+        }
 
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
 
-	public ActionForward prepareValidateJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareValidateJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		bean.setWhenJuryValidated(new LocalDate());
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        bean.setWhenJuryValidated(new LocalDate());
 
-		request.setAttribute("thesisBean", bean);
-		return mapping.findForward("validateJury");
-	}
+        request.setAttribute("thesisBean", bean);
+        return mapping.findForward("validateJury");
+    }
 
-	public ActionForward prepareValidateJuryInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
-		return mapping.findForward("validateJury");
-	}
+    public ActionForward prepareValidateJuryInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
+        return mapping.findForward("validateJury");
+    }
 
-	public ActionForward validateJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward validateJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), ValidateJury.class, getRenderedObject("thesisBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), ValidateJury.class, getRenderedObject("thesisBean"));
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return prepareValidateJuryInvalid(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return prepareValidateJuryInvalid(mapping, actionForm, request, response);
+        }
 
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
 
-	public ActionForward printJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws IOException, JRException {
+    public ActionForward printJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, JRException {
 
-		final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
+        final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
 
-		writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
-				ReportsUtils.exportToProcessedPdfAsByteArray(report));
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
+                ReportsUtils.exportToProcessedPdfAsByteArray(report));
 
-		return null;
-	}
+        return null;
+    }
 
-	public ActionForward prepareRejectJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisBean", new PhdThesisProcessBean());
-		return mapping.findForward("rejectJuryElements");
-	}
+    public ActionForward prepareRejectJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisBean", new PhdThesisProcessBean());
+        return mapping.findForward("rejectJuryElements");
+    }
 
-	public ActionForward rejectJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward rejectJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), RejectJuryElements.class, getRenderedObject("thesisBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), RejectJuryElements.class, getRenderedObject("thesisBean"));
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
-			return mapping.findForward("rejectJuryElements");
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
+            return mapping.findForward("rejectJuryElements");
+        }
 
-		return manageThesisJuryElements(mapping, actionForm, request, response);
-	}
+        return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
 
-	// end thesis jury elements management
+    // end thesis jury elements management
 
-	// Request Jury Reviews
-	public ActionForward prepareRequestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // Request Jury Reviews
+    public ActionForward prepareRequestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("requestJuryReviewsBean", new PhdThesisProcessBean());
+        request.setAttribute("requestJuryReviewsBean", new PhdThesisProcessBean());
 
-		return mapping.findForward("requestJuryReviews");
-	}
+        return mapping.findForward("requestJuryReviews");
+    }
 
-	public ActionForward prepareRequestJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareRequestJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("requestJuryReviewsBean", getRenderedObject("requestJuryReviewsBean"));
+        request.setAttribute("requestJuryReviewsBean", getRenderedObject("requestJuryReviewsBean"));
 
-		return mapping.findForward("requestJuryReviews");
-	}
+        return mapping.findForward("requestJuryReviews");
+    }
 
-	public ActionForward requestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			ExecuteProcessActivity
-					.run(getProcess(request), RequestJuryReviews.class, getRenderedObject("requestJuryReviewsBean"));
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return prepareRequestJuryReviewsInvalid(mapping, form, request, response);
-		}
+    public ActionForward requestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            ExecuteProcessActivity
+                    .run(getProcess(request), RequestJuryReviews.class, getRenderedObject("requestJuryReviewsBean"));
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return prepareRequestJuryReviewsInvalid(mapping, form, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	// End of Request Jury Reviews
+    // End of Request Jury Reviews
 
-	// Remind Jury Reviews
-	public ActionForward prepareRemindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // Remind Jury Reviews
+    public ActionForward prepareRemindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("remindJuryReviewsBean", new PhdThesisProcessBean());
+        request.setAttribute("remindJuryReviewsBean", new PhdThesisProcessBean());
 
-		return mapping.findForward("remindJuryReviews");
-	}
+        return mapping.findForward("remindJuryReviews");
+    }
 
-	public ActionForward prepareRemindJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareRemindJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("remindJuryReviewsBean", getRenderedObject("remindJuryReviewsBean"));
+        request.setAttribute("remindJuryReviewsBean", getRenderedObject("remindJuryReviewsBean"));
 
-		return mapping.findForward("remindJuryReviews");
-	}
+        return mapping.findForward("remindJuryReviews");
+    }
 
-	public ActionForward remindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			ExecuteProcessActivity.run(getProcess(request), RemindJuryReviewToReporters.class,
-					getRenderedObject("remindJuryReviewsBean"));
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return prepareRemindJuryReviewsInvalid(mapping, form, request, response);
-		}
+    public ActionForward remindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            ExecuteProcessActivity.run(getProcess(request), RemindJuryReviewToReporters.class,
+                    getRenderedObject("remindJuryReviewsBean"));
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return prepareRemindJuryReviewsInvalid(mapping, form, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	// end remind jury reviews
+    // end remind jury reviews
 
-	// Schedule thesis discussion
+    // Schedule thesis discussion
 
-	public ActionForward prepareScheduleThesisDiscussion(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareScheduleThesisDiscussion(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		final PhdThesisProcess thesisProcess = getProcess(request);
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        final PhdThesisProcess thesisProcess = getProcess(request);
 
-		bean.setThesisProcess(thesisProcess);
-		setDefaultDiscussionMailInformation(bean, thesisProcess);
+        bean.setThesisProcess(thesisProcess);
+        setDefaultDiscussionMailInformation(bean, thesisProcess);
 
-		request.setAttribute("thesisProcessBean", bean);
-		return mapping.findForward("scheduleThesisDiscussion");
-	}
+        request.setAttribute("thesisProcessBean", bean);
+        return mapping.findForward("scheduleThesisDiscussion");
+    }
 
-	private void setDefaultDiscussionMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
-		final PhdIndividualProgramProcess process = thesisProcess.getIndividualProgramProcess();
-		bean.setMailSubject(AlertService.getSubjectPrefixed(process,
-				"message.phd.thesis.schedule.thesis.discussion.default.subject"));
-		bean.setMailBody(AlertService.getBodyText(process, "message.phd.thesis.schedule.thesis.discussion.default.body"));
-	}
+    private void setDefaultDiscussionMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
+        final PhdIndividualProgramProcess process = thesisProcess.getIndividualProgramProcess();
+        bean.setMailSubject(AlertService.getSubjectPrefixed(process,
+                "message.phd.thesis.schedule.thesis.discussion.default.subject"));
+        bean.setMailBody(AlertService.getBodyText(process, "message.phd.thesis.schedule.thesis.discussion.default.body"));
+    }
 
-	public ActionForward scheduleThesisDiscussionInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getThesisProcessBean());
-		return mapping.findForward("scheduleThesisDiscussion");
-	}
+    public ActionForward scheduleThesisDiscussionInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getThesisProcessBean());
+        return mapping.findForward("scheduleThesisDiscussion");
+    }
 
-	public ActionForward scheduleThesisDiscussionPostback(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getThesisProcessBean());
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("scheduleThesisDiscussion");
-	}
+    public ActionForward scheduleThesisDiscussionPostback(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getThesisProcessBean());
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("scheduleThesisDiscussion");
+    }
 
-	public ActionForward scheduleThesisDiscussion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward scheduleThesisDiscussion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdThesisProcess thesisProcess = getProcess(request);
+        final PhdThesisProcess thesisProcess = getProcess(request);
 
-		try {
-			ExecuteProcessActivity.run(thesisProcess, ScheduleThesisDiscussion.class, getThesisProcessBean());
+        try {
+            ExecuteProcessActivity.run(thesisProcess, ScheduleThesisDiscussion.class, getThesisProcessBean());
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return scheduleThesisDiscussionPostback(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return scheduleThesisDiscussionPostback(mapping, actionForm, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, thesisProcess);
-	}
+        return viewIndividualProgramProcess(request, thesisProcess);
+    }
 
-	// End of schedule thesis discussion
+    // End of schedule thesis discussion
 
-	// Submit thesis
-	public ActionForward prepareSubmitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // Submit thesis
+    public ActionForward prepareSubmitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS));
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS));
 
-		request.setAttribute("submitThesisBean", bean);
+        request.setAttribute("submitThesisBean", bean);
 
-		return mapping.findForward("submitThesis");
-	}
+        return mapping.findForward("submitThesis");
+    }
 
-	public ActionForward prepareSubmitThesisInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSubmitThesisInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("submitThesisBean", getRenderedObject("submitThesisBean"));
-		RenderUtils.invalidateViewState("submitThesisBean.edit.documents");
+        request.setAttribute("submitThesisBean", getRenderedObject("submitThesisBean"));
+        RenderUtils.invalidateViewState("submitThesisBean.edit.documents");
 
-		return mapping.findForward("submitThesis");
-	}
+        return mapping.findForward("submitThesis");
+    }
 
-	public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			if (!RenderUtils.getViewState("submitThesisBean.edit.documents").isValid()) {
-				addErrorMessage(request, "error.phd.invalid.documents");
-				return prepareSubmitThesisInvalid(mapping, form, request, response);
-			}
+            if (!RenderUtils.getViewState("submitThesisBean.edit.documents").isValid()) {
+                addErrorMessage(request, "error.phd.invalid.documents");
+                return prepareSubmitThesisInvalid(mapping, form, request, response);
+            }
 
-			ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
+            ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return prepareSubmitThesisInvalid(mapping, form, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return prepareSubmitThesisInvalid(mapping, form, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// End of submit thesis
+    // End of submit thesis
 
-	// Ratify final thesis
-	public ActionForward prepareRatifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    // Ratify final thesis
+    public ActionForward prepareRatifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS_RATIFICATION_DOCUMENT));
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS_RATIFICATION_DOCUMENT));
 
-		request.setAttribute("thesisProcessBean", bean);
-		return mapping.findForward("ratifyFinalThesis");
-	}
+        request.setAttribute("thesisProcessBean", bean);
+        return mapping.findForward("ratifyFinalThesis");
+    }
 
-	public ActionForward ratifyFinalThesisInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getThesisProcessBean());
-		return mapping.findForward("ratifyFinalThesis");
-	}
+    public ActionForward ratifyFinalThesisInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getThesisProcessBean());
+        return mapping.findForward("ratifyFinalThesis");
+    }
 
-	public ActionForward ratifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward ratifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
-				return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
-			}
+            if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
+                return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
+            }
 
-			if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
-				addErrorMessage(request, "error.phd.invalid.documents");
-				return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
-			}
+            if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
+                addErrorMessage(request, "error.phd.invalid.documents");
+                return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
+            }
 
-			ExecuteProcessActivity.run(getProcess(request), RatifyFinalThesis.class, getThesisProcessBean());
+            ExecuteProcessActivity.run(getProcess(request), RatifyFinalThesis.class, getThesisProcessBean());
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// End of ratify final thesis
+    // End of ratify final thesis
 
-	// Set final grade
+    // Set final grade
 
-	public ActionForward prepareSetFinalGrade(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSetFinalGrade(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CONCLUSION_DOCUMENT));
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CONCLUSION_DOCUMENT));
 
-		request.setAttribute("thesisProcessBean", bean);
-		return mapping.findForward("setFinalGrade");
-	}
+        request.setAttribute("thesisProcessBean", bean);
+        return mapping.findForward("setFinalGrade");
+    }
 
-	public ActionForward setFinalGradeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getThesisProcessBean());
-		return mapping.findForward("setFinalGrade");
-	}
+    public ActionForward setFinalGradeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getThesisProcessBean());
+        return mapping.findForward("setFinalGrade");
+    }
 
-	public ActionForward setFinalGrade(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward setFinalGrade(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
+        try {
 
-			if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
-				return setFinalGradeInvalid(mapping, actionForm, request, response);
-			}
+            if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
+                return setFinalGradeInvalid(mapping, actionForm, request, response);
+            }
 
-			if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
-				addErrorMessage(request, "error.phd.invalid.documents");
-				return setFinalGradeInvalid(mapping, actionForm, request, response);
-			}
+            if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
+                addErrorMessage(request, "error.phd.invalid.documents");
+                return setFinalGradeInvalid(mapping, actionForm, request, response);
+            }
 
-			ExecuteProcessActivity.run(getProcess(request), SetFinalGrade.class, getThesisProcessBean());
+            ExecuteProcessActivity.run(getProcess(request), SetFinalGrade.class, getThesisProcessBean());
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return setFinalGradeInvalid(mapping, actionForm, request, response);
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return setFinalGradeInvalid(mapping, actionForm, request, response);
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	// End of set final grade
+    // End of set final grade
 
-	// Reject jury elements documents
+    // Reject jury elements documents
 
-	public ActionForward prepareRejectJuryElementsDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		request.setAttribute("thesisProcessBean", bean);
+    public ActionForward prepareRejectJuryElementsDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        request.setAttribute("thesisProcessBean", bean);
 
-		return mapping.findForward("rejectJuryElementsDocuments");
-	}
+        return mapping.findForward("rejectJuryElementsDocuments");
+    }
 
-	public ActionForward rejectJuryElementsDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
+    public ActionForward rejectJuryElementsDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
 
-			ExecuteProcessActivity.run(getProcess(request), RejectJuryElementsDocuments.class,
-					getRenderedObject("thesisProcessBean"));
-			addSuccessMessage(request, "message.thesis.jury.elements.documents.rejected.with.success");
+            ExecuteProcessActivity.run(getProcess(request), RejectJuryElementsDocuments.class,
+                    getRenderedObject("thesisProcessBean"));
+            addSuccessMessage(request, "message.thesis.jury.elements.documents.rejected.with.success");
 
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
-			return mapping.findForward("rejectJuryElementsDocuments");
-		}
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
+            return mapping.findForward("rejectJuryElementsDocuments");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	// End of reject jury elements document
+    // End of reject jury elements document
 
-	// Manage phd thesis process meetings
-	public ActionForward viewMeetingSchedulingProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-		request.setAttribute("thesisProcessBean", bean);
+    // Manage phd thesis process meetings
+    public ActionForward viewMeetingSchedulingProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+        request.setAttribute("thesisProcessBean", bean);
 
-		return mapping.findForward("viewMeetingSchedulingProcess");
-	}
+        return mapping.findForward("viewMeetingSchedulingProcess");
+    }
 
-	// End of manage phd thesis process meetings
+    // End of manage phd thesis process meetings
 
-	public ActionForward prepareReplaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final PhdProgramDocumentUploadBean bean =
-				new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.valueOf(request.getParameter("type")));
+    public ActionForward prepareReplaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdProgramDocumentUploadBean bean =
+                new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.valueOf(request.getParameter("type")));
 
-		request.setAttribute("documentBean", bean);
+        request.setAttribute("documentBean", bean);
 
-		return mapping.findForward("replaceDocument");
-	}
+        return mapping.findForward("replaceDocument");
+    }
 
-	public ActionForward replaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
+    public ActionForward replaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
 
-			final IViewState viewState = RenderUtils.getViewState("documentBean");
-			if (!viewState.isValid()) {
-				return juryReportFeedbackUploadInvalid(mapping, form, request, response);
-			}
+            final IViewState viewState = RenderUtils.getViewState("documentBean");
+            if (!viewState.isValid()) {
+                return juryReportFeedbackUploadInvalid(mapping, form, request, response);
+            }
 
-			ExecuteProcessActivity.run(getProcess(request), ReplaceDocument.class, getRenderedObject("documentBean"));
-			addSuccessMessage(request, "message.replace.document.done.with.success");
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-			return replaceDocumentInvalid(mapping, form, request, response);
-		}
+            ExecuteProcessActivity.run(getProcess(request), ReplaceDocument.class, getRenderedObject("documentBean"));
+            addSuccessMessage(request, "message.replace.document.done.with.success");
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+            return replaceDocumentInvalid(mapping, form, request, response);
+        }
 
-		return manageThesisDocuments(mapping, form, request, response);
-	}
+        return manageThesisDocuments(mapping, form, request, response);
+    }
 
-	public ActionForward replaceDocumentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getThesisProcessBean());
-		return mapping.findForward("replaceDocument");
-	}
+    public ActionForward replaceDocumentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getThesisProcessBean());
+        return mapping.findForward("replaceDocument");
+    }
 
-	// jury report feedback operations
+    // jury report feedback operations
 
-	@Override
-	public ActionForward prepareJuryReportFeedbackUpload(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    @Override
+    public ActionForward prepareJuryReportFeedbackUpload(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
-		bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
+        bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
 
-		request.setAttribute("thesisProcessBean", bean);
-		request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
+        request.setAttribute("thesisProcessBean", bean);
+        request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
 
-		return mapping.findForward("juryReporterFeedbackUpload");
-	}
+        return mapping.findForward("juryReporterFeedbackUpload");
+    }
 
-	public ActionForward juryReportFeedbackUploadPostback(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("thesisProcessBean", getThesisProcessBean());
-		request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
-		return mapping.findForward("juryReporterFeedbackUpload");
-	}
+    public ActionForward juryReportFeedbackUploadPostback(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("thesisProcessBean", getThesisProcessBean());
+        request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
+        return mapping.findForward("juryReporterFeedbackUpload");
+    }
 
-	public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
-		request.setAttribute("thesisProcessBean", bean);
+        final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
+        request.setAttribute("thesisProcessBean", bean);
 
-		return mapping.findForward("manageStates");
-	}
+        return mapping.findForward("manageStates");
+    }
 
-	public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		try {
-			PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
-			ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
-		} catch (PhdDomainOperationException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-		}
+    public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+            ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+        } catch (PhdDomainOperationException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+        }
 
-		return manageStates(mapping, form, request, response);
-	}
+        return manageStates(mapping, form, request, response);
+    }
 
-	public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+    public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
 
-		request.setAttribute("thesisProcessBean", bean);
+        request.setAttribute("thesisProcessBean", bean);
 
-		return mapping.findForward("manageStates");
-	}
+        return mapping.findForward("manageStates");
+    }
 
-	public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
-		} catch (final DomainException e) {
-			addErrorMessage(request, e.getMessage(), e.getArgs());
-		}
-		return manageStates(mapping, form, request, response);
-	}
+    public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
+        } catch (final DomainException e) {
+            addErrorMessage(request, e.getMessage(), e.getArgs());
+        }
+        return manageStates(mapping, form, request, response);
+    }
 
-	// Phd Thesis process information edit
-	public ActionForward prepareEditPhdThesisProcessInformation(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("phdThesisProcessBean", new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess()));
-		return mapping.findForward("editPhdThesisProcessInformation");
-	}
+    // Phd Thesis process information edit
+    public ActionForward prepareEditPhdThesisProcessInformation(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("phdThesisProcessBean", new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess()));
+        return mapping.findForward("editPhdThesisProcessInformation");
+    }
 
-	public ActionForward editPhdThesisProcessInformationInvalid(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("phdThesisProcessBean", getRenderedObject("phdThesisProcessBean"));
-		return mapping.findForward("editPhdThesisProcessInformation");
-	}
+    public ActionForward editPhdThesisProcessInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("phdThesisProcessBean", getRenderedObject("phdThesisProcessBean"));
+        return mapping.findForward("editPhdThesisProcessInformation");
+    }
 
-	public ActionForward editPhdThesisProcessInformationPostback(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("phdThesisProcessBean", getRenderedObject("phdThesisProcessBean"));
-		RenderUtils.invalidateViewState();
-		return mapping.findForward("editPhdThesisProcessInformation");
-	}
+    public ActionForward editPhdThesisProcessInformationPostback(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("phdThesisProcessBean", getRenderedObject("phdThesisProcessBean"));
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("editPhdThesisProcessInformation");
+    }
 
-	public ActionForward editPhdThesisProcessInformation(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward editPhdThesisProcessInformation(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		final PhdThesisProcessBean bean = getRenderedObject("phdThesisProcessBean");
-		request.setAttribute("phdThesisProcessBean", bean);
+        final PhdThesisProcessBean bean = getRenderedObject("phdThesisProcessBean");
+        request.setAttribute("phdThesisProcessBean", bean);
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), EditPhdThesisProcessInformation.class.getSimpleName(), bean);
-			addSuccessMessage(request, "message.phdThesisProcessInformation.edit.success");
-			return viewIndividualProgramProcess(request, getProcess(request));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), EditPhdThesisProcessInformation.class.getSimpleName(), bean);
+            addSuccessMessage(request, "message.phdThesisProcessInformation.edit.success");
+            return viewIndividualProgramProcess(request, getProcess(request));
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("editPhdThesisProcessInformation");
-		}
-	}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("editPhdThesisProcessInformation");
+        }
+    }
 
-	// End of Phd Thesis process information edit
+    // End of Phd Thesis process information edit
 
-	/* Conclusion Process */
+    /* Conclusion Process */
 
-	public ActionForward listConclusionProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("listConclusionProcess");
-	}
+    public ActionForward listConclusionProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("listConclusionProcess");
+    }
 
-	public ActionForward prepareCreateConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdIndividualProgramProcess individualProgramProcess = getProcess(request).getIndividualProgramProcess();
-		PhdConclusionProcessBean bean = new PhdConclusionProcessBean(individualProgramProcess);
+    public ActionForward prepareCreateConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdIndividualProgramProcess individualProgramProcess = getProcess(request).getIndividualProgramProcess();
+        PhdConclusionProcessBean bean = new PhdConclusionProcessBean(individualProgramProcess);
 
-		LocalDate conclusionDate = null;
-		if (!individualProgramProcess.getStudyPlan().isExempted()) {
-			conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
-		} else {
-			conclusionDate = bean.getConclusionDate();
-		}
+        LocalDate conclusionDate = null;
+        if (!individualProgramProcess.getStudyPlan().isExempted()) {
+            conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
+        } else {
+            conclusionDate = bean.getConclusionDate();
+        }
 
-		PhdProgramInformation phdProgramInformation =
-				getProcess(request).getIndividualProgramProcess().getPhdProgram().getPhdProgramInformationByDate(conclusionDate);
+        PhdProgramInformation phdProgramInformation =
+                getProcess(request).getIndividualProgramProcess().getPhdProgram().getPhdProgramInformationByDate(conclusionDate);
 
-		request.setAttribute("isExempted", individualProgramProcess.getStudyPlan().isExempted());
-		request.setAttribute("conclusionDateForPhdInformation", conclusionDate);
-		request.setAttribute("phdProgramInformation", phdProgramInformation);
-		request.setAttribute("phdConclusionProcessBean", bean);
+        request.setAttribute("isExempted", individualProgramProcess.getStudyPlan().isExempted());
+        request.setAttribute("conclusionDateForPhdInformation", conclusionDate);
+        request.setAttribute("phdProgramInformation", phdProgramInformation);
+        request.setAttribute("phdConclusionProcessBean", bean);
 
-		return mapping.findForward("createConclusionProcess");
-	}
+        return mapping.findForward("createConclusionProcess");
+    }
 
-	public ActionForward createConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
-		try {
-			ExecuteProcessActivity.run(getProcess(request), ConcludePhdProcess.class, bean);
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return createConclusionProcessInvalid(mapping, form, request, response);
-		}
+    public ActionForward createConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
+        try {
+            ExecuteProcessActivity.run(getProcess(request), ConcludePhdProcess.class, bean);
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return createConclusionProcessInvalid(mapping, form, request, response);
+        }
 
-		return listConclusionProcesses(mapping, form, request, response);
-	}
+        return listConclusionProcesses(mapping, form, request, response);
+    }
 
-	public ActionForward createConclusionProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
-		PhdIndividualProgramProcess individualProgramProcess = getProcess(request).getIndividualProgramProcess();
+    public ActionForward createConclusionProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
+        PhdIndividualProgramProcess individualProgramProcess = getProcess(request).getIndividualProgramProcess();
 
-		LocalDate conclusionDate = null;
-		if (!individualProgramProcess.getStudyPlan().isExempted()) {
-			conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
-		} else {
-			conclusionDate = bean.getConclusionDate();
-		}
+        LocalDate conclusionDate = null;
+        if (!individualProgramProcess.getStudyPlan().isExempted()) {
+            conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
+        } else {
+            conclusionDate = bean.getConclusionDate();
+        }
 
-		PhdProgramInformation phdProgramInformation =
-				getProcess(request).getIndividualProgramProcess().getPhdProgram().getPhdProgramInformationByDate(conclusionDate);
+        PhdProgramInformation phdProgramInformation =
+                getProcess(request).getIndividualProgramProcess().getPhdProgram().getPhdProgramInformationByDate(conclusionDate);
 
-		request.setAttribute("isExempted", individualProgramProcess.getStudyPlan().isExempted());
-		request.setAttribute("conclusionDateForPhdInformation", conclusionDate);
-		request.setAttribute("phdProgramInformation", phdProgramInformation);
-		request.setAttribute("phdConclusionProcessBean", bean);
+        request.setAttribute("isExempted", individualProgramProcess.getStudyPlan().isExempted());
+        request.setAttribute("conclusionDateForPhdInformation", conclusionDate);
+        request.setAttribute("phdProgramInformation", phdProgramInformation);
+        request.setAttribute("phdConclusionProcessBean", bean);
 
-		return mapping.findForward("createConclusionProcess");
-	}
+        return mapping.findForward("createConclusionProcess");
+    }
 
-	public ActionForward setPhdJuryElementsRatificationEntity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
-		final PhdThesisProcess process = getProcess(request);
+    public ActionForward setPhdJuryElementsRatificationEntity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+        final PhdThesisProcess process = getProcess(request);
 
-		ExecuteProcessActivity.run(process, SetPhdJuryElementRatificationEntity.class, bean);
+        ExecuteProcessActivity.run(process, SetPhdJuryElementRatificationEntity.class, bean);
 
-		return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
-	}
+        return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
+    }
 
-	public ActionForward setPhdJuryElementsRatificationEntityPostback(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
-		RenderUtils.invalidateViewState();
-		return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
-	}
+    public ActionForward setPhdJuryElementsRatificationEntityPostback(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+        RenderUtils.invalidateViewState();
+        return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
+    }
 
-	public ActionForward setPhdJuryElementsRatificationEntityInvalid(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
-		return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
-	}
+    public ActionForward setPhdJuryElementsRatificationEntityInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+        return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
+    }
 
-	/* EDIT PHD STATES */
+    /* EDIT PHD STATES */
 
-	public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProcessState state = getDomainObject(request, "stateId");
-		PhdProcessStateBean bean = new PhdProcessStateBean(state);
+    public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProcessState state = getDomainObject(request, "stateId");
+        PhdProcessStateBean bean = new PhdProcessStateBean(state);
 
-		request.setAttribute("bean", bean);
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editPhdProcessState");
-	}
+        return mapping.findForward("editPhdProcessState");
+    }
 
-	public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProcessStateBean bean = getRenderedObject("bean");
-		bean.getState().editStateDate(bean);
+    public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProcessStateBean bean = getRenderedObject("bean");
+        bean.getState().editStateDate(bean);
 
-		return manageStates(mapping, form, request, response);
-	}
+        return manageStates(mapping, form, request, response);
+    }
 
-	public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdProcessStateBean bean = getRenderedObject("bean");
-		request.setAttribute("bean", bean);
+    public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdProcessStateBean bean = getRenderedObject("bean");
+        request.setAttribute("bean", bean);
 
-		return mapping.findForward("editPhdProcessState");
-	}
+        return mapping.findForward("editPhdProcessState");
+    }
 
-	/* EDIT PHD STATES */
+    /* EDIT PHD STATES */
 
-	public ActionForward viewLogs(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-			final HttpServletResponse response) {
+    public ActionForward viewLogs(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
 
-		return mapping.findForward("viewLogs");
-	}
+        return mapping.findForward("viewLogs");
+    }
 
-	@SuppressWarnings("unchecked")
-	protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
-		return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
-	}
+    @SuppressWarnings("unchecked")
+    protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
+        return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
+    }
 
-	protected boolean hasAnyDocumentToUpload() {
-		for (final PhdProgramDocumentUploadBean each : getDocumentsToUpload()) {
-			if (each.hasAnyInformation()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    protected boolean hasAnyDocumentToUpload() {
+        for (final PhdProgramDocumentUploadBean each : getDocumentsToUpload()) {
+            if (each.hasAnyInformation()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		prepareDocumentsToUpload(request);
+    @Override
+    public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        prepareDocumentsToUpload(request);
 
-		return mapping.findForward("manageThesisDocuments");
-	}
+        return mapping.findForward("manageThesisDocuments");
+    }
 
-	private void prepareDocumentsToUpload(HttpServletRequest request) {
-		request.setAttribute("documentsToUpload", Arrays.asList(new PhdProgramDocumentUploadBean(),
-				new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean()));
-	}
+    private void prepareDocumentsToUpload(HttpServletRequest request) {
+        request.setAttribute("documentsToUpload", Arrays.asList(new PhdProgramDocumentUploadBean(),
+                new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean()));
+    }
 
-	public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("documentsToUpload", getDocumentsToUpload());
-		return mapping.findForward("manageThesisDocuments");
-	}
+        request.setAttribute("documentsToUpload", getDocumentsToUpload());
+        return mapping.findForward("manageThesisDocuments");
+    }
 
-	public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		if (!hasAnyDocumentToUpload()) {
-			request.setAttribute("documentsToUpload", getDocumentsToUpload());
+        if (!hasAnyDocumentToUpload()) {
+            request.setAttribute("documentsToUpload", getDocumentsToUpload());
 
-			addErrorMessage(request, "message.no.documents.to.upload");
+            addErrorMessage(request, "message.no.documents.to.upload");
 
-			return mapping.findForward("manageThesisDocuments");
-		}
+            return mapping.findForward("manageThesisDocuments");
+        }
 
-		final ActionForward result =
-				executeActivity(net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments.class,
-						getDocumentsToUpload(), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
-						"message.documents.uploaded.with.success");
+        final ActionForward result =
+                executeActivity(net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments.class,
+                        getDocumentsToUpload(), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
+                        "message.documents.uploaded.with.success");
 
-		RenderUtils.invalidateViewState("documentsToUpload");
+        RenderUtils.invalidateViewState("documentsToUpload");
 
-		prepareDocumentsToUpload(request);
+        prepareDocumentsToUpload(request);
 
-		return result;
+        return result;
 
-	}
+    }
 
 }

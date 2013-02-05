@@ -25,145 +25,145 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
-	public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("registrations", getLoggedPerson(request).getStudent().getRegistrations());
+    public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("registrations", getLoggedPerson(request).getStudent().getRegistrations());
 
-		return mapping.findForward("chooseRegistration");
-	}
+        return mapping.findForward("chooseRegistration");
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(getRegistration(request, actionForm)));
+        request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(getRegistration(request, actionForm)));
 
-		return mapping.findForward("createDocumentRequests");
-	}
+        return mapping.findForward("createDocumentRequests");
+    }
 
-	private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
-		return rootDomainObject.readRegistrationByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
-				"registrationId"));
-	}
+    private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
+        return rootDomainObject.readRegistrationByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
+                "registrationId"));
+    }
 
-	public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("student", getLoggedPerson(request).getStudent());
-		request.setAttribute("documentRequests", getDocumentRequest(request));
-		return mapping.findForward("viewDocumentRequests");
-	}
+        request.setAttribute("student", getLoggedPerson(request).getStudent());
+        request.setAttribute("documentRequests", getDocumentRequest(request));
+        return mapping.findForward("viewDocumentRequests");
+    }
 
-	private List<AcademicServiceRequest> getDocumentRequest(final HttpServletRequest request) {
+    private List<AcademicServiceRequest> getDocumentRequest(final HttpServletRequest request) {
 
-		final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
-		for (final Registration registration : getLoggedPerson(request).getStudent().getRegistrationsSet()) {
-			result.addAll(registration.getAcademicServiceRequests());
-		}
-		return result;
-	}
+        final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
+        for (final Registration registration : getLoggedPerson(request).getStudent().getRegistrationsSet()) {
+            result.addAll(registration.getAcademicServiceRequests());
+        }
+        return result;
+    }
 
-	public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("documentRequest",
-				rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "documentRequestId")));
+    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("documentRequest",
+                rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "documentRequestId")));
 
-		return mapping.findForward("viewDocumentRequest");
-	}
+        return mapping.findForward("viewDocumentRequest");
+    }
 
-	public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		getAndSetAcademicServiceRequest(request);
-		return mapping.findForward("prepareCancelAcademicServiceRequest");
-	}
+        getAndSetAcademicServiceRequest(request);
+        return mapping.findForward("prepareCancelAcademicServiceRequest");
+    }
 
-	public ActionForward cancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward cancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-		final String justification = ((DynaActionForm) actionForm).getString("justification");
-		try {
-			academicServiceRequest.cancel(justification);
-		} catch (DomainExceptionWithLabelFormatter ex) {
-			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-			return mapping.findForward("prepareCancelAcademicServiceRequest");
-		} catch (DomainException ex) {
-			addActionMessage(request, ex.getKey());
-			return mapping.findForward("prepareCancelAcademicServiceRequest");
-		}
+        final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+        final String justification = ((DynaActionForm) actionForm).getString("justification");
+        try {
+            academicServiceRequest.cancel(justification);
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+            return mapping.findForward("prepareCancelAcademicServiceRequest");
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey());
+            return mapping.findForward("prepareCancelAcademicServiceRequest");
+        }
 
-		return mapping.findForward("cancelSuccess");
-	}
+        return mapping.findForward("cancelSuccess");
+    }
 
-	private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
-		final AcademicServiceRequest academicServiceRequest =
-				rootDomainObject
-						.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "academicServiceRequestId"));
-		request.setAttribute("academicServiceRequest", academicServiceRequest);
-		return academicServiceRequest;
-	}
+    private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
+        final AcademicServiceRequest academicServiceRequest =
+                rootDomainObject
+                        .readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "academicServiceRequestId"));
+        request.setAttribute("academicServiceRequest", academicServiceRequest);
+        return academicServiceRequest;
+    }
 
-	public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(getRegistration(request, actionForm)));
+        request.setAttribute("documentRequestCreateBean", new DocumentRequestCreator(getRegistration(request, actionForm)));
 
-		return mapping.findForward("createDocumentRequests");
-	}
+        return mapping.findForward("createDocumentRequests");
+    }
 
-	public ActionForward documentRequestTypeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward documentRequestTypeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DocumentRequestCreateBean requestCreateBean =
-				(DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
+        final DocumentRequestCreateBean requestCreateBean =
+                (DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-		setAdditionalInformationSchemaName(request, requestCreateBean);
-		request.setAttribute("documentRequestCreateBean", requestCreateBean);
-		return mapping.findForward("createDocumentRequests");
-	}
+        setAdditionalInformationSchemaName(request, requestCreateBean);
+        request.setAttribute("documentRequestCreateBean", requestCreateBean);
+        return mapping.findForward("createDocumentRequests");
+    }
 
-	public ActionForward documentRequestTypeChosenPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward documentRequestTypeChosenPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DocumentRequestCreateBean requestCreateBean =
-				(DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
-		RenderUtils.invalidateViewState();
+        final DocumentRequestCreateBean requestCreateBean =
+                (DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
+        RenderUtils.invalidateViewState();
 
-		setAdditionalInformationSchemaName(request, requestCreateBean);
-		request.setAttribute("documentRequestCreateBean", requestCreateBean);
-		return mapping.findForward("createDocumentRequests");
-	}
+        setAdditionalInformationSchemaName(request, requestCreateBean);
+        request.setAttribute("documentRequestCreateBean", requestCreateBean);
+        return mapping.findForward("createDocumentRequests");
+    }
 
-	private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
-		if (requestCreateBean.getHasAdditionalInformation()) {
-			request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
-					+ requestCreateBean.getChosenDocumentRequestType().name() + ".AdditionalInformation");
-		}
-	}
+    private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
+        if (requestCreateBean.getHasAdditionalInformation()) {
+            request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
+                    + requestCreateBean.getChosenDocumentRequestType().name() + ".AdditionalInformation");
+        }
+    }
 
-	public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final DocumentRequestCreateBean requestCreateBean =
-				(DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
+        final DocumentRequestCreateBean requestCreateBean =
+                (DocumentRequestCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-		setAdditionalInformationSchemaName(request, requestCreateBean);
-		request.setAttribute("documentRequestCreateBean", requestCreateBean);
-		return mapping.findForward("viewDocumentRequestsToCreate");
-	}
+        setAdditionalInformationSchemaName(request, requestCreateBean);
+        request.setAttribute("documentRequestCreateBean", requestCreateBean);
+        return mapping.findForward("viewDocumentRequestsToCreate");
+    }
 
-	public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		try {
-			executeFactoryMethod();
-		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage());
-			return viewDocumentRequestToCreate(mapping, actionForm, request, response);
-		}
+    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        try {
+            executeFactoryMethod();
+        } catch (DomainException e) {
+            addActionMessage(request, e.getMessage());
+            return viewDocumentRequestToCreate(mapping, actionForm, request, response);
+        }
 
-		request.setAttribute("documentRequestCreateBean", ((DocumentRequestCreateBean) getRenderedObject()).getRegistration());
+        request.setAttribute("documentRequestCreateBean", ((DocumentRequestCreateBean) getRenderedObject()).getRegistration());
 
-		return mapping.findForward("createSuccess");
-	}
+        return mapping.findForward("createSuccess");
+    }
 
 }

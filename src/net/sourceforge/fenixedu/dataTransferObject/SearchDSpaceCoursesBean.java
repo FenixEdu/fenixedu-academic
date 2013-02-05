@@ -12,77 +12,77 @@ import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 
 public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
 
-	ExecutionYear executionYear;
-	ExecutionSemester executionSemester;
-	List<EducationalResourceType> educationalResourceTypes;
+    ExecutionYear executionYear;
+    ExecutionSemester executionSemester;
+    List<EducationalResourceType> educationalResourceTypes;
 
-	public SearchDSpaceCoursesBean() {
-		super();
-		this.setExecutionYear(null);
-		this.setExecutionPeriod(null);
-		this.educationalResourceTypes = new ArrayList<EducationalResourceType>();
-	}
+    public SearchDSpaceCoursesBean() {
+        super();
+        this.setExecutionYear(null);
+        this.setExecutionPeriod(null);
+        this.educationalResourceTypes = new ArrayList<EducationalResourceType>();
+    }
 
-	public List<EducationalResourceType> getEducationalResourceTypes() {
-		return educationalResourceTypes;
-	}
+    public List<EducationalResourceType> getEducationalResourceTypes() {
+        return educationalResourceTypes;
+    }
 
-	public void setEducationalResourceTypes(List<EducationalResourceType> educationalResourceTypes) {
-		this.educationalResourceTypes = educationalResourceTypes;
-	}
+    public void setEducationalResourceTypes(List<EducationalResourceType> educationalResourceTypes) {
+        this.educationalResourceTypes = educationalResourceTypes;
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	public ExecutionSemester getExecutionPeriod() {
-		return executionSemester;
-	}
+    public ExecutionSemester getExecutionPeriod() {
+        return executionSemester;
+    }
 
-	public void setExecutionPeriod(ExecutionSemester executionSemester) {
-		this.executionSemester = executionSemester;
-	}
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
+    }
 
-	@Override
-	public String getSearchElementsAsParameters() {
-		String parameters = super.getSearchElementsAsParameters();
-		for (EducationalResourceType type : getEducationalResourceTypes()) {
-			parameters += "&amp;type=" + type.toString();
-		}
-		ExecutionYear executionYear = getExecutionYear();
-		ExecutionSemester period = getExecutionPeriod();
-		if (executionYear != null) {
-			parameters += "&amp;executionYearId=" + getExecutionYear().getIdInternal();
-		}
-		if (period != null) {
-			parameters += "&amp;executionPeriodId=" + getExecutionPeriod().getIdInternal();
-		}
-		return parameters;
-	}
+    @Override
+    public String getSearchElementsAsParameters() {
+        String parameters = super.getSearchElementsAsParameters();
+        for (EducationalResourceType type : getEducationalResourceTypes()) {
+            parameters += "&amp;type=" + type.toString();
+        }
+        ExecutionYear executionYear = getExecutionYear();
+        ExecutionSemester period = getExecutionPeriod();
+        if (executionYear != null) {
+            parameters += "&amp;executionYearId=" + getExecutionYear().getIdInternal();
+        }
+        if (period != null) {
+            parameters += "&amp;executionPeriodId=" + getExecutionPeriod().getIdInternal();
+        }
+        return parameters;
+    }
 
-	@Override
-	public FileSearchCriteria getSearchCriteria(int start) {
+    @Override
+    public FileSearchCriteria getSearchCriteria(int start) {
 
-		FileSearchCriteria criteria = new FileSearchCriteria(start, pageSize);
-		List<SearchElement> elements = getSearchElements();
+        FileSearchCriteria criteria = new FileSearchCriteria(start, pageSize);
+        List<SearchElement> elements = getSearchElements();
 
-		if (hasSearchElements()) {
-			for (EducationalResourceType type : getEducationalResourceTypes()) {
-				criteria.addExactMatchOrCriteria(SearchField.TYPE, type.getType());
-			}
-			for (SearchElement element : elements) {
-				if (element.getConjunction().equals(ConjunctionType.AND)) {
-					criteria.addAndCriteria(element.getSearchField(), element.getQueryValue());
-				}
-				if (element.getConjunction().equals(ConjunctionType.OR)) {
-					criteria.addOrCriteria(element.getSearchField(), element.getQueryValue());
-				}
-			}
-		}
-		return criteria;
-	}
+        if (hasSearchElements()) {
+            for (EducationalResourceType type : getEducationalResourceTypes()) {
+                criteria.addExactMatchOrCriteria(SearchField.TYPE, type.getType());
+            }
+            for (SearchElement element : elements) {
+                if (element.getConjunction().equals(ConjunctionType.AND)) {
+                    criteria.addAndCriteria(element.getSearchField(), element.getQueryValue());
+                }
+                if (element.getConjunction().equals(ConjunctionType.OR)) {
+                    criteria.addOrCriteria(element.getSearchField(), element.getQueryValue());
+                }
+            }
+        }
+        return criteria;
+    }
 }

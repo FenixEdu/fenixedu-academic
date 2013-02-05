@@ -13,62 +13,62 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ExamDateCertificateExamSelectionBean implements Serializable {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<ExamDateCertificateExamSelectionEntryBean> entries;
+    private List<ExamDateCertificateExamSelectionEntryBean> entries;
 
-	public ExamDateCertificateExamSelectionBean() {
-		this.entries = new ArrayList<ExamDateCertificateExamSelectionEntryBean>();
-	}
+    public ExamDateCertificateExamSelectionBean() {
+        this.entries = new ArrayList<ExamDateCertificateExamSelectionEntryBean>();
+    }
 
-	public List<ExamDateCertificateExamSelectionEntryBean> getEntries() {
-		return entries;
-	}
+    public List<ExamDateCertificateExamSelectionEntryBean> getEntries() {
+        return entries;
+    }
 
-	public void addEntry(final ExamDateCertificateExamSelectionEntryBean entry) {
-		this.entries.add(entry);
-	}
+    public void addEntry(final ExamDateCertificateExamSelectionEntryBean entry) {
+        this.entries.add(entry);
+    }
 
-	public void addEntries(final List<ExamDateCertificateExamSelectionEntryBean> entries) {
-		this.entries.addAll(entries);
-	}
+    public void addEntries(final List<ExamDateCertificateExamSelectionEntryBean> entries) {
+        this.entries.addAll(entries);
+    }
 
-	public static ExamDateCertificateExamSelectionBean buildFor(final Collection<Enrolment> enrolments,
-			final ExecutionSemester executionSemester) {
-		final ExamDateCertificateExamSelectionBean result = new ExamDateCertificateExamSelectionBean();
+    public static ExamDateCertificateExamSelectionBean buildFor(final Collection<Enrolment> enrolments,
+            final ExecutionSemester executionSemester) {
+        final ExamDateCertificateExamSelectionBean result = new ExamDateCertificateExamSelectionBean();
 
-		for (final Enrolment enrolment : enrolments) {
-			for (final Exam exam : enrolment.getAttendsFor(executionSemester).getExecutionCourse()
-					.getPublishedExamsFor(enrolment.getCurricularCourse())) {
-				result.addEntry(new ExamDateCertificateExamSelectionEntryBean(enrolment, exam));
-			}
-		}
+        for (final Enrolment enrolment : enrolments) {
+            for (final Exam exam : enrolment.getAttendsFor(executionSemester).getExecutionCourse()
+                    .getPublishedExamsFor(enrolment.getCurricularCourse())) {
+                result.addEntry(new ExamDateCertificateExamSelectionEntryBean(enrolment, exam));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public Set<Enrolment> getEnrolmentsWithoutExam(final Collection<Enrolment> enrolments) {
-		final Set<Enrolment> result = new HashSet<Enrolment>();
+    public Set<Enrolment> getEnrolmentsWithoutExam(final Collection<Enrolment> enrolments) {
+        final Set<Enrolment> result = new HashSet<Enrolment>();
 
-		for (final Enrolment enrolment : enrolments) {
-			if (!containsEnrolment(enrolment)) {
-				result.add(enrolment);
-			}
-		}
+        for (final Enrolment enrolment : enrolments) {
+            if (!containsEnrolment(enrolment)) {
+                result.add(enrolment);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private boolean containsEnrolment(Enrolment enrolment) {
-		for (final ExamDateCertificateExamSelectionEntryBean each : getEntries()) {
-			if (each.getEnrolment() == enrolment) {
-				return true;
-			}
-		}
+    private boolean containsEnrolment(Enrolment enrolment) {
+        for (final ExamDateCertificateExamSelectionEntryBean each : getEntries()) {
+            if (each.getEnrolment() == enrolment) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

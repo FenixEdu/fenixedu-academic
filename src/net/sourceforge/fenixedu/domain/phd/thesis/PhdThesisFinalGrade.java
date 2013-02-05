@@ -10,76 +10,76 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PhdThesisFinalGrade implements IPresentableEnum {
 
-	NOT_APPROVED(true, false),
+    NOT_APPROVED(true, false),
 
-	APPROVED(true, true),
+    APPROVED(true, true),
 
-	APPROVED_WITH_PLUS(true, true),
+    APPROVED_WITH_PLUS(true, true),
 
-	APPROVED_WITH_PLUS_PLUS(true, true),
+    APPROVED_WITH_PLUS_PLUS(true, true),
 
-	PRE_BOLONHA_NOT_APPROVED(true, false),
+    PRE_BOLONHA_NOT_APPROVED(true, false),
 
-	PRE_BOLONHA_APPROVED(false, true),
+    PRE_BOLONHA_APPROVED(false, true),
 
-	PRE_BOLONHA_APPROVED_WITH_PLUS(false, true),
+    PRE_BOLONHA_APPROVED_WITH_PLUS(false, true),
 
-	PRE_BOLONHA_APPROVED_WITH_PLUS_PLUS(false, true);
+    PRE_BOLONHA_APPROVED_WITH_PLUS_PLUS(false, true);
 
-	private boolean forBolonha;
+    private boolean forBolonha;
 
-	private boolean approved;
+    private boolean approved;
 
-	private PhdThesisFinalGrade(boolean forBolonha, boolean approved) {
-		this.forBolonha = forBolonha;
-		this.approved = approved;
-	}
+    private PhdThesisFinalGrade(boolean forBolonha, boolean approved) {
+        this.forBolonha = forBolonha;
+        this.approved = approved;
+    }
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	@Override
-	public String getLocalizedName() {
-		return getLocalizedName(Language.getLocale());
-	}
+    @Override
+    public String getLocalizedName() {
+        return getLocalizedName(Language.getLocale());
+    }
 
-	public String getLocalizedName(final Locale locale) {
-		return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
-	}
+    public String getLocalizedName(final Locale locale) {
+        return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
+    }
 
-	public String getQualifiedName() {
-		return getClass().getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return getClass().getSimpleName() + "." + name();
+    }
 
-	public boolean isForBolonha() {
-		return forBolonha;
-	}
+    public boolean isForBolonha() {
+        return forBolonha;
+    }
 
-	public boolean isApproved() {
-		return approved;
-	}
+    public boolean isApproved() {
+        return approved;
+    }
 
-	static public List<PhdThesisFinalGrade> getGradesForBolonha() {
-		ArrayList<PhdThesisFinalGrade> values = new ArrayList<PhdThesisFinalGrade>();
-		for (PhdThesisFinalGrade grade : PhdThesisFinalGrade.values()) {
-			if (grade.isForBolonha()) {
-				values.add(grade);
-			}
-		}
+    static public List<PhdThesisFinalGrade> getGradesForBolonha() {
+        ArrayList<PhdThesisFinalGrade> values = new ArrayList<PhdThesisFinalGrade>();
+        for (PhdThesisFinalGrade grade : PhdThesisFinalGrade.values()) {
+            if (grade.isForBolonha()) {
+                values.add(grade);
+            }
+        }
 
-		return values;
-	}
+        return values;
+    }
 
-	static public List<PhdThesisFinalGrade> getGradesForPreBolonha() {
-		ArrayList<PhdThesisFinalGrade> values = new ArrayList<PhdThesisFinalGrade>();
-		for (PhdThesisFinalGrade grade : PhdThesisFinalGrade.values()) {
-			if (!grade.isForBolonha()) {
-				values.add(grade);
-			}
-		}
+    static public List<PhdThesisFinalGrade> getGradesForPreBolonha() {
+        ArrayList<PhdThesisFinalGrade> values = new ArrayList<PhdThesisFinalGrade>();
+        for (PhdThesisFinalGrade grade : PhdThesisFinalGrade.values()) {
+            if (!grade.isForBolonha()) {
+                values.add(grade);
+            }
+        }
 
-		return values;
-	}
+        return values;
+    }
 
 }

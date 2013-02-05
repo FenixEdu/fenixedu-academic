@@ -15,36 +15,36 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGrantInsurance extends FenixService {
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public static void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException {
 
-		GrantInsurance grantInsurance = rootDomainObject.readGrantInsuranceByOID(infoGrantInsurance.getIdInternal());
-		if (grantInsurance == null) {
-			grantInsurance = new GrantInsurance();
-		}
+        GrantInsurance grantInsurance = rootDomainObject.readGrantInsuranceByOID(infoGrantInsurance.getIdInternal());
+        if (grantInsurance == null) {
+            grantInsurance = new GrantInsurance();
+        }
 
-		final GrantContract grantContract =
-				rootDomainObject.readGrantContractByOID(infoGrantInsurance.getInfoGrantContract().getIdInternal());
+        final GrantContract grantContract =
+                rootDomainObject.readGrantContractByOID(infoGrantInsurance.getInfoGrantContract().getIdInternal());
 
-		grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
-		if (infoGrantInsurance.getDateEndInsurance() == null) {
-			final List grantContractRegimeList =
-					grantContract.readGrantContractRegimeByGrantContractAndState(InfoGrantContractRegime.getActiveState());
-			final GrantContractRegime grantContractRegime = (GrantContractRegime) grantContractRegimeList.get(0);
-			grantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
-		} else {
-			grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
-		}
+        grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
+        if (infoGrantInsurance.getDateEndInsurance() == null) {
+            final List grantContractRegimeList =
+                    grantContract.readGrantContractRegimeByGrantContractAndState(InfoGrantContractRegime.getActiveState());
+            final GrantContractRegime grantContractRegime = (GrantContractRegime) grantContractRegimeList.get(0);
+            grantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
+        } else {
+            grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
+        }
 
-		grantInsurance.setGrantContract(grantContract);
+        grantInsurance.setGrantContract(grantContract);
 
-		final GrantPaymentEntity grantPaymentEntity =
-				rootDomainObject.readGrantPaymentEntityByOID(infoGrantInsurance.getInfoGrantPaymentEntity().getIdInternal());
-		grantInsurance.setGrantPaymentEntity(grantPaymentEntity);
+        final GrantPaymentEntity grantPaymentEntity =
+                rootDomainObject.readGrantPaymentEntityByOID(infoGrantInsurance.getInfoGrantPaymentEntity().getIdInternal());
+        grantInsurance.setGrantPaymentEntity(grantPaymentEntity);
 
-		grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance.getDateBeginInsurance(),
-				grantInsurance.getDateEndInsurance()));
-	}
+        grantInsurance.setTotalValue(InfoGrantInsurance.calculateTotalValue(grantInsurance.getDateBeginInsurance(),
+                grantInsurance.getDateEndInsurance()));
+    }
 
 }

@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class NewRoundElectionsCandidatesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		NewRoundElectionBean bean = (NewRoundElectionBean) source;
-		return bean.getCandidates();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        NewRoundElectionBean bean = (NewRoundElectionBean) source;
+        return bean.getCandidates();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 }

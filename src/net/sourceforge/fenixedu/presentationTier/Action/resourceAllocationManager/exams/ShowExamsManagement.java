@@ -45,139 +45,132 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Ana e Ricardo
  */
-@Mapping(
-		module = "resourceAllocationManager",
-		path = "/showExamsManagement",
-		input = "/chooseDegreeAndYearContext.do?method=prepare",
-		attribute = "examNewForm",
-		formBean = "examNewForm",
-		scope = "request",
-		validate = false,
-		parameter = "method")
+@Mapping(module = "resourceAllocationManager", path = "/showExamsManagement",
+        input = "/chooseDegreeAndYearContext.do?method=prepare", attribute = "examNewForm", formBean = "examNewForm",
+        scope = "request", validate = false, parameter = "method")
 @Forwards(value = { @Forward(name = "editExam", path = "/createExamNew.do?method=prepareForEdit&page=0"),
-		@Forward(name = "viewExamsMap", path = "df.page.viewExamsMap"),
-		@Forward(name = "deleteExam", path = "/showExamsManagement.do?method=view&page=0"),
-		@Forward(name = "createExamByDay", path = "/chooseExecutionCourseForExams.do?method=prepare&page=0"),
-		@Forward(name = "createExamByCourse", path = "/createExamNew.do?method=prepare&page=0&nextPage=showExamsManagement") })
+        @Forward(name = "viewExamsMap", path = "df.page.viewExamsMap"),
+        @Forward(name = "deleteExam", path = "/showExamsManagement.do?method=view&page=0"),
+        @Forward(name = "createExamByDay", path = "/chooseExecutionCourseForExams.do?method=prepare&page=0"),
+        @Forward(name = "createExamByCourse", path = "/createExamNew.do?method=prepare&page=0&nextPage=showExamsManagement") })
 @Exceptions(
-		value = { @ExceptionHandling(
-				type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class,
-				key = "error.exams.period.undefined",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request") })
+        value = { @ExceptionHandling(
+                type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class,
+                key = "error.exams.period.undefined",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ShowExamsManagement extends FenixContextDispatchAction {
 
-	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixServiceException, FenixFilterException {
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixServiceException, FenixFilterException {
 
-		InfoExamsMap infoExamsMap = getExamsMap(request);
-		request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
+        InfoExamsMap infoExamsMap = getExamsMap(request);
+        request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
 
-		request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, ContextUtils.createCurricularYearList());
-		request.setAttribute(PresentationConstants.DEGREES, ContextUtils.createExecutionDegreeList(request));
+        request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, ContextUtils.createCurricularYearList());
+        request.setAttribute(PresentationConstants.DEGREES, ContextUtils.createExecutionDegreeList(request));
 
-		return mapping.findForward("viewExamsMap");
-	}
+        return mapping.findForward("viewExamsMap");
+    }
 
-	private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-		IUserView userView = getUserView(request);
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+        IUserView userView = getUserView(request);
 
-		InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+        InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-		InfoCurricularYear curricularYearObj = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+        InfoCurricularYear curricularYearObj = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
 
-		Integer curricularYear = curricularYearObj.getYear();
+        Integer curricularYear = curricularYearObj.getYear();
 
-		InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod =
+                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-		List curricularYearsList = new ArrayList();
-		curricularYearsList.add(curricularYear);
+        List curricularYearsList = new ArrayList();
+        curricularYearsList.add(curricularYear);
 
-		Object[] args = { infoExecutionDegree, curricularYearsList, infoExecutionPeriod };
-		InfoExamsMap infoExamsMap;
+        Object[] args = { infoExecutionDegree, curricularYearsList, infoExecutionPeriod };
+        InfoExamsMap infoExamsMap;
 
-		infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
+        infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
 
-		return infoExamsMap;
-	}
+        return infoExamsMap;
+    }
 
-	public ActionForward createByCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward createByCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setExecutionCourseContext(request);
-		InfoExecutionCourse infoExecutionCourse =
-				(InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+        ContextUtils.setExecutionCourseContext(request);
+        InfoExecutionCourse infoExecutionCourse =
+                (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
-		ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setCurricularYearContext(request);
 
-		request.setAttribute(PresentationConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
-		request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
 
-		ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
 
-		return mapping.findForward("createExamByCourse");
-	}
+        return mapping.findForward("createExamByCourse");
+    }
 
-	public ActionForward createByDay(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward createByDay(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setCurricularYearContext(request);
 
-		Integer day = new Integer(request.getParameter(PresentationConstants.DAY));
-		Integer month = new Integer(request.getParameter(PresentationConstants.MONTH));
-		Integer year = new Integer(request.getParameter(PresentationConstants.YEAR));
-		request.setAttribute(PresentationConstants.DAY, day);
-		request.setAttribute(PresentationConstants.MONTH, month);
-		request.setAttribute(PresentationConstants.YEAR, year);
+        Integer day = new Integer(request.getParameter(PresentationConstants.DAY));
+        Integer month = new Integer(request.getParameter(PresentationConstants.MONTH));
+        Integer year = new Integer(request.getParameter(PresentationConstants.YEAR));
+        request.setAttribute(PresentationConstants.DAY, day);
+        request.setAttribute(PresentationConstants.MONTH, month);
+        request.setAttribute(PresentationConstants.YEAR, year);
 
-		ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
 
-		return mapping.findForward("createExamByDay");
-	}
+        return mapping.findForward("createExamByDay");
+    }
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionCourseContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionCourseContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
 
-		Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
+        Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
 
-		InfoExam infoExam = ReadExamByOID.run(examID);
-		request.setAttribute(PresentationConstants.EXAM, infoExam);
-		request.setAttribute(PresentationConstants.EXAM_OID, infoExam.getIdInternal());
-		return mapping.findForward("editExam");
-	}
+        InfoExam infoExam = ReadExamByOID.run(examID);
+        request.setAttribute(PresentationConstants.EXAM, infoExam);
+        request.setAttribute(PresentationConstants.EXAM_OID, infoExam.getIdInternal());
+        return mapping.findForward("editExam");
+    }
 
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		ActionErrors actionErrors = new ActionErrors();
+        ActionErrors actionErrors = new ActionErrors();
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionCourseContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionCourseContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
 
-		Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
-		Object[] args = { null, examID };
+        Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
+        Object[] args = { null, examID };
 
-		try {
-			ServiceUtils.executeService("DeleteWrittenEvaluation", args);
-		} catch (FenixServiceException exception) {
-			actionErrors.add(exception.getMessage(), new ActionError(exception.getMessage()));
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
-		}
+        try {
+            ServiceUtils.executeService("DeleteWrittenEvaluation", args);
+        } catch (FenixServiceException exception) {
+            actionErrors.add(exception.getMessage(), new ActionError(exception.getMessage()));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
 
-		return mapping.findForward("deleteExam");
-	}
+        return mapping.findForward("deleteExam");
+    }
 }

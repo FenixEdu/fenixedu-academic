@@ -15,19 +15,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExternalPersonByID extends FenixService {
 
-	@Service
-	public static Object run(Integer externalPersonID) throws FenixServiceException {
-		InfoExternalPerson infoExternalPerson = null;
-		ExternalContract externalPerson = null;
+    @Service
+    public static Object run(Integer externalPersonID) throws FenixServiceException {
+        InfoExternalPerson infoExternalPerson = null;
+        ExternalContract externalPerson = null;
 
-		externalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
-		if (externalPerson == null) {
-			throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
-		}
+        externalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
+        if (externalPerson == null) {
+            throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
+        }
 
-		infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
+        infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
 
-		return infoExternalPerson;
-	}
+        return infoExternalPerson;
+    }
 
 }

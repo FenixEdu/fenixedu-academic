@@ -13,16 +13,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveParentInherentFunction extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer functionID) throws FenixServiceException, DomainException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer functionID) throws FenixServiceException, DomainException {
 
-		Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
-		if (function == null) {
-			throw new FenixServiceException("error.noFunction");
-		}
+        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+        if (function == null) {
+            throw new FenixServiceException("error.noFunction");
+        }
 
-		function.removeParentInherentFunction();
-	}
+        function.removeParentInherentFunction();
+    }
 
 }

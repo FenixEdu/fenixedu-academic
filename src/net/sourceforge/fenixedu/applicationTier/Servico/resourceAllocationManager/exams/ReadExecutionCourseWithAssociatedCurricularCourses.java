@@ -23,35 +23,35 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourseWithAssociatedCurricularCourses extends FenixService {
 
-	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-	@Service
-	public static InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException {
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-		if (executionCourse == null) {
-			throw new FenixServiceException("error.noExecutionCourse");
-		}
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException {
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        if (executionCourse == null) {
+            throw new FenixServiceException("error.noExecutionCourse");
+        }
 
-		final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+        final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
-		List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+        List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
-		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-			CollectionUtils.filter(infoCurricularCourse.getInfoScopes(), new Predicate() {
-				@Override
-				public boolean evaluate(Object arg0) {
-					InfoCurricularCourseScope scope = (InfoCurricularCourseScope) arg0;
-					return scope.getInfoCurricularSemester().getSemester()
-							.equals(executionCourse.getExecutionPeriod().getSemester());
-				}
-			});
+            CollectionUtils.filter(infoCurricularCourse.getInfoScopes(), new Predicate() {
+                @Override
+                public boolean evaluate(Object arg0) {
+                    InfoCurricularCourseScope scope = (InfoCurricularCourseScope) arg0;
+                    return scope.getInfoCurricularSemester().getSemester()
+                            .equals(executionCourse.getExecutionPeriod().getSemester());
+                }
+            });
 
-			infoCurricularCourses.add(infoCurricularCourse);
-		}
+            infoCurricularCourses.add(infoCurricularCourse);
+        }
 
-		infoExecutionCourse.setFilteredAssociatedInfoCurricularCourses(infoCurricularCourses);
+        infoExecutionCourse.setFilteredAssociatedInfoCurricularCourses(infoCurricularCourses);
 
-		return infoExecutionCourse;
-	}
+        return infoExecutionCourse;
+    }
 }

@@ -11,39 +11,39 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 public abstract class CandidacyOperation extends Operation {
 
-	public static Comparator<CandidacyOperation> COMPARATOR_BY_TYPE = new Comparator<CandidacyOperation>() {
-		@Override
-		public int compare(CandidacyOperation leftCandidacyOperation, CandidacyOperation rightCandidacyOperation) {
-			return leftCandidacyOperation.getType().compareTo(rightCandidacyOperation.getType());
+    public static Comparator<CandidacyOperation> COMPARATOR_BY_TYPE = new Comparator<CandidacyOperation>() {
+        @Override
+        public int compare(CandidacyOperation leftCandidacyOperation, CandidacyOperation rightCandidacyOperation) {
+            return leftCandidacyOperation.getType().compareTo(rightCandidacyOperation.getType());
 
-		}
-	};
+        }
+    };
 
-	private Candidacy candidacy;
+    private Candidacy candidacy;
 
-	protected CandidacyOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
-		super(roleTypes);
-		setCandidacy(candidacy);
-	}
+    protected CandidacyOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
+        super(roleTypes);
+        setCandidacy(candidacy);
+    }
 
-	public Candidacy getCandidacy() {
-		return this.candidacy;
-	}
+    public Candidacy getCandidacy() {
+        return this.candidacy;
+    }
 
-	private void setCandidacy(Candidacy candidacy) {
-		this.candidacy = candidacy;
-	}
+    private void setCandidacy(Candidacy candidacy) {
+        this.candidacy = candidacy;
+    }
 
-	@Override
-	public IStateWithOperations getState() {
-		return getCandidacy().getActiveCandidacySituation();
-	}
+    @Override
+    public IStateWithOperations getState() {
+        return getCandidacy().getActiveCandidacySituation();
+    }
 
-	@Override
-	public int compareTo(Operation operation) {
-		return ((CandidacyOperation) operation).getType().compareTo(getType());
-	}
+    @Override
+    public int compareTo(Operation operation) {
+        return ((CandidacyOperation) operation).getType().compareTo(getType());
+    }
 
-	public abstract CandidacyOperationType getType();
+    public abstract CandidacyOperationType getType();
 
 }

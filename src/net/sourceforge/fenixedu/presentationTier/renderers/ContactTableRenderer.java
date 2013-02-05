@@ -15,96 +15,96 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ContactTableRenderer extends AbstractContactRenderer {
-	private String label;
+    private String label;
 
-	private String rowClasses;
+    private String rowClasses;
 
-	private String leftColumnClasses;
+    private String leftColumnClasses;
 
-	private String rightColumnClasses;
+    private String rightColumnClasses;
 
-	private String leftLineStyle;
+    private String leftLineStyle;
 
-	private String rightLineStyle;
+    private String rightLineStyle;
 
-	@Override
-	protected Layout getLayout(Object unfiltered, Class type) {
-		return new Layout() {
-			@Override
-			public HtmlComponent createComponent(Object unfiltered, Class type) {
-				List<MetaObject> contacts = getFilteredContacts((Collection<PartyContact>) unfiltered);
-				if (contacts.isEmpty()) {
-					return new HtmlText();
-				}
-				HtmlInlineContainer span = new HtmlInlineContainer();
-				int rowIndex = 0;
-				for (MetaObject meta : contacts) {
-					HtmlTableRow row = new HtmlTableRow();
-					row.setClasses(getRowClasses());
-					if (rowIndex == 0) {
-						HtmlTableCell left = row.createCell(CellType.HEADER);
-						left.setClasses(getLeftColumnClasses());
-						left.setStyle(getLeftLineStyle());
-						left.setRowspan(contacts.size());
-						left.setBody(new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()) + ":"));
-					}
-					HtmlTableCell right = row.createCell();
-					right.setClasses(getRightColumnClasses());
-					right.setStyle(getRightLineStyle());
-					right.setBody(getValue((PartyContact) meta.getObject()));
-					span.addChild(row);
-					rowIndex++;
-				}
-				return span;
-			}
-		};
-	}
+    @Override
+    protected Layout getLayout(Object unfiltered, Class type) {
+        return new Layout() {
+            @Override
+            public HtmlComponent createComponent(Object unfiltered, Class type) {
+                List<MetaObject> contacts = getFilteredContacts((Collection<PartyContact>) unfiltered);
+                if (contacts.isEmpty()) {
+                    return new HtmlText();
+                }
+                HtmlInlineContainer span = new HtmlInlineContainer();
+                int rowIndex = 0;
+                for (MetaObject meta : contacts) {
+                    HtmlTableRow row = new HtmlTableRow();
+                    row.setClasses(getRowClasses());
+                    if (rowIndex == 0) {
+                        HtmlTableCell left = row.createCell(CellType.HEADER);
+                        left.setClasses(getLeftColumnClasses());
+                        left.setStyle(getLeftLineStyle());
+                        left.setRowspan(contacts.size());
+                        left.setBody(new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()) + ":"));
+                    }
+                    HtmlTableCell right = row.createCell();
+                    right.setClasses(getRightColumnClasses());
+                    right.setStyle(getRightLineStyle());
+                    right.setBody(getValue((PartyContact) meta.getObject()));
+                    span.addChild(row);
+                    rowIndex++;
+                }
+                return span;
+            }
+        };
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getRowClasses() {
-		return rowClasses;
-	}
+    public String getRowClasses() {
+        return rowClasses;
+    }
 
-	public void setRowClasses(String rowClasses) {
-		this.rowClasses = rowClasses;
-	}
+    public void setRowClasses(String rowClasses) {
+        this.rowClasses = rowClasses;
+    }
 
-	public String getLeftColumnClasses() {
-		return leftColumnClasses;
-	}
+    public String getLeftColumnClasses() {
+        return leftColumnClasses;
+    }
 
-	public void setLeftColumnClasses(String leftColumnClasses) {
-		this.leftColumnClasses = leftColumnClasses;
-	}
+    public void setLeftColumnClasses(String leftColumnClasses) {
+        this.leftColumnClasses = leftColumnClasses;
+    }
 
-	public String getRightColumnClasses() {
-		return rightColumnClasses;
-	}
+    public String getRightColumnClasses() {
+        return rightColumnClasses;
+    }
 
-	public void setRightColumnClasses(String rightColumnClasses) {
-		this.rightColumnClasses = rightColumnClasses;
-	}
+    public void setRightColumnClasses(String rightColumnClasses) {
+        this.rightColumnClasses = rightColumnClasses;
+    }
 
-	public String getLeftLineStyle() {
-		return leftLineStyle;
-	}
+    public String getLeftLineStyle() {
+        return leftLineStyle;
+    }
 
-	public void setLeftLineStyle(String leftLineStyle) {
-		this.leftLineStyle = leftLineStyle;
-	}
+    public void setLeftLineStyle(String leftLineStyle) {
+        this.leftLineStyle = leftLineStyle;
+    }
 
-	public String getRightLineStyle() {
-		return rightLineStyle;
-	}
+    public String getRightLineStyle() {
+        return rightLineStyle;
+    }
 
-	public void setRightLineStyle(String rightLineStyle) {
-		this.rightLineStyle = rightLineStyle;
-	}
+    public void setRightLineStyle(String rightLineStyle) {
+        this.rightLineStyle = rightLineStyle;
+    }
 }

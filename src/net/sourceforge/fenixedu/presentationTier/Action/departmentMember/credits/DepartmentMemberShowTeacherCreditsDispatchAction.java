@@ -25,28 +25,28 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
-	public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
-			ParseException {
+    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+            ParseException {
 
-		DynaActionForm teacherCreditsForm = (DynaActionForm) form;
-		ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+        DynaActionForm teacherCreditsForm = (DynaActionForm) form;
+        ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
 
-		Teacher requestedTeacher = DomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
+        Teacher requestedTeacher = DomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 
-		IUserView userView = UserView.getUser();
-		Teacher loggedTeacher = userView.getPerson().getTeacher();
+        IUserView userView = UserView.getUser();
+        Teacher loggedTeacher = userView.getPerson().getTeacher();
 
-		if (requestedTeacher == null || loggedTeacher != requestedTeacher) {
-			ActionMessages actionMessages = new ActionMessages();
-			actionMessages.add("", new ActionMessage("message.invalid.teacher"));
-			saveMessages(request, actionMessages);
-			return mapping.findForward("teacher-not-found");
-		}
+        if (requestedTeacher == null || loggedTeacher != requestedTeacher) {
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage("message.invalid.teacher"));
+            saveMessages(request, actionMessages);
+            return mapping.findForward("teacher-not-found");
+        }
 
-		showLinks(request, executionSemester, RoleType.DEPARTMENT_MEMBER);
-		getAllTeacherCredits(request, executionSemester, requestedTeacher);
-		return mapping.findForward("show-teacher-credits");
-	}
+        showLinks(request, executionSemester, RoleType.DEPARTMENT_MEMBER);
+        getAllTeacherCredits(request, executionSemester, requestedTeacher);
+        return mapping.findForward("show-teacher-credits");
+    }
 }

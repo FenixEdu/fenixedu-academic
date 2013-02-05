@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestionType;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateAtomicQuestion extends FenixService {
-	@Service
-	public static NewQuestion run(NewQuestionGroup parentQuestionGroup, NewQuestionType questionType)
-			throws FenixServiceException {
-		return questionType.newInstance(parentQuestionGroup);
-	}
+    @Service
+    public static NewQuestion run(NewQuestionGroup parentQuestionGroup, NewQuestionType questionType)
+            throws FenixServiceException {
+        return questionType.newInstance(parentQuestionGroup);
+    }
 }

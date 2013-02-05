@@ -13,21 +13,21 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PersonRolesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		Set<RoleType> roleTypes = new HashSet<RoleType>();
-		LoginAliasBean bean = (LoginAliasBean) source;
-		if (bean != null) {
-			Person person = bean.getLogin().getUser().getPerson();
-			for (Role role : person.getPersonRoles()) {
-				roleTypes.add(role.getRoleType());
-			}
-		}
-		return roleTypes;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        Set<RoleType> roleTypes = new HashSet<RoleType>();
+        LoginAliasBean bean = (LoginAliasBean) source;
+        if (bean != null) {
+            Person person = bean.getLogin().getUser().getPerson();
+            for (Role role : person.getPersonRoles()) {
+                roleTypes.add(role.getRoleType());
+            }
+        }
+        return roleTypes;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 }

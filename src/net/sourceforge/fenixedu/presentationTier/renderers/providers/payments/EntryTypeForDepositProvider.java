@@ -7,17 +7,17 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class EntryTypeForDepositProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final DepositAmountBean depositAmountBean = (DepositAmountBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final DepositAmountBean depositAmountBean = (DepositAmountBean) source;
 
-		return depositAmountBean.getEvent().getPossibleEntryTypesForDeposit();
+        return depositAmountBean.getEvent().getPossibleEntryTypesForDeposit();
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
 }

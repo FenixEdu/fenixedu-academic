@@ -8,26 +8,26 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 
 public class StudentStandaloneEnrolmentBean extends StudentOptionalEnrolmentBean implements NoCourseGroupEnrolmentBean {
 
-	static private final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
-	public StudentStandaloneEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-			final ExecutionSemester executionSemester) {
-		setStudentCurricularPlan(studentCurricularPlan);
-		setExecutionPeriod(executionSemester);
-	}
+    public StudentStandaloneEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
+            final ExecutionSemester executionSemester) {
+        setStudentCurricularPlan(studentCurricularPlan);
+        setExecutionPeriod(executionSemester);
+    }
 
-	@Override
-	public NoCourseGroupCurriculumGroupType getGroupType() {
-		return NoCourseGroupCurriculumGroupType.STANDALONE;
-	}
+    @Override
+    public NoCourseGroupCurriculumGroupType getGroupType() {
+        return NoCourseGroupCurriculumGroupType.STANDALONE;
+    }
 
-	@Override
-	public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup() {
-		return getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(getGroupType());
-	}
+    @Override
+    public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup() {
+        return getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(getGroupType());
+    }
 
-	@Override
-	public CurricularRuleLevel getCurricularRuleLevel() {
-		return super.getCurricularRuleLevel() != null ? super.getCurricularRuleLevel() : getGroupType().getCurricularRuleLevel();
-	}
+    @Override
+    public CurricularRuleLevel getCurricularRuleLevel() {
+        return super.getCurricularRuleLevel() != null ? super.getCurricularRuleLevel() : getGroupType().getCurricularRuleLevel();
+    }
 }

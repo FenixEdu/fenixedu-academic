@@ -8,160 +8,160 @@ import net.sourceforge.fenixedu.util.Month;
 
 public class CreateIssueBean implements Serializable {
 
-	private ScientificJournal journal;
-	private String journalName = null;
-	private String scientificJournalName;
-	private ScopeType location;
-	private Integer year;
-	private String issn;
-	private String magazineUrl;
+    private ScientificJournal journal;
+    private String journalName = null;
+    private String scientificJournalName;
+    private ScopeType location;
+    private Integer year;
+    private String issn;
+    private String magazineUrl;
 
-	private Month month;
-	private String volume;
-	private String number;
-	private String publisher;
-	private String url;
-	private Boolean specialIssue;
-	private String specialIssueComment;
-	private Boolean createNewJournal;
+    private Month month;
+    private String volume;
+    private String number;
+    private String publisher;
+    private String url;
+    private Boolean specialIssue;
+    private String specialIssueComment;
+    private Boolean createNewJournal;
 
-	public Boolean getCreateNewJournal() {
-		return createNewJournal;
-	}
+    public Boolean getCreateNewJournal() {
+        return createNewJournal;
+    }
 
-	public void setCreateNewJournal(Boolean createNewIssue) {
-		this.createNewJournal = createNewIssue;
-	}
+    public void setCreateNewJournal(Boolean createNewIssue) {
+        this.createNewJournal = createNewIssue;
+    }
 
-	public CreateIssueBean() {
-		journal = null;
-	}
+    public CreateIssueBean() {
+        journal = null;
+    }
 
-	public ScientificJournal getJournal() {
-		return journal;
-	}
+    public ScientificJournal getJournal() {
+        return journal;
+    }
 
-	public void setJournal(ScientificJournal journal) {
-		this.journal = journal;
-	}
+    public void setJournal(ScientificJournal journal) {
+        this.journal = journal;
+    }
 
-	public String getJournalName() {
-		return journalName;
-	}
+    public String getJournalName() {
+        return journalName;
+    }
 
-	public void setJournalName(String journalName) {
-		this.journalName = journalName;
-	}
+    public void setJournalName(String journalName) {
+        this.journalName = journalName;
+    }
 
-	public Boolean getJournalAlreadyChosen() {
-		return journal != null;
-	}
+    public Boolean getJournalAlreadyChosen() {
+        return journal != null;
+    }
 
-	public Boolean getIssueAlreadyChosen() {
-		return getVolume() != null;
-	}
+    public Boolean getIssueAlreadyChosen() {
+        return getVolume() != null;
+    }
 
-	public Month getMonth() {
-		return month;
-	}
+    public Month getMonth() {
+        return month;
+    }
 
-	public void setMonth(Month month) {
-		this.month = month;
-	}
+    public void setMonth(Month month) {
+        this.month = month;
+    }
 
-	public String getNumber() {
-		return number;
-	}
+    public String getNumber() {
+        return number;
+    }
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-	public String getPublisher() {
-		return publisher;
-	}
+    public String getPublisher() {
+        return publisher;
+    }
 
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public String getVolume() {
-		return volume;
-	}
+    public String getVolume() {
+        return volume;
+    }
 
-	public void setVolume(String volume) {
-		this.volume = volume;
-	}
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
 
-	public Integer getYear() {
-		return year;
-	}
+    public Integer getYear() {
+        return year;
+    }
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
-	public ScopeType getLocation() {
-		return location;
-	}
+    public ScopeType getLocation() {
+        return location;
+    }
 
-	public void setLocation(ScopeType location) {
-		this.location = location;
-	}
+    public void setLocation(ScopeType location) {
+        this.location = location;
+    }
 
-	public String getScientificJournalName() {
-		return scientificJournalName;
-	}
+    public String getScientificJournalName() {
+        return scientificJournalName;
+    }
 
-	public void setScientificJournalName(String scientificJournalName) {
-		this.scientificJournalName = scientificJournalName;
-	}
+    public void setScientificJournalName(String scientificJournalName) {
+        this.scientificJournalName = scientificJournalName;
+    }
 
-	public String getJournalAsString() {
-		return (getJournal() != null) ? getJournal().getName() : getJournalName();
-	}
+    public String getJournalAsString() {
+        return (getJournal() != null) ? getJournal().getName() : getJournalName();
+    }
 
-	public String getIssn() {
-		return issn;
-	}
+    public String getIssn() {
+        return issn;
+    }
 
-	public void setIssn(String issn) {
-		this.issn = issn;
-	}
+    public void setIssn(String issn) {
+        this.issn = issn;
+    }
 
-	public String getMagazineUrl() {
-		return magazineUrl;
-	}
+    public String getMagazineUrl() {
+        return magazineUrl;
+    }
 
-	public void setMagazineUrl(String magazineUrl) {
-		this.magazineUrl = magazineUrl;
-	}
+    public void setMagazineUrl(String magazineUrl) {
+        this.magazineUrl = magazineUrl;
+    }
 
-	public Boolean getSpecialIssue() {
-		return specialIssue;
-	}
+    public Boolean getSpecialIssue() {
+        return specialIssue;
+    }
 
-	public void setSpecialIssue(Boolean specialIssue) {
-		this.specialIssue = specialIssue;
-	}
+    public void setSpecialIssue(Boolean specialIssue) {
+        this.specialIssue = specialIssue;
+    }
 
-	public String getSpecialIssueComment() {
-		return specialIssueComment;
-	}
+    public String getSpecialIssueComment() {
+        return specialIssueComment;
+    }
 
-	public void setSpecialIssueComment(String specialIssueComment) {
-		this.specialIssueComment = specialIssueComment;
-	}
+    public void setSpecialIssueComment(String specialIssueComment) {
+        this.specialIssueComment = specialIssueComment;
+    }
 
-	public boolean isJournalFormValid() {
-		return getJournal() != null || (getScientificJournalName() != null && getLocation() != null);
-	}
+    public boolean isJournalFormValid() {
+        return getJournal() != null || (getScientificJournalName() != null && getLocation() != null);
+    }
 }

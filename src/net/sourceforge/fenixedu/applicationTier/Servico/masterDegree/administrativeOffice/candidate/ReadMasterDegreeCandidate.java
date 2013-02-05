@@ -20,49 +20,49 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadMasterDegreeCandidate extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, Integer candidateNumber,
-			Specialization degreeType) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, Integer candidateNumber,
+            Specialization degreeType) {
 
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-		MasterDegreeCandidate masterDegreeCandidate =
-				executionDegree.getMasterDegreeCandidateBySpecializationAndCandidateNumber(degreeType, candidateNumber);
+        MasterDegreeCandidate masterDegreeCandidate =
+                executionDegree.getMasterDegreeCandidateBySpecializationAndCandidateNumber(degreeType, candidateNumber);
 
-		return getInfoMasterDegreeCandidate(masterDegreeCandidate);
-	}
+        return getInfoMasterDegreeCandidate(masterDegreeCandidate);
+    }
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) {
 
-		final Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-		final MasterDegreeCandidate masterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
+        final MasterDegreeCandidate masterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
 
-		return getInfoMasterDegreeCandidate(masterDegreeCandidate);
-	}
+        return getInfoMasterDegreeCandidate(masterDegreeCandidate);
+    }
 
-	private static InfoMasterDegreeCandidate getInfoMasterDegreeCandidate(final MasterDegreeCandidate masterDegreeCandidate) {
+    private static InfoMasterDegreeCandidate getInfoMasterDegreeCandidate(final MasterDegreeCandidate masterDegreeCandidate) {
 
-		final State candidateState = new State(State.ACTIVE);
+        final State candidateState = new State(State.ACTIVE);
 
-		final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
-				InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
+        final InfoMasterDegreeCandidate infoMasterDegreeCandidate =
+                InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
 
-		final List<InfoCandidateSituation> candidateSituations = new ArrayList<InfoCandidateSituation>();
-		for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
-			InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain(candidateSituation);
-			candidateSituations.add(infoCandidateSituation);
-			if (candidateSituation.getValidation().equals(candidateState)) {
-				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-			}
-		}
-		infoMasterDegreeCandidate.setSituationList(candidateSituations);
+        final List<InfoCandidateSituation> candidateSituations = new ArrayList<InfoCandidateSituation>();
+        for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituationsSet()) {
+            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain(candidateSituation);
+            candidateSituations.add(infoCandidateSituation);
+            if (candidateSituation.getValidation().equals(candidateState)) {
+                infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+            }
+        }
+        infoMasterDegreeCandidate.setSituationList(candidateSituations);
 
-		return infoMasterDegreeCandidate;
-	}
+        return infoMasterDegreeCandidate;
+    }
 
 }

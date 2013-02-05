@@ -11,17 +11,17 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class StudentsLowPerformancePrescriptionProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		List<PrescriptionEnum> prescriptionBeans = new LinkedList<PrescriptionEnum>();
-		for (AbstractPrescriptionRule abstractPrescriptionRule : AbstractPrescriptionRule.readProviderPrescriptionRules()) {
-			prescriptionBeans.add(abstractPrescriptionRule.getPrescriptionEnum());
-		}
-		return prescriptionBeans;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        List<PrescriptionEnum> prescriptionBeans = new LinkedList<PrescriptionEnum>();
+        for (AbstractPrescriptionRule abstractPrescriptionRule : AbstractPrescriptionRule.readProviderPrescriptionRules()) {
+            prescriptionBeans.add(abstractPrescriptionRule.getPrescriptionEnum());
+        }
+        return prescriptionBeans;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 }

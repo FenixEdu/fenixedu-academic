@@ -7,41 +7,41 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 
 public class ProjectParticipantFullCreationBean implements Serializable {
 
-	private Unit organization;
-	private String role;
-	private String personName;
-	private String organizationName;
+    private Unit organization;
+    private String role;
+    private String personName;
+    private String organizationName;
 
-	public ProjectParticipation.ProjectParticipationType getRole() {
-		return ProjectParticipation.ProjectParticipationType.valueOf(role);
-	}
+    public ProjectParticipation.ProjectParticipationType getRole() {
+        return ProjectParticipation.ProjectParticipationType.valueOf(role);
+    }
 
-	public void setRole(ProjectParticipation.ProjectParticipationType projectParticipationRole) {
-		this.role = projectParticipationRole.toString();
-	}
+    public void setRole(ProjectParticipation.ProjectParticipationType projectParticipationRole) {
+        this.role = projectParticipationRole.toString();
+    }
 
-	public String getPersonName() {
-		return personName;
-	}
+    public String getPersonName() {
+        return personName;
+    }
 
-	public void setPersonName(String name) {
-		this.personName = name;
-	}
+    public void setPersonName(String name) {
+        this.personName = name;
+    }
 
-	public String getOrganizationName() {
-		return organizationName;
-	}
+    public String getOrganizationName() {
+        return organizationName;
+    }
 
-	public void setOrganizationName(String name) {
-		this.organizationName = name;
-	}
+    public void setOrganizationName(String name) {
+        this.organizationName = name;
+    }
 
-	public Unit getOrganization() {
-		return this.organization;
-	}
+    public Unit getOrganization() {
+        return this.organization;
+    }
 
-	public void setOrganization(Unit organization) {
-		this.organization = organization;
-	}
+    public void setOrganization(Unit organization) {
+        this.organization = organization;
+    }
 
 }

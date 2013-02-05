@@ -21,22 +21,22 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod extends FenixService {
 
-	public Set<Student> run(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester)
-			throws FenixServiceException {
+    public Set<Student> run(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester)
+            throws FenixServiceException {
 
-		if (degreeCurricularPlan == null) {
-			throw new FenixServiceException("nullDegreeCurricularPlanId");
-		}
-		if (executionSemester == null) {
-			throw new FenixServiceException("nullExecutionPeriodId");
-		}
+        if (degreeCurricularPlan == null) {
+            throw new FenixServiceException("nullDegreeCurricularPlanId");
+        }
+        if (executionSemester == null) {
+            throw new FenixServiceException("nullExecutionPeriodId");
+        }
 
-		Set<Student> result = new HashSet<Student>();
-		for (final Enrolment enrolment : executionSemester.getEnrolmentsWithAttendsByDegreeCurricularPlan(degreeCurricularPlan)) {
-			result.add(enrolment.getRegistration().getStudent());
-		}
-		return result;
+        Set<Student> result = new HashSet<Student>();
+        for (final Enrolment enrolment : executionSemester.getEnrolmentsWithAttendsByDegreeCurricularPlan(degreeCurricularPlan)) {
+            result.add(enrolment.getRegistration().getStudent());
+        }
+        return result;
 
-	}
+    }
 
 }

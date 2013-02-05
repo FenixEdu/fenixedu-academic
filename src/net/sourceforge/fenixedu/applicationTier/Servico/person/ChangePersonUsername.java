@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangePersonUsername extends FenixService {
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public static void run(String newUsername, Integer personId, RoleType roleType) {
-		Person person = (Person) rootDomainObject.readPartyByOID(personId);
-		person.changeUsername(roleType);
-	}
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(String newUsername, Integer personId, RoleType roleType) {
+        Person person = (Person) rootDomainObject.readPartyByOID(personId);
+        person.changeUsername(roleType);
+    }
 }

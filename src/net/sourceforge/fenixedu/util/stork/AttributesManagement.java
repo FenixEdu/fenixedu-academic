@@ -17,267 +17,267 @@ import org.joda.time.YearMonthDay;
 
 public class AttributesManagement {
 
-	private Map<StorkAttributeType, Attribute> attributes;
+    private Map<StorkAttributeType, Attribute> attributes;
 
-	public static final String STORK_RETURN_CODE_OK = "OK";
+    public static final String STORK_RETURN_CODE_OK = "OK";
 
-	public AttributesManagement(Map<StorkAttributeType, Attribute> attributes) {
-		this.attributes = attributes;
-	}
+    public AttributesManagement(Map<StorkAttributeType, Attribute> attributes) {
+        this.attributes = attributes;
+    }
 
-	public AttributesManagement(String attrList) {
-		this.attributes = buildStorkAttributes(attrList);
-	}
+    public AttributesManagement(String attrList) {
+        this.attributes = buildStorkAttributes(attrList);
+    }
 
-	/* ADDRESS */
+    /* ADDRESS */
 
-	public String getTextAddress() {
-		Attribute attribute = attributes.get(StorkAttributeType.STORK_TEXT_RESIDENCE_ADDRESS);
+    public String getTextAddress() {
+        Attribute attribute = attributes.get(StorkAttributeType.STORK_TEXT_RESIDENCE_ADDRESS);
 
-		if (attribute == null) {
-			return null;
-		}
+        if (attribute == null) {
+            return null;
+        }
 
-		return attribute.getSemanticValue();
-	}
+        return attribute.getSemanticValue();
+    }
 
-	public boolean hasCanonicalAddress() {
-		return getCanonicalAddress() != null && getCanonicalAddress().isValidCanonicalAddressAttribute();
-	}
+    public boolean hasCanonicalAddress() {
+        return getCanonicalAddress() != null && getCanonicalAddress().isValidCanonicalAddressAttribute();
+    }
 
-	public String getAddressCompound() {
-		if (!hasCanonicalAddress()) {
-			return null;
-		}
+    public String getAddressCompound() {
+        if (!hasCanonicalAddress()) {
+            return null;
+        }
 
-		return getCanonicalAddress().getAddress();
-	}
+        return getCanonicalAddress().getAddress();
+    }
 
-	public String getZipCodeCompound() {
-		if (!hasCanonicalAddress()) {
-			return null;
-		}
+    public String getZipCodeCompound() {
+        if (!hasCanonicalAddress()) {
+            return null;
+        }
 
-		return getCanonicalAddress().getZipCode();
-	}
+        return getCanonicalAddress().getZipCode();
+    }
 
-	public String getCityCompound() {
-		if (!hasCanonicalAddress()) {
-			return null;
-		}
+    public String getCityCompound() {
+        if (!hasCanonicalAddress()) {
+            return null;
+        }
 
-		return getCanonicalAddress().getCity();
-	}
+        return getCanonicalAddress().getCity();
+    }
 
-	public Country getResidenceCountryCompound() {
-		if (!hasCanonicalAddress()) {
-			return null;
-		}
+    public Country getResidenceCountryCompound() {
+        if (!hasCanonicalAddress()) {
+            return null;
+        }
 
-		return getCanonicalAddress().getCountry();
-	}
+        return getCanonicalAddress().getCountry();
+    }
 
-	/* END OF ADDRESS */
+    /* END OF ADDRESS */
 
-	/* PERSONAL DATA */
+    /* PERSONAL DATA */
 
-	public Gender getGender() {
-		Attribute attribute = attributes.get(StorkAttributeType.STORK_GENDER);
+    public Gender getGender() {
+        Attribute attribute = attributes.get(StorkAttributeType.STORK_GENDER);
 
-		if (attribute == null) {
-			return null;
-		}
+        if (attribute == null) {
+            return null;
+        }
 
-		if (attribute.getSemanticValue() == null) {
-			return null;
-		}
+        if (attribute.getSemanticValue() == null) {
+            return null;
+        }
 
-		if ("M".equals(attribute.getSemanticValue())) {
-			return Gender.MALE;
-		} else if ("F".equals(attribute.getSemanticValue())) {
-			return Gender.FEMALE;
-		}
+        if ("M".equals(attribute.getSemanticValue())) {
+            return Gender.MALE;
+        } else if ("F".equals(attribute.getSemanticValue())) {
+            return Gender.FEMALE;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public YearMonthDay getBirthDate() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_BIRTHDATE);
-		String birthDateText = attr != null ? attr.getSemanticValue() : null;
+    public YearMonthDay getBirthDate() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_BIRTHDATE);
+        String birthDateText = attr != null ? attr.getSemanticValue() : null;
 
-		if (birthDateText == null || !birthDateText.matches("\\d{8}")) {
-			return null;
-		}
+        if (birthDateText == null || !birthDateText.matches("\\d{8}")) {
+            return null;
+        }
 
-		Integer day = Integer.valueOf(birthDateText.substring(6, 8));
-		Integer month = Integer.valueOf(birthDateText.substring(4, 6));
-		Integer year = Integer.valueOf(birthDateText.substring(0, 4));
+        Integer day = Integer.valueOf(birthDateText.substring(6, 8));
+        Integer month = Integer.valueOf(birthDateText.substring(4, 6));
+        Integer year = Integer.valueOf(birthDateText.substring(0, 4));
 
-		return new YearMonthDay(year, month, day);
-	}
+        return new YearMonthDay(year, month, day);
+    }
 
-	/* NAMES */
+    /* NAMES */
 
-	public String getStorkName() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_NAME);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkName() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_NAME);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getStorkSurname() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_SURNAME);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkSurname() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_SURNAME);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getStorkFamilyName() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_FAMILY_NAME);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkFamilyName() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_FAMILY_NAME);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getStorkAdoptedName() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_ADOPTED_FAMILY_NAME);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkAdoptedName() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_ADOPTED_FAMILY_NAME);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getStorkFullname() {
-		String name = getStorkName();
-		String surname = getStorkSurname();
+    public String getStorkFullname() {
+        String name = getStorkName();
+        String surname = getStorkSurname();
 
-		StringBuilder fullNameBuilder = new StringBuilder();
+        StringBuilder fullNameBuilder = new StringBuilder();
 
-		if (!StringUtils.isEmpty(name)) {
-			fullNameBuilder.append(name);
-		}
+        if (!StringUtils.isEmpty(name)) {
+            fullNameBuilder.append(name);
+        }
 
-		if (!StringUtils.isEmpty(surname)) {
-			fullNameBuilder.append(" ").append(surname);
-		}
+        if (!StringUtils.isEmpty(surname)) {
+            fullNameBuilder.append(" ").append(surname);
+        }
 
-		return fullNameBuilder.toString().trim();
-	}
+        return fullNameBuilder.toString().trim();
+    }
 
-	/* END OF NAMES */
+    /* END OF NAMES */
 
-	/* COUNTRIES */
-	public Country getStorkNationality() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_NATIONALITY);
-		String nationalityCode = attr != null ? attr.getSemanticValue() : null;
+    /* COUNTRIES */
+    public Country getStorkNationality() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_NATIONALITY);
+        String nationalityCode = attr != null ? attr.getSemanticValue() : null;
 
-		if (nationalityCode == null || !nationalityCode.matches("\\w{2,3}")) {
-			return null;
-		}
+        if (nationalityCode == null || !nationalityCode.matches("\\w{2,3}")) {
+            return null;
+        }
 
-		return nationalityCode.length() == 2 ? Country.readByTwoLetterCode(nationalityCode) : Country
-				.readByThreeLetterCode(nationalityCode);
-	}
+        return nationalityCode.length() == 2 ? Country.readByTwoLetterCode(nationalityCode) : Country
+                .readByThreeLetterCode(nationalityCode);
+    }
 
-	public Country getStorkCountryOfBirth() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_COUNTRY_OF_BIRTH);
-		String countryOfBirthCode = attr != null ? attr.getSemanticValue() : null;
+    public Country getStorkCountryOfBirth() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_COUNTRY_OF_BIRTH);
+        String countryOfBirthCode = attr != null ? attr.getSemanticValue() : null;
 
-		if (countryOfBirthCode == null || !countryOfBirthCode.matches("\\w{2,3}")) {
-			return null;
-		}
+        if (countryOfBirthCode == null || !countryOfBirthCode.matches("\\w{2,3}")) {
+            return null;
+        }
 
-		return countryOfBirthCode.length() == 2 ? Country.readByTwoLetterCode(countryOfBirthCode) : Country
-				.readByThreeLetterCode(countryOfBirthCode);
-	}
+        return countryOfBirthCode.length() == 2 ? Country.readByTwoLetterCode(countryOfBirthCode) : Country
+                .readByThreeLetterCode(countryOfBirthCode);
+    }
 
-	/* END OF COUNTRIES */
+    /* END OF COUNTRIES */
 
-	/* SERVICE RETURN CODE AND ERROR MESSAGES */
-	public String getStorkReturnCode() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_RETURN_CODE);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    /* SERVICE RETURN CODE AND ERROR MESSAGES */
+    public String getStorkReturnCode() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_RETURN_CODE);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getStorkErrorCode() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_ERROR_CODE);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkErrorCode() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_ERROR_CODE);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getStorkErrorMessage() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_ERROR_MESSAGE);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkErrorMessage() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_ERROR_MESSAGE);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	/* END OF SERVICE RETURN CODE AND ERROR MESSAGES */
+    /* END OF SERVICE RETURN CODE AND ERROR MESSAGES */
 
-	/* CONTACTS */
+    /* CONTACTS */
 
-	public String getStorkPhoneContact() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_PHONE_CONTACT);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getStorkPhoneContact() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_PHONE_CONTACT);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	public String getEmail() {
-		Attribute attr = attributes.get(StorkAttributeType.STORK_EMAIL);
-		return attr != null ? attr.getSemanticValue() : null;
-	}
+    public String getEmail() {
+        Attribute attr = attributes.get(StorkAttributeType.STORK_EMAIL);
+        return attr != null ? attr.getSemanticValue() : null;
+    }
 
-	/* END OF CONTACTS */
+    /* END OF CONTACTS */
 
-	/* IDENTIFICATION */
+    /* IDENTIFICATION */
 
-	public String getIdentificationNumber() {
-		String eIdentifier = getEIdentifier();
-		return eIdentifier.substring(6);
-	}
+    public String getIdentificationNumber() {
+        String eIdentifier = getEIdentifier();
+        return eIdentifier.substring(6);
+    }
 
-	public String getEIdentifier() {
-		Attribute attribute = attributes.get(StorkAttributeType.STORK_EIDENTIFIER);
+    public String getEIdentifier() {
+        Attribute attribute = attributes.get(StorkAttributeType.STORK_EIDENTIFIER);
 
-		if (attribute == null) {
-			return null;
-		}
+        if (attribute == null) {
+            return null;
+        }
 
-		return attribute.getSemanticValue();
-	}
+        return attribute.getSemanticValue();
+    }
 
-	/* END OF IDENTIFICATION */
+    /* END OF IDENTIFICATION */
 
-	private Map<StorkAttributeType, Attribute> buildStorkAttributes(String attrList) {
-		StringTokenizer st = new StringTokenizer(attrList, ";");
-		Map<StorkAttributeType, Attribute> attributes = new HashMap<StorkAttributeType, Attribute>();
+    private Map<StorkAttributeType, Attribute> buildStorkAttributes(String attrList) {
+        StringTokenizer st = new StringTokenizer(attrList, ";");
+        Map<StorkAttributeType, Attribute> attributes = new HashMap<StorkAttributeType, Attribute>();
 
-		int i = 1;
-		while (st.hasMoreTokens()) {
-			String[] params = st.nextToken().split("=");
+        int i = 1;
+        while (st.hasMoreTokens()) {
+            String[] params = st.nextToken().split("=");
 
-			if (params.length < 2) {
-				throw new DomainException(String.format("error.erasmus.stork.attributes.list.invalid - %s", st.nextToken()));
-			}
+            if (params.length < 2) {
+                throw new DomainException(String.format("error.erasmus.stork.attributes.list.invalid - %s", st.nextToken()));
+            }
 
-			String attrName = params[0];
-			String value = params[1].equals("null") ? null : params[1].substring(1, params[1].length() - 1);
+            String attrName = params[0];
+            String value = params[1].equals("null") ? null : params[1].substring(1, params[1].length() - 1);
 
-			if (StorkAttributeType.STORK_CANONICAL_ADDRESS.equals(StorkAttributeType.getTypeFromStorkName(attrName))) {
-				attributes.put(StorkAttributeType.getTypeFromStorkName(attrName), new CanonicalAddressAttribute(i++,
-						StorkAttributeType.getTypeFromStorkName(attrName), false, value));
-			} else {
-				attributes.put(StorkAttributeType.getTypeFromStorkName(attrName),
-						new Attribute(i++, StorkAttributeType.getTypeFromStorkName(attrName), false, value));
-			}
-		}
+            if (StorkAttributeType.STORK_CANONICAL_ADDRESS.equals(StorkAttributeType.getTypeFromStorkName(attrName))) {
+                attributes.put(StorkAttributeType.getTypeFromStorkName(attrName), new CanonicalAddressAttribute(i++,
+                        StorkAttributeType.getTypeFromStorkName(attrName), false, value));
+            } else {
+                attributes.put(StorkAttributeType.getTypeFromStorkName(attrName),
+                        new Attribute(i++, StorkAttributeType.getTypeFromStorkName(attrName), false, value));
+            }
+        }
 
-		return attributes;
-	}
+        return attributes;
+    }
 
-	public StorkAttributesList getStorkAttributesList() {
-		Set<StorkAttributeType> attrList = new HashSet<StorkAttributeType>();
+    public StorkAttributesList getStorkAttributesList() {
+        Set<StorkAttributeType> attrList = new HashSet<StorkAttributeType>();
 
-		for (StorkAttributeType type : attributes.keySet()) {
-			Attribute attr = attributes.get(type);
+        for (StorkAttributeType type : attributes.keySet()) {
+            Attribute attr = attributes.get(type);
 
-			if (!StringUtils.isEmpty(attr.getSemanticValue())) {
-				attrList.add(type);
-			}
-		}
+            if (!StringUtils.isEmpty(attr.getSemanticValue())) {
+                attrList.add(type);
+            }
+        }
 
-		return new StorkAttributesList(attrList);
-	}
+        return new StorkAttributesList(attrList);
+    }
 
-	private CanonicalAddressAttribute getCanonicalAddress() {
-		return (CanonicalAddressAttribute) attributes.get(StorkAttributeType.STORK_CANONICAL_ADDRESS);
-	}
+    private CanonicalAddressAttribute getCanonicalAddress() {
+        return (CanonicalAddressAttribute) attributes.get(StorkAttributeType.STORK_CANONICAL_ADDRESS);
+    }
 
 }

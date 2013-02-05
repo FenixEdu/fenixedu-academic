@@ -14,14 +14,14 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ConfirmManagerIdentity extends FenixService {
 
-	public ConfirmManagerIdentity() {
-	}
+    public ConfirmManagerIdentity() {
+    }
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static Boolean run() {
-		// Authentication is taken care of by the filters.
-		return new Boolean(true);
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static Boolean run() {
+        // Authentication is taken care of by the filters.
+        return new Boolean(true);
+    }
 
 }

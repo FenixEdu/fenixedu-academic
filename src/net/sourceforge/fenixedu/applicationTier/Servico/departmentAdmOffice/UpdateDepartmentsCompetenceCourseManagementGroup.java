@@ -17,81 +17,81 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class UpdateDepartmentsCompetenceCourseManagementGroup extends FenixService {
 
-	@Checked("RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static void run(Department department, Integer[] add, Integer[] remove) {
-		List<Person> toAdd = materializePersons(add);
-		List<Person> toRemove = materializePersons(remove);
-		List<Person> finalList = new ArrayList<Person>();
+    @Checked("RolePredicates.DEPARTMENT_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Department department, Integer[] add, Integer[] remove) {
+        List<Person> toAdd = materializePersons(add);
+        List<Person> toRemove = materializePersons(remove);
+        List<Person> finalList = new ArrayList<Person>();
 
-		Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
+        Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
 
-		Group group = department.getCompetenceCourseMembersGroup();
-		if (group == null) {
-			group = new FixedSetGroup();
-		}
+        Group group = department.getCompetenceCourseMembersGroup();
+        if (group == null) {
+            group = new FixedSetGroup();
+        }
 
-		for (Person person : group.getElements()) {
+        for (Person person : group.getElements()) {
 
-			if (!toRemove.contains(person)) {
-				finalList.add(person);
-				addBolonhaRole(person, bolonhaRole);
-			} else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
-				person.removeRoleByType(RoleType.BOLONHA_MANAGER);
-			}
-		}
+            if (!toRemove.contains(person)) {
+                finalList.add(person);
+                addBolonhaRole(person, bolonhaRole);
+            } else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(department, person)) {
+                person.removeRoleByType(RoleType.BOLONHA_MANAGER);
+            }
+        }
 
-		for (Person person : toAdd) {
-			if (!finalList.contains(person)) {
-				finalList.add(person);
-				addBolonhaRole(person, bolonhaRole);
-			}
-		}
+        for (Person person : toAdd) {
+            if (!finalList.contains(person)) {
+                finalList.add(person);
+                addBolonhaRole(person, bolonhaRole);
+            }
+        }
 
-		department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
-	}
+        department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
+    }
 
-	private static List<Person> materializePersons(Integer[] personsIDs) {
-		if (personsIDs != null) {
-			List<Person> result = new ArrayList<Person>();
+    private static List<Person> materializePersons(Integer[] personsIDs) {
+        if (personsIDs != null) {
+            List<Person> result = new ArrayList<Person>();
 
-			for (Integer personID : personsIDs) {
-				result.add((Person) rootDomainObject.readPartyByOID(personID));
-			}
+            for (Integer personID : personsIDs) {
+                result.add((Person) rootDomainObject.readPartyByOID(personID));
+            }
 
-			return result;
-		} else {
-			return new ArrayList<Person>();
-		}
-	}
+            return result;
+        } else {
+            return new ArrayList<Person>();
+        }
+    }
 
-	private static void addBolonhaRole(Person person, Role bolonhaRole) {
-		if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
-			person.addPersonRoles(bolonhaRole);
-		}
-	}
+    private static void addBolonhaRole(Person person, Role bolonhaRole) {
+        if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
+            person.addPersonRoles(bolonhaRole);
+        }
+    }
 
-	private static boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
-		List<Department> departments = rootDomainObject.getDepartments();
-		for (Department department : departments) {
-			if (department != departmentWhoAsks) {
-				Group group = department.getCompetenceCourseMembersGroup();
-				if (group != null && group.isMember(person)) {
-					return true;
-				}
-			}
-		}
+    private static boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
+        List<Department> departments = rootDomainObject.getDepartments();
+        for (Department department : departments) {
+            if (department != departmentWhoAsks) {
+                Group group = department.getCompetenceCourseMembersGroup();
+                if (group != null && group.isMember(person)) {
+                    return true;
+                }
+            }
+        }
 
-		for (Degree degree : Degree.readBolonhaDegrees()) {
-			for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-				Group group = dcp.getCurricularPlanMembersGroup();
-				if (group != null && group.isMember(person)) {
-					return true;
-				}
-			}
-		}
+        for (Degree degree : Degree.readBolonhaDegrees()) {
+            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+                Group group = dcp.getCurricularPlanMembersGroup();
+                if (group != null && group.isMember(person)) {
+                    return true;
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }

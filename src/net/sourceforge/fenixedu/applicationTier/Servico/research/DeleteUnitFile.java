@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteUnitFile extends FenixService {
 
-	@Service
-	public static void run(final UnitFile file) {
-		file.delete();
-	}
+    @Service
+    public static void run(final UnitFile file) {
+        file.delete();
+    }
 }

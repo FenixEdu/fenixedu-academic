@@ -13,154 +13,154 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {
 
-	private final AcademicServiceRequestEvent event;
-	private final AcademicServiceRequest request;
+    private final AcademicServiceRequestEvent event;
+    private final AcademicServiceRequest request;
 
-	public AcademicServiceRequestEventWrapper(AcademicServiceRequestEvent event) {
-		this.event = event;
-		this.request = event.getAcademicServiceRequest();
-	}
+    public AcademicServiceRequestEventWrapper(AcademicServiceRequestEvent event) {
+        this.event = event;
+        this.request = event.getAcademicServiceRequest();
+    }
 
-	@Override
-	public String getStudentNumber() {
-		if (request.getPerson().hasStudent()) {
-			return request.getPerson().getStudent().getNumber().toString();
-		}
+    @Override
+    public String getStudentNumber() {
+        if (request.getPerson().hasStudent()) {
+            return request.getPerson().getStudent().getNumber().toString();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getStudentName() {
-		return request.getPerson().getName();
-	}
+    @Override
+    public String getStudentName() {
+        return request.getPerson().getName();
+    }
 
-	@Override
-	public String getStudentEmail() {
-		return event.getPerson().getDefaultEmailAddressValue();
-	}
+    @Override
+    public String getStudentEmail() {
+        return event.getPerson().getDefaultEmailAddressValue();
+    }
 
-	@Override
-	public String getRegistrationStartDate() {
-		if (request.isRequestForRegistration()) {
-			return ((RegistrationAcademicServiceRequest) request).getRegistration().getStartDate().toString("dd/MM/yyyy");
-		}
+    @Override
+    public String getRegistrationStartDate() {
+        if (request.isRequestForRegistration()) {
+            return ((RegistrationAcademicServiceRequest) request).getRegistration().getStartDate().toString("dd/MM/yyyy");
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getExecutionYear() {
-		return getForExecutionYear().getName();
-	}
+    @Override
+    public String getExecutionYear() {
+        return getForExecutionYear().getName();
+    }
 
-	@Override
-	public String getDegreeName() {
-		if (request.isRequestForRegistration()) {
-			return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegree().getNameI18N()
-					.getContent(Language.pt);
-		}
+    @Override
+    public String getDegreeName() {
+        if (request.isRequestForRegistration()) {
+            return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegree().getNameI18N()
+                    .getContent(Language.pt);
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getDegreeType() {
-		if (request.isRequestForRegistration()) {
-			return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegreeType().getLocalizedName();
-		}
+    @Override
+    public String getDegreeType() {
+        if (request.isRequestForRegistration()) {
+            return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegreeType().getLocalizedName();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getPhdProgramName() {
-		if (request.isRequestForPhd()) {
-			return ((PhdAcademicServiceRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getName()
-					.getContent(Language.pt);
-		}
+    @Override
+    public String getPhdProgramName() {
+        if (request.isRequestForPhd()) {
+            return ((PhdAcademicServiceRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getName()
+                    .getContent(Language.pt);
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getEnrolledECTS() {
-		if (request.isRequestForRegistration()) {
-			Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
-			ExecutionYear executionYear = ExecutionYear.readByDateTime(request.getCreationDate());
+    @Override
+    public String getEnrolledECTS() {
+        if (request.isRequestForRegistration()) {
+            Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
+            ExecutionYear executionYear = ExecutionYear.readByDateTime(request.getCreationDate());
 
-			return new BigDecimal(registration.getEnrolmentsEcts(executionYear)).toString();
-		}
+            return new BigDecimal(registration.getEnrolmentsEcts(executionYear)).toString();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getRegime() {
-		if (request.isRequestForRegistration()) {
-			Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
-			ExecutionYear executionYear = ExecutionYear.readByDateTime(request.getCreationDate());
+    @Override
+    public String getRegime() {
+        if (request.isRequestForRegistration()) {
+            Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
+            ExecutionYear executionYear = ExecutionYear.readByDateTime(request.getCreationDate());
 
-			return registration.getRegimeType(executionYear).getLocalizedName();
-		}
+            return registration.getRegimeType(executionYear).getLocalizedName();
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getEnrolmentModel() {
-		if (request.isRequestForRegistration()) {
-			Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
-			ExecutionYear executionYear = ExecutionYear.readByDateTime(request.getCreationDate());
+    @Override
+    public String getEnrolmentModel() {
+        if (request.isRequestForRegistration()) {
+            Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
+            ExecutionYear executionYear = ExecutionYear.readByDateTime(request.getCreationDate());
 
-			if (registration.getEnrolmentModelForExecutionYear(executionYear) != null) {
-				return registration.getEnrolmentModelForExecutionYear(executionYear).getLocalizedName();
-			}
+            if (registration.getEnrolmentModelForExecutionYear(executionYear) != null) {
+                return registration.getEnrolmentModelForExecutionYear(executionYear).getLocalizedName();
+            }
 
-		}
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getResidenceYear() {
-		return "-";
-	}
+    @Override
+    public String getResidenceYear() {
+        return "-";
+    }
 
-	@Override
-	public String getResidenceMonth() {
-		return "-";
-	}
+    @Override
+    public String getResidenceMonth() {
+        return "-";
+    }
 
-	@Override
-	public String getStudiesType() {
-		if (request.isRequestForRegistration()) {
-			return Wrapper.REGISTRATION_STUDIES;
-		} else if (request.isRequestForPhd()) {
-			return Wrapper.PHD_PROGRAM_STUDIES;
-		}
+    @Override
+    public String getStudiesType() {
+        if (request.isRequestForRegistration()) {
+            return Wrapper.REGISTRATION_STUDIES;
+        } else if (request.isRequestForPhd()) {
+            return Wrapper.PHD_PROGRAM_STUDIES;
+        }
 
-		return "-";
-	}
+        return "-";
+    }
 
-	@Override
-	public String getTotalDiscount() {
-		return event.getTotalDiscount().toPlainString();
-	}
+    @Override
+    public String getTotalDiscount() {
+        return event.getTotalDiscount().toPlainString();
+    }
 
-	@Override
-	public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
-		return !ExecutionYear.readByDateTime(request.getCreationDate()).isBefore(executionYear);
-	}
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+        return !ExecutionYear.readByDateTime(request.getCreationDate()).isBefore(executionYear);
+    }
 
-	@Override
-	public ExecutionYear getForExecutionYear() {
-		return ExecutionYear.readByDateTime(request.getCreationDate());
-	}
+    @Override
+    public ExecutionYear getForExecutionYear() {
+        return ExecutionYear.readByDateTime(request.getCreationDate());
+    }
 
-	@Override
-	public AdministrativeOffice getRelatedAcademicOffice() {
-		return event.getAdministrativeOffice();
-	}
+    @Override
+    public AdministrativeOffice getRelatedAcademicOffice() {
+        return event.getAdministrativeOffice();
+    }
 
 }

@@ -28,86 +28,86 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "firstTimeCyleInquiry", path = "/student/inquiries/fillFirstTimeCycleInquiry.jsp") })
 public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final Student student = AccessControl.getPerson().getStudent();
-		ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        final Student student = AccessControl.getPerson().getStudent();
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-		for (Registration registration : student.getActiveRegistrations()) {
-			if (!registration.getDegreeType().isEmpty() && !registration.hasInquiryStudentCycleAnswer()
-					&& registration.isFirstTime()) {
-				if (registration.hasPhdIndividualProgramProcess()
-						&& registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
-					return actionMapping.findForward("firstTimeCyleInquiry");
-				}
-				StudentCycleInquiryTemplate currentTemplate =
-						StudentCycleInquiryTemplate.getStudentCycleInquiryTemplate(registration);
-				StudentFirstTimeCycleInquiryBean studentInquiryBean =
-						new StudentFirstTimeCycleInquiryBean(currentTemplate, registration);
-				request.setAttribute("studentInquiryBean", studentInquiryBean);
-				return actionMapping.findForward("firstTimeCyleInquiry");
-			}
-		}
+        for (Registration registration : student.getActiveRegistrations()) {
+            if (!registration.getDegreeType().isEmpty() && !registration.hasInquiryStudentCycleAnswer()
+                    && registration.isFirstTime()) {
+                if (registration.hasPhdIndividualProgramProcess()
+                        && registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
+                    return actionMapping.findForward("firstTimeCyleInquiry");
+                }
+                StudentCycleInquiryTemplate currentTemplate =
+                        StudentCycleInquiryTemplate.getStudentCycleInquiryTemplate(registration);
+                StudentFirstTimeCycleInquiryBean studentInquiryBean =
+                        new StudentFirstTimeCycleInquiryBean(currentTemplate, registration);
+                request.setAttribute("studentInquiryBean", studentInquiryBean);
+                return actionMapping.findForward("firstTimeCyleInquiry");
+            }
+        }
 
-		for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-			if (!phdProcess.hasInquiryStudentCycleAnswer() && student.isValidAndActivePhdProcess(phdProcess)) {
-				if (phdProcess.hasRegistration()) {
-					if (phdProcess.getRegistration().hasInquiryStudentCycleAnswer()) {
-						break;
-					} else {
-						if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
-							setStudentPhdBean(request, phdProcess);
-							break;
-						}
-					}
-				} else {
-					if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
-						setStudentPhdBean(request, phdProcess);
-						break;
-					}
-				}
-			}
-		}
+        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
+            if (!phdProcess.hasInquiryStudentCycleAnswer() && student.isValidAndActivePhdProcess(phdProcess)) {
+                if (phdProcess.hasRegistration()) {
+                    if (phdProcess.getRegistration().hasInquiryStudentCycleAnswer()) {
+                        break;
+                    } else {
+                        if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
+                            setStudentPhdBean(request, phdProcess);
+                            break;
+                        }
+                    }
+                } else {
+                    if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
+                        setStudentPhdBean(request, phdProcess);
+                        break;
+                    }
+                }
+            }
+        }
 
-		return actionMapping.findForward("firstTimeCyleInquiry");
-	}
+        return actionMapping.findForward("firstTimeCyleInquiry");
+    }
 
-	private void setStudentPhdBean(HttpServletRequest request, final PhdIndividualProgramProcess phdProcess) {
-		StudentCycleInquiryTemplate currentTemplate = StudentCycleInquiryTemplate.getStudentCycleInquiryTemplate(phdProcess);
-		StudentFirstTimeCycleInquiryBean studentInquiryBean = new StudentFirstTimeCycleInquiryBean(currentTemplate, phdProcess);
-		request.setAttribute("studentInquiryBean", studentInquiryBean);
-	}
+    private void setStudentPhdBean(HttpServletRequest request, final PhdIndividualProgramProcess phdProcess) {
+        StudentCycleInquiryTemplate currentTemplate = StudentCycleInquiryTemplate.getStudentCycleInquiryTemplate(phdProcess);
+        StudentFirstTimeCycleInquiryBean studentInquiryBean = new StudentFirstTimeCycleInquiryBean(currentTemplate, phdProcess);
+        request.setAttribute("studentInquiryBean", studentInquiryBean);
+    }
 
-	public ActionForward saveInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward saveInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
-		if (!studentInquiryBean.hasInquiryStudentCycleAnswer()) {
-			RenderUtils.invalidateViewState();
-			String validationResult = studentInquiryBean.validateInquiry();
-			if (!Boolean.valueOf(validationResult)) {
-				if (!validationResult.equalsIgnoreCase("false")) {
-					addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
-				} else {
-					addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-				}
-				request.setAttribute("studentInquiryBean", studentInquiryBean);
-				return actionMapping.findForward("firstTimeCyleInquiry");
-			}
-			studentInquiryBean.saveAnswers();
-			request.setAttribute("answered", "true");
-		}
-		return actionMapping.findForward("firstTimeCyleInquiry");
-	}
+        final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
+        if (!studentInquiryBean.hasInquiryStudentCycleAnswer()) {
+            RenderUtils.invalidateViewState();
+            String validationResult = studentInquiryBean.validateInquiry();
+            if (!Boolean.valueOf(validationResult)) {
+                if (!validationResult.equalsIgnoreCase("false")) {
+                    addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+                } else {
+                    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+                }
+                request.setAttribute("studentInquiryBean", studentInquiryBean);
+                return actionMapping.findForward("firstTimeCyleInquiry");
+            }
+            studentInquiryBean.saveAnswers();
+            request.setAttribute("answered", "true");
+        }
+        return actionMapping.findForward("firstTimeCyleInquiry");
+    }
 
-	public ActionForward postBackStudentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
-		studentInquiryBean.setGroupsVisibility();
-		RenderUtils.invalidateViewState();
+    public ActionForward postBackStudentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
+        studentInquiryBean.setGroupsVisibility();
+        RenderUtils.invalidateViewState();
 
-		request.setAttribute("studentInquiryBean", studentInquiryBean);
-		return actionMapping.findForward("firstTimeCyleInquiry");
-	}
+        request.setAttribute("studentInquiryBean", studentInquiryBean);
+        return actionMapping.findForward("firstTimeCyleInquiry");
+    }
 }

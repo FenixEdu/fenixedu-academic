@@ -15,23 +15,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeTypeDegrees implements DataProvider {
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object provide(Object source, Object currentValue) {
 
-		final List<Degree> result = new ArrayList<Degree>();
-		for (Degree degree : Degree.readNotEmptyDegrees()) {
-			if (degree.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-				result.add(degree);
-			}
-		}
-		Collections.sort(result, new BeanComparator("name"));
-		return result;
-	}
+        final List<Degree> result = new ArrayList<Degree>();
+        for (Degree degree : Degree.readNotEmptyDegrees()) {
+            if (degree.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+                result.add(degree);
+            }
+        }
+        Collections.sort(result, new BeanComparator("name"));
+        return result;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

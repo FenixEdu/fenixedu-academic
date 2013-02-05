@@ -17,138 +17,138 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public enum StudentStatuteType {
 
-	/**
-	 * Most common statutes
-	 */
-	SENIOR(true, true, false) {
-		@Override
-		public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
-				ExecutionSemester endExecutionPeriod) {
+    /**
+     * Most common statutes
+     */
+    SENIOR(true, true, false) {
+        @Override
+        public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
+                ExecutionSemester endExecutionPeriod) {
 
-			throw new DomainException("error.studentStatute.mustDefineValidRegistrationMatchingSeniorStatute");
-		}
+            throw new DomainException("error.studentStatute.mustDefineValidRegistrationMatchingSeniorStatute");
+        }
 
-		@Override
-		public StudentStatute createStudentStatute(Student student, Registration registration,
-				ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
-			return new SeniorStatute(student, registration, this, beginExecutionPeriod, endExecutionPeriod);
-		}
+        @Override
+        public StudentStatute createStudentStatute(Student student, Registration registration,
+                ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            return new SeniorStatute(student, registration, this, beginExecutionPeriod, endExecutionPeriod);
+        }
 
-	},
+    },
 
-	WORKING_STUDENT(true, true, true),
+    WORKING_STUDENT(true, true, true),
 
-	/**
-	 * AEIST related statutes
-	 */
-	AEIST_ASSOCIATIVE_LEADER(true, true, true),
+    /**
+     * AEIST related statutes
+     */
+    AEIST_ASSOCIATIVE_LEADER(true, true, true),
 
-	AEIST_FISCAL_COUNCIL_AND_GENERAL_ASSEMBLY_SECRETARIES(true, true, true),
+    AEIST_FISCAL_COUNCIL_AND_GENERAL_ASSEMBLY_SECRETARIES(true, true, true),
 
-	AEIST_AUTONOMOUS_SECTIONS(true, true, true),
+    AEIST_AUTONOMOUS_SECTIONS(true, true, true),
 
-	/**
-	 * Old institutional statutes
-	 */
-	DIRECTIVE_COUNCIL(true, true, true),
+    /**
+     * Old institutional statutes
+     */
+    DIRECTIVE_COUNCIL(true, true, true),
 
-	ASSEMBLY_OF_REPRESENTATIVES(true, true, true),
+    ASSEMBLY_OF_REPRESENTATIVES(true, true, true),
 
-	ASSEMBLY_OF_REPRESENTATIVES_COMMITTEES(true, true, true),
+    ASSEMBLY_OF_REPRESENTATIVES_COMMITTEES(true, true, true),
 
-	PEDAGOCICAL_COUNCIL_EXECUTIVE_BOARD(true, true, true),
+    PEDAGOCICAL_COUNCIL_EXECUTIVE_BOARD(true, true, true),
 
-	PEDAGOGICAL_COUNCIL_COORDINATING_COMMITTEE(true, true, true),
+    PEDAGOGICAL_COUNCIL_COORDINATING_COMMITTEE(true, true, true),
 
-	/**
-	 * New institutional statutes
-	 */
-	SCHOOL_ASSEMBLY(true, true, true),
+    /**
+     * New institutional statutes
+     */
+    SCHOOL_ASSEMBLY(true, true, true),
 
-	SCHOOL_COUNCIL(true, true, true),
+    SCHOOL_COUNCIL(true, true, true),
 
-	/**
-	 * Statutes related with students' extracurricular activities.
-	 */
-	PROFESSIONAL_ATHLETE(true, true, true),
+    /**
+     * Statutes related with students' extracurricular activities.
+     */
+    PROFESSIONAL_ATHLETE(true, true, true),
 
-	IST_ATHLETE(true, true, true),
+    IST_ATHLETE(true, true, true),
 
-	IST_TUNA_MEMBER(true, true, true),
+    IST_TUNA_MEMBER(true, true, true),
 
-	ASSOCIATIVE_LEADER(true, true, true),
+    ASSOCIATIVE_LEADER(true, true, true),
 
-	FIREMAN(true, true, true),
+    FIREMAN(true, true, true),
 
-	/**
-	 * Life condition imposed statutes.
-	 */
-	HANDICAPPED(false, true, true),
+    /**
+     * Life condition imposed statutes.
+     */
+    HANDICAPPED(false, true, true),
 
-	PARTURIENT_OR_SPOUSE(true, true, true),
+    PARTURIENT_OR_SPOUSE(true, true, true),
 
-	SPECIAL_SEASON_GRANTED_BY_MEDICAL_JUSTIFICATION(true, true, true),
+    SPECIAL_SEASON_GRANTED_BY_MEDICAL_JUSTIFICATION(true, true, true),
 
-	/**
-	 * Grants and external protocols related statutes.
-	 */
-	SAS_GRANT_OWNER(true, true, false),
+    /**
+     * Grants and external protocols related statutes.
+     */
+    SAS_GRANT_OWNER(true, true, false),
 
-	IST_GRANT_OWNER(true, true, true),
+    IST_GRANT_OWNER(true, true, true),
 
-	SPECIAL_SEASON_GRANTED_BY_MILITARY_PROTOCOL(true, true, true),
+    SPECIAL_SEASON_GRANTED_BY_MILITARY_PROTOCOL(true, true, true),
 
-	/**
-	 * Other statutes.
-	 */
-	SPECIAL_SEASON_GRANTED_BY_LEGI_TRANSITION_REGIME(true, false, true),
+    /**
+     * Other statutes.
+     */
+    SPECIAL_SEASON_GRANTED_BY_LEGI_TRANSITION_REGIME(true, false, true),
 
-	SPECIAL_SEASON_GRANTED_BY_REQUEST(true, false, true);
+    SPECIAL_SEASON_GRANTED_BY_REQUEST(true, false, true);
 
-	private boolean explicitCreation;
+    private boolean explicitCreation;
 
-	private boolean visible;
+    private boolean visible;
 
-	private boolean specialSeasonGranted;
+    private boolean specialSeasonGranted;
 
-	private StudentStatuteType(boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
-		this.explicitCreation = explicitCreation;
-		this.visible = visible;
-		this.specialSeasonGranted = specialSeasonGranted;
-	}
+    private StudentStatuteType(boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
+        this.explicitCreation = explicitCreation;
+        this.visible = visible;
+        this.specialSeasonGranted = specialSeasonGranted;
+    }
 
-	public boolean isExplicitCreation() {
-		return explicitCreation;
-	}
+    public boolean isExplicitCreation() {
+        return explicitCreation;
+    }
 
-	public boolean isVisible() {
-		return visible;
-	}
+    public boolean isVisible() {
+        return visible;
+    }
 
-	public boolean isSpecialSeasonGranted() {
-		return specialSeasonGranted;
-	}
+    public boolean isSpecialSeasonGranted() {
+        return specialSeasonGranted;
+    }
 
-	public static final List<StudentStatuteType> VISIBLE_STATUTES;
-	static {
-		final List<StudentStatuteType> result = new ArrayList<StudentStatuteType>();
-		for (final StudentStatuteType statute : values()) {
-			if (statute.isVisible()) {
-				result.add(statute);
-			}
-		}
-		VISIBLE_STATUTES = Collections.unmodifiableList(result);
-	}
+    public static final List<StudentStatuteType> VISIBLE_STATUTES;
+    static {
+        final List<StudentStatuteType> result = new ArrayList<StudentStatuteType>();
+        for (final StudentStatuteType statute : values()) {
+            if (statute.isVisible()) {
+                result.add(statute);
+            }
+        }
+        VISIBLE_STATUTES = Collections.unmodifiableList(result);
+    }
 
-	@Service
-	public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
-			ExecutionSemester endExecutionPeriod) {
-		return new StudentStatute(student, this, beginExecutionPeriod, endExecutionPeriod);
-	}
+    @Service
+    public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
+            ExecutionSemester endExecutionPeriod) {
+        return new StudentStatute(student, this, beginExecutionPeriod, endExecutionPeriod);
+    }
 
-	public StudentStatute createStudentStatute(Student student, Registration registration,
-			ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
-		throw new DomainException("error.studentStatute.RegistrationUnrelated");
-	}
+    public StudentStatute createStudentStatute(Student student, Registration registration,
+            ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+        throw new DomainException("error.studentStatute.RegistrationUnrelated");
+    }
 
 }

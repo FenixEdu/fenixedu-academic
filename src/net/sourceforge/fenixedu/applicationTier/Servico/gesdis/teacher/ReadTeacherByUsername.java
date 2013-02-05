@@ -7,13 +7,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadTeacherByUsername extends FenixService {
 
-	@Service
-	public static InfoTeacher run(String username) {
-		final Teacher teacher = Teacher.readTeacherByUsername(username);
+    @Service
+    public static InfoTeacher run(String username) {
+        final Teacher teacher = Teacher.readTeacherByUsername(username);
 
-		if (teacher != null) {
-			return InfoTeacher.newInfoFromDomain(teacher);
-		}
-		return null;
-	}
+        if (teacher != null) {
+            return InfoTeacher.newInfoFromDomain(teacher);
+        }
+        return null;
+    }
 }

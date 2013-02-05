@@ -14,41 +14,41 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangePasswordKerberos extends FenixService {
 
-	@Service
-	@Checked("RolePredicates.PERSON_PREDICATE")
-	public static void run(IUserView userView, String oldPassword, String newPassword) throws Exception {
-		Person person = userView.getPerson();
+    @Service
+    @Checked("RolePredicates.PERSON_PREDICATE")
+    public static void run(IUserView userView, String oldPassword, String newPassword) throws Exception {
+        Person person = userView.getPerson();
 
-		try {
-			if (person.hasIstUsername()) {
-				Script.verifyPass(person.getIstUsername(), oldPassword);
-				person.changePassword(oldPassword, newPassword);
-				Script.changeKerberosPass(person.getIstUsername(), newPassword);
-			} else {
-				person.changePassword(oldPassword, newPassword);
-			}
-		} catch (DomainException de) {
-			throw new InvalidPasswordServiceException(de.getKey());
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException("error.person.impossible.change");
-		} catch (KerberosException ke) {
-			if (ke.getExitCode() == 1) {
-				String returnCode = ke.getReturnCode();
-				if (returnCode.equals(KerberosException.CHANGE_PASSWORD_TOO_SHORT)
-						|| returnCode.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
-						|| returnCode.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
-						|| returnCode.equals(KerberosException.ADD_NOT_ENOUGH_CHARACTER_CLASSES)
-						|| returnCode.equals(KerberosException.ADD_TOO_SHORT)
-						|| returnCode.equals(KerberosException.CHECK_PASSWORD_LOW_QUALITY)) {
-					throw new InvalidPasswordServiceException(returnCode);
-				} else if (returnCode.equals(KerberosException.WRONG_PASSWORD)) {
-					throw new InvalidPasswordServiceException("error.person.invalidExistingPassword");
-				} else {
-					throw new InvalidPasswordServiceException("error.person.impossible.change");
-				}
-			} else {
-				throw new FenixServiceException("error.person.impossible.change");
-			}
-		}
-	}
+        try {
+            if (person.hasIstUsername()) {
+                Script.verifyPass(person.getIstUsername(), oldPassword);
+                person.changePassword(oldPassword, newPassword);
+                Script.changeKerberosPass(person.getIstUsername(), newPassword);
+            } else {
+                person.changePassword(oldPassword, newPassword);
+            }
+        } catch (DomainException de) {
+            throw new InvalidPasswordServiceException(de.getKey());
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException("error.person.impossible.change");
+        } catch (KerberosException ke) {
+            if (ke.getExitCode() == 1) {
+                String returnCode = ke.getReturnCode();
+                if (returnCode.equals(KerberosException.CHANGE_PASSWORD_TOO_SHORT)
+                        || returnCode.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
+                        || returnCode.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
+                        || returnCode.equals(KerberosException.ADD_NOT_ENOUGH_CHARACTER_CLASSES)
+                        || returnCode.equals(KerberosException.ADD_TOO_SHORT)
+                        || returnCode.equals(KerberosException.CHECK_PASSWORD_LOW_QUALITY)) {
+                    throw new InvalidPasswordServiceException(returnCode);
+                } else if (returnCode.equals(KerberosException.WRONG_PASSWORD)) {
+                    throw new InvalidPasswordServiceException("error.person.invalidExistingPassword");
+                } else {
+                    throw new InvalidPasswordServiceException("error.person.impossible.change");
+                }
+            } else {
+                throw new FenixServiceException("error.person.impossible.change");
+            }
+        }
+    }
 }

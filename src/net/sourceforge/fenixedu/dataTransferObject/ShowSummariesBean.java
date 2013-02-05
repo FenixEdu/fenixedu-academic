@@ -10,104 +10,104 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class ShowSummariesBean implements Serializable {
 
-	private SummaryTeacherBean summaryTeacher;
+    private SummaryTeacherBean summaryTeacher;
 
-	private Shift shiftReference;
+    private Shift shiftReference;
 
-	private ShiftType shiftType;
+    private ShiftType shiftType;
 
-	private ListSummaryType listSummaryType;
+    private ListSummaryType listSummaryType;
 
-	private ExecutionCourse executionCourseReference;
+    private ExecutionCourse executionCourseReference;
 
-	private Professorship professorshipLoggedReference;
+    private Professorship professorshipLoggedReference;
 
-	private SummariesOrder summariesOrder;
+    private SummariesOrder summariesOrder;
 
-	protected ShowSummariesBean() {
-		// TODO Auto-generated constructor stub
-	}
+    protected ShowSummariesBean() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type,
-			Professorship loggedProfessorship) {
-		setSummaryTeacher(teacher);
-		setExecutionCourse(executionCourse);
-		setListSummaryType(type);
-		setProfessorshipLogged(loggedProfessorship);
-		setSummariesOrder(SummariesOrder.DECREASING);
-	}
+    public ShowSummariesBean(SummaryTeacherBean teacher, ExecutionCourse executionCourse, ListSummaryType type,
+            Professorship loggedProfessorship) {
+        setSummaryTeacher(teacher);
+        setExecutionCourse(executionCourse);
+        setListSummaryType(type);
+        setProfessorshipLogged(loggedProfessorship);
+        setSummariesOrder(SummariesOrder.DECREASING);
+    }
 
-	public Professorship getProfessorshipLogged() {
-		return this.professorshipLoggedReference;
-	}
+    public Professorship getProfessorshipLogged() {
+        return this.professorshipLoggedReference;
+    }
 
-	public void setProfessorshipLogged(Professorship professorship) {
-		this.professorshipLoggedReference = professorship;
-	}
+    public void setProfessorshipLogged(Professorship professorship) {
+        this.professorshipLoggedReference = professorship;
+    }
 
-	public SummaryTeacherBean getSummaryTeacher() {
-		return summaryTeacher;
-	}
+    public SummaryTeacherBean getSummaryTeacher() {
+        return summaryTeacher;
+    }
 
-	public void setSummaryTeacher(SummaryTeacherBean summaryTeacher) {
-		this.summaryTeacher = summaryTeacher;
-	}
+    public void setSummaryTeacher(SummaryTeacherBean summaryTeacher) {
+        this.summaryTeacher = summaryTeacher;
+    }
 
-	public Shift getShift() {
-		return this.shiftReference;
-	}
+    public Shift getShift() {
+        return this.shiftReference;
+    }
 
-	public void setShift(Shift shift) {
-		this.shiftReference = shift;
-	}
+    public void setShift(Shift shift) {
+        this.shiftReference = shift;
+    }
 
-	public ShiftType getShiftType() {
-		return shiftType;
-	}
+    public ShiftType getShiftType() {
+        return shiftType;
+    }
 
-	public void setShiftType(ShiftType shiftType) {
-		this.shiftType = shiftType;
-	}
+    public void setShiftType(ShiftType shiftType) {
+        this.shiftType = shiftType;
+    }
 
-	public ListSummaryType getListSummaryType() {
-		return listSummaryType;
-	}
+    public ListSummaryType getListSummaryType() {
+        return listSummaryType;
+    }
 
-	public void setListSummaryType(ListSummaryType listSummaryType) {
-		this.listSummaryType = listSummaryType;
-	}
+    public void setListSummaryType(ListSummaryType listSummaryType) {
+        this.listSummaryType = listSummaryType;
+    }
 
-	public ExecutionCourse getExecutionCourse() {
-		return this.executionCourseReference;
-	}
+    public ExecutionCourse getExecutionCourse() {
+        return this.executionCourseReference;
+    }
 
-	public void setExecutionCourse(ExecutionCourse executionCourse) {
-		this.executionCourseReference = executionCourse;
-	}
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+        this.executionCourseReference = executionCourse;
+    }
 
-	public SummariesOrder getSummariesOrder() {
-		return summariesOrder;
-	}
+    public SummariesOrder getSummariesOrder() {
+        return summariesOrder;
+    }
 
-	public void setSummariesOrder(SummariesOrder summariesOrder) {
-		this.summariesOrder = summariesOrder;
-	}
+    public void setSummariesOrder(SummariesOrder summariesOrder) {
+        this.summariesOrder = summariesOrder;
+    }
 
-	public static enum ListSummaryType {
+    public static enum ListSummaryType {
 
-		ALL_CONTENT, SUMMARIZED;
+        ALL_CONTENT, SUMMARIZED;
 
-		public String getName() {
-			return name();
-		}
-	}
+        public String getName() {
+            return name();
+        }
+    }
 
-	public static enum SummariesOrder {
+    public static enum SummariesOrder {
 
-		GROWING, DECREASING;
+        GROWING, DECREASING;
 
-		public String getName() {
-			return name();
-		}
-	}
+        public String getName() {
+            return name();
+        }
+    }
 }

@@ -21,232 +21,232 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class Item extends Item_Base {
 
-	public static final Comparator<Item> COMPARATOR_BY_ORDER = new Comparator<Item>() {
+    public static final Comparator<Item> COMPARATOR_BY_ORDER = new Comparator<Item>() {
 
-		@Override
-		public int compare(Item o1, Item o2) {
-			final int co = o1.getItemOrder().compareTo(o2.getItemOrder());
-			if (co != 0) {
-				return co;
-			}
-			final int cn = o1.getName().compareTo(o2.getName());
-			if (cn != 0) {
-				return cn;
-			}
-			return DomainObject.COMPARATOR_BY_ID.compare(o1, o2);
-		}
-	};
+        @Override
+        public int compare(Item o1, Item o2) {
+            final int co = o1.getItemOrder().compareTo(o2.getItemOrder());
+            if (co != 0) {
+                return co;
+            }
+            final int cn = o1.getName().compareTo(o2.getName());
+            if (cn != 0) {
+                return cn;
+            }
+            return DomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+        }
+    };
 
-	protected Item() {
-		super();
+    protected Item() {
+        super();
 
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public Item(Section section, MultiLanguageString name) {
-		this();
+    public Item(Section section, MultiLanguageString name) {
+        this();
 
-		if (section == null) {
-			throw new NullPointerException();
-		}
+        if (section == null) {
+            throw new NullPointerException();
+        }
 
-		new ExplicitOrderNode(section, this);
-		setName(name);
-	}
+        new ExplicitOrderNode(section, this);
+        setName(name);
+    }
 
-	public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder, Boolean showName) {
-		this(section, name);
-		setBody(information);
-		setShowName(showName);
-	}
+    public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder, Boolean showName) {
+        this(section, name);
+        setBody(information);
+        setShowName(showName);
+    }
 
-	@Override
-	public void setName(MultiLanguageString name) {
-		if (name == null) {
-			throw new NullPointerException();
-		}
+    @Override
+    public void setName(MultiLanguageString name) {
+        if (name == null) {
+            throw new NullPointerException();
+        }
 
-		if (!isNameUnique(getSection().getAssociatedItems(), name)) {
-			throw new DuplicatedNameException("site.section.item.name.duplicated");
-		}
+        if (!isNameUnique(getSection().getAssociatedItems(), name)) {
+            throw new DuplicatedNameException("site.section.item.name.duplicated");
+        }
 
-		super.setName(name);
-	}
+        super.setName(name);
+    }
 
-	/**
-	 * @return the item immediately after this item in the section or <code>null</code> if the item is the last
-	 */
-	public Item getNextItem() {
-		Item result = null;
+    /**
+     * @return the item immediately after this item in the section or <code>null</code> if the item is the last
+     */
+    public Item getNextItem() {
+        Item result = null;
 
-		if (hasAnyParents()) {
-			final List<Item> items = (List<Item>) getUniqueParentContainer().getOrderedChildren(Item.class);
-			final Integer order = items.indexOf(this) + 1;
-			result = order < items.size() ? items.get(order) : null;
-		}
+        if (hasAnyParents()) {
+            final List<Item> items = (List<Item>) getUniqueParentContainer().getOrderedChildren(Item.class);
+            final Integer order = items.indexOf(this) + 1;
+            result = order < items.size() ? items.get(order) : null;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Changes the order of this item so that the given item is immediately
-	 * after this item. If the given item is <code>null</code> then this item
-	 * will be the last in the section
-	 * 
-	 * @param item
-	 *            the item that should appear after this item or <code>null</code> if this item should be last
-	 */
-	public void setNextItem(Item item) {
-		if (item != null) {
-			setItemOrder(item.getUniqueParentExplicitOrderNode().getNodeOrder());
-		} else if (hasAnyParents()) {
-			List<Item> items = (List<Item>) getUniqueParentContainer().getChildren(Item.class);
-			setItemOrder(items.size() - 1);
-		}
-	}
+    /**
+     * Changes the order of this item so that the given item is immediately
+     * after this item. If the given item is <code>null</code> then this item
+     * will be the last in the section
+     * 
+     * @param item
+     *            the item that should appear after this item or <code>null</code> if this item should be last
+     */
+    public void setNextItem(Item item) {
+        if (item != null) {
+            setItemOrder(item.getUniqueParentExplicitOrderNode().getNodeOrder());
+        } else if (hasAnyParents()) {
+            List<Item> items = (List<Item>) getUniqueParentContainer().getChildren(Item.class);
+            setItemOrder(items.size() - 1);
+        }
+    }
 
-	public Collection<FileContent> getSortedVisibleFileItems() {
-		final List<FileContent> sortedFiles = new ArrayList<FileContent>();
+    public Collection<FileContent> getSortedVisibleFileItems() {
+        final List<FileContent> sortedFiles = new ArrayList<FileContent>();
 
-		for (Node node : getOrderedChildrenNodes(Attachment.class)) {
-			if (node.isNodeVisible()) {
-				sortedFiles.add(((Attachment) node.getChild()).getFile());
-			}
-		}
+        for (Node node : getOrderedChildrenNodes(Attachment.class)) {
+            if (node.isNodeVisible()) {
+                sortedFiles.add(((Attachment) node.getChild()).getFile());
+            }
+        }
 
-		return sortedFiles;
-	}
+        return sortedFiles;
+    }
 
-	public Collection<FileContent> getSortedFileItems() {
-		final List<FileContent> sortedFiles = new ArrayList<FileContent>();
+    public Collection<FileContent> getSortedFileItems() {
+        final List<FileContent> sortedFiles = new ArrayList<FileContent>();
 
-		for (Attachment attachment : getOrderedChildren(Attachment.class)) {
-			sortedFiles.add(attachment.getFile());
-		}
+        for (Attachment attachment : getOrderedChildren(Attachment.class)) {
+            sortedFiles.add(attachment.getFile());
+        }
 
-		return sortedFiles;
-	}
+        return sortedFiles;
+    }
 
-	public Collection<Node> getSortedAttachmentNodes() {
-		return getOrderedChildrenNodes(Attachment.class);
-	}
+    public Collection<Node> getSortedAttachmentNodes() {
+        return getOrderedChildrenNodes(Attachment.class);
+    }
 
-	@Override
-	public boolean isAvailable(FunctionalityContext context) {
-		if (getSection() != null && !getSection().isAvailable(context)) {
-			return false;
-		}
+    @Override
+    public boolean isAvailable(FunctionalityContext context) {
+        if (getSection() != null && !getSection().isAvailable(context)) {
+            return false;
+        }
 
-		return super.isAvailable(context);
-	}
+        return super.isAvailable(context);
+    }
 
-	/**
-	 * The item's title is visible unless the manager chooses to hide it or when
-	 * the item's sections has the same title as the item and the item has no
-	 * siblings.
-	 * 
-	 * @return <code>true</code> if the item's title is to be presented
-	 */
-	public boolean isNameVisible() {
-		Boolean show = getShowName();
+    /**
+     * The item's title is visible unless the manager chooses to hide it or when
+     * the item's sections has the same title as the item and the item has no
+     * siblings.
+     * 
+     * @return <code>true</code> if the item's title is to be presented
+     */
+    public boolean isNameVisible() {
+        Boolean show = getShowName();
 
-		if (show != null && !show) {
-			return false;
-		}
+        if (show != null && !show) {
+            return false;
+        }
 
-		Section section = getSection();
+        Section section = getSection();
 
-		String sectionName = section.getName().getContent();
-		String itemName = getName().getContent();
+        String sectionName = section.getName().getContent();
+        String itemName = getName().getContent();
 
-		if (!sectionName.equals(itemName)) {
-			return true;
-		}
+        if (!sectionName.equals(itemName)) {
+            return true;
+        }
 
-		return section.getAssociatedItems().size() > 1;
-	}
+        return section.getAssociatedItems().size() > 1;
+    }
 
-	public void removeSection() {
-		if (hasAnyParents()) {
-			getUniqueParentExplicitOrderNode().delete();
-		}
-	}
+    public void removeSection() {
+        if (hasAnyParents()) {
+            getUniqueParentExplicitOrderNode().delete();
+        }
+    }
 
-	public Section getSection() {
-		return (Section) getUniqueParentContainer();
-	}
+    public Section getSection() {
+        return (Section) getUniqueParentContainer();
+    }
 
-	private ExplicitOrderNode getUniqueParentExplicitOrderNode() {
-		return (ExplicitOrderNode) getUniqueParentNode();
-	}
+    private ExplicitOrderNode getUniqueParentExplicitOrderNode() {
+        return (ExplicitOrderNode) getUniqueParentNode();
+    }
 
-	public Integer getItemOrder() {
-		return getUniqueParentExplicitOrderNode().getNodeOrder();
-	}
+    public Integer getItemOrder() {
+        return getUniqueParentExplicitOrderNode().getNodeOrder();
+    }
 
-	public void setItemOrder(Integer nodeOrder) {
-		getUniqueParentExplicitOrderNode().setNodeOrder(nodeOrder);
-	}
+    public void setItemOrder(Integer nodeOrder) {
+        getUniqueParentExplicitOrderNode().setNodeOrder(nodeOrder);
+    }
 
-	public void setVisible(Boolean visible) {
-		getUniqueParentExplicitOrderNode().setVisible(visible);
-	}
+    public void setVisible(Boolean visible) {
+        getUniqueParentExplicitOrderNode().setVisible(visible);
+    }
 
-	public Boolean getVisible() {
-		return getUniqueParentExplicitOrderNode().getVisible();
-	}
+    public Boolean getVisible() {
+        return getUniqueParentExplicitOrderNode().getVisible();
+    }
 
-	@Override
-	protected Node createChildNode(Content childContent) {
-		final Section section = getSection();
-		final Site site = section.getSite();
-		site.logAddFileToItem(this, section, childContent);
-		return new ExplicitOrderNode(this, childContent, Boolean.TRUE);
-	}
+    @Override
+    protected Node createChildNode(Content childContent) {
+        final Section section = getSection();
+        final Site site = section.getSite();
+        site.logAddFileToItem(this, section, childContent);
+        return new ExplicitOrderNode(this, childContent, Boolean.TRUE);
+    }
 
-	public Collection<FileContent> getFileItems() {
-		Collection<FileContent> result = new ArrayList<FileContent>();
-		for (Attachment attachment : getChildren(Attachment.class)) {
-			result.add(attachment.getFile());
-		}
-		return result;
-	}
+    public Collection<FileContent> getFileItems() {
+        Collection<FileContent> result = new ArrayList<FileContent>();
+        for (Attachment attachment : getChildren(Attachment.class)) {
+            result.add(attachment.getFile());
+        }
+        return result;
+    }
 
-	@Override
-	public boolean isChildAccepted(Content child) {
-		return child instanceof Attachment;
-	}
+    @Override
+    public boolean isChildAccepted(Content child) {
+        return child instanceof Attachment;
+    }
 
-	@Override
-	public Content getInitialContent() {
-		return null;
-	}
+    @Override
+    public Content getInitialContent() {
+        return null;
+    }
 
-	public void logCreateItemtoSection() {
-		final Site site = getSection().getSite();
-		site.logCreateItemtoSection(this);
-	}
+    public void logCreateItemtoSection() {
+        final Site site = getSection().getSite();
+        site.logCreateItemtoSection(this);
+    }
 
-	public void logEditItemtoSection() {
-		final Site site = getSection().getSite();
-		site.logEditItemtoSection(this);
-	}
+    public void logEditItemtoSection() {
+        final Site site = getSection().getSite();
+        site.logEditItemtoSection(this);
+    }
 
-	@Override
-	protected void disconnectContent() {
-		Section section = getSection();
-		if (section != null) {
-			Site site = section.getSite();
-			if (site != null) {
-				site.logDeleteItemtoSection(this);
-			}
-		}
-		super.disconnectContent();
-	}
+    @Override
+    protected void disconnectContent() {
+        Section section = getSection();
+        if (section != null) {
+            Site site = section.getSite();
+            if (site != null) {
+                site.logDeleteItemtoSection(this);
+            }
+        }
+        super.disconnectContent();
+    }
 
-	public void logEditItemPermission() {
-		final Site site = getSection().getSite();
-		site.logEditItemPermission(this);
-	}
+    public void logEditItemPermission() {
+        final Site site = getSection().getSite();
+        site.logEditItemPermission(this);
+    }
 
 }

@@ -7,11 +7,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "nape", formBeanClass = FenixActionForm.class)
 @Forwards({
-		@Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
-		@Forward(
-				name = "list-allowed-activities",
-				path = "/scientificCouncil/candidacy/degreeChange/listIndividualCandidacyActivities.jsp") })
+        @Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
+        @Forward(name = "list-allowed-activities",
+                path = "/scientificCouncil/candidacy/degreeChange/listIndividualCandidacyActivities.jsp") })
 public class DegreeChangeIndividualCandidacyProcessDA extends
-		net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange.DegreeChangeIndividualCandidacyProcessDA {
+        net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange.DegreeChangeIndividualCandidacyProcessDA {
 
 }

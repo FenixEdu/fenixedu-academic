@@ -11,97 +11,97 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public abstract class NodeGroup extends Group {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final List<IGroup> children;
+    private final List<IGroup> children;
 
-	protected NodeGroup() {
-		super();
+    protected NodeGroup() {
+        super();
 
-		this.children = new ArrayList<IGroup>();
-	}
+        this.children = new ArrayList<IGroup>();
+    }
 
-	public NodeGroup(IGroup... groups) {
-		this();
+    public NodeGroup(IGroup... groups) {
+        this();
 
-		for (IGroup group : groups) {
-			this.children.add(group);
-		}
-	}
+        for (IGroup group : groups) {
+            this.children.add(group);
+        }
+    }
 
-	public NodeGroup(Collection<IGroup> groups) {
-		this();
+    public NodeGroup(Collection<IGroup> groups) {
+        this();
 
-		this.children.addAll(groups);
-	}
+        this.children.addAll(groups);
+    }
 
-	public List<IGroup> getChildren() {
-		return Collections.unmodifiableList(this.children);
-	}
+    public List<IGroup> getChildren() {
+        return Collections.unmodifiableList(this.children);
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		if (other == null) {
-			return false;
-		}
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
 
-		if (!this.getClass().equals(other.getClass())) {
-			return false;
-		}
+        if (!this.getClass().equals(other.getClass())) {
+            return false;
+        }
 
-		NodeGroup otherNodeGroup = (NodeGroup) other;
-		return this.children.equals(otherNodeGroup.children);
-	}
+        NodeGroup otherNodeGroup = (NodeGroup) other;
+        return this.children.equals(otherNodeGroup.children);
+    }
 
-	@Override
-	public int hashCode() {
-		return this.children.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return this.children.hashCode();
+    }
 
-	abstract public Group with(final Group... group);
+    abstract public Group with(final Group... group);
 
-	@Override
-	public Group with(final NodeGroup nodeGroup, final Group group) {
-		Group result = null;
+    @Override
+    public Group with(final NodeGroup nodeGroup, final Group group) {
+        Group result = null;
 
-		if (this.getClass().equals(nodeGroup.getClass())) {
-			result = this.with(group);
-		} else {
-			result = super.with(nodeGroup, group);
-		}
+        if (this.getClass().equals(nodeGroup.getClass())) {
+            result = this.with(group);
+        } else {
+            result = super.with(nodeGroup, group);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public String getExpression() {
-		StringBuilder builder = new StringBuilder();
+    @Override
+    public String getExpression() {
+        StringBuilder builder = new StringBuilder();
 
-		Iterator<IGroup> iterator = getChildren().iterator();
-		while (iterator.hasNext()) {
-			builder.append(getChildrenExpression(iterator.next()));
+        Iterator<IGroup> iterator = getChildren().iterator();
+        while (iterator.hasNext()) {
+            builder.append(getChildrenExpression(iterator.next()));
 
-			if (iterator.hasNext()) {
-				builder.append(" " + getExpressionOperator() + " ");
-			}
-		}
+            if (iterator.hasNext()) {
+                builder.append(" " + getExpressionOperator() + " ");
+            }
+        }
 
-		return builder.toString();
-	}
+        return builder.toString();
+    }
 
-	private String getChildrenExpression(IGroup group) {
-		if (group instanceof NodeGroup) {
-			return "(" + group.getExpression() + ")";
-		} else {
-			return group.getExpression();
-		}
-	}
+    private String getChildrenExpression(IGroup group) {
+        if (group instanceof NodeGroup) {
+            return "(" + group.getExpression() + ")";
+        } else {
+            return group.getExpression();
+        }
+    }
 
-	protected abstract String getExpressionOperator();
+    protected abstract String getExpressionOperator();
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[0];
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
+    }
 
 }

@@ -13,24 +13,24 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
  */
 public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends InfoGrantOrientationTeacher {
 
-	@Override
-	public void copyFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
-		super.copyFromDomain(grantOrientationTeacher);
-		if (grantOrientationTeacher != null) {
+    @Override
+    public void copyFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
+        super.copyFromDomain(grantOrientationTeacher);
+        if (grantOrientationTeacher != null) {
 
-			setGrantContractInfo(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantOrientationTeacher
-					.getGrantContract()));
-			setOrientationTeacherInfo(InfoTeacher.newInfoFromDomain(grantOrientationTeacher.getOrientationTeacher()));
-		}
-	}
+            setGrantContractInfo(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantOrientationTeacher
+                    .getGrantContract()));
+            setOrientationTeacherInfo(InfoTeacher.newInfoFromDomain(grantOrientationTeacher.getOrientationTeacher()));
+        }
+    }
 
-	public static InfoGrantOrientationTeacher newInfoFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
-		InfoGrantOrientationTeacherWithTeacherAndGrantContract infoGrantOrientationTeacherWithTeacherAndGrantContract = null;
-		if (grantOrientationTeacher != null) {
-			infoGrantOrientationTeacherWithTeacherAndGrantContract = new InfoGrantOrientationTeacherWithTeacherAndGrantContract();
-			infoGrantOrientationTeacherWithTeacherAndGrantContract.copyFromDomain(grantOrientationTeacher);
-		}
-		return infoGrantOrientationTeacherWithTeacherAndGrantContract;
-	}
+    public static InfoGrantOrientationTeacher newInfoFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
+        InfoGrantOrientationTeacherWithTeacherAndGrantContract infoGrantOrientationTeacherWithTeacherAndGrantContract = null;
+        if (grantOrientationTeacher != null) {
+            infoGrantOrientationTeacherWithTeacherAndGrantContract = new InfoGrantOrientationTeacherWithTeacherAndGrantContract();
+            infoGrantOrientationTeacherWithTeacherAndGrantContract.copyFromDomain(grantOrientationTeacher);
+        }
+        return infoGrantOrientationTeacherWithTeacherAndGrantContract;
+    }
 
 }

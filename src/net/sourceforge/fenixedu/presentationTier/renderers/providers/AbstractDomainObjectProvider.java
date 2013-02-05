@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 abstract public class AbstractDomainObjectProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

@@ -12,22 +12,22 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class GroupBuilderNameTakenException extends DomainException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String MESSAGE = "accessControl.group.builder.nameTaken";
-	private String name;
+    private static final String MESSAGE = "accessControl.group.builder.nameTaken";
+    private String name;
 
-	public GroupBuilderNameTakenException(String name) {
-		super(MESSAGE, name);
+    public GroupBuilderNameTakenException(String name) {
+        super(MESSAGE, name);
 
-		this.name = name;
-	}
+        this.name = name;
+    }
 
-	/**
-	 * @return the name that was asked for
-	 */
-	public String getName() {
-		return this.name;
-	}
+    /**
+     * @return the name that was asked for
+     */
+    public String getName() {
+        return this.name;
+    }
 
 }

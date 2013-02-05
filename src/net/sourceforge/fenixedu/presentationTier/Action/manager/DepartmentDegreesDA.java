@@ -18,37 +18,37 @@ import org.apache.struts.action.ActionMapping;
 
 public class DepartmentDegreesDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
-		DepartmentDegreeBean departmentDegreeBean = getRenderedObject();
-		if (departmentDegreeBean == null) {
-			departmentDegreeBean = new DepartmentDegreeBean();
-		}
-		return forwardToPage(mapping, request, departmentDegreeBean);
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
+        DepartmentDegreeBean departmentDegreeBean = getRenderedObject();
+        if (departmentDegreeBean == null) {
+            departmentDegreeBean = new DepartmentDegreeBean();
+        }
+        return forwardToPage(mapping, request, departmentDegreeBean);
+    }
 
-	public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-		executeFactoryMethod();
-		return prepare(mapping, form, request, response);
-	}
+    public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+        executeFactoryMethod();
+        return prepare(mapping, form, request, response);
+    }
 
-	public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException, FenixServiceException {
-		final String departmentString = request.getParameter("departmentID");
-		final String degreeString = request.getParameter("degreeID");
-		final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));
-		final Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(degreeString));
-		RemoveDegreeFromDepartment.run(department, degree);
-		final DepartmentDegreeBean departmentDegreeBean = new DepartmentDegreeBean();
-		departmentDegreeBean.setDepartment(department);
-		return forwardToPage(mapping, request, departmentDegreeBean);
-	}
+    public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException, FenixServiceException {
+        final String departmentString = request.getParameter("departmentID");
+        final String degreeString = request.getParameter("degreeID");
+        final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));
+        final Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(degreeString));
+        RemoveDegreeFromDepartment.run(department, degree);
+        final DepartmentDegreeBean departmentDegreeBean = new DepartmentDegreeBean();
+        departmentDegreeBean.setDepartment(department);
+        return forwardToPage(mapping, request, departmentDegreeBean);
+    }
 
-	private ActionForward forwardToPage(final ActionMapping mapping, final HttpServletRequest request,
-			final DepartmentDegreeBean departmentDegreeBean) {
-		request.setAttribute("departmentDegreeBean", departmentDegreeBean);
-		return mapping.findForward("manageDepartmentDegrees");
-	}
+    private ActionForward forwardToPage(final ActionMapping mapping, final HttpServletRequest request,
+            final DepartmentDegreeBean departmentDegreeBean) {
+        request.setAttribute("departmentDegreeBean", departmentDegreeBean);
+        return mapping.findForward("manageDepartmentDegrees");
+    }
 
 }

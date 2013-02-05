@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final DegreesMergeBean degreesMergeBean = (DegreesMergeBean) source;
+        final DegreesMergeBean degreesMergeBean = (DegreesMergeBean) source;
 
-		final List<Degree> degrees = new ArrayList<Degree>(Degree.readNotEmptyDegrees());
+        final List<Degree> degrees = new ArrayList<Degree>(Degree.readNotEmptyDegrees());
 
-		Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
-		return degrees;
-	}
+        return degrees;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

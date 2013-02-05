@@ -15,10 +15,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteQualification extends FenixService {
 
-	@Service
-	public static void run(Integer qualificationId) {
-		Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
-		qualification.delete();
-	}
+    @Service
+    public static void run(Integer qualificationId) {
+        Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
+        qualification.delete();
+    }
 
 }

@@ -14,145 +14,145 @@ import org.joda.time.LocalDate;
 
 public class PhdCustomAlertBean implements Serializable {
 
-	static enum PhdAlertTargetGroupType {
+    static enum PhdAlertTargetGroupType {
 
-		MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS,
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS,
 
-		ONLY_FOR_ME;
+        ONLY_FOR_ME;
 
-	}
+    }
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = -3274906509546432695L;
+    private static final long serialVersionUID = -3274906509546432695L;
 
-	private PhdAlertTargetGroupType targetGroupType;
+    private PhdAlertTargetGroupType targetGroupType;
 
-	private String subject;
+    private String subject;
 
-	private String body;
+    private String body;
 
-	private boolean toSendEmail;
+    private boolean toSendEmail;
 
-	private LocalDate fireDate;
+    private LocalDate fireDate;
 
-	private Person personToAdd;
+    private Person personToAdd;
 
-	private Boolean userDefined = true;
+    private Boolean userDefined = true;
 
-	private Boolean shared = false;
+    private Boolean shared = false;
 
-	private PhdIndividualProgramProcess process;
+    private PhdIndividualProgramProcess process;
 
-	private Group targetGroup;
+    private Group targetGroup;
 
-	public PhdCustomAlertBean(PhdIndividualProgramProcess process) {
-		setProcess(process);
-	}
+    public PhdCustomAlertBean(PhdIndividualProgramProcess process) {
+        setProcess(process);
+    }
 
-	public PhdCustomAlertBean(PhdIndividualProgramProcess process, Boolean sendEmail, Boolean userDefined, Boolean shared) {
-		setProcess(process);
-		setToSendEmail(sendEmail);
-		setUserDefined(userDefined);
-		setShared(shared);
-	}
+    public PhdCustomAlertBean(PhdIndividualProgramProcess process, Boolean sendEmail, Boolean userDefined, Boolean shared) {
+        setProcess(process);
+        setToSendEmail(sendEmail);
+        setUserDefined(userDefined);
+        setShared(shared);
+    }
 
-	public PhdAlertTargetGroupType getTargetGroupType() {
-		return targetGroupType;
-	}
+    public PhdAlertTargetGroupType getTargetGroupType() {
+        return targetGroupType;
+    }
 
-	public void setTargetGroupType(PhdAlertTargetGroupType targetGroupType) {
-		this.targetGroupType = targetGroupType;
-	}
+    public void setTargetGroupType(PhdAlertTargetGroupType targetGroupType) {
+        this.targetGroupType = targetGroupType;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public String getBody() {
-		return body;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-	public boolean isToSendEmail() {
-		return toSendEmail;
-	}
+    public boolean isToSendEmail() {
+        return toSendEmail;
+    }
 
-	public void setToSendEmail(boolean toSendEmail) {
-		this.toSendEmail = toSendEmail;
-	}
+    public void setToSendEmail(boolean toSendEmail) {
+        this.toSendEmail = toSendEmail;
+    }
 
-	public LocalDate getFireDate() {
-		return fireDate;
-	}
+    public LocalDate getFireDate() {
+        return fireDate;
+    }
 
-	public void setFireDate(LocalDate fireDate) {
-		this.fireDate = fireDate;
-	}
+    public void setFireDate(LocalDate fireDate) {
+        this.fireDate = fireDate;
+    }
 
-	public void setTargetGroup(Group targetGroup) {
-		this.targetGroup = targetGroup;
-	}
+    public void setTargetGroup(Group targetGroup) {
+        this.targetGroup = targetGroup;
+    }
 
-	public Group getTargetGroup() {
-		return this.targetGroup;
-	}
+    public Group getTargetGroup() {
+        return this.targetGroup;
+    }
 
-	public Group calculateTargetGroup() {
-		if (getTargetGroup() != null) {
-			return getTargetGroup();
-		}
+    public Group calculateTargetGroup() {
+        if (getTargetGroup() != null) {
+            return getTargetGroup();
+        }
 
-		switch (getTargetGroupType()) {
+        switch (getTargetGroupType()) {
 
-		case MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS:
-			return new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
-		case ONLY_FOR_ME:
-			return new PersonGroup(AccessControl.getPerson());
+        case MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS:
+            return new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
+        case ONLY_FOR_ME:
+            return new PersonGroup(AccessControl.getPerson());
 
-		default:
-			throw new RuntimeException("Target group type not supported");
-		}
-	}
+        default:
+            throw new RuntimeException("Target group type not supported");
+        }
+    }
 
-	public Person getPersonToAdd() {
-		return this.personToAdd;
-	}
+    public Person getPersonToAdd() {
+        return this.personToAdd;
+    }
 
-	public void setPersonToAdd(Person personToAdd) {
-		this.personToAdd = personToAdd;
-	}
+    public void setPersonToAdd(Person personToAdd) {
+        this.personToAdd = personToAdd;
+    }
 
-	public Boolean getUserDefined() {
-		return userDefined;
-	}
+    public Boolean getUserDefined() {
+        return userDefined;
+    }
 
-	public void setUserDefined(Boolean userDefined) {
-		this.userDefined = userDefined;
-	}
+    public void setUserDefined(Boolean userDefined) {
+        this.userDefined = userDefined;
+    }
 
-	public Boolean getShared() {
-		return shared;
-	}
+    public Boolean getShared() {
+        return shared;
+    }
 
-	public void setShared(Boolean shared) {
-		this.shared = shared;
-	}
+    public void setShared(Boolean shared) {
+        this.shared = shared;
+    }
 
-	public PhdIndividualProgramProcess getProcess() {
-		return this.process;
-	}
+    public PhdIndividualProgramProcess getProcess() {
+        return this.process;
+    }
 
-	public void setProcess(PhdIndividualProgramProcess process) {
-		this.process = process;
-	}
+    public void setProcess(PhdIndividualProgramProcess process) {
+        this.process = process;
+    }
 
 }

@@ -19,59 +19,59 @@ import pt.utl.ist.fenix.tools.file.utils.FileUtils;
  */
 public class DiskZipArchive extends DiskArchive {
 
-	public DiskZipArchive(HttpServletResponse response, String name) throws IOException {
-		super(getTemporaryDirectory(), response);
+    public DiskZipArchive(HttpServletResponse response, String name) throws IOException {
+        super(getTemporaryDirectory(), response);
 
-		setName(name);
-	}
+        setName(name);
+    }
 
-	/**
-	 * Creates a Zip file from all contents saved in the disk and writes it into
-	 * the response.
-	 */
-	@Override
-	public void finish() throws IOException {
-		File root = getRoot();
+    /**
+     * Creates a Zip file from all contents saved in the disk and writes it into
+     * the response.
+     */
+    @Override
+    public void finish() throws IOException {
+        File root = getRoot();
 
-		HttpServletResponse response = getResponse();
+        HttpServletResponse response = getResponse();
 
-		response.setContentType(ZipArchive.ARCHIVE_CONTENT_TYPE);
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + getName() + ".zip\"");
+        response.setContentType(ZipArchive.ARCHIVE_CONTENT_TYPE);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + getName() + ".zip\"");
 
-		ZipOutputStream zipStream = new ZipOutputStream(response.getOutputStream());
+        ZipOutputStream zipStream = new ZipOutputStream(response.getOutputStream());
 
-		writeZipEntries(zipStream, "", root);
+        writeZipEntries(zipStream, "", root);
 
-		zipStream.close();
+        zipStream.close();
 
-		FileUtils.deleteDirectory(getRoot());
-	}
+        FileUtils.deleteDirectory(getRoot());
+    }
 
-	private void writeZipEntries(ZipOutputStream zipStream, String prefix, File dir) throws IOException {
-		for (File file : dir.listFiles()) {
-			if (file.isDirectory()) {
-				writeZipEntries(zipStream, prefix + file.getName() + "/", file);
-			} else {
-				writeZipEntry(zipStream, prefix, file);
-			}
-		}
-	}
+    private void writeZipEntries(ZipOutputStream zipStream, String prefix, File dir) throws IOException {
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+                writeZipEntries(zipStream, prefix + file.getName() + "/", file);
+            } else {
+                writeZipEntry(zipStream, prefix, file);
+            }
+        }
+    }
 
-	private void writeZipEntry(ZipOutputStream zipStream, String prefix, File file) throws IOException {
-		ZipEntry entry = new ZipEntry(prefix + file.getName());
-		zipStream.putNextEntry(entry);
+    private void writeZipEntry(ZipOutputStream zipStream, String prefix, File file) throws IOException {
+        ZipEntry entry = new ZipEntry(prefix + file.getName());
+        zipStream.putNextEntry(entry);
 
-		FileInputStream fileStream = new FileInputStream(file);
+        FileInputStream fileStream = new FileInputStream(file);
 
-		byte[] buffer = new byte[2048];
-		int length;
+        byte[] buffer = new byte[2048];
+        int length;
 
-		while ((length = fileStream.read(buffer)) != -1) {
-			zipStream.write(buffer, 0, length);
-		}
+        while ((length = fileStream.read(buffer)) != -1) {
+            zipStream.write(buffer, 0, length);
+        }
 
-		fileStream.close();
-		zipStream.closeEntry();
-	}
+        fileStream.close();
+        zipStream.closeEntry();
+    }
 
 }

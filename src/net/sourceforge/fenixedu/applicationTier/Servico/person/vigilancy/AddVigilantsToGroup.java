@@ -12,16 +12,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddVigilantsToGroup extends FenixService {
 
-	@Service
-	public static void run(Map<VigilantGroup, List<Person>> peopleToAdd) {
+    @Service
+    public static void run(Map<VigilantGroup, List<Person>> peopleToAdd) {
 
-		Set<VigilantGroup> groups = peopleToAdd.keySet();
-		for (VigilantGroup group : groups) {
-			List<Person> people = peopleToAdd.get(group);
-			for (Person person : people) {
-				new VigilantWrapper(group, person);
-			}
-		}
-	}
+        Set<VigilantGroup> groups = peopleToAdd.keySet();
+        for (VigilantGroup group : groups) {
+            List<Person> people = peopleToAdd.get(group);
+            for (Person person : people) {
+                new VigilantWrapper(group, person);
+            }
+        }
+    }
 
 }

@@ -19,44 +19,44 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/internship", module = "publico")
 @Forwards({ @Forward(name = "candidacy", path = "internship.candidacy"),
-		@Forward(name = "rules", path = "internship.candidacy.rules"),
-		@Forward(name = "final", path = "internship.candidacy.final") })
+        @Forward(name = "rules", path = "internship.candidacy.rules"),
+        @Forward(name = "final", path = "internship.candidacy.final") })
 public class InternshipDA extends FenixDispatchAction {
-	public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		InternshipCandidacySession session = InternshipCandidacySession.getMostRecentCandidacySession();
-		if (session.getCandidacyInterval().containsNow()) {
-			request.setAttribute("candidacy", new InternshipCandidacyBean(session));
-		}
-		return mapping.findForward("candidacy");
-	}
+    public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        InternshipCandidacySession session = InternshipCandidacySession.getMostRecentCandidacySession();
+        if (session.getCandidacyInterval().containsNow()) {
+            request.setAttribute("candidacy", new InternshipCandidacyBean(session));
+        }
+        return mapping.findForward("candidacy");
+    }
 
-	public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		InternshipCandidacyBean bean = getRenderedObject();
-		request.setAttribute("candidacy", bean);
-		return mapping.findForward("rules");
-	}
+    public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        InternshipCandidacyBean bean = getRenderedObject();
+        request.setAttribute("candidacy", bean);
+        return mapping.findForward("rules");
+    }
 
-	public ActionForward confirmCandidacyRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			InternshipCandidacyBean bean = getRenderedObject();
-			request.setAttribute("candidacy", bean);
-			Integer candidacyNumber = InternshipCandidacy.create(bean);
-			request.setAttribute("candidacyNumber", candidacyNumber);
-			return mapping.findForward("final");
-		} catch (DuplicateInternshipCandidacy e) {
-			addActionMessage(request, "error.internationalrelations.internship.candidacy.duplicateStudentNumber", e.getNumber(),
-					e.getUniversity());
-			return mapping.findForward("rules");
-		}
-	}
+    public ActionForward confirmCandidacyRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            InternshipCandidacyBean bean = getRenderedObject();
+            request.setAttribute("candidacy", bean);
+            Integer candidacyNumber = InternshipCandidacy.create(bean);
+            request.setAttribute("candidacyNumber", candidacyNumber);
+            return mapping.findForward("final");
+        } catch (DuplicateInternshipCandidacy e) {
+            addActionMessage(request, "error.internationalrelations.internship.candidacy.duplicateStudentNumber", e.getNumber(),
+                    e.getUniversity());
+            return mapping.findForward("rules");
+        }
+    }
 
-	public ActionForward backToCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		InternshipCandidacyBean bean = getRenderedObject();
-		request.setAttribute("candidacy", bean);
-		return mapping.findForward("candidacy");
-	}
+    public ActionForward backToCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        InternshipCandidacyBean bean = getRenderedObject();
+        request.setAttribute("candidacy", bean);
+        return mapping.findForward("candidacy");
+    }
 }

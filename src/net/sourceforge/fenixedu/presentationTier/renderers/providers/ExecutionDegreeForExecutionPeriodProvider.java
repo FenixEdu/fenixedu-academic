@@ -14,25 +14,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionDegreeForExecutionPeriodProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
 
-		final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
-		final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
-		if (executionPeriod != null) {
-			final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-			executionDegrees.addAll(executionYear.getExecutionDegreesSet());
-		}
+        final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
+        final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
+        if (executionPeriod != null) {
+            final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+            executionDegrees.addAll(executionYear.getExecutionDegreesSet());
+        }
 
-		Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 
-		return executionDegrees;
-	}
+        return executionDegrees;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

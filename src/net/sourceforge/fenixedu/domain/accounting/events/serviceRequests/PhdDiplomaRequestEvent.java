@@ -11,51 +11,51 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
 
-	protected PhdDiplomaRequestEvent() {
-		super();
-	}
+    protected PhdDiplomaRequestEvent() {
+        super();
+    }
 
-	protected PhdDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
-			final Person person, final AcademicServiceRequest academicServiceRequest) {
-		this();
+    protected PhdDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
+            final Person person, final AcademicServiceRequest academicServiceRequest) {
+        this();
 
-		if (!academicServiceRequest.isDiploma()) {
-			throw new DomainException("error.PhdRegistryDiplomaRequestEvent.request.is.not.diploma");
-		}
+        if (!academicServiceRequest.isDiploma()) {
+            throw new DomainException("error.PhdRegistryDiplomaRequestEvent.request.is.not.diploma");
+        }
 
-		if (!EventType.BOLONHA_PHD_DIPLOMA_REQUEST.equals(eventType)) {
-			throw new DomainException("error.PhdRegistryDiplomaRequestEvent.eventType.is.not.phd.diploma");
-		}
+        if (!EventType.BOLONHA_PHD_DIPLOMA_REQUEST.equals(eventType)) {
+            throw new DomainException("error.PhdRegistryDiplomaRequestEvent.eventType.is.not.phd.diploma");
+        }
 
-		super.init(administrativeOffice, eventType, person, academicServiceRequest);
-	}
+        super.init(administrativeOffice, eventType, person, academicServiceRequest);
+    }
 
-	final static public PhdDiplomaRequestEvent create(final AdministrativeOffice administrativeOffice, final Person person,
-			final PhdDiplomaRequest phdDiplomaRequest) {
-		return new PhdDiplomaRequestEvent(administrativeOffice, phdDiplomaRequest.getEventType(), person, phdDiplomaRequest);
-	}
+    final static public PhdDiplomaRequestEvent create(final AdministrativeOffice administrativeOffice, final Person person,
+            final PhdDiplomaRequest phdDiplomaRequest) {
+        return new PhdDiplomaRequestEvent(administrativeOffice, phdDiplomaRequest.getEventType(), person, phdDiplomaRequest);
+    }
 
-	@Override
-	public LabelFormatter getDescription() {
-		final LabelFormatter result = super.getDescription();
-		fillDescription(result);
-		return result;
-	}
+    @Override
+    public LabelFormatter getDescription() {
+        final LabelFormatter result = super.getDescription();
+        fillDescription(result);
+        return result;
+    }
 
-	@Override
-	final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-		final LabelFormatter labelFormatter = new LabelFormatter();
-		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-		fillDescription(labelFormatter);
+    @Override
+    final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+        fillDescription(labelFormatter);
 
-		return labelFormatter;
-	}
+        return labelFormatter;
+    }
 
-	private void fillDescription(final LabelFormatter labelFormatter) {
-		labelFormatter.appendLabel(" (");
-		final PhdDiplomaRequest request = (PhdDiplomaRequest) getAcademicServiceRequest();
-		labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
-		labelFormatter.appendLabel(")");
-	}
+    private void fillDescription(final LabelFormatter labelFormatter) {
+        labelFormatter.appendLabel(" (");
+        final PhdDiplomaRequest request = (PhdDiplomaRequest) getAcademicServiceRequest();
+        labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
+        labelFormatter.appendLabel(")");
+    }
 
 }

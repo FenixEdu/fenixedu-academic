@@ -21,97 +21,97 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  */
 public class IdOperator extends OperatorArgument {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final int PARAMETER = 0;
-	private static final int TYPE = 1;
+    private static final int PARAMETER = 0;
+    private static final int TYPE = 1;
 
-	private NumberOperator number;
-	private ClassOperator type;
+    private NumberOperator number;
+    private ClassOperator type;
 
-	public IdOperator(Argument parameter, Argument type) {
-		super();
+    public IdOperator(Argument parameter, Argument type) {
+        super();
 
-		addArgument(parameter);
-		addArgument(type);
-	}
+        addArgument(parameter);
+        addArgument(type);
+    }
 
-	public IdOperator(DomainObject object) {
-		this(new StaticArgument(object.getIdInternal()), new StaticArgument(ClassOperator.simplify(object.getClass().getName())));
-	}
+    public IdOperator(DomainObject object) {
+        this(new StaticArgument(object.getIdInternal()), new StaticArgument(ClassOperator.simplify(object.getClass().getName())));
+    }
 
-	@Override
-	protected void checkOperatorArguments() {
-		int size = getArguments().size();
+    @Override
+    protected void checkOperatorArguments() {
+        int size = getArguments().size();
 
-		if (size != 2) {
-			throw new WrongNumberOfArgumentsException(size, 2, 2);
-		}
-	}
+        if (size != 2) {
+            throw new WrongNumberOfArgumentsException(size, 2, 2);
+        }
+    }
 
-	@Override
-	protected DomainObject execute() {
-		Integer number = getNumber();
-		Class type = getClassType();
+    @Override
+    protected DomainObject execute() {
+        Integer number = getNumber();
+        Class type = getClassType();
 
-		return RootDomainObject.readDomainObjectByOID(type, number);
-	}
+        return RootDomainObject.readDomainObjectByOID(type, number);
+    }
 
-	protected Integer getNumber() {
-		Argument argument = argument(PARAMETER);
-		if (argument instanceof StaticArgument) {
-			StaticArgument staticArgument = (StaticArgument) argument;
+    protected Integer getNumber() {
+        Argument argument = argument(PARAMETER);
+        if (argument instanceof StaticArgument) {
+            StaticArgument staticArgument = (StaticArgument) argument;
 
-			if (staticArgument.isNumber()) {
-				return staticArgument.getNumber();
-			}
-		}
+            if (staticArgument.isNumber()) {
+                return staticArgument.getNumber();
+            }
+        }
 
-		return (Integer) getNumberOperator().getValue();
-	}
+        return (Integer) getNumberOperator().getValue();
+    }
 
-	/**
-	 * @return the NumberOperator that will fetch the oid
-	 */
-	protected NumberOperator getNumberOperator() {
-		if (this.number == null) {
-			this.number = new NumberOperator((GroupContextProvider) this, new ParameterOperator(this, argument(PARAMETER)));
-		}
+    /**
+     * @return the NumberOperator that will fetch the oid
+     */
+    protected NumberOperator getNumberOperator() {
+        if (this.number == null) {
+            this.number = new NumberOperator((GroupContextProvider) this, new ParameterOperator(this, argument(PARAMETER)));
+        }
 
-		return this.number;
-	}
+        return this.number;
+    }
 
-	@Override
-	public boolean isDynamic() {
-		checkOperatorArguments();
+    @Override
+    public boolean isDynamic() {
+        checkOperatorArguments();
 
-		Argument argument = argument(PARAMETER);
+        Argument argument = argument(PARAMETER);
 
-		if (argument instanceof StaticArgument) {
-			StaticArgument staticArgument = (StaticArgument) argument;
+        if (argument instanceof StaticArgument) {
+            StaticArgument staticArgument = (StaticArgument) argument;
 
-			if (staticArgument.isString()) {
-				return true;
-			}
-		}
+            if (staticArgument.isString()) {
+                return true;
+            }
+        }
 
-		return argument(TYPE).isDynamic();
-	}
+        return argument(TYPE).isDynamic();
+    }
 
-	/**
-	 * @return the target domain class type
-	 */
-	protected Class getClassType() {
-		if (this.type == null) {
-			this.type = new ClassOperator(this, argument(TYPE));
-		}
+    /**
+     * @return the target domain class type
+     */
+    protected Class getClassType() {
+        if (this.type == null) {
+            this.type = new ClassOperator(this, argument(TYPE));
+        }
 
-		return (Class) this.type.getValue();
-	}
+        return (Class) this.type.getValue();
+    }
 
-	@Override
-	public String getMainValueString() {
-		return String.format("$I(%s, %s)", argument(PARAMETER), argument(TYPE));
-	}
+    @Override
+    public String getMainValueString() {
+        return String.format("$I(%s, %s)", argument(PARAMETER), argument(TYPE));
+    }
 
 }

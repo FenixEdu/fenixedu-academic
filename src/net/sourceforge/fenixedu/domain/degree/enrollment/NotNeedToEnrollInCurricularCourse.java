@@ -18,66 +18,66 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricularCourse_Base {
 
-	public NotNeedToEnrollInCurricularCourse() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public NotNeedToEnrollInCurricularCourse() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
-		this();
-		setCurricularCourse(curricularCourse);
-		setStudentCurricularPlan(studentCurricularPlan);
-	}
+    public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
+        this();
+        setCurricularCourse(curricularCourse);
+        setStudentCurricularPlan(studentCurricularPlan);
+    }
 
-	public void delete() {
-		removeStudentCurricularPlan();
-		removeCurricularCourse();
-		removeRootDomainObject();
-		getEnrolments().clear();
-		getExternalEnrolments().clear();
-		super.deleteDomainObject();
-	}
+    public void delete() {
+        removeStudentCurricularPlan();
+        removeCurricularCourse();
+        removeRootDomainObject();
+        getEnrolments().clear();
+        getExternalEnrolments().clear();
+        super.deleteDomainObject();
+    }
 
-	public Double getEctsCredits() {
-		if (isDueToEquivalence()) {
-			return Double.valueOf(0d);
-		}
-		return getCurricularCourse().getEctsCredits();
-	}
+    public Double getEctsCredits() {
+        if (isDueToEquivalence()) {
+            return Double.valueOf(0d);
+        }
+        return getCurricularCourse().getEctsCredits();
+    }
 
-	private boolean isDueToEquivalence() {
-		return isDueToOtherEnrolmentEquivalence() || isDueToGlobalEquivalence();
-	}
+    private boolean isDueToEquivalence() {
+        return isDueToOtherEnrolmentEquivalence() || isDueToGlobalEquivalence();
+    }
 
-	private boolean isDueToGlobalEquivalence() {
-		for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse()
-				.getCurricularCourseEquivalencesSet()) {
-			if (curricularCourseEquivalence.isSatisfied(getRegistration())) {
-				return true;
-			}
-		}
+    private boolean isDueToGlobalEquivalence() {
+        for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse()
+                .getCurricularCourseEquivalencesSet()) {
+            if (curricularCourseEquivalence.isSatisfied(getRegistration())) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private boolean isDueToOtherEnrolmentEquivalence() {
-		for (final Enrolment enrolment : getEnrolmentsSet()) {
-			if (getRegistration().hasEnrolments(enrolment)) {
-				return true;
-			}
-		}
+    private boolean isDueToOtherEnrolmentEquivalence() {
+        for (final Enrolment enrolment : getEnrolmentsSet()) {
+            if (getRegistration().hasEnrolments(enrolment)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public Registration getRegistration() {
-		return getStudentCurricularPlan().getRegistration();
-	}
+    public Registration getRegistration() {
+        return getStudentCurricularPlan().getRegistration();
+    }
 
-	public Collection<IEnrolment> getIEnrolments() {
-		Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
-		res.addAll(getExternalEnrolmentsSet());
-		return res;
-	}
+    public Collection<IEnrolment> getIEnrolments() {
+        Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
+        res.addAll(getExternalEnrolmentsSet());
+        return res;
+    }
 
 }

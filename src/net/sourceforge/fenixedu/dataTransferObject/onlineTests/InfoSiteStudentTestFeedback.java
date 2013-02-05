@@ -14,56 +14,56 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
  */
 public class InfoSiteStudentTestFeedback extends DataTranferObject implements ISiteComponent {
 
-	private Integer responseNumber;
+    private Integer responseNumber;
 
-	private Integer notResponseNumber;
+    private Integer notResponseNumber;
 
-	private List<String> errors;
+    private List<String> errors;
 
-	private List studentTestQuestionList;
+    private List studentTestQuestionList;
 
-	private StudentTestLog studentTestLog;
+    private StudentTestLog studentTestLog;
 
-	public InfoSiteStudentTestFeedback() {
-	}
+    public InfoSiteStudentTestFeedback() {
+    }
 
-	public List<String> getErrors() {
-		return errors;
-	}
+    public List<String> getErrors() {
+        return errors;
+    }
 
-	public void setErrors(List<String> errors) {
-		this.errors = errors;
-	}
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
 
-	public Integer getNotResponseNumber() {
-		return notResponseNumber;
-	}
+    public Integer getNotResponseNumber() {
+        return notResponseNumber;
+    }
 
-	public void setNotResponseNumber(Integer notResponseNumber) {
-		this.notResponseNumber = notResponseNumber;
-	}
+    public void setNotResponseNumber(Integer notResponseNumber) {
+        this.notResponseNumber = notResponseNumber;
+    }
 
-	public Integer getResponseNumber() {
-		return responseNumber;
-	}
+    public Integer getResponseNumber() {
+        return responseNumber;
+    }
 
-	public void setResponseNumber(Integer responseNumber) {
-		this.responseNumber = responseNumber;
-	}
+    public void setResponseNumber(Integer responseNumber) {
+        this.responseNumber = responseNumber;
+    }
 
-	public List getStudentTestQuestionList() {
-		return studentTestQuestionList;
-	}
+    public List getStudentTestQuestionList() {
+        return studentTestQuestionList;
+    }
 
-	public void setStudentTestQuestionList(List studentTestQuestionList) {
-		this.studentTestQuestionList = studentTestQuestionList;
-	}
+    public void setStudentTestQuestionList(List studentTestQuestionList) {
+        this.studentTestQuestionList = studentTestQuestionList;
+    }
 
-	public StudentTestLog getStudentTestLog() {
-		return studentTestLog;
-	}
+    public StudentTestLog getStudentTestLog() {
+        return studentTestLog;
+    }
 
-	public void setStudentTestLog(StudentTestLog studentTestLog) {
-		this.studentTestLog = studentTestLog;
-	}
+    public void setStudentTestLog(StudentTestLog studentTestLog) {
+        this.studentTestLog = studentTestLog;
+    }
 }

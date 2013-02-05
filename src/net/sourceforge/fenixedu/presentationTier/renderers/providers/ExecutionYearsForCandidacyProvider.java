@@ -16,16 +16,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class ExecutionYearsForCandidacyProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final DFACandidacyBean candidacyBean = ((DFACandidacyBean) source);
-		return candidacyBean.getDegreeCurricularPlan() == null ? Collections.EMPTY_SET : candidacyBean.getDegreeCurricularPlan()
-				.getCandidacyPeriodsExecutionYears();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final DFACandidacyBean candidacyBean = ((DFACandidacyBean) source);
+        return candidacyBean.getDegreeCurricularPlan() == null ? Collections.EMPTY_SET : candidacyBean.getDegreeCurricularPlan()
+                .getCandidacyPeriodsExecutionYears();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

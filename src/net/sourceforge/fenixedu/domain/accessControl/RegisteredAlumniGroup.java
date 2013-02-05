@@ -10,24 +10,24 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 public class RegisteredAlumniGroup extends Group {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public RegisteredAlumniGroup() {
-	}
+    public RegisteredAlumniGroup() {
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = new HashSet<Person>();
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = new HashSet<Person>();
 
-		for (final Alumni alumni : RootDomainObject.getInstance().getAlumnisSet()) {
-			elements.add(alumni.getStudent().getPerson());
-		}
-		return elements;
-	}
+        for (final Alumni alumni : RootDomainObject.getInstance().getAlumnisSet()) {
+            elements.add(alumni.getStudent().getPerson());
+        }
+        return elements;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
 
 }

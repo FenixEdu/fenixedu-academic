@@ -16,203 +16,203 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.joda.time.LocalDate;
 
 public class DelegateBean implements Serializable {
-	private DegreeType degreeType;
+    private DegreeType degreeType;
 
-	private ExecutionYear executionYear;
+    private ExecutionYear executionYear;
 
-	private Degree degree;
+    private Degree degree;
 
-	private CurricularYear curricularYear;
+    private CurricularYear curricularYear;
 
-	private Student delegate;
+    private Student delegate;
 
-	private Person ggaeDelegate;
+    private Person ggaeDelegate;
 
-	private FunctionType delegateType;
+    private FunctionType delegateType;
 
-	private Integer studentNumber;
+    private Integer studentNumber;
 
-	private String personUsername;
+    private String personUsername;
 
-	private Function ggaeDelegateFunction;
+    private Function ggaeDelegateFunction;
 
-	private DelegateElection delegateElection;
+    private DelegateElection delegateElection;
 
-	private PersonFunction personFunction;
+    private PersonFunction personFunction;
 
-	private LocalDate personFunctionNewEndDate;
+    private LocalDate personFunctionNewEndDate;
 
-	public DelegateBean() {
-		setDegreeType(null);
-		setDegree(null);
-		setCurricularYear(null);
-		setDelegate(null);
-		setGgaeDelegate(null);
-		setGgaeDelegateFunction(null);
-	}
+    public DelegateBean() {
+        setDegreeType(null);
+        setDegree(null);
+        setCurricularYear(null);
+        setDelegate(null);
+        setGgaeDelegate(null);
+        setGgaeDelegateFunction(null);
+    }
 
-	public CurricularYear getCurricularYear() {
-		return (curricularYear);
-	}
+    public CurricularYear getCurricularYear() {
+        return (curricularYear);
+    }
 
-	public void setCurricularYear(CurricularYear curricularYear) {
-		this.curricularYear = curricularYear;
-	}
+    public void setCurricularYear(CurricularYear curricularYear) {
+        this.curricularYear = curricularYear;
+    }
 
-	public Degree getDegree() {
-		return (degree);
-	}
+    public Degree getDegree() {
+        return (degree);
+    }
 
-	public void setDegree(Degree degree) {
-		this.degree = degree;
-	}
+    public void setDegree(Degree degree) {
+        this.degree = degree;
+    }
 
-	public DegreeType getDegreeType() {
-		return degreeType;
-	}
+    public DegreeType getDegreeType() {
+        return degreeType;
+    }
 
-	public void setDegreeType(DegreeType degreeType) {
-		this.degreeType = degreeType;
-	}
+    public void setDegreeType(DegreeType degreeType) {
+        this.degreeType = degreeType;
+    }
 
-	public ExecutionYear getExecutionYear() {
-		return (executionYear);
-	}
+    public ExecutionYear getExecutionYear() {
+        return (executionYear);
+    }
 
-	public void setDelegateElection(DelegateElection election) {
-		this.delegateElection = election;
-	}
+    public void setDelegateElection(DelegateElection election) {
+        this.delegateElection = election;
+    }
 
-	public DelegateElection getDelegateElection() {
-		return (delegateElection);
-	}
+    public DelegateElection getDelegateElection() {
+        return (delegateElection);
+    }
 
-	public void setExecutionYear(ExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	public Student getDelegate() {
-		return (delegate);
-	}
+    public Student getDelegate() {
+        return (delegate);
+    }
 
-	public void setDelegate(Student delegate) {
-		this.delegate = delegate;
-	}
+    public void setDelegate(Student delegate) {
+        this.delegate = delegate;
+    }
 
-	public Person getGgaeDelegate() {
-		return (ggaeDelegate);
-	}
+    public Person getGgaeDelegate() {
+        return (ggaeDelegate);
+    }
 
-	public void setGgaeDelegate(Person ggaeDelegate) {
-		this.ggaeDelegate = ggaeDelegate;
-	}
+    public void setGgaeDelegate(Person ggaeDelegate) {
+        this.ggaeDelegate = ggaeDelegate;
+    }
 
-	public Integer getStudentNumber() {
-		return ((getDelegate() == null) || (getDelegate().getLastActiveRegistration() == null)) ? studentNumber : getDelegate()
-				.getLastActiveRegistration().getNumber();
-	}
+    public Integer getStudentNumber() {
+        return ((getDelegate() == null) || (getDelegate().getLastActiveRegistration() == null)) ? studentNumber : getDelegate()
+                .getLastActiveRegistration().getNumber();
+    }
 
-	public void setStudentNumber(Integer studentNumber) {
-		this.studentNumber = studentNumber;
-	}
+    public void setStudentNumber(Integer studentNumber) {
+        this.studentNumber = studentNumber;
+    }
 
-	public String getPersonUsername() {
-		return (getGgaeDelegate() == null ? personUsername : getGgaeDelegate().getUsername());
-	}
+    public String getPersonUsername() {
+        return (getGgaeDelegate() == null ? personUsername : getGgaeDelegate().getUsername());
+    }
 
-	public void setPersonUsername(String personUsername) {
-		this.personUsername = personUsername;
-	}
+    public void setPersonUsername(String personUsername) {
+        this.personUsername = personUsername;
+    }
 
-	public String getPersonName() {
-		return (getGgaeDelegate() != null ? getGgaeDelegate().getName() : null);
-	}
+    public String getPersonName() {
+        return (getGgaeDelegate() != null ? getGgaeDelegate().getName() : null);
+    }
 
-	public String getStudentName() {
-		return (getDelegate() != null ? getDelegate().getPerson().getName() : null);
-	}
+    public String getStudentName() {
+        return (getDelegate() != null ? getDelegate().getPerson().getName() : null);
+    }
 
-	public String getStudentEmail() {
-		return (getDelegate() != null ? getDelegate().getPerson().getEmail() : null);
-	}
+    public String getStudentEmail() {
+        return (getDelegate() != null ? getDelegate().getPerson().getEmail() : null);
+    }
 
-	public FunctionType getDelegateType() {
-		return delegateType;
-	}
+    public FunctionType getDelegateType() {
+        return delegateType;
+    }
 
-	public void setDelegateType(FunctionType delegateType) {
-		this.delegateType = delegateType;
-	}
+    public void setDelegateType(FunctionType delegateType) {
+        this.delegateType = delegateType;
+    }
 
-	public Function getGgaeDelegateFunction() {
-		return (ggaeDelegateFunction);
-	}
+    public Function getGgaeDelegateFunction() {
+        return (ggaeDelegateFunction);
+    }
 
-	public void setGgaeDelegateFunction(Function delegateFunction) {
-		this.ggaeDelegateFunction = delegateFunction;
-	}
+    public void setGgaeDelegateFunction(Function delegateFunction) {
+        this.ggaeDelegateFunction = delegateFunction;
+    }
 
-	/*
-	 * THE FOLLOWING METHODS ARE PRESENTATION LOGIC
-	 */
-	public boolean getHasDelegate() {
-		return hasDelegate();
-	}
+    /*
+     * THE FOLLOWING METHODS ARE PRESENTATION LOGIC
+     */
+    public boolean getHasDelegate() {
+        return hasDelegate();
+    }
 
-	public boolean getHasGgaeDelegate() {
-		return hasGgaeDelegate();
-	}
+    public boolean getHasGgaeDelegate() {
+        return hasGgaeDelegate();
+    }
 
-	public boolean isEmptyDelegateBean() {
-		return (getDelegate() == null && !isYearDelegateTypeBean() ? true : false);
-	}
+    public boolean isEmptyDelegateBean() {
+        return (getDelegate() == null && !isYearDelegateTypeBean() ? true : false);
+    }
 
-	public boolean isEmptyYearDelegateBean() {
-		return (getDelegate() == null && isYearDelegateTypeBean() ? true : false);
-	}
+    public boolean isEmptyYearDelegateBean() {
+        return (getDelegate() == null && isYearDelegateTypeBean() ? true : false);
+    }
 
-	public boolean isEmptyYearDelegateBeanWithElection() {
-		return (hasDelegateElection() && getDelegateElection().hasLastVotingPeriod() ? true : false);
-	}
+    public boolean isEmptyYearDelegateBeanWithElection() {
+        return (hasDelegateElection() && getDelegateElection().hasLastVotingPeriod() ? true : false);
+    }
 
-	public boolean isYearDelegateBeanWithElectedElection() {
-		return (hasDelegateElection() && hasYearDelegate() && getDelegateElection().hasElectedStudent()
-				&& getDelegateElection().getElectedStudent().equals(getDelegate()) ? true : false);
-	}
+    public boolean isYearDelegateBeanWithElectedElection() {
+        return (hasDelegateElection() && hasYearDelegate() && getDelegateElection().hasElectedStudent()
+                && getDelegateElection().getElectedStudent().equals(getDelegate()) ? true : false);
+    }
 
-	public boolean hasDelegate() {
-		return (getDelegate() != null ? true : false);
-	}
+    public boolean hasDelegate() {
+        return (getDelegate() != null ? true : false);
+    }
 
-	public boolean hasGgaeDelegate() {
-		return (getGgaeDelegate() != null ? true : false);
-	}
+    public boolean hasGgaeDelegate() {
+        return (getGgaeDelegate() != null ? true : false);
+    }
 
-	public boolean isYearDelegateTypeBean() {
-		return (getDelegateType().equals(FunctionType.DELEGATE_OF_YEAR) ? true : false);
-	}
+    public boolean isYearDelegateTypeBean() {
+        return (getDelegateType().equals(FunctionType.DELEGATE_OF_YEAR) ? true : false);
+    }
 
-	public boolean hasYearDelegate() {
-		return (isYearDelegateTypeBean() && hasDelegate() ? true : false);
-	}
+    public boolean hasYearDelegate() {
+        return (isYearDelegateTypeBean() && hasDelegate() ? true : false);
+    }
 
-	public boolean hasDelegateElection() {
-		return (getDelegateElection() != null ? true : false);
-	}
+    public boolean hasDelegateElection() {
+        return (getDelegateElection() != null ? true : false);
+    }
 
-	public PersonFunction getPersonFunction() {
-		return personFunction;
-	}
+    public PersonFunction getPersonFunction() {
+        return personFunction;
+    }
 
-	public void setPersonFunction(PersonFunction personFunction) {
-		this.personFunction = personFunction;
-	}
+    public void setPersonFunction(PersonFunction personFunction) {
+        this.personFunction = personFunction;
+    }
 
-	public LocalDate getPersonFunctionNewEndDate() {
-		return personFunctionNewEndDate;
-	}
+    public LocalDate getPersonFunctionNewEndDate() {
+        return personFunctionNewEndDate;
+    }
 
-	public void setPersonFunctionNewEndDate(LocalDate personFunctionNewEndDate) {
-		this.personFunctionNewEndDate = personFunctionNewEndDate;
-	}
+    public void setPersonFunctionNewEndDate(LocalDate personFunctionNewEndDate) {
+        this.personFunctionNewEndDate = personFunctionNewEndDate;
+    }
 }

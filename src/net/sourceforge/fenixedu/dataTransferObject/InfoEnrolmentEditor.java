@@ -11,247 +11,247 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public class InfoEnrolmentEditor extends InfoObject {
 
-	private InfoStudentCurricularPlan infoStudentCurricularPlan;
+    private InfoStudentCurricularPlan infoStudentCurricularPlan;
 
-	private InfoCurricularCourse infoCurricularCourse;
+    private InfoCurricularCourse infoCurricularCourse;
 
-	private InfoExecutionPeriod infoExecutionPeriod;
+    private InfoExecutionPeriod infoExecutionPeriod;
 
-	private EnrollmentState enrollmentState;
+    private EnrollmentState enrollmentState;
 
-	private EnrolmentEvaluationType enrolmentEvaluationType;
+    private EnrolmentEvaluationType enrolmentEvaluationType;
 
-	private Date creationDate;
+    private Date creationDate;
 
-	// to be used to keep the actual enrolment evaluation
-	private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
+    // to be used to keep the actual enrolment evaluation
+    private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
 
-	// used in the curriculum marks list
-	private InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation;
+    // used in the curriculum marks list
+    private InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation;
 
-	private InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation;
+    private InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation;
 
-	private InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation;
+    private InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation;
 
-	private InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation;
+    private InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation;
 
-	private List infoEvaluations;
+    private List infoEvaluations;
 
-	private Integer accumulatedWeight;
+    private Integer accumulatedWeight;
 
-	private EnrollmentCondition condition;
+    private EnrollmentCondition condition;
 
-	private String enrollmentTypeResourceKey;
+    private String enrollmentTypeResourceKey;
 
-	// this variable is used for in the interface for changing a students
-	// degree
-	// check
-	// net.sourceforge.fenixedu.presentationTier.backBeans.
-	// degreeAdministrativeOffice.ChangeDegree.EnrolementOperation
-	// for possible valies
-	private String changeDegreeOperation;
+    // this variable is used for in the interface for changing a students
+    // degree
+    // check
+    // net.sourceforge.fenixedu.presentationTier.backBeans.
+    // degreeAdministrativeOffice.ChangeDegree.EnrolementOperation
+    // for possible valies
+    private String changeDegreeOperation;
 
-	public InfoEnrolmentEditor() {
-	}
+    public InfoEnrolmentEditor() {
+    }
 
-	public InfoEnrolmentEditor(InfoStudentCurricularPlan infoStudentCurricularPlan, InfoCurricularCourse infoCurricularCourse,
-			EnrollmentState state, InfoExecutionPeriod infoExecutionPeriod) {
-		this();
-		setInfoCurricularCourse(infoCurricularCourse);
-		setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-		setEnrollmentState(state);
-		setInfoExecutionPeriod(infoExecutionPeriod);
-	}
+    public InfoEnrolmentEditor(InfoStudentCurricularPlan infoStudentCurricularPlan, InfoCurricularCourse infoCurricularCourse,
+            EnrollmentState state, InfoExecutionPeriod infoExecutionPeriod) {
+        this();
+        setInfoCurricularCourse(infoCurricularCourse);
+        setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+        setEnrollmentState(state);
+        setInfoExecutionPeriod(infoExecutionPeriod);
+    }
 
-	public Integer getAccumulatedWeight() {
-		return accumulatedWeight;
-	}
+    public Integer getAccumulatedWeight() {
+        return accumulatedWeight;
+    }
 
-	public void setAccumulatedWeight(Integer accumulatedWeight) {
-		this.accumulatedWeight = accumulatedWeight;
-	}
+    public void setAccumulatedWeight(Integer accumulatedWeight) {
+        this.accumulatedWeight = accumulatedWeight;
+    }
 
-	public String getEnrollmentTypeResourceKey() {
-		return enrollmentTypeResourceKey;
-	}
+    public String getEnrollmentTypeResourceKey() {
+        return enrollmentTypeResourceKey;
+    }
 
-	public void setEnrollmentTypeResourceKey(String enrolmentTypeResourceKey) {
-		this.enrollmentTypeResourceKey = enrolmentTypeResourceKey;
-	}
+    public void setEnrollmentTypeResourceKey(String enrolmentTypeResourceKey) {
+        this.enrollmentTypeResourceKey = enrolmentTypeResourceKey;
+    }
 
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return infoExecutionPeriod;
-	}
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return infoExecutionPeriod;
+    }
 
-	public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-		return infoStudentCurricularPlan;
-	}
+    public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
+        return infoStudentCurricularPlan;
+    }
 
-	public EnrollmentState getEnrollmentState() {
-		return enrollmentState;
-	}
+    public EnrollmentState getEnrollmentState() {
+        return enrollmentState;
+    }
 
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
-	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-		this.infoExecutionPeriod = infoExecutionPeriod;
-	}
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 
-	public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
-		this.infoStudentCurricularPlan = infoStudentCurricularPlan;
-	}
+    public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
+        this.infoStudentCurricularPlan = infoStudentCurricularPlan;
+    }
 
-	public void setEnrollmentState(EnrollmentState state) {
-		this.enrollmentState = state;
-	}
+    public void setEnrollmentState(EnrollmentState state) {
+        this.enrollmentState = state;
+    }
 
-	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-		return this.enrolmentEvaluationType;
-	}
+    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+        return this.enrolmentEvaluationType;
+    }
 
-	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
-		this.enrolmentEvaluationType = type;
-	}
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
+        this.enrolmentEvaluationType = type;
+    }
 
-	public List getInfoEvaluations() {
-		return infoEvaluations;
-	}
+    public List getInfoEvaluations() {
+        return infoEvaluations;
+    }
 
-	public void setInfoEvaluations(List list) {
-		infoEvaluations = list;
-	}
+    public void setInfoEvaluations(List list) {
+        infoEvaluations = list;
+    }
 
-	public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
-		return infoEnrolmentEvaluation;
-	}
+    public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
+        return infoEnrolmentEvaluation;
+    }
 
-	public void setInfoEnrolmentEvaluation(InfoEnrolmentEvaluation evaluation) {
-		infoEnrolmentEvaluation = evaluation;
-	}
+    public void setInfoEnrolmentEvaluation(InfoEnrolmentEvaluation evaluation) {
+        infoEnrolmentEvaluation = evaluation;
+    }
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public void copyFromDomain(Enrolment enrollment) {
-		super.copyFromDomain(enrollment);
-		if (enrollment != null) {
-			setCreationDate(enrollment.getCreationDate());
-			setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
-			setEnrollmentState(enrollment.getEnrollmentState());
-			setAccumulatedWeight(enrollment.getAccumulatedWeight());
-			setCondition(enrollment.getEnrolmentCondition());
-			setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
-			setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(enrollment.getExecutionPeriod()));
-			setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment.getStudentCurricularPlan()));
+    public void copyFromDomain(Enrolment enrollment) {
+        super.copyFromDomain(enrollment);
+        if (enrollment != null) {
+            setCreationDate(enrollment.getCreationDate());
+            setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
+            setEnrollmentState(enrollment.getEnrollmentState());
+            setAccumulatedWeight(enrollment.getAccumulatedWeight());
+            setCondition(enrollment.getEnrolmentCondition());
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
+            setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(enrollment.getExecutionPeriod()));
+            setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment.getStudentCurricularPlan()));
 
-			setEnrollmentTypeResourceKey(enrollment.getEnrolmentTypeName());
-		}
-	}
+            setEnrollmentTypeResourceKey(enrollment.getEnrolmentTypeName());
+        }
+    }
 
-	public static InfoEnrolmentEditor newInfoFromDomain(Enrolment enrollment) {
-		InfoEnrolmentEditor infoEnrolment = null;
-		if (enrollment != null) {
-			infoEnrolment = new InfoEnrolmentEditor();
-			infoEnrolment.copyFromDomain(enrollment);
+    public static InfoEnrolmentEditor newInfoFromDomain(Enrolment enrollment) {
+        InfoEnrolmentEditor infoEnrolment = null;
+        if (enrollment != null) {
+            infoEnrolment = new InfoEnrolmentEditor();
+            infoEnrolment.copyFromDomain(enrollment);
 
-		}
-		return infoEnrolment;
-	}
+        }
+        return infoEnrolment;
+    }
 
-	public EnrollmentCondition getCondition() {
-		return condition;
-	}
+    public EnrollmentCondition getCondition() {
+        return condition;
+    }
 
-	public void setCondition(EnrollmentCondition condition) {
-		this.condition = condition;
-	}
+    public void setCondition(EnrollmentCondition condition) {
+        this.condition = condition;
+    }
 
-	public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
-		return infoImprovmentEnrolmentEvaluation;
-	}
+    public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
+        return infoImprovmentEnrolmentEvaluation;
+    }
 
-	public void setInfoImprovmentEnrolmentEvaluation(InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation) {
-		this.infoImprovmentEnrolmentEvaluation = infoImprovmentEnrolmentEvaluation;
-	}
+    public void setInfoImprovmentEnrolmentEvaluation(InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation) {
+        this.infoImprovmentEnrolmentEvaluation = infoImprovmentEnrolmentEvaluation;
+    }
 
-	public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
-		return infoNormalEnrolmentEvaluation;
-	}
+    public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
+        return infoNormalEnrolmentEvaluation;
+    }
 
-	public void setInfoNormalEnrolmentEvaluation(InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation) {
-		this.infoNormalEnrolmentEvaluation = infoNormalEnrolmentEvaluation;
-	}
+    public void setInfoNormalEnrolmentEvaluation(InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation) {
+        this.infoNormalEnrolmentEvaluation = infoNormalEnrolmentEvaluation;
+    }
 
-	public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
-		return infoSpecialSeasonEnrolmentEvaluation;
-	}
+    public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
+        return infoSpecialSeasonEnrolmentEvaluation;
+    }
 
-	public void setInfoSpecialSeasonEnrolmentEvaluation(InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation) {
-		this.infoSpecialSeasonEnrolmentEvaluation = infoSpecialSeasonEnrolmentEvaluation;
-	}
+    public void setInfoSpecialSeasonEnrolmentEvaluation(InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation) {
+        this.infoSpecialSeasonEnrolmentEvaluation = infoSpecialSeasonEnrolmentEvaluation;
+    }
 
-	public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
-		return infoEquivalenceEnrolmentEvaluation;
-	}
+    public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
+        return infoEquivalenceEnrolmentEvaluation;
+    }
 
-	public void setInfoEquivalenceEnrolmentEvaluation(InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
-		this.infoEquivalenceEnrolmentEvaluation = infoEquivalenceEnrolmentEvaluation;
-	}
+    public void setInfoEquivalenceEnrolmentEvaluation(InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
+        this.infoEquivalenceEnrolmentEvaluation = infoEquivalenceEnrolmentEvaluation;
+    }
 
-	public String getChangeDegreeOperation() {
-		return changeDegreeOperation;
-	}
+    public String getChangeDegreeOperation() {
+        return changeDegreeOperation;
+    }
 
-	public void setChangeDegreeOperation(String changeDegreeOperation) {
-		this.changeDegreeOperation = changeDegreeOperation;
-	}
+    public void setChangeDegreeOperation(String changeDegreeOperation) {
+        this.changeDegreeOperation = changeDegreeOperation;
+    }
 
-	public String getGradeValue() {
-		final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(getIdInternal());
-		return enrolment.getGrade().getValue();
-	}
+    public String getGradeValue() {
+        final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(getIdInternal());
+        return enrolment.getGrade().getValue();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoEnrolmentEditor) {
-			InfoEnrolmentEditor enrolment = (InfoEnrolmentEditor) obj;
-			// these kind of tests are necessary for the new cloner
-			// philosophy
-			resultado =
-					((this.getInfoStudentCurricularPlan() == null && enrolment.getInfoStudentCurricularPlan() == null) || (this
-							.getInfoStudentCurricularPlan() != null && enrolment.getInfoStudentCurricularPlan() != null && this
-							.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan())))
-							&& ((this.getInfoCurricularCourse() == null && enrolment.getInfoCurricularCourse() == null) || (this
-									.getInfoCurricularCourse() != null && enrolment.getInfoCurricularCourse() != null && this
-									.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse())))
-							&& ((this.getInfoExecutionPeriod() == null && enrolment.getInfoExecutionPeriod() == null) || (this
-									.getInfoExecutionPeriod() != null && enrolment.getInfoExecutionPeriod() != null && this
-									.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod())));
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoEnrolmentEditor) {
+            InfoEnrolmentEditor enrolment = (InfoEnrolmentEditor) obj;
+            // these kind of tests are necessary for the new cloner
+            // philosophy
+            resultado =
+                    ((this.getInfoStudentCurricularPlan() == null && enrolment.getInfoStudentCurricularPlan() == null) || (this
+                            .getInfoStudentCurricularPlan() != null && enrolment.getInfoStudentCurricularPlan() != null && this
+                            .getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan())))
+                            && ((this.getInfoCurricularCourse() == null && enrolment.getInfoCurricularCourse() == null) || (this
+                                    .getInfoCurricularCourse() != null && enrolment.getInfoCurricularCourse() != null && this
+                                    .getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse())))
+                            && ((this.getInfoExecutionPeriod() == null && enrolment.getInfoExecutionPeriod() == null) || (this
+                                    .getInfoExecutionPeriod() != null && enrolment.getInfoExecutionPeriod() != null && this
+                                    .getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod())));
+        }
+        return resultado;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
-		result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
-		result += "state = " + this.enrollmentState + "; ";
-		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
-		result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
-		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
+        result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
+        result += "state = " + this.enrollmentState + "; ";
+        result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
+        result += "infoEvaluations = " + this.infoEvaluations + "]\n";
+        return result;
+    }
 }

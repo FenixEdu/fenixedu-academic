@@ -10,45 +10,45 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PersonFileSourceBean implements PersonFileSource {
 
-	/**
-	 * Default serial id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Default serial id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	private Unit unit;
-	private int count;
+    private Unit unit;
+    private int count;
 
-	public PersonFileSourceBean(Unit unit) {
-		this.unit = unit;
-		this.count = -1;
-	}
+    public PersonFileSourceBean(Unit unit) {
+        this.unit = unit;
+        this.count = -1;
+    }
 
-	@Override
-	public MultiLanguageString getName() {
-		return getUnit().getNameI18n();
-	}
+    @Override
+    public MultiLanguageString getName() {
+        return getUnit().getNameI18n();
+    }
 
-	public Unit getUnit() {
-		return this.unit;
-	}
+    public Unit getUnit() {
+        return this.unit;
+    }
 
-	@Override
-	public int getCount() {
-		if (this.count < 0) {
-			this.count = getUnit().getAccessibileFiles(AccessControl.getPerson()).size();
-		}
+    @Override
+    public int getCount() {
+        if (this.count < 0) {
+            this.count = getUnit().getAccessibileFiles(AccessControl.getPerson()).size();
+        }
 
-		return this.count;
-	}
+        return this.count;
+    }
 
-	@Override
-	public List<PersonFileSource> getChildren() {
-		return Collections.emptyList();
-	}
+    @Override
+    public List<PersonFileSource> getChildren() {
+        return Collections.emptyList();
+    }
 
-	@Override
-	public boolean isAllowedToUpload(Person person) {
-		return getUnit().isUserAllowedToUploadFiles(person);
-	}
+    @Override
+    public boolean isAllowedToUpload(Person person) {
+        return getUnit().isUserAllowedToUploadFiles(person);
+    }
 
 }

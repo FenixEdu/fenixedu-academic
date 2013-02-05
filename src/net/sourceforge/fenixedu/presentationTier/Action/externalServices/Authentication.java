@@ -34,54 +34,54 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(module = "external", path = "/authenticate", scope = "request")
 public class Authentication extends FenixAction {
-	final static String allowedProtocol = "https";
+    final static String allowedProtocol = "https";
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException {
-		final String username = request.getParameter("username");
-		final String password = request.getParameter("password");
-		final String requestURL = request.getRequestURL().toString();
-		boolean result = false;
-		final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-		Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-		try {
-			String scheme = request.getScheme();
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException {
+        final String username = request.getParameter("username");
+        final String password = request.getParameter("password");
+        final String requestURL = request.getRequestURL().toString();
+        boolean result = false;
+        final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
+        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
+        try {
+            String scheme = request.getScheme();
 
-			if (allowedProtocol.equalsIgnoreCase(scheme)) {
+            if (allowedProtocol.equalsIgnoreCase(scheme)) {
 
-				Person person = Person.readPersonByUsername(username);
-				if (person == null) {
-					person = Person.readPersonByIstUsername(username);
-				}
-				if (person != null) {
-					SetUserUID.run(person);
-				}
+                Person person = Person.readPersonByUsername(username);
+                if (person == null) {
+                    person = Person.readPersonByIstUsername(username);
+                }
+                if (person != null) {
+                    SetUserUID.run(person);
+                }
 
-				ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),
-						argsAutenticacao);
-				result = true;
-			}
+                ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),
+                        argsAutenticacao);
+                result = true;
+            }
 
-		} catch (Exception e) {
-			result = false;
-		}
+        } catch (Exception e) {
+            result = false;
+        }
 
-		try {
-			sendAnswer(response, result);
-		} catch (IOException ex) {
-			throw new FenixActionException(ex);
-		}
+        try {
+            sendAnswer(response, result);
+        } catch (IOException ex) {
+            throw new FenixActionException(ex);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private void sendAnswer(HttpServletResponse response, boolean result) throws IOException {
-		ServletOutputStream writer = response.getOutputStream();
-		response.setContentType("text/plain");
-		writer.print(result);
-		writer.flush();
-		response.flushBuffer();
-	}
+    private void sendAnswer(HttpServletResponse response, boolean result) throws IOException {
+        ServletOutputStream writer = response.getOutputStream();
+        response.setContentType("text/plain");
+        writer.print(result);
+        writer.flush();
+        response.flushBuffer();
+    }
 
 }

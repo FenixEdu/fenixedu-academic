@@ -15,63 +15,63 @@ import org.apache.struts.util.LabelValueBean;
  */
 
 public class EnrollmentStateSelectionType extends FenixUtil {
-	public static final int ALL_TYPE = 1;
-	public static final int APPROVED_TYPE = 2;
-	public static final int NONE_TYPE = 3;
+    public static final int ALL_TYPE = 1;
+    public static final int APPROVED_TYPE = 2;
+    public static final int NONE_TYPE = 3;
 
-	public static final String ALL_STRING = "Todas";
-	public static final String APPROVED_STRING = "Aprovado / Inscrito";
-	public static final String NONE_STRING = "Nenhuma disciplina";
+    public static final String ALL_STRING = "Todas";
+    public static final String APPROVED_STRING = "Aprovado / Inscrito";
+    public static final String NONE_STRING = "Nenhuma disciplina";
 
-	public static final EnrollmentStateSelectionType ALL =
-			new EnrollmentStateSelectionType(EnrollmentStateSelectionType.ALL_TYPE);
-	public static final EnrollmentStateSelectionType APPROVED = new EnrollmentStateSelectionType(
-			EnrollmentStateSelectionType.APPROVED_TYPE);
-	public static final EnrollmentStateSelectionType NONE = new EnrollmentStateSelectionType(
-			EnrollmentStateSelectionType.NONE_TYPE);
+    public static final EnrollmentStateSelectionType ALL =
+            new EnrollmentStateSelectionType(EnrollmentStateSelectionType.ALL_TYPE);
+    public static final EnrollmentStateSelectionType APPROVED = new EnrollmentStateSelectionType(
+            EnrollmentStateSelectionType.APPROVED_TYPE);
+    public static final EnrollmentStateSelectionType NONE = new EnrollmentStateSelectionType(
+            EnrollmentStateSelectionType.NONE_TYPE);
 
-	private Integer selectionType;
+    private Integer selectionType;
 
-	private EnrollmentStateSelectionType() {
-	}
+    private EnrollmentStateSelectionType() {
+    }
 
-	public EnrollmentStateSelectionType(String selType) {
-		setSelectionType(new Integer(Integer.parseInt(selType)));
-	}
+    public EnrollmentStateSelectionType(String selType) {
+        setSelectionType(new Integer(Integer.parseInt(selType)));
+    }
 
-	private EnrollmentStateSelectionType(int selType) {
-		setSelectionType(new Integer(selType));
-	}
+    private EnrollmentStateSelectionType(int selType) {
+        setSelectionType(new Integer(selType));
+    }
 
-	public static List getLabelValueBeanList() {
-		ArrayList result = new ArrayList();
-		result.add(new LabelValueBean(EnrollmentStateSelectionType.ALL_STRING, EnrollmentStateSelectionType.ALL.toString()));
-		result.add(new LabelValueBean(EnrollmentStateSelectionType.APPROVED_STRING, EnrollmentStateSelectionType.APPROVED
-				.toString()));
-		return result;
-	}
+    public static List getLabelValueBeanList() {
+        ArrayList result = new ArrayList();
+        result.add(new LabelValueBean(EnrollmentStateSelectionType.ALL_STRING, EnrollmentStateSelectionType.ALL.toString()));
+        result.add(new LabelValueBean(EnrollmentStateSelectionType.APPROVED_STRING, EnrollmentStateSelectionType.APPROVED
+                .toString()));
+        return result;
+    }
 
-	public Integer getSelectionType() {
-		return this.selectionType;
-	}
+    public Integer getSelectionType() {
+        return this.selectionType;
+    }
 
-	private void setSelectionType(Integer selType) {
-		this.selectionType = selType;
-	}
+    private void setSelectionType(Integer selType) {
+        this.selectionType = selType;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof EnrollmentStateSelectionType) {
-			EnrollmentStateSelectionType tipo = (EnrollmentStateSelectionType) obj;
-			resultado = (getSelectionType() != null) && (getSelectionType().equals(tipo.getSelectionType()));
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof EnrollmentStateSelectionType) {
+            EnrollmentStateSelectionType tipo = (EnrollmentStateSelectionType) obj;
+            resultado = (getSelectionType() != null) && (getSelectionType().equals(tipo.getSelectionType()));
+        }
+        return resultado;
+    }
 
-	@Override
-	public String toString() {
-		return getSelectionType().toString();
-	}
+    @Override
+    public String toString() {
+        return getSelectionType().toString();
+    }
 
 }

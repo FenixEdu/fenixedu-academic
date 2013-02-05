@@ -12,18 +12,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeSelectManySearchStudentsWithEnrolmentsByDepartment implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final SearchStudentsWithEnrolmentsByDepartment bean = (SearchStudentsWithEnrolmentsByDepartment) source;
-		final Department department = bean.getDepartment();
-		final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-		degrees.addAll(department.getDegreesSet());
-		return degrees;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final SearchStudentsWithEnrolmentsByDepartment bean = (SearchStudentsWithEnrolmentsByDepartment) source;
+        final Department department = bean.getDepartment();
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        degrees.addAll(department.getDegreesSet());
+        return degrees;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
 }

@@ -20,40 +20,40 @@ import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler {
 
-	@Override
-	public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    @Override
+    public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
+            HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-		super.execute(ex, ae, mapping, formInstance, request, response);
+        super.execute(ex, ae, mapping, formInstance, request, response);
 
-		ActionMessage error = null;
-		IUserView userView = null;
-		String errorMessage = "message.invalid.password";
+        ActionMessage error = null;
+        IUserView userView = null;
+        String errorMessage = "message.invalid.password";
 
-		// Figure out the error
-		if (ex instanceof InvalidPasswordServiceException) {
-			InvalidPasswordServiceException invalidPasswordServiceException = (InvalidPasswordServiceException) ex;
-			userView = invalidPasswordServiceException.getUserView();
-			error = new ActionMessage(errorMessage, errorMessage);
-		}
+        // Figure out the error
+        if (ex instanceof InvalidPasswordServiceException) {
+            InvalidPasswordServiceException invalidPasswordServiceException = (InvalidPasswordServiceException) ex;
+            userView = invalidPasswordServiceException.getUserView();
+            error = new ActionMessage(errorMessage, errorMessage);
+        }
 
-		// Invalidate existing session if it exists
-		HttpSession sessao = request.getSession(false);
-		if (sessao != null) {
-			sessao.invalidate();
-		}
+        // Invalidate existing session if it exists
+        HttpSession sessao = request.getSession(false);
+        if (sessao != null) {
+            sessao.invalidate();
+        }
 
-		// Create a new session for this user
-		sessao = request.getSession(true);
+        // Create a new session for this user
+        sessao = request.getSession(true);
 
-		// Store the UserView into the session and return
-		UserView.setUser(userView);
-		sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
+        // Store the UserView into the session and return
+        UserView.setUser(userView);
+        sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 
-		ActionForward forward = mapping.findForward("changePass");
-		request.setAttribute(Globals.EXCEPTION_KEY, ex);
-		super.storeException(request, errorMessage, error, forward, ae.getScope());
-		return forward;
-	}
+        ActionForward forward = mapping.findForward("changePass");
+        request.setAttribute(Globals.EXCEPTION_KEY, ex);
+        super.storeException(request, errorMessage, error, forward, ae.getScope());
+        return forward;
+    }
 
 }

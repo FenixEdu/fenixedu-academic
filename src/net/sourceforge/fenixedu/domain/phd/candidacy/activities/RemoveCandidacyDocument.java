@@ -7,26 +7,26 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class RemoveCandidacyDocument extends PhdProgramCandidacyProcessActivity {
 
-	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-		if (!process.isAllowedToManageProcess(userView)) {
-			return;
-		}
+    @Override
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+        if (!process.isAllowedToManageProcess(userView)) {
+            return;
+        }
 
-		if (process.isPublicCandidacy() && process.getPublicPhdCandidacyPeriod().isOpen()) {
-			return;
-		}
+        if (process.isPublicCandidacy() && process.getPublicPhdCandidacyPeriod().isOpen()) {
+            return;
+        }
 
-		throw new PreConditionNotValidException();
-	}
+        throw new PreConditionNotValidException();
+    }
 
-	@Override
-	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-		PhdProgramProcessDocument phdDocument = (PhdProgramProcessDocument) object;
+    @Override
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+        PhdProgramProcessDocument phdDocument = (PhdProgramProcessDocument) object;
 
-		phdDocument.removeFromProcess();
+        phdDocument.removeFromProcess();
 
-		return process;
-	}
+        return process;
+    }
 
 }

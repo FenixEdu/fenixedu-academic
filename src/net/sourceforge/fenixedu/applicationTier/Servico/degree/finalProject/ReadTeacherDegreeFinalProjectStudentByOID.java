@@ -15,15 +15,15 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
  */
 public class ReadTeacherDegreeFinalProjectStudentByOID extends ReadDomainObjectService {
 
-	@Override
-	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-		return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson
-				.newInfoFromDomain((TeacherDegreeFinalProjectStudent) domainObject);
-	}
+    @Override
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson
+                .newInfoFromDomain((TeacherDegreeFinalProjectStudent) domainObject);
+    }
 
-	@Override
-	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(idInternal);
-	}
+    @Override
+    protected DomainObject readDomainObject(final Integer idInternal) {
+        return rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(idInternal);
+    }
 
 }

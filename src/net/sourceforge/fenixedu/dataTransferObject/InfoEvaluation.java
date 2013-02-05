@@ -19,133 +19,133 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent {
 
-	public static final Comparator<InfoEvaluation> COMPARATOR_BY_START = new Comparator<InfoEvaluation>() {
+    public static final Comparator<InfoEvaluation> COMPARATOR_BY_START = new Comparator<InfoEvaluation>() {
 
-		@Override
-		public int compare(InfoEvaluation o1, InfoEvaluation o2) {
-			return o1.getInicio().compareTo(o2.getInicio());
-		}
+        @Override
+        public int compare(InfoEvaluation o1, InfoEvaluation o2) {
+            return o1.getInicio().compareTo(o2.getInicio());
+        }
 
-	};
+    };
 
-	private String publishmentMessage;
-	private EvaluationType evaluationType;
+    private String publishmentMessage;
+    private EvaluationType evaluationType;
 
-	public InfoEvaluation() {
-		setPublishmentMessage(null);
-		setEvaluationType(null);
-	}
+    public InfoEvaluation() {
+        setPublishmentMessage(null);
+        setEvaluationType(null);
+    }
 
-	public InfoEvaluation(String publishmentMessage, EvaluationType type) {
-		this();
-		setPublishmentMessage(publishmentMessage);
-		setEvaluationType(type);
-	}
+    public InfoEvaluation(String publishmentMessage, EvaluationType type) {
+        this();
+        setPublishmentMessage(publishmentMessage);
+        setEvaluationType(type);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoEvaluation) {
-			InfoEvaluation infoEvaluation = (InfoEvaluation) obj;
-			resultado =
-					this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
-							&& this.getEvaluationType() == infoEvaluation.getEvaluationType();
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoEvaluation) {
+            InfoEvaluation infoEvaluation = (InfoEvaluation) obj;
+            resultado =
+                    this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
+                            && this.getEvaluationType() == infoEvaluation.getEvaluationType();
+        }
+        return resultado;
+    }
 
-	@Override
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "publishmentMessage = " + this.publishmentMessage + "; ";
-		result += "type = " + this.evaluationType + "]";
-		return result;
-	}
+    @Override
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "publishmentMessage = " + this.publishmentMessage + "; ";
+        result += "type = " + this.evaluationType + "]";
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getPublishmentMessage() {
-		return publishmentMessage;
-	}
+    /**
+     * @return
+     */
+    public String getPublishmentMessage() {
+        return publishmentMessage;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setPublishmentMessage(String string) {
-		this.publishmentMessage = string;
-	}
+    /**
+     * @param string
+     */
+    public void setPublishmentMessage(String string) {
+        this.publishmentMessage = string;
+    }
 
-	/**
-	 * @return
-	 */
-	public EvaluationType getEvaluationType() {
-		return evaluationType;
-	}
+    /**
+     * @return
+     */
+    public EvaluationType getEvaluationType() {
+        return evaluationType;
+    }
 
-	/**
-	 * @param type
-	 */
-	public void setEvaluationType(EvaluationType type) {
-		evaluationType = type;
-	}
+    /**
+     * @param type
+     */
+    public void setEvaluationType(EvaluationType type) {
+        evaluationType = type;
+    }
 
-	// Methods inherited from abstract InfoShowOccupations - not used
-	@Override
-	public InfoShift getInfoShift() {
-		return null;
-	}
+    // Methods inherited from abstract InfoShowOccupations - not used
+    @Override
+    public InfoShift getInfoShift() {
+        return null;
+    }
 
-	@Override
-	public ShiftType getTipo() {
-		return null;
-	}
+    @Override
+    public ShiftType getTipo() {
+        return null;
+    }
 
-	@Override
-	public InfoRoomOccupation getInfoRoomOccupation() {
-		return null;
-	}
+    @Override
+    public InfoRoomOccupation getInfoRoomOccupation() {
+        return null;
+    }
 
-	@Override
-	public DiaSemana getDiaSemana() {
-		return null;
-	}
+    @Override
+    public DiaSemana getDiaSemana() {
+        return null;
+    }
 
-	@Override
-	public Calendar getInicio() {
-		return null;
-	}
+    @Override
+    public Calendar getInicio() {
+        return null;
+    }
 
-	@Override
-	public Calendar getFim() {
-		return null;
-	}
+    @Override
+    public Calendar getFim() {
+        return null;
+    }
 
-	public void copyFromDomain(Evaluation evaluation) {
-		super.copyFromDomain(evaluation);
-		if (evaluation != null) {
-			setPublishmentMessage(evaluation.getPublishmentMessage());
-		}
-	}
+    public void copyFromDomain(Evaluation evaluation) {
+        super.copyFromDomain(evaluation);
+        if (evaluation != null) {
+            setPublishmentMessage(evaluation.getPublishmentMessage());
+        }
+    }
 
-	/**
-	 * @param evaluation
-	 * @return
-	 */
-	public static InfoEvaluation newInfoFromDomain(Evaluation evaluation) {
-		InfoEvaluation infoEvaluation = null;
-		if (evaluation != null) {
-			if (evaluation instanceof WrittenEvaluation) {
-				infoEvaluation = InfoWrittenEvaluation.newInfoFromDomain((WrittenEvaluation) evaluation);
-			} else if (evaluation instanceof FinalEvaluation) {
-				infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((FinalEvaluation) evaluation);
-			} else if (evaluation instanceof OnlineTest) {
-				infoEvaluation = InfoOnlineTest.newInfoFromDomain((OnlineTest) evaluation);
-			} else {
-				infoEvaluation = new InfoEvaluation();
-				infoEvaluation.copyFromDomain(evaluation);
-			}
-		}
-		return infoEvaluation;
-	}
+    /**
+     * @param evaluation
+     * @return
+     */
+    public static InfoEvaluation newInfoFromDomain(Evaluation evaluation) {
+        InfoEvaluation infoEvaluation = null;
+        if (evaluation != null) {
+            if (evaluation instanceof WrittenEvaluation) {
+                infoEvaluation = InfoWrittenEvaluation.newInfoFromDomain((WrittenEvaluation) evaluation);
+            } else if (evaluation instanceof FinalEvaluation) {
+                infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((FinalEvaluation) evaluation);
+            } else if (evaluation instanceof OnlineTest) {
+                infoEvaluation = InfoOnlineTest.newInfoFromDomain((OnlineTest) evaluation);
+            } else {
+                infoEvaluation = new InfoEvaluation();
+                infoEvaluation.copyFromDomain(evaluation);
+            }
+        }
+        return infoEvaluation;
+    }
 }

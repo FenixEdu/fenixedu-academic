@@ -8,32 +8,32 @@ import org.apache.commons.io.IOUtils;
 
 public class OpenFileBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private transient InputStream inputStream;
-	private String fileName;
+    private static final long serialVersionUID = 1L;
+    private transient InputStream inputStream;
+    private String fileName;
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-	}
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
-	public byte[] readStream() {
-		try {
-			return IOUtils.toByteArray(inputStream);
-		} catch (final IOException e) {
-			throw new Error(e);
-		}
-	}
+    public byte[] readStream() {
+        try {
+            return IOUtils.toByteArray(inputStream);
+        } catch (final IOException e) {
+            throw new Error(e);
+        }
+    }
 
 }

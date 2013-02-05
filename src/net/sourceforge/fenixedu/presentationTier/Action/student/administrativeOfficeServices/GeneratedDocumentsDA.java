@@ -25,14 +25,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class GeneratedDocumentsDA extends FenixDispatchAction {
 
-	public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		request.setAttribute("person", AccessControl.getPerson());
+        request.setAttribute("person", AccessControl.getPerson());
 
-		request.setAttribute("annualIRSDocuments", AccessControl.getPerson().getAnnualIRSDocuments());
+        request.setAttribute("annualIRSDocuments", AccessControl.getPerson().getAnnualIRSDocuments());
 
-		return mapping.findForward("showAnnualIRSDocuments");
-	}
+        return mapping.findForward("showAnnualIRSDocuments");
+    }
 
 }

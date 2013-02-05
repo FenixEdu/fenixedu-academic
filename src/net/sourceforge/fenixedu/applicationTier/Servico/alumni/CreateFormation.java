@@ -8,22 +8,22 @@ import net.sourceforge.fenixedu.domain.Formation;
 
 public class CreateFormation extends FormationManagement {
 
-	public void run(final Alumni alumni, final AlumniFormation formation) {
-		createAlumniFormation(alumni, formation);
-	}
+    public void run(final Alumni alumni, final AlumniFormation formation) {
+        createAlumniFormation(alumni, formation);
+    }
 
-	public void run(final Alumni alumni, final ArrayList<AlumniFormation> formationList) {
-		for (AlumniFormation formation : formationList) {
-			createAlumniFormation(alumni, formation);
-		}
-	}
+    public void run(final Alumni alumni, final ArrayList<AlumniFormation> formationList) {
+        for (AlumniFormation formation : formationList) {
+            createAlumniFormation(alumni, formation);
+        }
+    }
 
-	private void createAlumniFormation(final Alumni alumni, final AlumniFormation formation) {
+    private void createAlumniFormation(final Alumni alumni, final AlumniFormation formation) {
 
-		new Formation(alumni.getStudent().getPerson(), formation.getFormationType(), formation.getFormationDegree(),
-				formation.getEducationArea(), formation.getFormationBeginYear(), formation.getFormationEndYear(),
-				formation.getFormationCredits(), formation.getFormationHours(), getFormationInstitution(formation),
-				formation.getParentInstitution(), formation.getInstitutionType(), formation.getCountryUnit());
-	}
+        new Formation(alumni.getStudent().getPerson(), formation.getFormationType(), formation.getFormationDegree(),
+                formation.getEducationArea(), formation.getFormationBeginYear(), formation.getFormationEndYear(),
+                formation.getFormationCredits(), formation.getFormationHours(), getFormationInstitution(formation),
+                formation.getParentInstitution(), formation.getInstitutionType(), formation.getCountryUnit());
+    }
 
 }

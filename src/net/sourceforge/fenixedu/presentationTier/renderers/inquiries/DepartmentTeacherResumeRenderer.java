@@ -28,192 +28,192 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer {
 
-	@Override
-	protected void buildTableBody(final HtmlTable mainTable, Object object, int rowSpan) {
-		List<DepartmentTeacherResultsResume> departmentTeacherResultsResumeList = (List<DepartmentTeacherResultsResume>) object;
-		for (DepartmentTeacherResultsResume departmentTeacherResultsResume : departmentTeacherResultsResumeList) {
-			boolean createTeacherCell = true;
-			for (List<TeacherShiftTypeGroupsResumeResult> teachersResumeUCList : departmentTeacherResultsResume
-					.getTeacherShiftResumesByUC()) {
-				boolean createFirstCellBeforeCommonBody = true;
-				for (BlockResumeResult blockResumeResult : teachersResumeUCList) {
-					Set<InquiryResult> blocksResults = blockResumeResult.getResultBlocks();
+    @Override
+    protected void buildTableBody(final HtmlTable mainTable, Object object, int rowSpan) {
+        List<DepartmentTeacherResultsResume> departmentTeacherResultsResumeList = (List<DepartmentTeacherResultsResume>) object;
+        for (DepartmentTeacherResultsResume departmentTeacherResultsResume : departmentTeacherResultsResumeList) {
+            boolean createTeacherCell = true;
+            for (List<TeacherShiftTypeGroupsResumeResult> teachersResumeUCList : departmentTeacherResultsResume
+                    .getTeacherShiftResumesByUC()) {
+                boolean createFirstCellBeforeCommonBody = true;
+                for (BlockResumeResult blockResumeResult : teachersResumeUCList) {
+                    Set<InquiryResult> blocksResults = blockResumeResult.getResultBlocks();
 
-					HtmlTableRow tableRow = mainTable.createRow();
-					if (createTeacherCell) {
-						createTeacherCell(departmentTeacherResultsResume, tableRow);
-					}
-					if (createFirstCellBeforeCommonBody) {
-						createFirstCellBeforeCommonBody(teachersResumeUCList.size(), blockResumeResult, tableRow);
-						createFirstCellBeforeCommonBody = false;
-					}
-					createRegularLine(blockResumeResult, blocksResults, tableRow);
-					if (createTeacherCell) {
-						createTeacherActionCell(departmentTeacherResultsResume, tableRow);
-						createTeacherCell = false;
-					}
-				}
+                    HtmlTableRow tableRow = mainTable.createRow();
+                    if (createTeacherCell) {
+                        createTeacherCell(departmentTeacherResultsResume, tableRow);
+                    }
+                    if (createFirstCellBeforeCommonBody) {
+                        createFirstCellBeforeCommonBody(teachersResumeUCList.size(), blockResumeResult, tableRow);
+                        createFirstCellBeforeCommonBody = false;
+                    }
+                    createRegularLine(blockResumeResult, blocksResults, tableRow);
+                    if (createTeacherCell) {
+                        createTeacherActionCell(departmentTeacherResultsResume, tableRow);
+                        createTeacherCell = false;
+                    }
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	private void createTeacherCell(DepartmentTeacherResultsResume departmentTeacherResultsResume, HtmlTableRow tableRow) {
-		HtmlTableCell competenceCell = tableRow.createCell();
-		competenceCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
-		competenceCell.setClasses("col-first");
-		competenceCell.setBody(new HtmlText(departmentTeacherResultsResume.getTeacher().getPerson().getName()));
-	}
+    private void createTeacherCell(DepartmentTeacherResultsResume departmentTeacherResultsResume, HtmlTableRow tableRow) {
+        HtmlTableCell competenceCell = tableRow.createCell();
+        competenceCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
+        competenceCell.setClasses("col-first");
+        competenceCell.setBody(new HtmlText(departmentTeacherResultsResume.getTeacher().getPerson().getName()));
+    }
 
-	private void createTeacherActionCell(DepartmentTeacherResultsResume departmentTeacherResultsResume, HtmlTableRow tableRow) {
-		String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
-		Person teacher = departmentTeacherResultsResume.getTeacher().getPerson();
+    private void createTeacherActionCell(DepartmentTeacherResultsResume departmentTeacherResultsResume, HtmlTableRow tableRow) {
+        String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
+        Person teacher = departmentTeacherResultsResume.getTeacher().getPerson();
 
-		boolean showCommentLink = false;
-		if (!departmentTeacherResultsResume.isShowAllComments()) {
-			for (TeacherShiftTypeGroupsResumeResult groupsResumeResult : departmentTeacherResultsResume
-					.getTeacherShiftTypeGroupsResumeResults()) {
-				if (groupsResumeResult.getProfessorship().hasResultsToImprove()) {
-					showCommentLink = true;
-					break;
-				}
-			}
-		}
+        boolean showCommentLink = false;
+        if (!departmentTeacherResultsResume.isShowAllComments()) {
+            for (TeacherShiftTypeGroupsResumeResult groupsResumeResult : departmentTeacherResultsResume
+                    .getTeacherShiftTypeGroupsResumeResults()) {
+                if (groupsResumeResult.getProfessorship().hasResultsToImprove()) {
+                    showCommentLink = true;
+                    break;
+                }
+            }
+        }
 
-		HtmlTableCell actionCell = tableRow.createCell();
-		actionCell.setClasses("col-action");
-		actionCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
+        HtmlTableCell actionCell = tableRow.createCell();
+        actionCell.setClasses("col-action");
+        actionCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
 
-		ExecutionSemester executionSemester =
-				departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0).getProfessorship()
-						.getExecutionCourse().getExecutionPeriod();
-		String fillInParameters =
-				buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume.isBackToResume());
-		if (showCommentLink) {
-			if (teacher.hasQucGlobalCommentsMadeBy(departmentTeacherResultsResume.getPresident(), executionSemester,
-					departmentTeacherResultsResume.getPersonCategory())) {
-				commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
-			}
-			HtmlLink commentLink = new HtmlLink();
-			commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=true&showAllComments=false"
-					+ fillInParameters);
-			commentLink.setText(commentLinkText);
+        ExecutionSemester executionSemester =
+                departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0).getProfessorship()
+                        .getExecutionCourse().getExecutionPeriod();
+        String fillInParameters =
+                buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume.isBackToResume());
+        if (showCommentLink) {
+            if (teacher.hasQucGlobalCommentsMadeBy(departmentTeacherResultsResume.getPresident(), executionSemester,
+                    departmentTeacherResultsResume.getPersonCategory())) {
+                commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
+            }
+            HtmlLink commentLink = new HtmlLink();
+            commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=true&showAllComments=false"
+                    + fillInParameters);
+            commentLink.setText(commentLinkText);
 
-			actionCell.setBody(commentLink);
-		} else {
-			HtmlLink commentLink = new HtmlLink();
-			commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=false&showAllComments="
-					+ departmentTeacherResultsResume.isShowAllComments() + fillInParameters);
-			commentLink.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults"));
-			actionCell.setBody(commentLink);
-		}
-	}
+            actionCell.setBody(commentLink);
+        } else {
+            HtmlLink commentLink = new HtmlLink();
+            commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=false&showAllComments="
+                    + departmentTeacherResultsResume.isShowAllComments() + fillInParameters);
+            commentLink.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults"));
+            actionCell.setBody(commentLink);
+        }
+    }
 
-	private String buildFillInParameters(Person person, ExecutionSemester executionSemester, boolean backToResume) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("&personOID=").append(person.getExternalId());
-		builder.append("&executionSemesterOID=").append(executionSemester.getExternalId());
-		builder.append("&backToResume=").append(backToResume);
-		return builder.toString();
-	}
+    private String buildFillInParameters(Person person, ExecutionSemester executionSemester, boolean backToResume) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("&personOID=").append(person.getExternalId());
+        builder.append("&executionSemesterOID=").append(executionSemester.getExternalId());
+        builder.append("&backToResume=").append(backToResume);
+        return builder.toString();
+    }
 
-	@Override
-	protected void createFirstCellBeforeCommonBody(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
-		HtmlTableCell competenceCell = tableRow.createCell();
-		competenceCell.setRowspan(rowSpan);
-		competenceCell.setClasses("col-course");
+    @Override
+    protected void createFirstCellBeforeCommonBody(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
+        HtmlTableCell competenceCell = tableRow.createCell();
+        competenceCell.setRowspan(rowSpan);
+        competenceCell.setClasses("col-course");
 
-		TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
-				(TeacherShiftTypeGroupsResumeResult) blockResumeResult;
-		ExecutionCourse executionCourse = teacherShiftTypeGroupsResumeResult.getProfessorship().getExecutionCourse();
+        TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
+                (TeacherShiftTypeGroupsResumeResult) blockResumeResult;
+        ExecutionCourse executionCourse = teacherShiftTypeGroupsResumeResult.getProfessorship().getExecutionCourse();
 
-		HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
-		inlineContainer.addChild(new HtmlText(executionCourse.getName() + " <span class=\"color888\">(", false));
+        HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
+        inlineContainer.addChild(new HtmlText(executionCourse.getName() + " <span class=\"color888\">(", false));
 
-		for (Iterator<ExecutionDegree> iterator =
-				teacherShiftTypeGroupsResumeResult.getProfessorship().getExecutionCourse().getExecutionDegrees().iterator(); iterator
-				.hasNext();) {
-			ExecutionDegree executionDegree = iterator.next();
-			HtmlLink ucResultsLink = new HtmlLink();
-			ucResultsLink.setUrl("/viewCourseResults.do?executionCourseOID=" + executionCourse.getExternalId()
-					+ "&degreeCurricularPlanOID=" + executionDegree.getDegreeCurricularPlan().getExternalId());
-			ucResultsLink.setText(executionDegree.getDegree().getSigla());
-			ucResultsLink.setModule("/publico");
-			ucResultsLink.setTarget("_blank");
-			inlineContainer.addChild(ucResultsLink);
+        for (Iterator<ExecutionDegree> iterator =
+                teacherShiftTypeGroupsResumeResult.getProfessorship().getExecutionCourse().getExecutionDegrees().iterator(); iterator
+                .hasNext();) {
+            ExecutionDegree executionDegree = iterator.next();
+            HtmlLink ucResultsLink = new HtmlLink();
+            ucResultsLink.setUrl("/viewCourseResults.do?executionCourseOID=" + executionCourse.getExternalId()
+                    + "&degreeCurricularPlanOID=" + executionDegree.getDegreeCurricularPlan().getExternalId());
+            ucResultsLink.setText(executionDegree.getDegree().getSigla());
+            ucResultsLink.setModule("/publico");
+            ucResultsLink.setTarget("_blank");
+            inlineContainer.addChild(ucResultsLink);
 
-			if (iterator.hasNext()) {
-				inlineContainer.addChild(new HtmlText(", "));
-			}
-		}
-		inlineContainer.addChild(new HtmlText(")</span> ", false));
+            if (iterator.hasNext()) {
+                inlineContainer.addChild(new HtmlText(", "));
+            }
+        }
+        inlineContainer.addChild(new HtmlText(")</span> ", false));
 
-		HtmlLink ucPublicPageLink =
-				new HtmlLinkWithPreprendedComment(
-						pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-		ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
-		ucPublicPageLink.setText("Site");
-		ucPublicPageLink.setModule("");
-		ucPublicPageLink.setTarget("_blank");
+        HtmlLink ucPublicPageLink =
+                new HtmlLinkWithPreprendedComment(
+                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+        ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
+        ucPublicPageLink.setText("Site");
+        ucPublicPageLink.setModule("");
+        ucPublicPageLink.setTarget("_blank");
 
-		inlineContainer.addChild(ucPublicPageLink);
+        inlineContainer.addChild(ucPublicPageLink);
 
-		competenceCell.setBody(inlineContainer);
-	}
+        competenceCell.setBody(inlineContainer);
+    }
 
-	private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("degreeCurricularPlanOID=").append(
-				courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
-		builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
-		return builder.toString();
-	}
+    private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("degreeCurricularPlanOID=").append(
+                courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+        builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+        return builder.toString();
+    }
 
-	@Override
-	protected void createHeader(Object object, final HtmlTableRow headerRow) {
-		List<DepartmentTeacherResultsResume> departmentTeacherResultsResumeList = (List<DepartmentTeacherResultsResume>) object;
-		if (!departmentTeacherResultsResumeList.isEmpty()) {
-			DepartmentTeacherResultsResume departmentTeacherResultsResume = departmentTeacherResultsResumeList.get(0);
+    @Override
+    protected void createHeader(Object object, final HtmlTableRow headerRow) {
+        List<DepartmentTeacherResultsResume> departmentTeacherResultsResumeList = (List<DepartmentTeacherResultsResume>) object;
+        if (!departmentTeacherResultsResumeList.isEmpty()) {
+            DepartmentTeacherResultsResume departmentTeacherResultsResume = departmentTeacherResultsResumeList.get(0);
 
-			final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
-			firstHeaderCell.setBody(new HtmlText("Docente"));
-			firstHeaderCell.setClasses("col-first");
+            final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
+            firstHeaderCell.setBody(new HtmlText("Docente"));
+            firstHeaderCell.setClasses("col-first");
 
-			final HtmlTableCell secondHeaderCell = headerRow.createCell(CellType.HEADER);
-			secondHeaderCell.setBody(new HtmlText("Disciplina"));
-			secondHeaderCell.setClasses("col-course");
+            final HtmlTableCell secondHeaderCell = headerRow.createCell(CellType.HEADER);
+            secondHeaderCell.setBody(new HtmlText("Disciplina"));
+            secondHeaderCell.setClasses("col-course");
 
-			super.createHeader(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults(), headerRow);
-		}
-	}
+            super.createHeader(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults(), headerRow);
+        }
+    }
 
-	@Override
-	protected void createFirstPartRegularLine(BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
-		super.createFirstPartRegularLine(blockResumeResult, tableRow);
+    @Override
+    protected void createFirstPartRegularLine(BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
+        super.createFirstPartRegularLine(blockResumeResult, tableRow);
 
-		TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
-				(TeacherShiftTypeGroupsResumeResult) blockResumeResult;
-		HtmlTableCell generalClassificationCell = tableRow.createCell();
-		generalClassificationCell.setBody(new HtmlText(
-				getColoredBar(teacherShiftTypeGroupsResumeResult.getGlobalTeacherResult()), false));
-		generalClassificationCell.setClasses("col-bar");
-	}
+        TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
+                (TeacherShiftTypeGroupsResumeResult) blockResumeResult;
+        HtmlTableCell generalClassificationCell = tableRow.createCell();
+        generalClassificationCell.setBody(new HtmlText(
+                getColoredBar(teacherShiftTypeGroupsResumeResult.getGlobalTeacherResult()), false));
+        generalClassificationCell.setClasses("col-bar");
+    }
 
-	@Override
-	protected void createFirstPartRegularHeader(final HtmlTableRow headerRow, BlockResumeResult blocksResume) {
-		super.createFirstPartRegularHeader(headerRow, blocksResume);
+    @Override
+    protected void createFirstPartRegularHeader(final HtmlTableRow headerRow, BlockResumeResult blocksResume) {
+        super.createFirstPartRegularHeader(headerRow, blocksResume);
 
-		final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
-		firstHeaderCell.setBody(new HtmlText("Geral"));
-		firstHeaderCell.setClasses("col-bar");
-	}
+        final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
+        firstHeaderCell.setBody(new HtmlText("Geral"));
+        firstHeaderCell.setClasses("col-bar");
+    }
 
-	@Override
-	protected String getFirstColClass() {
-		return "col-type";
-	}
+    @Override
+    protected String getFirstColClass() {
+        return "col-type";
+    }
 
-	@Override
-	protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
-	}
+    @Override
+    protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+    }
 }

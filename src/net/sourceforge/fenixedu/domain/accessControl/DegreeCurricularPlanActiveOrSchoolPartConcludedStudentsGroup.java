@@ -28,92 +28,92 @@ import org.apache.commons.collections.Transformer;
  *          23397 2006-11-17 14:31:10Z cfgi $
  */
 public class DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup extends DegreeCurricularPlanGroup {
-	private static final long serialVersionUID = 1052397518994080993L;
+    private static final long serialVersionUID = 1052397518994080993L;
 
-	private class StudentCurricularStateIsActiveOrSchoolPartConcluded implements Predicate {
+    private class StudentCurricularStateIsActiveOrSchoolPartConcluded implements Predicate {
 
-		@Override
-		public boolean evaluate(Object arg0) {
-			boolean result = false;
-			if (arg0 instanceof StudentCurricularPlan) {
-				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
-				result =
-						studentCurricularPlan.isLastStudentCurricularPlanFromRegistration()
-								&& studentCurricularPlan.getRegistration().isActive();
-			}
+        @Override
+        public boolean evaluate(Object arg0) {
+            boolean result = false;
+            if (arg0 instanceof StudentCurricularPlan) {
+                StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
+                result =
+                        studentCurricularPlan.isLastStudentCurricularPlanFromRegistration()
+                                && studentCurricularPlan.getRegistration().isActive();
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 
-	private class StudentCurricularPlanPersonTransformer implements Transformer {
+    private class StudentCurricularPlanPersonTransformer implements Transformer {
 
-		@Override
-		public Object transform(Object arg0) {
-			StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
+        @Override
+        public Object transform(Object arg0) {
+            StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
 
-			return scp.getRegistration().getPerson();
-		}
-	}
+            return scp.getRegistration().getPerson();
+        }
+    }
 
-	public DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup(DegreeCurricularPlan degreeCurricularPlan) {
-		super(degreeCurricularPlan);
-	}
+    public DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup(DegreeCurricularPlan degreeCurricularPlan) {
+        super(degreeCurricularPlan);
+    }
 
-	@Override
-	public int getElementsCount() {
-		int elementsCount = 0;
-		for (StudentCurricularPlan scp : this.getDegreeCurricularPlan().getStudentCurricularPlans()) {
+    @Override
+    public int getElementsCount() {
+        int elementsCount = 0;
+        for (StudentCurricularPlan scp : this.getDegreeCurricularPlan().getStudentCurricularPlans()) {
 
-			if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
-				elementsCount++;
-			}
-		}
+            if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
+                elementsCount++;
+            }
+        }
 
-		return elementsCount;
-	}
+        return elementsCount;
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = super.buildSet();
-		Collection<StudentCurricularPlan> studentCurricularPlans = this.getDegreeCurricularPlan().getStudentCurricularPlans();
-		Collection<StudentCurricularPlan> activeOrSchoolPartConcludedStudentCurricularPlans =
-				CollectionUtils.select(studentCurricularPlans, new StudentCurricularStateIsActiveOrSchoolPartConcluded());
-		Collection<Person> activeOrSchoolPartConcludedPersons =
-				CollectionUtils.collect(activeOrSchoolPartConcludedStudentCurricularPlans,
-						new StudentCurricularPlanPersonTransformer());
-		elements.addAll(activeOrSchoolPartConcludedPersons);
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
+        Collection<StudentCurricularPlan> studentCurricularPlans = this.getDegreeCurricularPlan().getStudentCurricularPlans();
+        Collection<StudentCurricularPlan> activeOrSchoolPartConcludedStudentCurricularPlans =
+                CollectionUtils.select(studentCurricularPlans, new StudentCurricularStateIsActiveOrSchoolPartConcluded());
+        Collection<Person> activeOrSchoolPartConcludedPersons =
+                CollectionUtils.collect(activeOrSchoolPartConcludedStudentCurricularPlans,
+                        new StudentCurricularPlanPersonTransformer());
+        elements.addAll(activeOrSchoolPartConcludedPersons);
 
-		return super.freezeSet(elements);
-	}
+        return super.freezeSet(elements);
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getDegreeCurricularPlan()) };
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getDegreeCurricularPlan()) };
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			try {
-				return new DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup((DegreeCurricularPlan) arguments[0]);
-			} catch (ClassCastException e) {
-				throw new GroupDynamicExpressionException(
-						"accessControl.group.builder.degreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup.notDegreeCurricularPlan",
-						arguments[0].toString());
-			}
-		}
+        @Override
+        public Group build(Object[] arguments) {
+            try {
+                return new DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup((DegreeCurricularPlan) arguments[0]);
+            } catch (ClassCastException e) {
+                throw new GroupDynamicExpressionException(
+                        "accessControl.group.builder.degreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup.notDegreeCurricularPlan",
+                        arguments[0].toString());
+            }
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 0;
-		}
+        @Override
+        public int getMinArguments() {
+            return 0;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 1;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 1;
+        }
 
-	}
+    }
 }

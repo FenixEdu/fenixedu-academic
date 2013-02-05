@@ -7,15 +7,15 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 
 public class RemoveExecutionDegreeToScheduling extends FenixService {
 
-	private class SchedulingContainsProposalsException extends FenixServiceException {
-	}
+    private class SchedulingContainsProposalsException extends FenixServiceException {
+    }
 
-	public void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree) throws FenixServiceException {
-		if (!scheduleing.getProposalsSet().isEmpty()
-				|| (executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
-			throw new SchedulingContainsProposalsException();
-		}
-		scheduleing.getExecutionDegrees().remove(executionDegree);
-	}
+    public void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree) throws FenixServiceException {
+        if (!scheduleing.getProposalsSet().isEmpty()
+                || (executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
+            throw new SchedulingContainsProposalsException();
+        }
+        scheduleing.getExecutionDegrees().remove(executionDegree);
+    }
 
 }

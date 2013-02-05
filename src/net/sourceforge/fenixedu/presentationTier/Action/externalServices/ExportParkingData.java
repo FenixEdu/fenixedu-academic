@@ -21,36 +21,36 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/exportParkingData", scope = "request", validate = false)
 public class ExportParkingData extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		final String password = request.getParameter("password");
-		final String username = request.getParameter("username");
-		checkPermissions(username, password);
+        final String password = request.getParameter("password");
+        final String username = request.getParameter("username");
+        checkPermissions(username, password);
 
-		ParkingDataReportFile parkingDataReportFile = getLastParkingDataReportJob();
-		if (parkingDataReportFile != null && parkingDataReportFile.getFile() != null) {
-			response.setContentType("application/vnd.ms-access");
-			response.setHeader("Content-disposition", "attachment; filename=" + parkingDataReportFile.getFilename());
-			final OutputStream outputStream = response.getOutputStream();
-			outputStream.write(parkingDataReportFile.getFile().getContents());
-			outputStream.close();
-		}
-		return null;
-	}
+        ParkingDataReportFile parkingDataReportFile = getLastParkingDataReportJob();
+        if (parkingDataReportFile != null && parkingDataReportFile.getFile() != null) {
+            response.setContentType("application/vnd.ms-access");
+            response.setHeader("Content-disposition", "attachment; filename=" + parkingDataReportFile.getFilename());
+            final OutputStream outputStream = response.getOutputStream();
+            outputStream.write(parkingDataReportFile.getFile().getContents());
+            outputStream.close();
+        }
+        return null;
+    }
 
-	private ParkingDataReportFile getLastParkingDataReportJob() {
-		List<QueueJob> allJobsForClassOrSubClass = QueueJob.getAllJobsForClassOrSubClass(ParkingDataReportFile.class, 1);
-		return allJobsForClassOrSubClass.size() > 0 ? (ParkingDataReportFile) allJobsForClassOrSubClass.get(0) : null;
-	}
+    private ParkingDataReportFile getLastParkingDataReportJob() {
+        List<QueueJob> allJobsForClassOrSubClass = QueueJob.getAllJobsForClassOrSubClass(ParkingDataReportFile.class, 1);
+        return allJobsForClassOrSubClass.size() > 0 ? (ParkingDataReportFile) allJobsForClassOrSubClass.get(0) : null;
+    }
 
-	private void checkPermissions(String username, String password) throws NotAuthorizedException {
-		final String allowedUser = PropertiesManager.getProperty("exportParkingData.username");
-		final String allowedPass = PropertiesManager.getProperty("exportParkingData.password");
-		if ((!allowedUser.equals(username)) || (!allowedPass.equals(password))) {
-			throw new NotAuthorizedException();
-		}
-	}
+    private void checkPermissions(String username, String password) throws NotAuthorizedException {
+        final String allowedUser = PropertiesManager.getProperty("exportParkingData.username");
+        final String allowedPass = PropertiesManager.getProperty("exportParkingData.password");
+        if ((!allowedUser.equals(username)) || (!allowedPass.equals(password))) {
+            throw new NotAuthorizedException();
+        }
+    }
 
 }

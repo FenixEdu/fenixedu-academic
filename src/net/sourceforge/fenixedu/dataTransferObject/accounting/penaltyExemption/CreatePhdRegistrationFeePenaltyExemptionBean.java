@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 
 public class CreatePhdRegistrationFeePenaltyExemptionBean extends CreatePenaltyExemptionBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CreatePhdRegistrationFeePenaltyExemptionBean(final PhdRegistrationFee event) {
-		super(event);
-	}
+    public CreatePhdRegistrationFeePenaltyExemptionBean(final PhdRegistrationFee event) {
+        super(event);
+    }
 
-	@Override
-	public PhdRegistrationFee getEvent() {
-		return (PhdRegistrationFee) super.getEvent();
-	}
+    @Override
+    public PhdRegistrationFee getEvent() {
+        return (PhdRegistrationFee) super.getEvent();
+    }
 }

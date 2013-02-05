@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCu
 
 public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPlanBaseService {
 
-	public List run(final Integer degreeCurricularPlanId) {
+    public List run(final Integer degreeCurricularPlanId) {
 
-		return super.readActiveCurricularCourseScopes(degreeCurricularPlanId);
+        return super.readActiveCurricularCourseScopes(degreeCurricularPlanId);
 
-	}
+    }
 }

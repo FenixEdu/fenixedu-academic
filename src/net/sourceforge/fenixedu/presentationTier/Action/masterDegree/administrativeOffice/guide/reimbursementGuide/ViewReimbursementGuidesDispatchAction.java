@@ -36,67 +36,60 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-@Mapping(
-		module = "masterDegreeAdministrativeOffice",
-		path = "/viewReimbursementGuides",
-		input = "/viewReimbursementGuides.do?page=0&method=view",
-		scope = "request",
-		parameter = "method")
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/viewReimbursementGuides",
+        input = "/viewReimbursementGuides.do?page=0&method=view", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste71")),
-		@Forward(name = "start", path = "df.page.viewReimbursementGuides", tileProperties = @Tile(title = "teste72")) })
+        @Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste71")),
+        @Forward(name = "start", path = "df.page.viewReimbursementGuides", tileProperties = @Tile(title = "teste72")) })
 @Exceptions(value = {
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
-				key = "resources.Action.exceptions.FenixActionException",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request"),
-		@ExceptionHandling(
-				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class,
-				key = "resources.Action.exceptions.InvalidSituationActionException",
-				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-				scope = "request") })
+        @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class,
+                key = "resources.Action.exceptions.FenixActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class,
+                key = "resources.Action.exceptions.InvalidSituationActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 
-	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		Integer guideNumber = new Integer(this.getFromRequest("number", request));
-		Integer guideYear = new Integer(this.getFromRequest("year", request));
-		Integer guideVersion = new Integer(this.getFromRequest("version", request));
+        Integer guideNumber = new Integer(this.getFromRequest("number", request));
+        Integer guideYear = new Integer(this.getFromRequest("year", request));
+        Integer guideVersion = new Integer(this.getFromRequest("version", request));
 
-		InfoGuide infoGuide = null;
+        InfoGuide infoGuide = null;
 
-		Object args[] = { guideNumber, guideYear, guideVersion };
-		try {
-			infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+        Object args[] = { guideNumber, guideYear, guideVersion };
+        try {
+            infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
-			request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide.getInfoReimbursementGuides());
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-		}
+            request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide.getInfoReimbursementGuides());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+        }
 
-		if (infoGuide.getInfoReimbursementGuides().isEmpty() == true) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistingReimbursementGuides",
-					mapping.findForward("error"));
-		}
+        if (infoGuide.getInfoReimbursementGuides().isEmpty() == true) {
+            throw new NonExistingActionException("error.exception.masterDegree.nonExistingReimbursementGuides",
+                    mapping.findForward("error"));
+        }
 
-		if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
-			return mapping.findForward("start");
-		}
+        if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
+            return mapping.findForward("start");
+        }
 
-		throw new InvalidGuideSituationActionException(mapping.findForward("error"));
+        throw new InvalidGuideSituationActionException(mapping.findForward("error"));
 
-	}
+    }
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
+    }
 
 }

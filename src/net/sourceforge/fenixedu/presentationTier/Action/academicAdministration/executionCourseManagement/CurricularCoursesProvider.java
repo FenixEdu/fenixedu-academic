@@ -9,22 +9,22 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class CurricularCoursesProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ExecutionCourseSearchBean bean = (ExecutionCourseSearchBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ExecutionCourseSearchBean bean = (ExecutionCourseSearchBean) source;
 
-		if (bean.getSemester() == null) {
-			return new ArrayList<CurricularCourse>();
-		}
+        if (bean.getSemester() == null) {
+            return new ArrayList<CurricularCourse>();
+        }
 
-		if (bean.getDegreeCurricularPlan() == null) {
-			return new ArrayList<CurricularCourse>();
-		}
+        if (bean.getDegreeCurricularPlan() == null) {
+            return new ArrayList<CurricularCourse>();
+        }
 
-		DegreeCurricularPlan degreeCurricularPlan = bean.getDegreeCurricularPlan();
-		ExecutionSemester semester = bean.getSemester();
+        DegreeCurricularPlan degreeCurricularPlan = bean.getDegreeCurricularPlan();
+        ExecutionSemester semester = bean.getSemester();
 
-		return degreeCurricularPlan.getActiveCurricularCourses(semester);
-	}
+        return degreeCurricularPlan.getActiveCurricularCourses(semester);
+    }
 
 }

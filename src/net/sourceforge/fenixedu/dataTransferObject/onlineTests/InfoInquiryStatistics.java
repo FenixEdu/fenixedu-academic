@@ -16,27 +16,27 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
  * 
  */
 public class InfoInquiryStatistics extends DataTranferObject implements ISiteComponent {
-	private StudentTestQuestion infoStudentTestQuestion;
+    private StudentTestQuestion infoStudentTestQuestion;
 
-	private List optionStatistics;
+    private List optionStatistics;
 
-	public InfoInquiryStatistics() {
-	}
+    public InfoInquiryStatistics() {
+    }
 
-	public List getOptionStatistics() {
-		return optionStatistics;
-	}
+    public List getOptionStatistics() {
+        return optionStatistics;
+    }
 
-	public StudentTestQuestion getInfoStudentTestQuestion() {
-		return infoStudentTestQuestion;
-	}
+    public StudentTestQuestion getInfoStudentTestQuestion() {
+        return infoStudentTestQuestion;
+    }
 
-	public void setOptionStatistics(List list) {
-		optionStatistics = list;
-	}
+    public void setOptionStatistics(List list) {
+        optionStatistics = list;
+    }
 
-	public void setInfoStudentTestQuestion(StudentTestQuestion question) {
-		infoStudentTestQuestion = question;
-	}
+    public void setInfoStudentTestQuestion(StudentTestQuestion question) {
+        infoStudentTestQuestion = question;
+    }
 
 }

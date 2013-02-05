@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentSenior extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static Senior run(final Registration registration) {
-		if (registration.hasSenior()) {
-			return registration.getSenior();
-		} else if (registration.isQualifiedForSeniority()) {
-			return new Senior(registration);
-		} else {
-			return null;
-		}
-	}
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Senior run(final Registration registration) {
+        if (registration.hasSenior()) {
+            return registration.getSenior();
+        } else if (registration.isQualifiedForSeniority()) {
+            return new Senior(registration);
+        } else {
+            return null;
+        }
+    }
 
 }

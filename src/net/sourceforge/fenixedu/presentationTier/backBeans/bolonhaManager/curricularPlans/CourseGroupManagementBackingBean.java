@@ -30,214 +30,214 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 
-	private String name = null;
-	private String nameEn = null;
-	private Integer courseGroupID;
-	private List<SelectItem> courseGroups = null;
+    private String name = null;
+    private String nameEn = null;
+    private Integer courseGroupID;
+    private List<SelectItem> courseGroups = null;
 
-	public Integer getParentCourseGroupID() {
-		return getAndHoldIntegerParameter("parentCourseGroupID");
-	}
+    public Integer getParentCourseGroupID() {
+        return getAndHoldIntegerParameter("parentCourseGroupID");
+    }
 
-	@Override
-	public Integer getCourseGroupID() {
-		return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
-	}
+    @Override
+    public Integer getCourseGroupID() {
+        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
+    }
 
-	@Override
-	public void setCourseGroupID(Integer courseGroupID) {
-		this.courseGroupID = courseGroupID;
-	}
+    @Override
+    public void setCourseGroupID(Integer courseGroupID) {
+        this.courseGroupID = courseGroupID;
+    }
 
-	@Override
-	public String getName() {
-		return (name == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getName() : name;
-	}
+    @Override
+    public String getName() {
+        return (name == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getName() : name;
+    }
 
-	@Override
-	public String getNameEn() {
-		return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;
-	}
+    @Override
+    public String getNameEn() {
+        return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;
+    }
 
-	public String getParentName() {
-		return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
-	}
+    public String getParentName() {
+        return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
+    }
 
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public void setNameEn(String nameEn) {
-		this.nameEn = nameEn;
-	}
+    @Override
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
 
-	public CourseGroup getCourseGroup(Integer courseGroupID) {
-		return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
-	}
+    public CourseGroup getCourseGroup(Integer courseGroupID) {
+        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
+    }
 
-	@Override
-	public List<SelectItem> getCourseGroups() {
-		return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
-	}
+    @Override
+    public List<SelectItem> getCourseGroups() {
+        return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
+    }
 
-	@Override
-	public List<String> getRulesLabels() {
-		final List<String> resultLabels = new ArrayList<String>();
-		for (final CurricularRule curricularRule : getCourseGroup(getCourseGroupID()).getParticipatingCurricularRules()) {
-			resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
-		}
-		return resultLabels;
-	}
+    @Override
+    public List<String> getRulesLabels() {
+        final List<String> resultLabels = new ArrayList<String>();
+        for (final CurricularRule curricularRule : getCourseGroup(getCourseGroupID()).getParticipatingCurricularRules()) {
+            resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
+        }
+        return resultLabels;
+    }
 
-	@Override
-	protected ExecutionSemester getMinimumExecutionPeriod() {
-		CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());;
-		if (courseGroup == null) {
-			final Context context = getContext(getContextID());
-			if (context != null) {
-				courseGroup = context.getParentCourseGroup();
-			}
-		}
-		return (courseGroup == null) ? null : courseGroup.getMinimumExecutionPeriod();
-	}
+    @Override
+    protected ExecutionSemester getMinimumExecutionPeriod() {
+        CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());;
+        if (courseGroup == null) {
+            final Context context = getContext(getContextID());
+            if (context != null) {
+                courseGroup = context.getParentCourseGroup();
+            }
+        }
+        return (courseGroup == null) ? null : courseGroup.getMinimumExecutionPeriod();
+    }
 
-	public String createCourseGroup() {
-		try {
-			final Object args[] =
-					{ getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-							getFinalEndExecutionPeriodID() };
-			ServiceUtils.executeService("CreateCourseGroup", args);
-			addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
-			return "editCurricularPlanStructure";
-		} catch (FenixFilterException e) {
-			this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-			return "editCurricularPlanStructure";
-		} catch (final FenixServiceException e) {
-			addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-		} catch (final DomainException e) {
-			addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
-		}
-		return "";
-	}
+    public String createCourseGroup() {
+        try {
+            final Object args[] =
+                    { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
+                            getFinalEndExecutionPeriodID() };
+            ServiceUtils.executeService("CreateCourseGroup", args);
+            addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (final FenixServiceException e) {
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+        } catch (final DomainException e) {
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+        }
+        return "";
+    }
 
-	public String editCourseGroup() {
-		try {
-			final Object args[] =
-					{ getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-							getFinalEndExecutionPeriodID() };
-			ServiceUtils.executeService("EditCourseGroup", args);
-			addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
-			return "editCurricularPlanStructure";
-		} catch (FenixFilterException e) {
-			this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-			return "editCurricularPlanStructure";
-		} catch (final FenixServiceException e) {
-			addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-		} catch (final DomainException e) {
-			addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
-		}
-		return "";
-	}
+    public String editCourseGroup() {
+        try {
+            final Object args[] =
+                    { getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
+                            getFinalEndExecutionPeriodID() };
+            ServiceUtils.executeService("EditCourseGroup", args);
+            addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (final FenixServiceException e) {
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+        } catch (final DomainException e) {
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+        }
+        return "";
+    }
 
-	public String deleteCourseGroup() {
-		try {
-			final Object args[] = { getCourseGroupID(), getContextID() };
-			ServiceUtils.executeService("DeleteContextFromDegreeModule", args);
-			addInfoMessage(bolonhaBundle.getString("courseGroupDeleted"));
-			return "editCurricularPlanStructure";
-		} catch (FenixFilterException e) {
-			this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-			return "editCurricularPlanStructure";
-		} catch (final FenixServiceException e) {
-			addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-		} catch (final DomainException e) {
-			addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
-		}
-		return "";
-	}
+    public String deleteCourseGroup() {
+        try {
+            final Object args[] = { getCourseGroupID(), getContextID() };
+            ServiceUtils.executeService("DeleteContextFromDegreeModule", args);
+            addInfoMessage(bolonhaBundle.getString("courseGroupDeleted"));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (final FenixServiceException e) {
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+        } catch (final DomainException e) {
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+        }
+        return "";
+    }
 
-	@Override
-	public String addContext() {
-		try {
-			checkCourseGroup();
-			Object args[] =
-					{ getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()), getBeginExecutionPeriodID(),
-							getFinalEndExecutionPeriodID() };
-			ServiceUtils.executeService("AddContextToCourseGroup", args);
-			addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
-			return "editCurricularPlanStructure";
-		} catch (FenixActionException e) {
-			this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-		} catch (FenixFilterException e) {
-			this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-			return "editCurricularPlanStructure";
-		} catch (FenixServiceException e) {
-			this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-		} catch (DomainException e) {
-			this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
-		} catch (Exception e) {
-			this.addErrorMessage(bolonhaBundle.getString("general.error"));
-			return "editCurricularPlanStructure";
-		}
-		return "";
-	}
+    @Override
+    public String addContext() {
+        try {
+            checkCourseGroup();
+            Object args[] =
+                    { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()), getBeginExecutionPeriodID(),
+                            getFinalEndExecutionPeriodID() };
+            ServiceUtils.executeService("AddContextToCourseGroup", args);
+            addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
+            return "editCurricularPlanStructure";
+        } catch (FenixActionException e) {
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (FenixServiceException e) {
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+        } catch (DomainException e) {
+            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+        } catch (Exception e) {
+            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            return "editCurricularPlanStructure";
+        }
+        return "";
+    }
 
-	private boolean isBranch() {
-		return (this.getCourseGroup() instanceof BranchCourseGroup);
-	}
+    private boolean isBranch() {
+        return (this.getCourseGroup() instanceof BranchCourseGroup);
+    }
 
-	public String getIfBranchShowType() {
-		if (isBranch()) {
-			return "<p class=\"mtop25\">" + BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "branchType") + ": "
-					+ "<em><strong>"
-					+ ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(Language.getLocale())
-					+ "</strong></em>" + "</p>";
-		}
-		return "";
-	}
+    public String getIfBranchShowType() {
+        if (isBranch()) {
+            return "<p class=\"mtop25\">" + BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "branchType") + ": "
+                    + "<em><strong>"
+                    + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(Language.getLocale())
+                    + "</strong></em>" + "</p>";
+        }
+        return "";
+    }
 
-	private List<SelectItem> readCourseGroups() {
-		final List<SelectItem> result = new ArrayList<SelectItem>();
-		final List<List<DegreeModule>> degreeModulesSet =
-				getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class, null);
-		final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
-		for (final List<DegreeModule> degreeModules : degreeModulesSet) {
-			final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null;
-			if (!allParents.contains(lastDegreeModule) && lastDegreeModule != getCourseGroup(getParentCourseGroupID())) {
-				final StringBuilder pathName = new StringBuilder();
-				for (final DegreeModule degreeModule : degreeModules) {
-					pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
-				}
-				result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
-			}
-		}
-		Collections.sort(result, new BeanComparator("label"));
-		result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-		return result;
-	}
+    private List<SelectItem> readCourseGroups() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        final List<List<DegreeModule>> degreeModulesSet =
+                getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class, null);
+        final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
+        for (final List<DegreeModule> degreeModules : degreeModulesSet) {
+            final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null;
+            if (!allParents.contains(lastDegreeModule) && lastDegreeModule != getCourseGroup(getParentCourseGroupID())) {
+                final StringBuilder pathName = new StringBuilder();
+                for (final DegreeModule degreeModule : degreeModules) {
+                    pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
+                }
+                result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
+            }
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
+        return result;
+    }
 
-	public Integer getPosition() {
-		return getAndHoldIntegerParameter("pos");
-	}
+    public Integer getPosition() {
+        return getAndHoldIntegerParameter("pos");
+    }
 
-	public String orderCourseGroup() {
-		try {
-			Object args[] = { getContextID(), getPosition() };
-			ServiceUtils.executeService("OrderDegreeModule", args);
-			addInfoMessage(bolonhaBundle.getString("courseGroupMoved"));
-			return "editCurricularPlanStructure";
-		} catch (FenixFilterException e) {
-			this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-			return "editCurricularPlanStructure";
-		} catch (DomainException e) {
-			this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
-		} catch (Exception e) {
-			this.addErrorMessage(bolonhaBundle.getString("general.error"));
-			return "editCurricularPlanStructure";
-		}
-		return "";
-	}
+    public String orderCourseGroup() {
+        try {
+            Object args[] = { getContextID(), getPosition() };
+            ServiceUtils.executeService("OrderDegreeModule", args);
+            addInfoMessage(bolonhaBundle.getString("courseGroupMoved"));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (DomainException e) {
+            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+        } catch (Exception e) {
+            this.addErrorMessage(bolonhaBundle.getString("general.error"));
+            return "editCurricularPlanStructure";
+        }
+        return "";
+    }
 
 }

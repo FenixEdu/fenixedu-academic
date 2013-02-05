@@ -12,34 +12,34 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 
 public class ContactListRenderer extends AbstractContactRenderer {
-	private String itemClasses;
+    private String itemClasses;
 
-	@Override
-	protected Layout getLayout(Object unfiltered, Class type) {
-		return new Layout() {
-			@Override
-			public HtmlComponent createComponent(Object unfiltered, Class type) {
-				List<MetaObject> contacts = getFilteredContacts((Collection<PartyContact>) unfiltered);
-				if (contacts.isEmpty()) {
-					return new HtmlText();
-				}
-				HtmlList list = new HtmlList();
-				list.setClasses(getClasses());
-				for (MetaObject meta : contacts) {
-					HtmlListItem item = list.createItem();
-					item.setClasses(getItemClasses());
-					item.setBody(getValue((PartyContact) meta.getObject()));
-				}
-				return list;
-			}
-		};
-	}
+    @Override
+    protected Layout getLayout(Object unfiltered, Class type) {
+        return new Layout() {
+            @Override
+            public HtmlComponent createComponent(Object unfiltered, Class type) {
+                List<MetaObject> contacts = getFilteredContacts((Collection<PartyContact>) unfiltered);
+                if (contacts.isEmpty()) {
+                    return new HtmlText();
+                }
+                HtmlList list = new HtmlList();
+                list.setClasses(getClasses());
+                for (MetaObject meta : contacts) {
+                    HtmlListItem item = list.createItem();
+                    item.setClasses(getItemClasses());
+                    item.setBody(getValue((PartyContact) meta.getObject()));
+                }
+                return list;
+            }
+        };
+    }
 
-	public String getItemClasses() {
-		return itemClasses;
-	}
+    public String getItemClasses() {
+        return itemClasses;
+    }
 
-	public void setItemClasses(String itemClasses) {
-		this.itemClasses = itemClasses;
-	}
+    public void setItemClasses(String itemClasses) {
+        this.itemClasses = itemClasses;
+    }
 }

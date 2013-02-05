@@ -16,56 +16,56 @@ import java.io.IOException;
  */
 public abstract class FileUtil {
 
-	protected static String inputFile;
+    protected static String inputFile;
 
-	protected static String outputFile;
+    protected static String outputFile;
 
-	protected static BufferedReader bufferedReader;
+    protected static BufferedReader bufferedReader;
 
-	public void processFile() {
-		String outputBuffer = generateHeader();
+    public void processFile() {
+        String outputBuffer = generateHeader();
 
-		try {
-			bufferedReader = new BufferedReader(new FileReader(inputFile));
-			String line = new String();
-			int i = 0;
-			while (line != null) {
-				line = bufferedReader.readLine();
-				outputBuffer += processLine(Integer.valueOf(++i), line);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            bufferedReader = new BufferedReader(new FileReader(inputFile));
+            String line = new String();
+            int i = 0;
+            while (line != null) {
+                line = bufferedReader.readLine();
+                outputBuffer += processLine(Integer.valueOf(++i), line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		outputBuffer += generateFooter();
+        outputBuffer += generateFooter();
 
-		try {
-			FileWriter fileWriter = new FileWriter(outputFile);
-			fileWriter.write(outputBuffer);
-			fileWriter.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
+        try {
+            FileWriter fileWriter = new FileWriter(outputFile);
+            fileWriter.write(outputBuffer);
+            fileWriter.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 
-	/**
-	 * @param line
-	 * @return
-	 */
-	abstract protected String processLine(Integer lineNumber, String line);
+    /**
+     * @param line
+     * @return
+     */
+    abstract protected String processLine(Integer lineNumber, String line);
 
-	/**
-	 * @param
-	 * @return
-	 */
-	abstract protected String generateHeader();
+    /**
+     * @param
+     * @return
+     */
+    abstract protected String generateHeader();
 
-	/**
-	 * @param
-	 * @return
-	 */
-	abstract protected String generateFooter();
+    /**
+     * @param
+     * @return
+     */
+    abstract protected String generateFooter();
 
 }

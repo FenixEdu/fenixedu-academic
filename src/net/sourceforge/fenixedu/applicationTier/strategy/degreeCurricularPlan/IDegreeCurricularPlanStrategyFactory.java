@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 
 public interface IDegreeCurricularPlanStrategyFactory {
 
-	/**
-	 * 
-	 * @param The
-	 *            Degree Curricular Plan
-	 * @return The Degree Curricular Plan Strategy
-	 */
-	public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan);
+    /**
+     * 
+     * @param The
+     *            Degree Curricular Plan
+     * @return The Degree Curricular Plan Strategy
+     */
+    public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan);
 }

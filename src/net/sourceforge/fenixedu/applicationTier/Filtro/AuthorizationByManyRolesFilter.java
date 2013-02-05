@@ -15,22 +15,22 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public abstract class AuthorizationByManyRolesFilter extends Filtro {
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView id = (IUserView) request.getRequester();
-		String messageException = hasPrevilege(id, request.getServiceParameters().parametersArray());
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView id = (IUserView) request.getRequester();
+        String messageException = hasPrevilege(id, request.getServiceParameters().parametersArray());
 
-		if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-				|| (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
-				|| (id.getRoleTypes() == null)) {
-			throw new NotAuthorizedFilterException(messageException);
-		}
-	}
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
+                || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedFilterException(messageException);
+        }
+    }
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	abstract protected String hasPrevilege(IUserView id, Object[] arguments);
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    abstract protected String hasPrevilege(IUserView id, Object[] arguments);
 }

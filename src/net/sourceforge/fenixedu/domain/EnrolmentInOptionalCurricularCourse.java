@@ -17,35 +17,35 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 @Deprecated
 public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurricularCourse_Base {
 
-	protected EnrolmentInOptionalCurricularCourse() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    protected EnrolmentInOptionalCurricularCourse() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
-			ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition, String createdBy) {
-		this();
-		initializeAsNew(studentCurricularPlan, curricularCourse, executionSemester, enrolmentCondition, createdBy);
-		createCurriculumLineLog(EnrolmentAction.ENROL);
-	}
+    public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
+            ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition, String createdBy) {
+        this();
+        initializeAsNew(studentCurricularPlan, curricularCourse, executionSemester, enrolmentCondition, createdBy);
+        createCurriculumLineLog(EnrolmentAction.ENROL);
+    }
 
-	@Override
-	final public boolean isOptional() {
-		return true;
-	}
+    @Override
+    final public boolean isOptional() {
+        return true;
+    }
 
-	// new student structure methods
-	public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-			CurricularCourse curricularCourse, ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition,
-			String createdBy) {
-		this();
-		if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
-				|| enrolmentCondition == null || createdBy == null) {
-			throw new DomainException("invalid arguments");
-		}
-		// TODO: check this
-		// validateDegreeModuleLink(curriculumGroup, curricularCourse);
-		initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
-				createdBy);
-	}
+    // new student structure methods
+    public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+            CurricularCourse curricularCourse, ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition,
+            String createdBy) {
+        this();
+        if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
+                || enrolmentCondition == null || createdBy == null) {
+            throw new DomainException("invalid arguments");
+        }
+        // TODO: check this
+        // validateDegreeModuleLink(curriculumGroup, curricularCourse);
+        initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
+                createdBy);
+    }
 }

@@ -18,59 +18,59 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixService {
 
-	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-	@Service
-	public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits,
-			String startDate, List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
-			throws FenixServiceException {
-		final StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
-		if (scp == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits,
+            String startDate, List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
+            throws FenixServiceException {
+        final StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
+        if (scp == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		final Person person = Person.readPersonByUsername(userView.getUtilizador());
-		if (person == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        final Person person = Person.readPersonByUsername(userView.getUtilizador());
+        if (person == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		final Employee employee = person.getEmployee();
-		if (employee == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        final Employee employee = person.getEmployee();
+        if (employee == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		final Branch branch = rootDomainObject.readBranchByOID(branchId);
-		if (branch == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        final Branch branch = rootDomainObject.readBranchByOID(branchId);
+        if (branch == null) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		scp.setStartDate(stringDateToCalendar(startDate).getTime());
-		// scp.setCurrentState(newState);
-		scp.setEmployee(employee);
-		scp.setGivenCredits(credits);
-		scp.setObservations(observations);
-		scp.setBranch(branch);
-		scp.setSpecialization(Specialization.valueOf(specialization));
+        scp.setStartDate(stringDateToCalendar(startDate).getTime());
+        // scp.setCurrentState(newState);
+        scp.setEmployee(employee);
+        scp.setGivenCredits(credits);
+        scp.setObservations(observations);
+        scp.setBranch(branch);
+        scp.setSpecialization(Specialization.valueOf(specialization));
 
-		for (final Enrolment enrolment : scp.getEnrolments()) {
-			if (extraCurricularOIDs.contains(enrolment.getIdInternal())) {
-				if (enrolment.isExtraCurricular()) {
-					enrolment.setIsExtraCurricular(false);
-				} else {
-					enrolment.markAsExtraCurricular();
-				}
-			}
-		}
-	}
+        for (final Enrolment enrolment : scp.getEnrolments()) {
+            if (extraCurricularOIDs.contains(enrolment.getIdInternal())) {
+                if (enrolment.isExtraCurricular()) {
+                    enrolment.setIsExtraCurricular(false);
+                } else {
+                    enrolment.markAsExtraCurricular();
+                }
+            }
+        }
+    }
 
-	private static Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
-		final Calendar result = Calendar.getInstance();
+    private static Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
+        final Calendar result = Calendar.getInstance();
 
-		String[] aux = startDate.split("/");
-		result.set(Calendar.DAY_OF_MONTH, Integer.parseInt(aux[0]));
-		result.set(Calendar.MONTH, Integer.parseInt(aux[1]) - 1);
-		result.set(Calendar.YEAR, Integer.parseInt(aux[2]));
+        String[] aux = startDate.split("/");
+        result.set(Calendar.DAY_OF_MONTH, Integer.parseInt(aux[0]));
+        result.set(Calendar.MONTH, Integer.parseInt(aux[1]) - 1);
+        result.set(Calendar.YEAR, Integer.parseInt(aux[2]));
 
-		return result;
-	}
+        return result;
+    }
 
 }

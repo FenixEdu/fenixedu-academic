@@ -12,31 +12,31 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class InfoSiteEvaluations extends DataTranferObject implements ISiteComponent {
 
-	private static final ComparatorChain comparator = new ComparatorChain();
-	static {
-		comparator.addComparator(new BeanComparator("dayDate"));
-		comparator.addComparator(new BeanComparator("beginningDate.time"));
-		comparator.addComparator(new BeanComparator("endDate.time"));
-	}
+    private static final ComparatorChain comparator = new ComparatorChain();
+    static {
+        comparator.addComparator(new BeanComparator("dayDate"));
+        comparator.addComparator(new BeanComparator("beginningDate.time"));
+        comparator.addComparator(new BeanComparator("endDate.time"));
+    }
 
-	private List<Evaluation> evaluations;
+    private List<Evaluation> evaluations;
 
-	public List<Evaluation> getEvaluations() {
-		return evaluations;
-	}
+    public List<Evaluation> getEvaluations() {
+        return evaluations;
+    }
 
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
+    public void setEvaluations(List<Evaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
 
-	public Collection<WrittenEvaluation> getSortedWrittenEvaluations() {
-		final Collection<WrittenEvaluation> sortedWrittenEvaluations = new TreeSet<WrittenEvaluation>(comparator);
-		for (final Evaluation evaluation : getEvaluations()) {
-			if (evaluation instanceof WrittenEvaluation) {
-				sortedWrittenEvaluations.add((WrittenEvaluation) evaluation);
-			}
-		}
-		return sortedWrittenEvaluations;
-	}
+    public Collection<WrittenEvaluation> getSortedWrittenEvaluations() {
+        final Collection<WrittenEvaluation> sortedWrittenEvaluations = new TreeSet<WrittenEvaluation>(comparator);
+        for (final Evaluation evaluation : getEvaluations()) {
+            if (evaluation instanceof WrittenEvaluation) {
+                sortedWrittenEvaluations.add((WrittenEvaluation) evaluation);
+            }
+        }
+        return sortedWrittenEvaluations;
+    }
 
 }

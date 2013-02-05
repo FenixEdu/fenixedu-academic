@@ -22,41 +22,40 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "gep", path = "/executionCourseInquiries", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(
-		name = "showExecutionCoursesForInquiries",
-		path = "/gep/inquiries/showExecutionCoursesForInquiries.jsp",
-		tileProperties = @Tile(title = "private.gep.surveys.settoevaluatedisciplines")) })
+@Forwards(value = { @Forward(name = "showExecutionCoursesForInquiries",
+        path = "/gep/inquiries/showExecutionCoursesForInquiries.jsp", tileProperties = @Tile(
+                title = "private.gep.surveys.settoevaluatedisciplines")) })
 public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
 
-	public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ExecutionCourseSearchBean executionCourseSearchBean = getRenderedObject();
-		if (executionCourseSearchBean == null) {
-			executionCourseSearchBean = new ExecutionCourseSearchBean();
-			final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-			executionCourseSearchBean.setExecutionPeriod(executionSemester);
-		} else {
-			final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
-			if (executionCourses != null) {
-				request.setAttribute("executionCourses", executionCourses);
-			}
-			RenderUtils.invalidateViewState("executionCourses");
-		}
-		request.setAttribute("executionCourseSearchBean", executionCourseSearchBean);
-		return mapping.findForward("showExecutionCoursesForInquiries");
-	}
+    public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExecutionCourseSearchBean executionCourseSearchBean = getRenderedObject();
+        if (executionCourseSearchBean == null) {
+            executionCourseSearchBean = new ExecutionCourseSearchBean();
+            final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+            executionCourseSearchBean.setExecutionPeriod(executionSemester);
+        } else {
+            final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
+            if (executionCourses != null) {
+                request.setAttribute("executionCourses", executionCourses);
+            }
+            RenderUtils.invalidateViewState("executionCourses");
+        }
+        request.setAttribute("executionCourseSearchBean", executionCourseSearchBean);
+        return mapping.findForward("showExecutionCoursesForInquiries");
+    }
 
-	public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final ExecutionCourseSearchBean executionCourseSearchBean = getRenderedObject();
-		SelectAllExecutionCoursesForInquiries.run(executionCourseSearchBean);
-		return search(mapping, actionForm, request, response);
-	}
+    public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final ExecutionCourseSearchBean executionCourseSearchBean = getRenderedObject();
+        SelectAllExecutionCoursesForInquiries.run(executionCourseSearchBean);
+        return search(mapping, actionForm, request, response);
+    }
 
-	public ActionForward unselectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		SelectAllExecutionCoursesForInquiries.unselectAll((ExecutionCourseSearchBean) getRenderedObject());
-		return search(mapping, actionForm, request, response);
-	}
+    public ActionForward unselectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        SelectAllExecutionCoursesForInquiries.unselectAll((ExecutionCourseSearchBean) getRenderedObject());
+        return search(mapping, actionForm, request, response);
+    }
 
 }

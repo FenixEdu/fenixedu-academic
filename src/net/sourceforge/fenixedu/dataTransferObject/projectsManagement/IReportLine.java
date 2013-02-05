@@ -15,14 +15,14 @@ import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
  * 
  */
 public interface IReportLine {
-	public int getNumberOfColumns();
+    public int getNumberOfColumns();
 
-	public Double getValue(int column);
+    public Double getValue(int column);
 
-	public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
 
-	public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
 
-	public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
 
 }

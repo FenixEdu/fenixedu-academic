@@ -18,22 +18,22 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
-	@Override
-	protected RoleType getRoleType() {
-		return RoleType.PERSON;
-	}
+    @Override
+    protected RoleType getRoleType() {
+        return RoleType.PERSON;
+    }
 
-	@Override
-	protected boolean verifyCondition(IUserView id, Integer executionCourseID) {
-		final Person person = id.getPerson();
+    @Override
+    protected boolean verifyCondition(IUserView id, Integer executionCourseID) {
+        final Person person = id.getPerson();
 
-		for (final Professorship professorship : person.getProfessorshipsSet()) {
-			final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-			if (executionCourse.getIdInternal().equals(executionCourseID)) {
-				return true;
-			}
-		}
-		return false;
-	}
+        for (final Professorship professorship : person.getProfessorshipsSet()) {
+            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+            if (executionCourse.getIdInternal().equals(executionCourseID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -5,12 +5,12 @@ import pt.ist.fenixWebFramework.renderers.InputRenderer;
 
 public abstract class AnswerTypeRenderer extends InputRenderer {
 
-	protected final NewAtomicQuestion atomicQuestion;
+    protected final NewAtomicQuestion atomicQuestion;
 
-	public AnswerTypeRenderer(NewAtomicQuestion atomicQuestion) {
-		super();
+    public AnswerTypeRenderer(NewAtomicQuestion atomicQuestion) {
+        super();
 
-		this.atomicQuestion = atomicQuestion;
-	}
+        this.atomicQuestion = atomicQuestion;
+    }
 
 }

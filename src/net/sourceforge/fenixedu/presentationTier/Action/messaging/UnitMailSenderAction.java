@@ -13,12 +13,12 @@ import org.apache.struts.action.ActionMapping;
 
 public class UnitMailSenderAction extends FenixDispatchAction {
 
-	public Unit getUnit(HttpServletRequest request) {
-		return DomainObject.fromExternalId(request.getParameter("unitExternalId"));
-	}
+    public Unit getUnit(HttpServletRequest request) {
+        return DomainObject.fromExternalId(request.getParameter("unitExternalId"));
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return EmailsDA.sendEmail(request, getUnit(request).getOneUnitBasedSender());
-	}
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return EmailsDA.sendEmail(request, getUnit(request).getOneUnitBasedSender());
+    }
 }

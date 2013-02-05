@@ -9,19 +9,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesGivenDegreeTypeForDelegatesManagement implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		if (source instanceof DelegateBean) {
-			return Degree.readAllByDegreeType(((DelegateBean) source).getDegreeType());
-		} else {
-			return Degree.readAllByDegreeType(((DelegateSearchBean) source).getDegreeType());
-		}
+        if (source instanceof DelegateBean) {
+            return Degree.readAllByDegreeType(((DelegateBean) source).getDegreeType());
+        } else {
+            return Degree.readAllByDegreeType(((DelegateSearchBean) source).getDegreeType());
+        }
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

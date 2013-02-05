@@ -22,142 +22,142 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class InfoReimbursementGuideSituation extends InfoObject {
 
-	protected State state;
+    protected State state;
 
-	protected InfoReimbursementGuide infoReimbursementGuide;
+    protected InfoReimbursementGuide infoReimbursementGuide;
 
-	protected String remarks;
+    protected String remarks;
 
-	protected InfoEmployee infoEmployee;
+    protected InfoEmployee infoEmployee;
 
-	protected Calendar modificationDate;
+    protected Calendar modificationDate;
 
-	protected Calendar officialDate;
+    protected Calendar officialDate;
 
-	protected ReimbursementGuideState reimbursementGuideState;
+    protected ReimbursementGuideState reimbursementGuideState;
 
-	/**
-	 * @return
-	 */
-	public InfoEmployee getInfoEmployee() {
-		return infoEmployee;
-	}
+    /**
+     * @return
+     */
+    public InfoEmployee getInfoEmployee() {
+        return infoEmployee;
+    }
 
-	/**
-	 * @param infoEmployee
-	 */
-	public void setInfoEmployee(InfoEmployee infoEmployee) {
-		this.infoEmployee = infoEmployee;
-	}
+    /**
+     * @param infoEmployee
+     */
+    public void setInfoEmployee(InfoEmployee infoEmployee) {
+        this.infoEmployee = infoEmployee;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoReimbursementGuide getInfoReimbursementGuide() {
-		return infoReimbursementGuide;
-	}
+    /**
+     * @return
+     */
+    public InfoReimbursementGuide getInfoReimbursementGuide() {
+        return infoReimbursementGuide;
+    }
 
-	/**
-	 * @param infoReimbursementGuide
-	 */
-	public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
-		this.infoReimbursementGuide = infoReimbursementGuide;
-	}
+    /**
+     * @param infoReimbursementGuide
+     */
+    public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
+        this.infoReimbursementGuide = infoReimbursementGuide;
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getModificationDate() {
-		return modificationDate;
-	}
+    /**
+     * @return
+     */
+    public Calendar getModificationDate() {
+        return modificationDate;
+    }
 
-	/**
-	 * @param modificationDate
-	 */
-	public void setModificationDate(Calendar modificationDate) {
-		this.modificationDate = modificationDate;
-	}
+    /**
+     * @param modificationDate
+     */
+    public void setModificationDate(Calendar modificationDate) {
+        this.modificationDate = modificationDate;
+    }
 
-	/**
-	 * @return
-	 */
-	public ReimbursementGuideState getReimbursementGuideState() {
-		return reimbursementGuideState;
-	}
+    /**
+     * @return
+     */
+    public ReimbursementGuideState getReimbursementGuideState() {
+        return reimbursementGuideState;
+    }
 
-	/**
-	 * @param reimbursementGuideState
-	 */
-	public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState) {
-		this.reimbursementGuideState = reimbursementGuideState;
-	}
+    /**
+     * @param reimbursementGuideState
+     */
+    public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState) {
+        this.reimbursementGuideState = reimbursementGuideState;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
 
-	/**
-	 * @param remarks
-	 */
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
+    /**
+     * @param remarks
+     */
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	/**
-	 * @return
-	 */
-	public State getState() {
-		return state;
-	}
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
 
-	/**
-	 * @param state
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
 
-	/**
-	 * @return Returns the officialDate.
-	 */
-	public Calendar getOfficialDate() {
-		return officialDate;
-	}
+    /**
+     * @return Returns the officialDate.
+     */
+    public Calendar getOfficialDate() {
+        return officialDate;
+    }
 
-	/**
-	 * @param officialDate
-	 *            The officialDate to set.
-	 */
-	public void setOfficialDate(Calendar officialDate) {
-		this.officialDate = officialDate;
-	}
+    /**
+     * @param officialDate
+     *            The officialDate to set.
+     */
+    public void setOfficialDate(Calendar officialDate) {
+        this.officialDate = officialDate;
+    }
 
-	public void copyFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
-		super.copyFromDomain(reimbursementGuideSituation);
-		if (reimbursementGuideSituation != null) {
+    public void copyFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
+        super.copyFromDomain(reimbursementGuideSituation);
+        if (reimbursementGuideSituation != null) {
 
-			setInfoEmployee(InfoEmployee.newInfoFromDomain(reimbursementGuideSituation.getEmployee()));
-			// setInfoReimbursementGuide(null);
-			setModificationDate(reimbursementGuideSituation.getModificationDate());
-			setOfficialDate(reimbursementGuideSituation.getOfficialDate());
-			setReimbursementGuideState(reimbursementGuideSituation.getReimbursementGuideState());
-			setRemarks(reimbursementGuideSituation.getRemarks());
-			setState(reimbursementGuideSituation.getState());
+            setInfoEmployee(InfoEmployee.newInfoFromDomain(reimbursementGuideSituation.getEmployee()));
+            // setInfoReimbursementGuide(null);
+            setModificationDate(reimbursementGuideSituation.getModificationDate());
+            setOfficialDate(reimbursementGuideSituation.getOfficialDate());
+            setReimbursementGuideState(reimbursementGuideSituation.getReimbursementGuideState());
+            setRemarks(reimbursementGuideSituation.getRemarks());
+            setState(reimbursementGuideSituation.getState());
 
-		}
-	}
+        }
+    }
 
-	public static InfoReimbursementGuideSituation newInfoFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
-		InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
-		if (reimbursementGuideSituation != null) {
-			infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();
-			infoReimbursementGuideSituation.copyFromDomain(reimbursementGuideSituation);
-		}
+    public static InfoReimbursementGuideSituation newInfoFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
+        InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
+        if (reimbursementGuideSituation != null) {
+            infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();
+            infoReimbursementGuideSituation.copyFromDomain(reimbursementGuideSituation);
+        }
 
-		return infoReimbursementGuideSituation;
-	}
+        return infoReimbursementGuideSituation;
+    }
 
 }

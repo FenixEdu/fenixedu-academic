@@ -16,15 +16,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class StudentCurricularPlansProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) source;
-		return bean.getRegistration() != null ? bean.getRegistration().getStudentCurricularPlans() : Collections.EMPTY_LIST;
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) source;
+        return bean.getRegistration() != null ? bean.getRegistration().getStudentCurricularPlans() : Collections.EMPTY_LIST;
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

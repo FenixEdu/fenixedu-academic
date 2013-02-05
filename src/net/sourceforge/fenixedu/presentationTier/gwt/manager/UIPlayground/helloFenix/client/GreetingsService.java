@@ -6,6 +6,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("greetings.gwt")
 public interface GreetingsService extends RemoteService {
 
-	public String getGreetings();
+    public String getGreetings();
 
 }

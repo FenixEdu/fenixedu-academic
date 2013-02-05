@@ -34,94 +34,94 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/fctDebts", module = "academicAdministration")
 @Forwards({ @Forward(name = "selectPhdStudent", path = "/academicAdminOffice/payments/selectPhdStudent.jsp"),
-		@Forward(name = "showScolarship", path = "/academicAdminOffice/payments/showScolarship.jsp") })
+        @Forward(name = "showScolarship", path = "/academicAdminOffice/payments/showScolarship.jsp") })
 public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
-	public static class AmountBean implements Serializable {
-		private Money value;
+    public static class AmountBean implements Serializable {
+        private Money value;
 
-		public Money getValue() {
-			return value;
-		}
+        public Money getValue() {
+            return value;
+        }
 
-		public void setValue(Money value) {
-			this.value = value;
-		}
-	}
+        public void setValue(Money value) {
+            this.value = value;
+        }
+    }
 
-	protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
-		final String processIdAttribute = (String) request.getAttribute("processId");
-		return DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
-				.getParameter("processId"));
-	}
+    protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
+        final String processIdAttribute = (String) request.getAttribute("processId");
+        return DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
+                .getParameter("processId"));
+    }
 
-	public ActionForward viewDebtsForProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		PhdIndividualProgramProcess process = getProcess(request);
-		ArrayList<PhdGratuityExternalScholarshipExemption> list = new ArrayList<PhdGratuityExternalScholarshipExemption>();
+    public ActionForward viewDebtsForProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        PhdIndividualProgramProcess process = getProcess(request);
+        ArrayList<PhdGratuityExternalScholarshipExemption> list = new ArrayList<PhdGratuityExternalScholarshipExemption>();
 
-		for (Event event : process.getPerson().getEvents()) {
-			if (event instanceof PhdGratuityEvent) {
-				for (Exemption exemption : event.getExemptions()) {
-					if (exemption instanceof PhdGratuityExternalScholarshipExemption) {
-						PhdGratuityExternalScholarshipExemption exemption2 = (PhdGratuityExternalScholarshipExemption) exemption;
-						list.add(exemption2);
-					}
-				}
-			}
-		}
+        for (Event event : process.getPerson().getEvents()) {
+            if (event instanceof PhdGratuityEvent) {
+                for (Exemption exemption : event.getExemptions()) {
+                    if (exemption instanceof PhdGratuityExternalScholarshipExemption) {
+                        PhdGratuityExternalScholarshipExemption exemption2 = (PhdGratuityExternalScholarshipExemption) exemption;
+                        list.add(exemption2);
+                    }
+                }
+            }
+        }
 
-		request.setAttribute("person", process.getPerson());
-		request.setAttribute("debts", list);
-		return mapping.findForward("selectPhdStudent");
-	}
+        request.setAttribute("person", process.getPerson());
+        request.setAttribute("debts", list);
+        return mapping.findForward("selectPhdStudent");
+    }
 
-	public ActionForward prepareLiquidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareLiquidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		String exemptionId = request.getParameter("exemptiontId");
-		PhdGratuityExternalScholarshipExemption exemption =
-				(PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId);
-		request.setAttribute("processId", ((PhdGratuityEvent) exemption.getEvent()).getPhdIndividualProgramProcess()
-				.getExternalId());
-		request.setAttribute("exemption", exemption);
-		request.setAttribute("person", exemption.getEvent().getPerson());
-		AmountBean bean = new AmountBean();
-		bean.setValue(exemption.getAmoutStillMissing());
-		request.setAttribute("bean", bean);
-		return mapping.findForward("showScolarship");
-	}
+        String exemptionId = request.getParameter("exemptiontId");
+        PhdGratuityExternalScholarshipExemption exemption =
+                (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId);
+        request.setAttribute("processId", ((PhdGratuityEvent) exemption.getEvent()).getPhdIndividualProgramProcess()
+                .getExternalId());
+        request.setAttribute("exemption", exemption);
+        request.setAttribute("person", exemption.getEvent().getPerson());
+        AmountBean bean = new AmountBean();
+        bean.setValue(exemption.getAmoutStillMissing());
+        request.setAttribute("bean", bean);
+        return mapping.findForward("showScolarship");
+    }
 
-	@Service
-	public ActionForward liquidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Service
+    public ActionForward liquidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		String exemptionId = request.getParameter("externalId");
-		PhdGratuityExternalScholarshipExemption exemption =
-				(PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId == null ? (String) request
-						.getAttribute("externalId") : exemptionId);
-		ExternalScholarshipPhdGratuityContribuitionEvent event = exemption.getExternalScholarshipPhdGratuityContribuitionEvent();
-		AmountBean bean = getRenderedObject("bean");
-		List<EntryDTO> list = new ArrayList<EntryDTO>();
-		list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
-		event.process(AccessControl.getPerson().getUser(), list, new AccountingTransactionDetailDTO(new DateTime(),
-				PaymentMode.CASH));
+        String exemptionId = request.getParameter("externalId");
+        PhdGratuityExternalScholarshipExemption exemption =
+                (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId == null ? (String) request
+                        .getAttribute("externalId") : exemptionId);
+        ExternalScholarshipPhdGratuityContribuitionEvent event = exemption.getExternalScholarshipPhdGratuityContribuitionEvent();
+        AmountBean bean = getRenderedObject("bean");
+        List<EntryDTO> list = new ArrayList<EntryDTO>();
+        list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
+        event.process(AccessControl.getPerson().getUser(), list, new AccountingTransactionDetailDTO(new DateTime(),
+                PaymentMode.CASH));
 
-		PhdGratuityEvent gratuityEvent = (PhdGratuityEvent) exemption.getEvent();
-		PhdIndividualProgramProcess process = gratuityEvent.getPhdIndividualProgramProcess();
-		request.setAttribute("processId", process.getExternalId());
+        PhdGratuityEvent gratuityEvent = (PhdGratuityEvent) exemption.getEvent();
+        PhdIndividualProgramProcess process = gratuityEvent.getPhdIndividualProgramProcess();
+        request.setAttribute("processId", process.getExternalId());
 
-		return viewDebtsForProcess(mapping, form, request, response);
-	}
+        return viewDebtsForProcess(mapping, form, request, response);
+    }
 
-	public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-		String exemptionId = request.getParameter("externalId");
-		PhdGratuityExternalScholarshipExemption exemption =
-				(PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId == null ? (String) request
-						.getAttribute("externalId") : exemptionId);
-		PhdGratuityEvent event = (PhdGratuityEvent) exemption.getEvent();
-		PhdIndividualProgramProcess process = event.getPhdIndividualProgramProcess();
-		request.setAttribute("processId", process.getExternalId());
-		return viewDebtsForProcess(mapping, form, request, response);
-	}
+    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        String exemptionId = request.getParameter("externalId");
+        PhdGratuityExternalScholarshipExemption exemption =
+                (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId == null ? (String) request
+                        .getAttribute("externalId") : exemptionId);
+        PhdGratuityEvent event = (PhdGratuityEvent) exemption.getEvent();
+        PhdIndividualProgramProcess process = event.getPhdIndividualProgramProcess();
+        request.setAttribute("processId", process.getExternalId());
+        return viewDebtsForProcess(mapping, form, request, response);
+    }
 }

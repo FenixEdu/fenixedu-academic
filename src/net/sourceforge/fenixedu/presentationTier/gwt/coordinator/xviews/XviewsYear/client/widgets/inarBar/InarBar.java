@@ -17,304 +17,304 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public class InarBar extends Raphael {
 
-	private XviewsYear window;
+    private XviewsYear window;
 
-	private int width;
-	private int height;
-	private int inarBarOX;
-	private int inarBarOY;
-	private int cx;
-	private int cy;
-	private int absoluteLeft;
-	private int absoluteTop;
+    private int width;
+    private int height;
+    private int inarBarOX;
+    private int inarBarOY;
+    private int cx;
+    private int cy;
+    private int absoluteLeft;
+    private int absoluteTop;
 
-	private Raphael.Rect outline;
-	private BarSlice IBar;
-	private BarSlice NBar;
-	private BarSlice ABar;
-	private BarSlice RBar;
+    private Raphael.Rect outline;
+    private BarSlice IBar;
+    private BarSlice NBar;
+    private BarSlice ABar;
+    private BarSlice RBar;
 
-	private int[] ianrt;
+    private int[] ianrt;
 
-	private InarBar(int width, int height) {
-		super(width, height);
-	}
+    private InarBar(int width, int height) {
+        super(width, height);
+    }
 
-	public InarBar(XviewsYear window, int width, int height, int[] inar) {
-		this(width, height);
-		this.window = window;
-		int _width = width - 2;
-		int _height = height - 2;
+    public InarBar(XviewsYear window, int width, int height, int[] inar) {
+        this(width, height);
+        this.window = window;
+        int _width = width - 2;
+        int _height = height - 2;
 
-		double proportion = (_width * 1.0) / (_height * 1.0);
-		if (proportion <= 7.0) {
-			this.width = _width;
-			this.height = (int) ((this.width) * (1.0 / 7.0));
-		} else {
-			this.height = (int) (_height * 0.5);
-			this.width = (int) (this.height * 7.0);
-		}
+        double proportion = (_width * 1.0) / (_height * 1.0);
+        if (proportion <= 7.0) {
+            this.width = _width;
+            this.height = (int) ((this.width) * (1.0 / 7.0));
+        } else {
+            this.height = (int) (_height * 0.5);
+            this.width = (int) (this.height * 7.0);
+        }
 
-		inarBarOX = (int) ((_width - this.width) / 2.0);
-		inarBarOY = (int) ((_height - this.height) / 2.0);
+        inarBarOX = (int) ((_width - this.width) / 2.0);
+        inarBarOY = (int) ((_height - this.height) / 2.0);
 
-		cx = _width / 2;
-		cy = _height / 2;
+        cx = _width / 2;
+        cy = _height / 2;
 
-		this.ianrt = inar;
+        this.ianrt = inar;
 
-		initInarBar();
-	}
+        initInarBar();
+    }
 
-	@Override
-	public void onLoad() {
-		super.onLoad();
+    @Override
+    public void onLoad() {
+        super.onLoad();
 
-		if (ianrt[0] != 0) {
-			IBar.initText();
-			IBar.setBarHandlers();
-		}
+        if (ianrt[0] != 0) {
+            IBar.initText();
+            IBar.setBarHandlers();
+        }
 
-		if (ianrt[1] != 0) {
-			ABar.initText();
-			ABar.setBarHandlers();
-		}
+        if (ianrt[1] != 0) {
+            ABar.initText();
+            ABar.setBarHandlers();
+        }
 
-		if (ianrt[2] != 0) {
-			NBar.initText();
-			NBar.setBarHandlers();
-		}
-		if (ianrt[3] != 0) {
-			RBar.initText();
-			RBar.setBarHandlers();
-		}
-	}
+        if (ianrt[2] != 0) {
+            NBar.initText();
+            NBar.setBarHandlers();
+        }
+        if (ianrt[3] != 0) {
+            RBar.initText();
+            RBar.setBarHandlers();
+        }
+    }
 
-	public int getThisLeft() {
-		return this.getAbsoluteLeft();
-	}
+    public int getThisLeft() {
+        return this.getAbsoluteLeft();
+    }
 
-	public int getThisTop() {
-		return this.getAbsoluteTop();
-	}
+    public int getThisTop() {
+        return this.getAbsoluteTop();
+    }
 
-	private class BarSlice extends Raphael.Rect implements HasClickHandlers {
+    private class BarSlice extends Raphael.Rect implements HasClickHandlers {
 
-		private double originX;
-		private double originY;
-		private double thisWidth;
-		private double thisHeight;
+        private double originX;
+        private double originY;
+        private double thisWidth;
+        private double thisHeight;
 
-		private double thisCX;
-		private double thisCY;
-		private double percCY;
+        private double thisCX;
+        private double thisCY;
+        private double percCY;
 
-		private int flavour;
+        private int flavour;
 
-		private InarBar parent;
+        private InarBar parent;
 
-		private ClickableText nominalLabel;
-		private ClickableText percLabel;
+        private ClickableText nominalLabel;
+        private ClickableText percLabel;
 
-		private BarSlice(double x, double y, double w, double h) {
-			super(x, y, w, h);
-		}
+        private BarSlice(double x, double y, double w, double h) {
+            super(x, y, w, h);
+        }
 
-		public BarSlice(double sliceOX, double sliceOY, double sliceWidth, double sliceHeight, int flavour, InarBar parent) {
-			this(sliceOX, sliceOY, sliceWidth, sliceHeight);
-			originX = sliceOX;
-			originY = sliceOY;
-			thisWidth = sliceWidth;
-			thisHeight = sliceHeight;
-			thisCX = originX + (thisWidth / 2.0);
-			thisCY = originY + (thisHeight / 2.0);
-			percCY = originY - (0.2 * thisHeight);
+        public BarSlice(double sliceOX, double sliceOY, double sliceWidth, double sliceHeight, int flavour, InarBar parent) {
+            this(sliceOX, sliceOY, sliceWidth, sliceHeight);
+            originX = sliceOX;
+            originY = sliceOY;
+            thisWidth = sliceWidth;
+            thisHeight = sliceHeight;
+            thisCX = originX + (thisWidth / 2.0);
+            thisCY = originY + (thisHeight / 2.0);
+            percCY = originY - (0.2 * thisHeight);
 
-			this.flavour = flavour;
+            this.flavour = flavour;
 
-			this.parent = parent;
+            this.parent = parent;
 
-		}
+        }
 
-		@Override
-		public HandlerRegistration addClickHandler(ClickHandler handler) {
-			if (nominalLabel != null) {
-				nominalLabel.addClickHandler(handler);
-			}
-			if (percLabel != null) {
-				percLabel.addClickHandler(handler);
-			}
-			return this.addDomHandler(handler, ClickEvent.getType());
-		}
+        @Override
+        public HandlerRegistration addClickHandler(ClickHandler handler) {
+            if (nominalLabel != null) {
+                nominalLabel.addClickHandler(handler);
+            }
+            if (percLabel != null) {
+                percLabel.addClickHandler(handler);
+            }
+            return this.addDomHandler(handler, ClickEvent.getType());
+        }
 
-		public void initText() {
+        public void initText() {
 
-			if (((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) > 0.1) {
-				nominalLabel = new ClickableText(thisCX, thisCY, Integer.toString(pickCardinal(flavour)));
-				nominalLabel.attr("font-size", getFontSize(4) + "px");
-				nominalLabel.attr("font-weight", "bold");
-				nominalLabel.attr("font-family", "sans-serif");
-				nominalLabel.attr("fill", "#FFFFFF");
-				nominalLabel.attr("cursor", "pointer");
-			}
+            if (((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) > 0.1) {
+                nominalLabel = new ClickableText(thisCX, thisCY, Integer.toString(pickCardinal(flavour)));
+                nominalLabel.attr("font-size", getFontSize(4) + "px");
+                nominalLabel.attr("font-weight", "bold");
+                nominalLabel.attr("font-family", "sans-serif");
+                nominalLabel.attr("fill", "#FFFFFF");
+                nominalLabel.attr("cursor", "pointer");
+            }
 
-			percLabel = new ClickableText(thisCX, percCY, getPerc(flavour));
-			percLabel.attr("font-size", getFontSize(3) + "px");
-			percLabel.attr("font-family", "sans-serif");
-			percLabel.attr("fill", "#000000");
-			percLabel.attr("cursor", "pointer");
+            percLabel = new ClickableText(thisCX, percCY, getPerc(flavour));
+            percLabel.attr("font-size", getFontSize(3) + "px");
+            percLabel.attr("font-family", "sans-serif");
+            percLabel.attr("fill", "#000000");
+            percLabel.attr("cursor", "pointer");
 
-		}
+        }
 
-		public int getThisLeft() {
-			return parent.getThisLeft() + ((int) originX);
-		}
+        public int getThisLeft() {
+            return parent.getThisLeft() + ((int) originX);
+        }
 
-		public int getThisTop() {
-			return parent.getThisTop() + ((int) originY);
-		}
+        public int getThisTop() {
+            return parent.getThisTop() + ((int) originY);
+        }
 
-		public void setBarHandlers() {
-			this.addClickHandler(new ClickHandler() {
+        public void setBarHandlers() {
+            this.addClickHandler(new ClickHandler() {
 
-				@Override
-				public void onClick(ClickEvent event) {
-					window.loadDetailedSlicePopup(getThisLeft() + (thisWidth / 2.0), getThisTop() + (thisHeight / 2.0), width,
-							height, pickColor(flavour), pickULabel(flavour), pickLLabel(flavour));
-					window.focus();
-				}
+                @Override
+                public void onClick(ClickEvent event) {
+                    window.loadDetailedSlicePopup(getThisLeft() + (thisWidth / 2.0), getThisTop() + (thisHeight / 2.0), width,
+                            height, pickColor(flavour), pickULabel(flavour), pickLLabel(flavour));
+                    window.focus();
+                }
 
-			});
-		}
+            });
+        }
 
-		private class ClickableText extends Text implements HasClickHandlers {
+        private class ClickableText extends Text implements HasClickHandlers {
 
-			public ClickableText(double x, double y, String str) {
-				super(x, y, str);
-			}
+            public ClickableText(double x, double y, String str) {
+                super(x, y, str);
+            }
 
-			@Override
-			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				return this.addDomHandler(handler, ClickEvent.getType());
-			}
+            @Override
+            public HandlerRegistration addClickHandler(ClickHandler handler) {
+                return this.addDomHandler(handler, ClickEvent.getType());
+            }
 
-		}
+        }
 
-	}
+    }
 
-	private void initInarBar() {
+    private void initInarBar() {
 
-		double outlineStroke = 1;
-		double padding = (width * (1.0 / 100.0));
+        double outlineStroke = 1;
+        double padding = (width * (1.0 / 100.0));
 
-		int validSlots = 0;
-		for (int i = 0; i < 5; i++) {
-			if (ianrt[i] != 0) {
-				validSlots++;
-			}
-		}
+        int validSlots = 0;
+        for (int i = 0; i < 5; i++) {
+            if (ianrt[i] != 0) {
+                validSlots++;
+            }
+        }
 
-		double innerRemainingW = (width * 1.0) - ((validSlots * 1.0) * padding);
-		double remainingH = ((height * 1.0) - (inarBarOY * 1.0)) - (2.0 * padding);
+        double innerRemainingW = (width * 1.0) - ((validSlots * 1.0) * padding);
+        double remainingH = ((height * 1.0) - (inarBarOY * 1.0)) - (2.0 * padding);
 
-		double sliceOY = ((height * 1.0) - remainingH - padding);
-		double sliceHeight = remainingH + inarBarOY;
+        double sliceOY = ((height * 1.0) - remainingH - padding);
+        double sliceHeight = remainingH + inarBarOY;
 
-		outline = new Rect(inarBarOX, inarBarOY, width, height);
-		outline.attr("stroke", "#000000");
-		outline.attr("stroke-width", outlineStroke);
+        outline = new Rect(inarBarOX, inarBarOY, width, height);
+        outline.attr("stroke", "#000000");
+        outline.attr("stroke-width", outlineStroke);
 
-		double sliceOX = ((inarBarOX * 1.0) + padding);
-		double sliceWidth;
+        double sliceOX = ((inarBarOX * 1.0) + padding);
+        double sliceWidth;
 
-		if (ianrt[0] != 0) {
-			sliceWidth = (((ianrt[0] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-			IBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 0, this);
-			IBar.attr("fill", "#1888B8");
-			IBar.attr("stroke-width", 0.00001);
-			IBar.attr("cursor", "pointer");
-			sliceOX += sliceWidth + padding;
-		}
+        if (ianrt[0] != 0) {
+            sliceWidth = (((ianrt[0] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
+            IBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 0, this);
+            IBar.attr("fill", "#1888B8");
+            IBar.attr("stroke-width", 0.00001);
+            IBar.attr("cursor", "pointer");
+            sliceOX += sliceWidth + padding;
+        }
 
-		if (ianrt[1] != 0) {
-			sliceWidth = (((ianrt[1] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-			ABar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 1, this);
-			ABar.attr("fill", "#39B54A");
-			ABar.attr("stroke-width", 0.00001);
-			ABar.attr("cursor", "pointer");
-			sliceOX += sliceWidth + padding;
-		}
+        if (ianrt[1] != 0) {
+            sliceWidth = (((ianrt[1] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
+            ABar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 1, this);
+            ABar.attr("fill", "#39B54A");
+            ABar.attr("stroke-width", 0.00001);
+            ABar.attr("cursor", "pointer");
+            sliceOX += sliceWidth + padding;
+        }
 
-		if (ianrt[2] != 0) {
-			sliceWidth = (((ianrt[2] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-			NBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 2, this);
-			NBar.attr("fill", "#FBB03B");
-			NBar.attr("stroke-width", 0.00001);
-			NBar.attr("cursor", "pointer");
-			sliceOX += sliceWidth + padding;
-		}
+        if (ianrt[2] != 0) {
+            sliceWidth = (((ianrt[2] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
+            NBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 2, this);
+            NBar.attr("fill", "#FBB03B");
+            NBar.attr("stroke-width", 0.00001);
+            NBar.attr("cursor", "pointer");
+            sliceOX += sliceWidth + padding;
+        }
 
-		if (ianrt[3] != 0) {
-			sliceWidth = (((ianrt[3] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-			RBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 3, this);
-			RBar.attr("fill", "#ED1C24");
-			RBar.attr("stroke-width", 0.00001);
-			RBar.attr("cursor", "pointer");
-			sliceOX += sliceWidth + padding;
-		}
+        if (ianrt[3] != 0) {
+            sliceWidth = (((ianrt[3] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
+            RBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 3, this);
+            RBar.attr("fill", "#ED1C24");
+            RBar.attr("stroke-width", 0.00001);
+            RBar.attr("cursor", "pointer");
+            sliceOX += sliceWidth + padding;
+        }
 
-	}
+    }
 
-	private int getFontSize(int reference) {
-		return (int) (Math.sqrt((width * width) + (height * height)) * (reference * 1.0) / 100.0);
-	}
+    private int getFontSize(int reference) {
+        return (int) (Math.sqrt((width * width) + (height * height)) * (reference * 1.0) / 100.0);
+    }
 
-	private String getPerc(int flavour) {
-		final double abs = ((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) * 1000.0;
-		final double round = abs % 10;
-		int perc = (int) (((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) * 100.0);
-		if (round > 4) {
-			perc++;
-		}
-		return (Integer.toString(perc) + "%");
-	}
+    private String getPerc(int flavour) {
+        final double abs = ((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) * 1000.0;
+        final double round = abs % 10;
+        int perc = (int) (((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) * 100.0);
+        if (round > 4) {
+            perc++;
+        }
+        return (Integer.toString(perc) + "%");
+    }
 
-	private String pickColor(int flavour) {
-		switch (flavour) {
-		case 0:
-			return "#1888B8";
-		case 1:
-			return "#39B54A";
-		case 2:
-			return "#FBB03B";
-		case 3:
-			return "#ED1C24";
-		default:
-			return "#000000";
-		}
-	}
+    private String pickColor(int flavour) {
+        switch (flavour) {
+        case 0:
+            return "#1888B8";
+        case 1:
+            return "#39B54A";
+        case 2:
+            return "#FBB03B";
+        case 3:
+            return "#ED1C24";
+        default:
+            return "#000000";
+        }
+    }
 
-	private int pickCardinal(int flavour) {
-		return ianrt[flavour];
-	}
+    private int pickCardinal(int flavour) {
+        return ianrt[flavour];
+    }
 
-	private String pickULabel(int flavour) {
-		switch (flavour) {
-		case 0:
-			return window.getBundle().inFrequency() + ":";
-		case 1:
-			return window.getBundle().approved() + ":";
-		case 2:
-			return window.getBundle().nonEvaluated() + ":";
-		case 3:
-			return window.getBundle().flunked() + ":";
-		default:
-			return window.getBundle().generalException();
-		}
-	}
+    private String pickULabel(int flavour) {
+        switch (flavour) {
+        case 0:
+            return window.getBundle().inFrequency() + ":";
+        case 1:
+            return window.getBundle().approved() + ":";
+        case 2:
+            return window.getBundle().nonEvaluated() + ":";
+        case 3:
+            return window.getBundle().flunked() + ":";
+        default:
+            return window.getBundle().generalException();
+        }
+    }
 
-	private String pickLLabel(int flavour) {
-		return (ianrt[flavour] + " " + window.getBundle().outOf() + " " + ianrt[4] + " (" + getPerc(flavour) + ")");
-	}
+    private String pickLLabel(int flavour) {
+        return (ianrt[flavour] + " " + window.getBundle().outOf() + " " + ianrt[4] + " (" + getPerc(flavour) + ")");
+    }
 
 }

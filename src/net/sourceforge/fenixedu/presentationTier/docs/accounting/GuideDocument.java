@@ -15,75 +15,75 @@ import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class GuideDocument extends FenixReport {
 
-	private final PaymentsManagementDTO paymentsManagementDTO;
+    private final PaymentsManagementDTO paymentsManagementDTO;
 
-	private final IMessageResourceProvider messageResourceProvider;
+    private final IMessageResourceProvider messageResourceProvider;
 
-	public static class GuideDocumentEntry {
-		private String description;
+    public static class GuideDocumentEntry {
+        private String description;
 
-		private String amountToPay;
+        private String amountToPay;
 
-		public GuideDocumentEntry(final String description, final String amountToPay) {
-			this.description = description;
-			this.amountToPay = amountToPay;
-		}
+        public GuideDocumentEntry(final String description, final String amountToPay) {
+            this.description = description;
+            this.amountToPay = amountToPay;
+        }
 
-		public String getDescription() {
-			return description;
-		}
+        public String getDescription() {
+            return description;
+        }
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
+        public void setDescription(String description) {
+            this.description = description;
+        }
 
-		public String getAmountToPay() {
-			return amountToPay;
-		}
+        public String getAmountToPay() {
+            return amountToPay;
+        }
 
-		public void setAmountToPay(String amountToPay) {
-			this.amountToPay = amountToPay;
-		}
+        public void setAmountToPay(String amountToPay) {
+            this.amountToPay = amountToPay;
+        }
 
-	}
+    }
 
-	public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO, final IMessageResourceProvider messageResourceProvider) {
-		this.paymentsManagementDTO = paymentsManagementDTO;
-		this.messageResourceProvider = messageResourceProvider;
-		fillReport();
-	}
+    public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO, final IMessageResourceProvider messageResourceProvider) {
+        this.paymentsManagementDTO = paymentsManagementDTO;
+        this.messageResourceProvider = messageResourceProvider;
+        fillReport();
+    }
 
-	@Override
-	protected void fillReport() {
+    @Override
+    protected void fillReport() {
 
-		addParameter("total", this.paymentsManagementDTO.getTotalAmountToPay().toPlainString());
-		addParameter("date", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
-		addParameter("unitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
-		addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
-		addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
-		addParameter("name", this.paymentsManagementDTO.getPerson().getName());
-		addParameter("studentNumber", this.paymentsManagementDTO.getPerson().hasStudent() ? this.paymentsManagementDTO
-				.getPerson().getStudent().getNumber().toString() : null);
+        addParameter("total", this.paymentsManagementDTO.getTotalAmountToPay().toPlainString());
+        addParameter("date", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
+        addParameter("unitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
+        addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
+        addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
+        addParameter("name", this.paymentsManagementDTO.getPerson().getName());
+        addParameter("studentNumber", this.paymentsManagementDTO.getPerson().hasStudent() ? this.paymentsManagementDTO
+                .getPerson().getStudent().getNumber().toString() : null);
 
-		addDataSourceElements(buildEntries());
-	}
+        addDataSourceElements(buildEntries());
+    }
 
-	private List<GuideDocumentEntry> buildEntries() {
+    private List<GuideDocumentEntry> buildEntries() {
 
-		final List<GuideDocumentEntry> result = new ArrayList<GuideDocumentEntry>();
+        final List<GuideDocumentEntry> result = new ArrayList<GuideDocumentEntry>();
 
-		for (final EntryDTO entryDTO : this.paymentsManagementDTO.getSelectedEntries()) {
-			result.add(new GuideDocumentEntry(entryDTO.getDescription().toString(this.messageResourceProvider), entryDTO
-					.getAmountToPay().toPlainString()));
-		}
+        for (final EntryDTO entryDTO : this.paymentsManagementDTO.getSelectedEntries()) {
+            result.add(new GuideDocumentEntry(entryDTO.getDescription().toString(this.messageResourceProvider), entryDTO
+                    .getAmountToPay().toPlainString()));
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	@Override
-	public String getReportFileName() {
-		return "Guide-" + new DateTime().toString(YYYYMMDDHHMMSS, getLocale());
-	}
+    @Override
+    public String getReportFileName() {
+        return "Guide-" + new DateTime().toString(YYYYMMDDHHMMSS, getLocale());
+    }
 
 }

@@ -14,29 +14,29 @@ import net.sourceforge.fenixedu.domain.Qualification;
  */
 public class InfoQualificationWithPersonAndCountry extends InfoQualification {
 
-	@Override
-	public void copyFromDomain(Qualification qualification) {
-		super.copyFromDomain(qualification);
-		if (qualification != null) {
-			final Country country = qualification.getCountry();
-			if (country != null) {
-				final InfoCountryEditor infoCountryEditor = new InfoCountryEditor();
-				infoCountryEditor.setCode(country.getCode());
-				infoCountryEditor.setIdInternal(country.getIdInternal());
-				infoCountryEditor.setName(country.getName());
-				infoCountryEditor.setNationality(country.getNationality());
-				setInfoCountry(infoCountryEditor);
-			}
-			setInfoPerson(InfoPerson.newInfoFromDomain(qualification.getPerson()));
-		}
-	}
+    @Override
+    public void copyFromDomain(Qualification qualification) {
+        super.copyFromDomain(qualification);
+        if (qualification != null) {
+            final Country country = qualification.getCountry();
+            if (country != null) {
+                final InfoCountryEditor infoCountryEditor = new InfoCountryEditor();
+                infoCountryEditor.setCode(country.getCode());
+                infoCountryEditor.setIdInternal(country.getIdInternal());
+                infoCountryEditor.setName(country.getName());
+                infoCountryEditor.setNationality(country.getNationality());
+                setInfoCountry(infoCountryEditor);
+            }
+            setInfoPerson(InfoPerson.newInfoFromDomain(qualification.getPerson()));
+        }
+    }
 
-	public static InfoQualification newInfoFromDomain(Qualification qualification) {
-		InfoQualificationWithPersonAndCountry infoQualification = null;
-		if (qualification != null) {
-			infoQualification = new InfoQualificationWithPersonAndCountry();
-			infoQualification.copyFromDomain(qualification);
-		}
-		return infoQualification;
-	}
+    public static InfoQualification newInfoFromDomain(Qualification qualification) {
+        InfoQualificationWithPersonAndCountry infoQualification = null;
+        if (qualification != null) {
+            infoQualification = new InfoQualificationWithPersonAndCountry();
+            infoQualification.copyFromDomain(qualification);
+        }
+        return infoQualification;
+    }
 }

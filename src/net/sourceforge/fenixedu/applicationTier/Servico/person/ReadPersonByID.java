@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPersonByID extends FenixService {
 
-	@Service
-	public static InfoPerson run(Integer idInternal) {
-		return InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(idInternal));
-	}
+    @Service
+    public static InfoPerson run(Integer idInternal) {
+        return InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(idInternal));
+    }
 }

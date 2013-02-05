@@ -13,10 +13,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteGlossaryEntry extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_PREDICATE")
-	@Service
-	public static void run(Integer entryId) {
-		rootDomainObject.readGlossaryEntryByOID(entryId).delete();
-	}
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer entryId) {
+        rootDomainObject.readGlossaryEntryByOID(entryId).delete();
+    }
 
 }

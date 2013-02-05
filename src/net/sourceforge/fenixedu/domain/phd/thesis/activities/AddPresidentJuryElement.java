@@ -11,28 +11,28 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
 public class AddPresidentJuryElement extends PhdThesisActivity {
 
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-		if (process.isJuryValidated()) {
-			throw new PreConditionNotValidException();
-		}
+        if (process.isJuryValidated()) {
+            throw new PreConditionNotValidException();
+        }
 
-		if (!process.isAllowedToManageProcess(userView)) {
-			throw new PreConditionNotValidException();
-		}
-	}
+        if (!process.isAllowedToManageProcess(userView)) {
+            throw new PreConditionNotValidException();
+        }
+    }
 
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 
-		process.checkJuryPresidentNotGuider((PhdThesisJuryElementBean) object);
+        process.checkJuryPresidentNotGuider((PhdThesisJuryElementBean) object);
 
-		if (process.hasPresidentJuryElement()) {
-			process.getPresidentJuryElement().delete();
-		}
+        if (process.hasPresidentJuryElement()) {
+            process.getPresidentJuryElement().delete();
+        }
 
-		ThesisJuryElement.createPresident(process, (PhdThesisJuryElementBean) object);
-		return process;
-	}
+        ThesisJuryElement.createPresident(process, (PhdThesisJuryElementBean) object);
+        return process;
+    }
 }

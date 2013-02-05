@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class DegreeProvider extends AbstractDomainObjectProvider {
 
-	@Override
-	public Object provide(Object source, Object value) {
-		DegreeFilterBean bean = (DegreeFilterBean) source;
+    @Override
+    public Object provide(Object source, Object value) {
+        DegreeFilterBean bean = (DegreeFilterBean) source;
 
-		return Degree.readAllByDegreeType(bean.getDegreeType());
-	}
+        return Degree.readAllByDegreeType(bean.getDegreeType());
+    }
 
 }

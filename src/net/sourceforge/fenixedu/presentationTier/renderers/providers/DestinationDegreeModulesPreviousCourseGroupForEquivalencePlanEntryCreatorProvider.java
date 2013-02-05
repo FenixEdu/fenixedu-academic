@@ -20,85 +20,85 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements DataProvider {
 
-	private static class CourseGroupPair extends GenericPair<String, String> {
+    private static class CourseGroupPair extends GenericPair<String, String> {
 
-		public CourseGroupPair(CourseGroup courseGroup, String path) {
-			super(courseGroup.getExternalId(), path);
-		}
+        public CourseGroupPair(CourseGroup courseGroup, String path) {
+            super(courseGroup.getExternalId(), path);
+        }
 
-		@Override
-		public boolean equals(Object obj) {
-			if (obj instanceof CourseGroup) {
-				return getLeft().equals(((CourseGroup) obj).getExternalId());
-			}
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof CourseGroup) {
+                return getLeft().equals(((CourseGroup) obj).getExternalId());
+            }
 
-			return false;
-		}
+            return false;
+        }
 
-	}
+    }
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		final List<GenericPair<String, String>> result = new ArrayList<GenericPair<String, String>>();
-		for (final List<DegreeModule> degreeModules : getDegreeCurricularPlan(source).getDcpDegreeModulesIncludingFullPath(
-				CourseGroup.class, null)) {
-			result.add(new CourseGroupPair((CourseGroup) degreeModules.get(degreeModules.size() - 1), buildPath(degreeModules)));
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        final List<GenericPair<String, String>> result = new ArrayList<GenericPair<String, String>>();
+        for (final List<DegreeModule> degreeModules : getDegreeCurricularPlan(source).getDcpDegreeModulesIncludingFullPath(
+                CourseGroup.class, null)) {
+            result.add(new CourseGroupPair((CourseGroup) degreeModules.get(degreeModules.size() - 1), buildPath(degreeModules)));
 
-		}
+        }
 
-		return result;
+        return result;
 
-	}
+    }
 
-	protected DegreeCurricularPlan getDegreeCurricularPlan(final Object source) {
+    protected DegreeCurricularPlan getDegreeCurricularPlan(final Object source) {
 
-		final EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) source;
-		final DegreeCurricularPlanEquivalencePlan equivalencePlan =
-				(DegreeCurricularPlanEquivalencePlan) equivalencePlanEntryCreator.getEquivalencePlan();
+        final EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) source;
+        final DegreeCurricularPlanEquivalencePlan equivalencePlan =
+                (DegreeCurricularPlanEquivalencePlan) equivalencePlanEntryCreator.getEquivalencePlan();
 
-		return equivalencePlan.getDegreeCurricularPlan();
+        return equivalencePlan.getDegreeCurricularPlan();
 
-	}
+    }
 
-	private String buildPath(final List<DegreeModule> degreeModules) {
-		final StringBuilder result = new StringBuilder();
+    private String buildPath(final List<DegreeModule> degreeModules) {
+        final StringBuilder result = new StringBuilder();
 
-		final Iterator<DegreeModule> iterator = degreeModules.iterator();
-		while (iterator.hasNext()) {
-			final DegreeModule degreeModule = iterator.next();
-			result.append(degreeModule.getName());
-			if (iterator.hasNext()) {
-				result.append(" > ");
-			}
-		}
+        final Iterator<DegreeModule> iterator = degreeModules.iterator();
+        while (iterator.hasNext()) {
+            final DegreeModule degreeModule = iterator.next();
+            result.append(degreeModule.getName());
+            if (iterator.hasNext()) {
+                result.append(" > ");
+            }
+        }
 
-		return result.toString();
+        return result.toString();
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new BiDirectionalConverter() {
-			@Override
-			public Object convert(Class type, Object value) {
-				if (!StringUtils.isEmpty((String) value)) {
-					return DomainObject.fromExternalId((String) value);
-				}
+    @Override
+    public Converter getConverter() {
+        return new BiDirectionalConverter() {
+            @Override
+            public Object convert(Class type, Object value) {
+                if (!StringUtils.isEmpty((String) value)) {
+                    return DomainObject.fromExternalId((String) value);
+                }
 
-				return null;
-			}
+                return null;
+            }
 
-			@Override
-			public String deserialize(Object object) {
-				if (object == null) {
-					return "";
-				}
+            @Override
+            public String deserialize(Object object) {
+                if (object == null) {
+                    return "";
+                }
 
-				final CourseGroupPair option = (CourseGroupPair) object;
+                final CourseGroupPair option = (CourseGroupPair) object;
 
-				return option.getLeft();
+                return option.getLeft();
 
-			}
-		};
-	}
+            }
+        };
+    }
 }

@@ -21,34 +21,34 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewCurriculum", module = "externalSupervision", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
 @Forwards({ @Forward(name = "chooseRegistration", path = "/externalSupervision/consult/chooseRegistration.jsp"),
-		@Forward(name = "ShowStudentCurriculum", path = "/externalSupervision/consult/showStudentCurriculum.jsp") })
+        @Forward(name = "ShowStudentCurriculum", path = "/externalSupervision/consult/showStudentCurriculum.jsp") })
 public class ShowStudentCurriculum extends CurriculumDispatchAction {
 
-	public ActionForward prepareForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		RenderUtils.invalidateViewState();
+    public ActionForward prepareForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        RenderUtils.invalidateViewState();
 
-		final String personId = request.getParameter("personId");
-		final Person personStudent = AbstractDomainObject.fromExternalId(personId);
-		final Student student = personStudent.getStudent();
+        final String personId = request.getParameter("personId");
+        final Person personStudent = AbstractDomainObject.fromExternalId(personId);
+        final Student student = personStudent.getStudent();
 
-		request.setAttribute("student", student);
-		return mapping.findForward("chooseRegistration");
-	}
+        request.setAttribute("student", student);
+        return mapping.findForward("chooseRegistration");
+    }
 
-	public ActionForward showCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		RenderUtils.invalidateViewState();
+    public ActionForward showCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        RenderUtils.invalidateViewState();
 
-		Registration registration = null;
+        Registration registration = null;
 
-		final String registrationId = request.getParameter("registrationId");
-		registration = AbstractDomainObject.fromExternalId(registrationId);
+        final String registrationId = request.getParameter("registrationId");
+        registration = AbstractDomainObject.fromExternalId(registrationId);
 
-		if (registration == null) {
-			return mapping.findForward("NotAuthorized");
-		} else {
-			return getStudentCPForSupervisor(registration, mapping, (DynaActionForm) form, request);
-		}
-	}
+        if (registration == null) {
+            return mapping.findForward("NotAuthorized");
+        } else {
+            return getStudentCPForSupervisor(registration, mapping, (DynaActionForm) form, request);
+        }
+    }
 }

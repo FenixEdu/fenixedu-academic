@@ -51,242 +51,239 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/regentInquiry", module = "teacher")
 @Forwards({
-		@Forward(
-				name = "inquiryResultsResume",
-				path = "/teacher/inquiries/regentInquiryResultsResume.jsp",
-				tileProperties = @Tile(
-						navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-						title = "private.teacher.qucreportsandresults.regent")),
-		@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/regentInquiryClosed.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-				title = "private.teacher.qucreportsandresults.regent")),
-		@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/regentInquiryUnavailable.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-				title = "private.teacher.qucreportsandresults.regent")),
-		@Forward(name = "regentInquiry", path = "/teacher/inquiries/regentInquiry.jsp", tileProperties = @Tile(
-				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-				title = "private.teacher.qucreportsandresults.regent")) })
+        @Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/regentInquiryResultsResume.jsp",
+                tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
+                        title = "private.teacher.qucreportsandresults.regent")),
+        @Forward(name = "inquiriesClosed", path = "/teacher/inquiries/regentInquiryClosed.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
+                title = "private.teacher.qucreportsandresults.regent")),
+        @Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/regentInquiryUnavailable.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
+                title = "private.teacher.qucreportsandresults.regent")),
+        @Forward(name = "regentInquiry", path = "/teacher/inquiries/regentInquiry.jsp", tileProperties = @Tile(
+                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
+                title = "private.teacher.qucreportsandresults.regent")) })
 public class RegentInquiryDA extends FenixDispatchAction {
 
-	public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
-		Professorship professorship = getProfessorship(executionCourse);
+        ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
+        Professorship professorship = getProfessorship(executionCourse);
 
-		RegentInquiryTemplate inquiryTemplate =
-				RegentInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
-		// if the inquiry doesn't exist or is from the execution period right
-		// before the current one and isn't open and has no results,
-		// that means that is not to answer and has no data to see
-		if (inquiryTemplate == null
-				|| (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
-						.getExecutionPeriod().hasAnyInquiryResults())) {
-			return actionMapping.findForward("inquiriesClosed");
-		} else if (!inquiryTemplate.isOpen()) {
-			request.setAttribute("readMode", "readMode");
-		}
+        RegentInquiryTemplate inquiryTemplate =
+                RegentInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
+        // if the inquiry doesn't exist or is from the execution period right
+        // before the current one and isn't open and has no results,
+        // that means that is not to answer and has no data to see
+        if (inquiryTemplate == null
+                || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
+                        .getExecutionPeriod().hasAnyInquiryResults())) {
+            return actionMapping.findForward("inquiriesClosed");
+        } else if (!inquiryTemplate.isOpen()) {
+            request.setAttribute("readMode", "readMode");
+        }
 
-		if (!professorship.getPerson().hasToAnswerRegentInquiry(professorship)) {
-			return actionMapping.findForward("inquiryUnavailable");
-		}
+        if (!professorship.getPerson().hasToAnswerRegentInquiry(professorship)) {
+            return actionMapping.findForward("inquiryUnavailable");
+        }
 
-		List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
-		for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
-			CurricularCourseResumeResult courseResumeResult =
-					new CurricularCourseResumeResult(executionCourse, executionDegree, "label.inquiry.degree", executionDegree
-							.getDegree().getSigla(), professorship.getPerson(), ResultPersonCategory.TEACHER, true, false, false,
-							false, true);
-			if (courseResumeResult.getResultBlocks().size() > 1) {
-				coursesResultResume.add(courseResumeResult);
-			}
-		}
-		Collections.sort(coursesResultResume, new BeanComparator("firstPresentationName"));
+        List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
+        for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
+            CurricularCourseResumeResult courseResumeResult =
+                    new CurricularCourseResumeResult(executionCourse, executionDegree, "label.inquiry.degree", executionDegree
+                            .getDegree().getSigla(), professorship.getPerson(), ResultPersonCategory.TEACHER, true, false, false,
+                            false, true);
+            if (courseResumeResult.getResultBlocks().size() > 1) {
+                coursesResultResume.add(courseResumeResult);
+            }
+        }
+        Collections.sort(coursesResultResume, new BeanComparator("firstPresentationName"));
 
-		Map<Professorship, RegentTeacherResultsResume> regentTeachersResumeMap =
-				new HashMap<Professorship, RegentTeacherResultsResume>();
+        Map<Professorship, RegentTeacherResultsResume> regentTeachersResumeMap =
+                new HashMap<Professorship, RegentTeacherResultsResume>();
 
-		List<Professorship> teachersWithNoResults = new ArrayList<Professorship>();
-		for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
-			List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
-			if (!professorshipResults.isEmpty()) {
-				for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-					List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
-					if (!teacherShiftResults.isEmpty()) {
-						TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
-								new TeacherShiftTypeGroupsResumeResult(teacherProfessorship, shiftType,
-										ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
-										RenderUtils.getEnumString(shiftType), teacherProfessorship == professorship);
+        List<Professorship> teachersWithNoResults = new ArrayList<Professorship>();
+        for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
+            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            if (!professorshipResults.isEmpty()) {
+                for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
+                    List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
+                    if (!teacherShiftResults.isEmpty()) {
+                        TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult =
+                                new TeacherShiftTypeGroupsResumeResult(teacherProfessorship, shiftType,
+                                        ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
+                                        RenderUtils.getEnumString(shiftType), teacherProfessorship == professorship);
 
-						RegentTeacherResultsResume regentTeachersResultsResume =
-								regentTeachersResumeMap.get(teacherProfessorship);
-						if (regentTeachersResultsResume == null) {
-							regentTeachersResultsResume = new RegentTeacherResultsResume(teacherProfessorship);
-							regentTeachersResumeMap.put(teacherProfessorship, regentTeachersResultsResume);
-						}
-						regentTeachersResultsResume.addTeacherShiftTypeGroupsResumeResult(teacherShiftTypeGroupsResumeResult);
-					}
-				}
-			} else {
-				teachersWithNoResults.add(teacherProfessorship);
-			}
-		}
+                        RegentTeacherResultsResume regentTeachersResultsResume =
+                                regentTeachersResumeMap.get(teacherProfessorship);
+                        if (regentTeachersResultsResume == null) {
+                            regentTeachersResultsResume = new RegentTeacherResultsResume(teacherProfessorship);
+                            regentTeachersResumeMap.put(teacherProfessorship, regentTeachersResultsResume);
+                        }
+                        regentTeachersResultsResume.addTeacherShiftTypeGroupsResumeResult(teacherShiftTypeGroupsResumeResult);
+                    }
+                }
+            } else {
+                teachersWithNoResults.add(teacherProfessorship);
+            }
+        }
 
-		InquiryResponseState finalState = getFilledState(executionCourse, professorship, inquiryTemplate);
-		InquiryResponseState teacherFilledState = null;
-		if (professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
-			teacherFilledState =
-					TeachingInquiryDA.getFilledState(professorship,
-							TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
-							new ArrayList<TeacherShiftTypeGroupsResumeResult>());
-		} else {
-			teacherFilledState = InquiryResponseState.COMPLETE;
-		}
-		if (!InquiryResponseState.COMPLETE.equals(teacherFilledState)) {
-			request.setAttribute("teacherCompletionState", teacherFilledState.getLocalizedName());
-		}
+        InquiryResponseState finalState = getFilledState(executionCourse, professorship, inquiryTemplate);
+        InquiryResponseState teacherFilledState = null;
+        if (professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
+            teacherFilledState =
+                    TeachingInquiryDA.getFilledState(professorship,
+                            TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
+                            new ArrayList<TeacherShiftTypeGroupsResumeResult>());
+        } else {
+            teacherFilledState = InquiryResponseState.COMPLETE;
+        }
+        if (!InquiryResponseState.COMPLETE.equals(teacherFilledState)) {
+            request.setAttribute("teacherCompletionState", teacherFilledState.getLocalizedName());
+        }
 
-		List<RegentTeacherResultsResume> regentTeachersResumeList =
-				new ArrayList<RegentTeacherResultsResume>(regentTeachersResumeMap.values());
+        List<RegentTeacherResultsResume> regentTeachersResumeList =
+                new ArrayList<RegentTeacherResultsResume>(regentTeachersResumeMap.values());
 
-		request.setAttribute("isComplete", InquiryResponseState.COMPLETE.equals(finalState));
-		request.setAttribute("completionState", finalState.getLocalizedName());
-		Collections.sort(regentTeachersResumeList, new BeanComparator("professorship.person.name"));
+        request.setAttribute("isComplete", InquiryResponseState.COMPLETE.equals(finalState));
+        request.setAttribute("completionState", finalState.getLocalizedName());
+        Collections.sort(regentTeachersResumeList, new BeanComparator("professorship.person.name"));
 
-		request.setAttribute("professorship", professorship);
-		request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
-		request.setAttribute("regentTeachersResumeList", regentTeachersResumeList);
-		request.setAttribute("teachersWithNoResults", teachersWithNoResults);
-		request.setAttribute("coursesResultResume", coursesResultResume);
+        request.setAttribute("professorship", professorship);
+        request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
+        request.setAttribute("regentTeachersResumeList", regentTeachersResumeList);
+        request.setAttribute("teachersWithNoResults", teachersWithNoResults);
+        request.setAttribute("coursesResultResume", coursesResultResume);
 
-		ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
-		return actionMapping.findForward("inquiryResultsResume");
-	}
+        ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
+        return actionMapping.findForward("inquiryResultsResume");
+    }
 
-	static InquiryResponseState getFilledState(ExecutionCourse executionCourse, Professorship professorship,
-			RegentInquiryTemplate inquiryTemplate) {
-		InquiryResponseState finalState = InquiryResponseState.COMPLETE;
-		if (!professorship.hasInquiryRegentAnswer()) {
-			finalState = InquiryResponseState.EMPTY;
-		} else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
-				|| professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)
-				|| professorship.hasMandatoryCommentsToMakeAsResponsible()) {
-			finalState = InquiryResponseState.INCOMPLETE;
-		}
-		return finalState;
-	}
+    static InquiryResponseState getFilledState(ExecutionCourse executionCourse, Professorship professorship,
+            RegentInquiryTemplate inquiryTemplate) {
+        InquiryResponseState finalState = InquiryResponseState.COMPLETE;
+        if (!professorship.hasInquiryRegentAnswer()) {
+            finalState = InquiryResponseState.EMPTY;
+        } else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
+                || professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)
+                || professorship.hasMandatoryCommentsToMakeAsResponsible()) {
+            finalState = InquiryResponseState.INCOMPLETE;
+        }
+        return finalState;
+    }
 
-	private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
-		Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
-		for (InquiryResult inquiryResult : professorshipResults) {
-			shiftTypes.add(inquiryResult.getShiftType());
-		}
-		return shiftTypes;
-	}
+    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+        Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
+        for (InquiryResult inquiryResult : professorshipResults) {
+            shiftTypes.add(inquiryResult.getShiftType());
+        }
+        return shiftTypes;
+    }
 
-	public ActionForward showRegentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showRegentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
-		RegentInquiryTemplate regentInquiryTemplate = RegentInquiryTemplate.getCurrentTemplate();
+        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        RegentInquiryTemplate regentInquiryTemplate = RegentInquiryTemplate.getCurrentTemplate();
 
-		RegentInquiryBean regentInquiryBean = new RegentInquiryBean(regentInquiryTemplate, professorship);
+        RegentInquiryBean regentInquiryBean = new RegentInquiryBean(regentInquiryTemplate, professorship);
 
-		request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
-		request.setAttribute("executionCourse", professorship.getExecutionCourse());
-		request.setAttribute("regentInquiryBean", regentInquiryBean);
+        request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
+        request.setAttribute("executionCourse", professorship.getExecutionCourse());
+        request.setAttribute("regentInquiryBean", regentInquiryBean);
 
-		return actionMapping.findForward("regentInquiry");
-	}
+        return actionMapping.findForward("regentInquiry");
+    }
 
-	public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
 
-		TeacherInquiryTemplate teacherInquiryTemplate =
-				TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
-		InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
+        TeacherInquiryTemplate teacherInquiryTemplate =
+                TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
+        InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
 
-		Set<InquiryBlockDTO> teacherInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-		for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
-			teacherInquiryBlocks.add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
-		}
+        Set<InquiryBlockDTO> teacherInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
+        for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+            teacherInquiryBlocks.add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
+        }
 
-		request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
-		request.setAttribute("executionCourse", professorship.getExecutionCourse());
-		request.setAttribute("person", professorship.getPerson());
-		request.setAttribute("teacherInquiryBlocks", teacherInquiryBlocks);
-		return actionMapping.findForward("teacherInquiry");
-	}
+        request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
+        request.setAttribute("executionCourse", professorship.getExecutionCourse());
+        request.setAttribute("person", professorship.getPerson());
+        request.setAttribute("teacherInquiryBlocks", teacherInquiryBlocks);
+        return actionMapping.findForward("teacherInquiry");
+    }
 
-	public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ExecutionCourse executionCourse =
-				AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
-		ExecutionDegree executionDegree =
-				AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+        ExecutionCourse executionCourse =
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+        ExecutionDegree executionDegree =
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
 
-		DelegateInquiryTemplate delegateInquiryTemplate =
-				DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
-		InquiryDelegateAnswer inquiryDelegateAnswer = null;
-		for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswers()) {
-			if (delegateAnswer.getExecutionDegree() == executionDegree) {
-				inquiryDelegateAnswer = delegateAnswer;
-				break;
-			}
-		}
+        DelegateInquiryTemplate delegateInquiryTemplate =
+                DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());
+        InquiryDelegateAnswer inquiryDelegateAnswer = null;
+        for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswers()) {
+            if (delegateAnswer.getExecutionDegree() == executionDegree) {
+                inquiryDelegateAnswer = delegateAnswer;
+                break;
+            }
+        }
 
-		Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-		for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
-			delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
-		}
+        Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
+        for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
+            delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
+        }
 
-		Integer year = inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getDelegate().getCurricularYear().getYear() : null;
-		request.setAttribute("year", year);
-		request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
-		request.setAttribute("executionCourse", executionCourse);
-		request.setAttribute("executionDegree", executionDegree);
-		request.setAttribute("delegateInquiryBlocks", delegateInquiryBlocks);
-		return actionMapping.findForward("delegateInquiry");
-	}
+        Integer year = inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getDelegate().getCurricularYear().getYear() : null;
+        request.setAttribute("year", year);
+        request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
+        request.setAttribute("executionCourse", executionCourse);
+        request.setAttribute("executionDegree", executionDegree);
+        request.setAttribute("delegateInquiryBlocks", delegateInquiryBlocks);
+        return actionMapping.findForward("delegateInquiry");
+    }
 
-	public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		final RegentInquiryBean regentInquiryBean = getRenderedObject("regentInquiryBean");
+    public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final RegentInquiryBean regentInquiryBean = getRenderedObject("regentInquiryBean");
 
-		String validationResult = regentInquiryBean.validateInquiry();
-		if (!Boolean.valueOf(validationResult)) {
-			RenderUtils.invalidateViewState();
-			addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+        String validationResult = regentInquiryBean.validateInquiry();
+        if (!Boolean.valueOf(validationResult)) {
+            RenderUtils.invalidateViewState();
+            addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
 
-			request.setAttribute("regentInquiryBean", regentInquiryBean);
-			request.setAttribute("executionPeriod", regentInquiryBean.getProfessorship().getExecutionCourse()
-					.getExecutionPeriod());
-			request.setAttribute("executionCourse", regentInquiryBean.getProfessorship().getExecutionCourse());
-			return actionMapping.findForward("regentInquiry");
-		}
+            request.setAttribute("regentInquiryBean", regentInquiryBean);
+            request.setAttribute("executionPeriod", regentInquiryBean.getProfessorship().getExecutionCourse()
+                    .getExecutionPeriod());
+            request.setAttribute("executionCourse", regentInquiryBean.getProfessorship().getExecutionCourse());
+            return actionMapping.findForward("regentInquiry");
+        }
 
-		RenderUtils.invalidateViewState("regentInquiryBean");
-		regentInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.REGENT);
+        RenderUtils.invalidateViewState("regentInquiryBean");
+        regentInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.REGENT);
 
-		request.setAttribute("updated", "true");
-		request.setAttribute("executionCourse", regentInquiryBean.getProfessorship().getExecutionCourse());
-		return showInquiriesPrePage(actionMapping, actionForm, request, response);
-	}
+        request.setAttribute("updated", "true");
+        request.setAttribute("executionCourse", regentInquiryBean.getProfessorship().getExecutionCourse());
+        return showInquiriesPrePage(actionMapping, actionForm, request, response);
+    }
 
-	private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {
-		ExecutionCourse executionCourse =
-				rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID"));
-		if (executionCourse == null) {
-			return (ExecutionCourse) request.getAttribute("executionCourse");
-		}
-		request.setAttribute("executionCourse", executionCourse);
-		return executionCourse;
-	}
+    private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {
+        ExecutionCourse executionCourse =
+                rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID"));
+        if (executionCourse == null) {
+            return (ExecutionCourse) request.getAttribute("executionCourse");
+        }
+        request.setAttribute("executionCourse", executionCourse);
+        return executionCourse;
+    }
 
-	private Professorship getProfessorship(ExecutionCourse executionCourse) {
-		return AccessControl.getPerson().getProfessorshipByExecutionCourse(executionCourse);
-	}
+    private Professorship getProfessorship(ExecutionCourse executionCourse) {
+        return AccessControl.getPerson().getProfessorshipByExecutionCourse(executionCourse);
+    }
 }

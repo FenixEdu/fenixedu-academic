@@ -17,24 +17,24 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public interface IGroup {
 
-	public int getElementsCount();
+    public int getElementsCount();
 
-	public boolean isMember(Person person);
+    public boolean isMember(Person person);
 
-	public boolean allows(IUserView userView);
+    public boolean allows(IUserView userView);
 
-	public Set<Person> getElements();
+    public Set<Person> getElements();
 
-	public String getExpression();
+    public String getExpression();
 
-	public String getName();
+    public String getName();
 
-	public boolean hasPresentationNameDynamic();
+    public boolean hasPresentationNameDynamic();
 
-	public String getPresentationNameBundle();
+    public String getPresentationNameBundle();
 
-	public String getPresentationNameKey();
+    public String getPresentationNameKey();
 
-	public String[] getPresentationNameKeyArgs();
+    public String[] getPresentationNameKeyArgs();
 
 }

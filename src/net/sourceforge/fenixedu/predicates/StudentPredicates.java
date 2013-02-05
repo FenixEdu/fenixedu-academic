@@ -8,20 +8,20 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class StudentPredicates {
 
-	public static final AccessControlPredicate<Student> checkIfLoggedPersonIsStudentOwnerOrManager =
-			new AccessControlPredicate<Student>() {
-				@Override
-				public boolean evaluate(Student student) {
-					final Person person = AccessControl.getPerson();
-					return person.getStudent() == student || person.hasRole(RoleType.MANAGER);
-				}
-			};
+    public static final AccessControlPredicate<Student> checkIfLoggedPersonIsStudentOwnerOrManager =
+            new AccessControlPredicate<Student>() {
+                @Override
+                public boolean evaluate(Student student) {
+                    final Person person = AccessControl.getPerson();
+                    return person.getStudent() == student || person.hasRole(RoleType.MANAGER);
+                }
+            };
 
-	public static final AccessControlPredicate<Student> checkIfLoggedPersonIsCoordinator = new AccessControlPredicate<Student>() {
-		@Override
-		public boolean evaluate(Student student) {
-			return AccessControl.getPerson().hasRole(RoleType.COORDINATOR);
-		}
-	};
+    public static final AccessControlPredicate<Student> checkIfLoggedPersonIsCoordinator = new AccessControlPredicate<Student>() {
+        @Override
+        public boolean evaluate(Student student) {
+            return AccessControl.getPerson().hasRole(RoleType.COORDINATOR);
+        }
+    };
 
 }

@@ -7,13 +7,13 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AllBuildingsProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		return Space.getAllActiveBuildingsOrderedByName();
-	}
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        return Space.getAllActiveBuildingsOrderedByName();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

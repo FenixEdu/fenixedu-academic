@@ -9,12 +9,12 @@ package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
  */
 public class CheckBoxQuestion extends InquiriesQuestion {
 
-	public CheckBoxQuestion(String label) {
-		super(label);
-	}
+    public CheckBoxQuestion(String label) {
+        super(label);
+    }
 
-	public CheckBoxQuestion(String label, QuestionHeader header) {
-		super(label, header);
-	}
+    public CheckBoxQuestion(String label, QuestionHeader header) {
+        super(label, header);
+    }
 
 }

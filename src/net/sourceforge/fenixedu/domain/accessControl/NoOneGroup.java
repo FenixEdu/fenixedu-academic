@@ -13,35 +13,35 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
  */
 public class NoOneGroup extends LeafGroup {
 
-	/**
-	 * Serialization id.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Serialization id.
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public Set<Person> getElements() {
-		return super.buildSet();
-	}
+    @Override
+    public Set<Person> getElements() {
+        return super.buildSet();
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[0];
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[0];
+    }
 
-	/**
-	 * @return <code>false</code>
-	 */
-	@Override
-	public boolean allows(IUserView userView) {
-		return false;
-	}
+    /**
+     * @return <code>false</code>
+     */
+    @Override
+    public boolean allows(IUserView userView) {
+        return false;
+    }
 
-	/**
-	 * @return <code>false</code>
-	 */
-	@Override
-	public boolean isMember(Person person) {
-		return false;
-	}
+    /**
+     * @return <code>false</code>
+     */
+    @Override
+    public boolean isMember(Person person) {
+        return false;
+    }
 
 }

@@ -27,31 +27,31 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadGrantContractRegimeByContractAndState extends FenixService {
 
-	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-	@Service
-	public static List run(Integer grantContractId, Integer state) throws FenixServiceException {
-		List contractRegimes = null;
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer grantContractId, Integer state) throws FenixServiceException {
+        List contractRegimes = null;
 
-		GrantContract grantContract = rootDomainObject.readGrantContractByOID(grantContractId);
-		if (grantContract != null) {
-			contractRegimes = grantContract.readGrantContractRegimeByGrantContractAndState(state);
-		}
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(grantContractId);
+        if (grantContract != null) {
+            contractRegimes = grantContract.readGrantContractRegimeByGrantContractAndState(state);
+        }
 
-		if (contractRegimes == null) {
-			return new ArrayList();
-		}
+        if (contractRegimes == null) {
+            return new ArrayList();
+        }
 
-		List infoContractRegimeList = (ArrayList) CollectionUtils.collect(contractRegimes, new Transformer() {
-			@Override
-			public Object transform(Object input) {
-				GrantContractRegime grantContractRegime = (GrantContractRegime) input;
-				InfoGrantContractRegime infoGrantContractRegime =
-						InfoGrantContractRegimeWithTeacherAndContract.newInfoFromDomain(grantContractRegime);
-				return infoGrantContractRegime;
-			}
-		});
+        List infoContractRegimeList = (ArrayList) CollectionUtils.collect(contractRegimes, new Transformer() {
+            @Override
+            public Object transform(Object input) {
+                GrantContractRegime grantContractRegime = (GrantContractRegime) input;
+                InfoGrantContractRegime infoGrantContractRegime =
+                        InfoGrantContractRegimeWithTeacherAndContract.newInfoFromDomain(grantContractRegime);
+                return infoGrantContractRegime;
+            }
+        });
 
-		return infoContractRegimeList;
+        return infoContractRegimeList;
 
-	}
+    }
 }

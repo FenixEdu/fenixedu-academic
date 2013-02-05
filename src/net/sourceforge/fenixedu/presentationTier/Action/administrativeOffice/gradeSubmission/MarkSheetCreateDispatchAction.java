@@ -30,143 +30,140 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/createMarkSheet",
-		module = "academicAdministration",
-		formBean = "markSheetManagementForm",
-		input = "/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp")
+@Mapping(path = "/createMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
+        input = "/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp")
 @Forwards({ @Forward(name = "createMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp"),
-		@Forward(name = "createMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/createMarkSheetStep2.jsp"),
-		@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-		@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
-		@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
-		@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp") })
+        @Forward(name = "createMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/createMarkSheetStep2.jsp"),
+        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
+        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
+        @Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp") })
 public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
-	public ActionForward prepareCreateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
-		markSheetManagementCreateBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
-		markSheetManagementCreateBean.setUrl("");
+        MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
+        markSheetManagementCreateBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
+        markSheetManagementCreateBean.setUrl("");
 
-		request.setAttribute("edit", markSheetManagementCreateBean);
+        request.setAttribute("edit", markSheetManagementCreateBean);
 
-		return mapping.findForward("createMarkSheetStep1");
-	}
+        return mapping.findForward("createMarkSheetStep1");
+    }
 
-	public ActionForward prepareCreateMarkSheetFilled(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareCreateMarkSheetFilled(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
-		fillMarkSheetBean(actionForm, request, markSheetManagementCreateBean);
-		markSheetManagementCreateBean.setUrl(buildUrl((DynaActionForm) actionForm));
+        MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
+        fillMarkSheetBean(actionForm, request, markSheetManagementCreateBean);
+        markSheetManagementCreateBean.setUrl(buildUrl((DynaActionForm) actionForm));
 
-		request.setAttribute("edit", markSheetManagementCreateBean);
+        request.setAttribute("edit", markSheetManagementCreateBean);
 
-		return mapping.findForward("createMarkSheetStep1");
-	}
+        return mapping.findForward("createMarkSheetStep1");
+    }
 
-	public ActionForward createMarkSheetStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward createMarkSheetStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		MarkSheetManagementCreateBean createBean =
-				(MarkSheetManagementCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
-		request.setAttribute("edit", createBean);
+        MarkSheetManagementCreateBean createBean =
+                (MarkSheetManagementCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
+        request.setAttribute("edit", createBean);
 
-		Teacher teacher = Teacher.readByIstId(createBean.getTeacherId());
-		createBean.setTeacher(teacher);
+        Teacher teacher = Teacher.readByIstId(createBean.getTeacherId());
+        createBean.setTeacher(teacher);
 
-		ActionMessages actionMessages = createActionMessages();
-		checkIfTeacherIsResponsibleOrCoordinator(createBean.getCurricularCourse(), createBean.getExecutionPeriod(),
-				createBean.getTeacherId(), teacher, request, createBean.getMarkSheetType(), actionMessages);
-		if (!actionMessages.isEmpty()) {
-			createBean.setTeacherId(null);
-		}
-		checkIfEvaluationDateIsInExamsPeriod(createBean.getDegreeCurricularPlan(), createBean.getExecutionPeriod(),
-				createBean.getEvaluationDate(), createBean.getMarkSheetType(), request, actionMessages);
+        ActionMessages actionMessages = createActionMessages();
+        checkIfTeacherIsResponsibleOrCoordinator(createBean.getCurricularCourse(), createBean.getExecutionPeriod(),
+                createBean.getTeacherId(), teacher, request, createBean.getMarkSheetType(), actionMessages);
+        if (!actionMessages.isEmpty()) {
+            createBean.setTeacherId(null);
+        }
+        checkIfEvaluationDateIsInExamsPeriod(createBean.getDegreeCurricularPlan(), createBean.getExecutionPeriod(),
+                createBean.getEvaluationDate(), createBean.getMarkSheetType(), request, actionMessages);
 
-		prepareCreateEnrolmentEvaluationsForMarkSheet(createBean, request, actionMessages);
+        prepareCreateEnrolmentEvaluationsForMarkSheet(createBean, request, actionMessages);
 
-		if (!actionMessages.isEmpty()) {
-			return mapping.findForward("createMarkSheetStep1");
-		} else {
-			return mapping.findForward("createMarkSheetStep2");
-		}
-	}
+        if (!actionMessages.isEmpty()) {
+            return mapping.findForward("createMarkSheetStep1");
+        } else {
+            return mapping.findForward("createMarkSheetStep2");
+        }
+    }
 
-	protected void prepareCreateEnrolmentEvaluationsForMarkSheet(MarkSheetManagementCreateBean createBean,
-			HttpServletRequest request, ActionMessages actionMessages) {
+    protected void prepareCreateEnrolmentEvaluationsForMarkSheet(MarkSheetManagementCreateBean createBean,
+            HttpServletRequest request, ActionMessages actionMessages) {
 
-		final Collection<Enrolment> enrolments =
-				createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(createBean.getMarkSheetType(),
-						createBean.getExecutionPeriod());
+        final Collection<Enrolment> enrolments =
+                createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(createBean.getMarkSheetType(),
+                        createBean.getExecutionPeriod());
 
-		if (enrolments.isEmpty()) {
-			addMessage(request, actionMessages, "error.allStudentsAreInMarkSheets");
-		} else {
-			final Set<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans =
-					new HashSet<MarkSheetEnrolmentEvaluationBean>();
-			final Set<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans =
-					new HashSet<MarkSheetEnrolmentEvaluationBean>();
+        if (enrolments.isEmpty()) {
+            addMessage(request, actionMessages, "error.allStudentsAreInMarkSheets");
+        } else {
+            final Set<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans =
+                    new HashSet<MarkSheetEnrolmentEvaluationBean>();
+            final Set<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans =
+                    new HashSet<MarkSheetEnrolmentEvaluationBean>();
 
-			for (final Enrolment enrolment : enrolments) {
-				final MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
-				markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
-				markSheetEnrolmentEvaluationBean.setEvaluationDate(createBean.getEvaluationDate());
+            for (final Enrolment enrolment : enrolments) {
+                final MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
+                markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
+                markSheetEnrolmentEvaluationBean.setEvaluationDate(createBean.getEvaluationDate());
 
-				if (enrolment.isImpossible()) {
-					impossibleEnrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
-				} else {
-					enrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
-				}
-			}
-			createBean.setEnrolmentEvaluationBeans(enrolmentEvaluationBeans);
-			createBean.setImpossibleEnrolmentEvaluationBeans(impossibleEnrolmentEvaluationBeans);
-		}
-	}
+                if (enrolment.isImpossible()) {
+                    impossibleEnrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
+                } else {
+                    enrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
+                }
+            }
+            createBean.setEnrolmentEvaluationBeans(enrolmentEvaluationBeans);
+            createBean.setImpossibleEnrolmentEvaluationBeans(impossibleEnrolmentEvaluationBeans);
+        }
+    }
 
-	public ActionForward createMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward createMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-		MarkSheetManagementCreateBean createBean =
-				(MarkSheetManagementCreateBean) RenderUtils.getViewState("edit-invisible").getMetaObject().getObject();
-		createBean.setTeacher(Teacher.readByIstId(createBean.getTeacherId()));
+        MarkSheetManagementCreateBean createBean =
+                (MarkSheetManagementCreateBean) RenderUtils.getViewState("edit-invisible").getMetaObject().getObject();
+        createBean.setTeacher(Teacher.readByIstId(createBean.getTeacherId()));
 
-		ActionMessages actionMessages = createActionMessages();
-		IUserView userView = getUserView(request);
-		try {
-			MarkSheet markSheet = createMarkSheet(createBean, userView);
-			((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
-			return viewMarkSheet(mapping, actionForm, request, response);
-		} catch (final IllegalDataAccessException e) {
-			addMessage(request, actionMessages, "error.notAuthorized");
-		} catch (final DomainException e) {
-			addMessage(request, actionMessages, e.getMessage(), e.getArgs());
-		}
+        ActionMessages actionMessages = createActionMessages();
+        IUserView userView = getUserView(request);
+        try {
+            MarkSheet markSheet = createMarkSheet(createBean, userView);
+            ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
+            return viewMarkSheet(mapping, actionForm, request, response);
+        } catch (final IllegalDataAccessException e) {
+            addMessage(request, actionMessages, "error.notAuthorized");
+        } catch (final DomainException e) {
+            addMessage(request, actionMessages, e.getMessage(), e.getArgs());
+        }
 
-		request.setAttribute("edit", createBean);
-		return mapping.findForward("createMarkSheetStep2");
-	}
+        request.setAttribute("edit", createBean);
+        return mapping.findForward("createMarkSheetStep2");
+    }
 
-	public ActionForward createMarkSheetStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		/*
-		 * - This method is used when a validation error occurs. Instead of
-		 * creating a new bean we use the existing one. - If we dont't use this
-		 * method, the createMarkSheetStep1 is called (input method) and a new
-		 * create bean is created.
-		 */
-		request.setAttribute("edit", RenderUtils.getViewState("edit-invisible").getMetaObject().getObject());
-		return mapping.findForward("createMarkSheetStep2");
-	}
+    public ActionForward createMarkSheetStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        /*
+         * - This method is used when a validation error occurs. Instead of
+         * creating a new bean we use the existing one. - If we dont't use this
+         * method, the createMarkSheetStep1 is called (input method) and a new
+         * create bean is created.
+         */
+        request.setAttribute("edit", RenderUtils.getViewState("edit-invisible").getMetaObject().getObject());
+        return mapping.findForward("createMarkSheetStep2");
+    }
 
-	public ActionForward prepareSearchMarkSheetFilled(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("searchMarkSheetFilled");
-	}
+    public ActionForward prepareSearchMarkSheetFilled(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("searchMarkSheetFilled");
+    }
 
-	protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
-		return createBean.createMarkSheet(userView.getPerson());
-	}
+    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
+        return createBean.createMarkSheet(userView.getPerson());
+    }
 }

@@ -20,18 +20,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDegreeCurricularPlansByDegreeType extends FenixService {
 
-	@Service
-	public static List<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
-		final List<DegreeCurricularPlan> dcps = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
-		final List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>(dcps.size());
+    @Service
+    public static List<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
+        final List<DegreeCurricularPlan> dcps = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
+        final List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>(dcps.size());
 
-		for (final DegreeCurricularPlan degreeCurricularPlan : dcps) {
-			if (degreeCurricularPlan.getDegreeType().equals(degreeType)) {
-				result.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
-			}
-		}
+        for (final DegreeCurricularPlan degreeCurricularPlan : dcps) {
+            if (degreeCurricularPlan.getDegreeType().equals(degreeType)) {
+                result.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

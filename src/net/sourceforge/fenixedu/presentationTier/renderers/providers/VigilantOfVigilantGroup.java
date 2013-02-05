@@ -16,24 +16,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class VigilantOfVigilantGroup implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		VigilantGroupBean bean = (VigilantGroupBean) source;
-		VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
+        VigilantGroupBean bean = (VigilantGroupBean) source;
+        VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
 
-		List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
-		if (vigilantGroup != null) {
-			vigilantWrappers.addAll(vigilantGroup.getVigilantWrappers());
-			Collections.sort(vigilantWrappers, new BeanComparator("person.name"));
-		}
-		return vigilantWrappers;
+        List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
+        if (vigilantGroup != null) {
+            vigilantWrappers.addAll(vigilantGroup.getVigilantWrappers());
+            Collections.sort(vigilantWrappers, new BeanComparator("person.name"));
+        }
+        return vigilantWrappers;
 
-	}
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 
 }

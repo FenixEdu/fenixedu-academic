@@ -10,30 +10,30 @@ import org.joda.time.DateTime;
 
 public class PhdLogEntry extends PhdLogEntry_Base {
 
-	private PhdLogEntry() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    private PhdLogEntry() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	private PhdLogEntry(final String activityClassName, final String message, final PhdProgramProcess process) {
-		setResponsible(AccessControl.getPerson());
-		setWhenOccured(new DateTime());
-		setActivityClassName(activityClassName);
-		setPhdProgramProcess(process);
-		setState(process.getActiveState().getLocalizedName(new Locale("pt", "PT")));
-		setMessage(message);
-	}
+    private PhdLogEntry(final String activityClassName, final String message, final PhdProgramProcess process) {
+        setResponsible(AccessControl.getPerson());
+        setWhenOccured(new DateTime());
+        setActivityClassName(activityClassName);
+        setPhdProgramProcess(process);
+        setState(process.getActiveState().getLocalizedName(new Locale("pt", "PT")));
+        setMessage(message);
+    }
 
-	public String getResponsibleName() {
-		if (!hasResponsible()) {
-			return "-";
-		}
+    public String getResponsibleName() {
+        if (!hasResponsible()) {
+            return "-";
+        }
 
-		return getResponsible().getName();
-	}
+        return getResponsible().getName();
+    }
 
-	static PhdLogEntry createLog(final String activityClassName, final String message, final PhdProgramProcess process) {
-		return new PhdLogEntry(activityClassName, message, process);
-	}
+    static PhdLogEntry createLog(final String activityClassName, final String message, final PhdProgramProcess process) {
+        return new PhdLogEntry(activityClassName, message, process);
+    }
 
 }

@@ -15,76 +15,76 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public class UnitSiteBannerWeightRenderer extends OutputRenderer {
 
-	private String percentClass;
-	private String percentStyle;
+    private String percentClass;
+    private String percentStyle;
 
-	public String getPercentClass() {
-		return percentClass;
-	}
+    public String getPercentClass() {
+        return percentClass;
+    }
 
-	/**
-	 * @property
-	 */
-	public void setPercentClass(String percentClass) {
-		this.percentClass = percentClass;
-	}
+    /**
+     * @property
+     */
+    public void setPercentClass(String percentClass) {
+        this.percentClass = percentClass;
+    }
 
-	public String getPercentStyle() {
-		return percentStyle;
-	}
+    public String getPercentStyle() {
+        return percentStyle;
+    }
 
-	/**
-	 * @property
-	 */
-	public void setPercentStyle(String percentStyle) {
-		this.percentStyle = percentStyle;
-	}
+    /**
+     * @property
+     */
+    public void setPercentStyle(String percentStyle) {
+        this.percentStyle = percentStyle;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
 
-				Integer weight = (Integer) object;
-				float percentage = calculatePercentage(weight);
+                Integer weight = (Integer) object;
+                float percentage = calculatePercentage(weight);
 
-				HtmlContainer container = new HtmlInlineContainer();
+                HtmlContainer container = new HtmlInlineContainer();
 
-				container.addChild(getWeightComponent(object));
-				container.addChild(getPercentageComponent(percentage));
+                container.addChild(getWeightComponent(object));
+                container.addChild(getPercentageComponent(percentage));
 
-				return container;
-			}
+                return container;
+            }
 
-			private HtmlComponent getWeightComponent(Object object) {
-				if (object == null) {
-					return new HtmlText("-");
-				} else {
-					return renderValue(object, null, null);
-				}
-			}
+            private HtmlComponent getWeightComponent(Object object) {
+                if (object == null) {
+                    return new HtmlText("-");
+                } else {
+                    return renderValue(object, null, null);
+                }
+            }
 
-			private HtmlText getPercentageComponent(float percentage) {
-				HtmlText text = new HtmlText(String.format("(%.1f%%)", percentage));
+            private HtmlText getPercentageComponent(float percentage) {
+                HtmlText text = new HtmlText(String.format("(%.1f%%)", percentage));
 
-				text.setClasses(getPercentClass());
-				text.setStyle(getPercentStyle());
+                text.setClasses(getPercentClass());
+                text.setStyle(getPercentStyle());
 
-				return text;
-			}
+                return text;
+            }
 
-			private float calculatePercentage(Integer weight) {
-				UnitSiteBanner banner = getBanner();
-				return banner.getWeightPercentage();
-			}
+            private float calculatePercentage(Integer weight) {
+                UnitSiteBanner banner = getBanner();
+                return banner.getWeightPercentage();
+            }
 
-			private UnitSiteBanner getBanner() {
-				return (UnitSiteBanner) getContext().getParentContext().getMetaObject().getObject();
-			}
+            private UnitSiteBanner getBanner() {
+                return (UnitSiteBanner) getContext().getParentContext().getMetaObject().getObject();
+            }
 
-		};
-	}
+        };
+    }
 
 }

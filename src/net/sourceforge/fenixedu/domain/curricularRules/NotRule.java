@@ -9,46 +9,46 @@ import dml.runtime.RelationAdapter;
 
 public class NotRule extends NotRule_Base {
 
-	static {
-		CurricularRuleNotRule.addListener(new RelationAdapter<NotRule, CurricularRule>() {
-			@Override
-			public void beforeAdd(NotRule notRule, CurricularRule curricularRule) {
-				if (curricularRule.getParentCompositeRule() != null) {
-					throw new DomainException("error.curricular.rule.invalid.state");
-				}
-			}
-		});
-	}
+    static {
+        CurricularRuleNotRule.addListener(new RelationAdapter<NotRule, CurricularRule>() {
+            @Override
+            public void beforeAdd(NotRule notRule, CurricularRule curricularRule) {
+                if (curricularRule.getParentCompositeRule() != null) {
+                    throw new DomainException("error.curricular.rule.invalid.state");
+                }
+            }
+        });
+    }
 
-	public NotRule(CurricularRule rule) {
-		if (rule == null || rule.getParentCompositeRule() != null) {
-			throw new DomainException("curricular.rule.invalid.parameters");
-		}
+    public NotRule(CurricularRule rule) {
+        if (rule == null || rule.getParentCompositeRule() != null) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        }
 
-		setDegreeModuleToApplyRule(rule.getDegreeModuleToApplyRule());
-		rule.removeDegreeModuleToApplyRule();
-		setBegin(rule.getBegin());
-		setEnd(rule.getEnd());
-		setWrappedRule(rule);
-	}
+        setDegreeModuleToApplyRule(rule.getDegreeModuleToApplyRule());
+        rule.removeDegreeModuleToApplyRule();
+        setBegin(rule.getBegin());
+        setEnd(rule.getEnd());
+        setWrappedRule(rule);
+    }
 
-	@Override
-	public List<GenericPair<Object, Boolean>> getLabel() {
-		return getWrappedRule().getLabel();
-	}
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel() {
+        return getWrappedRule().getLabel();
+    }
 
-	@Override
-	public boolean isLeaf() {
-		return false;
-	}
+    @Override
+    public boolean isLeaf() {
+        return false;
+    }
 
-	@Override
-	protected void removeOwnParameters() {
-		getWrappedRule().delete();
-	}
+    @Override
+    protected void removeOwnParameters() {
+        getWrappedRule().delete();
+    }
 
-	@Override
-	public VerifyRuleExecutor createVerifyRuleExecutor() {
-		return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
-	}
+    @Override
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+        return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+    }
 }

@@ -17,41 +17,41 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesByExecutionDegreeService extends FenixService {
 
-	public static class NonExistingExecutionDegree extends FenixServiceException {
-		public NonExistingExecutionDegree() {
-			super();
-		}
-	}
+    public static class NonExistingExecutionDegree extends FenixServiceException {
+        public NonExistingExecutionDegree() {
+            super();
+        }
+    }
 
-	@Service
-	public static List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException {
 
-		final ExecutionSemester executionSemester;
-		if (executionPeriodId == null) {
-			executionSemester = ExecutionSemester.readActualExecutionSemester();
-		} else {
-			executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		}
+        final ExecutionSemester executionSemester;
+        if (executionPeriodId == null) {
+            executionSemester = ExecutionSemester.readActualExecutionSemester();
+        } else {
+            executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        }
 
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-		if (executionDegree == null) {
-			throw new NonExistingExecutionDegree();
-		}
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        if (executionDegree == null) {
+            throw new NonExistingExecutionDegree();
+        }
 
-		Set<ExecutionCourse> executionCourseList =
-				executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionSemester);
+        Set<ExecutionCourse> executionCourseList =
+                executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionSemester);
 
-		List infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList, new Transformer() {
+        List infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList, new Transformer() {
 
-			@Override
-			public Object transform(Object input) {
-				ExecutionCourse executionCourse = (ExecutionCourse) input;
-				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-				return infoExecutionCourse;
-			}
-		});
+            @Override
+            public Object transform(Object input) {
+                ExecutionCourse executionCourse = (ExecutionCourse) input;
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                return infoExecutionCourse;
+            }
+        });
 
-		return infoExecutionCourseList;
+        return infoExecutionCourseList;
 
-	}
+    }
 }

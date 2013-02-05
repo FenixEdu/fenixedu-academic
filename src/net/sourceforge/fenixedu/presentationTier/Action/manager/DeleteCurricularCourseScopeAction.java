@@ -30,37 +30,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author lmac1
  */
 
-@Mapping(
-		module = "manager",
-		path = "/deleteCurricularCourseScope",
-		input = "/readCurricularCourse.do",
-		attribute = "curricularCourseScopeForm",
-		formBean = "curricularCourseScopeForm",
-		scope = "request")
+@Mapping(module = "manager", path = "/deleteCurricularCourseScope", input = "/readCurricularCourse.do",
+        attribute = "curricularCourseScopeForm", formBean = "curricularCourseScopeForm", scope = "request")
 @Forwards(value = { @Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do") })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.CantDeleteActionException.class,
-		key = "resources.Action.exceptions.CantDeleteActionException",
-		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-		scope = "request") })
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.CantDeleteActionException.class,
+        key = "resources.Action.exceptions.CantDeleteActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class DeleteCurricularCourseScopeAction extends FenixAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		Integer scopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+        Integer scopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
-		try {
-			DeleteCurricularCourseScope.run(scopeId);
-		} catch (CantDeleteServiceException e) {
-			throw new CantDeleteActionException("message.cant.delete.curricular.course.scope");
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        try {
+            DeleteCurricularCourseScope.run(scopeId);
+        } catch (CantDeleteServiceException e) {
+            throw new CantDeleteActionException("message.cant.delete.curricular.course.scope");
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		return mapping.findForward("readCurricularCourse");
-	}
+        return mapping.findForward("readCurricularCourse");
+    }
 }

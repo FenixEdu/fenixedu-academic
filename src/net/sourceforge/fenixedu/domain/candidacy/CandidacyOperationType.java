@@ -2,37 +2,37 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 public enum CandidacyOperationType {
 
-	FILL_PERSONAL_DATA,
+    FILL_PERSONAL_DATA,
 
-	REGISTRATION,
+    REGISTRATION,
 
-	FIRST_TIME_CYLE_INQUIRY,
+    FIRST_TIME_CYLE_INQUIRY,
 
-	PRINT_SCHEDULE,
+    PRINT_SCHEDULE,
 
-	PRINT_REGISTRATION_DECLARATION,
+    PRINT_REGISTRATION_DECLARATION,
 
-	PRINT_SYSTEM_ACCESS_DATA,
+    PRINT_SYSTEM_ACCESS_DATA,
 
-	PRINT_UNDER_23_TRANSPORTS_DECLARATION,
+    PRINT_UNDER_23_TRANSPORTS_DECLARATION,
 
-	PRINT_MEASUREMENT_TEST_DATE,
+    PRINT_MEASUREMENT_TEST_DATE,
 
-	PRINT_ALL_DOCUMENTS,
+    PRINT_ALL_DOCUMENTS,
 
-	CANCEL,
+    CANCEL,
 
-	PRINT_GRATUITY_PAYMENT_CODES;
+    PRINT_GRATUITY_PAYMENT_CODES;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public String getQualifiedName() {
-		return CandidacyOperationType.class.getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return CandidacyOperationType.class.getSimpleName() + "." + name();
+    }
 
-	public String getFullyQualifiedName() {
-		return CandidacyOperationType.class.getName() + "." + name();
-	}
+    public String getFullyQualifiedName() {
+        return CandidacyOperationType.class.getName() + "." + name();
+    }
 }

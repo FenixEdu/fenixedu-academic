@@ -11,43 +11,43 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceApplianceInquiryForm extends Form {
 
-	private boolean isToApplyForResidence;
+    private boolean isToApplyForResidence;
 
-	private String notesAboutApplianceForResidence;
+    private String notesAboutApplianceForResidence;
 
-	public ResidenceApplianceInquiryForm() {
-		super();
-	}
+    public ResidenceApplianceInquiryForm() {
+        super();
+    }
 
-	public boolean isToApplyForResidence() {
-		return isToApplyForResidence;
-	}
+    public boolean isToApplyForResidence() {
+        return isToApplyForResidence;
+    }
 
-	public void setToApplyForResidence(boolean isToApplyForResidence) {
-		this.isToApplyForResidence = isToApplyForResidence;
-	}
+    public void setToApplyForResidence(boolean isToApplyForResidence) {
+        this.isToApplyForResidence = isToApplyForResidence;
+    }
 
-	public String getNotesAboutApplianceForResidence() {
-		return notesAboutApplianceForResidence;
-	}
+    public String getNotesAboutApplianceForResidence() {
+        return notesAboutApplianceForResidence;
+    }
 
-	public void setNotesAboutApplianceForResidence(String notesAboutApplianceForResidence) {
-		this.notesAboutApplianceForResidence = notesAboutApplianceForResidence;
-	}
+    public void setNotesAboutApplianceForResidence(String notesAboutApplianceForResidence) {
+        this.notesAboutApplianceForResidence = notesAboutApplianceForResidence;
+    }
 
-	@Override
-	public List<LabelFormatter> validate() {
-		if (!StringUtils.isEmpty(this.notesAboutApplianceForResidence) && !isToApplyForResidence) {
-			return Collections.singletonList(new LabelFormatter().appendLabel(
-					"error.candidacy.workflow.ResidenceApplianceInquiryForm.notes.can.only.be.filled.in.case.of.appliance",
-					"application"));
-		}
+    @Override
+    public List<LabelFormatter> validate() {
+        if (!StringUtils.isEmpty(this.notesAboutApplianceForResidence) && !isToApplyForResidence) {
+            return Collections.singletonList(new LabelFormatter().appendLabel(
+                    "error.candidacy.workflow.ResidenceApplianceInquiryForm.notes.can.only.be.filled.in.case.of.appliance",
+                    "application"));
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
-	@Override
-	public String getFormName() {
-		return "label.candidacy.workflow.residenceApplianceForm";
-	}
+    @Override
+    public String getFormName() {
+        return "label.candidacy.workflow.residenceApplianceForm";
+    }
 }

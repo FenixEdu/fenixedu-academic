@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AproveActionAnnouncement extends FenixService {
 
-	@Service
-	public static void run(Announcement announcement, Boolean action) {
-		announcement.setApproved(action);
-	}
+    @Service
+    public static void run(Announcement announcement, Boolean action) {
+        announcement.setApproved(action);
+    }
 
 }

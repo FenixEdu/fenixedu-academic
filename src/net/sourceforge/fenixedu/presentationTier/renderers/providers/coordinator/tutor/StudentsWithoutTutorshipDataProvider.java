@@ -7,15 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class StudentsWithoutTutorshipDataProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
-		StudentsByEntryYearBean bean = (StudentsByEntryYearBean) source;
+    @Override
+    public Object provide(Object source, Object currentValue) {
+        StudentsByEntryYearBean bean = (StudentsByEntryYearBean) source;
 
-		return bean.getStudentsList();
-	}
+        return bean.getStudentsList();
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 }

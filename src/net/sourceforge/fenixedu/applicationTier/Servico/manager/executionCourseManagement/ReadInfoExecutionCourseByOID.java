@@ -14,16 +14,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadInfoExecutionCourseByOID extends FenixService {
 
-	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	@Service
-	public static InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Service
+    public static InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException {
 
-		if (executionCourseOID == null) {
-			throw new FenixServiceException("nullId");
-		}
+        if (executionCourseOID == null) {
+            throw new FenixServiceException("nullId");
+        }
 
-		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
-		return InfoExecutionCourse.newInfoFromDomain(executionCourse);
-	}
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
+        return InfoExecutionCourse.newInfoFromDomain(executionCourse);
+    }
 
 }

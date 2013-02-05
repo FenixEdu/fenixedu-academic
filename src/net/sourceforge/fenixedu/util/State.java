@@ -20,70 +20,70 @@ import org.apache.struts.util.LabelValueBean;
 
 public class State extends FenixUtil {
 
-	public static final int INACTIVE = 0;
+    public static final int INACTIVE = 0;
 
-	public static final int ACTIVE = 1;
+    public static final int ACTIVE = 1;
 
-	public static final String INACTIVE_STRING = "Inactiva";
+    public static final String INACTIVE_STRING = "Inactiva";
 
-	public static final String ACTIVE_STRING = "Activa";
+    public static final String ACTIVE_STRING = "Activa";
 
-	private final Integer state;
+    private final Integer state;
 
-	public State(int validation) {
-		this.state = new Integer(validation);
-	}
+    public State(int validation) {
+        this.state = new Integer(validation);
+    }
 
-	public State(Integer validation) {
-		this.state = validation;
-	}
+    public State(Integer validation) {
+        this.state = validation;
+    }
 
-	public State(String validation) {
-		if (validation.equals(State.ACTIVE_STRING)) {
-			this.state = new Integer(State.ACTIVE);
-		} else if (validation.equals(State.INACTIVE_STRING)) {
-			this.state = new Integer(State.INACTIVE);
-		} else {
-			throw new UnsupportedOperationException();
-		}
-	}
+    public State(String validation) {
+        if (validation.equals(State.ACTIVE_STRING)) {
+            this.state = new Integer(State.ACTIVE);
+        } else if (validation.equals(State.INACTIVE_STRING)) {
+            this.state = new Integer(State.INACTIVE);
+        } else {
+            throw new UnsupportedOperationException();
+        }
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof State) {
-			State aux = (State) o;
-			return this.state.equals(aux.getState());
-		}
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof State) {
+            State aux = (State) o;
+            return this.state.equals(aux.getState());
+        }
 
-		return false;
+        return false;
 
-	}
+    }
 
-	public List toArrayList() {
-		List result = new ArrayList();
-		result.add(new LabelValueBean(State.ACTIVE_STRING, State.ACTIVE_STRING));
-		result.add(new LabelValueBean(State.INACTIVE_STRING, State.INACTIVE_STRING));
-		return result;
-	}
+    public List toArrayList() {
+        List result = new ArrayList();
+        result.add(new LabelValueBean(State.ACTIVE_STRING, State.ACTIVE_STRING));
+        result.add(new LabelValueBean(State.INACTIVE_STRING, State.INACTIVE_STRING));
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		if (state.intValue() == State.ACTIVE) {
-			return State.ACTIVE_STRING;
-		}
-		if (state.intValue() == State.INACTIVE) {
-			return State.INACTIVE_STRING;
-		}
-		return "ERROR!";
-	}
+    @Override
+    public String toString() {
+        if (state.intValue() == State.ACTIVE) {
+            return State.ACTIVE_STRING;
+        }
+        if (state.intValue() == State.INACTIVE) {
+            return State.INACTIVE_STRING;
+        }
+        return "ERROR!";
+    }
 
-	/**
-	 * Returns the state.
-	 * 
-	 * @return Integer
-	 */
-	public Integer getState() {
-		return state;
-	}
+    /**
+     * Returns the state.
+     * 
+     * @return Integer
+     */
+    public Integer getState() {
+        return state;
+    }
 
 }

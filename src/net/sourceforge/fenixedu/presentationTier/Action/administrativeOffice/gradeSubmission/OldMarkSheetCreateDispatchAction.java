@@ -30,93 +30,88 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(
-		path = "/oldCreateMarkSheet",
-		module = "academicAdministration",
-		formBean = "markSheetManagementForm",
-		input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
+@Mapping(path = "/oldCreateMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
+        input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
 @Forwards({
-		@Forward(
-				name = "createMarkSheetStep1",
-				path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
-		@Forward(
-				name = "createMarkSheetStep2",
-				path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
-		@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-		@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
-		@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
-		@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
+        @Forward(name = "createMarkSheetStep1",
+                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
+        @Forward(name = "createMarkSheetStep2",
+                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
+        @Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
+        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
+        @Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
 public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAction {
 
-	@Override
-	public ActionForward createMarkSheetStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    @Override
+    public ActionForward createMarkSheetStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		MarkSheetManagementCreateBean createBean =
-				(MarkSheetManagementCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
-		request.setAttribute("edit", createBean);
+        MarkSheetManagementCreateBean createBean =
+                (MarkSheetManagementCreateBean) RenderUtils.getViewState().getMetaObject().getObject();
+        request.setAttribute("edit", createBean);
 
-		Teacher teacher = Teacher.readByIstId(createBean.getTeacherId());
-		createBean.setTeacher(teacher);
+        Teacher teacher = Teacher.readByIstId(createBean.getTeacherId());
+        createBean.setTeacher(teacher);
 
-		ActionMessages actionMessages = createActionMessages();
+        ActionMessages actionMessages = createActionMessages();
 
-		prepareCreateEnrolmentEvaluationsForMarkSheet(createBean, request, actionMessages);
+        prepareCreateEnrolmentEvaluationsForMarkSheet(createBean, request, actionMessages);
 
-		if (!actionMessages.isEmpty()) {
-			return mapping.findForward("createMarkSheetStep1");
-		} else {
-			return mapping.findForward("createMarkSheetStep2");
-		}
-	}
+        if (!actionMessages.isEmpty()) {
+            return mapping.findForward("createMarkSheetStep1");
+        } else {
+            return mapping.findForward("createMarkSheetStep2");
+        }
+    }
 
-	@Override
-	protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
-		return createBean.createOldMarkSheet(userView.getPerson());
-	}
+    @Override
+    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
+        return createBean.createOldMarkSheet(userView.getPerson());
+    }
 
-	@Override
-	protected void prepareCreateEnrolmentEvaluationsForMarkSheet(MarkSheetManagementCreateBean createBean,
-			HttpServletRequest request, ActionMessages actionMessages) {
+    @Override
+    protected void prepareCreateEnrolmentEvaluationsForMarkSheet(MarkSheetManagementCreateBean createBean,
+            HttpServletRequest request, ActionMessages actionMessages) {
 
-		final Collection<Enrolment> enrolments =
-				createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(createBean.getMarkSheetType(),
-						createBean.getExecutionPeriod());
+        final Collection<Enrolment> enrolments =
+                createBean.getCurricularCourse().getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(createBean.getMarkSheetType(),
+                        createBean.getExecutionPeriod());
 
-		if (enrolments.isEmpty()) {
-			addMessage(request, actionMessages, "error.allStudentsAreInMarkSheets");
-		} else {
-			final Set<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans =
-					new HashSet<MarkSheetEnrolmentEvaluationBean>();
+        if (enrolments.isEmpty()) {
+            addMessage(request, actionMessages, "error.allStudentsAreInMarkSheets");
+        } else {
+            final Set<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans =
+                    new HashSet<MarkSheetEnrolmentEvaluationBean>();
 
-			for (final Enrolment enrolment : enrolments) {
-				final MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
-				markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
-				markSheetEnrolmentEvaluationBean.setEvaluationDate(createBean.getEvaluationDate());
-				enrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
-			}
-			createBean.setEnrolmentEvaluationBeans(enrolmentEvaluationBeans);
-		}
-	}
+            for (final Enrolment enrolment : enrolments) {
+                final MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
+                markSheetEnrolmentEvaluationBean.setEnrolment(enrolment);
+                markSheetEnrolmentEvaluationBean.setEvaluationDate(createBean.getEvaluationDate());
+                enrolmentEvaluationBeans.add(markSheetEnrolmentEvaluationBean);
+            }
+            createBean.setEnrolmentEvaluationBeans(enrolmentEvaluationBeans);
+        }
+    }
 
-	public ActionForward prepareRectifyMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareRectifyMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		DynaActionForm form = (DynaActionForm) actionForm;
-		MarkSheet markSheet = rootDomainObject.readMarkSheetByOID((Integer) form.get("msID"));
+        DynaActionForm form = (DynaActionForm) actionForm;
+        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID((Integer) form.get("msID"));
 
-		MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
-		fillMarkSheetBean(actionForm, request, rectifyBean);
-		rectifyBean.setUrl(buildUrl(form));
+        MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
+        fillMarkSheetBean(actionForm, request, rectifyBean);
+        rectifyBean.setUrl(buildUrl(form));
 
-		rectifyBean.setMarkSheet(markSheet);
-		request.setAttribute("rectifyBean", rectifyBean);
-		request.setAttribute("msID", form.get("msID"));
+        rectifyBean.setMarkSheet(markSheet);
+        request.setAttribute("rectifyBean", rectifyBean);
+        request.setAttribute("msID", form.get("msID"));
 
-		List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
-		Collections.sort(enrolmentEvaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
-		request.setAttribute("enrolmentEvaluations", enrolmentEvaluations);
-		return mapping.findForward("rectifyMarkSheetStep1");
-	}
+        List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
+        Collections.sort(enrolmentEvaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
+        request.setAttribute("enrolmentEvaluations", enrolmentEvaluations);
+        return mapping.findForward("rectifyMarkSheetStep1");
+    }
 
 }

@@ -25,152 +25,152 @@ import org.apache.struts.action.ActionMapping;
 
 public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
 
-	public static class ThesisPresentationWrapper {
+    public static class ThesisPresentationWrapper {
 
-		public static final Comparator<ThesisPresentationWrapper> COMPARATOR_BY_STUDENT =
-				new Comparator<ThesisPresentationWrapper>() {
-					@Override
-					public int compare(ThesisPresentationWrapper t1, ThesisPresentationWrapper t2) {
-						return Thesis.COMPARATOR_BY_STUDENT.compare(t1.getThesis(), t2.getThesis());
-					}
-				};
+        public static final Comparator<ThesisPresentationWrapper> COMPARATOR_BY_STUDENT =
+                new Comparator<ThesisPresentationWrapper>() {
+                    @Override
+                    public int compare(ThesisPresentationWrapper t1, ThesisPresentationWrapper t2) {
+                        return Thesis.COMPARATOR_BY_STUDENT.compare(t1.getThesis(), t2.getThesis());
+                    }
+                };
 
-		protected final Thesis thesis;
-		protected final ThesisPresentationState thesisPresentationState;
+        protected final Thesis thesis;
+        protected final ThesisPresentationState thesisPresentationState;
 
-		public ThesisPresentationWrapper(final Thesis thesis) {
-			this.thesis = thesis;
-			this.thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
-		}
+        public ThesisPresentationWrapper(final Thesis thesis) {
+            this.thesis = thesis;
+            this.thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
+        }
 
-		public Thesis getThesis() {
-			return thesis;
-		}
+        public Thesis getThesis() {
+            return thesis;
+        }
 
-		public ThesisPresentationState getThesisPresentationState() {
-			return thesisPresentationState;
-		}
+        public ThesisPresentationState getThesisPresentationState() {
+            return thesisPresentationState;
+        }
 
-		public boolean isUnexisting() {
-			return thesisPresentationState.isUnexisting();
-		}
+        public boolean isUnexisting() {
+            return thesisPresentationState.isUnexisting();
+        }
 
-		public boolean isDraft() {
-			return thesisPresentationState.isDraft();
-		}
+        public boolean isDraft() {
+            return thesisPresentationState.isDraft();
+        }
 
-		public boolean isSubmitted() {
-			return thesisPresentationState.isSubmitted();
-		}
+        public boolean isSubmitted() {
+            return thesisPresentationState.isSubmitted();
+        }
 
-		public boolean isRejected() {
-			return thesisPresentationState.isRejected();
-		}
+        public boolean isRejected() {
+            return thesisPresentationState.isRejected();
+        }
 
-		public boolean isApproved() {
-			return thesisPresentationState.isApproved();
-		}
+        public boolean isApproved() {
+            return thesisPresentationState.isApproved();
+        }
 
-		public boolean isDocumentsSubmitted() {
-			return thesisPresentationState.isDocumentsSubmitted();
-		}
+        public boolean isDocumentsSubmitted() {
+            return thesisPresentationState.isDocumentsSubmitted();
+        }
 
-		public boolean isDocumentsConfirmed() {
-			return thesisPresentationState.isDocumentsConfirmed();
-		}
+        public boolean isDocumentsConfirmed() {
+            return thesisPresentationState.isDocumentsConfirmed();
+        }
 
-		public boolean isConfirmed() {
-			return thesisPresentationState.isConfirmed();
-		}
+        public boolean isConfirmed() {
+            return thesisPresentationState.isConfirmed();
+        }
 
-		public boolean isEvaluated1st() {
-			return thesisPresentationState.isEvaluated1st();
-		}
+        public boolean isEvaluated1st() {
+            return thesisPresentationState.isEvaluated1st();
+        }
 
-		public boolean isEvaluated() {
-			return thesisPresentationState.isEvaluated();
-		}
+        public boolean isEvaluated() {
+            return thesisPresentationState.isEvaluated();
+        }
 
-		public boolean isUnknown() {
-			return thesisPresentationState.isUnknown();
-		}
+        public boolean isUnknown() {
+            return thesisPresentationState.isUnknown();
+        }
 
-	}
+    }
 
-	public static class ThesisPresentationWrapperSet extends TreeSet<ThesisPresentationWrapper> {
-		public ThesisPresentationWrapperSet(final Collection<Thesis> theses) {
-			super(ThesisPresentationWrapper.COMPARATOR_BY_STUDENT);
-			for (final Thesis thesis : theses) {
-				add(new ThesisPresentationWrapper(thesis));
-			}
-		}
+    public static class ThesisPresentationWrapperSet extends TreeSet<ThesisPresentationWrapper> {
+        public ThesisPresentationWrapperSet(final Collection<Thesis> theses) {
+            super(ThesisPresentationWrapper.COMPARATOR_BY_STUDENT);
+            for (final Thesis thesis : theses) {
+                add(new ThesisPresentationWrapper(thesis));
+            }
+        }
 
-		public ThesisPresentationWrapperSet(final Person person, final ThesisParticipationType thesisParticipationType) {
-			this(Thesis.getThesesByParticipationType(person, thesisParticipationType));
-		}
-	}
+        public ThesisPresentationWrapperSet(final Person person, final ThesisParticipationType thesisParticipationType) {
+            this(Thesis.getThesesByParticipationType(person, thesisParticipationType));
+        }
+    }
 
-	public ActionForward showThesisList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException {
+    public ActionForward showThesisList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException {
 
-		final Person person = AccessControl.getPerson();
-		if (person != null) {
-			final ThesisPresentationWrapperSet orientedTheses =
-					new ThesisPresentationWrapperSet(person, ThesisParticipationType.ORIENTATOR);
-			request.setAttribute("orientedTheses", orientedTheses);
-			final ThesisPresentationWrapperSet coorientedTheses =
-					new ThesisPresentationWrapperSet(person, ThesisParticipationType.COORIENTATOR);
-			request.setAttribute("coorientedTheses", coorientedTheses);
-		}
+        final Person person = AccessControl.getPerson();
+        if (person != null) {
+            final ThesisPresentationWrapperSet orientedTheses =
+                    new ThesisPresentationWrapperSet(person, ThesisParticipationType.ORIENTATOR);
+            request.setAttribute("orientedTheses", orientedTheses);
+            final ThesisPresentationWrapperSet coorientedTheses =
+                    new ThesisPresentationWrapperSet(person, ThesisParticipationType.COORIENTATOR);
+            request.setAttribute("coorientedTheses", coorientedTheses);
+        }
 
-		return mapping.findForward("showThesisList");
-	}
+        return mapping.findForward("showThesisList");
+    }
 
-	public ActionForward viewThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException {
-		final String thesisIdString = request.getParameter("thesisID");
-		final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
+    public ActionForward viewThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException {
+        final String thesisIdString = request.getParameter("thesisID");
+        final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
-		final Thesis thesis = thesisId == null ? null : rootDomainObject.readThesisByOID(thesisId);
-		request.setAttribute("thesis", thesis);
+        final Thesis thesis = thesisId == null ? null : rootDomainObject.readThesisByOID(thesisId);
+        request.setAttribute("thesis", thesis);
 
-		final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
-		request.setAttribute("thesisPresentationState", thesisPresentationState);
+        final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
+        request.setAttribute("thesisPresentationState", thesisPresentationState);
 
-		return mapping.findForward("viewThesis");
-	}
+        return mapping.findForward("viewThesis");
+    }
 
-	public ActionForward showConfirmationPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException {
-		request.setAttribute("showConfirmationPage", Boolean.TRUE);
-		return viewThesis(mapping, form, request, response);
-	}
+    public ActionForward showConfirmationPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException {
+        request.setAttribute("showConfirmationPage", Boolean.TRUE);
+        return viewThesis(mapping, form, request, response);
+    }
 
-	public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
-		final String thesisIdString = request.getParameter("thesisID");
-		final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
+    public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+        final String thesisIdString = request.getParameter("thesisID");
+        final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
-		final Thesis thesis = thesisId == null ? null : rootDomainObject.readThesisByOID(thesisId);
-		ConfirmThesisDocumentSubmission.run(thesis);
+        final Thesis thesis = thesisId == null ? null : rootDomainObject.readThesisByOID(thesisId);
+        ConfirmThesisDocumentSubmission.run(thesis);
 
-		request.setAttribute("documentsConfirmed", Boolean.TRUE);
-		return viewThesis(mapping, form, request, response);
-	}
+        request.setAttribute("documentsConfirmed", Boolean.TRUE);
+        return viewThesis(mapping, form, request, response);
+    }
 
-	protected Teacher getLoggedTeacher() {
-		final Person person = AccessControl.getPerson();
-		if (person != null) {
-			final Teacher teacher = person.getTeacher();
-			return teacher;
-		}
-		return null;
-	}
+    protected Teacher getLoggedTeacher() {
+        final Person person = AccessControl.getPerson();
+        if (person != null) {
+            final Teacher teacher = person.getTeacher();
+            return teacher;
+        }
+        return null;
+    }
 
-	@Override
-	public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		throw new Error("this.cannot.be.called.here");
-	}
+    @Override
+    public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        throw new Error("this.cannot.be.called.here");
+    }
 
 }

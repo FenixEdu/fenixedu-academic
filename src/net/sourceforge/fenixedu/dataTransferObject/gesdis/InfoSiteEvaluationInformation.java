@@ -15,62 +15,62 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
  * 
  */
 public class InfoSiteEvaluationInformation extends DataTranferObject {
-	private InfoCurricularCourse infoCurricularCourse;
+    private InfoCurricularCourse infoCurricularCourse;
 
-	private InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
+    private InfoSiteEvaluationStatistics infoSiteEvaluationStatistics;
 
-	private List infoSiteEvaluationHistory;
+    private List infoSiteEvaluationHistory;
 
-	/**
+    /**
      *  
      */
-	public InfoSiteEvaluationInformation() {
-		super();
-	}
+    public InfoSiteEvaluationInformation() {
+        super();
+    }
 
-	/**
-	 * @return Returns the infoSiteEvaluationHistory.
-	 */
-	public List getInfoSiteEvaluationHistory() {
-		return infoSiteEvaluationHistory;
-	}
+    /**
+     * @return Returns the infoSiteEvaluationHistory.
+     */
+    public List getInfoSiteEvaluationHistory() {
+        return infoSiteEvaluationHistory;
+    }
 
-	/**
-	 * @param infoSiteEvaluationHistory
-	 *            The infoSiteEvaluationHistory to set.
-	 */
-	public void setInfoSiteEvaluationHistory(List infoSiteEvaluationHistory) {
-		this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
-	}
+    /**
+     * @param infoSiteEvaluationHistory
+     *            The infoSiteEvaluationHistory to set.
+     */
+    public void setInfoSiteEvaluationHistory(List infoSiteEvaluationHistory) {
+        this.infoSiteEvaluationHistory = infoSiteEvaluationHistory;
+    }
 
-	/**
-	 * @return Returns the infoSiteEvaluationStatistics.
-	 */
-	public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
-		return infoSiteEvaluationStatistics;
-	}
+    /**
+     * @return Returns the infoSiteEvaluationStatistics.
+     */
+    public InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics() {
+        return infoSiteEvaluationStatistics;
+    }
 
-	/**
-	 * @param infoSiteEvaluationStatistics
-	 *            The infoSiteEvaluationStatistics to set.
-	 */
-	public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
-		this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
-	}
+    /**
+     * @param infoSiteEvaluationStatistics
+     *            The infoSiteEvaluationStatistics to set.
+     */
+    public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
+        this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
+    }
 
-	/**
-	 * @return Returns the infoCurricularCourse.
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    /**
+     * @return Returns the infoCurricularCourse.
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	/**
-	 * @param infoCurricularCourse
-	 *            The infoCurricularCourse to set.
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @param infoCurricularCourse
+     *            The infoCurricularCourse to set.
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
 }

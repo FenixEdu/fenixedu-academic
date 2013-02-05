@@ -13,49 +13,49 @@ import net.sourceforge.fenixedu.domain.Country;
  */
 public class InfoCountry extends InfoObject {
 
-	private final Country country;
+    private final Country country;
 
-	public InfoCountry(final Country country) {
-		this.country = country;
-	}
+    public InfoCountry(final Country country) {
+        this.country = country;
+    }
 
-	public Country getCountry() {
-		return country;
-	}
+    public Country getCountry() {
+        return country;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof InfoCountry && getCountry() == ((InfoCountry) obj).getCountry();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof InfoCountry && getCountry() == ((InfoCountry) obj).getCountry();
+    }
 
-	public String getCode() {
-		return getCountry().getCode();
-	}
+    public String getCode() {
+        return getCountry().getCode();
+    }
 
-	public String getName() {
-		return getCountry().getName();
-	}
+    public String getName() {
+        return getCountry().getName();
+    }
 
-	public String getNationality() {
-		return getCountry().getNationality();
-	}
+    public String getNationality() {
+        return getCountry().getNationality();
+    }
 
-	public static InfoCountry newInfoFromDomain(final Country country) {
-		return country == null ? null : new InfoCountry(country);
-	}
+    public static InfoCountry newInfoFromDomain(final Country country) {
+        return country == null ? null : new InfoCountry(country);
+    }
 
-	public String getNameAndNationality() {
-		return getCountry().getName() + " - " + getCountry().getNationality();
-	}
+    public String getNameAndNationality() {
+        return getCountry().getName() + " - " + getCountry().getNationality();
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return getCountry().getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getCountry().getIdInternal();
+    }
 
-	@Override
-	public void setIdInternal(Integer integer) {
-		throw new Error("Method should not be called!");
-	}
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
 
 }

@@ -22,223 +22,223 @@ import dml.runtime.RelationAdapter;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
 
-	static {
-		PhdStudyPlanPhdIndividualProgramProcess.addListener(new RelationAdapter<PhdStudyPlan, PhdIndividualProgramProcess>() {
-			@Override
-			public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
+    static {
+        PhdStudyPlanPhdIndividualProgramProcess.addListener(new RelationAdapter<PhdStudyPlan, PhdIndividualProgramProcess>() {
+            @Override
+            public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
 
-				if (studyPlan != null && process != null) {
-					if (process.hasStudyPlan()) {
-						throw new DomainException(
-								"error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
-					}
-				}
+                if (studyPlan != null && process != null) {
+                    if (process.hasStudyPlan()) {
+                        throw new DomainException(
+                                "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
+                    }
+                }
 
-			}
-		});
-	}
+            }
+        });
+    }
 
-	protected PhdStudyPlan() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setWhenCreated(new DateTime());
-		if (AccessControl.getPerson() != null) {
-			setCreatedBy(AccessControl.getPerson().getUsername());
-		}
-	}
+    protected PhdStudyPlan() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setWhenCreated(new DateTime());
+        if (AccessControl.getPerson() != null) {
+            setCreatedBy(AccessControl.getPerson().getUsername());
+        }
+    }
 
-	public PhdStudyPlan(final PhdStudyPlanBean bean) {
-		this();
+    public PhdStudyPlan(final PhdStudyPlanBean bean) {
+        this();
 
-		init(bean.getProcess(), bean.getDegree(), bean.isExempted());
-	}
+        init(bean.getProcess(), bean.getDegree(), bean.isExempted());
+    }
 
-	private void init(PhdIndividualProgramProcess process, Degree degree, boolean exempted) {
+    private void init(PhdIndividualProgramProcess process, Degree degree, boolean exempted) {
 
-		check(process, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.cannot.be.null");
-		super.setProcess(process);
+        check(process, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.cannot.be.null");
+        super.setProcess(process);
 
-		init(degree, exempted);
-	}
+        init(degree, exempted);
+    }
 
-	private void init(Degree degree, boolean exempted) {
-		super.setExempted(exempted);
+    private void init(Degree degree, boolean exempted) {
+        super.setExempted(exempted);
 
-		if (!exempted) {
-			check(degree, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null");
+        if (!exempted) {
+            check(degree, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null");
 
-			if (!degree.isEmpty() && !degree.isDEA()) {
-				throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
-			}
+            if (!degree.isEmpty() && !degree.isDEA()) {
+                throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
+            }
 
-			super.setDegree(degree);
-		}
-	}
+            super.setDegree(degree);
+        }
+    }
 
-	public void edit(final PhdStudyPlanBean bean) {
-		init(bean.getDegree(), bean.isExempted());
-	}
+    public void edit(final PhdStudyPlanBean bean) {
+        init(bean.getDegree(), bean.isExempted());
+    }
 
-	@Override
-	public void setProcess(PhdIndividualProgramProcess process) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.enclosing_type.cannot.modify.process");
-	}
+    @Override
+    public void setProcess(PhdIndividualProgramProcess process) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.enclosing_type.cannot.modify.process");
+    }
 
-	@Override
-	public void addEntries(PhdStudyPlanEntry entry) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.cannot.add.entry");
-	}
+    @Override
+    public void addEntries(PhdStudyPlanEntry entry) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.cannot.add.entry");
+    }
 
-	@Override
-	public List<PhdStudyPlanEntry> getEntries() {
-		return Collections.unmodifiableList(super.getEntries());
-	}
+    @Override
+    public List<PhdStudyPlanEntry> getEntries() {
+        return Collections.unmodifiableList(super.getEntries());
+    }
 
-	@Override
-	public Set<PhdStudyPlanEntry> getEntriesSet() {
-		return Collections.unmodifiableSet(super.getEntriesSet());
-	}
+    @Override
+    public Set<PhdStudyPlanEntry> getEntriesSet() {
+        return Collections.unmodifiableSet(super.getEntriesSet());
+    }
 
-	@Override
-	public Iterator<PhdStudyPlanEntry> getEntriesIterator() {
-		return getEntries().iterator();
-	}
+    @Override
+    public Iterator<PhdStudyPlanEntry> getEntriesIterator() {
+        return getEntries().iterator();
+    }
 
-	@Override
-	public void removeEntries(PhdStudyPlanEntry entry) {
-		throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.cannot.remove.entry");
-	}
+    @Override
+    public void removeEntries(PhdStudyPlanEntry entry) {
+        throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.cannot.remove.entry");
+    }
 
-	public Set<PhdStudyPlanEntry> getNormalEntries() {
-		final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
+    public Set<PhdStudyPlanEntry> getNormalEntries() {
+        final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
 
-		for (final PhdStudyPlanEntry entry : getEntries()) {
-			if (entry.isNormal()) {
-				result.add(entry);
-			}
-		}
+        for (final PhdStudyPlanEntry entry : getEntries()) {
+            if (entry.isNormal()) {
+                result.add(entry);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public Set<PhdStudyPlanEntry> getPropaedeuticEntries() {
-		final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
+    public Set<PhdStudyPlanEntry> getPropaedeuticEntries() {
+        final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
 
-		for (final PhdStudyPlanEntry entry : getEntries()) {
-			if (entry.isPropaedeutic()) {
-				result.add(entry);
-			}
-		}
+        for (final PhdStudyPlanEntry entry : getEntries()) {
+            if (entry.isPropaedeutic()) {
+                result.add(entry);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public Set<PhdStudyPlanEntry> getExtraCurricularEntries() {
-		final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
+    public Set<PhdStudyPlanEntry> getExtraCurricularEntries() {
+        final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
 
-		for (final PhdStudyPlanEntry entry : getEntries()) {
-			if (entry.isExtraCurricular()) {
-				result.add(entry);
-			}
-		}
+        for (final PhdStudyPlanEntry entry : getEntries()) {
+            if (entry.isExtraCurricular()) {
+                result.add(entry);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public boolean hasSimilarEntry(PhdStudyPlanEntry entry) {
-		for (final PhdStudyPlanEntry each : getEntries()) {
-			if (each.isSimilar(entry)) {
-				return true;
-			}
-		}
+    public boolean hasSimilarEntry(PhdStudyPlanEntry entry) {
+        for (final PhdStudyPlanEntry each : getEntries()) {
+            if (each.isSimilar(entry)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public void createEntries(PhdStudyPlanEntryBean bean) {
+    public void createEntries(PhdStudyPlanEntryBean bean) {
 
-		if (getExempted().booleanValue()) {
-			throw new DomainException("error.PhdStudyPlanEntry.cannot.add.entries.in.exempted.plan");
-		}
+        if (getExempted().booleanValue()) {
+            throw new DomainException("error.PhdStudyPlanEntry.cannot.add.entries.in.exempted.plan");
+        }
 
-		if (bean.getInternalEntry().booleanValue()) {
-			for (final CompetenceCourse each : bean.getCompetenceCourses()) {
-				new InternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), each);
-			}
-		} else {
-			new ExternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), bean.getCourseName());
-		}
+        if (bean.getInternalEntry().booleanValue()) {
+            for (final CompetenceCourse each : bean.getCompetenceCourses()) {
+                new InternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), each);
+            }
+        } else {
+            new ExternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), bean.getCourseName());
+        }
 
-	}
+    }
 
-	public void delete() {
+    public void delete() {
 
-		for (; hasAnyEntries(); getEntries().get(0).delete()) {
-			;
-		}
+        for (; hasAnyEntries(); getEntries().get(0).delete()) {
+            ;
+        }
 
-		super.setProcess(null);
-		super.setDegree(null);
-		super.setRootDomainObject(null);
+        super.setProcess(null);
+        super.setDegree(null);
+        super.setRootDomainObject(null);
 
-		super.deleteDomainObject();
+        super.deleteDomainObject();
 
-	}
+    }
 
-	public boolean isToEnrolInCurricularCourses() {
-		return hasAnyEntries();
-	}
+    public boolean isToEnrolInCurricularCourses() {
+        return hasAnyEntries();
+    }
 
-	public String getDescription() {
-		if (getExempted().booleanValue()) {
-			return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
-					"label.PhdStudyPlan.description.exempted");
-		} else {
-			return getDegree().getPresentationName(getProcess().getExecutionYear());
-		}
-	}
+    public String getDescription() {
+        if (getExempted().booleanValue()) {
+            return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
+                    "label.PhdStudyPlan.description.exempted");
+        } else {
+            return getDegree().getPresentationName(getProcess().getExecutionYear());
+        }
+    }
 
-	public boolean isExempted() {
-		return getExempted() != null && getExempted().booleanValue();
-	}
+    public boolean isExempted() {
+        return getExempted() != null && getExempted().booleanValue();
+    }
 
-	public boolean hasAnyPropaeudeuticsOrExtraEntries() {
-		for (final PhdStudyPlanEntry entry : getEntries()) {
-			if (entry.isPropaedeutic() || entry.isExtraCurricular()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean hasAnyPropaeudeuticsOrExtraEntries() {
+        for (final PhdStudyPlanEntry entry : getEntries()) {
+            if (entry.isPropaedeutic() || entry.isExtraCurricular()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean hasPropaeudeuticsOrExtraEntriesApproved() {
-		final StudentCurricularPlan scp = getProcess().getRegistration().getLastStudentCurricularPlan();
+    public boolean hasPropaeudeuticsOrExtraEntriesApproved() {
+        final StudentCurricularPlan scp = getProcess().getRegistration().getLastStudentCurricularPlan();
 
-		for (final PhdStudyPlanEntry entry : getEntries()) {
+        for (final PhdStudyPlanEntry entry : getEntries()) {
 
-			if ((entry.isPropaedeutic() || entry.isExtraCurricular()) && entry.isInternalEntry()) {
+            if ((entry.isPropaedeutic() || entry.isExtraCurricular()) && entry.isInternalEntry()) {
 
-				if (findEnrolment(scp, (InternalPhdStudyPlanEntry) entry) == null) {
-					return false;
-				}
-			}
-		}
+                if (findEnrolment(scp, (InternalPhdStudyPlanEntry) entry) == null) {
+                    return false;
+                }
+            }
+        }
 
-		return hasAnyEntries();
-	}
+        return hasAnyEntries();
+    }
 
-	private Enrolment findEnrolment(final StudentCurricularPlan scp, final InternalPhdStudyPlanEntry entry) {
-		for (final Enrolment enrolment : scp.getRoot().getEnrolments()) {
-			if (enrolment.isApproved() && isFor(enrolment, entry.getCompetenceCourse())) {
-				return enrolment;
-			}
-		}
+    private Enrolment findEnrolment(final StudentCurricularPlan scp, final InternalPhdStudyPlanEntry entry) {
+        for (final Enrolment enrolment : scp.getRoot().getEnrolments()) {
+            if (enrolment.isApproved() && isFor(enrolment, entry.getCompetenceCourse())) {
+                return enrolment;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private boolean isFor(final Enrolment enrolment, final CompetenceCourse competenceCourse) {
-		return enrolment.getCurricularCourse().getCompetenceCourse().equals(competenceCourse);
-	}
+    private boolean isFor(final Enrolment enrolment, final CompetenceCourse competenceCourse) {
+        return enrolment.getCurricularCourse().getCompetenceCourse().equals(competenceCourse);
+    }
 
 }

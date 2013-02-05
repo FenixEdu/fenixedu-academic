@@ -7,28 +7,28 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum RegistrationRegimeType implements IPresentableEnum {
 
-	FULL_TIME,
+    FULL_TIME,
 
-	PARTIAL_TIME;
+    PARTIAL_TIME;
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public String getQualifiedName() {
-		return this.getClass().getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return this.getClass().getSimpleName() + "." + name();
+    }
 
-	public String getFullyQualifiedName() {
-		return getClass().getName() + "." + name();
-	}
+    public String getFullyQualifiedName() {
+        return getClass().getName() + "." + name();
+    }
 
-	final static public RegistrationRegimeType defaultType() {
-		return FULL_TIME;
-	}
+    final static public RegistrationRegimeType defaultType() {
+        return FULL_TIME;
+    }
 
-	@Override
-	public String getLocalizedName() {
-		return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
-	}
+    @Override
+    public String getLocalizedName() {
+        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+    }
 }

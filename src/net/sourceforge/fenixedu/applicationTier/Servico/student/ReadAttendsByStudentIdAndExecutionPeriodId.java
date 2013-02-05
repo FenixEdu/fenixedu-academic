@@ -23,34 +23,34 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAttendsByStudentIdAndExecutionPeriodId extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId,
-			Integer executionPeriodId, Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId,
+            Integer executionPeriodId, Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) {
 
-		final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList =
-				new ArrayList<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>();
+        final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList =
+                new ArrayList<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>();
 
-		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-		final Registration someRegistration = rootDomainObject.readRegistrationByOID(studentId);
-		for (final Registration registration : someRegistration.getStudent().getRegistrationsSet()) {
-			for (final Attends attends : registration.getAssociatedAttendsSet()) {
-				final ExecutionCourse executionCourse = attends.getExecutionCourse();
-				if (executionCourse.getExecutionPeriod() == executionSemester
-						&& (!(onlyEnrolledCourses.booleanValue() && (attends.getEnrolment() == null)))) {
-					if (!onlyAttendsWithTeachers) {
-						infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers
-								.newInfoFromDomain(attends));
-					} else if ((!attends.getExecutionCourse().getProfessorships().isEmpty())
-							|| (!attends.getExecutionCourse().getNonAffiliatedTeachers().isEmpty())) {
-						infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers
-								.newInfoFromDomain(attends));
-					}
-				}
-			}
-		}
+        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        final Registration someRegistration = rootDomainObject.readRegistrationByOID(studentId);
+        for (final Registration registration : someRegistration.getStudent().getRegistrationsSet()) {
+            for (final Attends attends : registration.getAssociatedAttendsSet()) {
+                final ExecutionCourse executionCourse = attends.getExecutionCourse();
+                if (executionCourse.getExecutionPeriod() == executionSemester
+                        && (!(onlyEnrolledCourses.booleanValue() && (attends.getEnrolment() == null)))) {
+                    if (!onlyAttendsWithTeachers) {
+                        infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers
+                                .newInfoFromDomain(attends));
+                    } else if ((!attends.getExecutionCourse().getProfessorships().isEmpty())
+                            || (!attends.getExecutionCourse().getNonAffiliatedTeachers().isEmpty())) {
+                        infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers
+                                .newInfoFromDomain(attends));
+                    }
+                }
+            }
+        }
 
-		return infoAttendsList;
-	}
+        return infoAttendsList;
+    }
 
 }

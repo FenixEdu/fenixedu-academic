@@ -13,53 +13,53 @@ import java.util.List;
  * 
  */
 public class RequestEntry {
-	private String requestPath = null;
+    private String requestPath = null;
 
-	private int executionTime = 0;
+    private int executionTime = 0;
 
-	private int numberCalls = 0;
+    private int numberCalls = 0;
 
-	private List logTimes = new ArrayList();
+    private List logTimes = new ArrayList();
 
-	private List executionTimes = new ArrayList();
+    private List executionTimes = new ArrayList();
 
-	public RequestEntry(String requestPath) {
-		super();
-		this.requestPath = requestPath;
-	}
+    public RequestEntry(String requestPath) {
+        super();
+        this.requestPath = requestPath;
+    }
 
-	public int getExecutionTime() {
-		return executionTime;
-	}
+    public int getExecutionTime() {
+        return executionTime;
+    }
 
-	public int getNumberCalls() {
-		return numberCalls;
-	}
+    public int getNumberCalls() {
+        return numberCalls;
+    }
 
-	public int getAverageExecutionTime() {
-		if (numberCalls != 0) {
-			return executionTime / numberCalls;
-		}
-		return 0;
+    public int getAverageExecutionTime() {
+        if (numberCalls != 0) {
+            return executionTime / numberCalls;
+        }
+        return 0;
 
-	}
+    }
 
-	public String getRequestPath() {
-		return requestPath;
-	}
+    public String getRequestPath() {
+        return requestPath;
+    }
 
-	public List getLogTimes() {
-		return logTimes;
-	}
+    public List getLogTimes() {
+        return logTimes;
+    }
 
-	public List getExecutionTimes() {
-		return executionTimes;
-	}
+    public List getExecutionTimes() {
+        return executionTimes;
+    }
 
-	public void addEntry(Integer executionTime, Date logTime) {
-		executionTimes.add(executionTime);
-		logTimes.add(logTime);
-		this.executionTime = this.executionTime + executionTime.intValue();
-		this.numberCalls++;
-	}
+    public void addEntry(Integer executionTime, Date logTime) {
+        executionTimes.add(executionTime);
+        logTimes.add(logTime);
+        this.executionTime = this.executionTime + executionTime.intValue();
+        this.numberCalls++;
+    }
 }

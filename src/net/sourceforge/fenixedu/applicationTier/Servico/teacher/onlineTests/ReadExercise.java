@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
 public class ReadExercise extends FenixService {
-	public Metadata run(Integer executionCourseId, Integer metadataId) throws FenixServiceException {
-		return rootDomainObject.readMetadataByOID(metadataId);
-	}
+    public Metadata run(Integer executionCourseId, Integer metadataId) throws FenixServiceException {
+        return rootDomainObject.readMetadataByOID(metadataId);
+    }
 
 }

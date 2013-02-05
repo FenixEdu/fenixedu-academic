@@ -13,27 +13,27 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ReadExecutionCoursesByExecutionPeriod extends FenixService {
 
-	public List run(Integer executionPeriodId) throws FenixServiceException {
-		List allExecutionCoursesFromExecutionPeriod = null;
-		List<InfoExecutionCourse> allExecutionCourses = null;
+    public List run(Integer executionPeriodId) throws FenixServiceException {
+        List allExecutionCoursesFromExecutionPeriod = null;
+        List<InfoExecutionCourse> allExecutionCourses = null;
 
-		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-		if (executionSemester == null) {
-			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-		}
-		allExecutionCoursesFromExecutionPeriod = executionSemester.getAssociatedExecutionCourses();
+        if (executionSemester == null) {
+            throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+        }
+        allExecutionCoursesFromExecutionPeriod = executionSemester.getAssociatedExecutionCourses();
 
-		if (allExecutionCoursesFromExecutionPeriod == null || allExecutionCoursesFromExecutionPeriod.isEmpty()) {
-			return allExecutionCoursesFromExecutionPeriod;
-		}
-		allExecutionCourses = new ArrayList<InfoExecutionCourse>(allExecutionCoursesFromExecutionPeriod.size());
-		Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
-		while (iter.hasNext()) {
-			ExecutionCourse executionCourse = (ExecutionCourse) iter.next();
-			allExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-		}
+        if (allExecutionCoursesFromExecutionPeriod == null || allExecutionCoursesFromExecutionPeriod.isEmpty()) {
+            return allExecutionCoursesFromExecutionPeriod;
+        }
+        allExecutionCourses = new ArrayList<InfoExecutionCourse>(allExecutionCoursesFromExecutionPeriod.size());
+        Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
+        while (iter.hasNext()) {
+            ExecutionCourse executionCourse = (ExecutionCourse) iter.next();
+            allExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+        }
 
-		return allExecutionCourses;
-	}
+        return allExecutionCourses;
+    }
 }

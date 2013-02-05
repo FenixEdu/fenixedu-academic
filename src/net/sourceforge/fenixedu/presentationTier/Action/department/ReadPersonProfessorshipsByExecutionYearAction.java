@@ -52,202 +52,195 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(
-		module = "departmentAdmOffice",
-		path = "/showTeacherProfessorshipsForManagement",
-		input = "show-teacher-professorships-for-management",
-		attribute = "teacherExecutionCourseResponsabilities",
-		formBean = "teacherExecutionCourseResponsabilities",
-		scope = "request")
-@Forwards(value = { @Forward(
-		name = "list-professorships",
-		path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp",
-		tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.teachers.courses")) })
+@Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement",
+        input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
+        formBean = "teacherExecutionCourseResponsabilities", scope = "request")
+@Forwards(value = { @Forward(name = "list-professorships",
+        path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp", tileProperties = @Tile(
+                title = "private.administrationofcreditsofdepartmentteachers.teachers.courses")) })
 @Exceptions(value = { @ExceptionHandling(
-		type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
-		key = "message.teacher-not-belong-to-department",
-		handler = org.apache.struts.action.ExceptionHandler.class,
-		path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0",
-		scope = "request") })
+        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
+        key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
+        path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0", scope = "request") })
 public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
-	private final class Professorships2DetailProfessorship implements Transformer {
-		private Professorships2DetailProfessorship() {
-			super();
-		}
+    private final class Professorships2DetailProfessorship implements Transformer {
+        private Professorships2DetailProfessorship() {
+            super();
+        }
 
-		@Override
-		public Object transform(Object input) {
-			Professorship professorship = (Professorship) input;
-			InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
+        @Override
+        public Object transform(Object input) {
+            Professorship professorship = (Professorship) input;
+            InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
 
-			final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
+            final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
-			ExecutionCourse executionCourse = professorship.getExecutionCourse();
-			List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship, executionCourse);
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
+            List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship, executionCourse);
 
-			detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
+            detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
 
-			detailedProfessorship.setInfoProfessorship(infoProfessorShip);
-			detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
+            detailedProfessorship.setInfoProfessorship(infoProfessorShip);
+            detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
 
-			return detailedProfessorship;
-		}
+            return detailedProfessorship;
+        }
 
-		private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, ExecutionCourse executionCourse) {
+        private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, ExecutionCourse executionCourse) {
 
-			List infoCurricularCourses =
-					(List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
+            List infoCurricularCourses =
+                    (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
 
-						@Override
-						public Object transform(Object input) {
-							CurricularCourse curricularCourse = (CurricularCourse) input;
-							InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-							DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-							if (degreeType.equals(DegreeType.DEGREE)) {
-								detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
-							}
-							return infoCurricularCourse;
-						}
-					});
-			return infoCurricularCourses;
-		}
-	}
+                        @Override
+                        public Object transform(Object input) {
+                            CurricularCourse curricularCourse = (CurricularCourse) input;
+                            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+                            DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
+                            if (degreeType.equals(DegreeType.DEGREE)) {
+                                detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
+                            }
+                            return infoCurricularCourse;
+                        }
+                    });
+            return infoCurricularCourses;
+        }
+    }
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		IUserView userView = UserView.getUser();
-		DynaActionForm dynaForm = (DynaActionForm) form;
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        IUserView userView = UserView.getUser();
+        DynaActionForm dynaForm = (DynaActionForm) form;
 
-		InfoPerson infoPerson = getInfoPerson(request, dynaForm);
+        InfoPerson infoPerson = getInfoPerson(request, dynaForm);
 
-		List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoPerson.getIdInternal(), dynaForm, request);
+        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoPerson.getIdInternal(), dynaForm, request);
 
-		ComparatorChain chain = new ComparatorChain();
+        ComparatorChain chain = new ComparatorChain();
 
-		Comparator executionPeriodComparator =
-				new BeanComparator("infoProfessorship.infoExecutionCourse.infoExecutionPeriod.semester");
-		Comparator nameComparator = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
+        Comparator executionPeriodComparator =
+                new BeanComparator("infoProfessorship.infoExecutionCourse.infoExecutionPeriod.semester");
+        Comparator nameComparator = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
 
-		chain.addComparator(executionPeriodComparator);
-		chain.addComparator(nameComparator);
-		Collections.sort(detailedInfoProfessorshipList, chain);
+        chain.addComparator(executionPeriodComparator);
+        chain.addComparator(nameComparator);
+        Collections.sort(detailedInfoProfessorshipList, chain);
 
-		request.setAttribute("detailedProfessorshipList", detailedInfoProfessorshipList);
+        request.setAttribute("detailedProfessorshipList", detailedInfoProfessorshipList);
 
-		extraPreparation(userView, infoPerson, request, dynaForm);
-		return mapping.findForward("list-professorships");
-	}
+        extraPreparation(userView, infoPerson, request, dynaForm);
+        return mapping.findForward("list-professorships");
+    }
 
-	protected InfoPerson getInfoPerson(HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
-		InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
-		if (infoPerson == null) {
-			final IUserView userView = UserView.getUser();
-			infoPerson = ReadPersonByID.run((Integer) dynaForm.get("idInternal"));
-			request.setAttribute("infoPerson", infoPerson);
+    protected InfoPerson getInfoPerson(HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
+        InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
+        if (infoPerson == null) {
+            final IUserView userView = UserView.getUser();
+            infoPerson = ReadPersonByID.run((Integer) dynaForm.get("idInternal"));
+            request.setAttribute("infoPerson", infoPerson);
 
-		}
-		return infoPerson;
-	}
+        }
+        return infoPerson;
+    }
 
-	List getDetailedProfessorships(IUserView userView, Integer personId, DynaActionForm actionForm, HttpServletRequest request)
-			throws FenixServiceException, FenixFilterException {
+    List getDetailedProfessorships(IUserView userView, Integer personId, DynaActionForm actionForm, HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
 
-		List<Professorship> professorshipList =
-				((Person) RootDomainObject.getInstance().readPartyByOID(personId)).getProfessorships();
+        List<Professorship> professorshipList =
+                ((Person) RootDomainObject.getInstance().readPartyByOID(personId)).getProfessorships();
 
-		ExecutionYear executionYear =
-				RootDomainObject.getInstance().readExecutionYearByOID(((Integer) actionForm.get("executionYearId")));
-		if (executionYear == null) {
-			executionYear = ExecutionYear.readCurrentExecutionYear();
-		}
-		final List<Professorship> responsibleFors = new ArrayList();
-		for (final Professorship professorship : professorshipList) {
-			if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear() == executionYear) {
-				responsibleFors.add(professorship);
-			}
-		}
+        ExecutionYear executionYear =
+                RootDomainObject.getInstance().readExecutionYearByOID(((Integer) actionForm.get("executionYearId")));
+        if (executionYear == null) {
+            executionYear = ExecutionYear.readCurrentExecutionYear();
+        }
+        final List<Professorship> responsibleFors = new ArrayList();
+        for (final Professorship professorship : professorshipList) {
+            if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear() == executionYear) {
+                responsibleFors.add(professorship);
+            }
+        }
 
-		List detailedProfessorshipList =
-				(List) CollectionUtils.collect(responsibleFors, new Professorships2DetailProfessorship());
+        List detailedProfessorshipList =
+                (List) CollectionUtils.collect(responsibleFors, new Professorships2DetailProfessorship());
 
-		request.setAttribute("args", new TreeMap());
-		return detailedProfessorshipList;
-	}
+        request.setAttribute("args", new TreeMap());
+        return detailedProfessorshipList;
+    }
 
-	protected void extraPreparation(IUserView userView, InfoPerson infoPerson, HttpServletRequest request, DynaActionForm dynaForm)
-			throws FenixServiceException, FenixFilterException {
+    protected void extraPreparation(IUserView userView, InfoPerson infoPerson, HttpServletRequest request, DynaActionForm dynaForm)
+            throws FenixServiceException, FenixFilterException {
 
-		prepareConstants(userView, infoPerson, request);
-		prepareForm(dynaForm, request);
-	}
+        prepareConstants(userView, infoPerson, request);
+        prepareForm(dynaForm, request);
+    }
 
-	private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
-		InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
-		dynaForm.set("idInternal", infoPerson.getIdInternal());
-		dynaForm.set("teacherId", infoPerson.getIstUsername());
-		dynaForm.set("teacherName", infoPerson.getIstUsername());
-		if (dynaForm.get("executionYearId") == null) {
-			dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
-		}
+    private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
+        InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
+        dynaForm.set("idInternal", infoPerson.getIdInternal());
+        dynaForm.set("teacherId", infoPerson.getIstUsername());
+        dynaForm.set("teacherName", infoPerson.getIstUsername());
+        if (dynaForm.get("executionYearId") == null) {
+            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+        }
 
-		List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
+        List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
 
-		List executionCourseIds = new ArrayList();
-		Map hours = new HashMap();
-		for (int i = 0; i < detailedProfessorshipList.size(); i++) {
-			DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
+        List executionCourseIds = new ArrayList();
+        Map hours = new HashMap();
+        for (int i = 0; i < detailedProfessorshipList.size(); i++) {
+            DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-			Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
-			if (dps.getResponsibleFor().booleanValue()) {
-				executionCourseIds.add(executionCourseId);
-			}
-			if (dps.getMasterDegreeOnly().booleanValue()) {
-				if (dps.getInfoProfessorship().getHours() != null) {
-					hours.put(executionCourseId.toString(), dps.getInfoProfessorship().getHours().toString());
-				}
-			}
-		}
+            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
+            if (dps.getResponsibleFor().booleanValue()) {
+                executionCourseIds.add(executionCourseId);
+            }
+            if (dps.getMasterDegreeOnly().booleanValue()) {
+                if (dps.getInfoProfessorship().getHours() != null) {
+                    hours.put(executionCourseId.toString(), dps.getInfoProfessorship().getHours().toString());
+                }
+            }
+        }
 
-		dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
-		dynaForm.set("hours", hours);
+        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
+        dynaForm.set("hours", hours);
 
-	}
+    }
 
-	private void prepareConstants(IUserView userView, InfoPerson infoPerson, HttpServletRequest request)
-			throws FenixServiceException, FenixFilterException {
+    private void prepareConstants(IUserView userView, InfoPerson infoPerson, HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
 
-		List executionYears = ReadNotClosedExecutionYears.run();
+        List executionYears = ReadNotClosedExecutionYears.run();
 
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
-			@Override
-			public boolean evaluate(Object arg0) {
-				InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear) arg0;
-				if (infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {
-					return true;
-				}
-				return false;
-			}
-		});
-		Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getIdInternal());
-		InfoDepartment teacherDepartment = null;
-		if (person.getTeacher() != null) {
-			Department department = person.getTeacher().getCurrentWorkingDepartment();
-			teacherDepartment = InfoDepartment.newInfoFromDomain(department);
-			if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
-				final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
-				request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
-			} else {
-				request.setAttribute("isDepartmentManager", Boolean.FALSE);
-			}
-		} else {
-			request.setAttribute("isDepartmentManager", Boolean.TRUE);
-		}
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear) arg0;
+                if (infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getIdInternal());
+        InfoDepartment teacherDepartment = null;
+        if (person.getTeacher() != null) {
+            Department department = person.getTeacher().getCurrentWorkingDepartment();
+            teacherDepartment = InfoDepartment.newInfoFromDomain(department);
+            if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
+                final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+                request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
+            } else {
+                request.setAttribute("isDepartmentManager", Boolean.FALSE);
+            }
+        } else {
+            request.setAttribute("isDepartmentManager", Boolean.TRUE);
+        }
 
-		request.setAttribute("teacherDepartment", teacherDepartment);
-		request.setAttribute("executionYear", infoExecutionYear);
-		request.setAttribute("executionYears", executionYears);
-	}
+        request.setAttribute("teacherDepartment", teacherDepartment);
+        request.setAttribute("executionYear", infoExecutionYear);
+        request.setAttribute("executionYears", executionYears);
+    }
 
 }

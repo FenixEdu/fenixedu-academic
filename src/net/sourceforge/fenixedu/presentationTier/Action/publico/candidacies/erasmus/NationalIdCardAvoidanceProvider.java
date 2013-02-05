@@ -9,19 +9,19 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class NationalIdCardAvoidanceProvider implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new EnumConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new EnumConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		return Arrays.asList(new NationalIdCardAvoidanceQuestion[] {
-				NationalIdCardAvoidanceQuestion.COUNTRY_NOT_LISTED_IN_FENIX_AUTHENTICATION,
-				NationalIdCardAvoidanceQuestion.ELECTRONIC_ID_CARD_CODES_UNKNOWN,
-				NationalIdCardAvoidanceQuestion.ELECTRONIC_ID_CARD_SUBMISSION_AVAILABILITY_UNKNOWN,
-				NationalIdCardAvoidanceQuestion.ELECTRONIC_ID_CARD_SUBMISSION_TRUST_LACK,
-				NationalIdCardAvoidanceQuestion.NOT_OWNER_ELECTRONIC_ID_CARD, NationalIdCardAvoidanceQuestion.OTHER_REASON });
-	}
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        return Arrays.asList(new NationalIdCardAvoidanceQuestion[] {
+                NationalIdCardAvoidanceQuestion.COUNTRY_NOT_LISTED_IN_FENIX_AUTHENTICATION,
+                NationalIdCardAvoidanceQuestion.ELECTRONIC_ID_CARD_CODES_UNKNOWN,
+                NationalIdCardAvoidanceQuestion.ELECTRONIC_ID_CARD_SUBMISSION_AVAILABILITY_UNKNOWN,
+                NationalIdCardAvoidanceQuestion.ELECTRONIC_ID_CARD_SUBMISSION_TRUST_LACK,
+                NationalIdCardAvoidanceQuestion.NOT_OWNER_ELECTRONIC_ID_CARD, NationalIdCardAvoidanceQuestion.OTHER_REASON });
+    }
 
 }

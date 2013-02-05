@@ -19,60 +19,60 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SearchMarkSheets {
 
-	@Service
-	public static Map<MarkSheetType, MarkSheetSearchResultBean> run(MarkSheetManagementSearchBean searchBean)
-			throws InvalidArgumentsServiceException {
+    @Service
+    public static Map<MarkSheetType, MarkSheetSearchResultBean> run(MarkSheetManagementSearchBean searchBean)
+            throws InvalidArgumentsServiceException {
 
-		if (searchBean.getTeacherId() != null) {
-			searchBean.setTeacher(Teacher.readByIstId(searchBean.getTeacherId()));
-		}
+        if (searchBean.getTeacherId() != null) {
+            searchBean.setTeacher(Teacher.readByIstId(searchBean.getTeacherId()));
+        }
 
-		CurricularCourse curricularCourse = searchBean.getCurricularCourse();
-		if (curricularCourse == null) {
-			throw new InvalidArgumentsServiceException("error.noCurricularCourse");
-		}
+        CurricularCourse curricularCourse = searchBean.getCurricularCourse();
+        if (curricularCourse == null) {
+            throw new InvalidArgumentsServiceException("error.noCurricularCourse");
+        }
 
-		Collection<MarkSheet> markSheets =
-				curricularCourse.searchMarkSheets(searchBean.getExecutionPeriod(), searchBean.getTeacher(),
-						searchBean.getEvaluationDate(), searchBean.getMarkSheetState(), searchBean.getMarkSheetType());
+        Collection<MarkSheet> markSheets =
+                curricularCourse.searchMarkSheets(searchBean.getExecutionPeriod(), searchBean.getTeacher(),
+                        searchBean.getEvaluationDate(), searchBean.getMarkSheetState(), searchBean.getMarkSheetType());
 
-		Map<MarkSheetType, MarkSheetSearchResultBean> result = new TreeMap<MarkSheetType, MarkSheetSearchResultBean>();
-		for (MarkSheet sheet : markSheets) {
-			addToMap(result, sheet);
-		}
+        Map<MarkSheetType, MarkSheetSearchResultBean> result = new TreeMap<MarkSheetType, MarkSheetSearchResultBean>();
+        for (MarkSheet sheet : markSheets) {
+            addToMap(result, sheet);
+        }
 
-		for (Entry<MarkSheetType, MarkSheetSearchResultBean> entry : result.entrySet()) {
+        for (Entry<MarkSheetType, MarkSheetSearchResultBean> entry : result.entrySet()) {
 
-			MarkSheetSearchResultBean searchResultBean = entry.getValue();
-			searchResultBean.setShowStatistics(entry.getKey() != MarkSheetType.SPECIAL_AUTHORIZATION);
-			if (searchResultBean.isShowStatistics()) {
-				searchResultBean.setTotalNumberOfStudents(getNumberOfStudentsNotEnrolled(searchBean, curricularCourse, entry)
-						+ searchResultBean.getNumberOfEnroledStudents());
-			}
-		}
+            MarkSheetSearchResultBean searchResultBean = entry.getValue();
+            searchResultBean.setShowStatistics(entry.getKey() != MarkSheetType.SPECIAL_AUTHORIZATION);
+            if (searchResultBean.isShowStatistics()) {
+                searchResultBean.setTotalNumberOfStudents(getNumberOfStudentsNotEnrolled(searchBean, curricularCourse, entry)
+                        + searchResultBean.getNumberOfEnroledStudents());
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private static int getNumberOfStudentsNotEnrolled(MarkSheetManagementSearchBean searchBean,
-			CurricularCourse curricularCourse, Entry<MarkSheetType, MarkSheetSearchResultBean> entry) {
-		int studentsNotEnrolled =
-				curricularCourse.getEnrolmentsNotInAnyMarkSheet(entry.getKey(), searchBean.getExecutionPeriod()).size();
-		return studentsNotEnrolled;
-	}
+    private static int getNumberOfStudentsNotEnrolled(MarkSheetManagementSearchBean searchBean,
+            CurricularCourse curricularCourse, Entry<MarkSheetType, MarkSheetSearchResultBean> entry) {
+        int studentsNotEnrolled =
+                curricularCourse.getEnrolmentsNotInAnyMarkSheet(entry.getKey(), searchBean.getExecutionPeriod()).size();
+        return studentsNotEnrolled;
+    }
 
-	private static void addToMap(Map<MarkSheetType, MarkSheetSearchResultBean> result, MarkSheet sheet) {
-		getResultBeanForMarkSheetType(result, sheet.getMarkSheetType()).addMarkSheet(sheet);
-	}
+    private static void addToMap(Map<MarkSheetType, MarkSheetSearchResultBean> result, MarkSheet sheet) {
+        getResultBeanForMarkSheetType(result, sheet.getMarkSheetType()).addMarkSheet(sheet);
+    }
 
-	private static MarkSheetSearchResultBean getResultBeanForMarkSheetType(Map<MarkSheetType, MarkSheetSearchResultBean> result,
-			MarkSheetType sheetType) {
-		MarkSheetSearchResultBean markSheetSearchResultBean = result.get(sheetType);
-		if (markSheetSearchResultBean == null) {
-			markSheetSearchResultBean = new MarkSheetSearchResultBean();
-			result.put(sheetType, markSheetSearchResultBean);
-		}
-		return markSheetSearchResultBean;
-	}
+    private static MarkSheetSearchResultBean getResultBeanForMarkSheetType(Map<MarkSheetType, MarkSheetSearchResultBean> result,
+            MarkSheetType sheetType) {
+        MarkSheetSearchResultBean markSheetSearchResultBean = result.get(sheetType);
+        if (markSheetSearchResultBean == null) {
+            markSheetSearchResultBean = new MarkSheetSearchResultBean();
+            result.put(sheetType, markSheetSearchResultBean);
+        }
+        return markSheetSearchResultBean;
+    }
 
 }

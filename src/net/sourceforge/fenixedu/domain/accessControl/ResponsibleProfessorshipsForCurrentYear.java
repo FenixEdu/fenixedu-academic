@@ -12,42 +12,42 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 public class ResponsibleProfessorshipsForCurrentYear extends Group {
 
-	@Override
-	public Set<Person> getElements() {
-		final Set<Person> result = new HashSet<Person>();
-		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-			for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
-				for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
-					if (professorship.isResponsibleFor()) {
-						result.add(professorship.getPerson());
-					}
-				}
-			}
-		}
-		return result;
-	}
+    @Override
+    public Set<Person> getElements() {
+        final Set<Person> result = new HashSet<Person>();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+            for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+                for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+                    if (professorship.isResponsibleFor()) {
+                        result.add(professorship.getPerson());
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
-	@Override
-	public boolean isMember(final Person person) {
-		if (person != null) {
-			for (final Professorship professorship : person.getProfessorshipsSet()) {
-				if (professorship.isResponsibleFor()) {
-					final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-					final ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
-					final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-					if (executionYear.isCurrent()) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isMember(final Person person) {
+        if (person != null) {
+            for (final Professorship professorship : person.getProfessorshipsSet()) {
+                if (professorship.isResponsibleFor()) {
+                    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+                    final ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
+                    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+                    if (executionYear.isCurrent()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return null;
+    }
 
 }

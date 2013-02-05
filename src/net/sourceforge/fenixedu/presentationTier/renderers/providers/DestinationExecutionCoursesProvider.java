@@ -13,43 +13,43 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DestinationExecutionCoursesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final DegreesMergeBean degreeBean = (DegreesMergeBean) source;
+        final DegreesMergeBean degreeBean = (DegreesMergeBean) source;
 
-		Degree destinationDegree = degreeBean.getDestinationDegree();
+        Degree destinationDegree = degreeBean.getDestinationDegree();
 
-		List<ExecutionCourse> destinationExecutionCourses =
-				destinationDegree.getExecutionCourses(degreeBean.getAcademicInterval());
+        List<ExecutionCourse> destinationExecutionCourses =
+                destinationDegree.getExecutionCourses(degreeBean.getAcademicInterval());
 
-		Collections.sort(destinationExecutionCourses, ExecutionCourse.COMPARATOR_BY_ID);
+        Collections.sort(destinationExecutionCourses, ExecutionCourse.COMPARATOR_BY_ID);
 
-		removeDuplicates(destinationExecutionCourses);
+        removeDuplicates(destinationExecutionCourses);
 
-		Collections.sort(destinationExecutionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+        Collections.sort(destinationExecutionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 
-		return destinationExecutionCourses;
-	}
+        return destinationExecutionCourses;
+    }
 
-	public static void removeDuplicates(final List<ExecutionCourse> beanList) {
-		if (beanList.isEmpty()) {
-			return;
-		}
+    public static void removeDuplicates(final List<ExecutionCourse> beanList) {
+        if (beanList.isEmpty()) {
+            return;
+        }
 
-		final Iterator<ExecutionCourse> iter = beanList.iterator();
-		ExecutionCourse prev = iter.next();
-		while (iter.hasNext()) {
-			final ExecutionCourse curr = iter.next();
-			if (curr.equals(prev)) {
-				iter.remove();
-			}
-			prev = curr;
-		}
-	}
+        final Iterator<ExecutionCourse> iter = beanList.iterator();
+        ExecutionCourse prev = iter.next();
+        while (iter.hasNext()) {
+            final ExecutionCourse curr = iter.next();
+            if (curr.equals(prev)) {
+                iter.remove();
+            }
+            prev = curr;
+        }
+    }
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
 }

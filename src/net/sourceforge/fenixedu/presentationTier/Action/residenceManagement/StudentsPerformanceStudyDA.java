@@ -29,277 +29,275 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/residenceStudentsPerformance", module = "residenceManagement")
 @Forwards({
-		@Forward(name = "list-generated-reports", path = "/residenceManagement/studentsPerformance/listGeneratedReports.jsp"),
-		@Forward(
-				name = "prepare-upload-student-numbers",
-				path = "/residenceManagement/studentsPerformance/prepareUploadStudentNumbers.jsp"),
-		@Forward(
-				name = "prepare-generate-students-performance",
-				path = "/residenceManagement/studentsPerformance/prepareGenerateStudentsPerformace.jsp") })
+        @Forward(name = "list-generated-reports", path = "/residenceManagement/studentsPerformance/listGeneratedReports.jsp"),
+        @Forward(name = "prepare-upload-student-numbers",
+                path = "/residenceManagement/studentsPerformance/prepareUploadStudentNumbers.jsp"),
+        @Forward(name = "prepare-generate-students-performance",
+                path = "/residenceManagement/studentsPerformance/prepareGenerateStudentsPerformace.jsp") })
 public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
-	public ActionForward listGeneratedReports(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
-		RenderUtils.invalidateViewState("execution.semester.bean");
+    public ActionForward listGeneratedReports(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
+        RenderUtils.invalidateViewState("execution.semester.bean");
 
-		if (executionSemesterBean == null) {
-			ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
-			executionSemesterBean = new ExecutionSemesterBean(executionSemester);
-		}
+        if (executionSemesterBean == null) {
+            ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
+            executionSemesterBean = new ExecutionSemesterBean(executionSemester);
+        }
 
-		request.setAttribute("executionSemesterBean", executionSemesterBean);
-		request.setAttribute("generatedReports",
-				StudentsPerformanceReport.readGeneratedReports(executionSemesterBean.getSemester()));
-		request.setAttribute("otherReports",
-				StudentsPerformanceReport.readNotGeneratedReports(executionSemesterBean.getSemester()));
+        request.setAttribute("executionSemesterBean", executionSemesterBean);
+        request.setAttribute("generatedReports",
+                StudentsPerformanceReport.readGeneratedReports(executionSemesterBean.getSemester()));
+        request.setAttribute("otherReports",
+                StudentsPerformanceReport.readNotGeneratedReports(executionSemesterBean.getSemester()));
 
-		return mapping.findForward("list-generated-reports");
-	}
+        return mapping.findForward("list-generated-reports");
+    }
 
-	public ActionForward prepareUploadStudentNumbers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		ExecutionSemesterBean executionSemesterBean =
-				new ExecutionSemesterBean((ExecutionSemester) getDomainObject(request, "executionSemesterId"));
-		RenderUtils.invalidateViewState("execution.semester.bean");
-		request.setAttribute("executionSemesterBean", executionSemesterBean);
-		request.setAttribute("studentsListBean", new StudentsListBean());
+    public ActionForward prepareUploadStudentNumbers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ExecutionSemesterBean executionSemesterBean =
+                new ExecutionSemesterBean((ExecutionSemester) getDomainObject(request, "executionSemesterId"));
+        RenderUtils.invalidateViewState("execution.semester.bean");
+        request.setAttribute("executionSemesterBean", executionSemesterBean);
+        request.setAttribute("studentsListBean", new StudentsListBean());
 
-		return mapping.findForward("prepare-upload-student-numbers");
-	}
+        return mapping.findForward("prepare-upload-student-numbers");
+    }
 
-	public ActionForward uploadStudentNumbers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		StudentsListBean studentsBean = getRenderedObject("students.list.bean");
+    public ActionForward uploadStudentNumbers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        StudentsListBean studentsBean = getRenderedObject("students.list.bean");
 
-		try {
-			process(studentsBean);
-			request.setAttribute("studentsListBean", studentsBean);
-		} catch (InvalidSpreasheetException e) {
-			return prepareUploadStudentNumbers(mapping, form, request, response);
-		} catch (IOException e) {
-			return prepareUploadStudentNumbers(mapping, form, request, response);
-		}
+        try {
+            process(studentsBean);
+            request.setAttribute("studentsListBean", studentsBean);
+        } catch (InvalidSpreasheetException e) {
+            return prepareUploadStudentNumbers(mapping, form, request, response);
+        } catch (IOException e) {
+            return prepareUploadStudentNumbers(mapping, form, request, response);
+        }
 
-		return prepareGenerateStudentsPerformace(mapping, form, request, response);
-	}
+        return prepareGenerateStudentsPerformace(mapping, form, request, response);
+    }
 
-	private ActionForward prepareGenerateStudentsPerformace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		request.setAttribute("studentsListBean", getRenderedObject("students.list.bean"));
-		request.setAttribute("executionSemesterBean", getRenderedObject("execution.semester.bean"));
+    private ActionForward prepareGenerateStudentsPerformace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("studentsListBean", getRenderedObject("students.list.bean"));
+        request.setAttribute("executionSemesterBean", getRenderedObject("execution.semester.bean"));
 
-		return mapping.findForward("prepare-generate-students-performance");
-	}
+        return mapping.findForward("prepare-generate-students-performance");
+    }
 
-	public ActionForward requestStudentsPerformanceStudy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		StudentsListBean studentsBean = getRenderedObject("students.list.bean");
-		ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
+    public ActionForward requestStudentsPerformanceStudy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        StudentsListBean studentsBean = getRenderedObject("students.list.bean");
+        ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
 
-		RenderUtils.invalidateViewState("students.list.bean");
-		RenderUtils.invalidateViewState("execution.semester.bean");
+        RenderUtils.invalidateViewState("students.list.bean");
+        RenderUtils.invalidateViewState("execution.semester.bean");
 
-		StudentsPerformanceReport.launchJob(executionSemesterBean.getSemester(), studentsBean.getStudents());
+        StudentsPerformanceReport.launchJob(executionSemesterBean.getSemester(), studentsBean.getStudents());
 
-		return listGeneratedReports(mapping, form, request, response);
-	}
+        return listGeneratedReports(mapping, form, request, response);
+    }
 
-	public ActionForward requestStudentsPerformanceStudyInvalid(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		StudentsListBean studentsBean = getRenderedObject("students.list.bean");
-		ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
+    public ActionForward requestStudentsPerformanceStudyInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        StudentsListBean studentsBean = getRenderedObject("students.list.bean");
+        ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
 
-		RenderUtils.invalidateViewState("students.list.bean");
-		RenderUtils.invalidateViewState("execution.semester.bean");
+        RenderUtils.invalidateViewState("students.list.bean");
+        RenderUtils.invalidateViewState("execution.semester.bean");
 
-		request.setAttribute("studentsListBean", getRenderedObject("students.list.bean"));
-		request.setAttribute("executionSemesterBean", getRenderedObject("execution.semester.bean"));
+        request.setAttribute("studentsListBean", getRenderedObject("students.list.bean"));
+        request.setAttribute("executionSemesterBean", getRenderedObject("execution.semester.bean"));
 
-		return mapping.findForward("prepare-generate-students-performance");
-	}
+        return mapping.findForward("prepare-generate-students-performance");
+    }
 
-	public ActionForward addStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		StudentsListBean studentsListBean = getRenderedObject("students.list.bean");
-		RenderUtils.invalidateViewState("students.list.bean");
+    public ActionForward addStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        StudentsListBean studentsListBean = getRenderedObject("students.list.bean");
+        RenderUtils.invalidateViewState("students.list.bean");
 
-		try {
-			studentsListBean.addStudent(studentsListBean.getStudentNumber());
-		} catch (StudentInexistent e) {
-			addErrorMessage(request, "errors", "error.student.performance.report.student.inexistent", null);
-		}
+        try {
+            studentsListBean.addStudent(studentsListBean.getStudentNumber());
+        } catch (StudentInexistent e) {
+            addErrorMessage(request, "errors", "error.student.performance.report.student.inexistent", null);
+        }
 
-		request.setAttribute("studentsListBean", studentsListBean);
+        request.setAttribute("studentsListBean", studentsListBean);
 
-		return mapping.findForward("prepare-generate-students-performance");
-	}
+        return mapping.findForward("prepare-generate-students-performance");
+    }
 
-	public ActionForward addStudentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		StudentsListBean studentsListBean = getRenderedObject("students.list.bean");
-		RenderUtils.invalidateViewState("students.list.bean");
-		request.setAttribute("studentsListBean", studentsListBean);
+    public ActionForward addStudentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        StudentsListBean studentsListBean = getRenderedObject("students.list.bean");
+        RenderUtils.invalidateViewState("students.list.bean");
+        request.setAttribute("studentsListBean", studentsListBean);
 
-		return mapping.findForward("prepare-generate-students-performance");
-	}
+        return mapping.findForward("prepare-generate-students-performance");
+    }
 
-	public static class StudentsListBean {
-		private final List<Student> students = new ArrayList<Student>();
-		private final List<String> unacceptedEntries = new ArrayList<String>();
+    public static class StudentsListBean {
+        private final List<Student> students = new ArrayList<Student>();
+        private final List<String> unacceptedEntries = new ArrayList<String>();
 
-		private InputStream stream;
-		private String fileName;
-		private long fileSize;
+        private InputStream stream;
+        private String fileName;
+        private long fileSize;
 
-		private Integer studentNumber;
+        private Integer studentNumber;
 
-		public StudentsListBean() {
+        public StudentsListBean() {
 
-		}
+        }
 
-		public List<Student> getStudents() {
-			return students;
-		}
+        public List<Student> getStudents() {
+            return students;
+        }
 
-		public void addStudent(Integer number) throws StudentInexistent {
-			Student student = Student.readStudentByNumber(number);
+        public void addStudent(Integer number) throws StudentInexistent {
+            Student student = Student.readStudentByNumber(number);
 
-			if (student == null) {
-				throw new StudentInexistent();
-			}
+            if (student == null) {
+                throw new StudentInexistent();
+            }
 
-			students.add(student);
-		}
+            students.add(student);
+        }
 
-		public List<String> getUnacceptedEntries() {
-			return unacceptedEntries;
-		}
+        public List<String> getUnacceptedEntries() {
+            return unacceptedEntries;
+        }
 
-		public void addUnacceptedEntry(String entry) {
-			unacceptedEntries.add(entry);
-		}
+        public void addUnacceptedEntry(String entry) {
+            unacceptedEntries.add(entry);
+        }
 
-		public InputStream getStream() {
-			return stream;
-		}
+        public InputStream getStream() {
+            return stream;
+        }
 
-		public void setStream(InputStream stream) {
-			this.stream = stream;
-		}
+        public void setStream(InputStream stream) {
+            this.stream = stream;
+        }
 
-		public String getFileName() {
-			return fileName;
-		}
+        public String getFileName() {
+            return fileName;
+        }
 
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
 
-		public long getFileSize() {
-			return fileSize;
-		}
+        public long getFileSize() {
+            return fileSize;
+        }
 
-		public void setFileSize(long fileSize) {
-			this.fileSize = fileSize;
-		}
+        public void setFileSize(long fileSize) {
+            this.fileSize = fileSize;
+        }
 
-		public Integer getStudentNumber() {
-			return studentNumber;
-		}
+        public Integer getStudentNumber() {
+            return studentNumber;
+        }
 
-		public void setStudentNumber(Integer studentNumber) {
-			this.studentNumber = studentNumber;
-		}
+        public void setStudentNumber(Integer studentNumber) {
+            this.studentNumber = studentNumber;
+        }
 
-	}
+    }
 
-	public static class ExecutionSemesterBean implements java.io.Serializable {
-		/**
+    public static class ExecutionSemesterBean implements java.io.Serializable {
+        /**
 	 * 
 	 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private ExecutionSemester semester;
+        private ExecutionSemester semester;
 
-		public ExecutionSemesterBean() {
+        public ExecutionSemesterBean() {
 
-		}
+        }
 
-		public ExecutionSemesterBean(ExecutionSemester executionSemester) {
-			this.semester = executionSemester;
-		}
+        public ExecutionSemesterBean(ExecutionSemester executionSemester) {
+            this.semester = executionSemester;
+        }
 
-		public ExecutionSemester getSemester() {
-			return semester;
-		}
+        public ExecutionSemester getSemester() {
+            return semester;
+        }
 
-		public void setSemester(ExecutionSemester semester) {
-			this.semester = semester;
-		}
-	}
+        public void setSemester(ExecutionSemester semester) {
+            this.semester = semester;
+        }
+    }
 
-	private void process(StudentsListBean bean) throws IOException, InvalidSpreasheetException {
-		POIFSFileSystem fs = new POIFSFileSystem(bean.getStream());
-		HSSFWorkbook wb = new HSSFWorkbook(fs);
+    private void process(StudentsListBean bean) throws IOException, InvalidSpreasheetException {
+        POIFSFileSystem fs = new POIFSFileSystem(bean.getStream());
+        HSSFWorkbook wb = new HSSFWorkbook(fs);
 
-		HSSFSheet sheet = wb.getSheetAt(0);
+        HSSFSheet sheet = wb.getSheetAt(0);
 
-		if (sheet == null) {
-			throw new InvalidSpreasheetException();
-		}
+        if (sheet == null) {
+            throw new InvalidSpreasheetException();
+        }
 
-		int i = 2;
-		HSSFRow row;
-		while ((row = sheet.getRow(i)) != null) {
-			String studentNumber = row.getCell((short) 0).getStringCellValue();
-			if (StringUtils.isEmpty(studentNumber)) {
-				break;
-			}
+        int i = 2;
+        HSSFRow row;
+        while ((row = sheet.getRow(i)) != null) {
+            String studentNumber = row.getCell((short) 0).getStringCellValue();
+            if (StringUtils.isEmpty(studentNumber)) {
+                break;
+            }
 
-			try {
-				bean.addStudent(Integer.parseInt(studentNumber));
-			} catch (NumberFormatException e) {
-				bean.addUnacceptedEntry(studentNumber);
-			} catch (StudentInexistent e) {
-				bean.addUnacceptedEntry(studentNumber);
-			}
+            try {
+                bean.addStudent(Integer.parseInt(studentNumber));
+            } catch (NumberFormatException e) {
+                bean.addUnacceptedEntry(studentNumber);
+            } catch (StudentInexistent e) {
+                bean.addUnacceptedEntry(studentNumber);
+            }
 
-			i++;
-		}
-	}
+            i++;
+        }
+    }
 
-	private static class InvalidSpreasheetException extends Exception {
+    private static class InvalidSpreasheetException extends Exception {
 
-		/**
+        /**
 	 * 
 	 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		public InvalidSpreasheetException() {
-			super();
-		}
+        public InvalidSpreasheetException() {
+            super();
+        }
 
-		public InvalidSpreasheetException(String arg0) {
-			super(arg0);
-		}
+        public InvalidSpreasheetException(String arg0) {
+            super(arg0);
+        }
 
-	}
+    }
 
-	private static class StudentInexistent extends Exception {
+    private static class StudentInexistent extends Exception {
 
-		/**
+        /**
 	 * 
 	 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		public StudentInexistent() {
-			super();
-		}
+        public StudentInexistent() {
+            super();
+        }
 
-		public StudentInexistent(String message) {
-			super(message);
-		}
+        public StudentInexistent(String message) {
+            super(message);
+        }
 
-	}
+    }
 }

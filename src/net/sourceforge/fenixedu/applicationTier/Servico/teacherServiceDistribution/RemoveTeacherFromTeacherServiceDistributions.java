@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
  */
 public class RemoveTeacherFromTeacherServiceDistributions extends FenixService {
 
-	public void run(Integer tsdId, Integer tsdTeacherId) throws FenixServiceException {
+    public void run(Integer tsdId, Integer tsdTeacherId) throws FenixServiceException {
 
-		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-		TSDTeacher tsdTeacher = rootDomainObject.readTSDTeacherByOID(tsdTeacherId);
+        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        TSDTeacher tsdTeacher = rootDomainObject.readTSDTeacherByOID(tsdTeacherId);
 
-		tsd.removeTSDTeacherFromAllChilds(tsdTeacher);
-		if (tsd.getIsRoot()) {
-			tsdTeacher.delete();
-		}
-	}
+        tsd.removeTSDTeacherFromAllChilds(tsdTeacher);
+        if (tsd.getIsRoot()) {
+            tsdTeacher.delete();
+        }
+    }
 }

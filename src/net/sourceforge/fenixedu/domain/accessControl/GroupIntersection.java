@@ -13,101 +13,101 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public final class GroupIntersection extends NodeGroup {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public GroupIntersection(IGroup... groups) {
-		super(groups);
-	}
+    public GroupIntersection(IGroup... groups) {
+        super(groups);
+    }
 
-	public GroupIntersection(Collection<IGroup> groups) {
-		super(groups);
-	}
+    public GroupIntersection(Collection<IGroup> groups) {
+        super(groups);
+    }
 
-	@Override
-	public Group with(final Group... groups) {
-		final List<IGroup> resultGroups = new ArrayList<IGroup>();
+    @Override
+    public Group with(final Group... groups) {
+        final List<IGroup> resultGroups = new ArrayList<IGroup>();
 
-		for (final IGroup iter : getChildren()) {
-			if (iter instanceof GroupIntersection) {
-				resultGroups.addAll(((GroupIntersection) iter).getChildren());
-			} else {
-				resultGroups.add(iter);
-			}
-		}
+        for (final IGroup iter : getChildren()) {
+            if (iter instanceof GroupIntersection) {
+                resultGroups.addAll(((GroupIntersection) iter).getChildren());
+            } else {
+                resultGroups.add(iter);
+            }
+        }
 
-		for (final IGroup iter : Arrays.asList(groups)) {
-			if (iter instanceof GroupIntersection) {
-				resultGroups.addAll(((GroupIntersection) iter).getChildren());
-			} else {
-				resultGroups.add(iter);
-			}
-		}
+        for (final IGroup iter : Arrays.asList(groups)) {
+            if (iter instanceof GroupIntersection) {
+                resultGroups.addAll(((GroupIntersection) iter).getChildren());
+            } else {
+                resultGroups.add(iter);
+            }
+        }
 
-		return new GroupIntersection(resultGroups);
-	}
+        return new GroupIntersection(resultGroups);
+    }
 
-	@Override
-	public Group without(final Group group) {
-		Group result = this;
+    @Override
+    public Group without(final Group group) {
+        Group result = this;
 
-		if (group != null) {
-			final List<IGroup> updated = new ArrayList<IGroup>();
-			for (final IGroup iter : getChildren()) {
-				if (!iter.equals(group) && iter instanceof Group) {
-					updated.add(((Group) iter).without(group));
-				}
-			}
-			result = updated.size() == 1 ? (Group) updated.iterator().next() : new GroupIntersection(updated);
-		}
+        if (group != null) {
+            final List<IGroup> updated = new ArrayList<IGroup>();
+            for (final IGroup iter : getChildren()) {
+                if (!iter.equals(group) && iter instanceof Group) {
+                    updated.add(((Group) iter).without(group));
+                }
+            }
+            result = updated.size() == 1 ? (Group) updated.iterator().next() : new GroupIntersection(updated);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Collection<Person> elementsCollection = null;
+    @Override
+    public Set<Person> getElements() {
+        Collection<Person> elementsCollection = null;
 
-		for (Object element : getChildren()) {
-			IGroup group = (IGroup) element;
+        for (Object element : getChildren()) {
+            IGroup group = (IGroup) element;
 
-			if (elementsCollection == null) {
-				elementsCollection = new ArrayList<Person>(group.getElements());
-			} else {
-				elementsCollection = CollectionUtils.intersection(elementsCollection, group.getElements());
-			}
-		}
+            if (elementsCollection == null) {
+                elementsCollection = new ArrayList<Person>(group.getElements());
+            } else {
+                elementsCollection = CollectionUtils.intersection(elementsCollection, group.getElements());
+            }
+        }
 
-		Set<Person> elements = buildSet();
-		if (elementsCollection != null) {
-			elements.addAll(elementsCollection);
-		}
+        Set<Person> elements = buildSet();
+        if (elementsCollection != null) {
+            elements.addAll(elementsCollection);
+        }
 
-		return freezeSet(elements);
-	}
+        return freezeSet(elements);
+    }
 
-	@Override
-	public boolean allows(IUserView userView) {
-		for (IGroup group : getChildren()) {
-			if (!group.allows(userView)) {
-				return false;
-			}
-		}
-		return !getChildren().isEmpty();
-	}
+    @Override
+    public boolean allows(IUserView userView) {
+        for (IGroup group : getChildren()) {
+            if (!group.allows(userView)) {
+                return false;
+            }
+        }
+        return !getChildren().isEmpty();
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		for (IGroup group : getChildren()) {
-			if (!group.isMember(person)) {
-				return false;
-			}
-		}
+    @Override
+    public boolean isMember(Person person) {
+        for (IGroup group : getChildren()) {
+            if (!group.isMember(person)) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	protected String getExpressionOperator() {
-		return "&&";
-	}
+    @Override
+    protected String getExpressionOperator() {
+        return "&&";
+    }
 }

@@ -14,192 +14,192 @@ import org.joda.time.LocalDate;
 
 public class AlumniJobBean implements Serializable {
 
-	private Alumni alumni;
-	private String employerName;
-	private String city;
-	private Country country;
-	private BusinessArea parentBusinessArea;
-	private BusinessArea childBusinessArea;
-	private String position;
-	private LocalDate beginDate;
-	private LocalDate endDate;
-	private Integer jobId;
-	private String schema;
-	private JobApplicationType applicationType;
-	private ContractType contractType;
-	private SalaryType salaryType;
-	private Double salary;
+    private Alumni alumni;
+    private String employerName;
+    private String city;
+    private Country country;
+    private BusinessArea parentBusinessArea;
+    private BusinessArea childBusinessArea;
+    private String position;
+    private LocalDate beginDate;
+    private LocalDate endDate;
+    private Integer jobId;
+    private String schema;
+    private JobApplicationType applicationType;
+    private ContractType contractType;
+    private SalaryType salaryType;
+    private Double salary;
 
-	private AlumniJobBean(Alumni alumni, String schema) {
-		setAlumni(alumni);
-		setSchema(schema);
-	}
+    private AlumniJobBean(Alumni alumni, String schema) {
+        setAlumni(alumni);
+        setSchema(schema);
+    }
 
-	public AlumniJobBean(Alumni alumni) {
-		this(alumni, "alumni.public.access.jobContact");
-	}
+    public AlumniJobBean(Alumni alumni) {
+        this(alumni, "alumni.public.access.jobContact");
+    }
 
-	public AlumniJobBean(Alumni alumni, Job job) {
-		this(alumni, "alumni.public.access.jobContact.full");
-		setEmployerName(job.getEmployerName());
-		setCity(job.getCity());
-		setCountry(job.getCountry());
-		setParentBusinessArea(job.getParentBusinessArea());
-		setChildBusinessArea(job.getBusinessArea());
-		setPosition(job.getPosition());
-		setBeginDateAsDate(job.getBeginDate());
-		setEndDateAsDate(job.getEndDate());
-		setApplicationType(job.getJobApplicationType());
-		setContractType(job.getContractType());
-		setSalaryType(job.getSalaryType());
-		setJobId(job.getIdInternal());
-		setSalary(job.getSalary());
-	}
+    public AlumniJobBean(Alumni alumni, Job job) {
+        this(alumni, "alumni.public.access.jobContact.full");
+        setEmployerName(job.getEmployerName());
+        setCity(job.getCity());
+        setCountry(job.getCountry());
+        setParentBusinessArea(job.getParentBusinessArea());
+        setChildBusinessArea(job.getBusinessArea());
+        setPosition(job.getPosition());
+        setBeginDateAsDate(job.getBeginDate());
+        setEndDateAsDate(job.getEndDate());
+        setApplicationType(job.getJobApplicationType());
+        setContractType(job.getContractType());
+        setSalaryType(job.getSalaryType());
+        setJobId(job.getIdInternal());
+        setSalary(job.getSalary());
+    }
 
-	public void setAlumni(Alumni alumni) {
-		this.alumni = alumni;
-	}
+    public void setAlumni(Alumni alumni) {
+        this.alumni = alumni;
+    }
 
-	public Alumni getAlumni() {
-		return this.alumni;
-	}
+    public Alumni getAlumni() {
+        return this.alumni;
+    }
 
-	public void setCountry(Country country) {
-		this.country = country;
-	}
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
-	public Country getCountry() {
-		return this.country;
-	}
+    public Country getCountry() {
+        return this.country;
+    }
 
-	public String getEmployerName() {
-		return employerName;
-	}
+    public String getEmployerName() {
+        return employerName;
+    }
 
-	public void setEmployerName(String employerName) {
-		this.employerName = employerName;
-	}
+    public void setEmployerName(String employerName) {
+        this.employerName = employerName;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getPosition() {
-		return position;
-	}
+    public String getPosition() {
+        return position;
+    }
 
-	public void setPosition(String jobPosition) {
-		this.position = jobPosition;
-	}
+    public void setPosition(String jobPosition) {
+        this.position = jobPosition;
+    }
 
-	public void setParentBusinessArea(BusinessArea businessArea) {
-		this.parentBusinessArea = businessArea;
-		if (businessArea == null) {
-			setChildBusinessArea(null);
-		}
-	}
+    public void setParentBusinessArea(BusinessArea businessArea) {
+        this.parentBusinessArea = businessArea;
+        if (businessArea == null) {
+            setChildBusinessArea(null);
+        }
+    }
 
-	public BusinessArea getParentBusinessArea() {
-		return this.parentBusinessArea;
-	}
+    public BusinessArea getParentBusinessArea() {
+        return this.parentBusinessArea;
+    }
 
-	public void setChildBusinessArea(BusinessArea businessArea) {
-		this.childBusinessArea = businessArea;
-	}
+    public void setChildBusinessArea(BusinessArea businessArea) {
+        this.childBusinessArea = businessArea;
+    }
 
-	public BusinessArea getChildBusinessArea() {
-		return this.childBusinessArea;
-	}
+    public BusinessArea getChildBusinessArea() {
+        return this.childBusinessArea;
+    }
 
-	public LocalDate getBeginDate() {
-		return beginDate;
-	}
+    public LocalDate getBeginDate() {
+        return beginDate;
+    }
 
-	public void setBeginDate(LocalDate beginDate) {
-		this.beginDate = beginDate;
-	}
+    public void setBeginDate(LocalDate beginDate) {
+        this.beginDate = beginDate;
+    }
 
-	public LocalDate getEndDate() {
-		return endDate;
-	}
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 
-	public Integer getJobId() {
-		return jobId;
-	}
+    public Integer getJobId() {
+        return jobId;
+    }
 
-	public void setJobId(Integer jobId) {
-		this.jobId = jobId;
-	}
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
 
-	public String getSchema() {
-		return schema;
-	}
+    public String getSchema() {
+        return schema;
+    }
 
-	public void setSchema(String schema) {
-		this.schema = schema;
-	}
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
 
-	public void updateSchema() {
-		if (getParentBusinessArea() == null) {
-			setSchema("alumni.public.access.jobContact");
-		} else {
-			setSchema("alumni.public.access.jobContact.full");
-		}
-	}
+    public void updateSchema() {
+        if (getParentBusinessArea() == null) {
+            setSchema("alumni.public.access.jobContact");
+        } else {
+            setSchema("alumni.public.access.jobContact.full");
+        }
+    }
 
-	private void setBeginDateAsDate(LocalDate beginDate) {
-		setBeginDate(beginDate);
-	}
+    private void setBeginDateAsDate(LocalDate beginDate) {
+        setBeginDate(beginDate);
+    }
 
-	private void setEndDateAsDate(LocalDate endDate) {
-		setEndDate(endDate);
-	}
+    private void setEndDateAsDate(LocalDate endDate) {
+        setEndDate(endDate);
+    }
 
-	public LocalDate getBeginDateAsLocalDate() {
-		return getBeginDate();
-	}
+    public LocalDate getBeginDateAsLocalDate() {
+        return getBeginDate();
+    }
 
-	public LocalDate getEndDateAsLocalDate() {
-		return getEndDate();
-	}
+    public LocalDate getEndDateAsLocalDate() {
+        return getEndDate();
+    }
 
-	public ContractType getContractType() {
-		return contractType;
-	}
+    public ContractType getContractType() {
+        return contractType;
+    }
 
-	public void setContractType(ContractType contractType) {
-		this.contractType = contractType;
-	}
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
 
-	public JobApplicationType getApplicationType() {
-		return applicationType;
-	}
+    public JobApplicationType getApplicationType() {
+        return applicationType;
+    }
 
-	public void setApplicationType(JobApplicationType applicationType) {
-		this.applicationType = applicationType;
-	}
+    public void setApplicationType(JobApplicationType applicationType) {
+        this.applicationType = applicationType;
+    }
 
-	public SalaryType getSalaryType() {
-		return salaryType;
-	}
+    public SalaryType getSalaryType() {
+        return salaryType;
+    }
 
-	public void setSalaryType(SalaryType salaryType) {
-		this.salaryType = salaryType;
-	}
+    public void setSalaryType(SalaryType salaryType) {
+        this.salaryType = salaryType;
+    }
 
-	public Double getSalary() {
-		return salary;
-	}
+    public Double getSalary() {
+        return salary;
+    }
 
-	public void setSalary(Double salary) {
-		this.salary = salary;
-	}
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
 }

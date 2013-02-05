@@ -10,51 +10,51 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class ReadQualificationsAuthorizationFilter extends Filtro {
 
-	public ReadQualificationsAuthorizationFilter() {
-	}
+    public ReadQualificationsAuthorizationFilter() {
+    }
 
-	protected RoleType getRoleTypeTeacher() {
-		return RoleType.TEACHER;
-	}
+    protected RoleType getRoleTypeTeacher() {
+        return RoleType.TEACHER;
+    }
 
-	protected RoleType getRoleTypeGrantOwnerManager() {
-		return RoleType.GRANT_OWNER_MANAGER;
-	}
+    protected RoleType getRoleTypeGrantOwnerManager() {
+        return RoleType.GRANT_OWNER_MANAGER;
+    }
 
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-		IUserView id = getRemoteUser(request);
-		Object[] arguments = getServiceCallArguments(request);
-		try {
-			// Verify if needed fields are null
-			if ((id == null) || (id.getRoleTypes() == null)) {
-				throw new NotAuthorizedException();
-			}
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
+        try {
+            // Verify if needed fields are null
+            if ((id == null) || (id.getRoleTypes() == null)) {
+                throw new NotAuthorizedException();
+            }
 
-			// Verify if:
-			// 1: The user ir a Grant Owner Manager and the qualification
-			// belongs to a Grant Owner
-			// 2: The user ir a Teacher and the qualification is his own
-			boolean valid = false;
+            // Verify if:
+            // 1: The user ir a Grant Owner Manager and the qualification
+            // belongs to a Grant Owner
+            // 2: The user ir a Teacher and the qualification is his own
+            boolean valid = false;
 
-			if ((id.hasRoleType(getRoleTypeGrantOwnerManager())) && isGrantOwner((String) arguments[0])) {
-				valid = true;
-			}
+            if ((id.hasRoleType(getRoleTypeGrantOwnerManager())) && isGrantOwner((String) arguments[0])) {
+                valid = true;
+            }
 
-			if (id.hasRoleType(getRoleTypeTeacher())) {
-				valid = true;
-			}
+            if (id.hasRoleType(getRoleTypeTeacher())) {
+                valid = true;
+            }
 
-			if (!valid) {
-				throw new NotAuthorizedException();
-			}
-		} catch (RuntimeException e) {
-			throw new NotAuthorizedException();
-		}
-	}
+            if (!valid) {
+                throw new NotAuthorizedException();
+            }
+        } catch (RuntimeException e) {
+            throw new NotAuthorizedException();
+        }
+    }
 
-	private boolean isGrantOwner(String user) {
-		return Person.readPersonByUsername(user).hasGrantOwner();
-	}
+    private boolean isGrantOwner(String user) {
+        return Person.readPersonByUsername(user).hasGrantOwner();
+    }
 
 }

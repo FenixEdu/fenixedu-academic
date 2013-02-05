@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByDegreeCurricularPlan extends FenixService {
 
-	@Service
-	public static List<InfoExecutionDegree> run(final DegreeCurricularPlan degreeCurricularPlan) throws FenixServiceException {
-		return getExecutionCourses(degreeCurricularPlan);
-	}
+    @Service
+    public static List<InfoExecutionDegree> run(final DegreeCurricularPlan degreeCurricularPlan) throws FenixServiceException {
+        return getExecutionCourses(degreeCurricularPlan);
+    }
 
-	public static List<InfoExecutionDegree> getExecutionCourses(final DegreeCurricularPlan degreeCurricularPlan) {
-		final List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+    public static List<InfoExecutionDegree> getExecutionCourses(final DegreeCurricularPlan degreeCurricularPlan) {
+        final List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
-		final List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
-		for (final ExecutionDegree executionDegree : executionDegrees) {
-			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-			result.add(infoExecutionDegree);
-		}
+        final List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
+        for (final ExecutionDegree executionDegree : executionDegrees) {
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            result.add(infoExecutionDegree);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

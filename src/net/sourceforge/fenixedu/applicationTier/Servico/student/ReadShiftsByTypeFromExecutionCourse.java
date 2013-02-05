@@ -22,19 +22,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadShiftsByTypeFromExecutionCourse extends FenixService {
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-		final Set<Shift> shifts = executionCourse.findShiftByType(tipoAula);
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final Set<Shift> shifts = executionCourse.findShiftByType(tipoAula);
 
-		return (List) CollectionUtils.collect(shifts, new Transformer() {
-			@Override
-			public Object transform(Object arg0) {
-				final Shift shift = (Shift) arg0;
-				return InfoShift.newInfoFromDomain(shift);
-			}
-		});
-	}
+        return (List) CollectionUtils.collect(shifts, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                final Shift shift = (Shift) arg0;
+                return InfoShift.newInfoFromDomain(shift);
+            }
+        });
+    }
 
 }

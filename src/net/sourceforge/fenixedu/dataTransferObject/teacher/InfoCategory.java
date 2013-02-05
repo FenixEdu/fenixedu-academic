@@ -13,110 +13,110 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
  * 
  */
 public class InfoCategory extends InfoObject {
-	private Boolean canBeExecutionCourseResponsible;
+    private Boolean canBeExecutionCourseResponsible;
 
-	private String code;
+    private String code;
 
-	private String longName;
+    private String longName;
 
-	private String shortName;
+    private String shortName;
 
-	public InfoCategory() {
-	}
+    public InfoCategory() {
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoCategory) {
-			resultado = getCode().equals(((InfoCategory) obj).getCode());
-		}
-		return resultado;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoCategory) {
+            resultado = getCode().equals(((InfoCategory) obj).getCode());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return Returns the canBeExecutionCourseResponsible.
-	 */
-	public Boolean getCanBeExecutionCourseResponsible() {
-		return this.canBeExecutionCourseResponsible;
-	}
+    /**
+     * @return Returns the canBeExecutionCourseResponsible.
+     */
+    public Boolean getCanBeExecutionCourseResponsible() {
+        return this.canBeExecutionCourseResponsible;
+    }
 
-	/**
-	 * @return Returns the code.
-	 */
-	public String getCode() {
-		return code;
-	}
+    /**
+     * @return Returns the code.
+     */
+    public String getCode() {
+        return code;
+    }
 
-	/**
-	 * @return Returns the longName.
-	 */
-	public String getLongName() {
-		return longName;
-	}
+    /**
+     * @return Returns the longName.
+     */
+    public String getLongName() {
+        return longName;
+    }
 
-	/**
-	 * @return Returns the shortName.
-	 */
-	public String getShortName() {
-		return shortName;
-	}
+    /**
+     * @return Returns the shortName.
+     */
+    public String getShortName() {
+        return shortName;
+    }
 
-	/**
-	 * @param canBeExecutionCourseResponsible
-	 *            The canBeExecutionCourseResponsible to set.
-	 */
-	public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible) {
-		this.canBeExecutionCourseResponsible = canBeExecutionCourseResponsible;
-	}
+    /**
+     * @param canBeExecutionCourseResponsible
+     *            The canBeExecutionCourseResponsible to set.
+     */
+    public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible) {
+        this.canBeExecutionCourseResponsible = canBeExecutionCourseResponsible;
+    }
 
-	/**
-	 * @param code
-	 *            The code to set.
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
+    /**
+     * @param code
+     *            The code to set.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	/**
-	 * @param longName
-	 *            The longName to set.
-	 */
-	public void setLongName(String longName) {
-		this.longName = longName;
-	}
+    /**
+     * @param longName
+     *            The longName to set.
+     */
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
 
-	/**
-	 * @param shortName
-	 *            The shortName to set.
-	 */
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
+    /**
+     * @param shortName
+     *            The shortName to set.
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
-	 * (Dominio.DomainObject)
-	 */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+     * (Dominio.DomainObject)
+     */
 
-	public void copyFromDomain(ProfessionalCategory category) {
-		super.copyFromDomain(category);
-		if (category != null) {
-			setCanBeExecutionCourseResponsible(category.isTeacherProfessorCategory());
-			setCode(category.getName().getContent());
-			setLongName(category.getName().getContent());
-			setShortName(category.getName().getContent());
-		}
-	}
+    public void copyFromDomain(ProfessionalCategory category) {
+        super.copyFromDomain(category);
+        if (category != null) {
+            setCanBeExecutionCourseResponsible(category.isTeacherProfessorCategory());
+            setCode(category.getName().getContent());
+            setLongName(category.getName().getContent());
+            setShortName(category.getName().getContent());
+        }
+    }
 
-	public static InfoCategory newInfoFromDomain(ProfessionalCategory category) {
-		InfoCategory infoCategory = null;
-		if (category != null) {
-			infoCategory = new InfoCategory();
-			infoCategory.copyFromDomain(category);
-		}
-		return infoCategory;
-	}
+    public static InfoCategory newInfoFromDomain(ProfessionalCategory category) {
+        InfoCategory infoCategory = null;
+        if (category != null) {
+            infoCategory = new InfoCategory();
+            infoCategory.copyFromDomain(category);
+        }
+        return infoCategory;
+    }
 }

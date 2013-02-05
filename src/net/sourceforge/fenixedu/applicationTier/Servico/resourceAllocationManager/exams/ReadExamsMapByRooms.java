@@ -31,110 +31,110 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExamsMapByRooms extends FenixService {
 
-	@Service
-	public static List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
-		final List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
+    @Service
+    public static List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
+        final List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
 
-		final InfoPeriod period =
-				calculateExamsSeason(infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getSemester()
-						.intValue());
+        final InfoPeriod period =
+                calculateExamsSeason(infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getSemester()
+                        .intValue());
 
-		final Calendar startSeason1 = period.getStartDate();
-		final Calendar endSeason2 = period.getEndDate();
+        final Calendar startSeason1 = period.getStartDate();
+        final Calendar endSeason2 = period.getEndDate();
 
-		if (startSeason1.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-			// The calendar must start at a monday
-			int shiftDays = Calendar.MONDAY - startSeason1.get(Calendar.DAY_OF_WEEK);
-			startSeason1.add(Calendar.DATE, shiftDays);
-		}
+        if (startSeason1.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            // The calendar must start at a monday
+            int shiftDays = Calendar.MONDAY - startSeason1.get(Calendar.DAY_OF_WEEK);
+            startSeason1.add(Calendar.DATE, shiftDays);
+        }
 
-		final ExecutionSemester executionSemester =
-				rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        final ExecutionSemester executionSemester =
+                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 
-		for (final InfoRoom infoRoom : infoRooms) {
-			final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
+        for (final InfoRoom infoRoom : infoRooms) {
+            final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
 
-			infoRoomExamsMap.setInfoRoom(infoRoom);
-			infoRoomExamsMap.setStartSeason1(startSeason1);
-			infoRoomExamsMap.setEndSeason1(null);
-			infoRoomExamsMap.setStartSeason2(null);
-			infoRoomExamsMap.setEndSeason2(endSeason2);
+            infoRoomExamsMap.setInfoRoom(infoRoom);
+            infoRoomExamsMap.setStartSeason1(startSeason1);
+            infoRoomExamsMap.setEndSeason1(null);
+            infoRoomExamsMap.setStartSeason2(null);
+            infoRoomExamsMap.setEndSeason2(endSeason2);
 
-			// final List<Exam> exams =
-			// Exam.getAllByRoomAndExecutionPeriod(infoRoom.getNome(),
-			// infoExecutionPeriod.getName(),
-			// infoExecutionPeriod.getInfoExecutionYear().getYear());
-			// infoRoomExamsMap.setExams(getInfoExams(exams,
-			// infoExecutionPeriod));
+            // final List<Exam> exams =
+            // Exam.getAllByRoomAndExecutionPeriod(infoRoom.getNome(),
+            // infoExecutionPeriod.getName(),
+            // infoExecutionPeriod.getInfoExecutionYear().getYear());
+            // infoRoomExamsMap.setExams(getInfoExams(exams,
+            // infoExecutionPeriod));
 
-			infoRoomExamsMap.setExams(getInfoExams(infoRoom, executionSemester));
+            infoRoomExamsMap.setExams(getInfoExams(infoRoom, executionSemester));
 
-			infoRoomExamMapList.add(infoRoomExamsMap);
-		}
-		return infoRoomExamMapList;
-	}
+            infoRoomExamMapList.add(infoRoomExamsMap);
+        }
+        return infoRoomExamMapList;
+    }
 
-	private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
-		final List<InfoExam> result = new ArrayList<InfoExam>();
-		final AllocatableSpace oldRoom = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
-		for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
-			if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-				List<WrittenEvaluation> writtenEvaluations =
-						((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluations();
-				for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-					if (writtenEvaluation instanceof Exam) {
-						final Exam exam = (Exam) writtenEvaluation;
-						final Set<ExecutionCourse> executionCourses = exam.getAssociatedExecutionCoursesSet();
-						final ExecutionCourse executionCourse =
-								executionCourses.isEmpty() ? null : executionCourses.iterator().next();
-						if (executionCourse != null && executionSemester == executionCourse.getExecutionPeriod()) {
-							InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-							infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
-									.getAssociatedExecutionCourses().get(0)));
-							result.add(infoExam);
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
+    private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
+        final List<InfoExam> result = new ArrayList<InfoExam>();
+        final AllocatableSpace oldRoom = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
+        for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
+            if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
+                List<WrittenEvaluation> writtenEvaluations =
+                        ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluations();
+                for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
+                    if (writtenEvaluation instanceof Exam) {
+                        final Exam exam = (Exam) writtenEvaluation;
+                        final Set<ExecutionCourse> executionCourses = exam.getAssociatedExecutionCoursesSet();
+                        final ExecutionCourse executionCourse =
+                                executionCourses.isEmpty() ? null : executionCourses.iterator().next();
+                        if (executionCourse != null && executionSemester == executionCourse.getExecutionPeriod()) {
+                            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+                            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
+                                    .getAssociatedExecutionCourses().get(0)));
+                            result.add(infoExam);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
-	// private List<InfoExam> getInfoExams(List<Exam> exams) {
-	// final List<InfoExam> result = new ArrayList<InfoExam>(exams.size());
-	// for (final Exam exam : exams) {
-	// InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-	// // Use one execution course
-	// infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
-	// .getAssociatedExecutionCourses().get(0)));
-	// result.add(infoExam);
-	// }
-	// return result;
-	// }
-	//
-	private static InfoPeriod calculateExamsSeason(final String year, final int semester) {
+    // private List<InfoExam> getInfoExams(List<Exam> exams) {
+    // final List<InfoExam> result = new ArrayList<InfoExam>(exams.size());
+    // for (final Exam exam : exams) {
+    // InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+    // // Use one execution course
+    // infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
+    // .getAssociatedExecutionCourses().get(0)));
+    // result.add(infoExam);
+    // }
+    // return result;
+    // }
+    //
+    private static InfoPeriod calculateExamsSeason(final String year, final int semester) {
 
-		ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
-		final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();
+        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
+        final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();
 
-		Calendar startSeason1 = null, endSeason2 = null;
-		Calendar startExams, endExams;
+        Calendar startSeason1 = null, endSeason2 = null;
+        Calendar startExams, endExams;
 
-		for (final ExecutionDegree executionDegree : executionDegreesList) {
-			if (semester == 1) {
-				startExams = executionDegree.getPeriodExamsFirstSemester().getStartDate();
-				endExams = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();
-			} else {
-				startExams = executionDegree.getPeriodExamsSecondSemester().getStartDate();
-				endExams = executionDegree.getPeriodExamsSecondSemester().getEndDateOfComposite();
-			}
-			if (startSeason1 == null || startExams.before(startSeason1)) {
-				startSeason1 = startExams;
-			}
-			if (endSeason2 == null || endExams.after(endSeason2)) {
-				endSeason2 = endExams;
-			}
-		}
-		return new InfoPeriod(startSeason1, endSeason2);
-	}
+        for (final ExecutionDegree executionDegree : executionDegreesList) {
+            if (semester == 1) {
+                startExams = executionDegree.getPeriodExamsFirstSemester().getStartDate();
+                endExams = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();
+            } else {
+                startExams = executionDegree.getPeriodExamsSecondSemester().getStartDate();
+                endExams = executionDegree.getPeriodExamsSecondSemester().getEndDateOfComposite();
+            }
+            if (startSeason1 == null || startExams.before(startSeason1)) {
+                startSeason1 = startExams;
+            }
+            if (endSeason2 == null || endExams.after(endSeason2)) {
+                endSeason2 = endExams;
+            }
+        }
+        return new InfoPeriod(startSeason1, endSeason2);
+    }
 }

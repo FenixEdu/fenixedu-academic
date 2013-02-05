@@ -17,51 +17,51 @@ import org.apache.struts.validator.ValidatorForm;
  */
 public class AnnouncementsStartPageForm extends ValidatorForm {
 
-	private static final long serialVersionUID = -1164357680230910679L;
+    private static final long serialVersionUID = -1164357680230910679L;
 
-	private String recentBoardsTimeSpanSelection = RecentBoardsTimeSpanSelection.TS_LAST_WEEK.name();
-	private String announcementBoardAccessType = AnnouncementBoardAccessType.ABAT_ALL.name();
-	private String announcementBoardAccessLevel = AnnouncementBoardAccessLevel.ABAL_ALL.name();
-	private Integer howManyAnnouncementsToShow = Integer.valueOf(6);
-	private String boardType = "BOOKMARKED";
+    private String recentBoardsTimeSpanSelection = RecentBoardsTimeSpanSelection.TS_LAST_WEEK.name();
+    private String announcementBoardAccessType = AnnouncementBoardAccessType.ABAT_ALL.name();
+    private String announcementBoardAccessLevel = AnnouncementBoardAccessLevel.ABAL_ALL.name();
+    private Integer howManyAnnouncementsToShow = Integer.valueOf(6);
+    private String boardType = "BOOKMARKED";
 
-	public Integer getHowManyAnnouncementsToShow() {
-		return howManyAnnouncementsToShow;
-	}
+    public Integer getHowManyAnnouncementsToShow() {
+        return howManyAnnouncementsToShow;
+    }
 
-	public void setHowManyAnnouncementsToShow(Integer howManyAnnouncementsToShow) {
-		this.howManyAnnouncementsToShow = howManyAnnouncementsToShow;
-	}
+    public void setHowManyAnnouncementsToShow(Integer howManyAnnouncementsToShow) {
+        this.howManyAnnouncementsToShow = howManyAnnouncementsToShow;
+    }
 
-	public String getAnnouncementBoardAccessLevel() {
-		return announcementBoardAccessLevel;
-	}
+    public String getAnnouncementBoardAccessLevel() {
+        return announcementBoardAccessLevel;
+    }
 
-	public void setAnnouncementBoardAccessLevel(String announcementBoardAccessLevel) {
-		this.announcementBoardAccessLevel = announcementBoardAccessLevel;
-	}
+    public void setAnnouncementBoardAccessLevel(String announcementBoardAccessLevel) {
+        this.announcementBoardAccessLevel = announcementBoardAccessLevel;
+    }
 
-	public String getAnnouncementBoardAccessType() {
-		return announcementBoardAccessType;
-	}
+    public String getAnnouncementBoardAccessType() {
+        return announcementBoardAccessType;
+    }
 
-	public void setAnnouncementBoardAccessType(String announcementBoardAccessType) {
-		this.announcementBoardAccessType = announcementBoardAccessType;
-	}
+    public void setAnnouncementBoardAccessType(String announcementBoardAccessType) {
+        this.announcementBoardAccessType = announcementBoardAccessType;
+    }
 
-	public String getRecentBoardsTimeSpanSelection() {
-		return recentBoardsTimeSpanSelection;
-	}
+    public String getRecentBoardsTimeSpanSelection() {
+        return recentBoardsTimeSpanSelection;
+    }
 
-	public void setRecentBoardsTimeSpanSelection(String recentBoardsTimeSpanSelection) {
-		this.recentBoardsTimeSpanSelection = recentBoardsTimeSpanSelection;
-	}
+    public void setRecentBoardsTimeSpanSelection(String recentBoardsTimeSpanSelection) {
+        this.recentBoardsTimeSpanSelection = recentBoardsTimeSpanSelection;
+    }
 
-	public String getBoardType() {
-		return boardType;
-	}
+    public String getBoardType() {
+        return boardType;
+    }
 
-	public void setBoardType(String boardType) {
-		this.boardType = boardType;
-	}
+    public void setBoardType(String boardType) {
+        this.boardType = boardType;
+    }
 }

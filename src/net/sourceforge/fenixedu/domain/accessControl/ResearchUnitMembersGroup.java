@@ -15,74 +15,74 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 
 public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
-	private final Class classType;
+    private final Class classType;
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ResearchUnitMembersGroup(ResearchUnit unit, Class type) {
-		super(unit);
-		this.classType = type;
-	}
+    public ResearchUnitMembersGroup(ResearchUnit unit, Class type) {
+        super(unit);
+        this.classType = type;
+    }
 
-	@Override
-	public String getPresentationNameBundle() {
-		return "resources.Messaging";
-	}
+    @Override
+    public String getPresentationNameBundle() {
+        return "resources.Messaging";
+    }
 
-	@Override
-	public String getPresentationNameKey() {
-		return "label." + classType.getSimpleName();
-	}
+    @Override
+    public String getPresentationNameKey() {
+        return "label." + classType.getSimpleName();
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> people = new HashSet<Person>();
-		for (Accountability accountability : getObject().getActiveResearchContracts(classType)) {
-			ResearchContract contract = (ResearchContract) accountability;
-			people.add(contract.getPerson());
-		}
-		return people;
-	}
+    @Override
+    public Set<Person> getElements() {
+        Set<Person> people = new HashSet<Person>();
+        for (Accountability accountability : getObject().getActiveResearchContracts(classType)) {
+            ResearchContract contract = (ResearchContract) accountability;
+            people.add(contract.getPerson());
+        }
+        return people;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return new Argument[] { new IdOperator(getObject()), new ClassOperator(this.classType) };
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] { new IdOperator(getObject()), new ClassOperator(this.classType) };
 
-	}
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		return super.equals(other) && ((ResearchUnitMembersGroup) other).classType.equals(this.classType);
-	}
+    @Override
+    public boolean equals(Object other) {
+        return super.equals(other) && ((ResearchUnitMembersGroup) other).classType.equals(this.classType);
+    }
 
-	@Override
-	public int hashCode() {
-		return super.hashCode() + this.classType.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return super.hashCode() + this.classType.hashCode();
+    }
 
-	public static class Builder implements GroupBuilder {
+    public static class Builder implements GroupBuilder {
 
-		@Override
-		public Group build(Object[] arguments) {
-			ResearchUnit unit = (ResearchUnit) arguments[0];
-			Class type = (Class) arguments[1];
-			if (unit == null || type == null) {
-				throw new VariableNotDefinedException("unit or contract class");
-			}
-			return new ResearchUnitMembersGroup(unit, type);
+        @Override
+        public Group build(Object[] arguments) {
+            ResearchUnit unit = (ResearchUnit) arguments[0];
+            Class type = (Class) arguments[1];
+            if (unit == null || type == null) {
+                throw new VariableNotDefinedException("unit or contract class");
+            }
+            return new ResearchUnitMembersGroup(unit, type);
 
-		}
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return 2;
-		}
+        @Override
+        public int getMaxArguments() {
+            return 2;
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 2;
-		}
+        @Override
+        public int getMinArguments() {
+            return 2;
+        }
 
-	}
+    }
 
 }

@@ -17,28 +17,28 @@ import com.google.common.collect.Collections2;
 
 public class DegreeCandidacyForGraduatedPersonDegreesProvider implements DataProvider {
 
-	@Override
-	public Object provide(Object source, Object currentValue) {
+    @Override
+    public Object provide(Object source, Object currentValue) {
 
-		final Set<AcademicProgram> programs =
-				AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-						AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+        final Set<AcademicProgram> programs =
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
-		return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
-			@Override
-			public boolean apply(Degree degree) {
-				return programs.contains(degree);
-			}
-		});
-	}
+        return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
+            @Override
+            public boolean apply(Degree degree) {
+                return programs.contains(degree);
+            }
+        });
+    }
 
-	private Collection<Degree> getDegrees(Object source) {
-		return Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-	}
+    private Collection<Degree> getDegrees(Object source) {
+        return Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    }
 
-	@Override
-	public Converter getConverter() {
-		return null;
-	}
+    @Override
+    public Converter getConverter() {
+        return null;
+    }
 
 }

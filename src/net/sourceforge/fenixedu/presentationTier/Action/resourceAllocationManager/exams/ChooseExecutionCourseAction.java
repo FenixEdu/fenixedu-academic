@@ -28,49 +28,43 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  * 
  */
-@Mapping(
-		module = "resourceAllocationManager",
-		path = "/chooseExecutionCourseForExams",
-		input = "/chooseExecutionCourseForExams.do?page=0",
-		attribute = "examNewForm",
-		formBean = "examNewForm",
-		scope = "request",
-		validate = false,
-		parameter = "method")
+@Mapping(module = "resourceAllocationManager", path = "/chooseExecutionCourseForExams",
+        input = "/chooseExecutionCourseForExams.do?page=0", attribute = "examNewForm", formBean = "examNewForm",
+        scope = "request", validate = false, parameter = "method")
 @Forwards(value = { @Forward(name = "showForm", path = "df.page.chooseExecutionCourse"),
-		@Forward(name = "forwardChoose", path = "/createExamNew.do?method=prepare&page=0") })
+        @Forward(name = "forwardChoose", path = "/createExamNew.do?method=prepare&page=0") })
 public class ChooseExecutionCourseAction
 // extends
-		// FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction
-		// {
-		extends FenixContextDispatchAction {
+        // FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction
+        // {
+        extends FenixContextDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		SessionUtils.getExecutionCourses(request);
+        SessionUtils.getExecutionCourses(request);
 
-		String nextPage = request.getParameter("nextPage");
-		request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
-		return mapping.findForward("showForm");
+        String nextPage = request.getParameter("nextPage");
+        request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
+        return mapping.findForward("showForm");
 
-	}
+    }
 
-	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
+        DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
-		Integer executionCourseID = new Integer((String) chooseCourseForm.get("executionCourseID"));
+        Integer executionCourseID = new Integer((String) chooseCourseForm.get("executionCourseID"));
 
-		request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, executionCourseID.toString());
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, executionCourseID.toString());
 
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setCurricularYearsContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setCurricularYearsContext(request);
 
-		return mapping.findForward("forwardChoose");
-	}
+        return mapping.findForward("forwardChoose");
+    }
 
 }

@@ -19,63 +19,63 @@ import net.sourceforge.fenixedu.domain.Professorship;
  */
 public class InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers extends InfoFrequenta {
 
-	List<InfoTeacher> teachers;
-	List<InfoNonAffiliatedTeacher> nonAffiliatedTeachers;
+    List<InfoTeacher> teachers;
+    List<InfoNonAffiliatedTeacher> nonAffiliatedTeachers;
 
-	/**
-	 * @return Returns the nonAffiliatedTeachers.
-	 */
-	public List<InfoNonAffiliatedTeacher> getNonAffiliatedTeachers() {
-		return nonAffiliatedTeachers;
-	}
+    /**
+     * @return Returns the nonAffiliatedTeachers.
+     */
+    public List<InfoNonAffiliatedTeacher> getNonAffiliatedTeachers() {
+        return nonAffiliatedTeachers;
+    }
 
-	/**
-	 * @param nonAffiliatedTeachers
-	 *            The nonAffiliatedTeachers to set.
-	 */
-	public void setNonAffiliatedTeachers(List<InfoNonAffiliatedTeacher> nonAffiliatedTeachers) {
-		this.nonAffiliatedTeachers = nonAffiliatedTeachers;
-	}
+    /**
+     * @param nonAffiliatedTeachers
+     *            The nonAffiliatedTeachers to set.
+     */
+    public void setNonAffiliatedTeachers(List<InfoNonAffiliatedTeacher> nonAffiliatedTeachers) {
+        this.nonAffiliatedTeachers = nonAffiliatedTeachers;
+    }
 
-	/**
-	 * @return Returns the teachers.
-	 */
-	public List<InfoTeacher> getTeachers() {
-		return teachers;
-	}
+    /**
+     * @return Returns the teachers.
+     */
+    public List<InfoTeacher> getTeachers() {
+        return teachers;
+    }
 
-	/**
-	 * @param teachers
-	 *            The teachers to set.
-	 */
-	public void setTeachers(List<InfoTeacher> teachers) {
-		this.teachers = teachers;
-	}
+    /**
+     * @param teachers
+     *            The teachers to set.
+     */
+    public void setTeachers(List<InfoTeacher> teachers) {
+        this.teachers = teachers;
+    }
 
-	@Override
-	public void copyFromDomain(Attends attends) {
-		super.copyFromDomain(attends);
+    @Override
+    public void copyFromDomain(Attends attends) {
+        super.copyFromDomain(attends);
 
-		this.teachers = new ArrayList<InfoTeacher>();
-		List<Professorship> professorships = attends.getExecutionCourse().getProfessorships();
-		for (Professorship professorship : professorships) {
-			this.teachers.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
-		}
+        this.teachers = new ArrayList<InfoTeacher>();
+        List<Professorship> professorships = attends.getExecutionCourse().getProfessorships();
+        for (Professorship professorship : professorships) {
+            this.teachers.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
+        }
 
-		this.nonAffiliatedTeachers = new ArrayList<InfoNonAffiliatedTeacher>();
-		List<NonAffiliatedTeacher> nonAffiliatedTeachers = attends.getExecutionCourse().getNonAffiliatedTeachers();
-		for (NonAffiliatedTeacher naTeacher : nonAffiliatedTeachers) {
-			this.nonAffiliatedTeachers.add(InfoNonAffiliatedTeacher.newInfoFromDomain(naTeacher));
-		}
-	}
+        this.nonAffiliatedTeachers = new ArrayList<InfoNonAffiliatedTeacher>();
+        List<NonAffiliatedTeacher> nonAffiliatedTeachers = attends.getExecutionCourse().getNonAffiliatedTeachers();
+        for (NonAffiliatedTeacher naTeacher : nonAffiliatedTeachers) {
+            this.nonAffiliatedTeachers.add(InfoNonAffiliatedTeacher.newInfoFromDomain(naTeacher));
+        }
+    }
 
-	public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers newInfoFromDomain(Attends attends) {
-		InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttends = null;
-		if (attends != null) {
-			infoAttends = new InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers();
-			infoAttends.copyFromDomain(attends);
-		}
-		return infoAttends;
-	}
+    public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers newInfoFromDomain(Attends attends) {
+        InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttends = null;
+        if (attends != null) {
+            infoAttends = new InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers();
+            infoAttends.copyFromDomain(attends);
+        }
+        return infoAttends;
+    }
 
 }

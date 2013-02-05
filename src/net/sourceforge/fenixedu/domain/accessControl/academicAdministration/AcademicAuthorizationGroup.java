@@ -40,222 +40,222 @@ import com.google.common.collect.Sets;
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
 public class AcademicAuthorizationGroup extends LeafGroup {
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 9181155093461555982L;
+    private static final long serialVersionUID = 9181155093461555982L;
 
-	private final AcademicOperationType operation;
+    private final AcademicOperationType operation;
 
-	private final Set<AcademicProgram> programs;
+    private final Set<AcademicProgram> programs;
 
-	private final Set<AdministrativeOffice> offices;
+    private final Set<AdministrativeOffice> offices;
 
-	private final Scope scope;
+    private final Scope scope;
 
-	public AcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> programs,
-			Set<AdministrativeOffice> offices, Scope scope) {
-		this.operation = operation;
-		this.programs = programs;
-		this.offices = offices;
-		this.scope = scope;
-	}
+    public AcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> programs,
+            Set<AdministrativeOffice> offices, Scope scope) {
+        this.operation = operation;
+        this.programs = programs;
+        this.offices = offices;
+        this.scope = scope;
+    }
 
-	public AcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> programs,
-			Set<AdministrativeOffice> offices) {
-		this(operation, programs, offices, null);
-	}
+    public AcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> programs,
+            Set<AdministrativeOffice> offices) {
+        this(operation, programs, offices, null);
+    }
 
-	public AcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> programs) {
-		this(operation, programs, new HashSet<AdministrativeOffice>());
-	}
+    public AcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> programs) {
+        this(operation, programs, new HashSet<AdministrativeOffice>());
+    }
 
-	public AcademicAuthorizationGroup(AcademicOperationType operation) {
-		this(operation, new HashSet<AcademicProgram>());
-	}
+    public AcademicAuthorizationGroup(AcademicOperationType operation) {
+        this(operation, new HashSet<AcademicProgram>());
+    }
 
-	public AcademicAuthorizationGroup(AcademicOperationType operation, AcademicProgram program) {
-		this(operation, Collections.singleton(program));
-	}
+    public AcademicAuthorizationGroup(AcademicOperationType operation, AcademicProgram program) {
+        this(operation, Collections.singleton(program));
+    }
 
-	public AcademicAuthorizationGroup(Scope scope) {
-		this(null, new HashSet<AcademicProgram>(), new HashSet<AdministrativeOffice>(), scope);
-	}
+    public AcademicAuthorizationGroup(Scope scope) {
+        this(null, new HashSet<AcademicProgram>(), new HashSet<AdministrativeOffice>(), scope);
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		if (scope != null) {
-			return PersistentAcademicAuthorizationGroup.getElements(scope);
-		}
-		return PersistentAcademicAuthorizationGroup.getElements(operation, programs, offices);
-	}
+    @Override
+    public Set<Person> getElements() {
+        if (scope != null) {
+            return PersistentAcademicAuthorizationGroup.getElements(scope);
+        }
+        return PersistentAcademicAuthorizationGroup.getElements(operation, programs, offices);
+    }
 
-	@Override
-	public boolean isMember(Person person) {
-		if (scope != null) {
-			return PersistentAcademicAuthorizationGroup.isMember(person, scope);
-		}
-		return PersistentAcademicAuthorizationGroup.isMember(person, operation, programs, offices);
-	}
+    @Override
+    public boolean isMember(Person person) {
+        if (scope != null) {
+            return PersistentAcademicAuthorizationGroup.isMember(person, scope);
+        }
+        return PersistentAcademicAuthorizationGroup.isMember(person, operation, programs, offices);
+    }
 
-	public static Set<DegreeType> getDegreeTypesForOperation(Party party, AcademicOperationType operation) {
-		return getFromGroups(party, operation, new Function<PersistentAcademicAuthorizationGroup, Collection<DegreeType>>() {
-			@Override
-			public Collection<DegreeType> apply(PersistentAcademicAuthorizationGroup group) {
-				Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-				for (AcademicProgram program : group.getFullProgramSet()) {
-					degreeTypes.add(program.getDegreeType());
-				}
-				return degreeTypes;
-			}
-		});
-	}
+    public static Set<DegreeType> getDegreeTypesForOperation(Party party, AcademicOperationType operation) {
+        return getFromGroups(party, operation, new Function<PersistentAcademicAuthorizationGroup, Collection<DegreeType>>() {
+            @Override
+            public Collection<DegreeType> apply(PersistentAcademicAuthorizationGroup group) {
+                Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+                for (AcademicProgram program : group.getFullProgramSet()) {
+                    degreeTypes.add(program.getDegreeType());
+                }
+                return degreeTypes;
+            }
+        });
+    }
 
-	public static Set<ServiceAgreementTemplate> getServiceAgreementTemplatesForOperation(Person person,
-			AcademicOperationType operation) {
-		return getFromGroups(person, operation,
-				new Function<PersistentAcademicAuthorizationGroup, Collection<ServiceAgreementTemplate>>() {
-					@Override
-					public Collection<ServiceAgreementTemplate> apply(PersistentAcademicAuthorizationGroup group) {
-						Set<ServiceAgreementTemplate> templates = new HashSet<ServiceAgreementTemplate>();
-						for (AcademicProgram program : group.getFullProgramSet()) {
-							templates.add(program.getAdministrativeOffice().getServiceAgreementTemplate());
-						}
-						return templates;
-					}
-				});
-	}
+    public static Set<ServiceAgreementTemplate> getServiceAgreementTemplatesForOperation(Person person,
+            AcademicOperationType operation) {
+        return getFromGroups(person, operation,
+                new Function<PersistentAcademicAuthorizationGroup, Collection<ServiceAgreementTemplate>>() {
+                    @Override
+                    public Collection<ServiceAgreementTemplate> apply(PersistentAcademicAuthorizationGroup group) {
+                        Set<ServiceAgreementTemplate> templates = new HashSet<ServiceAgreementTemplate>();
+                        for (AcademicProgram program : group.getFullProgramSet()) {
+                            templates.add(program.getAdministrativeOffice().getServiceAgreementTemplate());
+                        }
+                        return templates;
+                    }
+                });
+    }
 
-	public static Set<AcademicServiceRequest> getAcademicServiceRequests(Party party, Integer year,
-			AcademicServiceRequestSituationType situation) {
-		return getAcademicServiceRequests(party, year, situation, null);
-	}
+    public static Set<AcademicServiceRequest> getAcademicServiceRequests(Party party, Integer year,
+            AcademicServiceRequestSituationType situation) {
+        return getAcademicServiceRequests(party, year, situation, null);
+    }
 
-	public static Set<AcademicServiceRequest> getAcademicServiceRequests(Party party, Integer year,
-			AcademicServiceRequestSituationType situation, Interval interval) {
-		Set<AcademicServiceRequest> serviceRequests = new HashSet<AcademicServiceRequest>();
-		Set<AcademicProgram> programs = getProgramsForOperation(party, AcademicOperationType.SERVICE_REQUESTS);
-		Collection<AcademicServiceRequest> possible = null;
-		if (year != null) {
-			possible = AcademicServiceRequestYear.getAcademicServiceRequests(year);
-		} else {
-			possible = RootDomainObject.getInstance().getAcademicServiceRequests();
-		}
-		for (AcademicServiceRequest request : possible) {
-			if (!programs.contains(request.getAcademicProgram())) {
-				continue;
-			}
-			if (situation != null && !request.getAcademicServiceRequestSituationType().equals(situation)) {
-				continue;
-			}
-			if (interval != null && !interval.contains(request.getActiveSituationDate())) {
-				continue;
-			}
-			serviceRequests.add(request);
-		}
-		return serviceRequests;
-	}
+    public static Set<AcademicServiceRequest> getAcademicServiceRequests(Party party, Integer year,
+            AcademicServiceRequestSituationType situation, Interval interval) {
+        Set<AcademicServiceRequest> serviceRequests = new HashSet<AcademicServiceRequest>();
+        Set<AcademicProgram> programs = getProgramsForOperation(party, AcademicOperationType.SERVICE_REQUESTS);
+        Collection<AcademicServiceRequest> possible = null;
+        if (year != null) {
+            possible = AcademicServiceRequestYear.getAcademicServiceRequests(year);
+        } else {
+            possible = RootDomainObject.getInstance().getAcademicServiceRequests();
+        }
+        for (AcademicServiceRequest request : possible) {
+            if (!programs.contains(request.getAcademicProgram())) {
+                continue;
+            }
+            if (situation != null && !request.getAcademicServiceRequestSituationType().equals(situation)) {
+                continue;
+            }
+            if (interval != null && !interval.contains(request.getActiveSituationDate())) {
+                continue;
+            }
+            serviceRequests.add(request);
+        }
+        return serviceRequests;
+    }
 
-	public static boolean isAuthorized(Party party, AcademicServiceRequest request) {
-		return isAuthorized(party, request, AcademicOperationType.SERVICE_REQUESTS);
-	}
+    public static boolean isAuthorized(Party party, AcademicServiceRequest request) {
+        return isAuthorized(party, request, AcademicOperationType.SERVICE_REQUESTS);
+    }
 
-	public static boolean isAuthorized(Party party, AcademicServiceRequest request, AcademicOperationType operation) {
-		Set<AcademicProgram> programs = getProgramsForOperation(party, operation);
-		return programs.contains(request.getAcademicProgram());
-	}
+    public static boolean isAuthorized(Party party, AcademicServiceRequest request, AcademicOperationType operation) {
+        Set<AcademicProgram> programs = getProgramsForOperation(party, operation);
+        return programs.contains(request.getAcademicProgram());
+    }
 
-	public static Set<Degree> getDegreesForOperation(Person person, AcademicOperationType operation) {
-		return Sets.newHashSet(Iterables.filter(getProgramsForOperation(person, operation), Degree.class));
-	}
+    public static Set<Degree> getDegreesForOperation(Person person, AcademicOperationType operation) {
+        return Sets.newHashSet(Iterables.filter(getProgramsForOperation(person, operation), Degree.class));
+    }
 
-	public static Set<PhdProgram> getPhdProgramsForOperation(Person person, AcademicOperationType operation) {
-		return Sets.newHashSet(Iterables.filter(getProgramsForOperation(person, operation), PhdProgram.class));
-	}
+    public static Set<PhdProgram> getPhdProgramsForOperation(Person person, AcademicOperationType operation) {
+        return Sets.newHashSet(Iterables.filter(getProgramsForOperation(person, operation), PhdProgram.class));
+    }
 
-	public static Set<AdministrativeOffice> getOfficesForOperation(Party party, AcademicOperationType operation) {
-		return getFromGroups(party, operation,
-				new Function<PersistentAcademicAuthorizationGroup, Collection<AdministrativeOffice>>() {
-					@Override
-					public Collection<AdministrativeOffice> apply(PersistentAcademicAuthorizationGroup group) {
-						return group.getOffice();
-					}
-				});
-	}
+    public static Set<AdministrativeOffice> getOfficesForOperation(Party party, AcademicOperationType operation) {
+        return getFromGroups(party, operation,
+                new Function<PersistentAcademicAuthorizationGroup, Collection<AdministrativeOffice>>() {
+                    @Override
+                    public Collection<AdministrativeOffice> apply(PersistentAcademicAuthorizationGroup group) {
+                        return group.getOffice();
+                    }
+                });
+    }
 
-	public static Set<AcademicProgram> getProgramsForOperation(Party party, AcademicOperationType operation) {
-		return getFromGroups(party, operation, new Function<PersistentAcademicAuthorizationGroup, Collection<AcademicProgram>>() {
-			@Override
-			public Collection<AcademicProgram> apply(PersistentAcademicAuthorizationGroup group) {
-				return group.getFullProgramSet();
-			}
-		});
-	}
+    public static Set<AcademicProgram> getProgramsForOperation(Party party, AcademicOperationType operation) {
+        return getFromGroups(party, operation, new Function<PersistentAcademicAuthorizationGroup, Collection<AcademicProgram>>() {
+            @Override
+            public Collection<AcademicProgram> apply(PersistentAcademicAuthorizationGroup group) {
+                return group.getFullProgramSet();
+            }
+        });
+    }
 
-	static <T> Set<T> getFromGroups(Party party, AcademicOperationType operation,
-			Function<PersistentAcademicAuthorizationGroup, Collection<T>> function) {
-		Set<T> results = new HashSet<T>();
-		Set<PersistentAcademicAuthorizationGroup> groups =
-				PersistentAcademicAuthorizationGroup.getGroupsFor(party, operation, Collections.<AcademicProgram> emptySet(),
-						Collections.<AdministrativeOffice> emptySet());
-		for (PersistentAcademicAuthorizationGroup group : groups) {
-			results.addAll(function.apply(group));
-		}
-		return results;
-	}
+    static <T> Set<T> getFromGroups(Party party, AcademicOperationType operation,
+            Function<PersistentAcademicAuthorizationGroup, Collection<T>> function) {
+        Set<T> results = new HashSet<T>();
+        Set<PersistentAcademicAuthorizationGroup> groups =
+                PersistentAcademicAuthorizationGroup.getGroupsFor(party, operation, Collections.<AcademicProgram> emptySet(),
+                        Collections.<AdministrativeOffice> emptySet());
+        for (PersistentAcademicAuthorizationGroup group : groups) {
+            results.addAll(function.apply(group));
+        }
+        return results;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		List<Argument> arguments = new ArrayList<Argument>();
-		if (scope != null) {
-			arguments.add(new StaticArgument(scope.name()));
-		}
+    @Override
+    protected Argument[] getExpressionArguments() {
+        List<Argument> arguments = new ArrayList<Argument>();
+        if (scope != null) {
+            arguments.add(new StaticArgument(scope.name()));
+        }
 
-		arguments.add(new StaticArgument(operation.name()));
+        arguments.add(new StaticArgument(operation.name()));
 
-		for (AcademicProgram program : programs) {
-			arguments.add(new OidOperator(program));
-		}
-		for (AdministrativeOffice office : offices) {
-			arguments.add(new OidOperator(office));
-		}
-		return arguments.toArray(new Argument[0]);
-	}
+        for (AcademicProgram program : programs) {
+            arguments.add(new OidOperator(program));
+        }
+        for (AdministrativeOffice office : offices) {
+            arguments.add(new OidOperator(office));
+        }
+        return arguments.toArray(new Argument[0]);
+    }
 
-	public static class AcademicAuthorizationGroupBuilder implements GroupBuilder {
-		@Override
-		public Group build(Object[] arguments) {
-			AcademicOperationType operation = null;
-			Set<AcademicProgram> programs = new HashSet<AcademicProgram>();
-			Set<AdministrativeOffice> offices = new HashSet<AdministrativeOffice>();
-			Scope scope = null;
-			for (int i = 0; i < arguments.length; i++) {
-				Object argument = arguments[i];
-				if (argument instanceof String) {
-					try {
-						scope = Scope.valueOf((String) argument);
-					} catch (IllegalArgumentException e) {
-						operation = (AcademicOperationType.valueOf((String) argument));
-					}
-				} else if (argument instanceof AcademicProgram) {
-					programs.add((AcademicProgram) argument);
-				} else if (argument instanceof AdministrativeOffice) {
-					offices.add((AdministrativeOffice) argument);
-				} else {
-					throw new WrongTypeOfArgumentException(i, AcademicOperationType.class, arguments[i].getClass());
-				}
-			}
-			return new AcademicAuthorizationGroup(operation, programs, offices, scope);
-		}
+    public static class AcademicAuthorizationGroupBuilder implements GroupBuilder {
+        @Override
+        public Group build(Object[] arguments) {
+            AcademicOperationType operation = null;
+            Set<AcademicProgram> programs = new HashSet<AcademicProgram>();
+            Set<AdministrativeOffice> offices = new HashSet<AdministrativeOffice>();
+            Scope scope = null;
+            for (int i = 0; i < arguments.length; i++) {
+                Object argument = arguments[i];
+                if (argument instanceof String) {
+                    try {
+                        scope = Scope.valueOf((String) argument);
+                    } catch (IllegalArgumentException e) {
+                        operation = (AcademicOperationType.valueOf((String) argument));
+                    }
+                } else if (argument instanceof AcademicProgram) {
+                    programs.add((AcademicProgram) argument);
+                } else if (argument instanceof AdministrativeOffice) {
+                    offices.add((AdministrativeOffice) argument);
+                } else {
+                    throw new WrongTypeOfArgumentException(i, AcademicOperationType.class, arguments[i].getClass());
+                }
+            }
+            return new AcademicAuthorizationGroup(operation, programs, offices, scope);
+        }
 
-		@Override
-		public int getMinArguments() {
-			return 1;
-		}
+        @Override
+        public int getMinArguments() {
+            return 1;
+        }
 
-		@Override
-		public int getMaxArguments() {
-			return Integer.MAX_VALUE;
-		}
-	}
+        @Override
+        public int getMaxArguments() {
+            return Integer.MAX_VALUE;
+        }
+    }
 }

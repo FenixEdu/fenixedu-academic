@@ -29,199 +29,199 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class VerifyStudentGroupAtributes extends FenixService {
 
-	private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
-		boolean result = false;
+    private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
+        boolean result = false;
 
-		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-		if (studentGroup == null) {
-			throw new FenixServiceException();
-		}
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        if (studentGroup == null) {
+            throw new FenixServiceException();
+        }
 
-		Grouping groupProperties = studentGroup.getGrouping();
+        Grouping groupProperties = studentGroup.getGrouping();
 
-		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-		if (!strategy.checkStudentInGrouping(groupProperties, username)) {
-			throw new NotAuthorizedException();
-		}
+        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+            throw new NotAuthorizedException();
+        }
 
-		result = strategy.checkAlreadyEnroled(groupProperties, username);
-		if (result) {
-			throw new InvalidSituationServiceException();
-		}
+        result = strategy.checkAlreadyEnroled(groupProperties, username);
+        if (result) {
+            throw new InvalidSituationServiceException();
+        }
 
-		result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup);
-		if (!result) {
-			throw new InvalidArgumentsServiceException();
-		}
+        result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup);
+        if (!result) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
-			throws FenixServiceException {
-		boolean result = false;
-		final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-		if (groupProperties == null) {
-			throw new InvalidChangeServiceException();
-		}
+    private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
+            throws FenixServiceException {
+        boolean result = false;
+        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        if (groupProperties == null) {
+            throw new InvalidChangeServiceException();
+        }
 
-		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-		if (!strategy.checkStudentInGrouping(groupProperties, username)) {
-			throw new NotAuthorizedException();
-		}
+        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+            throw new NotAuthorizedException();
+        }
 
-		Shift shift = rootDomainObject.readShiftByOID(shiftCode);
-		result = strategy.checkNumberOfGroups(groupProperties, shift);
+        Shift shift = rootDomainObject.readShiftByOID(shiftCode);
+        result = strategy.checkNumberOfGroups(groupProperties, shift);
 
-		if (!result) {
-			throw new InvalidArgumentsServiceException();
-		}
+        if (!result) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		result = strategy.checkAlreadyEnroled(groupProperties, username);
+        result = strategy.checkAlreadyEnroled(groupProperties, username);
 
-		if (result) {
-			throw new InvalidSituationServiceException();
-		}
+        if (result) {
+            throw new InvalidSituationServiceException();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private static boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username) throws FenixServiceException {
 
-		boolean result = false;
+        boolean result = false;
 
-		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-		if (studentGroup == null) {
-			throw new FenixServiceException();
-		}
-		Grouping groupProperties = studentGroup.getGrouping();
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        if (studentGroup == null) {
+            throw new FenixServiceException();
+        }
+        Grouping groupProperties = studentGroup.getGrouping();
 
-		GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+        GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-		if (!strategy.checkStudentInGrouping(groupProperties, username)) {
-			throw new NotAuthorizedException();
-		}
+        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+            throw new NotAuthorizedException();
+        }
 
-		result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
-		if (result) {
-			throw new InvalidSituationServiceException();
-		}
+        result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
+        if (result) {
+            throw new InvalidSituationServiceException();
+        }
 
-		result = strategy.checkNumberOfGroupElements(groupProperties, studentGroup);
-		if (!result) {
-			throw new InvalidArgumentsServiceException();
-		}
+        result = strategy.checkNumberOfGroupElements(groupProperties, studentGroup);
+        if (!result) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private static boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
-			throws FenixServiceException {
-		boolean result = false;
+    private static boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+            throws FenixServiceException {
+        boolean result = false;
 
-		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-		if (groupProperties == null) {
-			throw new ExistingServiceException();
-		}
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        if (groupProperties == null) {
+            throw new ExistingServiceException();
+        }
 
-		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-		if (studentGroup == null) {
-			throw new FenixServiceException();
-		}
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        if (studentGroup == null) {
+            throw new FenixServiceException();
+        }
 
-		GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+        GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-		if (!strategy.checkStudentInGrouping(groupProperties, username)) {
-			throw new NotAuthorizedException();
-		}
+        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+            throw new NotAuthorizedException();
+        }
 
-		result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
-		if (result) {
-			throw new InvalidSituationServiceException();
-		}
+        result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
+        if (result) {
+            throw new InvalidSituationServiceException();
+        }
 
-		if (groupProperties.getShiftType() == null || studentGroup.getShift() == null) {
-			throw new InvalidChangeServiceException();
-		}
+        if (groupProperties.getShiftType() == null || studentGroup.getShift() == null) {
+            throw new InvalidChangeServiceException();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
-			throws FenixServiceException {
-		boolean result = false;
-		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-		if (groupProperties == null) {
-			throw new ExistingServiceException();
-		}
+    private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+            throws FenixServiceException {
+        boolean result = false;
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        if (groupProperties == null) {
+            throw new ExistingServiceException();
+        }
 
-		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-		if (studentGroup == null) {
-			throw new FenixServiceException();
-		}
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        if (studentGroup == null) {
+            throw new FenixServiceException();
+        }
 
-		GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+        GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-		if (!strategy.checkStudentInGrouping(groupProperties, username)) {
-			throw new NotAuthorizedException();
-		}
+        if (!strategy.checkStudentInGrouping(groupProperties, username)) {
+            throw new NotAuthorizedException();
+        }
 
-		result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
-		if (result) {
-			throw new InvalidSituationServiceException();
-		}
+        result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
+        if (result) {
+            throw new InvalidSituationServiceException();
+        }
 
-		if (groupProperties.getShiftType() == null || studentGroup.getShift() != null) {
-			throw new InvalidChangeServiceException();
-		}
+        if (groupProperties.getShiftType() == null || studentGroup.getShift() != null) {
+            throw new InvalidChangeServiceException();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Executes the service.
-	 * 
-	 * @throws ExcepcaoPersistencia
-	 */
+    /**
+     * Executes the service.
+     * 
+     * @throws ExcepcaoPersistencia
+     */
 
-	@Checked("RolePredicates.STUDENT_PREDICATE")
-	@Service
-	public static Boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username,
-			Integer option) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username,
+            Integer option) throws FenixServiceException {
 
-		boolean result = false;
+        boolean result = false;
 
-		switch (option.intValue()) {
+        switch (option.intValue()) {
 
-		case 1:
-			result = checkGroupStudentEnrolment(studentGroupCode, username);
-			return result;
+        case 1:
+            result = checkGroupStudentEnrolment(studentGroupCode, username);
+            return result;
 
-		case 2:
-			result = checkGroupEnrolment(groupPropertiesCode, shiftCode, username);
-			return result;
+        case 2:
+            result = checkGroupEnrolment(groupPropertiesCode, shiftCode, username);
+            return result;
 
-		case 3:
-			result = checkUnEnrollStudentInGroup(studentGroupCode, username);
-			return result;
+        case 3:
+            result = checkUnEnrollStudentInGroup(studentGroupCode, username);
+            return result;
 
-		case 4:
-			result = checkEditStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
-			return result;
+        case 4:
+            result = checkEditStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
+            return result;
 
-		case 5:
-			result = checkEnrollStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
-			return result;
-		}
+        case 5:
+            result = checkEnrollStudentGroupShift(studentGroupCode, groupPropertiesCode, username);
+            return result;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

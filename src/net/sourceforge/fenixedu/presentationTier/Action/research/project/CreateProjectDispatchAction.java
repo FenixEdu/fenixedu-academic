@@ -15,20 +15,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "researcher", path = "/projects/createProject", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/projects/projectsManagement.jsp"),
-		@Forward(name = "CreateProject", path = "/researcher/projects/createProject.jsp") })
+        @Forward(name = "CreateProject", path = "/researcher/projects/createProject.jsp") })
 public class CreateProjectDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepareCreateProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreateProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		request.setAttribute("party", getUserView(request).getPerson());
-		return mapping.findForward("CreateProject");
-	}
+        request.setAttribute("party", getUserView(request).getPerson());
+        return mapping.findForward("CreateProject");
+    }
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		return mapping.findForward("Success");
-	}
+        return mapping.findForward("Success");
+    }
 
 }

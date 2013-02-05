@@ -27,71 +27,71 @@ import edu.yale.its.tp.cas.client.CASReceipt;
 
 public class CASAuthenticationAction extends BaseAuthenticationAction {
 
-	private static final String USER_DOES_NOT_EXIST_ATTRIBUTE = "user-does-not-exist";
+    private static final String USER_DOES_NOT_EXIST_ATTRIBUTE = "user-does-not-exist";
 
-	@Override
-	protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-			throws FenixFilterException, FenixServiceException {
+    @Override
+    protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
+            throws FenixFilterException, FenixServiceException {
 
-		final String serverName = request.getServerName();
-		final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
-		if (casConfig == null || !casConfig.isCasEnabled()) {
-			throw new ExcepcaoAutenticacao("errors.noAuthorization");
-		}
+        final String serverName = request.getServerName();
+        final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+        if (casConfig == null || !casConfig.isCasEnabled()) {
+            throw new ExcepcaoAutenticacao("errors.noAuthorization");
+        }
 
-		IUserView userView = getCurrentUserView(request);
+        IUserView userView = getCurrentUserView(request);
 
-		if (userView == null) {
-			final String casTicket = request.getParameter("ticket");
-			String requestURL = request.getRequestURL().toString();
-			final String pendingRequest = request.getParameter("pendingRequest");
-			if (pendingRequest != null) {
-				requestURL = requestURL + "?pendingRequest=" + pendingRequest;
-			}
-			CASReceipt receipt;
-			try {
-				receipt = Authenticate.getCASReceipt(request.getServerName(), casTicket, requestURL);
-			} catch (UnsupportedEncodingException e) {
-				throw new ExcepcaoAutenticacao(e);
-			} catch (CASAuthenticationException e) {
-				throw new ExcepcaoAutenticacao(e);
-			}
-			final Object authenticationArgs[] = { receipt, requestURL, remoteHostName };
+        if (userView == null) {
+            final String casTicket = request.getParameter("ticket");
+            String requestURL = request.getRequestURL().toString();
+            final String pendingRequest = request.getParameter("pendingRequest");
+            if (pendingRequest != null) {
+                requestURL = requestURL + "?pendingRequest=" + pendingRequest;
+            }
+            CASReceipt receipt;
+            try {
+                receipt = Authenticate.getCASReceipt(request.getServerName(), casTicket, requestURL);
+            } catch (UnsupportedEncodingException e) {
+                throw new ExcepcaoAutenticacao(e);
+            } catch (CASAuthenticationException e) {
+                throw new ExcepcaoAutenticacao(e);
+            }
+            final Object authenticationArgs[] = { receipt, requestURL, remoteHostName };
 
-			try {
-				userView =
-						(IUserView) ServiceManagerServiceFactory.executeService(
-								PropertiesManager.getProperty("authenticationService"), authenticationArgs);
-			} catch (NonExistingUserException ex) {
-				request.setAttribute(USER_DOES_NOT_EXIST_ATTRIBUTE, Boolean.TRUE);
-				throw ex;
-			}
+            try {
+                userView =
+                        (IUserView) ServiceManagerServiceFactory.executeService(
+                                PropertiesManager.getProperty("authenticationService"), authenticationArgs);
+            } catch (NonExistingUserException ex) {
+                request.setAttribute(USER_DOES_NOT_EXIST_ATTRIBUTE, Boolean.TRUE);
+                throw ex;
+            }
 
-		}
+        }
 
-		return userView;
-	}
+        return userView;
+    }
 
-	@Override
-	protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
-			final String actionKey, final String messageKey) {
-		if (request.getAttribute(USER_DOES_NOT_EXIST_ATTRIBUTE) != null) {
-			final ActionForward actionForward = new ActionForward();
-			actionForward.setContextRelative(false);
-			actionForward.setRedirect(false);
+    @Override
+    protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
+            final String actionKey, final String messageKey) {
+        if (request.getAttribute(USER_DOES_NOT_EXIST_ATTRIBUTE) != null) {
+            final ActionForward actionForward = new ActionForward();
+            actionForward.setContextRelative(false);
+            actionForward.setRedirect(false);
 
-			actionForward.setPath("/userDoesNotExistOrIsInactive.do");
+            actionForward.setPath("/userDoesNotExistOrIsInactive.do");
 
-			return actionForward;
-		} else {
-			final ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(actionKey, new ActionError(messageKey));
-			saveErrors(request, actionErrors);
-			return mapping.findForward("error");
-		}
-	}
+            return actionForward;
+        } else {
+            final ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(actionKey, new ActionError(messageKey));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("error");
+        }
+    }
 
-	private IUserView getCurrentUserView(HttpServletRequest request) {
-		return UserView.getUser();
-	}
+    private IUserView getCurrentUserView(HttpServletRequest request) {
+        return UserView.getUser();
+    }
 }

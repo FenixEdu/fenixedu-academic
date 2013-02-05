@@ -46,152 +46,152 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	Logger logger = Logger.getLogger(ManageShiftDA.class);
+    Logger logger = Logger.getLogger(ManageShiftDA.class);
 
-	public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		readAndSetInfoToManageShifts(request);
-		return mapping.findForward("ShowShiftList");
-	}
+    public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        readAndSetInfoToManageShifts(request);
+        return mapping.findForward("ShowShiftList");
+    }
 
-	public ActionForward listExecutionCourseCourseLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward listExecutionCourseCourseLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		readAndSetInfoToManageShifts(request);
+        readAndSetInfoToManageShifts(request);
 
-		DynaActionForm createShiftForm = (DynaActionForm) form;
-		InfoExecutionCourse infoExecutionCourse =
-				RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm.get("courseInitials"));
+        DynaActionForm createShiftForm = (DynaActionForm) form;
+        InfoExecutionCourse infoExecutionCourse =
+                RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm.get("courseInitials"));
 
-		if (infoExecutionCourse != null) {
-			final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-			final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        if (infoExecutionCourse != null) {
+            final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 
-			for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
-				tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
-			}
+            for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
+                tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
+            }
 
-			request.setAttribute("tiposAula", tiposAula);
-		}
+            request.setAttribute("tiposAula", tiposAula);
+        }
 
-		return mapping.findForward("ShowShiftList");
-	}
+        return mapping.findForward("ShowShiftList");
+    }
 
-	public ActionForward createShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward createShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DynaActionForm createShiftForm = (DynaActionForm) form;
+        DynaActionForm createShiftForm = (DynaActionForm) form;
 
-		InfoShiftEditor infoShift = new InfoShiftEditor();
-		infoShift.setAvailabilityFinal(new Integer(0));
-		InfoExecutionCourse infoExecutionCourse =
-				RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm.get("courseInitials"));
-		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-		infoShift.setInfoLessons(null);
-		infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
-		infoShift.setNome((String) createShiftForm.get("nome"));
+        InfoShiftEditor infoShift = new InfoShiftEditor();
+        infoShift.setAvailabilityFinal(new Integer(0));
+        InfoExecutionCourse infoExecutionCourse =
+                RequestUtils.getExecutionCourseBySigla(request, (String) createShiftForm.get("courseInitials"));
+        infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+        infoShift.setInfoLessons(null);
+        infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
+        infoShift.setNome((String) createShiftForm.get("nome"));
 
-		String[] selectedShiftTypes = (String[]) createShiftForm.get("shiftTiposAula");
-		if (selectedShiftTypes.length == 0) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("errors.shift.types.notSelected", new ActionError("errors.shift.types.notSelected"));
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
-		}
+        String[] selectedShiftTypes = (String[]) createShiftForm.get("shiftTiposAula");
+        if (selectedShiftTypes.length == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("errors.shift.types.notSelected", new ActionError("errors.shift.types.notSelected"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
 
-		final List<ShiftType> shiftTypes = new ArrayList<ShiftType>();
-		for (String selectedShiftType : selectedShiftTypes) {
-			shiftTypes.add(ShiftType.valueOf(selectedShiftType.toString()));
-		}
+        final List<ShiftType> shiftTypes = new ArrayList<ShiftType>();
+        for (String selectedShiftType : selectedShiftTypes) {
+            shiftTypes.add(ShiftType.valueOf(selectedShiftType.toString()));
+        }
 
-		infoShift.setTipos(shiftTypes);
+        infoShift.setTipos(shiftTypes);
 
-		// try {
-		final InfoShift newInfoShift = CriarTurno.run(infoShift);
-		request.setAttribute(PresentationConstants.SHIFT, newInfoShift);
+        // try {
+        final InfoShift newInfoShift = CriarTurno.run(infoShift);
+        request.setAttribute(PresentationConstants.SHIFT, newInfoShift);
 
-		// } catch (ExistingServiceException ex) {
-		// throw new ExistingActionException("O Shift", ex);
-		// }
+        // } catch (ExistingServiceException ex) {
+        // throw new ExistingActionException("O Shift", ex);
+        // }
 
-		request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 
-		return mapping.findForward("EditShift");
-	}
+        return mapping.findForward("EditShift");
+    }
 
-	public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+    public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setShiftContext(request);
+        ContextUtils.setShiftContext(request);
 
-		InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
+        InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
-		try {
-			DeleteShift.run(infoShiftToDelete);
-		} catch (FenixServiceException exception) {
-			ActionErrors actionErrors = new ActionErrors();
-			if (exception.getMessage() != null && exception.getMessage().length() > 0) {
-				actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage(), exception.getArgs()));
-			} else {
-				actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
-			}
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
-		}
+        try {
+            DeleteShift.run(infoShiftToDelete);
+        } catch (FenixServiceException exception) {
+            ActionErrors actionErrors = new ActionErrors();
+            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
+                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage(), exception.getArgs()));
+            } else {
+                actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
+            }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
 
-		return listShifts(mapping, form, request, response);
-	}
+        return listShifts(mapping, form, request, response);
+    }
 
-	public ActionForward deleteShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		DynaActionForm deleteShiftsForm = (DynaActionForm) form;
-		String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
+    public ActionForward deleteShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DynaActionForm deleteShiftsForm = (DynaActionForm) form;
+        String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
 
-		if (selectedShifts.length == 0) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
-		}
+        if (selectedShifts.length == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
 
-		final List<Integer> shiftOIDs = new ArrayList<Integer>();
-		for (String selectedShift : selectedShifts) {
-			shiftOIDs.add(Integer.valueOf(selectedShift));
-		}
+        final List<Integer> shiftOIDs = new ArrayList<Integer>();
+        for (String selectedShift : selectedShifts) {
+            shiftOIDs.add(Integer.valueOf(selectedShift));
+        }
 
-		try {
-			DeleteShifts.run(shiftOIDs);
-		} catch (FenixServiceMultipleException e) {
-			final ActionErrors actionErrors = new ActionErrors();
+        try {
+            DeleteShifts.run(shiftOIDs);
+        } catch (FenixServiceMultipleException e) {
+            final ActionErrors actionErrors = new ActionErrors();
 
-			for (final DomainException domainException : e.getExceptionList()) {
-				actionErrors.add(domainException.getMessage(),
-						new ActionError(domainException.getMessage(), domainException.getArgs()));
-			}
-			saveErrors(request, actionErrors);
+            for (final DomainException domainException : e.getExceptionList()) {
+                actionErrors.add(domainException.getMessage(),
+                        new ActionError(domainException.getMessage(), domainException.getArgs()));
+            }
+            saveErrors(request, actionErrors);
 
-			return mapping.getInputForward();
-		}
+            return mapping.getInputForward();
+        }
 
-		return mapping.findForward("ShowShiftList");
-	}
+        return mapping.findForward("ShowShiftList");
+    }
 
-	private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
-			Exception {
-		ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
-		logger.warn(String.format("ContextSelectionBean: academicInterval %s executionDegree %s curricularYear %s",
-				context.getAcademicInterval(), context.getExecutionDegree(), context.getCurricularYear()));
-		List<InfoShift> infoShifts =
-				ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(context.getAcademicInterval(),
-						new InfoExecutionDegree(context.getExecutionDegree()),
-						new InfoCurricularYear(context.getCurricularYear()));
+    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
+            Exception {
+        ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
+        logger.warn(String.format("ContextSelectionBean: academicInterval %s executionDegree %s curricularYear %s",
+                context.getAcademicInterval(), context.getExecutionDegree(), context.getCurricularYear()));
+        List<InfoShift> infoShifts =
+                ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(context.getAcademicInterval(),
+                        new InfoExecutionDegree(context.getExecutionDegree()),
+                        new InfoCurricularYear(context.getCurricularYear()));
 
-		Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+        Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 
-		if (infoShifts != null && !infoShifts.isEmpty()) {
-			request.setAttribute(PresentationConstants.SHIFTS, infoShifts);
-		}
+        if (infoShifts != null && !infoShifts.isEmpty()) {
+            request.setAttribute(PresentationConstants.SHIFTS, infoShifts);
+        }
 
-		SessionUtils.getExecutionCourses(request);
-	}
+        SessionUtils.getExecutionCourses(request);
+    }
 }

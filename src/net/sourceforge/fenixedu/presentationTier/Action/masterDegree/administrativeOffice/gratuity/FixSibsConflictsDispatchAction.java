@@ -37,65 +37,63 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 
-@Mapping(
-		path = "/fixSibsPaymentFileEntries",
-		module = "masterDegreeAdministrativeOffice",
-		formBeanClass = FixSibsPaymentFileEntriesForm.class)
+@Mapping(path = "/fixSibsPaymentFileEntries", module = "masterDegreeAdministrativeOffice",
+        formBeanClass = FixSibsPaymentFileEntriesForm.class)
 @Forwards(@Forward(name = "show", path = "showSibsPaymentFileEntries", tileProperties = @Tile(title = "teste48")))
 @Exceptions({ @ExceptionHandling(type = NonExistingActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 
-	@Input
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    @Input
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		IUserView userView = UserView.getUser();
+        IUserView userView = UserView.getUser();
 
-		List infoSibsPaymentFileEntries = null;
+        List infoSibsPaymentFileEntries = null;
 
-		try {
-			infoSibsPaymentFileEntries = ReadNonProcessedSibsEntries.run();
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            infoSibsPaymentFileEntries = ReadNonProcessedSibsEntries.run();
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute(PresentationConstants.SIBS_PAYMENT_FILE_ENTRIES, infoSibsPaymentFileEntries);
+        request.setAttribute(PresentationConstants.SIBS_PAYMENT_FILE_ENTRIES, infoSibsPaymentFileEntries);
 
-		if (infoSibsPaymentFileEntries.isEmpty()) {
-			ActionErrors errors = new ActionErrors();
-			errors.add("nothingChosen", new ActionError("error.masterDegree.gratuity.nonExistingConflicts"));
-			saveErrors(request, errors);
+        if (infoSibsPaymentFileEntries.isEmpty()) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("nothingChosen", new ActionError("error.masterDegree.gratuity.nonExistingConflicts"));
+            saveErrors(request, errors);
 
-		}
+        }
 
-		return mapping.findForward("show");
+        return mapping.findForward("show");
 
-	}
+    }
 
-	public ActionForward fix(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward fix(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		IUserView userView = UserView.getUser();
-		FixSibsPaymentFileEntriesForm fixSibsPaymentFileEntriesForm = (FixSibsPaymentFileEntriesForm) form;
+        IUserView userView = UserView.getUser();
+        FixSibsPaymentFileEntriesForm fixSibsPaymentFileEntriesForm = (FixSibsPaymentFileEntriesForm) form;
 
-		Integer sibsPaymentFileEntryId = fixSibsPaymentFileEntriesForm.getSibsPaymentFileEntryId();
+        Integer sibsPaymentFileEntryId = fixSibsPaymentFileEntriesForm.getSibsPaymentFileEntryId();
 
-		if (sibsPaymentFileEntryId == null) {
-			ActionErrors errors = new ActionErrors();
-			errors.add("nothingChosen", new ActionError("error.masterDegree.gratuity.chooseConflictToFix"));
-			saveErrors(request, errors);
+        if (sibsPaymentFileEntryId == null) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("nothingChosen", new ActionError("error.masterDegree.gratuity.chooseConflictToFix"));
+            saveErrors(request, errors);
 
-			return mapping.getInputForward();
-		}
+            return mapping.getInputForward();
+        }
 
-		try {
-			FixSibsEntryByID.run(sibsPaymentFileEntryId);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try {
+            FixSibsEntryByID.run(sibsPaymentFileEntryId);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.getInputForward();
+        return mapping.getInputForward();
 
-	}
+    }
 
 }

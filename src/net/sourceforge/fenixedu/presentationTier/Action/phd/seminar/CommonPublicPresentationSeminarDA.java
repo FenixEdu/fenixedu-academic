@@ -24,257 +24,257 @@ import org.apache.struts.action.ActionMapping;
 
 abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
 
-	@Override
-	protected PublicPresentationSeminarProcess getProcess(HttpServletRequest request) {
-		return (PublicPresentationSeminarProcess) super.getProcess(request);
-	}
+    @Override
+    protected PublicPresentationSeminarProcess getProcess(HttpServletRequest request) {
+        return (PublicPresentationSeminarProcess) super.getProcess(request);
+    }
 
-	public ActionForward viewIndividualProgramProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
-		return viewIndividualProgramProcess(request, getProcess(request));
-	}
+    public ActionForward viewIndividualProgramProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        return viewIndividualProgramProcess(request, getProcess(request));
+    }
 
-	protected ActionForward viewIndividualProgramProcess(HttpServletRequest request,
-			final PublicPresentationSeminarProcess process) {
-		return redirect(String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process
-				.getIndividualProgramProcess().getExternalId()), request);
-	}
+    protected ActionForward viewIndividualProgramProcess(HttpServletRequest request,
+            final PublicPresentationSeminarProcess process) {
+        return redirect(String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process
+                .getIndividualProgramProcess().getExternalId()), request);
+    }
 
-	// submit comission
-	public ActionForward prepareSubmitComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // submit comission
+    public ActionForward prepareSubmitComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PublicPresentationSeminarProcessBean submitComissionBean =
-				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
-		final PhdProgramDocumentUploadBean documentBean =
-				new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
-		submitComissionBean.setDocument(documentBean);
+        final PublicPresentationSeminarProcessBean submitComissionBean =
+                new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
+        final PhdProgramDocumentUploadBean documentBean =
+                new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
+        submitComissionBean.setDocument(documentBean);
 
-		request.setAttribute("submitComissionBean", submitComissionBean);
+        request.setAttribute("submitComissionBean", submitComissionBean);
 
-		return mapping.findForward("submitComission");
+        return mapping.findForward("submitComission");
 
-	}
+    }
 
-	public ActionForward prepareSubmitComissionInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareSubmitComissionInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("submitComissionBean", getRenderedObject("submitComissionBean"));
+        request.setAttribute("submitComissionBean", getRenderedObject("submitComissionBean"));
 
-		return mapping.findForward("submitComission");
-	}
+        return mapping.findForward("submitComission");
+    }
 
-	public ActionForward submitComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward submitComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), SubmitComission.class, getRenderedObject("submitComissionBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), SubmitComission.class, getRenderedObject("submitComissionBean"));
 
-			addSuccessMessage(request, "message.comission.submitted.with.success");
+            addSuccessMessage(request, "message.comission.submitted.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("submitComission");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("submitComission");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// end of submit comission
+    // end of submit comission
 
-	// validate comission
-	public ActionForward prepareValidateComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // validate comission
+    public ActionForward prepareValidateComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PublicPresentationSeminarProcessBean validateComissionBean =
-				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
-		final PhdProgramDocumentUploadBean documentBean =
-				new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
-		validateComissionBean.setDocument(documentBean);
+        final PublicPresentationSeminarProcessBean validateComissionBean =
+                new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
+        final PhdProgramDocumentUploadBean documentBean =
+                new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
+        validateComissionBean.setDocument(documentBean);
 
-		request.setAttribute("validateComissionBean", validateComissionBean);
+        request.setAttribute("validateComissionBean", validateComissionBean);
 
-		return mapping.findForward("validateComission");
+        return mapping.findForward("validateComission");
 
-	}
+    }
 
-	public ActionForward prepareValidateComissionInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareValidateComissionInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("validateComissionBean", getRenderedObject("validateComissionBean"));
+        request.setAttribute("validateComissionBean", getRenderedObject("validateComissionBean"));
 
-		return mapping.findForward("validateComission");
-	}
+        return mapping.findForward("validateComission");
+    }
 
-	public ActionForward validateComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward validateComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), ValidateComission.class, getRenderedObject("validateComissionBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), ValidateComission.class, getRenderedObject("validateComissionBean"));
 
-			addSuccessMessage(request, "message.comission.validated.with.success");
+            addSuccessMessage(request, "message.comission.validated.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("validateComission");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("validateComission");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	public ActionForward rejectComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward rejectComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), RejectComission.class, getRenderedObject("validateComissionBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), RejectComission.class, getRenderedObject("validateComissionBean"));
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("validateComission");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("validateComission");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// end of validate comission
+    // end of validate comission
 
-	// schedule presentation date
-	public ActionForward prepareSchedulePresentationDate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // schedule presentation date
+    public ActionForward prepareSchedulePresentationDate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PublicPresentationSeminarProcessBean schedulePresentationDateBean =
-				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
+        final PublicPresentationSeminarProcessBean schedulePresentationDateBean =
+                new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
 
-		request.setAttribute("schedulePresentationDateBean", schedulePresentationDateBean);
+        request.setAttribute("schedulePresentationDateBean", schedulePresentationDateBean);
 
-		return mapping.findForward("schedulePresentationDate");
+        return mapping.findForward("schedulePresentationDate");
 
-	}
+    }
 
-	public ActionForward prepareSchedulePresentationDateInvalid(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareSchedulePresentationDateInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("schedulePresentationDateBean", getRenderedObject("schedulePresentationDateBean"));
+        request.setAttribute("schedulePresentationDateBean", getRenderedObject("schedulePresentationDateBean"));
 
-		return mapping.findForward("schedulePresentationDate");
-	}
+        return mapping.findForward("schedulePresentationDate");
+    }
 
-	public ActionForward schedulePresentationDate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward schedulePresentationDate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), SchedulePresentationDate.class,
-					getRenderedObject("schedulePresentationDateBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), SchedulePresentationDate.class,
+                    getRenderedObject("schedulePresentationDateBean"));
 
-			addSuccessMessage(request, "message.presentation.date.scheduled.with.success");
+            addSuccessMessage(request, "message.presentation.date.scheduled.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("schedulePresentationDate");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("schedulePresentationDate");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// end of schedule presentation date
+    // end of schedule presentation date
 
-	// upload report
-	public ActionForward prepareUploadReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // upload report
+    public ActionForward prepareUploadReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PublicPresentationSeminarProcessBean uploadReportBean =
-				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
+        final PublicPresentationSeminarProcessBean uploadReportBean =
+                new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
 
-		request.setAttribute("uploadReportBean", uploadReportBean);
+        request.setAttribute("uploadReportBean", uploadReportBean);
 
-		return mapping.findForward("uploadReport");
+        return mapping.findForward("uploadReport");
 
-	}
+    }
 
-	public ActionForward prepareUploadReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareUploadReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("uploadReportBean", getRenderedObject("uploadReportBean"));
+        request.setAttribute("uploadReportBean", getRenderedObject("uploadReportBean"));
 
-		return mapping.findForward("uploadReport");
-	}
+        return mapping.findForward("uploadReport");
+    }
 
-	public ActionForward uploadReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward uploadReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), UploadReport.class, getRenderedObject("uploadReportBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), UploadReport.class, getRenderedObject("uploadReportBean"));
 
-			addSuccessMessage(request, "message.public.presentation.seminar.report.uploaded.with.success");
+            addSuccessMessage(request, "message.public.presentation.seminar.report.uploaded.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("uploadReport");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("uploadReport");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// end of upload report
+    // end of upload report
 
-	// validate report
-	public ActionForward prepareValidateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    // validate report
+    public ActionForward prepareValidateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		final PublicPresentationSeminarProcessBean validateReportBean =
-				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
+        final PublicPresentationSeminarProcessBean validateReportBean =
+                new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
 
-		request.setAttribute("validateReportBean", validateReportBean);
+        request.setAttribute("validateReportBean", validateReportBean);
 
-		return mapping.findForward("validateReport");
+        return mapping.findForward("validateReport");
 
-	}
+    }
 
-	public ActionForward prepareValidateReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareValidateReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		request.setAttribute("validateReportBean", getRenderedObject("validateReportBean"));
+        request.setAttribute("validateReportBean", getRenderedObject("validateReportBean"));
 
-		return mapping.findForward("validateReport");
-	}
+        return mapping.findForward("validateReport");
+    }
 
-	public ActionForward validateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward validateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), ValidateReport.class, getRenderedObject("validateReportBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), ValidateReport.class, getRenderedObject("validateReportBean"));
 
-			addSuccessMessage(request, "message.public.presentation.seminar.report.validated.with.success");
+            addSuccessMessage(request, "message.public.presentation.seminar.report.validated.with.success");
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("validateReport");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("validateReport");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	public ActionForward rejectReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward rejectReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		try {
-			ExecuteProcessActivity.run(getProcess(request), RejectReport.class, getRenderedObject("validateReportBean"));
+        try {
+            ExecuteProcessActivity.run(getProcess(request), RejectReport.class, getRenderedObject("validateReportBean"));
 
-		} catch (DomainException e) {
-			addErrorMessage(request, e.getKey(), e.getArgs());
-			return mapping.findForward("validateReport");
-		}
+        } catch (DomainException e) {
+            addErrorMessage(request, e.getKey(), e.getArgs());
+            return mapping.findForward("validateReport");
+        }
 
-		return viewIndividualProgramProcess(request, getProcess(request));
+        return viewIndividualProgramProcess(request, getProcess(request));
 
-	}
+    }
 
-	// end of validate report
+    // end of validate report
 
 }

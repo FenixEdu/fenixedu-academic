@@ -9,102 +9,102 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EntryDTO implements Serializable {
 
-	private boolean selected;
+    private boolean selected;
 
-	private EntryType entryType;
+    private EntryType entryType;
 
-	private Event event;
+    private Event event;
 
-	private Money totalAmount;
+    private Money totalAmount;
 
-	private Money payedAmount;
+    private Money payedAmount;
 
-	private Money amountToPay;
+    private Money amountToPay;
 
-	private LabelFormatter description;
+    private LabelFormatter description;
 
-	private Money debtAmount;
+    private Money debtAmount;
 
-	public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount, Money amountToPay,
-			LabelFormatter description, Money debtAmount) {
-		setEntryType(entryType);
-		setEvent(event);
-		setTotalAmount(totalAmount);
-		setPayedAmount(payedAmount);
-		setAmountToPay(amountToPay);
-		setDescription(description);
-		setDebtAmount(debtAmount);
+    public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount, Money amountToPay,
+            LabelFormatter description, Money debtAmount) {
+        setEntryType(entryType);
+        setEvent(event);
+        setTotalAmount(totalAmount);
+        setPayedAmount(payedAmount);
+        setAmountToPay(amountToPay);
+        setDescription(description);
+        setDebtAmount(debtAmount);
 
-	}
+    }
 
-	public EntryDTO(EntryType entryType, Event event, Money amountToPay) {
-		setEntryType(entryType);
-		setEvent(event);
-		setAmountToPay(amountToPay);
-	}
+    public EntryDTO(EntryType entryType, Event event, Money amountToPay) {
+        setEntryType(entryType);
+        setEvent(event);
+        setAmountToPay(amountToPay);
+    }
 
-	public Money getTotalAmount() {
-		return totalAmount;
-	}
+    public Money getTotalAmount() {
+        return totalAmount;
+    }
 
-	public void setTotalAmount(Money totalAmount) {
-		this.totalAmount = totalAmount;
-	}
+    public void setTotalAmount(Money totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
-	public Money getPayedAmount() {
-		return payedAmount;
-	}
+    public Money getPayedAmount() {
+        return payedAmount;
+    }
 
-	public void setPayedAmount(Money payedAmount) {
-		this.payedAmount = payedAmount;
-	}
+    public void setPayedAmount(Money payedAmount) {
+        this.payedAmount = payedAmount;
+    }
 
-	public EntryType getEntryType() {
-		return entryType;
-	}
+    public EntryType getEntryType() {
+        return entryType;
+    }
 
-	public void setEntryType(EntryType entryType) {
-		this.entryType = entryType;
-	}
+    public void setEntryType(EntryType entryType) {
+        this.entryType = entryType;
+    }
 
-	public boolean isSelected() {
-		return selected;
-	}
+    public boolean isSelected() {
+        return selected;
+    }
 
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
-	public Money getAmountToPay() {
-		return amountToPay;
-	}
+    public Money getAmountToPay() {
+        return amountToPay;
+    }
 
-	public void setAmountToPay(Money amountToPay) {
-		this.amountToPay = amountToPay;
-	}
+    public void setAmountToPay(Money amountToPay) {
+        this.amountToPay = amountToPay;
+    }
 
-	public Event getEvent() {
-		return this.event;
-	}
+    public Event getEvent() {
+        return this.event;
+    }
 
-	public void setEvent(Event event) {
-		this.event = event;
-	}
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
-	public LabelFormatter getDescription() {
-		return description;
-	}
+    public LabelFormatter getDescription() {
+        return description;
+    }
 
-	public void setDescription(LabelFormatter description) {
-		this.description = description;
-	}
+    public void setDescription(LabelFormatter description) {
+        this.description = description;
+    }
 
-	public void setDebtAmount(Money debtAmount) {
-		this.debtAmount = debtAmount;
-	}
+    public void setDebtAmount(Money debtAmount) {
+        this.debtAmount = debtAmount;
+    }
 
-	public Money getDebtAmount() {
-		return this.debtAmount;
-	}
+    public Money getDebtAmount() {
+        return this.debtAmount;
+    }
 
 }

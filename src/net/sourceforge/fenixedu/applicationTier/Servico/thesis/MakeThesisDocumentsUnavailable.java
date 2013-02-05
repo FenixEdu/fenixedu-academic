@@ -13,23 +13,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MakeThesisDocumentsUnavailable extends FenixService {
 
-	@Service
-	public static void run(Thesis thesis) {
-		final ThesisFile thesisFile = thesis.getDissertation();
+    @Service
+    public static void run(Thesis thesis) {
+        final ThesisFile thesisFile = thesis.getDissertation();
 
-		RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
-		CurrentDegreeScientificCommissionMembersGroup commissionMembers =
-				new CurrentDegreeScientificCommissionMembersGroup(thesis.getDegree());
-		PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
+        RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
+        CurrentDegreeScientificCommissionMembersGroup commissionMembers =
+                new CurrentDegreeScientificCommissionMembersGroup(thesis.getDegree());
+        PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
 
-		thesisFile.setPermittedGroup(new GroupUnion(scientificCouncil, commissionMembers, student));
+        thesisFile.setPermittedGroup(new GroupUnion(scientificCouncil, commissionMembers, student));
 
-		final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
-		if (publication != null) {
-			for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
-				researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
-			}
-		}
-	}
+        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
+        if (publication != null) {
+            for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
+                researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
+            }
+        }
+    }
 
 }

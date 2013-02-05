@@ -22,46 +22,46 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public class InquiryRadioGroupQuestionRenderer extends InputRenderer {
 
-	private QuestionScale questionScale;
+    private QuestionScale questionScale;
 
-	public QuestionScale getQuestionScale() {
-		return questionScale;
-	}
+    public QuestionScale getQuestionScale() {
+        return questionScale;
+    }
 
-	public void setQuestionScale(QuestionScale questionScale) {
-		this.questionScale = questionScale;
-	}
+    public void setQuestionScale(QuestionScale questionScale) {
+        this.questionScale = questionScale;
+    }
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
 
-		return new Layout() {
+        return new Layout() {
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
+            @Override
+            public HtmlComponent createComponent(Object object, Class type) {
 
-				final InquiryQuestionDTO radioQuestion = (InquiryQuestionDTO) getContext().getProperties().get("radioQuestion");
-				final InquiryQuestionHeader questionHeader =
-						(InquiryQuestionHeader) getContext().getProperties().get("questionHeader");
-				final Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
-				QuestionScale choices = questionHeader.getScaleHeaders();
-				HtmlRadioButtonGroup group = new HtmlRadioButtonGroup();
-				for (int iter = 0; iter < choices.getScaleLength(); iter++) {
-					HtmlRadioButton button = group.createRadioButton();
-					button.setUserValue(choices.getScaleValues()[iter]);
-					if (!((InquiryRadioGroupQuestion) radioQuestion.getInquiryQuestion()).getIsMatrix()) {
-						button.setText(choices.getScale()[iter].toString());
-					}
-					if (!StringUtils.isEmpty(radioQuestion.getResponseValue())
-							&& choices.getScaleValues()[iter].equals(radioQuestion.getResponseValue())) {
-						button.setChecked(true);
-					}
-					if (readOnly) {
-						button.setOnClick("return false;");
-					}
-				}
-				return group;
-			}
-		};
-	}
+                final InquiryQuestionDTO radioQuestion = (InquiryQuestionDTO) getContext().getProperties().get("radioQuestion");
+                final InquiryQuestionHeader questionHeader =
+                        (InquiryQuestionHeader) getContext().getProperties().get("questionHeader");
+                final Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
+                QuestionScale choices = questionHeader.getScaleHeaders();
+                HtmlRadioButtonGroup group = new HtmlRadioButtonGroup();
+                for (int iter = 0; iter < choices.getScaleLength(); iter++) {
+                    HtmlRadioButton button = group.createRadioButton();
+                    button.setUserValue(choices.getScaleValues()[iter]);
+                    if (!((InquiryRadioGroupQuestion) radioQuestion.getInquiryQuestion()).getIsMatrix()) {
+                        button.setText(choices.getScale()[iter].toString());
+                    }
+                    if (!StringUtils.isEmpty(radioQuestion.getResponseValue())
+                            && choices.getScaleValues()[iter].equals(radioQuestion.getResponseValue())) {
+                        button.setChecked(true);
+                    }
+                    if (readOnly) {
+                        button.setOnClick("return false;");
+                    }
+                }
+                return group;
+            }
+        };
+    }
 }

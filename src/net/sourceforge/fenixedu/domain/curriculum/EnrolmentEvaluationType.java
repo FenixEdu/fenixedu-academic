@@ -16,52 +16,52 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public enum EnrolmentEvaluationType {
 
-	NORMAL,
+    NORMAL,
 
-	IMPROVEMENT,
+    IMPROVEMENT,
 
-	SPECIAL_SEASON,
+    SPECIAL_SEASON,
 
-	EQUIVALENCE;
+    EQUIVALENCE;
 
-	private static final Map<Locale, LabelValueBean[]> enrolmentEvaluationTypeLabelValuesByLocale =
-			new HashMap<Locale, LabelValueBean[]>(2);
+    private static final Map<Locale, LabelValueBean[]> enrolmentEvaluationTypeLabelValuesByLocale =
+            new HashMap<Locale, LabelValueBean[]>(2);
 
-	public static LabelValueBean[] getLabelValues(Locale locale) {
-		if (locale == null) {
-			locale = Locale.getDefault();
-		}
-		LabelValueBean[] labelValueBeans = enrolmentEvaluationTypeLabelValuesByLocale.get(locale);
-		if (labelValueBeans != null) {
-			return labelValueBeans;
-		}
+    public static LabelValueBean[] getLabelValues(Locale locale) {
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+        LabelValueBean[] labelValueBeans = enrolmentEvaluationTypeLabelValuesByLocale.get(locale);
+        if (labelValueBeans != null) {
+            return labelValueBeans;
+        }
 
-		final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
-		labelValueBeans =
-				new LabelValueBean[] {
-						new LabelValueBean(resourceBundle.getString(NORMAL.getQualifiedName()), NORMAL.toString()),
-						new LabelValueBean(resourceBundle.getString(IMPROVEMENT.getQualifiedName()), IMPROVEMENT.toString()),
-						new LabelValueBean(resourceBundle.getString(SPECIAL_SEASON.getQualifiedName()), SPECIAL_SEASON.toString()),
-						new LabelValueBean(resourceBundle.getString(EQUIVALENCE.getQualifiedName()), EQUIVALENCE.toString()) };
-		enrolmentEvaluationTypeLabelValuesByLocale.put(locale, labelValueBeans);
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
+        labelValueBeans =
+                new LabelValueBean[] {
+                        new LabelValueBean(resourceBundle.getString(NORMAL.getQualifiedName()), NORMAL.toString()),
+                        new LabelValueBean(resourceBundle.getString(IMPROVEMENT.getQualifiedName()), IMPROVEMENT.toString()),
+                        new LabelValueBean(resourceBundle.getString(SPECIAL_SEASON.getQualifiedName()), SPECIAL_SEASON.toString()),
+                        new LabelValueBean(resourceBundle.getString(EQUIVALENCE.getQualifiedName()), EQUIVALENCE.toString()) };
+        enrolmentEvaluationTypeLabelValuesByLocale.put(locale, labelValueBeans);
 
-		return labelValueBeans;
-	}
+        return labelValueBeans;
+    }
 
-	public String getName() {
-		return name();
-	}
+    public String getName() {
+        return name();
+    }
 
-	public String getQualifiedName() {
-		return EnrolmentEvaluationType.class.getSimpleName() + "." + name();
-	}
+    public String getQualifiedName() {
+        return EnrolmentEvaluationType.class.getSimpleName() + "." + name();
+    }
 
-	public String getAcronym() {
-		return getQualifiedName() + ".acronym";
-	}
+    public String getAcronym() {
+        return getQualifiedName() + ".acronym";
+    }
 
-	public String getDescription() {
-		return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
-	}
+    public String getDescription() {
+        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+    }
 
 }

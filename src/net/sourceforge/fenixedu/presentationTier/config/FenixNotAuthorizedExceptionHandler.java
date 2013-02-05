@@ -23,54 +23,54 @@ import org.apache.struts.config.ExceptionConfig;
  */
 public class FenixNotAuthorizedExceptionHandler extends ExceptionHandler {
 
-	/**
+    /**
      *  
      */
-	public FenixNotAuthorizedExceptionHandler() {
-		super();
-	}
+    public FenixNotAuthorizedExceptionHandler() {
+        super();
+    }
 
-	/**
-	 * Handle the exception. Return the <code>ActionForward</code> instance (if
-	 * any) returned by the called <code>ExceptionHandler</code>.
-	 * 
-	 * @param ex
-	 *            The exception to handle
-	 * @param ae
-	 *            The ExceptionConfig corresponding to the exception
-	 * @param mapping
-	 *            The ActionMapping we are processing
-	 * @param formInstance
-	 *            The ActionForm we are processing
-	 * @param request
-	 *            The servlet request we are processing
-	 * @param response
-	 *            The servlet response we are creating
-	 * 
-	 * @exception ServletException
-	 *                if a servlet exception occurs
-	 * 
-	 * @since Struts 1.1
-	 */
-	@Override
-	public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		try {
-			ActionForward forward = mapping.getInputForward();
+    /**
+     * Handle the exception. Return the <code>ActionForward</code> instance (if
+     * any) returned by the called <code>ExceptionHandler</code>.
+     * 
+     * @param ex
+     *            The exception to handle
+     * @param ae
+     *            The ExceptionConfig corresponding to the exception
+     * @param mapping
+     *            The ActionMapping we are processing
+     * @param formInstance
+     *            The ActionForm we are processing
+     * @param request
+     *            The servlet request we are processing
+     * @param response
+     *            The servlet response we are creating
+     * 
+     * @exception ServletException
+     *                if a servlet exception occurs
+     * 
+     * @since Struts 1.1
+     */
+    @Override
+    public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        try {
+            ActionForward forward = mapping.getInputForward();
 
-			ActionForward newForward = new ActionForward();
-			PropertyUtils.copyProperties(newForward, forward);
-			StringBuilder path = new StringBuilder();
-			path.append("/teacherAdministrationViewer.do?method=instructions").append("&objectCode=")
-					.append(request.getParameter("executionCourseId"));
-			newForward.setPath(path.toString());
-			// Store the exception
-			ActionError actionError = new ActionError(exceptionConfig.getKey());
-			super.storeException(request, exceptionConfig.getKey(), actionError, newForward, exceptionConfig.getScope());
-			return newForward;
-		} catch (Exception e) {
-			throw new ServletException(e.getMessage());
-		}
-	}
+            ActionForward newForward = new ActionForward();
+            PropertyUtils.copyProperties(newForward, forward);
+            StringBuilder path = new StringBuilder();
+            path.append("/teacherAdministrationViewer.do?method=instructions").append("&objectCode=")
+                    .append(request.getParameter("executionCourseId"));
+            newForward.setPath(path.toString());
+            // Store the exception
+            ActionError actionError = new ActionError(exceptionConfig.getKey());
+            super.storeException(request, exceptionConfig.getKey(), actionError, newForward, exceptionConfig.getScope());
+            return newForward;
+        } catch (Exception e) {
+            throw new ServletException(e.getMessage());
+        }
+    }
 
 }

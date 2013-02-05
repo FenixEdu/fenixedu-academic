@@ -35,153 +35,149 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Luis Crus
  */
-@Mapping(
-		module = "publico",
-		path = "/support",
-		input = "/support.do?method=prepare&page=0",
-		scope = "session",
-		parameter = "method")
+@Mapping(module = "publico", path = "/support", input = "/support.do?method=prepare&page=0", scope = "session",
+        parameter = "method")
 @Forwards(value = { @Forward(name = "Manage", path = "df.page.support-faq") })
 public class ManageFAQDA extends FenixDispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-		List infoFAQSections = (List) ReadFAQSections.run();
-		request.setAttribute("infoFAQSections", infoFAQSections);
+        List infoFAQSections = (List) ReadFAQSections.run();
+        request.setAttribute("infoFAQSections", infoFAQSections);
 
-		List infoFAQEntries = (List) ReadFAQEntries.run();
-		request.setAttribute("infoFAQEntries", infoFAQEntries);
+        List infoFAQEntries = (List) ReadFAQEntries.run();
+        request.setAttribute("infoFAQEntries", infoFAQEntries);
 
-		List rootInfoFAQSections = new ArrayList(infoFAQSections);
-		Map processedSection = new HashMap();
-		getSortedInfoFAQSections(rootInfoFAQSections, processedSection, null, 0);
-		request.setAttribute("rootInfoFAQSections", rootInfoFAQSections);
+        List rootInfoFAQSections = new ArrayList(infoFAQSections);
+        Map processedSection = new HashMap();
+        getSortedInfoFAQSections(rootInfoFAQSections, processedSection, null, 0);
+        request.setAttribute("rootInfoFAQSections", rootInfoFAQSections);
 
-		List rootEntries = getSortedInfoFAQEnrtries(infoFAQEntries, processedSection);
-		request.setAttribute("rootInfoFAQEntries", rootEntries);
+        List rootEntries = getSortedInfoFAQEnrtries(infoFAQEntries, processedSection);
+        request.setAttribute("rootInfoFAQEntries", rootEntries);
 
-		return mapping.findForward("Manage");
-	}
+        return mapping.findForward("Manage");
+    }
 
-	private List getSortedInfoFAQEnrtries(List infoFAQEntries, Map processedSection) {
-		List rootEntries = new ArrayList();
+    private List getSortedInfoFAQEnrtries(List infoFAQEntries, Map processedSection) {
+        List rootEntries = new ArrayList();
 
-		for (int i = 0; i < infoFAQEntries.size(); i++) {
-			InfoFAQEntry infoFAQEntry = (InfoFAQEntry) infoFAQEntries.get(i);
-			InfoFAQSection infoFAQSection = infoFAQEntry.getParentSection();
-			if (infoFAQSection != null) {
-				InfoFAQSection infoFAQParentSection = (InfoFAQSection) processedSection.get(infoFAQSection.getIdInternal());
-				if (infoFAQParentSection.getEntries() == null) {
-					infoFAQParentSection.setEntries(new ArrayList());
-				}
-				infoFAQParentSection.getEntries().add(infoFAQEntry);
-			} else {
-				rootEntries.add(infoFAQEntry);
-			}
-		}
+        for (int i = 0; i < infoFAQEntries.size(); i++) {
+            InfoFAQEntry infoFAQEntry = (InfoFAQEntry) infoFAQEntries.get(i);
+            InfoFAQSection infoFAQSection = infoFAQEntry.getParentSection();
+            if (infoFAQSection != null) {
+                InfoFAQSection infoFAQParentSection = (InfoFAQSection) processedSection.get(infoFAQSection.getIdInternal());
+                if (infoFAQParentSection.getEntries() == null) {
+                    infoFAQParentSection.setEntries(new ArrayList());
+                }
+                infoFAQParentSection.getEntries().add(infoFAQEntry);
+            } else {
+                rootEntries.add(infoFAQEntry);
+            }
+        }
 
-		return rootEntries;
-	}
+        return rootEntries;
+    }
 
-	private void getSortedInfoFAQSections(List copyOfInfoFAQSections, Map processedSection, List sectionsInPreviousLevel,
-			int numberRootSections) {
-		List sectionsToRemove = new ArrayList();
-		List nextSectionsInPreviousLevel = new ArrayList();
-		for (int i = 0; i < copyOfInfoFAQSections.size(); i++) {
-			InfoFAQSection infoFAQSection = (InfoFAQSection) copyOfInfoFAQSections.get(i);
-			if (sectionsInPreviousLevel == null && infoFAQSection.getParentSection() == null) {
-				nextSectionsInPreviousLevel.add(infoFAQSection.getIdInternal());
-				processedSection.put(infoFAQSection.getIdInternal(), infoFAQSection);
-			} else if (sectionsInPreviousLevel != null && infoFAQSection.getParentSection() != null
-					&& sectionsInPreviousLevel.contains(infoFAQSection.getParentSection().getIdInternal())) {
-				InfoFAQSection infoFAQParentSection =
-						(InfoFAQSection) processedSection.get(infoFAQSection.getParentSection().getIdInternal());
-				if (infoFAQParentSection != null) {
-					if (infoFAQParentSection.getSubSections() == null) {
-						infoFAQParentSection.setSubSections(new ArrayList());
-					}
-					infoFAQParentSection.getSubSections().add(infoFAQSection);
-					sectionsToRemove.add(infoFAQSection);
-					nextSectionsInPreviousLevel.add(infoFAQSection.getIdInternal());
-					processedSection.put(infoFAQSection.getIdInternal(), infoFAQSection);
-				}
-			}
-		}
-		if (sectionsInPreviousLevel == null) {
-			numberRootSections = nextSectionsInPreviousLevel.size();
-		}
-		copyOfInfoFAQSections.removeAll(sectionsToRemove);
-		if (copyOfInfoFAQSections.size() != numberRootSections) {
-			getSortedInfoFAQSections(copyOfInfoFAQSections, processedSection, nextSectionsInPreviousLevel, numberRootSections);
-		}
-	}
+    private void getSortedInfoFAQSections(List copyOfInfoFAQSections, Map processedSection, List sectionsInPreviousLevel,
+            int numberRootSections) {
+        List sectionsToRemove = new ArrayList();
+        List nextSectionsInPreviousLevel = new ArrayList();
+        for (int i = 0; i < copyOfInfoFAQSections.size(); i++) {
+            InfoFAQSection infoFAQSection = (InfoFAQSection) copyOfInfoFAQSections.get(i);
+            if (sectionsInPreviousLevel == null && infoFAQSection.getParentSection() == null) {
+                nextSectionsInPreviousLevel.add(infoFAQSection.getIdInternal());
+                processedSection.put(infoFAQSection.getIdInternal(), infoFAQSection);
+            } else if (sectionsInPreviousLevel != null && infoFAQSection.getParentSection() != null
+                    && sectionsInPreviousLevel.contains(infoFAQSection.getParentSection().getIdInternal())) {
+                InfoFAQSection infoFAQParentSection =
+                        (InfoFAQSection) processedSection.get(infoFAQSection.getParentSection().getIdInternal());
+                if (infoFAQParentSection != null) {
+                    if (infoFAQParentSection.getSubSections() == null) {
+                        infoFAQParentSection.setSubSections(new ArrayList());
+                    }
+                    infoFAQParentSection.getSubSections().add(infoFAQSection);
+                    sectionsToRemove.add(infoFAQSection);
+                    nextSectionsInPreviousLevel.add(infoFAQSection.getIdInternal());
+                    processedSection.put(infoFAQSection.getIdInternal(), infoFAQSection);
+                }
+            }
+        }
+        if (sectionsInPreviousLevel == null) {
+            numberRootSections = nextSectionsInPreviousLevel.size();
+        }
+        copyOfInfoFAQSections.removeAll(sectionsToRemove);
+        if (copyOfInfoFAQSections.size() != numberRootSections) {
+            getSortedInfoFAQSections(copyOfInfoFAQSections, processedSection, nextSectionsInPreviousLevel, numberRootSections);
+        }
+    }
 
-	public ActionForward createFAQSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		DynaActionForm dynaActionForm = (DynaActionForm) form;
-		String parentSectionId = (String) dynaActionForm.get("parentSectionId");
-		String sectionName = (String) dynaActionForm.get("sectionName");
+    public ActionForward createFAQSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+        String parentSectionId = (String) dynaActionForm.get("parentSectionId");
+        String sectionName = (String) dynaActionForm.get("sectionName");
 
-		InfoFAQSection infoFAQSection = new InfoFAQSection();
-		if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
-			infoFAQSection.setParentSection(new InfoFAQSection());
-			infoFAQSection.getParentSection().setIdInternal(new Integer(parentSectionId));
-		}
-		infoFAQSection.setSectionName(sectionName);
+        InfoFAQSection infoFAQSection = new InfoFAQSection();
+        if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
+            infoFAQSection.setParentSection(new InfoFAQSection());
+            infoFAQSection.getParentSection().setIdInternal(new Integer(parentSectionId));
+        }
+        infoFAQSection.setSectionName(sectionName);
 
-		CreateFAQSection.run(infoFAQSection);
+        CreateFAQSection.run(infoFAQSection);
 
-		return mapping.findForward("Manage");
-	}
+        return mapping.findForward("Manage");
+    }
 
-	public ActionForward deleteFAQSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String sectionIdString = request.getParameter("sectionId");
+    public ActionForward deleteFAQSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String sectionIdString = request.getParameter("sectionId");
 
-		if (sectionIdString != null && StringUtils.isNumeric(sectionIdString)) {
-			Integer sectionId = new Integer(sectionIdString);
+        if (sectionIdString != null && StringUtils.isNumeric(sectionIdString)) {
+            Integer sectionId = new Integer(sectionIdString);
 
-			DeleteFAQSection.run(sectionId);
-		}
+            DeleteFAQSection.run(sectionId);
+        }
 
-		return mapping.findForward("Manage");
-	}
+        return mapping.findForward("Manage");
+    }
 
-	public ActionForward createFAQEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		DynaActionForm dynaActionForm = (DynaActionForm) form;
-		String parentSectionId = (String) dynaActionForm.get("parentSectionId");
-		String question = (String) dynaActionForm.get("question");
-		String answer = (String) dynaActionForm.get("answer");
+    public ActionForward createFAQEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+        String parentSectionId = (String) dynaActionForm.get("parentSectionId");
+        String question = (String) dynaActionForm.get("question");
+        String answer = (String) dynaActionForm.get("answer");
 
-		InfoFAQSection infoFAQSection = null;
-		if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
-			infoFAQSection = new InfoFAQSection();
-			infoFAQSection.setIdInternal(new Integer(parentSectionId));
-		}
+        InfoFAQSection infoFAQSection = null;
+        if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
+            infoFAQSection = new InfoFAQSection();
+            infoFAQSection.setIdInternal(new Integer(parentSectionId));
+        }
 
-		InfoFAQEntry infoFAQEntry = new InfoFAQEntry();
-		infoFAQEntry.setQuestion(question);
-		infoFAQEntry.setAnswer(answer);
-		infoFAQEntry.setParentSection(infoFAQSection);
+        InfoFAQEntry infoFAQEntry = new InfoFAQEntry();
+        infoFAQEntry.setQuestion(question);
+        infoFAQEntry.setAnswer(answer);
+        infoFAQEntry.setParentSection(infoFAQSection);
 
-		CreateFAQEntry.run(infoFAQEntry);
+        CreateFAQEntry.run(infoFAQEntry);
 
-		return mapping.getInputForward();
-	}
+        return mapping.getInputForward();
+    }
 
-	public ActionForward deleteFAQEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String entryIdString = request.getParameter("entryId");
+    public ActionForward deleteFAQEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String entryIdString = request.getParameter("entryId");
 
-		if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
-			Integer entryId = new Integer(entryIdString);
+        if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
+            Integer entryId = new Integer(entryIdString);
 
-			DeleteFAQEntry.run(entryId);
-		}
+            DeleteFAQEntry.run(entryId);
+        }
 
-		return mapping.getInputForward();
-	}
+        return mapping.getInputForward();
+    }
 
 }

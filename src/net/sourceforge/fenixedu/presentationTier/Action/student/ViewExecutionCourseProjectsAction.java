@@ -36,60 +36,56 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author asnr & scpo
  * 
  */
-@Mapping(
-		module = "student",
-		path = "/viewExecutionCourseProjects",
-		attribute = "enroledExecutionCoursesForm",
-		formBean = "enroledExecutionCoursesForm",
-		scope = "request")
+@Mapping(module = "student", path = "/viewExecutionCourseProjects", attribute = "enroledExecutionCoursesForm",
+        formBean = "enroledExecutionCoursesForm", scope = "request")
 @Forwards(value = {
-		@Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp", tileProperties = @Tile(
-				title = "private.student.subscribe.groups")),
-		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-		@Forward(name = "noprojects", path = "/viewEnroledExecutionCourses.do?method=prepare") })
+        @Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp", tileProperties = @Tile(
+                title = "private.student.subscribe.groups")),
+        @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "noprojects", path = "/viewEnroledExecutionCourses.do?method=prepare") })
 public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
-	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException, FenixServiceException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixActionException, FenixFilterException, FenixServiceException {
 
-		IUserView userView = getUserView(request);
+        IUserView userView = getUserView(request);
 
-		String executionCourseCodeString = request.getParameter("executionCourseCode");
+        String executionCourseCodeString = request.getParameter("executionCourseCode");
 
-		if (executionCourseCodeString == null || executionCourseCodeString.equals("")) {
-			ActionErrors actionErrors1 = new ActionErrors();
-			ActionError error1 = null;
-			// Create an ACTION_ERROR
-			error1 = new ActionError("errors.notSelected.executionCourse");
-			actionErrors1.add("errors.notSelected.executionCourse", error1);
-			saveErrors(request, actionErrors1);
-			return mapping.findForward("insucess");
-		}
-		Integer executionCourseCode = new Integer(executionCourseCodeString);
+        if (executionCourseCodeString == null || executionCourseCodeString.equals("")) {
+            ActionErrors actionErrors1 = new ActionErrors();
+            ActionError error1 = null;
+            // Create an ACTION_ERROR
+            error1 = new ActionError("errors.notSelected.executionCourse");
+            actionErrors1.add("errors.notSelected.executionCourse", error1);
+            saveErrors(request, actionErrors1);
+            return mapping.findForward("insucess");
+        }
+        Integer executionCourseCode = new Integer(executionCourseCodeString);
 
-		ISiteComponent viewProjectsComponent = ReadExecutionCourseProjects.run(executionCourseCode, userView.getUtilizador());
+        ISiteComponent viewProjectsComponent = ReadExecutionCourseProjects.run(executionCourseCode, userView.getUtilizador());
 
-		InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCode);
-		request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+        InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCode);
+        request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-		InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
-		List infoGroupPropertiesList = new ArrayList();
-		if (infoSiteProjects != null) {
-			infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
-		} else {
-			ActionErrors actionErrors1 = new ActionErrors();
-			ActionError error1 = null;
-			error1 = new ActionError("errors.noStudentInAttendsSet");
-			actionErrors1.add("errors.noStudentInAttendsSet", error1);
-			saveErrors(request, actionErrors1);
-			return mapping.findForward("noprojects");
-		}
+        InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
+        List infoGroupPropertiesList = new ArrayList();
+        if (infoSiteProjects != null) {
+            infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
+        } else {
+            ActionErrors actionErrors1 = new ActionErrors();
+            ActionError error1 = null;
+            error1 = new ActionError("errors.noStudentInAttendsSet");
+            actionErrors1.add("errors.noStudentInAttendsSet", error1);
+            saveErrors(request, actionErrors1);
+            return mapping.findForward("noprojects");
+        }
 
-		request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
+        request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
 
-		return mapping.findForward("sucess");
+        return mapping.findForward("sucess");
 
-	}
+    }
 
 }
