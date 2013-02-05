@@ -459,6 +459,10 @@ public class Grouping extends Grouping_Base {
             shiftGP.delete();
         }
 
+        for (Project project : getProjects()) {
+            project.delete();
+        }
+
         removeRootDomainObject();
         super.deleteDomainObject();
     }
