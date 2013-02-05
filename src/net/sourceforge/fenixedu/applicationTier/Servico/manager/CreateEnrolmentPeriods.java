@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
@@ -14,8 +13,10 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodManagementBean;
 import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodType;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -23,25 +24,19 @@ public class CreateEnrolmentPeriods {
 
 	@Service
 	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-	public static void run(EnrolmentPeriodManagementBean bean) throws FenixServiceException {
-
-		final ExecutionSemester executionSemester = bean.getExecutionSemester();
-		DegreeType degreeType = bean.getDegreeType();
-		EnrolmentPeriodType enrolmentPeriodType = bean.getType();
-		final Date startDate = bean.getBegin().toDate();
-		final Date endDate = bean.getEnd().toDate();
-
+	public static void run(ExecutionSemester executionSemester, DegreeType degreeType, EnrolmentPeriodType enrolmentPeriodType,
+			DateTime start, DateTime end, List<DegreeCurricularPlan> dcps) {
+		final Date startDate = start.toDate();
+		final Date endDate = end.toDate();
 		/*
 		 * Allow pre-bolonha degrees to create reingression periods
 		 */
 		if (!degreeType.isBolonhaType() && enrolmentPeriodType.isReingressionPeriod()) {
-			createReingressionPeriodsForPreBolonhaDegrees(executionSemester, degreeType, startDate, endDate,
-					bean.getDegreeCurricularPlanList());
+			createReingressionPeriodsForPreBolonhaDegrees(executionSemester, degreeType, startDate, endDate, dcps);
 		} else if (degreeType.isEmpty()) {
 			createEnrolmentPeriodsForEmptyDegree(executionSemester, enrolmentPeriodType, startDate, endDate);
 		} else {
-			createEnrolmentPeriodsForBolonhaDegrees(executionSemester, degreeType, enrolmentPeriodType, startDate, endDate,
-					bean.getDegreeCurricularPlanList());
+			createEnrolmentPeriodsForBolonhaDegrees(executionSemester, degreeType, enrolmentPeriodType, startDate, endDate, dcps);
 		}
 	}
 
@@ -53,14 +48,14 @@ public class CreateEnrolmentPeriods {
 	}
 
 	private static void createEnrolmentPeriodsForEmptyDegree(ExecutionSemester executionSemester,
-			EnrolmentPeriodType enrolmentPeriodType, Date startDate, Date endDate) throws FenixServiceException {
+			EnrolmentPeriodType enrolmentPeriodType, Date startDate, Date endDate) {
 		createPeriod(enrolmentPeriodType, startDate, endDate, executionSemester,
 				DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
 	}
 
 	private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
 			final DegreeType degreeType, final EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
-			final List<DegreeCurricularPlan> dcpList) throws FenixServiceException {
+			final List<DegreeCurricularPlan> dcpList) {
 
 		for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
 
@@ -71,8 +66,7 @@ public class CreateEnrolmentPeriods {
 	}
 
 	private static void createPeriod(EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
-			final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan)
-			throws FenixServiceException {
+			final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan) {
 
 		if (EnrolmentPeriodType.ENROLMENT_PERIOD_IN_CLASSES.equals(enrolmentPeriodType)) {
 
@@ -103,8 +97,7 @@ public class CreateEnrolmentPeriods {
 			new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
 
 		} else {
-			throw new FenixServiceException("error.invalid.enrolment.period.class.name");
+			throw new Error("error.invalid.enrolment.period.class.name");
 		}
 	}
-
 }

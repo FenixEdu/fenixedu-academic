@@ -1036,8 +1036,8 @@ class DomainObject {
     }
 
     class EnrolmentPeriod extends DomainObject {
-        DateTime endDateDateTime;
-        DateTime startDateDateTime;
+        DateTime endDateDateTime (REQUIRED);
+        DateTime startDateDateTime (REQUIRED);
     }
 
         class CandidacyPeriodInDegreeCurricularPlan extends EnrolmentPeriod {

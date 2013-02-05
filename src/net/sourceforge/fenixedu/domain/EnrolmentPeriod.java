@@ -10,6 +10,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -124,6 +125,10 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 		} else {
 			setStartDateDateTime(new org.joda.time.DateTime(date.getTime()));
 		}
+	}
+
+	public Interval getInterval() {
+		return new Interval(getStartDateDateTime(), getEndDateDateTime());
 	}
 
 }

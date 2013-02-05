@@ -216,9 +216,6 @@
 		<put name="body" value="/manager/editExecutionPeriodDates.jsp" />
 	</definition>
 	
-	<definition name="show-enrolement-periods" extends="definition.operator.two-column" >
-		<put name="body" value="/manager/enrolementPeriods.jsp" />
-	</definition>	
 	<definition name="edit-enrolment-instructions" extends="definition.operator.two-column" >
 		<put name="body" value="/manager/editEnrolmentInstructions.jsp" />
 	</definition>

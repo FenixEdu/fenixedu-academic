@@ -464,10 +464,6 @@
 		<put name="body" value="/manager/competenceCourse/chooseCurricularCourses_bd.jsp" />
 	</definition>	
 
-	<definition name="show-enrolement-periods" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/enrolementPeriods.jsp" />
-	</definition>	
-
 	<definition name="edit-enrolment-instructions" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editEnrolmentInstructions.jsp" />
 	</definition>	
