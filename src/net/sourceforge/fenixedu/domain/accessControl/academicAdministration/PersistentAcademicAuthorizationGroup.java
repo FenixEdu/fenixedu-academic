@@ -268,10 +268,10 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
         Collection<Unit> parents = null;
         if (party instanceof Person) {
             Person person = (Person) party;
-            parents = person.getParentUnits(AccountabilityTypeEnum.WORKING_CONTRACT);
+            parents = person.getCurrentParentUnits(AccountabilityTypeEnum.WORKING_CONTRACT);
         } else if (party instanceof Unit) {
             Unit unit = (Unit) party;
-            parents = unit.getParentUnits(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+            parents = unit.getCurrentParentUnits(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
         }
         if (parents != null) {
             for (Unit parent : parents) {
@@ -294,10 +294,10 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
         Collection<Unit> parents = null;
         if (party instanceof Person) {
             Person person = (Person) party;
-            parents = person.getParentUnits(AccountabilityTypeEnum.WORKING_CONTRACT);
+            parents = person.getCurrentParentUnits(AccountabilityTypeEnum.WORKING_CONTRACT);
         } else if (party instanceof Unit) {
             Unit unit = (Unit) party;
-            parents = unit.getParentUnits(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+            parents = unit.getCurrentParentUnits(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
         }
         if (parents != null) {
             for (Unit parent : parents) {

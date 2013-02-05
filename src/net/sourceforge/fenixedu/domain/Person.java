@@ -2685,7 +2685,7 @@ public class Person extends Person_Base {
     public SortedSet<String> getOrganizationalUnitsPresentation() {
         final SortedSet<String> organizationalUnits = new TreeSet<String>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.isActive() && isOrganizationalUnitsForPresentation(accountability)) {
+            if (isOrganizationalUnitsForPresentation(accountability)) {
                 final Party party = accountability.getParentParty();
                 organizationalUnits.add(party.getName());
             }

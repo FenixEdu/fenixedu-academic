@@ -199,7 +199,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         }
     }
 
-    public Collection<? extends Party> getParentParties(AccountabilityTypeEnum accountabilityTypeEnum,
+    public Collection<? extends Party> getCurrentParentParties(AccountabilityTypeEnum accountabilityTypeEnum,
             Class<? extends Party> parentPartyClass) {
         final Set<Party> result = new HashSet<Party>();
         for (final Accountability accountability : getParentsSet()) {
@@ -211,10 +211,22 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return result;
     }
 
+    public Collection<? extends Party> getParentParties(AccountabilityTypeEnum accountabilityTypeEnum,
+            Class<? extends Party> parentPartyClass) {
+        final Set<Party> result = new HashSet<Party>();
+        for (final Accountability accountability : getParentsSet()) {
+            if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+                    && parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
+                result.add(accountability.getParentParty());
+            }
+        }
+        return result;
+    }
+
     public Collection<? extends Party> getParentParties(Class<? extends Party> parentPartyClass) {
         final Set<Party> result = new HashSet<Party>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.isActive() && parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
+            if (parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
                 result.add(accountability.getParentParty());
             }
         }
@@ -225,7 +237,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             Class<? extends Party> parentPartyClass) {
         final Set<Party> result = new HashSet<Party>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.isActive() && accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
+            if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
                     && parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
                 result.add(accountability.getParentParty());
             }
@@ -239,6 +251,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public Collection<Unit> getParentUnits(String accountabilityTypeEnum) {
         return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.valueOf(accountabilityTypeEnum), Unit.class);
+    }
+
+    public Collection<Unit> getCurrentParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+        return (Collection<Unit>) getCurrentParentParties(accountabilityTypeEnum, Unit.class);
     }
 
     public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -313,7 +329,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
         final Set<Accountability> result = new HashSet<Accountability>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.isActive() && accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
+            if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
                 result.add(accountability);
             }
         }
@@ -334,7 +350,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             Class<? extends Accountability> accountabilityClass) {
         final Set<Accountability> result = new HashSet<Accountability>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.isActive() && accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+            if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
                     && accountabilityClass.isAssignableFrom(accountability.getClass())) {
                 result.add(accountability);
             }
@@ -376,7 +392,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Collection<? extends Accountability> getParentAccountabilitiesByParentClass(Class<? extends Party> parentClass) {
         final Set<Accountability> result = new HashSet<Accountability>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.isActive() && parentClass.isAssignableFrom(accountability.getParentParty().getClass())) {
+            if (parentClass.isAssignableFrom(accountability.getParentParty().getClass())) {
                 result.add(accountability);
             }
         }
