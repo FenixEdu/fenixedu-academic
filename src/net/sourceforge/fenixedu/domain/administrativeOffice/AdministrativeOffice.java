@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
 
 import org.joda.time.DateTime;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
@@ -84,21 +82,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
             }
         }
         return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    public String getJSONAdministratedBolonhaDegrees() {
-        JSONArray degrees = new JSONArray();
-        for (Degree degree : getAdministratedDegrees()) {
-            if (degree.isBolonhaMasterOrDegree()) {
-                JSONObject degreeInfo = new JSONObject();
-                degreeInfo.put("degreeOid", degree.getExternalId());
-                degreeInfo.put("name", degree.getName());
-                degreeInfo.put("degreeType", degree.getDegreeTypeName());
-                degrees.add(degreeInfo);
-            }
-        }
-        return degrees.toJSONString();
     }
 
     public Set<Degree> getAdministratedDegreesForStudentCreationWithoutCandidacy() {
