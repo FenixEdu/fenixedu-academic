@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
@@ -130,21 +129,22 @@ public class JerseyServices {
         return Registration.readAllStudentsInfoForJobBank();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("readBolonhaDegrees")
-    public static String readBolonhaDegrees() {
-        JSONArray infos = new JSONArray();
-        AdministrativeOffice administrativeOffice = AdministrativeOffice.readDegreeAdministrativeOffice();
-        for (Degree degree : administrativeOffice.getAdministratedBolonhaDegrees()) {
-            JSONObject degreeInfo = new JSONObject();
-            degreeInfo.put("degreeOid", degree.getExternalId());
-            degreeInfo.put("name", degree.getPresentationName());
-            degreeInfo.put("degreeType", degree.getDegreeTypeName());
-            infos.add(degreeInfo);
-        }
-        return infos.toJSONString();
-    }
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("readBolonhaDegrees")
+	public static String readBolonhaDegrees() {
+		JSONArray infos = new JSONArray();
+		for (Degree degree : Degree.readBolonhaDegrees()) {
+			if (degree.isBolonhaMasterOrDegree()) {
+				JSONObject degreeInfo = new JSONObject();
+				degreeInfo.put("degreeOid", degree.getExternalId());
+				degreeInfo.put("name", degree.getPresentationName());
+				degreeInfo.put("degreeType", degree.getDegreeTypeName());
+				infos.add(degreeInfo);
+			}
+		}
+		return infos.toJSONString();
+	}
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
