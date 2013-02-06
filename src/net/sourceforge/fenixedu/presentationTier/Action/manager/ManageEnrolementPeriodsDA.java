@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -241,8 +240,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
                         addIfNotUsedInPeriod(possible, dcp);
                     }
                 } else {
-                    for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
-                            DegreeCurricularPlanState.PAST)) {
+                    for (DegreeCurricularPlan dcp : DegreeCurricularPlan.readPreBolonhaDegreeCurricularPlans()) {
                         addIfNotUsedInPeriod(possible, dcp);
                     }
                 }
