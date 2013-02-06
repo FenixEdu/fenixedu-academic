@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -2604,4 +2605,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         return executionCourse;
     }
+
+	@ConsistencyPredicate
+	public boolean checkFinalEvaluation() {
+		boolean hasFinalEvaluation = false;
+		for (Evaluation evaluation : getAssociatedEvaluationsSet()) {
+			if (evaluation instanceof FinalEvaluation) {
+				hasFinalEvaluation = true;
+				break;
+			}
+		}
+		return hasFinalEvaluation;
+	}
 }

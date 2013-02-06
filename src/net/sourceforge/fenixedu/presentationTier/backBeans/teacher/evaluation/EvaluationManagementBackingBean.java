@@ -239,7 +239,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public HtmlInputHidden getEvaluationIdHidden() {
         if (this.evaluationIdHidden == null) {
             Integer evaluationId = this.getEvaluationID();
-
             this.evaluationIdHidden = new HtmlInputHidden();
             this.evaluationIdHidden.setValue(evaluationId);
         }
@@ -584,7 +583,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String editMarks() throws FenixFilterException, FenixServiceException {
-
+		if (getEvaluationID() == null) {
+			WriteMarks.writeByAttend(getExecutionCourseID(), getEvaluationID(), buildAttendsMark());
+			return "";
+		}
         try {
             WriteMarks.writeByAttend(getExecutionCourseID(), getEvaluationID(), buildAttendsMark());
         } catch (FenixServiceMultipleException e) {
