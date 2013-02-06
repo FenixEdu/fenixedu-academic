@@ -43,7 +43,8 @@
 	    <put name="body" value="/student/enrollment/shifts/chooseRegistration.jsp" />
 	</definition>
 	<definition name="prepare-enrollment-view-warning" extends="definition.student.one-column">
-	    <put name="title" value ="B"/>
+	    <put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value ="private.student.subscribe.classes"/>
 	    <put name="body" value="/student/enrollment/prepareEnrollmentViewWarning.jsp" />
 	</definition>
 	<definition name="show-courses-by-degree" extends="definition.student.one-column">
@@ -51,7 +52,8 @@
 	    <put name="body" value="/student/enrollment/showCoursesByDegree.jsp" />
 	</definition>
 	<definition name="show-shifts-enrollment" extends="definition.student.one-column">
-		<put name="title" value ="D"/>
+	    <put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value ="private.student.subscribe.classes"/>
 		<put name="body" value="/student/enrollment/showShiftsEnrollment.jsp" />		
 	</definition>
 	<definition name="show-shifts-to-enroll" extends="definition.student.masterPage">
