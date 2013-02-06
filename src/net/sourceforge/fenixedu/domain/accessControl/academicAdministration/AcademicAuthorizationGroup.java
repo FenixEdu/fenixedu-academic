@@ -211,7 +211,9 @@ public class AcademicAuthorizationGroup extends LeafGroup {
             arguments.add(new StaticArgument(scope.name()));
         }
 
-        arguments.add(new StaticArgument(operation.name()));
+		if (operation != null) {
+			arguments.add(new StaticArgument(operation.name()));
+		}
 
         for (AcademicProgram program : programs) {
             arguments.add(new OidOperator(program));
