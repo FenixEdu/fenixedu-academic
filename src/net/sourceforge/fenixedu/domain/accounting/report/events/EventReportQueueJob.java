@@ -294,10 +294,12 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
                 List<InstallmentWrapper> list = bean.installments;
 
-                for (InstallmentWrapper installment : list) {
-                    addCell(installment.getExpirationDateLabel(), installment.getExpirationDate());
-                    addCell(installment.getAmountToPayLabel(), installment.getAmountToPay());
-                    addCell(installment.getRemainingAmountLabel(), installment.getRemainingAmount());
+                if (list != null) {
+                    for (InstallmentWrapper installment : list) {
+                        addCell(installment.getExpirationDateLabel(), installment.getExpirationDate());
+                        addCell(installment.getAmountToPayLabel(), installment.getAmountToPay());
+                        addCell(installment.getRemainingAmountLabel(), installment.getRemainingAmount());
+                    }
                 }
             }
 
