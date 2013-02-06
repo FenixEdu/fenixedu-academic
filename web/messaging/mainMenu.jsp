@@ -29,7 +29,6 @@
 		</html:link>
 	</li>
 --%>
-	<% if (Sender.hasAvailableSender()) { %>
 		<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.emails"/></li>
 		<li>
 			<html:link page="/emails.do?method=newEmail">
@@ -41,7 +40,6 @@
 				<bean:message bundle="MESSAGING_RESOURCES" key="label.email.sent"/>
 			</html:link>
 		</li>
-	<% } %>
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.files"/></li>
 	<li>
 		<html:link page="/viewFiles.do?method=showSources">

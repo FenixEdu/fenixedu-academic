@@ -9,7 +9,6 @@
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
 
 <logic:present name="sender">
-
 	<fr:view name="sender" schema="net.sourceforge.fenixedu.domain.util.email.Sender.info">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thleft thtop ulmvert0 ulindent075"/>
@@ -48,9 +47,7 @@
 
 </logic:present>
 
-
 <logic:present name="sendersGroups">
-
 	<fr:view name="sendersGroups" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list"  >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
@@ -66,7 +63,6 @@
 </logic:present>
 
 <logic:present name="sendersGroupsCourses">
-
 	<fr:view name="sendersGroupsCourses" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list.courses"  >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
@@ -78,7 +74,6 @@
 			<fr:property name="order(view)" value="1"/>
 		</fr:layout>
 	</fr:view>
-	
 </logic:present>
 
 <logic:present name="searchSendersBean">

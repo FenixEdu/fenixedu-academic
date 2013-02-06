@@ -1,7 +1,8 @@
+<%@ page language="java" %>
+<%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu.domain.User"%>
-<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -15,7 +16,8 @@
 		<span class="error0"><bean:write name="errorMessage"/></span>
 	</p>
 </logic:present>
-	
+
+<% if (Sender.hasAvailableSender()) { %>
 <form action="<%= request.getContextPath() + "/messaging/emails.do" %>" method="post">
 	<html:hidden property="method" value="sendEmail"/>
 
@@ -71,5 +73,7 @@
 		<fr:destination name="selectSender" path="/emails.do?method=newEmail"/>
 		<fr:destination name="cancel" path="/index.do"/>
 	</fr:edit>
-
 </form>
+<% } else { %>
+	<bean:message bundle="MANAGER_RESOURCES" key="message.not.authorized.to.send.emails"/>
+<% } %>
