@@ -24,9 +24,9 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     public boolean checkNumberOfGroups(Grouping grouping, Shift shift) {
         Integer maximumGroupCapacity = grouping.getGroupMaximumNumber();
 
-        if (grouping.getDifferentiatedCapacity()) {
+        if (shift != null && grouping.getDifferentiatedCapacity()) {
             maximumGroupCapacity = shift.getShiftGroupingProperties().getCapacity();
-        } else if (grouping.getGroupMaximumNumber() == null) {
+        } else if (maximumGroupCapacity == null) {
             return true;
         }
 
