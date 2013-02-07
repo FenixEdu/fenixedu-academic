@@ -47,7 +47,7 @@
 			<html:link action="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.idInternal" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
 		</li>
 		<li>			
-			<html:link href="mailto:nucleo.graduacao@ist.utl.pt" styleClass="externallink">
+			<html:link href="mailto:da@ist.utl.pt" styleClass="externallink">
 				<bean:message key="link.academicSupport" bundle="GLOBAL_RESOURCES"/>
 			</html:link>
 		</li>

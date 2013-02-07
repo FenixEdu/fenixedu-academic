@@ -75,7 +75,7 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cuj
 
 <p class="mtop05">
 <strong>9.</strong> Para apoio ao processo de inscrições, questões Académicas: 
-<a href="mailto:nucleo.graduacao@ist.utl.pt">Núcleo de Graduação</a>
+<a href="mailto:da@ist.utl.pt">Direcção Académica</a>
 </p>
 
 <p class="mtop05">
