@@ -182,7 +182,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             HttpServletResponse response) {
         final ExecutionCourse executionCourse = getExecutionCourse(request);
         Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new TreeMap<ShiftType, List<LessonPlanning>>();
-        if (executionCourse.getSite().getLessonPlanningAvailable()) {
+        if (executionCourse.getSite().getLessonPlanningAvailable() != null && executionCourse.getSite().getLessonPlanningAvailable()) {
             for (ShiftType shiftType : executionCourse.getShiftTypes()) {
                 List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
                 if (!lessonPlanningsOrderedByOrder.isEmpty()) {
