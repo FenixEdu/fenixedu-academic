@@ -46,7 +46,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    Logger logger = Logger.getLogger(ManageShiftDA.class);
+    private static final Logger logger = Logger.getLogger(ManageShiftDA.class);
 
     public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
