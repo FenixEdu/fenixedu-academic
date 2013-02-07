@@ -18,7 +18,7 @@
 		</li>
 	</logic:equal>
 	<li>
-		<a href="#" onclick="switchDisplay('instructions');">Instruções</a>
+		<a href="#" onclick="switchDisplay('instructions');"><bean:message key="label.instructions" bundle="RESEARCHER_RESOURCES"/></a>
 	</li>
 </ul>
 
