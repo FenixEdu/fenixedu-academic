@@ -138,6 +138,11 @@
 		  	</html:link>
 		</li>
 		<li>
+			<html:link page="/managePersonFunctionsShared.do?method=showDepartmentPersonFunctions" >
+				<bean:message key="link.managementPositions.management"/>
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/departmentCredits.do?method=prepareDepartmentCredits">
 		  		<bean:message key="link.department.credits"/>
 		  	</html:link>

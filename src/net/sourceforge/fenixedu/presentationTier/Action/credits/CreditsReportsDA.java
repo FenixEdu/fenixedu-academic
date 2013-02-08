@@ -13,7 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
 import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunctionShared;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -80,6 +84,67 @@ public class CreditsReportsDA extends FenixDispatchAction {
 
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=Disciplinas.xls");
+        final ServletOutputStream writer = response.getOutputStream();
+        spreadsheet.getWorkbook().write(writer);
+        writer.flush();
+        response.flushBuffer();
+        return null;
+    }
+
+    public ActionForward exportDepartmentPersonFunctions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
+        DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
+        List<Department> departments = new ArrayList<Department>();
+        if (departmentCreditsBean.getDepartment() != null) {
+            departments.add(departmentCreditsBean.getDepartment());
+        } else {
+            departments.addAll(departmentCreditsBean.getAvailableDepartments());
+        }
+        StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
+
+        AnnualCreditsState annualCreditsState =
+                AnnualCreditsState.getAnnualCreditsState(departmentCreditsBean.getExecutionSemester().getExecutionYear());
+        Boolean isFinalCreditsCalculated = annualCreditsState != null && annualCreditsState.getIsFinalCreditsCalculated();
+        for (Department department : departments) {
+            String sheetName = "Cargos_" + department.getAcronym();
+            spreadsheet.getSheet(sheetName);
+            spreadsheet.newHeaderRow();
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.teacher.id"));
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.name"),
+                    10000);
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.managementPosition.position"), 10000);
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.managementPosition.unit"), 10000);
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.teacher-dfp-student.percentage"));
+            if (isFinalCreditsCalculated) {
+                spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                        "label.managementPosition.credits"));
+            }
+            for (Teacher teacher : department.getAllTeachers(departmentCreditsBean.getExecutionSemester().getAcademicInterval())) {
+
+                for (PersonFunction personFunction : teacher.getPerson().getPersonFuntions(
+                        departmentCreditsBean.getExecutionSemester().getBeginDateYearMonthDay(),
+                        departmentCreditsBean.getExecutionSemester().getEndDateYearMonthDay())) {
+                    spreadsheet.newRow();
+                    spreadsheet.addCell(personFunction.getPerson().getUsername());
+                    spreadsheet.addCell(personFunction.getPerson().getName());
+                    spreadsheet.addCell(personFunction.getFunction().getName());
+                    spreadsheet.addCell(personFunction.getFunction().getUnit().getPresentationName());
+                    spreadsheet.addCell(personFunction.isPersonFunctionShared() ? ((PersonFunctionShared) personFunction)
+                            .getPercentage() : "-");
+                    if (isFinalCreditsCalculated) {
+                        spreadsheet.addCell(personFunction.getCredits());
+                    }
+                }
+            }
+        }
+
+        response.setContentType("text/plain");
+        String filename = "cargos_" + departmentCreditsBean.getExecutionSemester().getQualifiedName().replaceAll(" ", "_");
+        response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
         final ServletOutputStream writer = response.getOutputStream();
         spreadsheet.getWorkbook().write(writer);
         writer.flush();

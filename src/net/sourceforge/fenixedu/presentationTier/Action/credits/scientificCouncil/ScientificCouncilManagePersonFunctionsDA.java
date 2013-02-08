@@ -1,11 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
 import net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -22,7 +27,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/managePersonFunctionsShared", module = "scientificCouncil", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "addPersonFunction", path = "/credits/personFunction/addPersonFunction.jsp"),
-        @Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits") })
+        @Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits"),
+        @Forward(name = "showDepartmentPersonFunctions", path = "/credits/showDepartmentPersonFunctions.jsp") })
 public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFunctionsDA {
 
     public ActionForward prepareToAddPersonFunction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -62,4 +68,16 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
         request.setAttribute("executionYearOid", personFunctionBean.getExecutionSemester().getExecutionYear().getExternalId());
         return mapping.findForward("viewAnnualTeachingCredits");
     }
+
+    public ActionForward showDepartmentPersonFunctions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+        DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
+        if (departmentCreditsBean == null) {
+            departmentCreditsBean = new DepartmentCreditsBean();
+            departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+        }
+        request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+        return mapping.findForward("showDepartmentPersonFunctions");
+    }
+
 }

@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 public class DepartmentCreditsBean implements Serializable {
 
@@ -64,6 +66,17 @@ public class DepartmentCreditsBean implements Serializable {
                         result.add(executionCourse);
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+    public List<PersonFunction> getDepartmentPersonFunctions() {
+        List<PersonFunction> result = new ArrayList<PersonFunction>();
+        if (department != null) {
+            for (Teacher teacher : department.getAllTeachers(getExecutionSemester().getAcademicInterval())) {
+                result.addAll(teacher.getPerson().getPersonFuntions(getExecutionSemester().getBeginDateYearMonthDay(),
+                        getExecutionSemester().getEndDateYearMonthDay()));
             }
         }
         return result;
