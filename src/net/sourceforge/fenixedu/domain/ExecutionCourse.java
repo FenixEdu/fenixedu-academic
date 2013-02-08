@@ -2605,15 +2605,29 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return executionCourse;
     }
 
-//    TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 
-//    will be corrected and should be uncommented   
-//    @ConsistencyPredicate
-//    public boolean checkFinalEvaluation() {
-//        for (Evaluation evaluation : getAssociatedEvaluationsSet()) {
-//            if (evaluation instanceof FinalEvaluation) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public Double getEctsCredits() {
+        Double ects = null;
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+            if (curricularCourse.isActive(getExecutionPeriod())) {
+                if (ects == null) {
+                    ects = curricularCourse.getEctsCredits();
+                } else if (!ects.equals(curricularCourse.getEctsCredits())) {
+                    throw new DomainException("error.invalid.ectsCredits");
+                }
+            }
+        }
+        return ects;
+    }
+
+//  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 
+//  will be corrected and should be uncommented   
+//  @ConsistencyPredicate
+//  public boolean checkFinalEvaluation() {
+//      for (Evaluation evaluation : getAssociatedEvaluationsSet()) {
+//          if (evaluation instanceof FinalEvaluation) {
+//              return true;
+//          }
+//      }
+//      return false;
+//  }
 }

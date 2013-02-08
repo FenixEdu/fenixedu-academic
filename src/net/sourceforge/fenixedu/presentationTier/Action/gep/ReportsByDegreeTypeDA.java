@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.reports.RaidesSpecializationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.SummaryOccupancyReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeacherCreditsReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
@@ -543,6 +544,20 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         return selectDegreeType(mapping, actionForm, request, response);
     }
 
+    public ActionForward downloadTeacherCreditsReportFile(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+            return selectDegreeType(mapping, actionForm, request, response);
+        }
+        final DegreeType degreeType = getDegreeType(request);
+        final ExecutionYear executionYear = getExecutionYear(request);
+        final String format = getFormat(request);
+
+        prepareNewJobResponse(request, ReportFileFactory.createTeacherCreditsReportFile(format, degreeType, executionYear));
+
+        return selectDegreeType(mapping, actionForm, request, response);
+    }
+
     private void prepareNewJobResponse(HttpServletRequest request, GepReportFile job) {
 
         ReportBean reportBean = getRenderedObject();
@@ -605,6 +620,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
             return SummaryOccupancyReportFile.class;
         case 22:
             return WrittenEvaluationReportFile.class;
+        case 23:
+            return TeacherCreditsReportFile.class;
         default:
             return null;
         }

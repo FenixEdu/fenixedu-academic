@@ -122,10 +122,12 @@ public class PersonContractSituation extends PersonContractSituation_Base {
             }
             if (fullTimeEquivalent != null) {
                 if (fullTimeEquivalent.equals(BigDecimal.ONE)) {
-                    if (!professionalCategory.isTeacherMonitorCategory()) {
-                        return Double.valueOf(9);
-                    } else {
+                    if (professionalCategory.isTeacherMonitorCategory()) {
                         return Double.valueOf(4);
+                    } else if (professionalCategory.isTeacherInvitedCategory()) {
+                        return Double.valueOf(12);
+                    } else {
+                        return Double.valueOf(9);
                     }
                 } else {
                     return fullTimeEquivalent.multiply(new BigDecimal(12)).doubleValue();

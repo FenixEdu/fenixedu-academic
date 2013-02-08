@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,18 +33,22 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContract
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -550,6 +555,67 @@ public class Teacher extends Teacher_Base {
         }
 
         return round(totalCredits);
+    }
+
+    public BigDecimal getMasterDegreeThesesCredits(ExecutionYear executionYear) {
+        double totalThesisValue = 0.0;
+        if (!executionYear.getYear().equals("2011/2012")) {
+            for (ThesisEvaluationParticipant participant : getPerson().getThesisEvaluationParticipants()) {
+                Thesis thesis = participant.getThesis();
+                if (thesis.isEvaluated()
+                        && thesis.hasFinalEnrolmentEvaluation()
+                        && thesis.getEvaluation().getYear() == executionYear.getBeginCivilYear()
+                        && (participant.getType() == ThesisParticipationType.ORIENTATOR || participant.getType() == ThesisParticipationType.COORIENTATOR)) {
+                    totalThesisValue = totalThesisValue + participant.getParticipationCredits();
+                }
+            }
+        }
+        return (BigDecimal.valueOf(5).min(new BigDecimal(totalThesisValue * 0.5))).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public BigDecimal getPhdDegreeThesesCredits(ExecutionYear executionYear) {
+        ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
+        int guidedThesesNumber = 0;
+        double assistantGuidedTheses = 0.0;
+
+        if (!executionYear.getYear().equals("2011/2012")) {
+            for (InternalPhdParticipant internalPhdParticipant : getPerson().getInternalParticipants()) {
+                ExecutionYear conclusionYear = internalPhdParticipant.getIndividualProcess().getConclusionYear();
+                if (conclusionYear != null && conclusionYear.equals(previousExecutionYear)) {
+                    if (internalPhdParticipant.getProcessForGuiding() != null) {
+                        guidedThesesNumber++;
+                    } else if (internalPhdParticipant.getProcessForGuiding() != null) {
+                        assistantGuidedTheses =
+                                assistantGuidedTheses
+                                        + (0.5 / internalPhdParticipant.getProcessForGuiding().getAssistantGuidingsCount());
+                    }
+
+                }
+            }
+        }
+        return BigDecimal.valueOf(2 * (guidedThesesNumber + assistantGuidedTheses)).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public BigDecimal getProjectsTutorialsCredits(ExecutionYear executionYear) {
+        BigDecimal result = BigDecimal.ZERO;
+        ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
+        for (Professorship professorship : getPerson().getProfessorshipsSet()) {
+            if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(previousExecutionYear)
+                    && professorship.getExecutionCourse().getProjectTutorialCourse()
+                    && !professorship.getExecutionCourse().isDissertation()) {
+                Integer percentageValue = 0;
+                for (DegreeProjectTutorialService degreeProjectTutorialService : professorship.getDegreeProjectTutorialServices()) {
+                    if (degreeProjectTutorialService.getAttend().getEnrolment() != null
+                            && degreeProjectTutorialService.getAttend().getEnrolment().isApproved()) {
+                        percentageValue = percentageValue + degreeProjectTutorialService.getPercentageValue();
+                    }
+                }
+                result =
+                        result.add(BigDecimal.valueOf((percentageValue / 100)
+                                * (professorship.getExecutionCourse().getEctsCredits() / 100)));
+            }
+        }
+        return result.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public double getManagementFunctionsCredits(ExecutionSemester executionSemester) {

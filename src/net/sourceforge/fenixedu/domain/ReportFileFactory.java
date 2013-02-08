@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.reports.RaidesSpecializationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.SummaryOccupancyReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeacherCreditsReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
@@ -235,5 +236,14 @@ public class ReportFileFactory {
         reportFile.setDegreeType(degreeType);
         reportFile.setExecutionYear(executionYear);
         return reportFile;
+    }
+
+    @Service
+    public static GepReportFile createTeacherCreditsReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	final TeacherCreditsReportFile TeacherCreditsReportFile = new TeacherCreditsReportFile();
+	TeacherCreditsReportFile.setType(type);
+	TeacherCreditsReportFile.setDegreeType(degreeType);
+	TeacherCreditsReportFile.setExecutionYear(executionYear);
+	return TeacherCreditsReportFile;
     }
 }

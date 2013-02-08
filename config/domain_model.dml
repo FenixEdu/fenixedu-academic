@@ -7214,6 +7214,7 @@ class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
 class reports.DissertationsWithExternalAffiliationsReportFile extends reports.GepReportFile {}
 class reports.TimetablesReportFile extends reports.GepReportFile {}
 class reports.TeachersListFromGiafReportFile extends reports.GepReportFile {}
+class reports.TeacherCreditsReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 class reports.TutorshipProgramReportFile extends reports.GepReportFile {}
 class reports.RaidesGraduationReportFile extends reports.GepReportFile {}

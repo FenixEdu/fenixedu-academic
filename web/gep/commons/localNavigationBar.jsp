@@ -8,6 +8,7 @@
 		<%-- POR NO RESOURCES --%>
 		<bean:message key="label.gep.portal.tilte"  bundle="GEP_RESOURCES" />
 	</li>
+	<%--
 	<li>
 		<html:link page="/searchCoursesInformation.do?method=doBeforeSearch">
 			<bean:message key="link.gep.executionCoursesInformation"
@@ -19,7 +20,7 @@
 			<bean:message key="link.gep.teachersInformation"
 						  bundle="GEP_RESOURCES"/>
 		</html:link>
-	</li>
+	</li> --%>
 	<li>
 	  	<html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare">
 	  		<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES" />
