@@ -169,7 +169,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
         } else {
             return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
                     "curricularRules.ruleExecutors.CreditsLimitExecutor.limits.not.fulfilled", rule.getDegreeModuleToApplyRule()
-                            .getName(), rule.getMinimumCredits().toString(), rule.getMaximumCredits().toString());
+                            .getName(), rule.getMinimumCredits().toString(), rule.getMaximumCredits().toString(), ectsCredits
+                            .toString());
         }
     }
 
