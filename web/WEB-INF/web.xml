@@ -407,10 +407,6 @@
     	<servlet-name>FenixGWTServlet</servlet-name>
     	<url-pattern>*.gwt</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-       <servlet-name>Jersey Web Application</servlet-name>
-       <url-pattern>/jersey/*</url-pattern>
-    </servlet-mapping>
 
 	<session-config>
 			<session-timeout>120</session-timeout>
