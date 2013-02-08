@@ -112,7 +112,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     @Override
     public String getFilename() {
-        return "dividas" + getRequestDate().toString("ddMMyyyyhms") + ".csv";
+        return "dividas" + getRequestDate().toString("ddMMyyyyhms") + ".tsv";
     }
 
     @Override
@@ -131,23 +131,23 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         spreadsheetBuilderForExemptions.addSheet("isencoes", reports[1]);
         spreadsheetBuilderForTransactions.addSheet("transaccoes", reports[2]);
 
-        spreadsheetBuilderForDebts.build(WorkbookExportFormat.CSV, byteArrayOSForDebts);
-        spreadsheetBuilderForExemptions.build(WorkbookExportFormat.CSV, byteArrayOSForExemptions);
-        spreadsheetBuilderForTransactions.build(WorkbookExportFormat.CSV, byteArrayOSForTransactions);
+        spreadsheetBuilderForDebts.build(WorkbookExportFormat.TSV, byteArrayOSForDebts);
+        spreadsheetBuilderForExemptions.build(WorkbookExportFormat.TSV, byteArrayOSForExemptions);
+        spreadsheetBuilderForTransactions.build(WorkbookExportFormat.TSV, byteArrayOSForTransactions);
 
         byteArrayOSForDebts.close();
         byteArrayOSForExemptions.close();
         byteArrayOSForTransactions.close();
 
         final QueueJobResult queueJobResult = new QueueJobResult();
-        queueJobResult.setContentType("text/csv");
+        queueJobResult.setContentType("text/tsv");
         queueJobResult.setContent(byteArrayOSForDebts.toByteArray());
 
-        EventReportQueueJobFile fileForDebts = new EventReportQueueJobFile(byteArrayOSForDebts.toByteArray(), "dividas.csv");
+        EventReportQueueJobFile fileForDebts = new EventReportQueueJobFile(byteArrayOSForDebts.toByteArray(), "dividas.tsv");
         EventReportQueueJobFile fileForExemptions =
-                new EventReportQueueJobFile(byteArrayOSForExemptions.toByteArray(), "isencoes.csv");
+                new EventReportQueueJobFile(byteArrayOSForExemptions.toByteArray(), "isencoes.tsv");
         EventReportQueueJobFile fileForTransactions =
-                new EventReportQueueJobFile(byteArrayOSForTransactions.toByteArray(), "transaccoes.csv");
+                new EventReportQueueJobFile(byteArrayOSForTransactions.toByteArray(), "transaccoes.tsv");
 
         this.setDebts(fileForDebts);
         this.setExemptions(fileForExemptions);
