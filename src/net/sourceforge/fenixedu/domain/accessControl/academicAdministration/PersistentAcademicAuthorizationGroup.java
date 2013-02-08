@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
@@ -250,6 +251,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
         for (AdministrativeOffice office : getOfficeSet()) {
             programs.addAll(office.getManagedAcademicProgramSet());
         }
+        programs.add(Degree.readEmptyDegree());
         return programs;
     }
 
