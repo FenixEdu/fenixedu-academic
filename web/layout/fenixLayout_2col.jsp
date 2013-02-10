@@ -95,6 +95,9 @@
 	<div id="content">
 		<!-- Wrap -->
 		<div id="wrap">
+			<div style="float: right;">
+				<jsp:include page="../i18n.jsp"/>
+			</div>
 		  	<tiles:insert attribute="body-context" ignore="true"/>
 		  	<tiles:insert attribute="body" ignore="true"/>
 		  	<tiles:getAsString name="body-inline" ignore="true"/>

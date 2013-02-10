@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +51,7 @@ import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.VersionNotAvailableException;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -411,6 +413,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private HttpSession createNewSession(final HttpServletRequest request, final HttpSession session, final IUserView userView) {
+        final Locale locale = Language.getLocale();
         if (session != null) {
             try {
                 session.invalidate();
@@ -426,7 +429,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         UserView.setUser(userView);
         newSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 
-        I18NFilter.setDefaultLocale(request, newSession);
+        if (locale == null) {
+            I18NFilter.setDefaultLocale(request, newSession);
+        } else {
+            I18NFilter.setLocale(request, newSession, locale);
+        }
 
         return newSession;
     }
