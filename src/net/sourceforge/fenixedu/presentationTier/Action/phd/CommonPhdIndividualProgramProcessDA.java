@@ -130,10 +130,15 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         if (processes.size() == 1) {
             request.setAttribute("process", processes.get(0));
             loadProcessAlertMessagesToNotify(request, processes.get(0));
+            List<PhdParticipant> guidingsList = processes.get(0).getGuidings();
+            List<PhdParticipant> assistantGuidingsList = processes.get(0).getAssistantGuidings();
+            request.setAttribute("guidingsList", guidingsList);
+            request.setAttribute("assistantGuidingsList", assistantGuidingsList);
             return mapping.findForward("viewProcess");
         }
         request.setAttribute("searchProcessBean", searchBean);
         request.setAttribute("processes", processes);
+
         return mapping.findForward("searchResults");
     }
 

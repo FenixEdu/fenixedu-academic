@@ -447,7 +447,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             final HttpServletResponse response) {
         PhdIndividualProgramProcess process = getProcess(request);
         request.setAttribute("process", process);
-
         return mapping.findForward("viewRefereeLetters");
     }
 
@@ -457,8 +456,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         PhdCandidacyReferee referee = getDomainObject(request, "refereeId");
         request.setAttribute("process", process);
         request.setAttribute("referee", referee);
-
         return mapping.findForward("viewLetter");
     }
-
 }

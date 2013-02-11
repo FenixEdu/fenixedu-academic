@@ -138,7 +138,7 @@
 <fr:form action="<%= "/phdIndividualProgramProcess.do?processId=" + processId %>">
 	<input type="hidden" name="method" value="" />
 	<logic:notEmpty name="assistantGuidingsList">
-		<fr:view name="guidingsList">
+		<fr:view name="assistantGuidingsList">
 			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
 				<fr:slot name="name" key="label.istid" >
 					<fr:property name="classes" value="nobullet noindent"/>   
