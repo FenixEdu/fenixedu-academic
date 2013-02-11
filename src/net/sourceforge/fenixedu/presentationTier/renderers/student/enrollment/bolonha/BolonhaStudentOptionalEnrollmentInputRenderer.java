@@ -228,7 +228,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                 final HtmlActionLink actionLink = new HtmlActionLink();
                 actionLink.setText(studentResources.getString("label.enroll"));
                 actionLink.setName("optionalCurricularCourseEnrolLink" + scope.getCurricularCourse().getIdInternal());
-                actionLink.setOnClick("document.forms[0].method.value='enrolInOptionalCurricularCourse';");
+                actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
                 actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(scope.getCurricularCourse()));
                 linkTableCell.setBody(actionLink);
             }
@@ -301,7 +301,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                     actionLink.setText(studentResources.getString("label.enroll"));
                     actionLink.setName("optionalCurricularCourseEnrolLink" + curricularCourse.getExternalId() + "_"
                             + context.getExternalId());
-                    actionLink.setOnClick("document.forms[0].method.value='enrolInOptionalCurricularCourse';");
+                    actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
                     actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(curricularCourse));
                     linkTableCell.setBody(actionLink);
                 }
@@ -324,7 +324,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
     private class UpdateSelectedOptionalCurricularCourseController extends HtmlActionLinkController {
 
         static private final long serialVersionUID = 1L;
-        private CurricularCourse curricularCourse;
+        private final CurricularCourse curricularCourse;
 
         public UpdateSelectedOptionalCurricularCourseController(final CurricularCourse curricularCourse) {
             this.curricularCourse = curricularCourse;
