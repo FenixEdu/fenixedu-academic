@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -112,6 +113,7 @@ public class RaidesCommonReportFieldsWrapper {
         spreadsheet.setHeader("nº. ECTS inscritos em Propedeut e extra-curriculares");
         spreadsheet.setHeader("nº. ECTS equivalência/substituição/dispensa");
         spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
+        spreadsheet.setHeader("Ano da última resposta ao RAIDES");
     }
 
     public static Row reportRaidesFields(final Spreadsheet sheet, final Registration registration,
@@ -610,6 +612,10 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Tem situação de propinas no lectivo dos dados
         row.setCell(String.valueOf(lastStudentCurricularPlan.hasAnyGratuityEventFor(executionYear)));
+
+        // Ano da última resposta ao RAIDES
+        PrecedentDegreeInformation pdi = registration.getLatestPrecedentDegreeInformation();
+        row.setCell((pdi != null) ? pdi.getExecutionYear().getYear() : "-");
 
         return row;
     }
