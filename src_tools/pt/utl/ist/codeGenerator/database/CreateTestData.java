@@ -380,11 +380,11 @@ public class CreateTestData {
 	}
 
 	private void createServiceUnits(final AggregateUnit serviceUnits) {
-	    final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
-	    final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
-		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null, new YearMonthDay(), null,
-		    serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
-		    administrativeOffice, Boolean.FALSE, null);
+//	    final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
+//	    final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
+//		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null, new YearMonthDay(), null,
+//		    serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
+//		    administrativeOffice, Boolean.FALSE, null);
 	}
 
 	private void createDepartmentUnits(final AggregateUnit departmentUnits) {
