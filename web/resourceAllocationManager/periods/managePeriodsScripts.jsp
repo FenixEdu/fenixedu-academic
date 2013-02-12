@@ -66,6 +66,25 @@ ul {
 	position:absolute;
 	top:0;
 	right:0;
+	max-height: 650px;
+	min-height: 70px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#cenas  {
+	position: fixed;
+	top: 240px;
+	right: 2%;
+	width: 28%;
+	bottom: 100px;
+
+
+	width: 32%;
+	margin-left: 2%;
+	position:absolute;
+	top:0;
+	right:0;
 	max-height: 100%;
 	min-height: 70px;
 	overflow-y: auto;
@@ -751,8 +770,26 @@ a,input,.symbol {
 		$("#duplicate-dialog").dialog("open");
 	}
 	
+	function getDocHeight() {
+	    var D = document;
+	    return Math.max(
+	        Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+	        Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+	        Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+	    );
+	}
+	
+	
 	$(document).ready(
 			function() {
+				var sidebarYloc = parseInt($('#sidebar').css("top").substring(0,$('#sidebar').css("top").indexOf("px")))  
+			    $(window).scroll(function () {  
+			    	var offset = sidebarYloc+$(document).scrollTop()+"px";
+			    	var bottom = getDocHeight() - (window.pageYOffset + window.innerHeight);
+			    	if (bottom > 100) {
+			    		$('#sidebar').animate({top:offset},{duration:500,queue:false});
+			    	}
+			    });  
 
 				$('.edit-period').click(function(event) {
 					$(this).parent().parent().children('.period-edit').toggle();
