@@ -490,9 +490,10 @@ public class PersonalInformationBean implements Serializable {
 
         if (getConclusionGrade() == null || getConclusionYear() == null || getCountryOfResidence() == null
                 || getGrantOwnerType() == null || getDislocatedFromPermanentResidence() == null || !isSchoolLevelValid()
-                || !isMaritalStatusValid() || !isProfessionalConditionValid() || !isProfessionTypeValid()
-                || !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid() || !isMotherProfessionalConditionValid()
-                || !isFatherProfessionalConditionValid() || !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
+                || !isHighSchoolLevelValid() || !isMaritalStatusValid() || !isProfessionalConditionValid()
+                || !isProfessionTypeValid() || !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid()
+                || !isMotherProfessionalConditionValid() || !isFatherProfessionalConditionValid()
+                || !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
                 || getCountryWhereFinishedPreviousCompleteDegree() == null
                 || (getDegreeDesignation() == null && !isUnitFromRaidesListMandatory())
                 || (getInstitution() == null && StringUtils.isEmpty(getInstitutionName()))) {
@@ -587,6 +588,10 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isSchoolLevelValid() {
         return hasSchoolLevel() && getSchoolLevel().isForStudent();
+    }
+
+    public boolean isHighSchoolLevelValid() {
+        return !getSchoolLevel().isHighSchoolOrEquivalent() || getHighSchoolType() != null;
     }
 
     public boolean isProfessionTypeValid() {
