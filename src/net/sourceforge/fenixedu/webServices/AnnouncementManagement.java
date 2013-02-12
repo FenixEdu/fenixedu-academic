@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.webServices;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
@@ -117,6 +118,8 @@ public class AnnouncementManagement implements IAnnouncementManagement {
             categoriesList.add(AnnouncementCategoryType.getAnnouncementCategoryByType(type));
         }
 
+        //TODO remove this when the framework supports the add of a null element in a many to many relation
+        categoriesList.removeAll(Collections.singleton(null));
         return categoriesList;
     }
 
