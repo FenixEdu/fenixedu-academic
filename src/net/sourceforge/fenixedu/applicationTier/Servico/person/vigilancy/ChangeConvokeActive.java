@@ -29,7 +29,7 @@ public class ChangeConvokeActive extends FenixService {
         sendEmailNotification(bool, person, convoke);
         for (ExecutionCourse ec : convoke.getAssociatedExecutionCourses()) {
             EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
-                    "log.executionCourse.evaluation.generic.edited.vigilancies", convoke.getWrittenEvaluation()
+                    "log.executionCourse.evaluation.generic.edited.vigilancy", convoke.getWrittenEvaluation()
                             .getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
     }

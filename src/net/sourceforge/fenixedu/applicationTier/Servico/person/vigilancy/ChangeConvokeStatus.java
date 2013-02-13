@@ -14,7 +14,7 @@ public class ChangeConvokeStatus extends FenixService {
         vigilancy.setStatus(status);
         for (ExecutionCourse ec : vigilancy.getAssociatedExecutionCourses()) {
             EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
-                    "log.executionCourse.evaluation.generic.edited.vigilancies", vigilancy.getWrittenEvaluation()
+                    "log.executionCourse.evaluation.generic.edited.vigilancy", vigilancy.getWrittenEvaluation()
                             .getPresentationName(), ec.getName(), ec.getDegreePresentationString());
         }
     }
