@@ -283,7 +283,9 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                 final HtmlActionLink actionLink = new HtmlActionLink();
                 actionLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
                 actionLink.setName("curricularCourseEnrolLink" + scope.getCurricularCourse().getIdInternal());
-                actionLink.setOnClick(String.format("document.forms[0].method.value='%s';", getMethodName()));
+                actionLink.setOnClick(String.format(
+                        "$(this).closest('form').find('input[name=\\'method\\']').attr('value', '%s');", getMethodName()));
+                //actionLink.setOnClick(String.format("document.forms[0].method.value='%s';", getMethodName()));
                 actionLink.setController(new UpdateSelectedCurricularCourseController(scope.getCurricularCourse()));
                 linkTableCell.setBody(actionLink);
             }
