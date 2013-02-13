@@ -214,7 +214,9 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
                     final HtmlActionLink actionLink = new HtmlActionLink();
                     actionLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
                     actionLink.setName("curricularCourseEnrolLink" + curricularCourse.getIdInternal());
-                    actionLink.setOnClick(String.format("document.forms[0].method.value='%s';", getMethodName()));
+                    actionLink.setOnClick(String.format(
+                            "$(this).closest('form').find('input[name=\\'method\\']').attr('value', '%s');", getMethodName()));
+                    //actionLink.setOnClick(String.format("document.forms[0].method.value='%s';", getMethodName()));
                     actionLink.setController(new UpdateSelectedCurricularCourseController(curricularCourse));
                     linkTableCell.setBody(actionLink);
                 }
@@ -316,7 +318,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
     static private class UpdateSelectedCurricularCourseController extends HtmlActionLinkController {
 
         static private final long serialVersionUID = 1L;
-        private CurricularCourse curricularCourse;
+        private final CurricularCourse curricularCourse;
 
         public UpdateSelectedCurricularCourseController(final CurricularCourse curricularCourse) {
             this.curricularCourse = curricularCourse;

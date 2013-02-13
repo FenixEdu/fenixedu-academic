@@ -383,7 +383,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 actionLink.setText(getRenderer().studentResources.getString("label.chooseOptionalCurricularCourse"));
                 actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
                 actionLink
-                        .setOnClick("$(this).closest('form').find('input[name=\"method\"]').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
+                        .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
                 //actionLink.setOnClick("document.forms[2].method.value='prepareChooseOptionalCurricularCourseToEnrol';");
                 actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal()
                         + "_" + degreeModuleToEvaluate.getContext().getIdInternal());
