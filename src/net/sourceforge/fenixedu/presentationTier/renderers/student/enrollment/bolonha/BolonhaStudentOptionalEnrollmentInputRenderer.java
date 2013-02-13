@@ -228,7 +228,9 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                 final HtmlActionLink actionLink = new HtmlActionLink();
                 actionLink.setText(studentResources.getString("label.enroll"));
                 actionLink.setName("optionalCurricularCourseEnrolLink" + scope.getCurricularCourse().getIdInternal());
-                actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
+                actionLink
+                        .setOnClick("$(this).closest('form').find('input[name=\"method\"]').attr('value', 'enrolInOptionalCurricularCourse');");
+                //actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
                 actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(scope.getCurricularCourse()));
                 linkTableCell.setBody(actionLink);
             }
@@ -301,7 +303,9 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                     actionLink.setText(studentResources.getString("label.enroll"));
                     actionLink.setName("optionalCurricularCourseEnrolLink" + curricularCourse.getExternalId() + "_"
                             + context.getExternalId());
-                    actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
+                    actionLink
+                            .setOnClick("$(this).closest('form').find('input[name=\"method\"]').attr('value', 'enrolInOptionalCurricularCourse');");
+                    //actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
                     actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(curricularCourse));
                     linkTableCell.setBody(actionLink);
                 }
