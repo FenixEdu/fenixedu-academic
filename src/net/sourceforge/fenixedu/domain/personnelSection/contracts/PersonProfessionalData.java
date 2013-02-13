@@ -165,15 +165,18 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
         }
         PersonContractSituation lastPersonContractSituation = null;
         PersonContractSituation currentPersonContractSituation = null;
-        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
+        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalData();
         if (giafProfessionalDataByCategoryType != null) {
             for (final PersonContractSituation situation : giafProfessionalDataByCategoryType.getValidPersonContractSituations()) {
-                if ((dateInterval == null || situation.overlaps(dateInterval))) {
-                    if (situation.isActive(today)
-                            && (currentPersonContractSituation == null || situation.isAfter(currentPersonContractSituation))) {
-                        currentPersonContractSituation = situation;
+                if ((categoryType == null || (situation.getProfessionalCategory() != null && situation.getProfessionalCategory()
+                        .getCategoryType().equals(categoryType)))) {
+                    if ((dateInterval == null || situation.overlaps(dateInterval))) {
+                        if (situation.isActive(today)
+                                && (currentPersonContractSituation == null || situation.isAfter(currentPersonContractSituation))) {
+                            currentPersonContractSituation = situation;
+                        }
+                        lastPersonContractSituation = situation;
                     }
-                    lastPersonContractSituation = situation;
                 }
             }
         }
