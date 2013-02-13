@@ -24,18 +24,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/student", module = "academicAdministration", formBeanClass = FenixActionForm.class)
-@Forwards({
-        @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp",
-                tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-        @Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp", tileProperties = @Tile(
-                title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-        @Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp", tileProperties = @Tile(
-                title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-        @Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp", tileProperties = @Tile(
-                title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
+        @Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp"),
+        @Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp"),
+        @Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp") })
 public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {
