@@ -103,7 +103,7 @@ a {border-bottom: none !important;}
 	<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Frame">
 		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-<%=preloadLevel%>">
 			<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Link">
-				<a href='<%= "caseHandling" + processName.toString() + ".do?method=preLoadLastConfigurations&amp;processEid=" + processEid + "&amp;processId=" + processId %>'>
+				<a href='<%= request.getContextPath() + "/academicAdministration/caseHandling" + processName.toString() + ".do?method=preLoadLastConfigurations&amp;processEid=" + processEid + "&amp;processId=" + processId %>'>
 					<button <% if (preloadLevel == "Error") %> disabled="disabled" <% ; %>type='button'><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadButton" %>' bundle="CASE_HANDLING_RESOURCES" /></button>
 				</a>
 			</div>
