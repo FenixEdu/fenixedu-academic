@@ -48,7 +48,13 @@
 					<div class="last-announc-post-date">
 							<fr:view name="announcement" property="lastModification"/>
 					</div>
-					<p class="last-announc-info"><fr:view name="announcement" property="body" layout="html" /></p>
+					<p class="last-announc-info">
+						<logic:notEmpty name="lastAnnouncement" property="body" > 
+							<fr:view name="announcement" property="body" layout="html" />
+						</logic:notEmpty>
+						<logic:empty name="lastAnnouncement" property="body" >
+						<bean:message  key="label.bodyAnnouncementsEmpty"/>
+						</logic:empty>
 				</div>
 				<logic:empty name="lastFiveAnnouncements"></div></logic:empty>
 		</logic:notEmpty>

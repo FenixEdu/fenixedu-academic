@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
 import java.util.Collection;
 
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageStringInputRenderer.LanguageBean;
 import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class RequiredMultiLanguageStringValidator extends MultiLanguageStringValidator {
 
@@ -30,6 +33,13 @@ public class RequiredMultiLanguageStringValidator extends MultiLanguageStringVal
         Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
 
         for (LanguageBean bean : beans) {
+            String value = StringNormalizer.normalize(component.getValue());
+            String valueNoSpaces = StringUtils.deleteSpaces(value.replace("<p>", " ").replace("<//p>", " "));
+            if (valueNoSpaces.equals("pt:/") || valueNoSpaces.equals("en:/")) {
+                setValid(false);
+                return;
+            }
+
             if (bean.value != null && bean.value.length() > 0) {
                 setValid(true);
                 return;
