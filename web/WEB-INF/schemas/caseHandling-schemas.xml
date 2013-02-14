@@ -2514,7 +2514,7 @@
 	<slot name="chosenDegree" key="label.mobility.degree" layout="menu-select-postback">
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="chooseDegreePostback"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearProvider" />		
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearProviderForMobilityOffice" />		
 	</slot>
 	
 	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">

@@ -242,7 +242,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
         if (bean.getMobilityStudentDataBean().getSelectedMobilityProgram() == null) {
-            addActionMessage("erroe", request, "mobility.error.mobility.cant.be.null");
+            addActionMessage("error", request, "mobility.error.mobility.cant.be.null");
             return mapping.findForward("choose-mobility-program");
         }
 
