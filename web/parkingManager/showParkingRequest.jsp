@@ -7,11 +7,11 @@
 <script language="Javascript" type="text/javascript">
 <!--
 
-function confirmation(){
+function confirmation(thisForm){
 	var result = confirm("Os ficheiros submetidos electronicamente vão ser apagados. Deseja continuar ?");
 	if( result ) {
-		document.forms[0].accepted.value="true";
-		document.forms[0].submit();
+		thisForm.accepted.value="true";
+		thisForm.submit();
 	}
 }
 
@@ -37,7 +37,7 @@ function hideCardValidPeriod(toShow){
 
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="label.request" /></h2>
-
+					
 <logic:present name="parkingRequest">		
 			
 	<bean:define id="parkingRequest" name="parkingRequest" toScope="request"/>
@@ -178,13 +178,13 @@ function hideCardValidPeriod(toShow){
 			<p class="mtop15 mbottom025"><strong><bean:message key="label.note"/>:</strong></p>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.note" rows="7" cols="45" property="note"/>
 			<p class="mtop05">
-				<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation();"><bean:message key="button.accept"/></html:button>
+				<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation(this.form);"><bean:message key="button.accept"/></html:button>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>	
 			
 			<p class="mtop15">
-				<html:button property="" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
+				<html:button property="" onclick="this.form.method.value='exportToPDFParkingCard';this.form.submit();this.form.method.value='editFirstTimeParkingParty';">
 					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/>
 				</html:button>
 			</p>
