@@ -73,7 +73,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public abstract class SiteManagementDA extends FenixDispatchAction {
 
-    private static final int MAX_FILE_SIZE = 67108247;
+    private static final int MAX_FILE_SIZE = 66060288;
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
