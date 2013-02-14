@@ -86,7 +86,7 @@
 	</logic:equal>
 	<tr>
 		<td class="listClasses">
-			<html:link action="/payments.do?method=showOperations" paramName="candidacy" paramProperty="person.idInternal" paramId="personId" 
+			<html:link action="/academicAdministration/payments.do?method=showOperations" paramName="candidacy" paramProperty="person.idInternal" paramId="personId" 
 			module="/academicAdminOffice">
 				<bean:message bundle="ADMIN_OFFICE_RESOURCES" key="label.payments.management" />
 			</html:link>
