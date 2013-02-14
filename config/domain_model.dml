@@ -3382,6 +3382,7 @@ class DomainObject {
         Integer cardCopyNumber;
         YearMonthDay dateSendCGDYearMonthDay;
         Integer number;
+        Boolean migrated;
     }
 
     class gratuity.masterDegree.SibsPaymentFile extends DomainObject {
