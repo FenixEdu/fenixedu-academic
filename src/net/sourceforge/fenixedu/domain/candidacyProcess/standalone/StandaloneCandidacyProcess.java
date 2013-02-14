@@ -101,7 +101,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
     static private boolean isAllowedToManageProcess(IUserView userView) {
         for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
-            if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+            if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
                 return true;
             }
         }
