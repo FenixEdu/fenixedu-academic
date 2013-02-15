@@ -254,6 +254,33 @@ public class Person extends Person_Base {
         super.setFamilyNames(formattedName);
     }
 
+    public void setNames(final String name, final String givenNames, final String familyNames) {
+        // These trimmed names are used to make it easier on comparing strings.
+        // Fields are trimmed and will be null if arguments are null or empty.
+        // This avoids checking isEmpty() repeatidly.
+        final String trimmedGivenNames = (givenNames == null || givenNames.trim().isEmpty()) ? null : givenNames.trim();
+        final String trimmedFamilyNames = (familyNames == null || familyNames.trim().isEmpty()) ? null : familyNames.trim();
+        final String trimmedName = (name == null || name.trim().isEmpty()) ? null : name.trim();
+
+        final String composedName =
+                (trimmedGivenNames == null) ? trimmedFamilyNames : ((trimmedFamilyNames == null ? trimmedGivenNames : trimmedGivenNames
+                        + " " + trimmedFamilyNames));
+
+        if (composedName != null) {
+            if (trimmedName == null || !trimmedName.equals(composedName)) {
+                throw new DomainException("error.net.sourceforge.fenixedu.domain.Person.namesCorrectlyPartitioned");
+            } else {
+                if (trimmedGivenNames == null) {
+                    throw new DomainException("error.person.noGivenNamesWithFamily");
+                }
+            }
+        }
+
+        setName(name);
+        setGivenNames(givenNames);
+        setFamilyNames(familyNames);
+    }
+
     @Override
     public void setDocumentIdNumber(final String documentIdNumber) {
         if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
@@ -295,6 +322,12 @@ public class Person extends Person_Base {
         }
         setDocumentIdNumber(documentIdNumber);
         setIdDocumentType(idDocumentType);
+    }
+
+    public void setIdentificationAndNames(String documentIdNumber, final IDDocumentType idDocumentType, final String name,
+            final String givenNames, final String familyNames) {
+        setNames(name, givenNames, familyNames);
+        setIdentification(documentIdNumber, idDocumentType);
     }
 
     private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,

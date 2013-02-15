@@ -196,14 +196,14 @@
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info.email" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="email"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES"> 
+<schema name="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
 	<slot name="name" key="label.person.name">
 		<property name="size" value="50"/>
 	</slot>	
-	<slot name="givenNames">
+	<slot name="givenNames" key="label.givenNames">
 		<property name="size" value="50" />
 	</slot>
-	<slot name="familyNames">
+	<slot name="familyNames" key="label.familyNames">
 		<property name="size" value="50" />
 	</slot>
 	<slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -235,7 +235,7 @@
 	<slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
 	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
 	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
-	<setter signature="setIdentification(documentIdNumber,idDocumentType)"/>
+	<setter signature="setIdentificationAndNames(documentIdNumber,idDocumentType,name,givenNames,familyNames)"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info" extends="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" type="net.sourceforge.fenixedu.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<remove name="givenNames" /> 
