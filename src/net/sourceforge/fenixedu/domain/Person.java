@@ -3965,23 +3965,32 @@ public class Person extends Person_Base {
                 }
             }
         }
-        final GrantOwner grantOwner = getGrantOwner();
-        if (grantOwner != null) {
-            final YearMonthDay today = new YearMonthDay();
-            for (final GrantContract grantContract : grantOwner.getGrantContracts()) {
-                for (final GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
-                    if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
-                            && grantContractRegime.getDateEndContractYearMonthDay() != null
-                            && !today.isAfter(grantContractRegime.getDateEndContractYearMonthDay())) {
-                        final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
-                        final Person person = grantOwner.getPerson();
-                        if (grantCostCenter != null && person != null) {
-                            final String costCenterDesignation = grantCostCenter.getNumber();
-                            if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
-                                return Unit.readByCostCenterCode(Integer.valueOf(grantCostCenter.getNumber()));
+        if (hasRole(RoleType.GRANT_OWNER)) {
+            final GrantOwner grantOwner = getGrantOwner();
+            if (grantOwner != null) {
+                final YearMonthDay today = new YearMonthDay();
+                for (final GrantContract grantContract : grantOwner.getGrantContracts()) {
+                    for (final GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
+                        if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
+                                && grantContractRegime.getDateEndContractYearMonthDay() != null
+                                && !today.isAfter(grantContractRegime.getDateEndContractYearMonthDay())) {
+                            final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
+                            final Person person = grantOwner.getPerson();
+                            if (grantCostCenter != null && person != null) {
+                                final String costCenterDesignation = grantCostCenter.getNumber();
+                                if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
+                                    return Unit.readByCostCenterCode(Integer.valueOf(grantCostCenter.getNumber()));
+                                }
                             }
                         }
                     }
+                }
+            }
+            if (getPersonProfessionalData() != null) {
+                PersonContractSituation currentPersonContractSituationByCategoryType =
+                        getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER);
+                if (currentPersonContractSituationByCategoryType != null) {
+                    return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
                 }
             }
         }

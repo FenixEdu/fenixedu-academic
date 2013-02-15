@@ -221,7 +221,7 @@
 						<logic:notPresent name="attendance" property="personLibraryCardNumber">
 							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />
 							<p>
-								<html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>" onclick="return confirm('Tem a certeza que pretende gerar um c�digo Millenium para esta pessoa? A opera��o n�o � revers�vel');">
+								<html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>" onclick="return confirm('Tem a certeza que pretende gerar um código Millenium para esta pessoa? A operação não é reversível.');">
 									<bean:message key="button.generateLibraryNumber" bundle="LIBRARY_RESOURCES" />
 								</html:link>
 							</p>

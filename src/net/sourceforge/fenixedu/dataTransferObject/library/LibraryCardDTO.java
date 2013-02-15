@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -114,7 +115,20 @@ public class LibraryCardDTO implements Serializable {
             return getPerson().getStudent().getNumber();
         }
         if (getPartyClassification() == PartyClassification.GRANT_OWNER) {
-            return getPerson().getGrantOwner().getNumber();
+            if (person.hasGrantOwner()) {
+                GrantContract contract = person.getGrantOwner().getCurrentContract();
+                if (contract.getGrantCostCenter() != null) {
+                    return getPerson().getGrantOwner().getNumber();
+                }
+            }
+            if (person.hasPersonProfessionalData() && person.hasEmployee()) {
+                PersonContractSituation currentPersonContractSituationByCategoryType =
+                        person.getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(
+                                CategoryType.GRANT_OWNER);
+                if (currentPersonContractSituationByCategoryType != null) {
+                    return person.getEmployee().getEmployeeNumber();
+                }
+            }
         }
         return 0;
     }
@@ -135,6 +149,8 @@ public class LibraryCardDTO implements Serializable {
             }
         } else if (isStudent(partyClassification)) {
             return person.getStudentByType(DegreeType.valueOf(partyClassification.toString())).getDegree().getUnit();
+        } else if (partyClassification == PartyClassification.GRANT_OWNER) {
+            return person.getWorkingPlaceUnitForAnyRoleType();
         }
         return null;
     }
