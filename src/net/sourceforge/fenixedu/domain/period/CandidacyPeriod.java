@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 
@@ -79,6 +80,10 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
         return false;
     }
 
+    public boolean isOutboundMobilityCandidacyPeriod() {
+        return false;
+    }
+    
     public String getPresentationName() {
         return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
     }

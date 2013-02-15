@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create outbound mobility stuff." outbound_mobility.sql
 execute "Alter Table GrantOwner" alterTableGrantOwner.sql

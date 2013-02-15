@@ -1947,3 +1947,7 @@
 <schema name="view.administrativeOffice.nameAndType" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="unit.name" />
 </schema>
+
+<schema name="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval" type="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod">
+	<slot name="intervalAsString"/>
+</schema>

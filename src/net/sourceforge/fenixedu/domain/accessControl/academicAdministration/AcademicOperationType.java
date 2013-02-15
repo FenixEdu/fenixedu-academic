@@ -100,7 +100,9 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     MANAGE_PHD_PROCESSES(true, true, Scope.OFFICE),
 
-    MANAGE_PHD_PROCESS_STATE(true, true, Scope.OFFICE);
+    MANAGE_PHD_PROCESS_STATE(true, true, Scope.OFFICE),
+
+    MANAGE_MOBILITY_OUTBOUND(false, false, Scope.OFFICE);
 
     public static enum Scope {
         OFFICE, ADMINISTRATION;

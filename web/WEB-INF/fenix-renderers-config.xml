@@ -367,7 +367,7 @@ Documentation:
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean" layout="student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.DegreeCurricularPlanOptionalEnrolmentsRenderer"/>
 	
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" layout="student-dismissal" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentDismissalRenderer"/>	
-    
+
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="autoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRenderer">
         <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
         <property name="autoCompleteStyleClass" value="autoComplete"/>
@@ -380,6 +380,13 @@ Documentation:
         <property name="autoCompleteStyleClass" value="autoComplete"/>
         <property name="minChars" value="3"/>
         <property name="valueField" value="externalId" />
+    </renderer>
+
+    <renderer mode="input" type="pt.ist.fenixframework.DomainObject" layout="simpleAutoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.SimpleAutoCompleteRenderer">
+        <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
+        <property name="autoCompleteStyleClass" value="autoComplete"/>
+        <property name="minChars" value="3"/>
+        <property name="valueField" value="externalId"/>
     </renderer>
         
     <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer"/>
@@ -822,7 +829,7 @@ Documentation:
     <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
           an checkbox associated. This layout allows to choose several objects from a list. Only the choosen object will
           be part o the list that is created and used as the slot's value.  -->
-    <renderer mode="input" type="java.util.List" layout="option-select" class="pt.ist.fenixWebFramework.rendererExtensions.InputCheckBoxListRenderer">
+    <renderer mode="input" type="java.util.Collection" layout="option-select" class="pt.ist.fenixWebFramework.rendererExtensions.InputCheckBoxListRenderer">
     	<property name="eachClasses" value="dinline" />
     </renderer>
     
@@ -891,7 +898,7 @@ Documentation:
 	<renderer mode="input" type="java.util.List" layout="tabular-option-postback" class="pt.ist.fenixWebFramework.renderers.TabularOptionInputRendererWithPostBack"/>	
 
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
-	<renderer mode="input" type="java.util.List" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
+	<renderer mode="input" type="java.util.Collection" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
 
 	<!--@ Layout that allows you to render a boolean or Boolean with checkbox with postback -->
 	<renderer mode="input" type="boolean" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.BooleanInputRenderWithPostBack"/>

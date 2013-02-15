@@ -8176,13 +8176,118 @@ class student.PersonalIngressionData extends DomainObject {
     DateTime lastModifiedDate;
 }
 
+class mobility.outbound.OutboundMobilityCandidacyPeriod extends period.CandidacyPeriod {
+}
+
+class mobility.outbound.OutboundMobilityCandidacyContest extends DomainObject {
+    String code;
+    Integer vacancies;
+}
+
+class mobility.outbound.OutboundMobilityCandidacySubmission extends DomainObject {
+}
+
+class mobility.outbound.OutboundMobilityCandidacy extends DomainObject {
+    Integer preferenceOrder;
+    Boolean selected;
+}
+
 
 /*
  * Relations definitions
  * 
  */
 
-/* Students, Teacher and Courses Inquiries */
+relation RootDomainObjectOutboundMobilityCandidacyContest {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOutboundMobilityCandidacySubmission {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOutboundMobilityCandidacy {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyPeriodOutboundMobilityCandidacyContest {
+	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyPeriod {
+	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyContestExecutionDegree {
+	ExecutionDegree playsRole executionDegree {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyContestUnit {
+	organizationalStructure.Unit playsRole unit {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyContestOutboundMobilityCandidacy {
+	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacySubmissionOutboundMobilityCandidacy {
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacySubmissionRegistration {
+	student.Registration playsRole registration {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
+		multiplicity *;
+	}
+}
+
 
 relation DomainOperationLogPerson {
 	DomainOperationLog playsRole domainOperationLogs {
