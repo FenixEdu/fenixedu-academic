@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(module = "student", path = "/erasmusOutboundManagement", scope = "request", parameter = "method")
 @Forwards(value = {
         @Forward(name = "erasmusOutboundManagement", path = "/student/erasmusOutboundManagement.jsp",
-                tileProperties = @Tile(title = "private.student.erasmusOutboundManagement")),
+                tileProperties = @Tile(title = "private.student.erasmusOutboundManagement"))
 })
 public class ErasmusOutboundManagement extends FenixDispatchAction {
 
