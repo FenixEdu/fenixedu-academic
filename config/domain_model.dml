@@ -8245,7 +8245,7 @@ relation OutboundMobilityCandidacyPeriod {
 
 relation OutboundMobilityCandidacyContestExecutionDegree {
 	ExecutionDegree playsRole executionDegree {
-		multiplicity 1..1;
+		multiplicity 1..*;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
 		multiplicity *;
@@ -8253,7 +8253,7 @@ relation OutboundMobilityCandidacyContestExecutionDegree {
 }
 
 relation OutboundMobilityCandidacyContestUnit {
-	organizationalStructure.Unit playsRole unit {
+	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreement {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {

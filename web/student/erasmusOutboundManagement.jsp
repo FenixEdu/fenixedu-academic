@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@page import="net.sourceforge.fenixedu.domain.Country"%>
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy"%>
@@ -45,7 +46,7 @@
 	});
 </script>
 
-<h2><bean:message key="link.title.student.erasmus.outbound"/></h2>
+<h2><bean:message key="link.title.student.mobility.processes"/></h2>
 
 <bean:define id="student" name="student" type="net.sourceforge.fenixedu.domain.student.Student"/>
 
@@ -71,34 +72,36 @@
 							-
 							<%= candidacyPeriod.getExecutionInterval().getName() %>
 						</h3>
-						<table><tr>
+						<table style="width: 100%;"><tr>
 						<td>
 						<ul>
 							<li><bean:message key="label.candidacy.period"/>: <strong><%= candidacyPeriod.getPresentationName() %></strong></li>
 							<li>
 								<bean:message key="label.submitted.candidacies"/>:
-								<div style="margin-top: 10px; margin-left: 15px; width: 1050px;">
-									<ul id="sortable">
+								<div style="margin-top: 10px; margin-left: 15px;">
+									<ul id="sortable" style="width: 100%;">
 										<%
 											for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet() ) {
 										%>
 												<li class="ui-state-default" id="<%= candidacy.getExternalId() %>">
-													<%= candidacy.getOutboundMobilityCandidacyContest().getUnit().getName() %>
+													<strong><%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getName() %></strong>
+													&nbsp;-&nbsp;
+													<%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
 													
 													<html:link action="<%= "/erasmusOutboundManagement.do?method=removeCandidacy&amp;candidacyOid=" + candidacy.getExternalId() %>"
 															style="float: right; border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
 												</li>
 										<%  } %>
 									</ul>
-									<div style="margin-top: 10px; margin-left: 15px; width: 90%; color: graytext;">
+									<div style="margin-top: 10px; margin-left: 15px; width: 100%; color: graytext;">
 										<bean:message key="label.info.sort.candidacies"/>
 									</div>
 								</div>
 							</li>
 						</ul>
 						</td>
-						<td style="color: green; font-weight: bolder; font-size: large;">
-							<div id="sucessfulSave" style="display: none;">
+						<td style="color: green; font-weight: bolder; text-align: center; font-size: medium; width: 30%">
+							<div id="sucessfulSave" style="padding: 10px; display: none;">
 								<bean:message key="label.saved.order.complete"/>
 							</div>
 						</td>
@@ -140,9 +143,10 @@
 						<div style="margin-top: 10px; margin-left: 15px; width: 1050px;">
 							<table class="tstyle1 mtop05">
 								<tr>
-									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degree"/></th>
+									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degrees"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.country"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.university"/></th>
+									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobilityProgram"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/></th>
 									<th></th>
@@ -152,16 +156,24 @@
 									    if (contest.isAcceptingCandidacies(student)) {
 								%>
 									<tr>
-										<td><%= contest.getExecutionDegree().getDegree().getSigla() %></td>
 										<td>
 											<%
-												final Country country = contest.getUnit().getCountry();
+												int i = 0;
+												for (final ExecutionDegree executionDegree : contest.getExecutionDegreeSet()) { %>
+												<%= executionDegree.getDegree().getSigla() %>
+												<%= i++ > 0 ? "<br/>" : ""  %>
+											<% } %>
+										</td>
+										<td>
+											<%
+												final Country country = contest.getMobilityAgreement().getUniversityUnit().getCountry();
 												if (country != null) {
 											%>
 													<%= country.getName() %>
 											<%  } %>
 										</td>
-										<td><%= contest.getUnit().getPresentationName() %></td>
+										<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
+										<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
 										<td><%= contest.getVacancies() %></td>
 										<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
 										<td>

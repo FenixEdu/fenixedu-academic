@@ -5,7 +5,9 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 
 import org.joda.time.DateTime;
@@ -26,9 +28,19 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Service
-    public void createOutboundMobilityCandidacyContest(final ExecutionDegree executionDegree, final Unit unit, final String code,
-            final Integer vacancies) {
-        new OutboundMobilityCandidacyContest(this, executionDegree, unit, code, vacancies);
+    public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final ExecutionDegree executionDegree, final MobilityProgram mobilityProgram,
+            final UniversityUnit unit, final String code, final Integer vacancies) {
+        final MobilityAgreement mobilityAgreement = findOrCreateMobilityAgreement(mobilityProgram, unit);
+        return new OutboundMobilityCandidacyContest(this, executionDegree, mobilityAgreement, code, vacancies);
+    }
+
+    private MobilityAgreement findOrCreateMobilityAgreement(final MobilityProgram mobilityProgram, final UniversityUnit unit) {
+        for (final MobilityAgreement mobilityAgreement : mobilityProgram.getMobilityAgreementsSet()) {
+            if (mobilityAgreement.getUniversityUnit() == unit) {
+                return mobilityAgreement;
+            }
+        }
+        return new MobilityAgreement(mobilityProgram, unit);
     }
 
     @Override

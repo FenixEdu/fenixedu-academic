@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update mobility structure." updates.sql

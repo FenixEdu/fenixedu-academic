@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
 <%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
@@ -59,6 +60,15 @@
 		<fr:edit id="outboundMobilityContextBeanCreateCandidacyPeriod" name="outboundMobilityContextBean"
 				action="/outboundMobilityCandidacy.do?method=createNewOutboundMobilityCandidacyContest">
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+    			<fr:slot name="mobilityProgram" layout="simpleAutoComplete" key="label.mobilityProgram" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+        			<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.MobilityProgramProvider" />
+        			<fr:property name="labelField" value="registrationAgreement.description"/>
+        			<fr:property name="format" value="${registrationAgreement.description}"/>
+        			<fr:property name="classes" value="inputsize500px"/>
+        			<fr:property name="minChars" value="1"/>
+        			<fr:property name="sortBy" value="presentationName"/>
+					<fr:property name="saveOptions" value="true"/>
+    			</fr:slot>
     			<fr:slot name="executionDegree" layout="simpleAutoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
         			<fr:property name="args" value="<%= providerArgs %>" />
         			<fr:property name="labelField" value="presentationName"/>
@@ -69,7 +79,7 @@
 					<fr:property name="saveOptions" value="true"/>
     			</fr:slot>
     			<fr:slot name="unit" layout="simpleAutoComplete" key="label.university" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-        			<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUnitAutoCompleteProvider" />
+        			<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
         			<fr:property name="labelField" value="presentationName"/>
         			<fr:property name="format" value="${presentationName}"/>
         			<fr:property name="classes" value="inputsize500px"/>
@@ -95,7 +105,7 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.period"/>
 			</th>
 			<th>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degree"/>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degrees"/>
 			</th>
 			<th>
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.country"/>
@@ -116,16 +126,18 @@
 		<% for (final OutboundMobilityCandidacyContest contest : outboundMobilityContextBean.getOutboundMobilityCandidacyContest()) {%>
 			<tr>
 				<td>
-					TODO
+					<%= contest.getOutboundMobilityCandidacyPeriod().getPresentationName() %>
 				</td>
 				<td>
-					<%= contest.getExecutionDegree().getDegree().getSigla() %>
+					<% for (final ExecutionDegree executionDegree : contest.getExecutionDegreeSet()) { %>						
+						<%= executionDegree.getDegree().getSigla() %>
+					<% } %>
 				</td>
 				<td>
-					TODO
+					<%= contest.getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().toString() %>
 				</td>
 				<td>
-					<%= contest.getUnit().getPresentationName() %>
+					<%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %>
 				</td>
 				<td>
 					<%= contest.getCode() %>

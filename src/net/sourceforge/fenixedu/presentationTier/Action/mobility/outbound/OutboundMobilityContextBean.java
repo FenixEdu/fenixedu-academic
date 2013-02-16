@@ -8,9 +8,10 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 
 import org.joda.time.DateTime;
@@ -24,13 +25,28 @@ public class OutboundMobilityContextBean implements Serializable {
     private DateTime startDateTime;
     private DateTime endDateTime;
 
+    private MobilityProgram mobilityProgram;
     private ExecutionDegree executionDegree;
-    private Unit unit;
+    private UniversityUnit unit;
     private String code;
     private Integer vacancies;
 
     public OutboundMobilityContextBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+
+        OutboundMobilityCandidacyPeriod last = null;
+        for (final CandidacyPeriod candidacyPeriod : executionYear.getCandidacyPeriodsSet()) {
+            if (candidacyPeriod instanceof OutboundMobilityCandidacyPeriod) {
+                final OutboundMobilityCandidacyPeriod outboundMobilityCandidacyPeriod =
+                        (OutboundMobilityCandidacyPeriod) candidacyPeriod;
+                if (last == null || last.getStart().isBefore(outboundMobilityCandidacyPeriod.getStart())) {
+                    last = outboundMobilityCandidacyPeriod;
+                }
+            }
+        }
+        if (last != null) {
+            candidacyPeriods.add(last);
+        }
     }
 
     public ExecutionYear getExecutionYear() {
@@ -94,7 +110,7 @@ public class OutboundMobilityContextBean implements Serializable {
 
     public void createNewOutboundMobilityCandidacyContest() {
         for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
-            candidacyPeriod.createOutboundMobilityCandidacyContest(executionDegree, unit, code, vacancies);
+            candidacyPeriod.createOutboundMobilityCandidacyContest(executionDegree, mobilityProgram, unit, code, vacancies);
         }
         executionDegree = null;
         unit = null;
@@ -110,11 +126,11 @@ public class OutboundMobilityContextBean implements Serializable {
         this.executionDegree = executionDegree;
     }
 
-    public Unit getUnit() {
+    public UniversityUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
+    public void setUnit(UniversityUnit unit) {
         this.unit = unit;
     }
 
@@ -132,6 +148,14 @@ public class OutboundMobilityContextBean implements Serializable {
 
     public void setVacancies(Integer vacancies) {
         this.vacancies = vacancies;
+    }
+
+    public MobilityProgram getMobilityProgram() {
+        return mobilityProgram;
+    }
+
+    public void setMobilityProgram(MobilityProgram mobilityProgram) {
+        this.mobilityProgram = mobilityProgram;
     }
 
     public SortedSet<OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
