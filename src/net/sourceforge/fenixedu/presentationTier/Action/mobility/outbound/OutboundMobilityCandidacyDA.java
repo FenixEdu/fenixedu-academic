@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -53,6 +57,16 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
         outboundMobilityContextBean.createNewOutboundMobilityCandidacyContest();
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward editCandidacyPeriod(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityCandidacyPeriod candidacyPeriod = getRenderedObject();
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setExecutionYear((ExecutionYear) candidacyPeriod.getExecutionInterval());
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(candidacyPeriod));
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
     }

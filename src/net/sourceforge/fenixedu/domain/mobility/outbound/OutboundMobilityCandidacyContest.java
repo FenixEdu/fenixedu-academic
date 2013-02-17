@@ -107,7 +107,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         OutboundMobilityCandidacySubmission.apply(this, registration);
     }
 
-    private Registration findBestRegistration(final Student student) {
+    public Registration findBestRegistration(final Student student) {
         for (final Registration registration : student.getRegistrationsSet()) {
             for (final ExecutionDegree executionDegree : getExecutionDegreeSet()) {
                 if (executionDegree.getDegree() == registration.getDegree()) {
