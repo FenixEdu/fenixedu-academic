@@ -121,7 +121,10 @@ $(document).ready(function() {
 						<th rowspan="2"><bean:message key="label.shift" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th rowspan="2"><bean:message key="label.shift.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th colspan="4"><bean:message key="label.lessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+						<th rowspan="2"><bean:message key="label.weeklyAverage" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+						<th rowspan="2"><bean:message key="label.semesterTotal" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th rowspan="2"><bean:message key="label.professorship.percentage" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+						<th rowspan="2"><bean:message key="label.expectedEfectiveLoad" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 					</tr>
 					<tr>
 						<th><bean:message key="label.day.of.week" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
@@ -134,7 +137,7 @@ $(document).ready(function() {
 				<logic:iterate id="professorship" name="annualTeachingCreditsByPeriodBean" property="professorships">
 					<bean:define id="professorshipID" name="professorship" property="idInternal"/>
 					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
-					<bean:define id="totalNumberOfLessons" name="professorship" property="allLessonsNumber"/>
+					<bean:define id="totalNumberOfLessons" name="professorship" property="degreeTeachingServiceLessonRows"/>
 					<bean:size id="numberOfShifts" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
 					<tr>
 						<td rowspan="<%= java.lang.Math.max(((Integer)totalNumberOfLessons).intValue(),1)%>">
@@ -148,11 +151,22 @@ $(document).ready(function() {
 							</logic:notEqual>									
 						</td>
 						<logic:equal name="numberOfShifts" value="0">
-							<td colspan="7"/>
+							<td colspan="10"/>
 						</logic:equal>
 						
 						<logic:iterate id="degreeTeachingService" name="professorship" property="degreeTeachingServicesOrderedByShift" indexId="indexShifts">
 							<bean:size id="numberOfLessons" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>
+							<logic:equal name="numberOfLessons" value="0">
+								<td><bean:write name="degreeTeachingService" property="shift.nome"/></td>
+								<td><bean:write name="degreeTeachingService" property="shift.shiftTypesPrettyPrint"/></td>
+								<td colspan="6"/>
+								<td style="text-align: right;">
+									<bean:define id="teachingServicePercentage" name="degreeTeachingService" property="percentage"/>
+									<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
+								</td>
+								<td style="text-align: right;">-</td>
+								</tr>
+							</logic:equal>
 							<logic:iterate id="lesson" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime" indexId="indexLessons">
 								<logic:notEqual name="indexLessons" value="0">
 									</tr>
@@ -167,18 +181,27 @@ $(document).ready(function() {
 								<td><bean:write name="lesson" property="weekDay.labelShort"/></td>
 								<td><fr:view name="lesson" property="beginHourMinuteSecond"/></td>
 								<td><fr:view name="lesson" property="endHourMinuteSecond"/></td>
-								<td><logic:notEmpty name="lesson" property="sala">
-									<bean:write name="lesson" property="sala.nome"/>
+								<td>
+									<logic:notEmpty name="lesson" property="sala">
+										<bean:write name="lesson" property="sala.nome"/>
 									</logic:notEmpty>
 									<logic:empty name="lesson" property="sala">
 										-
 									</logic:empty>
 								</td>
 								<logic:equal name="indexLessons" value="0">
+									<td style="text-align: right;" rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="shift.courseLoadWeeklyAverage"/></td>
+									<td style="text-align: right;" rowspan="<%= numberOfLessons %>"><fr:view name="degreeTeachingService" property="shift.courseLoadTotalHours" /></td>
 									<td style="text-align: right;" rowspan="<%= numberOfLessons %>">
 										<bean:define id="teachingServicePercentage" name="degreeTeachingService" property="percentage"/>
 										<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 									</td>
+									<logic:equal name="degreeTeachingService" property="shift.executionCourse.projectTutorialCourse" value="true">
+										<td style="text-align: right;" rowspan="<%= numberOfLessons %>">-</td>
+									</logic:equal>
+									<logic:notEqual name="degreeTeachingService" property="shift.executionCourse.projectTutorialCourse" value="true">
+										<td style="text-align: right;" rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="efectiveLoad"/></td>
+									</logic:notEqual>
 								</logic:equal>
 							</logic:iterate>
 						</logic:iterate>
@@ -195,6 +218,9 @@ $(document).ready(function() {
 							<td><fr:view name="supportLesson" property="endTimeHourMinuteSecond"/></td>
 							<td><bean:write name="supportLesson" property="place"/></td>
 							<logic:equal name="indexSupportLessons" value="0">
+								<td style="text-align: right;" rowspan="<%= numberOfSupportLessons %>">-</td>
+								<td style="text-align: right;" rowspan="<%= numberOfSupportLessons %>">-</td>
+								<td style="text-align: right;" rowspan="<%= numberOfSupportLessons %>">-</td>
 								<td style="text-align: right;" rowspan="<%= numberOfSupportLessons %>">-</td>
 							</logic:equal>
 							</tr>

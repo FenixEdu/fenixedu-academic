@@ -420,10 +420,14 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return deletedResults;
     }
 
-    public int getAllLessonsNumber() {
+    public int getDegreeTeachingServiceLessonRows() {
         int lessonNumber = 0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            lessonNumber += degreeTeachingService.getShift().getAssociatedLessonsCount();
+            int associatedLessonsCount = degreeTeachingService.getShift().getAssociatedLessonsCount();
+            if (associatedLessonsCount == 0) {
+                lessonNumber += 1;
+            }
+            lessonNumber += associatedLessonsCount;
         }
         lessonNumber += getSupportLessonsCount();
         return lessonNumber;

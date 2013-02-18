@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -34,6 +36,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
@@ -1099,4 +1102,22 @@ public class Lesson extends Lesson_Base {
         return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
     }
 
+    public Set<Interval> getAllLessonIntervals() {
+        Set<Interval> intervals = new HashSet<Interval>();
+        for (LessonInstance instance : getLessonInstances()) {
+            intervals.add(new Interval(instance.getBeginDateTime(), instance.getEndDateTime()));
+        }
+        if (!wasFinished()) {
+            YearMonthDay startDateToSearch = getLessonStartDay();
+            YearMonthDay endDateToSearch = getLessonEndDay();
+            for (YearMonthDay day : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
+                intervals.add(new Interval(day.toLocalDate().toDateTime(
+                        new LocalTime(getBeginHourMinuteSecond().getHour(), getBeginHourMinuteSecond().getMinuteOfHour(),
+                                getBeginHourMinuteSecond().getSecondOfMinute())), day.toLocalDate().toDateTime(
+                        new LocalTime(getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
+                                getEndHourMinuteSecond().getSecondOfMinute()))));
+            }
+        }
+        return intervals;
+    }
 }

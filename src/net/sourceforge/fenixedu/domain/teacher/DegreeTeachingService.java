@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,12 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.Interval;
+import org.joda.time.LocalTime;
+import org.joda.time.Minutes;
 
 public class DegreeTeachingService extends DegreeTeachingService_Base {
 
@@ -135,6 +142,42 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
             totalHours += (hours * (getPercentage().doubleValue() / 100));
         }
         return totalHours;
+    }
+
+    public double getEfectiveLoad() {
+        double afterHeightFactor =
+                getProfessorship().getTeacher().isTeacherProfessorCategory(
+                        getProfessorship().getExecutionCourse().getExecutionPeriod()) ? 1.5 : 1;
+
+        double weeklyHoursAfter20 = getTotalHoursAfter20AndSaturdays() / 14;
+        double weeklyHoursBefore20 = (getShift().getCourseLoadWeeklyAverage().doubleValue() - weeklyHoursAfter20);
+        return new BigDecimal((weeklyHoursBefore20 + (weeklyHoursAfter20 * afterHeightFactor)) * (getPercentage() / 100))
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    public double getTotalHoursAfter20AndSaturdays() {
+        int minutesAfter20AndSaturday = 0;
+        for (Lesson lesson : getShift().getAssociatedLessons()) {
+            for (Interval lessonInterval : lesson.getAllLessonIntervals()) {
+                if (lessonInterval.getStart().getDayOfWeek() == DateTimeConstants.SATURDAY) {
+                    minutesAfter20AndSaturday +=
+                            Minutes.minutesBetween(lessonInterval.getStart(), lessonInterval.getEnd()).getMinutes();
+                } else {
+                    DateTime dateTimeAfter20 = lessonInterval.getStart().toLocalDate().toDateTime(new LocalTime(20, 0, 0));
+                    if (dateTimeAfter20.isBefore(lessonInterval.getEnd())) {
+                        if (!dateTimeAfter20.isAfter(lessonInterval.getStart())) {
+                            minutesAfter20AndSaturday +=
+                                    Minutes.minutesBetween(lessonInterval.getStart(), lessonInterval.getEnd()).getMinutes();
+                        } else {
+                            minutesAfter20AndSaturday +=
+                                    Minutes.minutesBetween(dateTimeAfter20, lessonInterval.getEnd()).getMinutes();
+                        }
+                    }
+
+                }
+            }
+        }
+        return minutesAfter20AndSaturday / DateTimeConstants.MINUTES_PER_HOUR;
     }
 
     public double calculateCredits() {

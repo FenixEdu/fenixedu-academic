@@ -305,6 +305,31 @@ public class Shift extends Shift_Base {
         return hours;
     }
 
+    public int getNumberOfLessonInstances() {
+        List<Lesson> lessons = getAssociatedLessons();
+        int totalLessonsDates = 0;
+        for (Lesson lesson : lessons) {
+            totalLessonsDates += lesson.getFinalNumberOfLessonInstances();
+        }
+        return totalLessonsDates;
+    }
+
+    public BigDecimal getCourseLoadWeeklyAverage() {
+        BigDecimal weeklyHours = BigDecimal.ZERO;
+        for (CourseLoad courseLoad : getCourseLoads()) {
+            weeklyHours = weeklyHours.add(courseLoad.getWeeklyHours());
+        }
+        return weeklyHours;
+    }
+
+    public BigDecimal getCourseLoadTotalHours() {
+        BigDecimal weeklyHours = BigDecimal.ZERO;
+        for (CourseLoad courseLoad : getCourseLoads()) {
+            weeklyHours = weeklyHours.add(courseLoad.getTotalQuantity());
+        }
+        return weeklyHours;
+    }
+
     public void associateSchoolClass(SchoolClass schoolClass) {
         if (schoolClass == null) {
             throw new NullPointerException();

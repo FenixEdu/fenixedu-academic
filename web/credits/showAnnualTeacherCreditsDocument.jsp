@@ -66,7 +66,7 @@ padding: 0;
 				<logic:iterate id="professorship" name="annualTeachingCreditsByPeriodBean" property="professorships">
 					<bean:define id="professorshipID" name="professorship" property="idInternal"/>
 					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
-					<bean:define id="totalNumberOfLessons" name="professorship" property="allLessonsNumber"/>
+					<bean:define id="totalNumberOfLessons" name="professorship" property="degreeTeachingServiceLessonRows"/>
 					<bean:size id="numberOfShifts" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
 					<tr>
 						<td rowspan="<%= java.lang.Math.max(((Integer)totalNumberOfLessons).intValue(),1)%>">
