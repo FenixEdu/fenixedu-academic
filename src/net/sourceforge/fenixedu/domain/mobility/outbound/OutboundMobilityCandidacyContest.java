@@ -136,4 +136,14 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         return false;
     }
 
+    @Override
+    public void addExecutionDegree(final ExecutionDegree executionDegree) {
+        super.addExecutionDegree(executionDegree);
+        // TODO : This is a hack due to a bug in the consistency predicate or fenix-framework code.
+        //        When the relation is initialized but never traversed, the consistency predicate always
+        //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
+        //        the framework, but the framework has not yet been updated on this project.
+        getExecutionDegreeCount();
+    }
+
 }
