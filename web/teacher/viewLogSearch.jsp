@@ -20,7 +20,7 @@
 </h2>
 
 <div class="infoop4">
-	<bean:message key="log.message.explanation" bundle="APPLICATION_RESOURCES"/>
+	<bean:message key="log.message.explanation"/>
 </div>
 
 <logic:present name="searchBean">
@@ -60,7 +60,7 @@
 	<logic:notEmpty name="searchBean" property="executionCourseLogs">
 		<bean:size id="size" name="searchBean" property="executionCourseLogs"/>
 		<h3> <bean:write name="size"/>
-			<bean:message bundle="APPLICATION_RESOURCES" key="log.total.entries"/>
+			<bean:message key="log.total.entries"/>
 		</h3>
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 			<cp:collectionPages
@@ -102,7 +102,7 @@
 	
 	</logic:notEmpty>
 	<logic:empty name="searchBean" property="executionCourseLogs">
-		<h3><bean:message bundle="APPLICATION_RESOURCES" key="log.label.noResults"/></h3>
+		<h3><bean:message key="log.label.noResults"/></h3>
 	</logic:empty>
 </logic:present>
 <!-- aqui acaba o viewLogSearch -->
