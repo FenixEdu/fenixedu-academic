@@ -344,72 +344,78 @@ public class AnnualTeachingCreditsBean implements Serializable {
     }
 
     public void calculateCredits() {
-	masterDegreeThesesCredits = teacher.getMasterDegreeThesesCredits(executionYear);
-	phdDegreeThesesCredits = teacher.getPhdDegreeThesesCredits(executionYear);
-	projectsTutorialsCredits = teacher.getProjectsTutorialsCredits(executionYear);
+        masterDegreeThesesCredits = teacher.getMasterDegreeThesesCredits(executionYear);
+        phdDegreeThesesCredits = teacher.getPhdDegreeThesesCredits(executionYear);
+        projectsTutorialsCredits = teacher.getProjectsTutorialsCredits(executionYear);
 
-	BigDecimal yearCreditsForFinalCredits = BigDecimal.ZERO;
-	BigDecimal annualTeachingLoadFinalCredits = BigDecimal.ZERO;
+        BigDecimal yearCreditsForFinalCredits = BigDecimal.ZERO;
+        BigDecimal annualTeachingLoadFinalCredits = BigDecimal.ZERO;
 
-	boolean hasOrientantionCredits = false;
-	boolean hasFinalAndAccumulatedCredits = false;
+        boolean hasOrientantionCredits = false;
+        boolean hasFinalAndAccumulatedCredits = false;
 
-	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-	    if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
-		BigDecimal thisSemesterManagementFunctionCredits = new BigDecimal(getTeacher().getManagementFunctionsCredits(
-			executionSemester));
-		managementFunctionCredits = managementFunctionCredits.add(thisSemesterManagementFunctionCredits);
-		serviceExemptionCredits = serviceExemptionCredits.add(new BigDecimal(getTeacher().getServiceExemptionCredits(
-			executionSemester)));
-		BigDecimal thisSemesterTeachingLoad = new BigDecimal(getTeacher().getMandatoryLessonHours(executionSemester));
-		annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad).setScale(2, BigDecimal.ROUND_HALF_UP);
-		TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
-		BigDecimal thisSemesterCreditsReduction = BigDecimal.ZERO;
-		if (teacherService != null) {
-		    teachingCredits = teachingCredits.add(new BigDecimal(teacherService.getTeachingDegreeCredits()));
-		    thisSemesterCreditsReduction = teacherService.getReductionServiceCredits();
-		    othersCredits = othersCredits.add(new BigDecimal(teacherService.getOtherServiceCredits()));
-		}
-		creditsReduction = creditsReduction.add(thisSemesterCreditsReduction);
-		BigDecimal reductionAndManagement = thisSemesterManagementFunctionCredits.add(thisSemesterCreditsReduction);
-		BigDecimal thisSemesterYearCredits = thisSemesterTeachingLoad;
-		if (thisSemesterTeachingLoad.compareTo(reductionAndManagement) > 0) {
-		    thisSemesterYearCredits = reductionAndManagement;
-		} else {
-		    setHasAnyLimitation(true);
-		}
-		yearCredits = yearCredits.add(thisSemesterYearCredits);
-		if (getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester)) {
-		    yearCreditsForFinalCredits = yearCreditsForFinalCredits.add(thisSemesterYearCredits);
-		    annualTeachingLoadFinalCredits = annualTeachingLoadFinalCredits.add(thisSemesterTeachingLoad);
-		    if (executionSemester.getSemester() == 2) {
-			hasFinalAndAccumulatedCredits = true;
-		    } else {
-			hasOrientantionCredits = true;
-		    }
-		}
-	    }
-	}
-	yearCredits = yearCredits.add(teachingCredits).add(serviceExemptionCredits).add(othersCredits);
-	yearCreditsForFinalCredits = yearCreditsForFinalCredits.add(teachingCredits).add(serviceExemptionCredits)
-		.add(othersCredits);
-	if (hasOrientantionCredits) {
-	    yearCredits = yearCredits.add(getMasterDegreeThesesCredits()).add(getPhdDegreeThesesCredits())
-		    .add(getProjectsTutorialsCredits()).setScale(2, BigDecimal.ROUND_HALF_UP);
-	    yearCreditsForFinalCredits = yearCreditsForFinalCredits.add(getMasterDegreeThesesCredits())
-		    .add(getPhdDegreeThesesCredits()).add(getProjectsTutorialsCredits());
-	}
-	if (hasFinalAndAccumulatedCredits) {
-	    finalCredits = yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits);
-	    BigDecimal lastYearAccumulated = getPreviousAccumulatedCredits();
-	    accumulatedCredits = (finalCredits.add(lastYearAccumulated)).setScale(2, BigDecimal.ROUND_HALF_UP);
-	    finalCredits = finalCredits.setScale(2, BigDecimal.ROUND_HALF_UP);
-	}
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
+                BigDecimal thisSemesterManagementFunctionCredits =
+                        new BigDecimal(getTeacher().getManagementFunctionsCredits(executionSemester));
+                managementFunctionCredits = managementFunctionCredits.add(thisSemesterManagementFunctionCredits);
+                serviceExemptionCredits =
+                        serviceExemptionCredits.add(new BigDecimal(getTeacher().getServiceExemptionCredits(executionSemester)));
+                BigDecimal thisSemesterTeachingLoad = new BigDecimal(getTeacher().getMandatoryLessonHours(executionSemester));
+                annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad).setScale(2, BigDecimal.ROUND_HALF_UP);
+                TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
+                BigDecimal thisSemesterCreditsReduction = BigDecimal.ZERO;
+                if (teacherService != null) {
+                    teachingCredits = teachingCredits.add(new BigDecimal(teacherService.getTeachingDegreeCredits()));
+                    thisSemesterCreditsReduction = teacherService.getReductionServiceCredits();
+                    othersCredits = othersCredits.add(new BigDecimal(teacherService.getOtherServiceCredits()));
+                }
+                creditsReduction = creditsReduction.add(thisSemesterCreditsReduction);
+                BigDecimal reductionAndManagement = thisSemesterManagementFunctionCredits.add(thisSemesterCreditsReduction);
+                BigDecimal thisSemesterYearCredits = thisSemesterTeachingLoad;
+                if (thisSemesterTeachingLoad.compareTo(reductionAndManagement) > 0) {
+                    thisSemesterYearCredits = reductionAndManagement;
+                } else {
+                    setHasAnyLimitation(true);
+                }
+                yearCredits = yearCredits.add(thisSemesterYearCredits);
+                if (getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester)) {
+                    yearCreditsForFinalCredits = yearCreditsForFinalCredits.add(thisSemesterYearCredits);
+                    annualTeachingLoadFinalCredits = annualTeachingLoadFinalCredits.add(thisSemesterTeachingLoad);
+                    if (executionSemester.getSemester() == 2) {
+                        hasFinalAndAccumulatedCredits = true;
+                    } else {
+                        hasOrientantionCredits = true;
+                    }
+                }
+            }
+        }
+        yearCredits = yearCredits.add(teachingCredits).add(serviceExemptionCredits).add(othersCredits);
+        yearCreditsForFinalCredits =
+                yearCreditsForFinalCredits.add(teachingCredits).add(serviceExemptionCredits).add(othersCredits);
+        if (hasOrientantionCredits) {
+            yearCredits =
+                    yearCredits.add(getMasterDegreeThesesCredits()).add(getPhdDegreeThesesCredits())
+                            .add(getProjectsTutorialsCredits()).setScale(2, BigDecimal.ROUND_HALF_UP);
+            yearCreditsForFinalCredits =
+                    yearCreditsForFinalCredits.add(getMasterDegreeThesesCredits()).add(getPhdDegreeThesesCredits())
+                            .add(getProjectsTutorialsCredits());
+        }
+        if (hasFinalAndAccumulatedCredits) {
+            finalCredits = yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits);
+            BigDecimal lastYearAccumulated = getPreviousAccumulatedCredits();
+            accumulatedCredits = (finalCredits.add(lastYearAccumulated)).setScale(2, BigDecimal.ROUND_HALF_UP);
+            finalCredits = finalCredits.setScale(2, BigDecimal.ROUND_HALF_UP);
+        }
     }
 
     private BigDecimal getPreviousAccumulatedCredits() {
-	AnnualTeachingCredits previousAnnualTeachingCredits = AnnualTeachingCredits.readByYearAndTeacher(getExecutionYear()
-		.getPreviousExecutionYear(), getTeacher());
-	return previousAnnualTeachingCredits != null ? previousAnnualTeachingCredits.getAccumulatedCredits() : BigDecimal.ZERO;
+        AnnualTeachingCredits previousAnnualTeachingCredits =
+                AnnualTeachingCredits.readByYearAndTeacher(getExecutionYear().getPreviousExecutionYear(), getTeacher());
+        return previousAnnualTeachingCredits != null ? previousAnnualTeachingCredits.getAccumulatedCredits() : BigDecimal.ZERO;
+    }
+
+    public Boolean getAreCreditsOpen() {
+        return !getAreCreditsCalculated();
     }
 }

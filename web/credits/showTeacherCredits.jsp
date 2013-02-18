@@ -32,13 +32,14 @@
 	<logic:notEmpty name="teacherBean" property="annualTeachingCredits">
 		<fr:view name="teacherBean" property="annualTeachingCredits">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">
-				<fr:slot name="executionYear" key="label.executionYear" layout="link">
+				<fr:slot name="executionYear" key="label.executionYear" layout="conditional-link">
 					<fr:property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
 					<fr:property name="subLayout" value="values"/>
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="moduleRelative" value="true" />
 					<fr:property name="useParent" value="true" />
 					<fr:property name="linkFormat" value="/credits.do?method=viewAnnualTeachingCredits&amp;executionYearOid=${executionYear.externalId}&amp;teacherOid=${teacher.externalId}"/>
+					<fr:property name="visibleIf" value="areCreditsOpen" />
 				</fr:slot>
 				<fr:slot name="teachingCredits" key="label.credits.teachingCredits.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
