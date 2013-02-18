@@ -62,6 +62,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     private PhdCandidacyPeriod phdCandidacyPeriod;
 
+    private PhdIndividualProgramCollaborationType phdCollaborationType;
+
     public String getSearchValue() {
         return searchValue;
     }
@@ -340,6 +342,18 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
             }
         }
 
+        if (getPhdCollaborationType() != null) {
+            result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdIndividualProgramCollaborationType>(
+                    getPhdCollaborationType()) {
+
+                @Override
+                public boolean eval(PhdIndividualProgramProcess process) {
+                    return process.getCollaborationType() == getValue();
+                }
+
+            });
+        }
+
         return result;
     }
 
@@ -396,5 +410,13 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     public void setOnlineApplicationFilter(OnlineApplicationFilter onlineApplicationFilter) {
         this.onlineApplicationFilter = onlineApplicationFilter;
+    }
+
+    public PhdIndividualProgramCollaborationType getPhdCollaborationType() {
+        return phdCollaborationType;
+    }
+
+    public void setPhdCollaborationType(PhdIndividualProgramCollaborationType phdCollaborationType) {
+        this.phdCollaborationType = phdCollaborationType;
     }
 }

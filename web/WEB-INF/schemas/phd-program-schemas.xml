@@ -10,6 +10,7 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
+	<slot name="collaborationType" />
 	<slot name="person.name" />
 </schema>
 

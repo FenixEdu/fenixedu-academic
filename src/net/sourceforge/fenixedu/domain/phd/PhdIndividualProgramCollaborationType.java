@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -57,6 +60,10 @@ public enum PhdIndividualProgramCollaborationType {
 
     public boolean generateCandidacyDebt() {
         return generateCandidacyDebt;
+    }
+
+    public static Collection<PhdIndividualProgramCollaborationType> valuesAsList() {
+        return Collections.unmodifiableList(Arrays.asList(values()));
     }
 
 }

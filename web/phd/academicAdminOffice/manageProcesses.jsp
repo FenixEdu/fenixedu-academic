@@ -72,6 +72,11 @@
 				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
 			<%  } %>
+			
+			<fr:slot name="phdCollaborationType" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsCollaborationTypeProvider" />
+			</fr:slot>
+			
 			<fr:slot name="processNumber" />
 			<fr:slot name="studentNumber" />
 			<fr:slot name="phdStudentNumber" />
