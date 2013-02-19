@@ -175,7 +175,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     @Override
     public boolean canExecuteActivity(IUserView userView) {
         return isAllowedToManageProcess(this, userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
-                || userView.hasRoleType(RoleType.COORDINATOR);
+                || userView.hasRoleType(RoleType.COORDINATOR) || isCoordinatorOfProcess(userView);
     }
 
     @Override
