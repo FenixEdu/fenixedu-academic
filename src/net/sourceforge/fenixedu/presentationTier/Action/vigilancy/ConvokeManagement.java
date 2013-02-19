@@ -49,9 +49,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "displayWhyUnavailable", path = "display-why-unavailable") })
 public class ConvokeManagement extends FenixDispatchAction {
 
+    @SuppressWarnings("deprecation")
     public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
+        RenderUtils.invalidateViewState();
         String writtenEvaluationId = request.getParameter("writtenEvaluationId");
         WrittenEvaluation writtenEvaluation =
                 (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
@@ -209,7 +210,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     public ActionForward createConvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
+        RenderUtils.invalidateViewState();
         ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("confirmConvokes").getMetaObject().getObject();
         List<VigilantWrapper> vigilantSugestion = bean.getVigilants();
         WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
