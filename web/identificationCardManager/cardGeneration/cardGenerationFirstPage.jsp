@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
-<em>Cartões de Identificação</em>
-<h2><bean:message key="link.manage.card.generation" /></h2>
+<em><bean:message key="link.manage.card"/></em>
+<h2><bean:message key="link.manage.card.generation"/></h2>
 
 <logic:present name="crossReferenceResult">
 	<pre><bean:write name="crossReferenceResult"/></pre>

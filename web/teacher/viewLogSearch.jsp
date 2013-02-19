@@ -1,6 +1,6 @@
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean"%>
 <%@page import="net.sourceforge.fenixedu.util.Month"%>
 <%@page import="net.sourceforge.fenixedu.domain.Professorship"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>

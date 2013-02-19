@@ -10,7 +10,7 @@
 <h2><bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <logic:notPresent name="studentInquiryBean">
-	O seu inquérito encontra-se respondido. Obrigado pela sua colaboração.
+	<bean:message key="message.inquiries.answered" bundle="INQUIRIES_RESOURCES"/>
 </logic:notPresent>
 
 <logic:present name="studentInquiryBean">
