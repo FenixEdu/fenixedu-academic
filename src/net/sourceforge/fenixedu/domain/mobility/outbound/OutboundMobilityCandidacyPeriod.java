@@ -61,4 +61,12 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         return isOpen();
     }
 
+    public SortedSet<OutboundMobilityCandidacyContestGroup> getOutboundMobilityCandidacyContestGroupSet() {
+        final SortedSet<OutboundMobilityCandidacyContestGroup> result = new TreeSet<>();
+        for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
+            result.add(contest.getOutboundMobilityCandidacyContestGroup());
+        }
+        return result;
+    }
+
 }

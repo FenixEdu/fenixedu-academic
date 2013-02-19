@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
 <%@page import="java.util.SortedSet"%>
 <%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
@@ -12,6 +13,14 @@
 
 <style type="text/css">
 	.inputsize500px input { width: 500px; }
+	.degreeSelectors {
+    	-moz-column-count: 4; -moz-column-gap: 10px;
+    	-webkit-column-count: 4; -webkit-column-gap: 10px;
+    	column-count: 4; column-gap: 10px;
+    	width: 100%;
+	}
+	.fullSpace { width: 100%; }
+	.fullSpace th { width: 15%; }
 </style>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/></h2>
@@ -22,26 +31,39 @@
 
 	<fr:form action="/outboundMobilityCandidacy.do">
 		<html:hidden property="method" value="prepare"/>
-
-		<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
-				<fr:slot name="executionYear" bundle="CARD_GENERATION_RESOURCES" key="label.execution.year"
-						layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-					<fr:property name="format" value="${year}" />
-				</fr:slot>
-	    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods" bundle="ACADEMIC_OFFICE_RESOURCES">
-    	    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
-        			<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
-        			<fr:property name="eachLayout" value="values"/>
-        			<fr:property name="classes" value="nobullet noindent"/>
-    			</fr:slot>
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>
-				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-			</fr:layout>
-		</fr:edit>
+				<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
+					<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
+						<fr:slot name="executionYear" bundle="CARD_GENERATION_RESOURCES" key="label.execution.year"
+								layout="menu-select-postback">
+							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+							<fr:property name="format" value="${year}" />
+						</fr:slot>
+			    		<fr:slot name="mobilityProgramsAsList" layout="option-select" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES">
+    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityProgramProvider" />
+        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityProgram.description"/>
+        					<fr:property name="eachLayout" value="values"/>
+        					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
+        					<fr:property name="listItemStyle" value=""/>
+		    			</fr:slot>
+			    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods" bundle="ACADEMIC_OFFICE_RESOURCES">
+    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
+        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
+        					<fr:property name="eachLayout" value="values"/>
+        					<fr:property name="classes" value="nobullet noindent"/>
+		    			</fr:slot>
+			    		<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group" bundle="ACADEMIC_OFFICE_RESOURCES">
+    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyGroupProvider" />
+        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup.description"/>
+        					<fr:property name="eachLayout" value="values"/>
+        					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
+        					<fr:property name="listItemStyle" value=""/>
+		    			</fr:slot>
+					</fr:schema>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1 fullSpace"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+					</fr:layout>
+				</fr:edit>
 		<html:submit value="<%= BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.submit") %>"/>
 		<% if (outboundMobilityContextBean.getCandidacyPeriods().size() == 0) { %>
 			&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -161,7 +183,6 @@
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degrees"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.country"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.university"/></th>
-				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.code"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/></th>
 		</tr>
@@ -171,14 +192,13 @@
 					<td><%= contest.getOutboundMobilityCandidacyPeriod().getIntervalAsString() %></td>
 				<% } %>
 				<td>
-					<% for (final ExecutionDegree executionDegree : contest.getExecutionDegreeSet()) { %>						
+					<% for (final ExecutionDegree executionDegree : contest.getOutboundMobilityCandidacyContestGroup().getSortedExecutionDegrees()) { %>
 						<%= executionDegree.getDegree().getSigla() %>
 					<% } %>
 				</td>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().toString() %></td>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
-				<td><%= contest.getCode() %></td>
-				<td><%= contest.getVacancies() %></td>
+				<td><%= contest.getVacancies() == null ? "" : contest.getVacancies() %></td>
 				<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
 			</tr>
 		<% } %>

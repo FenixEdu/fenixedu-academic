@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
@@ -19,8 +20,9 @@ import org.joda.time.DateTime;
 public class OutboundMobilityContextBean implements Serializable {
 
     private ExecutionYear executionYear;
-
     private SortedSet<OutboundMobilityCandidacyPeriod> candidacyPeriods = new TreeSet<OutboundMobilityCandidacyPeriod>();
+    private SortedSet<MobilityProgram> mobilityPrograms = new TreeSet<MobilityProgram>();
+    private SortedSet<OutboundMobilityCandidacyContestGroup> mobilityGroups = new TreeSet<OutboundMobilityCandidacyContestGroup>();
 
     private DateTime startDateTime;
     private DateTime endDateTime;
@@ -46,6 +48,7 @@ public class OutboundMobilityContextBean implements Serializable {
         }
         if (last != null) {
             candidacyPeriods.add(last);
+            // mobilityGroups.addAll(last.getOutboundMobilityCandidacyContestGroupSet());
         }
     }
 
@@ -84,6 +87,32 @@ public class OutboundMobilityContextBean implements Serializable {
     public void setCandidacyPeriodsAsList(List<OutboundMobilityCandidacyPeriod> candidacyPeriodsAsList) {
         this.candidacyPeriods.retainAll(candidacyPeriodsAsList);
         this.candidacyPeriods.addAll(candidacyPeriodsAsList);
+    }
+
+    public SortedSet<OutboundMobilityCandidacyContestGroup> getMobilityGroups() {
+        return mobilityGroups;
+    }
+
+    public List<OutboundMobilityCandidacyContestGroup> getMobilityGroupsAsList() {
+        return new ArrayList<OutboundMobilityCandidacyContestGroup>(mobilityGroups);
+    }
+
+    public void setMobilityGroupsAsList(List<OutboundMobilityCandidacyContestGroup> mobilityGroupsAsList) {
+        this.mobilityGroups.retainAll(mobilityGroupsAsList);
+        this.mobilityGroups.addAll(mobilityGroupsAsList);
+    }
+
+    public SortedSet<MobilityProgram> getMobilityPrograms() {
+        return mobilityPrograms;
+    }
+
+    public List<MobilityProgram> getMobilityProgramsAsList() {
+        return new ArrayList<MobilityProgram>(mobilityPrograms);
+    }
+
+    public void setMobilityProgramsAsList(List<MobilityProgram> mobilityProgramsAsList) {
+        this.mobilityPrograms.retainAll(mobilityProgramsAsList);
+        this.mobilityPrograms.addAll(mobilityProgramsAsList);
     }
 
     public DateTime getStartDateTime() {
@@ -161,7 +190,14 @@ public class OutboundMobilityContextBean implements Serializable {
     public SortedSet<OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
         final SortedSet<OutboundMobilityCandidacyContest> result = new TreeSet<OutboundMobilityCandidacyContest>();
         for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
-            result.addAll(candidacyPeriod.getOutboundMobilityCandidacyContestSet());
+            for (final OutboundMobilityCandidacyContest contest : candidacyPeriod.getOutboundMobilityCandidacyContestSet()) {
+                if (mobilityPrograms.contains(contest.getMobilityAgreement().getMobilityProgram())) {
+                    final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
+                    if (mobilityGroups.contains(mobilityGroup)) {
+                        result.add(contest);
+                    }
+                }
+            }
         }
         return result;
     }

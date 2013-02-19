@@ -14,10 +14,10 @@
 
 <style>
   .sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-  .sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+  .sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; }
   #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-  #sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
-  html>body #sortable li { height: 1.5em; line-height: 1.2em; }
+  #sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; }
+  html>body #sortable li { line-height: 1.2em; }
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
 </style>
 <script>
@@ -88,14 +88,16 @@
 											for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet() ) {
 										%>
 												<li class="ui-state-default" id="<%= candidacy.getExternalId() %>">
-													<strong><%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getName() %></strong>
-													&nbsp;-&nbsp;
-													<%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
-
-													<% if (candidacyPeriod.isOpen()) { %>
-														<html:link action="<%= "/erasmusOutboundManagement.do?method=removeCandidacy&amp;candidacyOid=" + candidacy.getExternalId() %>"
-																style="float: right; border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
-													<% } %>
+														<% final String name = candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getName(); %>
+														<strong><%= name %></strong>
+														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
+														<%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
+															<% if (candidacyPeriod.isOpen()) { %>
+																<div style="float: right;">
+																	<html:link action="<%= "/erasmusOutboundManagement.do?method=removeCandidacy&amp;candidacyOid=" + candidacy.getExternalId() %>"
+																			style="border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
+																</div>
+															<% } %>
 												</li>
 										<%  } %>
 									</ul>
@@ -151,7 +153,6 @@
 						<div style="margin-top: 10px; margin-left: 15px; width: 1050px;">
 							<table class="tstyle1 mtop05">
 								<tr>
-									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degrees"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.country"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.university"/></th>
 									<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobilityProgram"/></th>
@@ -166,14 +167,6 @@
 									<tr>
 										<td>
 											<%
-												int i = 0;
-												for (final ExecutionDegree executionDegree : contest.getExecutionDegreeSet()) { %>
-												<%= executionDegree.getDegree().getSigla() %>
-												<%= i++ > 0 ? "<br/>" : ""  %>
-											<% } %>
-										</td>
-										<td>
-											<%
 												final Country country = contest.getMobilityAgreement().getUniversityUnit().getCountry();
 												if (country != null) {
 											%>
@@ -182,7 +175,7 @@
 										</td>
 										<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
 										<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
-										<td><%= contest.getVacancies() %></td>
+										<td><%= contest.getVacancies() == null ? "" : contest.getVacancies().toString() %></td>
 										<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
 										<td>
 											<%

@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.util;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.commons.Transformer;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class StringUtils {
@@ -162,6 +164,18 @@ public class StringUtils {
 
     public static String upperCase(String content) {
         return org.apache.commons.lang.StringUtils.upperCase(content);
+    }
+
+    public static <T> String join(final Collection<T> collection, final String seperator,
+            final Transformer<? super T, String> transformer) {
+        final StringBuilder builder = new StringBuilder();
+        for (final T t : collection) {
+            if (builder.length() > 0) {
+                builder.append(seperator);
+            }
+            builder.append(transformer.transform(t));
+        }
+        return builder.toString();
     }
 
 }

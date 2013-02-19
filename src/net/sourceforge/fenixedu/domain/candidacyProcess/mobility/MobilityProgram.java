@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class MobilityProgram extends MobilityProgram_Base {
+public class MobilityProgram extends MobilityProgram_Base implements Comparable<MobilityProgram> {
 
     public static final Comparator<MobilityProgram> COMPARATOR_BY_REGISTRATION_AGREEMENT = new Comparator<MobilityProgram>() {
 
@@ -91,5 +91,11 @@ public class MobilityProgram extends MobilityProgram_Base {
             }
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(final MobilityProgram o) {
+        int rac = getRegistrationAgreement().compareTo(o.getRegistrationAgreement());
+        return rac == 0 ? getExternalId().compareTo(o.getExternalId()) : rac;
     }
 }

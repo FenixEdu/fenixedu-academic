@@ -56,6 +56,16 @@ import com.google.common.collect.Iterables;
 
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
 
+    public static final Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_CODE = new Comparator<ExecutionDegree>() {
+
+        @Override
+        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+            final int dcc = o1.getDegree().getSigla().compareTo(o2.getDegree().getSigla());
+            return dcc == 0 ? o1.getExternalId().compareTo(o2.getExternalId()): dcc;
+        }
+
+    };
+
     public static final Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_NAME = new Comparator<ExecutionDegree>() {
 
         @Override

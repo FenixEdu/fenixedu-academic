@@ -1951,3 +1951,13 @@
 <schema name="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval" type="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod">
 	<slot name="intervalAsString"/>
 </schema>
+
+<schema name="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup.description"
+		type="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup">
+	<slot name="description"/>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityProgram.description"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram">
+	<slot name="registrationAgreement.description"/>
+</schema>

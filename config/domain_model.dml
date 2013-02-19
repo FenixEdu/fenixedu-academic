@@ -8192,11 +8192,24 @@ class mobility.outbound.OutboundMobilityCandidacy extends DomainObject {
     Boolean selected;
 }
 
+class mobility.outbound.OutboundMobilityCandidacyContestGroup extends DomainObject {
+}
+
 
 /*
  * Relations definitions
  * 
  */
+
+
+relation RootDomainObjectOutboundMobilityCandidacyContestGroup {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
+		multiplicity *;
+	}
+}
 
 relation RootDomainObjectOutboundMobilityCandidacyContest {
 	RootDomainObject playsRole rootDomainObject {
@@ -8248,6 +8261,33 @@ relation OutboundMobilityCandidacyContestExecutionDegree {
 		multiplicity 1..*;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyContestGroupExecutionDegree {
+	ExecutionDegree playsRole executionDegree {
+		multiplicity 1..*;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyContestGroupOutboundMobilityCandidacyContest {
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
+		multiplicity 1..*;
+	}
+}
+
+relation OutboundMobilityCandidacyContestGroupMobilityCoordinator {
+	Person playsRole mobilityCoordinator {
+		multiplicity *;
+	}
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
 		multiplicity *;
 	}
 }
