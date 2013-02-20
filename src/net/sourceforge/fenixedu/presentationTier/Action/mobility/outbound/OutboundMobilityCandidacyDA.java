@@ -5,7 +5,10 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -67,6 +70,37 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
         outboundMobilityContextBean.setExecutionYear((ExecutionYear) candidacyPeriod.getExecutionInterval());
         outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(candidacyPeriod));
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward addDegreeToGroup(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        outboundMobilityContextBean.addDegreeToGroup();
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward removeDegreeFromGroup(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        final ExecutionDegree executionDegree = getDomainObject(request, "executionDegreeOid");
+        outboundMobilityContextBean.setExecutionDegree(executionDegree);
+        outboundMobilityContextBean.removeDegreeFromGroup();
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward deleteContest(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
+        if (mobilityGroup.getOutboundMobilityCandidacyContestCount() == 1) {
+            outboundMobilityContextBean.getMobilityGroups().remove(mobilityGroup);
+        }
+        contest.delete();
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
     }

@@ -30,7 +30,6 @@ public class OutboundMobilityContextBean implements Serializable {
     private MobilityProgram mobilityProgram;
     private ExecutionDegree executionDegree;
     private UniversityUnit unit;
-    private String code;
     private Integer vacancies;
 
     public OutboundMobilityContextBean() {
@@ -139,11 +138,16 @@ public class OutboundMobilityContextBean implements Serializable {
 
     public void createNewOutboundMobilityCandidacyContest() {
         for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
-            candidacyPeriod.createOutboundMobilityCandidacyContest(executionDegree, mobilityProgram, unit, code, vacancies);
+            if (executionDegree == null) {
+                for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
+                    candidacyPeriod.createOutboundMobilityCandidacyContest(mobilityGroup, mobilityProgram, unit, vacancies);
+                }
+            } else {
+                candidacyPeriod.createOutboundMobilityCandidacyContest(executionDegree, mobilityProgram, unit, vacancies);
+            }
         }
         executionDegree = null;
         unit = null;
-        code = null;
         vacancies = null;
     }
 
@@ -161,14 +165,6 @@ public class OutboundMobilityContextBean implements Serializable {
 
     public void setUnit(UniversityUnit unit) {
         this.unit = unit;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Integer getVacancies() {
@@ -200,6 +196,18 @@ public class OutboundMobilityContextBean implements Serializable {
             }
         }
         return result;
+    }
+
+    public void addDegreeToGroup() {
+        for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
+            mobilityGroup.addExecutionDegreeService(executionDegree);
+        }
+    }
+
+    public void removeDegreeFromGroup() {
+        for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
+            mobilityGroup.removeExecutionDegreeService(executionDegree);
+        }
     }
 
 }

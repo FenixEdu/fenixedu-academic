@@ -1,7 +1,13 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base implements Comparable<OutboundMobilityCandidacy> {
@@ -63,6 +69,18 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
     public int compareTo(final OutboundMobilityCandidacy o) {
         int p = getPreferenceOrder().compareTo(o.getPreferenceOrder());
         return p == 0 ? getExternalId().compareTo(o.getExternalId()) : p;
+    }
+
+    public void deleteWithNotification() {
+        final SystemSender sender = getRootDomainObject().getSystemSender();
+        if (sender != null) {
+            final Registration registration = getOutboundMobilityCandidacySubmission().getRegistration();
+            final Recipient recipient = new Recipient(new PersonGroup(registration.getPerson()));
+            new Message(sender, recipient,
+                    BundleUtil.getStringFromResourceBundle("resources.StudentResources", "label.email.deleted.contest.subject"),
+                    BundleUtil.getStringFromResourceBundle("resources.StudentResources", "label.email.deleted.contest.body", getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getPresentationName()));
+        }
+        delete();
     }
 
 }

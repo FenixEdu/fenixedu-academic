@@ -17,7 +17,6 @@
     	-moz-column-count: 4; -moz-column-gap: 10px;
     	-webkit-column-count: 4; -webkit-column-gap: 10px;
     	column-count: 4; column-gap: 10px;
-    	width: 100%;
 	}
 	.fullSpace { width: 100%; }
 	.fullSpace th { width: 15%; }
@@ -38,18 +37,18 @@
 							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
 							<fr:property name="format" value="${year}" />
 						</fr:slot>
+			    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods" bundle="ACADEMIC_OFFICE_RESOURCES">
+    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
+        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
+        					<fr:property name="eachLayout" value="values"/>
+        					<fr:property name="classes" value="nobullet noindent"/>
+		    			</fr:slot>
 			    		<fr:slot name="mobilityProgramsAsList" layout="option-select" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES">
     			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityProgramProvider" />
         					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityProgram.description"/>
         					<fr:property name="eachLayout" value="values"/>
         					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
         					<fr:property name="listItemStyle" value=""/>
-		    			</fr:slot>
-			    		<fr:slot name="candidacyPeriodsAsList" layout="option-select" key="label.candidacy.periods" bundle="ACADEMIC_OFFICE_RESOURCES">
-    			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyPeriodProvider" />
-        					<fr:property name="eachSchema" value="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval"/>
-        					<fr:property name="eachLayout" value="values"/>
-        					<fr:property name="classes" value="nobullet noindent"/>
 		    			</fr:slot>
 			    		<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group" bundle="ACADEMIC_OFFICE_RESOURCES">
     			    		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OutboundMobilityCandidacyGroupProvider" />
@@ -81,6 +80,16 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.create.new.contest"/>
 			</a>
 		<% } %>
+		<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) { %>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="#" onclick="$('#outboundMobilityContextBeanAddDegreeToGroupBlock').toggle()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.add.degree.to.group"/>
+			</a>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="#" onclick="$('#outboundMobilityContextBeanRemoveDegreeFromGroupBlock').toggle()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.remove.degree.from.group"/>
+			</a>
+		<% } %>
 	</fr:form>
 
 	<div id="outboundMobilityContextBeanCreateCandidacyPeriodBlock" style="display: none;">
@@ -99,6 +108,63 @@
 			</fr:layout>
 		</fr:edit>
 	</div>
+
+	<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) {
+	    	final OutboundMobilityCandidacyContestGroup mobilityGroup = outboundMobilityContextBean.getMobilityGroups().iterator().next();
+	%>
+		<div id="outboundMobilityContextBeanAddDegreeToGroupBlock" style="display: none;">
+			<h3>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.add.degree.to.group"/>
+				<%= mobilityGroup.getDescription() %>
+			</h3>
+			<bean:define id="providerArgs2" type="java.lang.String">provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider,executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
+			<fr:edit id="outboundMobilityContextBeanCreateCandidacyPeriod" name="outboundMobilityContextBean"
+					action="/outboundMobilityCandidacy.do?method=addDegreeToGroup">
+				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+   					<fr:slot name="executionDegree" layout="simpleAutoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+       					<fr:property name="args" value="<%= providerArgs2 %>" />
+        				<fr:property name="labelField" value="presentationName"/>
+   	    				<fr:property name="format" value="${presentationName}"/>
+       					<fr:property name="classes" value="inputsize500px"/>
+       					<fr:property name="minChars" value="2"/>
+       					<fr:property name="sortBy" value="presentationName"/>
+						<fr:property name="saveOptions" value="true"/>
+   					</fr:slot>
+   				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>
+					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+			</fr:edit>
+		</div>
+		<div id="outboundMobilityContextBeanRemoveDegreeFromGroupBlock" style="display: none;">
+			<h3>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.remove.degree.from.group"/>
+				<%= mobilityGroup.getDescription() %>
+			</h3>
+			<ul class="degreeSelectors">
+				<%
+					for (final ExecutionDegree executionDegree : mobilityGroup.getExecutionDegreeSet()) {
+					    final String params = "/outboundMobilityCandidacy.do?method=removeDegreeFromGroup&amp;executionDegreeOid=" + executionDegree.getExternalId();
+					    final String formId = "removeDegree" + executionDegree.getExternalId();
+				%>
+					<li style="margin-bottom: 10px;">
+						<fr:form id="<%= formId %>" action="<%= params %>">
+							<%--
+							<fr:hidden id="<%= "outboundMobilityContextBean" + executionDegree.getExternalId() " name="outboundMobilityContextBean"/>
+							--%>
+							<fr:edit id="<%= "outboundMobilityContextBean" + executionDegree.getExternalId() %>" name="outboundMobilityContextBean" visible="false"/>
+							<a href="#" onclick="<%= "document.getElementById('" + formId + "').submit()" %>">
+								<%= executionDegree.getDegree().getSigla() %>
+							</a>
+						</fr:form>
+					</li>
+				<%
+					}
+				%>
+			</ul>
+		</div>
+	<% } %>
 
 	<%
 		if (outboundMobilityContextBean.getCandidacyPeriods().size() == 1) {
@@ -136,15 +202,17 @@
         				<fr:property name="sortBy" value="presentationName"/>
 						<fr:property name="saveOptions" value="true"/>
     				</fr:slot>
-    				<fr:slot name="executionDegree" layout="simpleAutoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-        				<fr:property name="args" value="<%= providerArgs %>" />
-	        			<fr:property name="labelField" value="presentationName"/>
-    	    			<fr:property name="format" value="${presentationName}"/>
-        				<fr:property name="classes" value="inputsize500px"/>
-        				<fr:property name="minChars" value="2"/>
-        				<fr:property name="sortBy" value="presentationName"/>
-						<fr:property name="saveOptions" value="true"/>
-    				</fr:slot>
+					<% if (outboundMobilityContextBean.getMobilityGroups().size() == 0) { %>
+    					<fr:slot name="executionDegree" layout="simpleAutoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+        					<fr:property name="args" value="<%= providerArgs %>" />
+	        				<fr:property name="labelField" value="presentationName"/>
+    	    				<fr:property name="format" value="${presentationName}"/>
+        					<fr:property name="classes" value="inputsize500px"/>
+        					<fr:property name="minChars" value="2"/>
+        					<fr:property name="sortBy" value="presentationName"/>
+							<fr:property name="saveOptions" value="true"/>
+    					</fr:slot>
+					<% } %>
     				<fr:slot name="unit" layout="simpleAutoComplete" key="label.university" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
         				<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
 	        			<fr:property name="labelField" value="presentationName"/>
@@ -154,8 +222,6 @@
         				<fr:property name="sortBy" value="presentationName"/>
 						<fr:property name="saveOptions" value="true"/>
 	    			</fr:slot>
-					<fr:slot name="code" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.code"
-							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="vacancies" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				</fr:schema>
@@ -180,26 +246,49 @@
 				<% if (outboundMobilityContextBean.getCandidacyPeriods().size() > 1) { %>
 					<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.period"/></th>
 				<% } %>
-				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degrees"/></th>
+				<% if (outboundMobilityContextBean.getMobilityGroups().size() > 1) { %>
+					<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degrees"/></th>
+				<% } %>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.country"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.university"/></th>
+				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
+					<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.program"/></th>
+				<% } %>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/></th>
+				<th></th>
 		</tr>
 		<% for (final OutboundMobilityCandidacyContest contest : contests) {%>
 			<tr>
 				<% if (outboundMobilityContextBean.getCandidacyPeriods().size() > 1) { %>
 					<td><%= contest.getOutboundMobilityCandidacyPeriod().getIntervalAsString() %></td>
 				<% } %>
-				<td>
-					<% for (final ExecutionDegree executionDegree : contest.getOutboundMobilityCandidacyContestGroup().getSortedExecutionDegrees()) { %>
-						<%= executionDegree.getDegree().getSigla() %>
-					<% } %>
-				</td>
+				<% if (outboundMobilityContextBean.getMobilityGroups().size() > 1) { %>
+					<td>
+						<% for (final ExecutionDegree executionDegree : contest.getOutboundMobilityCandidacyContestGroup().getSortedExecutionDegrees()) { %>
+							<%= executionDegree.getDegree().getSigla() %>
+						<% } %>
+					</td>
+				<% } %>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().toString() %></td>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
+				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
+					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
+				<% } %>
 				<td><%= contest.getVacancies() == null ? "" : contest.getVacancies() %></td>
 				<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
+				<td>
+					<%
+						final String params = "/outboundMobilityCandidacy.do?method=deleteContest&amp;contestOid=" + contest.getExternalId();
+					    final String formId = "deleteContest" + contest.getExternalId();
+					%>
+					<fr:form id="<%= formId %>" action="<%= params %>">
+						<fr:edit id="<%= "outboundMobilityContextBean" + contest.getExternalId() %>" name="outboundMobilityContextBean" visible="false"/>
+						<a href="#" onclick="<%= "document.getElementById('" + formId + "').submit()" %>">
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
+						</a>
+					</fr:form>
+				</td>
 			</tr>
 		<% } %>
 	</table>

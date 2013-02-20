@@ -29,9 +29,24 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
 
     @Service
     public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final ExecutionDegree executionDegree, final MobilityProgram mobilityProgram,
-            final UniversityUnit unit, final String code, final Integer vacancies) {
+            final UniversityUnit unit, final Integer vacancies) {
         final MobilityAgreement mobilityAgreement = findOrCreateMobilityAgreement(mobilityProgram, unit);
-        return new OutboundMobilityCandidacyContest(this, executionDegree, mobilityAgreement, code, vacancies);
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = OutboundMobilityCandidacyContestGroup.findOrCreateGroup(executionDegree);
+        final OutboundMobilityCandidacyContest contest = new OutboundMobilityCandidacyContest(this, mobilityGroup, mobilityAgreement, vacancies);
+
+        // TODO : This is a hack due to a bug in the consistency predicate or fenix-framework code.
+        //        When the relation is initialized but never traversed, the consistency predicate always
+        //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
+        //        the framework, but the framework has not yet been updated on this project.
+        mobilityGroup.getOutboundMobilityCandidacyContestCount();
+        return contest;
+    }
+
+    @Service
+    public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final OutboundMobilityCandidacyContestGroup mobilityGroup,
+            final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer vacancies) {
+        final MobilityAgreement mobilityAgreement = findOrCreateMobilityAgreement(mobilityProgram, unit);
+        return new OutboundMobilityCandidacyContest(this, mobilityGroup, mobilityAgreement, vacancies);
     }
 
     private MobilityAgreement findOrCreateMobilityAgreement(final MobilityProgram mobilityProgram, final UniversityUnit unit) {

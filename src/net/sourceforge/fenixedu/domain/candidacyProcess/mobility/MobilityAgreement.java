@@ -12,6 +12,9 @@ public class MobilityAgreement extends MobilityAgreement_Base {
 
     public MobilityAgreement(MobilityProgram program, UniversityUnit university) {
         this();
+        if (university == null) {
+            throw new NullPointerException("error.university.cannot.be.null");
+        }
         setMobilityProgram(program);
         setUniversityUnit(university);
     }

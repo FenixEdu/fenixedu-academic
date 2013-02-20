@@ -14,20 +14,20 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyContest_Base implements
         Comparable<OutboundMobilityCandidacyContest> {
 
     public OutboundMobilityCandidacyContest(final OutboundMobilityCandidacyPeriod outboundMobilityCandidacyPeriod,
-            final ExecutionDegree executionDegree, final MobilityAgreement mobilityAgreement, final String code,
-            final Integer vacancies) {
+            final OutboundMobilityCandidacyContestGroup mobilityGroup, final MobilityAgreement mobilityAgreement, final Integer vacancies) {
         setRootDomainObject(RootDomainObject.getInstance());
         setOutboundMobilityCandidacyPeriod(outboundMobilityCandidacyPeriod);
-        if (executionDegree != null) {
+        setMobilityAgreement(mobilityAgreement);
+        setOutboundMobilityCandidacyContestGroup(mobilityGroup);
+        for (final ExecutionDegree executionDegree : mobilityGroup.getExecutionDegreeSet()) {
             addExecutionDegree(executionDegree);
         }
-        setMobilityAgreement(mobilityAgreement);
-        setCode(code);
         setVacancies(vacancies);
     }
 
@@ -144,6 +144,23 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
         //        the framework, but the framework has not yet been updated on this project.
         getExecutionDegreeCount();
+    }
+
+    @Service
+    public void delete() {
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getOutboundMobilityCandidacyContestGroup();
+        for (final OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
+            candidacy.deleteWithNotification();
+        }
+        getExecutionDegreeSet().clear();
+        removeMobilityAgreement();
+        removeOutboundMobilityCandidacyContestGroup();
+        removeOutboundMobilityCandidacyPeriod();
+        removeRootDomainObject();
+        if (mobilityGroup != null && mobilityGroup.getOutboundMobilityCandidacyContestCount() == 0) {
+            mobilityGroup.delete();
+        }
+        deleteDomainObject();
     }
 
 }
