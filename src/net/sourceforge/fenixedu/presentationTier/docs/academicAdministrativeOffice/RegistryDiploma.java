@@ -46,7 +46,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         addParameter("idHolder", person.getGender() == Gender.MALE ? "portador" : "portadora");
         addParameter("idDocType", getEnumerationBundle().getString(person.getIdDocumentType().getName()));
         addParameter("idNumber", person.getDocumentIdNumber());
-        if (person.getParishOfBirth() != null) {
+        if (person.getParishOfBirth() != null && !person.getParishOfBirth().isEmpty()) {
             addParameter("parishOfBirth", person.getParishOfBirth());
         } else {
             throw new DomainException("error.personWithoutParishOfBirth");

@@ -61,6 +61,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
         if (getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle()) != this) {
             throw new DomainException("error.registryDiploma.alreadyRequested");
         }
+        if (hasPersonalInfo() && hasMissingPersonalInfo()) {
+            throw new DomainException("AcademicServiceRequest.has.missing.personal.info");
+        }
     }
 
     @Override
