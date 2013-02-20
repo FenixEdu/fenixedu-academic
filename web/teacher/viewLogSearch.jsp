@@ -63,11 +63,12 @@
 			<bean:message key="log.total.entries"/>
 		</h3>
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
-			<cp:collectionPages
-				url="<%="/teacher/searchECLog.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
-				pageNumberAttributeName="pageNumber"
-				numberOfPagesAttributeName="numberOfPages"/>
-
+			<div style="word-wrap: break-word">
+				<cp:collectionPages
+					url="<%="/teacher/searchECLog.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+					pageNumberAttributeName="pageNumber"
+					numberOfPagesAttributeName="numberOfPages"/>
+			</div>
 			<fr:view name="logPagesBean" property="executionCourseLogs">
 				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean" bundle="APPLICATION_RESOURCES">
 					<fr:slot name="person" layout="view-as-image">
@@ -94,11 +95,12 @@
 					<fr:property name="classes" value="tstyle4 mtop15 tdcenter inobullet"/>
 				</fr:layout>
 			</fr:view>
-
-			<cp:collectionPages
-				url="<%="/teacher/searchECLog.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
-				pageNumberAttributeName="pageNumber"
-				numberOfPagesAttributeName="numberOfPages"/>
+			<div style="word-wrap: break-word">
+				<cp:collectionPages
+					url="<%="/teacher/searchECLog.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+					pageNumberAttributeName="pageNumber"
+					numberOfPagesAttributeName="numberOfPages"/>
+			</div>
 	
 	</logic:notEmpty>
 	<logic:empty name="searchBean" property="executionCourseLogs">
