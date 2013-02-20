@@ -1840,6 +1840,7 @@
         <property name="subLayout" value="values" />
 		<property name="subSchema" value="responsible.name"/>
     </slot>
+    <slot name="administrativeOffice.unit.name" key="label.rectorateSubmission.administrativeOffice" />
     <slot name="submission" key="label.rectorateSubmission.submission" />
     <slot name="submitter" key="label.rectorateSubmission.submitter" layout="null-as-label">
         <property name="subLayout" value="values" />
