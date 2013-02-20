@@ -1,17 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.CreateTeacherCreditsFillingPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.TeacherCreditsQueueJob;
-import net.sourceforge.fenixedu.domain.TeacherCreditsState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -36,23 +32,13 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
 
     public ActionForward showPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
         TeacherCreditsPeriodBean bean = createBeanTeacherCreditsPeriodBean(mapping, actionForm, request);
-
-        if (isDoneAllTeacherCreditsQueueJob(bean.getExecutionPeriod())) {
-            if (isCloseAllTeacherCreditsState(bean.getExecutionPeriod())) {
-                request.setAttribute("closePeriodTeacherCredits", true);
-            } else {
-                request.setAttribute("closePeriodTeacherCredits", false);
-            }
-        }
         request.setAttribute("teacherCreditsBean", bean);
         return mapping.findForward("show-credits-periods");
     }
 
     public ActionForward prepareEditTeacherCreditsPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         ExecutionSemester executionSemester = getExecutionPeriodToEditPeriod(request);
         request.setAttribute("teacherCreditsBean", new TeacherCreditsPeriodBean(executionSemester, true));
         return mapping.findForward("edit-teacher-credits-periods");
@@ -98,32 +84,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
         TeacherCreditsPeriodBean bean = createBeanTeacherCreditsPeriodBean(mapping, actionForm, request);
         TeacherCredits.openAllTeacherCredits(bean.getExecutionPeriod());
         request.setAttribute("teacherCreditsBean", bean);
-        request.setAttribute("closePeriodTeacherCredits", false);
         return mapping.findForward("show-credits-periods");
-    }
-
-    private boolean isDoneAllTeacherCreditsQueueJob(ExecutionSemester executionSemester) {
-        for (QueueJob queueJob : getTeacherCreditsJobs()) {
-            TeacherCreditsQueueJob job = (TeacherCreditsQueueJob) queueJob;
-            if (job.getExecutionSemester().equals(executionSemester)) {
-                if (job.getIsNotDoneAndNotCancelled()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean isCloseAllTeacherCreditsState(ExecutionSemester executionSemester) {
-        TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
-        if (teacherCreditsState == null || teacherCreditsState.isOpenState()) {
-            return false;
-        }
-        return true;
-    }
-
-    public List<QueueJob> getTeacherCreditsJobs() {
-        return (QueueJob.getAllJobsForClassOrSubClass(TeacherCreditsQueueJob.class, rootDomainObject.getQueueJobCount()));
     }
 
     private TeacherCreditsPeriodBean createBeanTeacherCreditsPeriodBean(ActionMapping mapping, ActionForm actionForm,

@@ -1294,6 +1294,11 @@ class DomainObject {
 		
 		class TeacherCreditsDocument extends File {
     	}
+    	
+    	class credits.AnnualTeachingCreditsDocument extends File {
+			Boolean hasConfidencialInformation;
+		}
+    	
 
     class FileLocalContent extends DomainObject {
        VirtualPath path;
@@ -20795,4 +20800,11 @@ relation OtherServiceExecutionSemester {
         multiplicity *;
     }
     ExecutionSemester playsRole correctedExecutionSemester;
+}
+
+relation AnnualTeachingCreditsDocumentAnnualTeachingCredits {
+	credits.AnnualTeachingCreditsDocument playsRole annualTeachingCreditsDocument {
+		multiplicity *;
+	}
+	credits.AnnualTeachingCredits playsRole annualTeachingCredits;
 }

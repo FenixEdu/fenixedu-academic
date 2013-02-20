@@ -141,4 +141,16 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
                         getTeacher());
         return previousAnnualTeachingCredits != null ? previousAnnualTeachingCredits.getAccumulatedCredits() : BigDecimal.ZERO;
     }
+
+    public AnnualTeachingCreditsDocument getLastTeacherCreditsDocument(Boolean withConfidencialInformation) {
+        AnnualTeachingCreditsDocument lastAnnualTeachingCreditsDocument = null;
+        for (AnnualTeachingCreditsDocument annualTeachingCreditsDocument : getAnnualTeachingCreditsDocument()) {
+            if (annualTeachingCreditsDocument.getHasConfidencialInformation() == withConfidencialInformation
+                    && (lastAnnualTeachingCreditsDocument == null || lastAnnualTeachingCreditsDocument.getUploadTime().isBefore(
+                            annualTeachingCreditsDocument.getUploadTime()))) {
+                lastAnnualTeachingCreditsDocument = annualTeachingCreditsDocument;
+            }
+        }
+        return lastAnnualTeachingCreditsDocument;
+    }
 }
