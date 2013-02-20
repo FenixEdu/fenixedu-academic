@@ -77,7 +77,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     public SortedSet<OutboundMobilityCandidacyContestGroup> getOutboundMobilityCandidacyContestGroupSet() {
-        final SortedSet<OutboundMobilityCandidacyContestGroup> result = new TreeSet<>();
+        final SortedSet<OutboundMobilityCandidacyContestGroup> result = new TreeSet<OutboundMobilityCandidacyContestGroup>();
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
             result.add(contest.getOutboundMobilityCandidacyContestGroup());
         }
