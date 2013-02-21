@@ -92,6 +92,14 @@
 								<%= thesis.getMark() == null ? "" : thesis.getMark().toString() %>
 							</td>							
 						</tr>
+						<tr>
+							<td>
+								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.approval.date"/>:
+							</td>
+							<td>
+								<%= thesis.getEvaluation() == null ? "" : thesis.getEvaluation().toString("yyyy-MM-dd HH:mm")  %>
+							</td>							
+						</tr>
 					</table>
 				</div> 
 			</div>
