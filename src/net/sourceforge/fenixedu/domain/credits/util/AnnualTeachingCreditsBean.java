@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -170,13 +171,12 @@ public class AnnualTeachingCreditsBean implements Serializable {
     }
 
     public List<InternalPhdParticipant> getPhdDegreeTheses() {
-        ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
         ArrayList<InternalPhdParticipant> participants = new ArrayList<InternalPhdParticipant>();
         if (!executionYear.getYear().equals("2011/2012")) {
             for (InternalPhdParticipant internalPhdParticipant : teacher.getPerson().getInternalParticipants()) {
-                ExecutionYear conclusionYear = internalPhdParticipant.getIndividualProcess().getConclusionYear();
-                if (conclusionYear != null
-                        && conclusionYear.equals(previousExecutionYear)
+                LocalDate conclusionDate = internalPhdParticipant.getIndividualProcess().getConclusionDate();
+                if (conclusionDate != null
+                        && conclusionDate.getYear() == executionYear.getBeginCivilYear()
                         && (internalPhdParticipant.getProcessForGuiding() != null || internalPhdParticipant
                                 .getProcessForAssistantGuiding() != null)) {
                     participants.add(internalPhdParticipant);
