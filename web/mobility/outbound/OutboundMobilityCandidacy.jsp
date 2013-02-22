@@ -1,3 +1,5 @@
+<%@page import="net.sourceforge.fenixedu.domain.Country"%>
+<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
 <%@page import="java.util.SortedSet"%>
 <%@ page language="java"%>
@@ -241,6 +243,10 @@
 	%>
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contests.none"/>
 	<%  } else { %>
+			<fr:form id="deleteContestForm" action="/outboundMobilityCandidacy.do?method=deleteContest">
+				<html:hidden property="contestOid" value=""/>
+				<fr:edit id="deleteContestFormBean" name="outboundMobilityContextBean" visible="false"/>
+	
 		<table class="tstyle1 mtop05">
 			<tr>
 				<% if (outboundMobilityContextBean.getCandidacyPeriods().size() > 1) { %>
@@ -258,7 +264,10 @@
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/></th>
 				<th></th>
 		</tr>
-		<% for (final OutboundMobilityCandidacyContest contest : contests) {%>
+		<% for (final OutboundMobilityCandidacyContest contest : contests) {
+		    final Unit unit = contest.getMobilityAgreement().getUniversityUnit();
+		    final Country country = unit.getCountry();
+		%>
 			<tr>
 				<% if (outboundMobilityContextBean.getCandidacyPeriods().size() > 1) { %>
 					<td><%= contest.getOutboundMobilityCandidacyPeriod().getIntervalAsString() %></td>
@@ -270,7 +279,7 @@
 						<% } %>
 					</td>
 				<% } %>
-				<td><%= contest.getMobilityAgreement().getUniversityUnit().getCountry().getLocalizedName().toString() %></td>
+				<td><%= country == null ? "" : country.getLocalizedName().toString() %></td>
 				<td><%= contest.getMobilityAgreement().getUniversityUnit().getPresentationName() %></td>
 				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
 					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
@@ -278,19 +287,13 @@
 				<td><%= contest.getVacancies() == null ? "" : contest.getVacancies() %></td>
 				<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
 				<td>
-					<%
-						final String params = "/outboundMobilityCandidacy.do?method=deleteContest&amp;contestOid=" + contest.getExternalId();
-					    final String formId = "deleteContest" + contest.getExternalId();
-					%>
-					<fr:form id="<%= formId %>" action="<%= params %>">
-						<fr:edit id="<%= "outboundMobilityContextBean" + contest.getExternalId() %>" name="outboundMobilityContextBean" visible="false"/>
-						<a href="#" onclick="<%= "document.getElementById('" + formId + "').submit()" %>">
-							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
-						</a>
-					</fr:form>
+					<a href="#" onclick="<%= " document.getElementById('deleteContestForm').contestOid.value = " + contest.getExternalId() + " ; document.getElementById('deleteContestForm').submit()" %>">
+						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
+					</a>
 				</td>
 			</tr>
 		<% } %>
 	</table>
+		</fr:form>
 	<% } %>
 </logic:present>
