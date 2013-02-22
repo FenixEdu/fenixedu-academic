@@ -21,6 +21,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
     public boolean isAssociatedWithEmailAndCandidacyProcess(String email, Class<? extends IndividualCandidacyProcess> type,
             CandidacyProcess process) {
         return email.equals(this.getEmail()) && this.hasIndividualCandidacyProcess()
+                && !getIndividualCandidacyProcess().isCandidacyCancelled()
                 && this.getIndividualCandidacyProcess().getClass() == type
                 && this.getIndividualCandidacyProcess().getCandidacyProcess() == process;
     }
