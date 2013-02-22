@@ -66,8 +66,8 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
     }
 
     private int compareDegrees(final OutboundMobilityCandidacyContest o) {
-        return executionDegreesCompareHash(o.getExecutionDegreeSet()).compareTo(
-                executionDegreesCompareHash(getExecutionDegreeSet()));
+        return executionDegreesCompareHash(o.getOutboundMobilityCandidacyContestGroup().getExecutionDegreeSet())
+                .compareTo(executionDegreesCompareHash(getOutboundMobilityCandidacyContestGroup().getExecutionDegreeSet()));
     }
 
     private String executionDegreesCompareHash(final Set<ExecutionDegree> executionDegreeSet) {
@@ -109,7 +109,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
 
     public Registration findBestRegistration(final Student student) {
         for (final Registration registration : student.getRegistrationsSet()) {
-            for (final ExecutionDegree executionDegree : getExecutionDegreeSet()) {
+            for (final ExecutionDegree executionDegree : getOutboundMobilityCandidacyContestGroup().getExecutionDegreeSet()) {
                 if (executionDegree.getDegree() == registration.getDegree()) {
                     final ExecutionYear executionYear =
                             (ExecutionYear) getOutboundMobilityCandidacyPeriod().getExecutionInterval();
