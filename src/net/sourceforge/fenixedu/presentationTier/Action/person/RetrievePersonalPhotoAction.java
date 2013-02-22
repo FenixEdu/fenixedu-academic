@@ -100,6 +100,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     public static void writeUnavailablePhoto(HttpServletResponse response, ActionServlet actionServlet) {
         try {
+            response.setContentType("image/gif");
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
             final String path =
                     actionServlet.getServletContext().getRealPath(
