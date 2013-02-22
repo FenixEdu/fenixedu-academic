@@ -42,7 +42,7 @@
 <logic:present name="reductionService">
 	<fr:edit id="reductionService" name="reductionService" action="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>">
 		<fr:schema type="net.sourceforge.fenixedu.domain.teacher.ReductionService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
-			<fr:slot name="creditsReduction" key="label.credits"/>
+			<fr:slot name="creditsReduction" key="label.credits" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		</fr:schema>
 		<fr:layout>
 			<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>

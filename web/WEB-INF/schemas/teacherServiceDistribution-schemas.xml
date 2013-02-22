@@ -230,7 +230,7 @@
 
 <schema name="create.reductionService" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="teacherService,creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
 	<slot name="teacherService" hidden="true"/>
-	<slot name="creditsReduction" key="label.credits" required="true"/>
+	<slot name="creditsReduction" key="label.credits" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" required="true"/>
 </schema>
 
 <schema name="create.reductionServiceAttributed" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="creditsReductionAttributed,teacherService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
