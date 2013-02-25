@@ -68,7 +68,8 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("CL");
         spreadsheet.setHeader("CG");
         spreadsheet.setHeader("O");
-        spreadsheet.setHeader("AD65");
+        spreadsheet.setHeader("AD65 requerido");
+        spreadsheet.setHeader("AD65 atribuído");
         spreadsheet.setHeader("SNE");
         spreadsheet.setHeader("CLN");
         //1º sem
@@ -126,11 +127,17 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     //CG (desc)
                     row.setCell(teacherService == null ? 0 : teacherService.getOtherServiceCredits());// O
                     //O (desc)
-                    Double reductionService =
-                            teacherService == null ? 0 : teacherService.getReductionService() == null ? 0 : teacherService
-                                    .getReductionService().getCreditsReduction() == null ? 0 : teacherService
+                    Double creditsReductionRequired =
+                            teacherService == null ? null : teacherService.getReductionService() == null ? null : teacherService
+                                    .getReductionService().getCreditsReduction() == null ? null : teacherService
                                     .getReductionService().getCreditsReduction().doubleValue();
-                    row.setCell(reductionService);// AD65
+
+                    Double creditsReductionAttributed =
+                            teacherService == null ? null : teacherService.getReductionService() == null ? null : teacherService
+                                    .getReductionService().getCreditsReductionAttributed() == null ? null : teacherService
+                                    .getReductionService().getCreditsReductionAttributed().doubleValue();
+                    row.setCell(creditsReductionRequired);// AD65 requerido
+                    row.setCell(creditsReductionAttributed);// AD65 atribuído
 
                     row.setCell(teacher.getServiceExemptionCredits(executionSemester)); //SNE
                     //SNE Desc
