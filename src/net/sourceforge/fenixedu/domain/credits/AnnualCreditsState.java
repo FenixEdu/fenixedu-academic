@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.credits;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.LocalDate;
 
@@ -15,6 +16,7 @@ public class AnnualCreditsState extends AnnualCreditsState_Base {
         setIsOrientationsCalculated(false);
         setIsFinalCreditsCalculated(false);
         setIsCreditsClosed(false);
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     @Service
