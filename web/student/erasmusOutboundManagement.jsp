@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@page import="net.sourceforge.fenixedu.domain.Country"%>
 <%@ page language="java" %>
@@ -86,18 +87,21 @@
 										style="width: 100%;" class="sortable">
 										<%
 											for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet() ) {
+											    final Unit unit = candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit();
+											    final Country country = unit.getCountry();
 										%>
 												<li class="ui-state-default" id="<%= candidacy.getExternalId() %>">
-														<% final String name = candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getName(); %>
+														<% final String name = unit.getName(); %>
 														<strong><%= name %></strong>
 														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
 														<%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
-															<% if (candidacyPeriod.isOpen()) { %>
-																<div style="float: right;">
-																	<html:link action="<%= "/erasmusOutboundManagement.do?method=removeCandidacy&amp;candidacyOid=" + candidacy.getExternalId() %>"
-																			style="border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
-																</div>
-															<% } %>
+														<%= country == null ? "" : "(" + country.getName() + ")" %>
+														<% if (candidacyPeriod.isOpen()) { %>
+															<div style="float: right;">
+																<html:link action="<%= "/erasmusOutboundManagement.do?method=removeCandidacy&amp;candidacyOid=" + candidacy.getExternalId() %>"
+																		style="border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
+															</div>
+														<% } %>
 												</li>
 										<%  } %>
 									</ul>
