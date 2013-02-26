@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
@@ -31,6 +32,7 @@ public class OutboundMobilityContextBean implements Serializable {
     private ExecutionDegree executionDegree;
     private UniversityUnit unit;
     private Integer vacancies;
+    private Person person;
 
     public OutboundMobilityContextBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
@@ -183,6 +185,14 @@ public class OutboundMobilityContextBean implements Serializable {
         this.mobilityProgram = mobilityProgram;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public SortedSet<OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
         final SortedSet<OutboundMobilityCandidacyContest> result = new TreeSet<OutboundMobilityCandidacyContest>();
         for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
@@ -207,6 +217,14 @@ public class OutboundMobilityContextBean implements Serializable {
     public void removeDegreeFromGroup() {
         for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
             mobilityGroup.removeExecutionDegreeService(executionDegree);
+        }
+    }
+
+    public void addMobilityCoordinator() {
+        if (person != null) {
+            for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
+                mobilityGroup.addMobilityCoordinatorService(person);
+            }
         }
     }
 

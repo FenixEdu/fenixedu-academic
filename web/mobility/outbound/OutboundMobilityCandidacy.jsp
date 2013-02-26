@@ -1,8 +1,9 @@
+<%@ page language="java"%>
+<%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.Country"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
 <%@page import="java.util.SortedSet"%>
-<%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
@@ -91,8 +92,34 @@
 			<a href="#" onclick="$('#outboundMobilityContextBeanRemoveDegreeFromGroupBlock').toggle()">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.remove.degree.from.group"/>
 			</a>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="#" onclick="$('#outboundMobilityContextBeanAddMobilityCoordinatorBlock').toggle()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.add.member"/>
+			</a>
 		<% } %>
 	</fr:form>
+
+	<div id="outboundMobilityContextBeanAddMobilityCoordinatorBlock" style="display: none;">
+		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.add.member"/></h3>
+		<fr:edit id="outboundMobilityContextBeanAddMobilityCoordinator" name="outboundMobilityContextBean"
+				action="/outboundMobilityCandidacy.do?method=addMobilityCoordinator">
+			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="person" layout="simpleAutoComplete" key="label.person" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+  					<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.person.PersonAutoCompleteProvider" />
+        			<fr:property name="labelField" value="presentationName"/>
+   	    			<fr:property name="format" value="${presentationName}"/>
+      				<fr:property name="classes" value="inputsize500px"/>
+       				<fr:property name="minChars" value="2"/>
+       				<fr:property name="sortBy" value="presentationName"/>
+					<fr:property name="saveOptions" value="true"/>
+   				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>
+				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+			</fr:layout>
+		</fr:edit>
+	</div>
 
 	<div id="outboundMobilityContextBeanCreateCandidacyPeriodBlock" style="display: none;">
 		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.create.new.period"/></h3>
@@ -235,6 +262,46 @@
 		</div>
 	<% } %>
 
+	<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) {
+	    	final OutboundMobilityCandidacyContestGroup mobilityGroup = outboundMobilityContextBean.getMobilityGroups().iterator().next();
+	%>
+		<br/>
+		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group"/></h3>
+
+		<% if (mobilityGroup.getMobilityCoordinatorCount() == 0) { %>
+				<span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.empty"/></span>
+		<% } else { %>
+				<fr:form id="removeMobilityCoordinatorForm" action="/outboundMobilityCandidacy.do">
+					<html:hidden property="method" value="removeMobilityCoordinator"/>
+					<html:hidden property="mobilityGroupOid" value="<%= mobilityGroup.getExternalId() %>"/>
+					<html:hidden property="personOid" value=""/>
+					<fr:edit id="removeMobilityCoordinatorFormBean" name="outboundMobilityContextBean" visible="false"/>
+					<table class="tstyle1 mtop05">
+						<tr>
+							<th></th>
+							<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.username"/></th>
+							<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.name"/></th>
+							<th></th>
+						</tr>
+						<% for (final Person person : mobilityGroup.getMobilityCoordinatorSet()) { %>
+								<tr>
+									<td>
+										<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + person.getExternalId() %>"  style="padding: 1em 0;" /></div>
+									</td>
+									<td><%= person.getUsername() %></td>
+									<td><%= person.getName() %></td>
+									<td>
+										<a href="#" onclick="<%= "document.getElementById('removeMobilityCoordinatorForm').personOid.value = " + person.getExternalId() + " ; document.getElementById('removeMobilityCoordinatorForm').submit()" %>">
+											<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
+										</a>
+									</td>
+								</tr>
+						<% } %>
+					</table>
+				</fr:form>
+		<% } %>
+	<% } %>
+
 	<br/>
 	<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contests"/></h3>
 	<%
@@ -243,7 +310,8 @@
 	%>
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contests.none"/>
 	<%  } else { %>
-			<fr:form id="deleteContestForm" action="/outboundMobilityCandidacy.do?method=deleteContest">
+			<fr:form id="deleteContestForm" action="/outboundMobilityCandidacy.do">
+				<html:hidden property="method" value=""/>
 				<html:hidden property="contestOid" value=""/>
 				<fr:edit id="deleteContestFormBean" name="outboundMobilityContextBean" visible="false"/>
 	
@@ -285,9 +353,17 @@
 					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
 				<% } %>
 				<td><%= contest.getVacancies() == null ? "" : contest.getVacancies() %></td>
-				<td><%= contest.getOutboundMobilityCandidacyCount() %></td>
 				<td>
-					<a href="#" onclick="<%= " document.getElementById('deleteContestForm').contestOid.value = " + contest.getExternalId() + " ; document.getElementById('deleteContestForm').submit()" %>">
+					<% if (contest.getOutboundMobilityCandidacyCount() == 0) { %>
+							0
+					<% } else { %>
+							<a href="#" onclick="<%= "document.getElementById('deleteContestForm').method.value = 'viewContestForm' ; document.getElementById('deleteContestForm').contestOid.value = " + contest.getExternalId() + " ; document.getElementById('deleteContestForm').submit()" %>">
+								<%= contest.getOutboundMobilityCandidacyCount() %>
+							</a>
+					<% } %>
+				</td>
+				<td>
+					<a href="#" onclick="<%= "document.getElementById('deleteContestForm').method.value = 'deleteContest' ; document.getElementById('deleteContestForm').contestOid.value = " + contest.getExternalId() + " ; document.getElementById('deleteContestForm').submit()" %>">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
 					</a>
 				</td>

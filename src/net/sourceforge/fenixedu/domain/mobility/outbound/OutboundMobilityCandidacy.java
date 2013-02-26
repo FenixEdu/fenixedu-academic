@@ -59,7 +59,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
                     if (order <= index && order > currentOrder) {
                         candidacy.setPreferenceOrder(Integer.valueOf(order - 1));
                     }
-                }                
+                }
             }
             setPreferenceOrder(Integer.valueOf(index));
         }
@@ -67,7 +67,11 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
 
     @Override
     public int compareTo(final OutboundMobilityCandidacy o) {
-        int p = getPreferenceOrder().compareTo(o.getPreferenceOrder());
+        final int s = getOutboundMobilityCandidacySubmission().compareTo(o.getOutboundMobilityCandidacySubmission());
+        if (s != 0) {
+            return s;
+        }
+        final int p = getPreferenceOrder().compareTo(o.getPreferenceOrder());
         return p == 0 ? getExternalId().compareTo(o.getExternalId()) : p;
     }
 
@@ -76,9 +80,10 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         if (sender != null) {
             final Registration registration = getOutboundMobilityCandidacySubmission().getRegistration();
             final Recipient recipient = new Recipient(new PersonGroup(registration.getPerson()));
-            new Message(sender, recipient,
-                    BundleUtil.getStringFromResourceBundle("resources.StudentResources", "label.email.deleted.contest.subject"),
-                    BundleUtil.getStringFromResourceBundle("resources.StudentResources", "label.email.deleted.contest.body", getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getPresentationName()));
+            new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.StudentResources",
+                    "label.email.deleted.contest.subject"), BundleUtil.getStringFromResourceBundle("resources.StudentResources",
+                    "label.email.deleted.contest.body", getOutboundMobilityCandidacyContest().getMobilityAgreement()
+                            .getUniversityUnit().getPresentationName()));
         }
         delete();
     }

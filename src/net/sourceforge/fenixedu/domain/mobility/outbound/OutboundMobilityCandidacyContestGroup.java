@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.Transformer;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixWebFramework.services.Service;
@@ -78,6 +79,16 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     @Service
     public void removeExecutionDegreeService(final ExecutionDegree executionDegree) {
         removeExecutionDegree(executionDegree);
+    }
+
+    @Service
+    public void addMobilityCoordinatorService(final Person person) {
+        addMobilityCoordinator(person);
+    }
+
+    @Service
+    public void removeMobilityCoordinatorService(final Person person) {
+        removeMobilityCoordinator(person);
     }
 
     public static OutboundMobilityCandidacyContestGroup findOrCreateGroup(final ExecutionDegree executionDegree) {

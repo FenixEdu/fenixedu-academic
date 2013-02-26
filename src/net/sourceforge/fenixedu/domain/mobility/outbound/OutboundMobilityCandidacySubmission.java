@@ -7,9 +7,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandidacySubmission_Base {
+public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandidacySubmission_Base implements
+        Comparable<OutboundMobilityCandidacySubmission> {
 
-    public OutboundMobilityCandidacySubmission(final OutboundMobilityCandidacyPeriod candidacyPeriod, final Registration registration) {
+    public OutboundMobilityCandidacySubmission(final OutboundMobilityCandidacyPeriod candidacyPeriod,
+            final Registration registration) {
         setRootDomainObject(RootDomainObject.getInstance());
         setOutboundMobilityCandidacyPeriod(candidacyPeriod);
         setRegistration(registration);
@@ -55,6 +57,12 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
 
     public SortedSet<OutboundMobilityCandidacy> getSortedOutboundMobilityCandidacySet() {
         return new TreeSet<OutboundMobilityCandidacy>(getOutboundMobilityCandidacySet());
+    }
+
+    @Override
+    public int compareTo(final OutboundMobilityCandidacySubmission o) {
+        final int r = Registration.COMPARATOR_BY_NUMBER_AND_ID.compare(getRegistration(), o.getRegistration());
+        return r == 0 ? getExternalId().compareTo(o.getExternalId()) : r;
     }
 
 }

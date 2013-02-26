@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
@@ -17,12 +18,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/outboundMobilityCandidacy", module = "academicAdministration")
-@Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp") })
+@Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
+        @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp") })
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -96,11 +99,64 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
         final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
-        final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
-        if (mobilityGroup.getOutboundMobilityCandidacyContestCount() == 1) {
-            outboundMobilityContextBean.getMobilityGroups().remove(mobilityGroup);
+        if (contest != null) {
+            final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
+            if (mobilityGroup.getOutboundMobilityCandidacyContestCount() == 1) {
+                outboundMobilityContextBean.getMobilityGroups().remove(mobilityGroup);
+            }
+            contest.delete();
         }
-        contest.delete();
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward viewContest(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
+        request.setAttribute("contest", contest);
+        return mapping.findForward("viewContest");
+    }
+
+    public ActionForward viewContestForm(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
+        request.setAttribute("contest", contest);
+        return new ActionForward(viewContestPath(mapping, request, contest), true);
+    }
+
+    private String viewContestPath(final ActionMapping mapping, final HttpServletRequest request, final OutboundMobilityCandidacyContest contest) {
+        final StringBuilder path = new StringBuilder();
+        path.append(mapping.getModuleConfig().getPrefix());
+        path.append("/outboundMobilityCandidacy.do?method=viewContest&contestOid=");
+        path.append(contest.getExternalId());
+        return constructRedirectPath(mapping, request, path);
+    }
+
+    private String constructRedirectPath(final ActionMapping mapping, final HttpServletRequest request, final StringBuilder path) {
+        path.append('&');
+        path.append(net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+        path.append('=');
+        path.append(getFromRequest(request, net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME));
+        final String result = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), path.toString());
+        return result.substring(mapping.getModuleConfig().getPrefix().length());
+    }
+
+    public ActionForward removeMobilityCoordinator(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+        final Person person = getDomainObject(request, "personOid");
+        mobilityGroup.removeMobilityCoordinatorService(person);
+
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward addMobilityCoordinator(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        outboundMobilityContextBean.addMobilityCoordinator();
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
     }
