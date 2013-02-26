@@ -78,15 +78,7 @@
 	</definition>
 	
 	<!-- ===================== Equivalences ====================== -->
-	<definition name="show-not-need-to-enroll" extends="definition.operator.two-column">
-		<put name="body" value="/manager/equivalences/notNeedToEnroll.jsp"></put>
-	</definition>
-	<definition name="show-curricular-course-equivalencies" extends="definition.operator.two-column">
-		<put name="body" value="/manager/equivalences/curricularCourseEquivalencies.jsp"></put>
-	</definition>
-	<definition name="show-create-curricular-course-equivalencies" extends="definition.operator.two-column">
-		<put name="body" value="/manager/equivalences/createCurricularCourseEquivalencies.jsp"></put>
-	</definition>
+		<!-- ### migrated to Academic Administration ### -->
 	
 	<!-- ========== ROLES MANIPULATION ========== -->
 	<definition name="df.page.manage-persons-with-role" extends="definition.operator.two-column" >

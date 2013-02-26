@@ -21,8 +21,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -42,7 +45,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         final IUserView userView = UserView.getUser();
         final DynaActionForm actionForm = (DynaActionForm) form;
 
-        setInfoDegrees(request, userView);
+        setInfoDegreesToManage(request, userView);
 
         final String degreeIDString = (String) actionForm.get("degreeID");
         if (isValidObjectID(degreeIDString)) {
@@ -69,7 +72,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
         final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
         if (isValidObjectID(degreeCurricularPlanIDString)) {
-            setInfoDegrees(request, userView);
+            setInfoDegreesToAdd(request, userView);
 
             final String degreeIDString = (String) actionForm.get("degreeID");
             if (isValidObjectID(degreeIDString)) {
@@ -133,17 +136,24 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
-    private void setInfoDegrees(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
+    private void setInfoDegreesToManage(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
             FenixServiceException {
 
-        final SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        degrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_EQUIVALENCES));
+        request.setAttribute("infoDegrees", degrees);
+    }
 
+    private void setInfoDegreesToAdd(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
+            FenixServiceException {
+
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
         degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
         degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
         degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
         degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
-
         request.setAttribute("infoDegrees", degrees);
     }
 

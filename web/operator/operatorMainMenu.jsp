@@ -54,18 +54,6 @@
 			</html:link>
 		</li>
 		
-	<li class="navheader"><bean:message key="link.manager.equivalencies" bundle="MANAGER_RESOURCES"/></li>
-		<!--<li>
-			<html:link page="/showNotNeedToEnroll.do?method=prepare">
-				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
-			</html:link>
-		</li>-->
-		<li>
-			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
-				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />
-			</html:link>
-		</li>
-	
 	<li class="navheader"><bean:message key="title.people" bundle="MANAGER_RESOURCES"/></li>
 		<li>
 			<html:link page="/studentsManagement.do?method=show">

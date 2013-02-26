@@ -8,6 +8,9 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 public enum AcademicOperationType implements IPresentableEnum {
     MANAGE_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION),
 
+    // AVMC: Migrated from Manager
+    MANAGE_EQUIVALENCES(true, true, Scope.ADMINISTRATION),
+
     /*
      * Student stuff
      */

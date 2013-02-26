@@ -16,6 +16,14 @@ public class AcademicPredicates {
         };
     };
 
+    // AVMC: Required to filter which degrees can be selected 
+    public static final AccessControlPredicate<Object> MANAGE_EQUIVALENCES = new AccessControlPredicate<Object>() {
+        @Override
+        public boolean evaluate(Object domainObject) {
+            return new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_EQUIVALENCES).isMember(AccessControl.getPerson());
+        };
+    };
+
     public static final AccessControlPredicate<Object> CREATE_REGISTRATION = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {

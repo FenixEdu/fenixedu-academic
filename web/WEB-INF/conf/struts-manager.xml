@@ -732,7 +732,7 @@
             <action forward="df.executionDegreeManagement.firstPage" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/executionDegreesManagementMainPage"></action>
             <!-- ==================== Curricular Course Equivalencies ================== -->
             <!-- =================== Equivalences =================== -->
-            <action forward="show-not-need-to-enroll" path="/prepareNotNeedToEnroll"></action>
+            		<!-- ### migrated to Academic Administration ### -->
             <!-- =================== Logins Management =================== -->
             <!-- =================== Academic Calendar Management =================== -->
             <!-- =================== Units Merge =================== -->

@@ -239,7 +239,7 @@
             <!-- ========== SYSTEM MONITORING MANIPULATION ========== -->
             <!-- =================== Logins Management =================== -->
             <!-- =================== Equivalences =================== -->
-            <action forward="show-not-need-to-enroll" path="/prepareNotNeedToEnroll"></action>
+            		<!-- ### migrated to Academic Administration ### -->
             <!-- ==================== Curricular Course Equivalencies ================== -->
             <!-- ========== ROLE MANIPULATION ========== -->
             <!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
