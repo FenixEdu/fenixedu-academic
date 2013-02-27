@@ -280,7 +280,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
             DateTime firstDayOfMonth =
                     new DateTime(bean.getYear().get(DateTimeFieldType.year()), bean.getMonth().get(
                             DateTimeFieldType.monthOfYear()), 1, 0, 0, 0, 0);
-            DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
+            DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1);
             Set<GenericEvent> events =
                     GenericEvent.getAllGenericEvents(firstDayOfMonth, lastDayOfMonth, bean.getAllocatableSpace());
             request.setAttribute("events", events);
