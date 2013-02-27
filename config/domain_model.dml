@@ -8191,6 +8191,10 @@ class mobility.outbound.OutboundMobilityCandidacyContest extends DomainObject {
 class mobility.outbound.OutboundMobilityCandidacySubmission extends DomainObject {
 }
 
+class mobility.outbound.OutboundMobilityCandidacySubmissionGrade extends DomainObject {
+	BigDecimal grade;
+}
+
 class mobility.outbound.OutboundMobilityCandidacy extends DomainObject {
     Integer preferenceOrder;
     Boolean selected;
@@ -8242,6 +8246,15 @@ relation RootDomainObjectOutboundMobilityCandidacy {
 	}
 }
 
+relation RootDomainObjectOutboundMobilityCandidacySubmissionGrade {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
+		multiplicity *;
+	}
+}
+
 relation OutboundMobilityCandidacyPeriodOutboundMobilityCandidacyContest {
 	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
 		multiplicity 1..1;
@@ -8251,11 +8264,20 @@ relation OutboundMobilityCandidacyPeriodOutboundMobilityCandidacyContest {
 	}
 }
 
-relation OutboundMobilityCandidacyPeriod {
+relation OutboundMobilityCandidacyPeriodOutboundMobilityCandidacySubmission {
 	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacySubmissionOutboundMobilityCandidacySubmissionGrade {
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
 		multiplicity *;
 	}
 }
@@ -8274,6 +8296,15 @@ relation OutboundMobilityCandidacyContestGroupExecutionDegree {
 		multiplicity 1..*;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
+		multiplicity *;
+	}
+}
+
+relation OutboundMobilityCandidacyContestGroupOutboundMobilityCandidacySubmissionGrade {
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
 		multiplicity *;
 	}
 }

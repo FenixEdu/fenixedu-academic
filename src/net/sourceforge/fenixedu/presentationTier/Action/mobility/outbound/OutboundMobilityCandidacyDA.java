@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -25,7 +27,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/outboundMobilityCandidacy", module = "academicAdministration")
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
-        @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp") })
+        @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
+        @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp") })
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -117,14 +120,15 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("viewContest");
     }
 
-    public ActionForward viewContestForm(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward viewContestForm(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
         request.setAttribute("contest", contest);
         return new ActionForward(viewContestPath(mapping, request, contest), true);
     }
 
-    private String viewContestPath(final ActionMapping mapping, final HttpServletRequest request, final OutboundMobilityCandidacyContest contest) {
+    private String viewContestPath(final ActionMapping mapping, final HttpServletRequest request,
+            final OutboundMobilityCandidacyContest contest) {
         final StringBuilder path = new StringBuilder();
         path.append(mapping.getModuleConfig().getPrefix());
         path.append("/outboundMobilityCandidacy.do?method=viewContest&contestOid=");
@@ -136,13 +140,14 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         path.append('&');
         path.append(net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
         path.append('=');
-        path.append(getFromRequest(request, net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME));
+        path.append(getFromRequest(request,
+                net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME));
         final String result = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), path.toString());
         return result.substring(mapping.getModuleConfig().getPrefix().length());
     }
 
-    public ActionForward removeMobilityCoordinator(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward removeMobilityCoordinator(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
 
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
@@ -159,6 +164,22 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         outboundMobilityContextBean.addMobilityCoordinator();
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward manageCandidacies(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("manageCandidacies");
+    }
+
+    public ActionForward editGrade(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacySubmission submission = getDomainObject(request, "candidacySubmissionOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+        final String grade = (String) getFromRequest(request, "grade");
+        submission.setGrade(mobilityGroup, new BigDecimal(grade));
+        return null;
     }
 
 }

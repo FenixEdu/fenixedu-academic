@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
+import java.math.BigDecimal;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
@@ -63,6 +65,25 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     public int compareTo(final OutboundMobilityCandidacySubmission o) {
         final int r = Registration.COMPARATOR_BY_NUMBER_AND_ID.compare(getRegistration(), o.getRegistration());
         return r == 0 ? getExternalId().compareTo(o.getExternalId()) : r;
+    }
+
+    public BigDecimal getGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup) {
+        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
+            if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
+                return submissionGrade.getGrade();
+            }
+        }
+        return null;
+    }
+
+    @Service
+    public void setGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade) {
+        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
+            if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
+                submissionGrade.edit(grade);
+            }
+        }
+        new OutboundMobilityCandidacySubmissionGrade(this, mobilityGroup, grade);
     }
 
 }

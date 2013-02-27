@@ -31,7 +31,7 @@
 
 	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean"/>
 
-	<fr:form action="/outboundMobilityCandidacy.do">
+	<fr:form id="prepareForm" action="/outboundMobilityCandidacy.do">
 		<html:hidden property="method" value="prepare"/>
 				<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
 					<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
@@ -95,6 +95,10 @@
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="#" onclick="$('#outboundMobilityContextBeanAddMobilityCoordinatorBlock').toggle()">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.add.member"/>
+			</a>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="#" onclick="<%= "document.getElementById('prepareForm').method.value = 'manageCandidacies' ; document.getElementById('prepareForm').submit()" %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.manage.candidacies"/>
 			</a>
 		<% } %>
 	</fr:form>

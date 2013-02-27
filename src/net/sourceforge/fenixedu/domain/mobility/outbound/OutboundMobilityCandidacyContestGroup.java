@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.Transformer;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -92,7 +93,8 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     public static OutboundMobilityCandidacyContestGroup findOrCreateGroup(final ExecutionDegree executionDegree) {
-        for (final OutboundMobilityCandidacyContestGroup mobilityGroup : executionDegree.getOutboundMobilityCandidacyContestGroupSet()) {
+        for (final OutboundMobilityCandidacyContestGroup mobilityGroup : executionDegree
+                .getOutboundMobilityCandidacyContestGroupSet()) {
             if (mobilityGroup.getExecutionDegreeCount() == 1) {
                 return mobilityGroup;
             }
@@ -108,7 +110,16 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         }
         removeRootDomainObject();
         deleteDomainObject();
-        
+
+    }
+
+    public boolean handles(final Degree degree) {
+        for (final ExecutionDegree executionDegree : getExecutionDegreeSet()) {
+            if (executionDegree.getDegree() == degree) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
