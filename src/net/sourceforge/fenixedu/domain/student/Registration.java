@@ -2072,7 +2072,9 @@ public class Registration extends Registration_Base {
 
     final public boolean isAllowedToManageRegistration() {
         return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree());
+                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
+                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
     }
 
     final public List<NewTestGroup> getPublishedTestGroups() {

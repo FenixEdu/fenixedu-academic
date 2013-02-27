@@ -263,6 +263,46 @@
 	
 	</academic:allowed>
 	
+	<academic:notAllowed operation="MANAGE_REGISTRATIONS" program="<%= registration.getDegree() %>">
+		<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+			<h3 class="mbottom05 mtop25 separator2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+			
+			<fr:view name="registration" property="sortedStudentCurricularPlans" schema="student.studentCurricularPlans" >
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
+					<fr:property name="groupLinks" value="false"/>
+					
+					<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
+					<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
+					<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
+					<fr:property name="contextRelative(enrol)" value="true"/>      
+					<fr:property name="visibleIf(enrol)" value="allowedToManageEnrolments" />
+					<fr:property name="order(enrol)" value="1"/>
+		
+					<fr:property name="linkFormat(setEvaluations)" value="/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=${externalId}" />
+					<fr:property name="key(setEvaluations)" value="link.student.setEvaluations" />
+					<fr:property name="bundle(setEvaluations)" value="ACADEMIC_OFFICE_RESOURCES" />
+					<fr:property name="contextRelative(setEvaluations)" value="true" />
+					<fr:property name="visibleIf(setEvaluations)" value="evaluationForCurriculumValidationAllowed"/>
+					
+					<fr:property name="linkFormat(createAccountingEvents)" value="/accountingEventsManagement.do?method=prepare&amp;scpID=${idInternal}" />
+					<fr:property name="key(createAccountingEvents)" value="label.accountingEvents.management.createEvents"/>
+					<fr:property name="bundle(createAccountingEvents)" value="ACADEMIC_OFFICE_RESOURCES"/>
+					<fr:property name="contextRelative(createAccountingEvents)" value="true"/>      	
+					<fr:property name="order(createAccountingEvents)" value="3"/>
+					<fr:property name="visibleIf(createAccountingEvents)" value="allowedToManageAccountingEvents"/>
+				</fr:layout>
+			</fr:view>
+			<p class="mtop0">
+				<span>
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
+						<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>
+			</p>
+		</academic:allowed>
+	</academic:notAllowed>
 	
 	<%-- Academic Services --%>
 	

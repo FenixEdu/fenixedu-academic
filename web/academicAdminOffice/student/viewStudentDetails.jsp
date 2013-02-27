@@ -75,6 +75,28 @@
 </fr:view>
 </academic:allowed>
 
+<academic:notAllowed operation="MANAGE_REGISTRATIONS">
+	<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+		<h3 class="mtop15 mbottom025">
+			<bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</h3>
+		<fr:view name="student" property="registrations" schema="student.registrationDetail.short" >
+			<fr:layout name="tabular">
+		<fr:property name="sortBy" value="startDate=desc"/>
+
+		<fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
+		<fr:property name="columnClasses" value="acenter,acenter,tdhl1,,acenter,nowrap"/>
+
+		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
+		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
+		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
+		<fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
+		<fr:property name="contextRelative(view)" value="true"/>
+		</fr:layout>
+		</fr:view>	
+	</academic:allowed>
+</academic:notAllowed>
+
 <!-- Student Status -->
 <academic:allowed operation="MANAGE_STATUTES">
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
