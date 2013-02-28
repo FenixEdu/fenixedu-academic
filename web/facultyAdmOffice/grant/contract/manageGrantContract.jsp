@@ -100,11 +100,12 @@
     
 <br/><br/>
 
+<%--
 <bean:message key="message.grant.contract.creation"/>:&nbsp;
 <html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idInternal=" + request.getAttribute("idInternal").toString() %>'>
 	<bean:message key="link.grant.contract.create"/>
 </html:link>
-
+ --%>
 <br/><br/><br/>
 <center>
 <html:form action="/manageGrantOwner" style="display:inline">

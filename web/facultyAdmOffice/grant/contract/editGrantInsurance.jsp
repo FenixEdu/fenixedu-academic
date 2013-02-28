@@ -112,9 +112,9 @@
 	<table>
 		<tr>
 			<td>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<%--	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>
-				</html:submit>
+				</html:submit> --%>
 
 </html:form>
 			</td>
@@ -132,11 +132,12 @@
 	</table>	
 <br/><br/>
 
+<%--
 <logic:present name="editGrantInsuranceForm" property="idGrantInsurance">
 	<bean:message key="message.grant.contract.movement.manage"/>:&nbsp;
 	<bean:define id="idContract" name="editGrantInsuranceForm" property="idContract"/>
 	<bean:define id="idGrantOwner" name="editGrantInsuranceForm" property="idGrantOwner"/>
 	<html:link page='<%= "/manageGrantContractMovement.do?method=prepareManageGrantContractMovement&amp;idContract=" + idContract + "&amp;idGrantOwner=" + idGrantOwner %>'>
 		<bean:message key="link.grant.contract.movement.manage"/>
-	</html:link>
-</logic:present>
+	</html:link> 
+</logic:present>--%>

@@ -158,10 +158,10 @@
 </table>
 
 
-<%-- Create a new person Grant Owner --%>
+<%-- Create a new person Grant Owner 
 <p>
 	<bean:message key="message.grant.owner.creation"/>:&nbsp;
 	<html:link page="/personnelManagePeople.do?method=prepareCreatePerson">
 		<bean:message key="link.create.person.grant.owner"/>
 	</html:link>
-</p>
+</p>--%>

@@ -382,11 +382,11 @@
 <bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <bean:define id="personExternalId" name="infoGrantOwner" property="personInfo.person.externalId"/>
 
-	<%-- Editar Bolseiro --%>
+	<%-- Editar Bolseiro 
 	
 	<html:link page='<%= "/findPerson.do?method=viewPerson&amp;personID=" +  personExternalId.toString() %>' > 
 		<bean:message key="button.edit" />
-	</html:link>
+	</html:link>--%>
 <br/>
 <%-- 
 <html:form action="/editGrantOwner">

@@ -158,9 +158,9 @@
 	<table>
 		<tr>
 			<td>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+				<%--<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>
-				</html:submit>
+				</html:submit> --%>
 </html:form>
 			</td>
 			<td>

@@ -42,7 +42,7 @@
         <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.state"/>
         </th>
-        <th class="listClasses-header">&nbsp;</th>
+     <%--   <th class="listClasses-header">&nbsp;</th>--%>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContractRegime" name="infoGrantActiveContractRegimeList">
@@ -83,12 +83,12 @@
                 	<bean:message key="label.grant.contract.regime.desactive"/>
    				</logic:equal>
             </td>
-            <td class="listClasses">
+      <%--      <td class="listClasses">
                 <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
                 <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime + "&amp;loaddb=1" %>' > 
                     <bean:message key="link.grant.contract.regime.edit" />
                 </html:link>        
-            </td>
+            </td>--%>
         </tr>
     </logic:iterate>
     </table>
@@ -101,12 +101,14 @@
     <p align="center"><bean:message key="message.grant.contract.regime.nonExistent" /></p><br/><br/>
 </logic:notPresent>
 
+<%--
 <bean:message key="message.grant.contract.regime.creation"/>:&nbsp;
 <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;idContract=" + request.getAttribute("idContract").toString() + "&amp;loaddb=1" %>'>
 	<bean:message key="link.create.contract.regime"/>
 </html:link>
 <br/><bean:message key="message.grant.contract.regime.creation.note" /><br/><br/>
-
+ --%>
+ 
 <%-- LISTA DE SUBSIDIOS ACTIVOS --%>
 
 <logic:present name="infoGrantNotActiveContractRegimeList">
@@ -127,7 +129,7 @@
         <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.state"/>
         </th>
-        <th class="listClasses-header">&nbsp;</th>
+   <%--     <th class="listClasses-header">&nbsp;</th>--%>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContractRegime" name="infoGrantNotActiveContractRegimeList">
@@ -168,11 +170,11 @@
                 	<bean:message key="label.grant.contract.regime.desactive"/>
    				</logic:equal>
             </td>
-            <td class="listClasses">
+          <%--  <td class="listClasses">
                 <bean:define id="idContractRegime" name="infoGrantContractRegime" property="idInternal"/>
                 <html:link page='<%= "/editGrantContractRegime.do?method=prepareEditGrantContractRegime&amp;grantContractRegimeId=" + idContractRegime + "&amp;loaddb=1" %>' > 
                     <bean:message key="link.grant.contract.regime.edit" />
-                </html:link>        
+                </html:link> --%>        
             </td>
         </tr>
     </logic:iterate>

@@ -40,8 +40,8 @@
         <th class="listClasses-header">
             <bean:message key="label.grant.part.responsibleTeacher.number"/>
         </th>
-        <th class="listClasses-header">&nbsp;</th>
-        <th class="listClasses-header">&nbsp;</th>
+     <%--   <th class="listClasses-header">&nbsp;</th>
+        <th class="listClasses-header">&nbsp;</th> --%>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantPart" name="infoGrantPartList">
@@ -61,20 +61,21 @@
 		            <bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherId"/>
 	            </logic:present>
             </td>
+            <%--
             <td class="listClasses">
-	            <%-- Edit a Grant Part --%>
+	            <%-- Edit a Grant Part 
                 <bean:define id="idGrantPart" name="infoGrantPart" property="idInternal"/>
                 <html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idGrantPart=" + idGrantPart.toString() + "&amp;loaddb=" + 1 %>' > 
                 	<bean:message key="link.edit" />
                 </html:link>
             </td>       
             <td class="listClasses">
-	            <%-- Delete a Grant Part --%>
+	            <%-- Delete a Grant Part 
                 <bean:define id="idGrantPart" name="infoGrantPart" property="idInternal"/>
                 <html:link page='<%= "/editGrantPart.do?method=doDelete&amp;idGrantPart=" + idGrantPart.toString() + "&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString() %>' > 
                 	<bean:message key="link.delete"/>
                 </html:link>
-            </td>       
+            </td>       --%> 
         </tr>
     </logic:iterate>
     </table>
@@ -88,11 +89,12 @@
 <br/><br/>
 
 <%-- Create a new Grant Part --%>
+<%--
 <bean:message key="message.grant.type.creation"/>:&nbsp;
 	<html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString() + "&amp;loaddb=" + 1 %>' >
 <bean:message key="link.create.grant.part"/>
 </html:link>
-
+ --%>
 <br/><br/>
 
 <center>

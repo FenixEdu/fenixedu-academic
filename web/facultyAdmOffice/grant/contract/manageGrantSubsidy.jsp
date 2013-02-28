@@ -42,7 +42,7 @@
         <th class="listClasses-header">
             <bean:message key="label.grant.subsidy.totalCost"/>
         </th>
-        <th class="listClasses-header">&nbsp;</th>
+       <%--   <th class="listClasses-header">&nbsp;</th>--%>
         <th class="listClasses-header">&nbsp;</th>
     </tr>   
     <%-- Table with result of search --%>
@@ -74,12 +74,12 @@
             <td class="listClasses">
                  <bean:write name="infoGrantSubsidy" property="totalCost"/>
             </td>
-            <td class="listClasses">
+        <%--    <td class="listClasses">
                     <bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
                     <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idSubsidy=" + idSubsidy %>' > 
                         <bean:message key="link.grant.subsidy.edit" />
                     </html:link>        
-            </td>
+            </td> --%>
             <td class="listClasses">
             		<bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
                     <html:link page='<%= "/manageGrantPart.do?method=prepareManageGrantPart&amp;idSubsidy=" + idSubsidy %>' > 
@@ -98,12 +98,13 @@
     <p align="center"><bean:message key="message.grant.subsidy.nonExistent" /></p><br/><br/>
 </logic:notPresent>
 
+<%--
 <bean:message key="message.grant.subsidy.creation"/>:&nbsp;
 <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idContract=" + request.getAttribute("idContract").toString() %>'>
 	<bean:message key="link.grant.subsidy.create"/>
 </html:link>
 <br/><bean:message key="message.grant.subsidy.creation.note"/><br/><br/>
-
+ --%>
 <%-- LISTA DE SUBSIDIOS ACTIVOS --%>
 
 <logic:present name="infoGrantNotActiveSubsidyList">
@@ -124,7 +125,7 @@
         <th class="listClasses-header">
             <bean:message key="label.grant.subsidy.totalCost"/>
         </th>
-        <th class="listClasses-header">&nbsp;</th>
+        <%--  <th class="listClasses-header">&nbsp;</th>--%>
         <th class="listClasses-header">&nbsp;</th>
     </tr>   
     <%-- Table with result of search --%>
@@ -156,12 +157,12 @@
             <td class="listClasses">
                  <bean:write name="infoGrantSubsidy" property="totalCost"/>
             </td>
-            <td class="listClasses">
+       <%--     <td class="listClasses">
                     <bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
                     <html:link page='<%= "/editGrantSubsidy.do?method=prepareEditGrantSubsidyForm&amp;idSubsidy=" + idSubsidy %>' > 
                         <bean:message key="link.grant.subsidy.edit" />
                     </html:link>        
-            </td>
+            </td> --%>
             <td class="listClasses">
             		<bean:define id="idSubsidy" name="infoGrantSubsidy" property="idInternal"/>
                     <html:link page='<%= "/manageGrantPart.do?method=prepareManageGrantPart&amp;idSubsidy=" + idSubsidy %>' > 

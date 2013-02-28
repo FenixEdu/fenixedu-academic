@@ -65,6 +65,7 @@
 		    </html:link>
 		</li>
 
+<%--
 		<li class="navheader"><bean:message key="link.grant.correction"/></li>
 		<li>
 			<html:link page="/correctGrantOwner.do?method=prepareForm">
@@ -85,6 +86,6 @@
 			<html:link page="/correctGrantContract.do?method=prepareForm&amp;action=moveContract">
 		    	<bean:message key="link.grant.contract.move.correction"/>
 		    </html:link>
-		</li>
+		</li> --%>
 	</ul>	
 </logic:present>
