@@ -16,7 +16,7 @@
 	</ul>
 </logic:messagesPresent>
 
-<html:form action="/markSheetManagement.do">
+<html:form action="/markSheetManagement.do" styleId="submitForm">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeGrades"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" property="epID" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" property="dID" />
@@ -53,12 +53,27 @@
 	<p class="mtop15 mbottom1">
 		<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
 		<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
-		<span class="highlight1"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/>: <bean:write name="checksum"/></span>
+		<span class="highlight1">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/>: <bean:write name="checksum"/>
+		</span>
 	</p>
 	
 	<p class="mtop15">
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='searchConfirmedMarkSheetsFilled';this.form.submit();"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/></html:cancel>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/>
+		</html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="askForConfirmation(); return false;">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/>
+		</html:submit>
 	</p>
 	
 </html:form>
+
+<script src="../javaScript/alertHandlers.js"></script>
+<script src="../javaScript/jquery.alerts.js"></script>
+
+<script type="text/javascript">
+function askForConfirmation()  {
+	  requestConfirmation("submitForm","Tem a certeza de que pretende apagar a nota deste(s) aluno(s)?<br/>Em caso afirmativo, a Pauta precisará novamente de confirmação.","Confirmar");
+}
+</script>

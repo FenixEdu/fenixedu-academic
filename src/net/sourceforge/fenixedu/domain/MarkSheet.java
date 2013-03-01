@@ -892,7 +892,6 @@ public class MarkSheet extends MarkSheet_Base {
         return degreesForOperation.contains(getCurricularCourse().getDegreeCurricularPlan().getDegree());
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void removeGrades(Collection<EnrolmentEvaluation> enrolmentEvaluations) {
         if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
             if (getMarkSheetState() == MarkSheetState.CONFIRMED) {
@@ -919,7 +918,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     private void removeEvaluationFromMarkSheet(EnrolmentEvaluation enrolmentEvaluation) {
         changeEvaluationStateToTemporaryState(enrolmentEvaluation);
         enrolmentEvaluation.removeMarkSheet();
@@ -932,7 +930,6 @@ public class MarkSheet extends MarkSheet_Base {
         enrolmentEvaluation.removeRectified();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     private void changeEvaluationStateToTemporaryState(final EnrolmentEvaluation enrolmentEvaluation) {
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 
@@ -950,11 +947,15 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     public boolean getCanConfirm() {
-        return isNotConfirmed() && MarkSheetPredicates.confirmPredicate.evaluate(this);
+        return isNotConfirmed() && !getEnrolmentEvaluationsSet().isEmpty() && MarkSheetPredicates.confirmPredicate.evaluate(this);
     }
 
     public boolean getCanEdit() {
         return isNotConfirmed() && MarkSheetPredicates.editPredicate.evaluate(this);
+    }
+
+    public boolean getCanRemoveGrades() {
+        return isConfirmed() && MarkSheetPredicates.removeGradesPredicate.evaluate(this);
     }
 
     public boolean isDissertation() {

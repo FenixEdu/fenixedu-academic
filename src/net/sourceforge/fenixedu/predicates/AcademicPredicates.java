@@ -38,14 +38,6 @@ public class AcademicPredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> RECTIFICATION_MARKSHEETS = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return new AcademicAuthorizationGroup(AcademicOperationType.RECTIFICATION_MARKSHEETS).isMember(AccessControl
-                    .getPerson());
-        };
-    };
-
     public static final AccessControlPredicate<Object> DISSERTATION_MARKSHEETS = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {

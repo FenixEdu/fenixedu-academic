@@ -42,7 +42,9 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
         @Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"),
         @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
         @Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"),
-        @Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet") })
+        @Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet"),
+        @Forward(name = "listMarkSheet", path = "/manager/markSheet/viewMarkSheet.jsp"),
+        @Forward(name = "searchMarkSheet", path = "/manager/markSheet/markSheetManagement.jsp") })
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -224,7 +226,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             return listMarkSheet(mapping, actionForm, request, response);
         }
 
-        return searchConfirmedMarkSheetsFilled(mapping, actionForm, request, response);
+        return prepareSearchMarkSheetFilled(mapping, actionForm, request, response);
     }
 
     private List<EnrolmentEvaluation> getEvaluationsToRemove(DynaActionForm actionForm) {

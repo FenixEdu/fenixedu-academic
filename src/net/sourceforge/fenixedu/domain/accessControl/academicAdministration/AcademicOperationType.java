@@ -45,6 +45,8 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     RECTIFICATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
+    REMOVE_GRADES(true, true, Scope.ADMINISTRATION),
+
     DISSERTATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
     REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION(true, true, Scope.OFFICE),

@@ -68,7 +68,7 @@
 				<div style="margin-left: 2em;">
 
 					<p>
-						<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="markSheetType" property="name" /></strong>
+						<strong><bean:message bundle="ENUMERATION_RESOURCES" name="markSheetType" property="name" /></strong>
 						<logic:equal name="markSheetResult" property="showStatistics" value="true">
 							(<bean:write name="markSheetResult" property="numberOfEnroledStudents"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.evaluatedStudents"/>)
 						</logic:equal>
@@ -82,30 +82,41 @@
 							<fr:property name="param(view)" value="idInternal/msID" />
 							<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="order(view)" value="1" />
+							
 							<fr:property name="link(rectify)" value='<%= "/rectifyMarkSheet.do?method=prepareRectifyMarkSheet" + url %>' />
 							<fr:property name="key(rectify)" value="label.markSheet.rectify" />
 							<fr:property name="param(rectify)" value="idInternal/msID" />
 							<fr:property name="bundle(rectify)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(rectify)" value="canRectify" />
 							<fr:property name="order(rectify)" value="2" />
+							
 							<fr:property name="link(edit)" value='<%= "/editMarkSheet.do?method=prepareEditMarkSheet" + url %>' />
 							<fr:property name="key(edit)" value="label.markSheet.edit" />
 							<fr:property name="param(edit)" value="idInternal/msID" />
 							<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(edit)" value="canEdit" />
-							<fr:property name="order(edit)" value="3" />														
+							<fr:property name="order(edit)" value="3" />
+
 							<fr:property name="link(delete)" value='<%= "/markSheetManagement.do?method=prepareDeleteMarkSheet" + url %>' />
 							<fr:property name="key(delete)" value="label.markSheet.remove" />
 							<fr:property name="param(delete)" value="idInternal/msID" />
 							<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(delete)" value="canEdit" />
-							<fr:property name="order(delete)" value="4" />														
+							<fr:property name="order(delete)" value="4" />
+
 							<fr:property name="link(confirm)" value='<%= "/markSheetManagement.do?method=prepareConfirmMarkSheet" + url %>' />
 							<fr:property name="key(confirm)" value="label.markSheet.confirm" />
 							<fr:property name="param(confirm)" value="idInternal/msID" />
 							<fr:property name="bundle(confirm)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(confirm)" value="canConfirm" />
-							<fr:property name="order(confirm)" value="5" />																																			
+							<fr:property name="order(confirm)" value="5" />
+
+							<fr:property name="link(removeGrades)" value='<%= "/markSheetManagement.do?method=listMarkSheet" + url %>' />
+							<fr:property name="key(removeGrades)" value="label.remove.grades" />
+							<fr:property name="param(removeGrades)" value="idInternal/msID" />
+							<fr:property name="bundle(removeGrades)" value="ACADEMIC_OFFICE_RESOURCES" />
+							<fr:property name="visibleIf(removeGrades)" value="canRemoveGrades" />
+							<fr:property name="order(removeGrades)" value="6" />																																			
 						</fr:layout>
 					</fr:view>
 				</div>
