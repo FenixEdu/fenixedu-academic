@@ -223,6 +223,7 @@ public class PersonFunction extends PersonFunction_Base {
         if (hasSender()) {
             removeSender();
         }
+        removeExecutionInterval();
         super.delete();
     }
 
