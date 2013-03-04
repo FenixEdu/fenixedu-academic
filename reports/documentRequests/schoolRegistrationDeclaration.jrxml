@@ -135,10 +135,10 @@
 			<band height="227"  isSplitAllowed="true" >
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="19"
-						y="9"
-						width="77"
-						height="168"
+						x="48"
+						y="44"
+						width="117"
+						height="45"
 						key="image-1"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -146,12 +146,12 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoTecnicoLisboa.png"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="175"
+						y="173"
 						width="470"
 						height="21"
 						key="textField-21"/>
@@ -185,9 +185,9 @@
 				</textField>
 				<line direction="TopDown">
 					<reportElement
-						x="141"
+						x="284"
 						y="82"
-						width="425"
+						width="282"
 						height="0"
 						key="line-1"/>
 					<graphicElement stretchType="NoStretch"/>

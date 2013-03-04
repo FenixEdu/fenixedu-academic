@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.MessageFormat;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -12,7 +14,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 
@@ -27,10 +29,28 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
+        //Employee loggedEmployee = AccessControl.getPerson().getEmployee();
         addParameter("documentRequest", getDocumentRequest());
+        addParameter("documentTitle", getResourceBundle().getString("label.academicDocument.title.declaration"));
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String socialSecurityNumber = RootDomainObject.getInstance().getInstitutionUnit().getSocialSecurityNumber().toString();
+        addParameter("institutionName", institutionName);
+        //addParameter("universityName", universityName);
 
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-        addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+        String stringTemplate1 = getResourceBundle().getString("label.academicDocument.irs.declaration.firstParagraph");
+        addParameter(
+                "firstParagraph",
+                MessageFormat.format(stringTemplate1, institutionName.toUpperCase(getLocale()),
+                        universityName.toUpperCase(getLocale())));
+
+        String stringTemplate2 = getResourceBundle().getString("label.academicDocument.irs.declaration.secondParagraph");
+        addParameter("secondParagraph", MessageFormat.format(stringTemplate2, socialSecurityNumber));
+        addParameter("socialSecurityNumber", socialSecurityNumber);
+        addParameter("thirdParagraph", getResourceBundle().getString("label.academicDocument.irs.declaration.thirdParagraph"));
+
+        addParameter("sixthParagraph", getResourceBundle().getString("label.academicDocument.irs.declaration.sixthParagraph"));
+        addParameter("seventhParagraph", getResourceBundle().getString("label.academicDocument.irs.declaration.seventhParagraph"));
 
         final Registration registration = getDocumentRequest().getRegistration();
         addParameter("registration", registration);
@@ -42,9 +62,10 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         addParameter("civilYear", civilYear.toString());
 
         setAmounts(person, civilYear);
-        setEmployeeFields();
+        setEmployeeFields(institutionName);
 
-        addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
+        //addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
+        setFooter(registration);
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {
@@ -52,19 +73,18 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, END_CHAR));
 
         final String registrationNumber = registration.getNumber().toString();
-        addParameter("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH
-                - "aluno deste Instituto com o Número ".length(), END_CHAR));
+        String fourthParagraph = getResourceBundle().getString("label.academicDocument.irs.declaration.fourthParagraph");
+        addParameter("fourthParagraph", fourthParagraph);
+        int fourthParagraphLength = fourthParagraph.length();
+        addParameter("registrationNumber",
+                StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - fourthParagraphLength, END_CHAR));
 
-        final StringBuilder documentIdType = new StringBuilder();
-        documentIdType.append("portador" + (person.isMale() ? EMPTY_STR : "a"));
-        documentIdType.append(" do ");
-        documentIdType.append(person.getIdDocumentType().getLocalizedName());
-        documentIdType.append(" Nº ");
-        addParameter("documentIdType", documentIdType.toString());
-
-        final String documentIdNumber = person.getDocumentIdNumber();
+        final String documentIdNumber = person.getDocumentIdNumber().toString();
+        String fifthParagraph = getResourceBundle().getString("label.academicDocument.irs.declaration.fifthParagraph");
+        addParameter("fifthParagraph", fifthParagraph);
+        int fithParagraphLength = fifthParagraph.length();
         addParameter("documentIdNumber",
-                StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - documentIdType.toString().length(), END_CHAR));
+                StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - fithParagraphLength, END_CHAR));
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {
@@ -78,8 +98,10 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
                     .append(LINE_BREAK);
             payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
         }
+
         if (!othersPayedAmount.isZero()) {
-            eventTypes.append("- Outras despesas de educação").append(LINE_BREAK);
+            eventTypes.append(getResourceBundle().getString("label.academicDocument.irs.declaration.eighthParagraph")).append(
+                    LINE_BREAK);
             payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
         }
         addParameter("eventTypes", eventTypes.toString());
@@ -87,6 +109,8 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
         Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount);
         addParameter("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
+        addParameter("total", getResourceBundle().getString("label.academicDocument.irs.declaration.total"));
+
     }
 
     private Money calculateOthersPayedAmount(final Person person, final Integer civilYear) {
@@ -101,13 +125,53 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         return result;
     }
 
-    final private void setEmployeeFields() {
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
-        addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
+    final private void setEmployeeFields(String institutionName) {
 
-        addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
+        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        String coordinatorTitle;
+        if (coordinator.isMale()) {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
+
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.irs.declaration.signer");
+        addParameter("signer",
+                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
+
+        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
+        String location = adminOfficeUnit.getCampus().getLocation();
+        String dateDD = new LocalDate().toString("dd", getLocale());
+        String dateMMMM = new LocalDate().toString("MMMM", getLocale());
+        String dateYYYY = new LocalDate().toString("yyyy", getLocale());
+        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
+        addParameter("signerLocation",
+                MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
+        //addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
+
+        //addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
 
     }
 
+    final private void setFooter(Registration registration) {
+        String student;
+
+        if (registration.getStudent().getPerson().isMale()) {
+            student = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
+        } else {
+            student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
+        }
+
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.studentNumber");
+        addParameter("studentNumber", MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
+
+        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
+        addParameter("documentNumber",
+                MessageFormat.format(stringTemplate, getDocumentRequest().getServiceRequestNumber().toString().trim()));
+        addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
+
+        addParameter("page", getResourceBundle().getString("label.academicDocument.declaration.footer.page"));
+        addParameter("pageOf", getResourceBundle().getString("label.academicDocument.declaration.footer.pageOf"));
+    }
 }

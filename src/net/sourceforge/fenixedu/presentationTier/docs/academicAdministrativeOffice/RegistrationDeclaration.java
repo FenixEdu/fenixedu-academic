@@ -2,16 +2,15 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.text.MessageFormat;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -48,22 +47,26 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void newFillReport() {
-        Employee loggedEmployee = AccessControl.getPerson().getEmployee();
+        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        //Employee loggedEmployee = AccessControl.getPerson().getEmployee();
         Registration registration = getDocumentRequest().getRegistration();
 
-        fillFirstParagraph(loggedEmployee);
+        fillFirstParagraph(coordinator, adminOfficeUnit);
 
         fillSecondParagraph(registration);
 
         fillSeventhParagraph(registration);
 
-        fillTrailer(loggedEmployee, registration);
+        fillTrailer(coordinator, registration, adminOfficeUnit);
     }
 
-    protected void fillFirstParagraph(Employee loggedEmployee) {
+    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit) {
         String coordinatorTitle;
-        Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-        String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
+        //Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
+        //Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        //Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
         String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
 
@@ -107,12 +110,14 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
                 getExecutionYear().getYear(), getDegreeDescription()));
     }
 
-    protected void fillTrailer(Employee loggedEmployee, Registration registration) {
+    protected void fillTrailer(Person coordinator, Registration registration, Unit adminOfficeUnit) {
+
         String coordinatorTitle;
-        Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-        String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
+        //Person coordinator = coordinator2.getCurrentWorkingPlace().getActiveUnitCoordinator();
+
+        //String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String location = loggedEmployee.getCurrentCampus().getLocation();
+        String location = adminOfficeUnit.getCampus().getLocation();
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());
@@ -129,9 +134,10 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         } else {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
         }
-
+        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signer");
-        addParameter("signer", MessageFormat.format(stringTemplate, coordinatorTitle, adminOfficeName));
+        addParameter("signer",
+                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
 
         stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
         addParameter("signerLocation",
