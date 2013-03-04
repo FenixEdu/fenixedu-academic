@@ -1347,12 +1347,30 @@ public class Person extends Person_Base {
      * 
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
      * 
+     */
+    @Service
+    public void mergeAndDelete(Person personToMergeLogs) {
+        removeRelations();
+        for (PersonInformationLog personInformationLog : getPersonInformationLogs()) {
+            personInformationLog.setPersonViewed(personToMergeLogs);
+        }
+        super.delete();
+    }
+
+    /**
+     * 
+     * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
+     * 
      * 
      * @return true if the person have been deleted, false otherwise
      */
     @Override
     public void delete() {
+        removeRelations();
+        super.delete();
+    }
 
+    protected void removeRelations() {
         if (!canBeDeleted()) {
             throw new DomainException("error.person.cannot.be.deleted");
         }
@@ -1405,8 +1423,6 @@ public class Person extends Person_Base {
         for (final PreferredPublication preferred : getPreferredPublication()) {
             preferred.delete();
         }
-
-        super.delete();
     }
 
     private boolean canBeDeleted() {
@@ -1596,7 +1612,6 @@ public class Person extends Person_Base {
                     removeRoleIfPresent(person, RoleType.RESEARCHER);
                 }
                 removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
-                removeRoleIfPresent(person, RoleType.DELEGATE);
                 break;
 
             case EMPLOYEE:

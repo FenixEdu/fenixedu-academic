@@ -360,7 +360,8 @@ public class MergePersonsDA extends FenixDispatchAction {
         Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
         Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
 
-        DeleteObjectByOID.run(Person.class, domainObject2.getIdInternal());
+        domainObject2.mergeAndDelete(domainObject1);
+
         request.setAttribute("studentRemoved", true);
 
         return mapping.findForward("person-removed");
