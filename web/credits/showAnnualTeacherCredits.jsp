@@ -362,7 +362,8 @@ $(document).ready(function() {
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty> 
-			<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsBean" property="canEditTeacherCredits"/>
+		<%--	<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsBean" property="canEditTeacherCredits"/> --%>
+			<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsBean" property="canEditTeacherCreditsInAnyPeriod"/>
 			<logic:equal name="canEditCreditsInfo" value="true">
 				<html:link page='<%= "/degreeProjectTutorialService.do?page=0&amp;method=showProjectTutorialServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
 					<bean:message key="link.change" />
