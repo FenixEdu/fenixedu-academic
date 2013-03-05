@@ -247,11 +247,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         schemaName.append("DocumentRequestCreateBean.");
         schemaName.append(requestType.name());
 
-        if (requestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)
-                && !requestCreateBean.getRegistrationAgreement().isNormal()) {
-            schemaName.append("_mobility");
-        }
-
         if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
             schemaName.append("_WithBranch");
         }

@@ -5003,13 +5003,6 @@ class DomainObject {
                 }
     
                     class serviceRequests.documentRequests.ApprovementCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        MobilityProgram mobilityProgram;
-                        Boolean ignoreExternalEntries;
-                        Boolean ignoreCurriculumInAdvance;
-                        Integer numberOfUnits;
-                    }
-                    
-                    class serviceRequests.documentRequests.ApprovementMobilityCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
                         Integer numberOfUnits;
                     }
     
