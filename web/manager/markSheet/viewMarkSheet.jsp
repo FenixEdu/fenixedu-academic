@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
+<%@ page import="net.sourceforge.fenixedu.util.BundleUtil"%>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/></h2>
 <logic:messagesPresent message="true">
@@ -62,18 +63,22 @@
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.back"/>
 		</html:cancel>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="askForConfirmation(); return false;">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"
+			onclick="<%= "askForConfirmation('" +
+				BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.remove.grades.confirmationMessage")
+				+ "', '" +
+				BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.remove.grades.confirmationTitle")
+				+ "'); return false;" %>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.remove.grades"/>
 		</html:submit>
 	</p>
 	
 </html:form>
-
 <script src="../javaScript/alertHandlers.js"></script>
 <script src="../javaScript/jquery.alerts.js"></script>
 
 <script type="text/javascript">
-function askForConfirmation()  {
-	  requestConfirmation("submitForm","Tem a certeza de que pretende apagar a nota deste(s) aluno(s)?<br/>Em caso afirmativo, a Pauta precisará novamente de confirmação.","Confirmar");
+function askForConfirmation(messageKey, titleKey)  {
+	requestConfirmation("submitForm", messageKey, titleKey);
 }
 </script>
