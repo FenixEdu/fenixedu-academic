@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 /**
  * @author pcma
  */
@@ -46,7 +44,7 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
             }
         }
 
-        Collections.sort(results, new BeanComparator("name"));
+        Collections.sort(results, CompetenceCourseStatisticsDTO.COURSE_STATISTICS_COMPARATOR_BY_NAME);
 
         return results;
     }

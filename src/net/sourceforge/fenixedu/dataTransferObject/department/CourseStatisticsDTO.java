@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.department;
 
+import java.text.Collator;
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class CourseStatisticsDTO {
     private int idInternal;
@@ -24,6 +28,16 @@ public abstract class CourseStatisticsDTO {
     private int totalApprovedCount;
 
     private IGrade totalApprovedAverage;
+
+    public static final Comparator<CourseStatisticsDTO> COURSE_STATISTICS_COMPARATOR_BY_NAME =
+            new Comparator<CourseStatisticsDTO>() {
+
+                @Override
+                public int compare(CourseStatisticsDTO o1, CourseStatisticsDTO o2) {
+                    return Collator.getInstance(Language.getLocale()).compare(o1.getName(), o2.getName());
+                }
+
+            };
 
     public CourseStatisticsDTO() {
     }
