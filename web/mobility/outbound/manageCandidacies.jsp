@@ -86,6 +86,12 @@
 	            });
 			});
 	};
+
+	function ViewCandidate (personOid) {
+		document.getElementById('mobilityGradeForm').method.value = 'viewCandidate';
+		document.getElementById('mobilityGradeForm').personOid.value = personOid;		
+		document.getElementById('mobilityGradeForm').submit();
+	};
 </script>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/></h2>
@@ -134,7 +140,11 @@
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies"/>:
 </h3>
 
-<form id="mobilityGradeForm" action="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=editGrade&mobilityGroupOid=" + mobilityGroup.getExternalId() %>">
+<form id="mobilityGradeForm" action="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?mobilityGroupOid=" + mobilityGroup.getExternalId() %>"
+		method="post">
+	<input type="hidden" name="method" value="editGrade"/>
+	<input type="hidden" name="personOid" value=""/>
+	<input type="hidden" name="executionYearOid" value="<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %>"/>
 
 <%
 	for (final OutboundMobilityCandidacyPeriod candidacyPeriod : outboundMobilityContextBean.getCandidacyPeriods()) {
@@ -164,7 +174,11 @@
 					<td>
 						<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + person.getExternalId() %>"  style="padding: 1em 0;" /></div>
 					</td>
-					<td><%= person.getUsername() %></td>
+					<td>
+						<a href="#" onclick="<%= "ViewCandidate('" + person.getExternalId() + "');" %>">
+							<%= person.getUsername() %>
+						</a>
+					</td>
 					<td><%= person.getName() %></td>
 					<td><%= registration.getDegree().getSigla() %></td>
 					<td style="text-align: center;">
@@ -174,6 +188,7 @@
 							<a href="#" onclick="<%= "ToggleGradeInput('" + showGradeID + "', '" + hideGradeID + "'); $('#" + inputGradeID + "').focus()" %>"
 									style="border-bottom: 0px; float: right;">
 								<img src="<%= request.getContextPath() +"/images/iconEditOn.png" %>" />
+								&nbsp;&nbsp;
 							</a>
 						</span>
 						<span id="<%= hideGradeID %>" style="display: none;">
@@ -231,4 +246,5 @@
 	}
 %>
 
+	<input name="xpto" style="display: none;">
 </form>

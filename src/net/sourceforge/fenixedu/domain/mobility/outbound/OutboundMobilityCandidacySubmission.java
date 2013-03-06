@@ -67,6 +67,15 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         return r == 0 ? getExternalId().compareTo(o.getExternalId()) : r;
     }
 
+    public SortedSet<OutboundMobilityCandidacyContestGroup> getOutboundMobilityCandidacyContestGroupSet() {
+        final SortedSet<OutboundMobilityCandidacyContestGroup> result = new TreeSet<OutboundMobilityCandidacyContestGroup>();
+        for (final OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
+            final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
+            result.add(contest.getOutboundMobilityCandidacyContestGroup());
+        }
+        return result;
+    }
+
     public BigDecimal getGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup) {
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
             if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {

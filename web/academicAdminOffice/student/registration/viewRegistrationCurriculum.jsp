@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
@@ -19,11 +20,13 @@
 	request.setAttribute("executionYear", executionYear);
 %>
 
+<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
 <p>
 	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
+</academic:allowed>
 
 
 <div style="float: right;">

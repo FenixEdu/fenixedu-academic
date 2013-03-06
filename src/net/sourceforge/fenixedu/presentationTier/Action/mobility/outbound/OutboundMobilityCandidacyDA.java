@@ -28,7 +28,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/outboundMobilityCandidacy", module = "academicAdministration")
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
         @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
-        @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp") })
+        @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp"),
+        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"),
+})
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -180,6 +182,22 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final String grade = (String) getFromRequest(request, "grade");
         submission.setGrade(mobilityGroup, new BigDecimal(grade));
         return null;
+    }
+
+    public ActionForward viewCandidate(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        final Person person = getDomainObject(request, "personOid");
+        if (person != null) {
+            outboundMobilityContextBean.setPerson(person);
+        }
+        final ExecutionYear executionYear = getDomainObject(request, "executionYearOid");
+        if (executionYear != null) {
+            outboundMobilityContextBean.setExecutionYear(executionYear);
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("viewCandidate");
     }
 
 }

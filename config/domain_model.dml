@@ -8354,6 +8354,11 @@ relation OutboundMobilityCandidacySubmissionOutboundMobilityCandidacy {
 	}
 }
 
+relation SelectedOutboundMobilityCandidacySubmissionOutboundMobilityCandidacy {
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole submissionFromSelectedCandidacy;
+	mobility.outbound.OutboundMobilityCandidacy playsRole selectedCandidacy;
+}
+
 relation OutboundMobilityCandidacySubmissionRegistration {
 	student.Registration playsRole registration {
 		multiplicity 1..1;
