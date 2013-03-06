@@ -152,9 +152,6 @@
 	<slot name="ignoreCurriculumInAdvance" key="label.ignoreCurriculumInAdvance" />
 </schema>
 
-<schema name="ApprovementMobilityCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-</schema>
-
 <schema name="EnrolmentCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 </schema>
