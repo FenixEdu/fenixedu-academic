@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create new relation for selected mobility candidacies." updates.sql
