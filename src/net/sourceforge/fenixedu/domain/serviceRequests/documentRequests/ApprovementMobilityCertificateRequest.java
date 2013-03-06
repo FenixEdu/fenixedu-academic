@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -19,24 +18,21 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 
 import org.joda.time.DateTime;
 
-public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
+public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCertificateRequest_Base {
 
-    protected ApprovementCertificateRequest() {
+    protected ApprovementMobilityCertificateRequest() {
         super();
     }
 
-    public ApprovementCertificateRequest(final DocumentRequestCreateBean bean) {
+    public ApprovementMobilityCertificateRequest(final DocumentRequestCreateBean bean) {
         this();
         super.init(bean);
 
         checkParameters(bean);
-        super.setMobilityProgram(bean.getMobilityProgram());
-        super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
-        super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
 
         // TODO: remove this after DEA diplomas and certificates
         if (!isDEARegistration()) {
@@ -58,6 +54,16 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
         return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+    }
+
+    @Override
+    public boolean isFreeProcessed() {
+        if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
+                && RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -113,7 +119,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public DocumentRequestType getDocumentRequestType() {
-        return DocumentRequestType.APPROVEMENT_CERTIFICATE;
+        return DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE;
     }
 
     @Override
@@ -123,7 +129,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public EventType getEventType() {
-        return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
+        return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())
+                || RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override
@@ -140,16 +147,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     final public void setNumberOfUnits(final Integer numberOfUnits) {
         throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
-    }
-
-    @Override
-    public void setMobilityProgram(MobilityProgram mobilityProgram) {
-        throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
-    }
-
-    @Override
-    public void setIgnoreExternalEntries(Boolean ignoreExternalEntries) {
-        throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
     }
 
     @Override
@@ -170,6 +167,13 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
                     filterEntries(result, this, curriculum);
                 }
             }
+            if (isMobilityStudent()) {
+                final StandaloneCurriculumGroup standalone =
+                        registration.getLastStudentCurricularPlan().getStandaloneCurriculumGroup();
+                if (standalone != null && standalone.hasAnyApprovedCurriculumLines()) {
+                    result.addAll(getStandaloneEntriesToReport());
+                }
+            }
         } else {
             curriculum = getRegistration().getCurriculum(getFilteringDate());
             filterEntries(result, this, curriculum);
@@ -183,7 +187,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     static final public void filterEntries(final Collection<ICurriculumEntry> result,
-            final ApprovementCertificateRequest request, final ICurriculum curriculum) {
+            final ApprovementMobilityCertificateRequest request, final ICurriculum curriculum) {
         for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
             if (entry instanceof Dismissal) {
                 final Dismissal dismissal = (Dismissal) entry;
@@ -191,12 +195,18 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
                         && !dismissal.getCredits().isSubstitution()) {
                     continue;
                 }
-            } else if (entry instanceof ExternalEnrolment && request.getIgnoreExternalEntries()) {
-                continue;
             }
-
             result.add(entry);
         }
+    }
+
+    final public Collection<ICurriculumEntry> getStandaloneEntriesToReport() {
+        final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+        reportApprovedCurriculumLines(result, calculateStandaloneCurriculumLines());
+        // reportExternalGroups(result);
+
+        return result;
     }
 
     final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
@@ -224,6 +234,22 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         return result;
     }
 
+    private Collection<CurriculumLine> calculateStandaloneCurriculumLines() {
+        final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+
+        for (final CurriculumLine line : getRegistration().getStandaloneCurriculumLines()) {
+            if (line.isEnrolment()) {
+                if (!((Enrolment) line).isSourceOfAnyCreditsInCurriculum()) {
+                    result.add(line);
+                }
+            } else {
+                result.add(line);
+            }
+        }
+
+        return result;
+    }
+
     private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
         for (final CurriculumLine line : lines) {
             if (line.isApproved()) {
@@ -237,11 +263,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
-        if (getIgnoreCurriculumInAdvance() != null && !getIgnoreCurriculumInAdvance()) {
-            for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
-                    .getExternalCurriculumGroups()) {
-                filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
-            }
+        for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
+            filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
         }
     }
 
@@ -256,6 +279,17 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     public boolean hasPersonalInfo() {
         return true;
+    }
+
+    @Override
+    protected boolean hasMissingPersonalInfo() {
+        // no need to test for parishOfBirth or districtOfBirth
+        // see super for more details
+        return false;
+    }
+
+    private boolean isMobilityStudent() {
+        return RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement());
     }
 
 }

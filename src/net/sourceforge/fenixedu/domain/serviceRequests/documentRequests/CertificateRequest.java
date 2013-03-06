@@ -34,6 +34,9 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
         case APPROVEMENT_CERTIFICATE:
             return new ApprovementCertificateRequest(bean);
 
+        case APPROVEMENT_MOBILITY_CERTIFICATE:
+            return new ApprovementMobilityCertificateRequest(bean);
+
         case DEGREE_FINALIZATION_CERTIFICATE:
             return new DegreeFinalizationCertificateRequest(bean);
 
@@ -119,7 +122,7 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
      */
     @Override
     public boolean isFree() {
-        if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_CERTIFICATE
+        if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
                 && RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
             return true;
         }

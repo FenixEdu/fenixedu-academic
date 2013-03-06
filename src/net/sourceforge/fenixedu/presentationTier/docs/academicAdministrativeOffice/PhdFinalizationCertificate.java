@@ -66,7 +66,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         builder2.append(getResourceBundle().getString("documents.birthLocale"));
         builder2.append(SINGLE_SPACE).append(getBirthLocale(person, false));
 
-        if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_CERTIFICATE)) {
+        if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
             addParameter("name", person.getName().toUpperCase());
             addParameter("documentIdNumber", builder1.toString());
             addParameter("birthLocale", builder2.toString());
@@ -90,7 +90,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         final String nationality = person.getCountry().getFilteredNationality(getLocale());
         builder.append(SINGLE_SPACE).append(nationality.toUpperCase()).append(SINGLE_SPACE);
 
-        if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_CERTIFICATE)) {
+        if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
             addParameter("nationality", builder.toString());
         } else {
             addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
