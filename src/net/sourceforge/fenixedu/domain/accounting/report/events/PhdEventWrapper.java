@@ -18,7 +18,7 @@ public class PhdEventWrapper implements Wrapper {
             return event.getPerson().getStudent().getNumber().toString();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PhdEventWrapper implements Wrapper {
             return event.getPhdIndividualProgramProcess().getWhenFormalizedRegistration().toString("dd/MM/yyyy");
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -47,12 +47,12 @@ public class PhdEventWrapper implements Wrapper {
 
     @Override
     public String getDegreeName() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getDegreeType() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -62,27 +62,27 @@ public class PhdEventWrapper implements Wrapper {
 
     @Override
     public String getEnrolledECTS() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getRegime() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getEnrolmentModel() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceYear() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceMonth() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -108,6 +108,21 @@ public class PhdEventWrapper implements Wrapper {
     @Override
     public AdministrativeOffice getRelatedAcademicOffice() {
         return event.getPhdIndividualProgramProcess().getAdministrativeOffice();
+    }
+
+    @Override
+    public String getRelatedEventExternalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorFiscalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorName() {
+        return "--";
     }
 
 }

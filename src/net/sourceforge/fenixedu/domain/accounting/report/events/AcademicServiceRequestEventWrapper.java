@@ -27,7 +27,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
             return request.getPerson().getStudent().getNumber().toString();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
             return ((RegistrationAcademicServiceRequest) request).getRegistration().getStartDate().toString("dd/MM/yyyy");
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -61,7 +61,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
                     .getContent(Language.pt);
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -70,7 +70,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
             return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegreeType().getLocalizedName();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -80,7 +80,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
                     .getContent(Language.pt);
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -92,7 +92,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
             return new BigDecimal(registration.getEnrolmentsEcts(executionYear)).toString();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -104,7 +104,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
             return registration.getRegimeType(executionYear).getLocalizedName();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -119,17 +119,17 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceYear() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceMonth() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -140,7 +140,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
             return Wrapper.PHD_PROGRAM_STUDIES;
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -161,6 +161,21 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     @Override
     public AdministrativeOffice getRelatedAcademicOffice() {
         return event.getAdministrativeOffice();
+    }
+
+    @Override
+    public String getRelatedEventExternalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorFiscalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorName() {
+        return "--";
     }
 
 }

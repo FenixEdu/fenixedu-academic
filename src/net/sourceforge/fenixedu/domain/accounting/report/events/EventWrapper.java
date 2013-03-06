@@ -28,7 +28,7 @@ public class EventWrapper implements Wrapper {
             }
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class EventWrapper implements Wrapper {
 
     @Override
     public String getRegistrationStartDate() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -75,7 +75,7 @@ public class EventWrapper implements Wrapper {
             return getRegistration().getDegree().getNameI18N().getContent(Language.pt);
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -84,12 +84,12 @@ public class EventWrapper implements Wrapper {
             return getRegistration().getDegreeType().getLocalizedName();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
     public String getPhdProgramName() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -99,7 +99,7 @@ public class EventWrapper implements Wrapper {
                     .getEnrolmentsEctsCredits(getForExecutionYear())).toString();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -108,13 +108,13 @@ public class EventWrapper implements Wrapper {
             return getRegistration().getRegimeType(getForExecutionYear()).getLocalizedName();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
     public String getEnrolmentModel() {
         if (!hasRegistration()) {
-            return "-";
+            return "--";
         }
 
         EnrolmentModel enrolmentModelForExecutionYear =
@@ -123,17 +123,17 @@ public class EventWrapper implements Wrapper {
             return enrolmentModelForExecutionYear.getLocalizedName();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceYear() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceMonth() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -142,7 +142,7 @@ public class EventWrapper implements Wrapper {
             return "Curso";
         }
 
-        return "-";
+        return "--";
     }
 
     private Registration getRegistration() {
@@ -180,6 +180,21 @@ public class EventWrapper implements Wrapper {
         }
 
         return registration.getDegree().getAdministrativeOffice();
+    }
+
+    @Override
+    public String getRelatedEventExternalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorFiscalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorName() {
+        return "--";
     }
 
 }

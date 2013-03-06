@@ -26,7 +26,7 @@ public class GratuityEventWrapper implements Wrapper {
             return event.getPerson().getStudent().getNumber().toString();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -61,7 +61,7 @@ public class GratuityEventWrapper implements Wrapper {
 
     @Override
     public String getPhdProgramName() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -85,17 +85,17 @@ public class GratuityEventWrapper implements Wrapper {
             }
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceYear() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getResidenceMonth() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -136,6 +136,21 @@ public class GratuityEventWrapper implements Wrapper {
         }
 
         return wrappers;
+    }
+
+    @Override
+    public String getRelatedEventExternalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorFiscalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorName() {
+        return "--";
     }
 
 }

@@ -17,7 +17,7 @@ public class ResidenceEventWrapper implements Wrapper {
             return event.getPerson().getStudent().getNumber().toString();
         }
 
-        return "-";
+        return "--";
     }
 
     @Override
@@ -32,42 +32,42 @@ public class ResidenceEventWrapper implements Wrapper {
 
     @Override
     public String getRegistrationStartDate() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getExecutionYear() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getDegreeName() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getDegreeType() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getPhdProgramName() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getEnrolledECTS() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getRegime() {
-        return "-";
+        return "--";
     }
 
     @Override
     public String getEnrolmentModel() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ResidenceEventWrapper implements Wrapper {
 
     @Override
     public String getStudiesType() {
-        return "-";
+        return "--";
     }
 
     @Override
@@ -104,6 +104,21 @@ public class ResidenceEventWrapper implements Wrapper {
     @Override
     public AdministrativeOffice getRelatedAcademicOffice() {
         return null;
+    }
+
+    @Override
+    public String getRelatedEventExternalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorFiscalId() {
+        return "--";
+    }
+
+    @Override
+    public String getDebtorName() {
+        return "--";
     }
 
 }

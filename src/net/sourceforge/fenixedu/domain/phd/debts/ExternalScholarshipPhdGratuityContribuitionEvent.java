@@ -68,4 +68,9 @@ public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalSc
     public Unit getOwnerUnit() {
         return AdministrativeOffice.readMasterDegreeAdministrativeOffice().getUnit();
     }
+    
+    @Override
+    public boolean isFctScholarshipPhdGratuityContribuitionEvent() {
+        return true;
+    }
 }

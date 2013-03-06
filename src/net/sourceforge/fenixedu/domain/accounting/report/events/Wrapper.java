@@ -36,6 +36,12 @@ public interface Wrapper {
     public String getStudiesType();
 
     public String getTotalDiscount();
+    
+    public String getRelatedEventExternalId();
+    
+    public String getDebtorFiscalId();
+    
+    public String getDebtorName();
 
     public boolean isAfterOrEqualExecutionYear(final ExecutionYear executionYear);
 

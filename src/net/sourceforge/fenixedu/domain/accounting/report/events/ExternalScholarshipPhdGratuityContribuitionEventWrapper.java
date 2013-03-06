@@ -118,4 +118,19 @@ public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements 
         return getPhdGratuityEvent().getPhdIndividualProgramProcess().getAdministrativeOffice();
     }
 
+    @Override
+    public String getRelatedEventExternalId() {
+        return getPhdGratuityEvent().getExternalId();
+    }
+
+    @Override
+    public String getDebtorFiscalId() {
+        return event.getParty().getSocialSecurityNumber();
+    }
+
+    @Override
+    public String getDebtorName() {
+        return event.getParty().getName();
+    }
+
 }

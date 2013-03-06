@@ -291,6 +291,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 addCell("Valor em divida", bean.amountToPay);
                 addCell("Valor Reembolsável", bean.reimbursableAmount);
                 addCell("Desconto", bean.totalDiscount);
+                addCell("Dívida Associada", bean.relatedEvent);
+                addCell("Id. Fiscal Entidade", bean.debtorFiscalId);
+                addCell("Nome Entidade", bean.debtorName);
 
                 List<InstallmentWrapper> list = bean.installments;
 
@@ -408,6 +411,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         bean.amountToPay = event.getAmountToPay().toPlainString();
         bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
         bean.totalDiscount = event.getTotalDiscount().toPlainString();
+        bean.relatedEvent = wrapper.getRelatedEventExternalId();
+        bean.debtorFiscalId = wrapper.getDebtorFiscalId();
+        bean.debtorName = wrapper.getDebtorName();
 
         if (wrapper instanceof GratuityEventWrapper) {
             bean.installments = ((GratuityEventWrapper) wrapper).getInstallments();
@@ -439,6 +445,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         public String amountToPay;
         public String reimbursableAmount;
         public String totalDiscount;
+        public String relatedEvent;
+        public String debtorFiscalId;
+        public String debtorName;
 
         public List<InstallmentWrapper> installments;
     }
