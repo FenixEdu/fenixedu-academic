@@ -163,4 +163,19 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         deleteDomainObject();
     }
 
+    public int countSelectedCandidates() {
+        int c = 0;
+        for (OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
+            if (candidacy.getSubmissionFromSelectedCandidacy() != null) {
+                c++;
+            }
+        }
+        return c;
+    }
+
+    public boolean hasVacancy() {
+        final Integer vacancies = getVacancies();
+        return vacancies == null || vacancies.intValue() > countSelectedCandidates();
+    }
+
 }

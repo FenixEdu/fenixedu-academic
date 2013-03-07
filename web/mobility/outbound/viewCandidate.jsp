@@ -31,6 +31,7 @@
   #sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; }
   html>body #sortable li { line-height: 1.2em; }
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+  .ui-state-default-selected { border: 1px; border-color: green; border-style: solid; background: #CCFFCC url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #555555; }
 
 	.savedGrade { font-size: large; color: green; font-weight: bold; }
 
@@ -247,19 +248,31 @@
 								<div style="margin-top: 10px; margin-left: 15px;">
 									<ul style="width: 100%;" class="sortable">
 										<%
+											int i = 0;
 											for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet() ) {
 											    final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
 											    final Unit unit = contest.getMobilityAgreement().getUniversityUnit();
 											    final Country country = unit.getCountry();
+											    final String selectionClass = candidacy.getSubmissionFromSelectedCandidacy() == null ? "ui-state-default" : "ui-state-default-selected";
 										%>
-												<li class="ui-state-default" id="<%= candidacy.getExternalId() %>">
+												<li class="<%= selectionClass %>" id="<%= candidacy.getExternalId() %>">
 														<% final String name = unit.getName(); %>
 														<strong><%= name %></strong>
 														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
 														<%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
 														<%= country == null ? "" : "(" + country.getName() + ")" %>
 														<span style="float: right;">
+															<% if (submission.getSelectedCandidacy() == null) { %>
+																	<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=selectCandite&candidacyOid=" + candidacy.getExternalId() %>">
+																		<bean:message key="label.select"/>
+																	</html:link>
+															<% } %>
+															&nbsp;&nbsp;
 															<%= contest.getOutboundMobilityCandidacyContestGroup().getDescription() %>
+															<% if (candidacy.getSubmissionFromSelectedCandidacy() != null) { %>
+																	<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=unselectCandite&candidacyOid=" + candidacy.getExternalId() %>"
+																		style="border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
+															<% } %>
 														</span>
 												</li>
 										<%  } %>

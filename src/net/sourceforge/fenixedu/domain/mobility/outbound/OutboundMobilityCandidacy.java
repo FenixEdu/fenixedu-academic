@@ -88,4 +88,50 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         delete();
     }
 
+    @Service
+    public void select() {
+        final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
+        if (submission.getSelectedCandidacy() != this) {
+            if (submission.getSelectedCandidacy() != null) {
+                throw new DomainException("error.message.cannot.select.multiple.candidacies");
+            }
+
+            final OutboundMobilityCandidacyContest contest = getOutboundMobilityCandidacyContest();
+            if (contest.hasVacancy()) {
+                setSelected(Boolean.TRUE);
+                submission.setSelectedCandidacy(this);
+            } else {
+                throw new DomainException("error.message.contest.has.no.more.vacancies");
+            }
+        }
+    }
+
+    @Service
+    public void unselect() {
+        setSelected(Boolean.FALSE);
+        final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
+        submission.setSelectedCandidacy(null);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

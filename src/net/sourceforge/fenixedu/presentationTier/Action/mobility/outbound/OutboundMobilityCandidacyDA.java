@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
@@ -200,4 +201,26 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("viewCandidate");
     }
 
+    public ActionForward selectCandite(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacy candidacy = getDomainObject(request, "candidacyOid");
+        candidacy.select();
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setPerson(candidacy.getOutboundMobilityCandidacySubmission().getRegistration().getPerson());
+        RenderUtils.invalidateViewState();
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("viewCandidate");
+    }
+
+    public ActionForward unselectCandite(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacy candidacy = getDomainObject(request, "candidacyOid");
+        candidacy.unselect();
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setPerson(candidacy.getOutboundMobilityCandidacySubmission().getRegistration().getPerson());
+        RenderUtils.invalidateViewState();
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("viewCandidate");
+    }
+    
 }
