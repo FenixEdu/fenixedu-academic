@@ -4118,16 +4118,6 @@ public class Person extends Person_Base {
         appendEmployerInfoFor(result, RoleType.RESEARCHER);
         appendEmployerInfoFor(result, RoleType.EMPLOYEE);
         appendEmployerInfoFor(result, RoleType.GRANT_OWNER);
-
-        final Role role = Role.getRoleByRoleType(RoleType.GRANT_OWNER);
-        for (final Person person : role.getAssociatedPersonsSet()) {
-            if (result.length() > 0) {
-                result.append('|');
-            }
-            result.append(person.getUsername());
-            result.append(':');
-            result.append("IST");
-        }
         return result.toString();
     }
 
