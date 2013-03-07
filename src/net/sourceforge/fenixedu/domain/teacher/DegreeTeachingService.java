@@ -151,8 +151,10 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
         double weeklyHoursAfter20 = getTotalHoursAfter20AndSaturdays() / 14;
         double weeklyHoursBefore20 = (getShift().getCourseLoadWeeklyAverage().doubleValue() - weeklyHoursAfter20);
-        return new BigDecimal((weeklyHoursBefore20 + (weeklyHoursAfter20 * afterHeightFactor)) * (getPercentage() / 100))
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+        BigDecimal percentage = new BigDecimal(getPercentage() / 100).setScale(4, BigDecimal.ROUND_HALF_UP);
+        return (new BigDecimal((weeklyHoursBefore20 + (weeklyHoursAfter20 * afterHeightFactor))).multiply(percentage)).setScale(
+                2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public double getTotalHoursAfter20AndSaturdays() {
