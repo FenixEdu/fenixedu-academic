@@ -167,7 +167,23 @@ public class PersonFunctionBean implements Serializable {
 
     @Service
     public void deletePersonFunction() {
-        TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(getExecutionSemester());
+        if (getExecutionSemester() == null) {
+            List<ExecutionSemester> executionSemesters =
+                    ExecutionSemester.readExecutionPeriod(getPersonFunction().getBeginDate(), getPersonFunction().getEndDate());
+            ExecutionSemester actualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+            for (ExecutionSemester executionSemester : executionSemesters) {
+                if (executionSemester.isBeforeOrEquals(actualExecutionSemester)) {
+                    createLogForDeletePersonFunction(executionSemester);
+                }
+            }
+        } else {
+            createLogForDeletePersonFunction(getExecutionSemester());
+        }
+        getPersonFunction().delete();
+    }
+
+    protected void createLogForDeletePersonFunction(ExecutionSemester executionSemester) {
+        TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
         if (teacherService == null) {
             teacherService = new TeacherService(getTeacher(), getExecutionSemester());
         }
@@ -180,7 +196,6 @@ public class PersonFunctionBean implements Serializable {
                     "resources.TeacherCreditsSheetResources", "label.teacher.personFunction.delete", getFunction().getName(),
                     getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getCredits().toString()));
         }
-        getPersonFunction().delete();
     }
 
     public List<PersonFunctionShared> getPersonFunctionsShared() {

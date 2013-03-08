@@ -66,7 +66,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
             try {
                 pdfStreamToReturn = getAnnualTeacherCreditsDocument(arg0, arg1, arg2, teacher, executionYear, null);
             } finally {
-                response.resetBuffer();
+                response.reset();
             }
             response.getOutputStream().write(pdfStreamToReturn.toByteArray());
             response.setContentType("application/pdf");
