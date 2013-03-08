@@ -1,18 +1,25 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.DateTime;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
@@ -23,9 +30,36 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
         super.fillReport();
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        final EnrolmentCertificateRequest request = getDocumentRequest();
+        final Registration registration = getDocumentRequest().getRegistration();
+
+        String coordinatorTitle;
+        if (coordinator.isMale()) {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
+
+        String student, studentGender;
+        if (registration.getStudent().getPerson().isMale()) {
+            student = getResourceBundle().getString("label.academicDocument.enrolment.declaration.maleEnrolment");
+            studentGender = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
+        } else {
+            student = getResourceBundle().getString("label.academicDocument.enrolment.declaration.femaleEnrolment");
+            studentGender = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
+        }
 
         addParameter("curricularYear", getCurricularYear());
         addParameter("enrolmentsInfo", getEnrolmentsInfo());
+        fillFirstParagraph(coordinator, adminOfficeUnit, institutionName, coordinatorTitle);
+        fillthirdthParagraph(registration, request, student);
+        //setEmployeeFields(institutionName, coordinator, adminOfficeUnit, coordinatorTitle);
+        //setFooter(registration, studentGender);
+        setEmployeeFields(institutionName, adminOfficeUnit);
+        setFooter(getDocumentRequest(), true);
     }
 
     @Override
@@ -40,6 +74,10 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
         if (postingRule instanceof EnrolmentCertificateRequestPR) {
             final EnrolmentCertificateRequestPR requestPR = (EnrolmentCertificateRequestPR) postingRule;
+            addParameter("printed", getResourceBundle().getString("label.academicDocument.certificate.printingPriceLabel"));
+            addParameter("printPriceLabel", getResourceBundle().getString("label.academicDocument.certificate.issuingPriceLabel"));
+            addParameter("urgency", getResourceBundle().getString("label.academicDocument.certificate.fastDeliveryPriceLabel"));
+            addParameter("total", getResourceBundle().getString("label.academicDocument.certificate.totalsPriceLabel"));
             addParameter("amountPerPage", requestPR.getAmountPerPage());
             addParameter("baseAmountPlusAmountForUnits", calculateAmountToPayPlusUnits(request, requestPR));
             addParameter("urgencyAmount", request.getUrgentRequest() ? requestPR.getBaseAmount() : Money.ZERO);
@@ -47,6 +85,44 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         } else {
             super.addPriceFields();
         }
+    }
+
+    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String institutionName, String coordinatorTitle) {
+
+        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
+
+        addParameter(
+                "firstParagraph",
+                "     "
+                        + MessageFormat.format(stringTemplate, coordinator.getName(), coordinatorTitle,
+                                adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
+                                universityName.toUpperCase(getLocale())));
+
+        addParameter("certificate",
+                getResourceBundle().getString("label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
+    }
+
+    private void fillthirdthParagraph(Registration registration, EnrolmentCertificateRequest request, String student) {
+        String situation = "";
+        if (request.hasExecutionYear()) {
+            situation = getResourceBundle().getString(getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
+            //addParameter("situation", getResourceBundle().getString(situation));
+        }
+
+        String detailed =
+                request.getDetailed() ? getResourceBundle().getString("label.academicDocument.enrolmentCertificate.detailed") : ".";
+        addParameter("detailed", detailed);
+        String executionYear = getResourceBundle().getString("message.declaration.registration.execution.year.prefix");
+        String stringTemplate1 = getResourceBundle().getString("message.academicDocument.enrolmentCertificate");
+        addParameter(
+                "secondParagraph",
+                MessageFormat.format(stringTemplate1, situation, student, executionYear, getDocumentRequest().getExecutionYear()
+                        .getYear().toString(), getCurricularYear(), getDegreeDescription(), detailed));
+
+        addParameter("curricularYear", getCurricularYear());
+
     }
 
     private Money calculateAmountToPayPlusUnits(final EnrolmentCertificateRequest request,
@@ -90,7 +166,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
                     Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getExecutionYear()));
 
             result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
-            result.append(" ano curricular, do ");
+            result.append(getResourceBundle().getString("label.academicDocument.enrolment.declaration.curricularYear"));
         }
 
         return result.toString();
@@ -157,5 +233,36 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
         return result.toString();
     }
+
+//    final private void setEmployeeFields(String institutionName, Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+//
+//        String stringTemplate = getResourceBundle().getString("label.academicDocument.irs.declaration.signer");
+//        addParameter("signer",
+//                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
+//
+//        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
+//        String location = adminOfficeUnit.getCampus().getLocation();
+//        String dateDD = new LocalDate().toString("dd", getLocale());
+//        String dateMMMM = new LocalDate().toString("MMMM", getLocale());
+//        String dateYYYY = new LocalDate().toString("yyyy", getLocale());
+//        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
+//        addParameter("signerLocation",
+//                MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
+//
+//    }
+
+//    final private void setFooter(Registration registration, String studentGender) {
+//
+//        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.studentNumber");
+//        addParameter("studentNumber", MessageFormat.format(stringTemplate, studentGender, registration.getNumber().toString()));
+//
+//        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
+//        addParameter("documentNumber",
+//                MessageFormat.format(stringTemplate, getDocumentRequest().getServiceRequestNumber().toString().trim()));
+//        //addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
+//        addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
+//        addParameter("page", getResourceBundle().getString("label.academicDocument.declaration.footer.page"));
+//        addParameter("pageOf", getResourceBundle().getString("label.academicDocument.declaration.footer.pageOf"));
+//    }
 
 }

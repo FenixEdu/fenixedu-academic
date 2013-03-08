@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
@@ -85,6 +87,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 return Collections.<T> singletonList((T) new PhdFinalizationCertificate(documentRequest));
             case SCHOOL_REGISTRATION_DECLARATION:
                 return Collections.<T> singletonList((T) new RegistrationDeclaration(documentRequest));
+            case SCHOOL_REGISTRATION_CERTIFICATE:
+                return Collections.<T> singletonList((T) new RegistrationCertificate(documentRequest));
             case ENROLMENT_DECLARATION:
                 return Collections.<T> singletonList((T) new EnrolmentDeclaration(documentRequest));
             case IRS_DECLARATION:
@@ -233,7 +237,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
                         certificateRequestPR.getAmountPerUnit().multiply(
                                 BigDecimal.valueOf(certificateRequest.getNumberOfUnits())));
         final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
-
+        addParameter("printed", getResourceBundle().getString("label.academicDocument.certificate.printingPriceLabel"));
+        addParameter("printPriceLabel", getResourceBundle().getString("label.academicDocument.certificate.issuingPriceLabel"));
+        addParameter("urgency", getResourceBundle().getString("label.academicDocument.certificate.fastDeliveryPriceLabel"));
+        addParameter("total", getResourceBundle().getString("label.academicDocument.certificate.totalsPriceLabel"));
         addParameter("amountPerPage", amountPerPage);
         addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
         addParameter("urgencyAmount", urgencyAmount);
@@ -471,5 +478,52 @@ public class AdministrativeOfficeDocument extends FenixReport {
         }
 
         return result.toString();
+    }
+
+    protected void setFooter(DocumentRequest documentRequest, Boolean checked) {
+        Registration registration = documentRequest.getRegistration();
+        String student;
+
+        if (registration.getStudent().getPerson().isMale()) {
+            student = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
+        } else {
+            student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
+        }
+
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.studentNumber");
+        addParameter("studentNumber", MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
+
+        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
+        addParameter("documentNumber",
+                MessageFormat.format(stringTemplate, documentRequest.getServiceRequestNumber().toString().trim()));
+        if (checked) {
+            addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
+        }
+        addParameter("page", getResourceBundle().getString("label.academicDocument.declaration.footer.page"));
+        addParameter("pageOf", getResourceBundle().getString("label.academicDocument.declaration.footer.pageOf"));
+    }
+
+    protected void setEmployeeFields(String institutionName, Unit adminOfficeUnit) {
+
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        String coordinatorTitle;
+        if (coordinator.isMale()) {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.irs.declaration.signer");
+        addParameter("signer",
+                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
+
+        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
+        String location = adminOfficeUnit.getCampus().getLocation();
+        String dateDD = new LocalDate().toString("dd", getLocale());
+        String dateMMMM = new LocalDate().toString("MMMM", getLocale());
+        String dateYYYY = new LocalDate().toString("yyyy", getLocale());
+        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
+        addParameter("signerLocation",
+                MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
+
     }
 }

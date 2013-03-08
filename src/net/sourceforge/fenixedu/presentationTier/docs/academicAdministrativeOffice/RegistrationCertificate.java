@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
-public class RegistrationDeclaration extends AdministrativeOfficeDocument {
+public class RegistrationCertificate extends AdministrativeOfficeDocument {
 
-    protected RegistrationDeclaration(final IDocumentRequest documentRequest) {
+    protected RegistrationCertificate(final IDocumentRequest documentRequest) {
         super(documentRequest);
     }
 
@@ -57,12 +57,10 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
         }
 
-        String student, studentRegistered;
+        String studentRegistered;
         if (registration.getStudent().getPerson().isMale()) {
-            student = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
             studentRegistered = getResourceBundle().getString("label.academicDocument.declaration.maleRegistered");
         } else {
-            student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
             studentRegistered = getResourceBundle().getString("label.academicDocument.declaration.femaleRegistered");
         }
 
@@ -72,9 +70,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
         fillSeventhParagraph(registration, studentRegistered);
 
-        //fillTrailer(coordinator, registration, adminOfficeUnit, coordinatorTitle, student);
-        setFooter(getDocumentRequest(), false);
         setEmployeeFields(institutionName, adminOfficeUnit);
+        setFooter(getDocumentRequest(), true);
+
     }
 
     protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
@@ -91,6 +89,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
                         + MessageFormat.format(stringTemplate, coordinator.getName(), coordinatorTitle,
                                 adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
                                 universityName.toUpperCase(getLocale())));
+
+        addParameter("certificate",
+                getResourceBundle().getString("label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
     }
 
     protected void fillSecondParagraph(Registration registration) {
@@ -114,25 +115,5 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         addParameter("seventhParagraph", MessageFormat.format(stringTemplate, situation,
                 studentRegistered.toUpperCase(getLocale()), getExecutionYear().getYear(), getDegreeDescription()));
     }
-
-//    protected void fillTrailer(Person coordinator, Registration registration, Unit adminOfficeUnit, String coordinatorTitle,
-//            String student) {
-//
-//        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-//        String location = adminOfficeUnit.getCampus().getLocation();
-//        String dateDD = new LocalDate().toString("dd", getLocale());
-//        String dateMMMM = new LocalDate().toString("MMMM", getLocale());
-//        String dateYYYY = new LocalDate().toString("yyyy", getLocale());
-//
-//        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
-//        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signer");
-//        addParameter("signer",
-//                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
-//
-//        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
-//        addParameter("signerLocation",
-//                MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
-//
-//    }
 
 }

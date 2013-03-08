@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.text.MessageFormat;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,11 +16,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
@@ -32,62 +29,61 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
         super.fillReport();
-        Employee loggedEmployee = AccessControl.getPerson().getEmployee();
         Registration registration = getDocumentRequest().getRegistration();
-
-        addParameter("curricularYear", getCurricularYear());
-        addParameter("documentTitle", getResourceBundle().getString("label.academicDocument.title.declaration"));
+        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
         final List<Enrolment> enrolments =
                 (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getExecutionYear());
         Integer numberEnrolments = Integer.valueOf(enrolments.size());
-        addParameter("numberEnrolments", Integer.valueOf(enrolments.size()));
-        addParameter("approvementInfo", getApprovementInfo());
-        addParameter("documentPurpose", getDocumentPurpose());
-        fillFirstParagraph(loggedEmployee);
-        fillSecondParagraph(registration);
-        fillthirdthParagraph(registration, numberEnrolments);
-        setFooter(registration);
-    }
-
-    private void fillthirdthParagraph(Registration registration, Integer numberEnrolments) {
-        String situation = "";
-        if (getDocumentRequest().hasExecutionYear()) {
-            situation = getResourceBundle().getString(getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
-            //addParameter("situation", getResourceBundle().getString(situation));
-        }
-        String student;
-
-        if (registration.getStudent().getPerson().isMale()) {
-            student = getResourceBundle().getString("label.academicDocument.enrolment.declaration.maleEnrolment");
-        } else {
-            student = getResourceBundle().getString("label.academicDocument.enrolment.declaration.femaleEnrolment");
-        }
-        String executionYear = getResourceBundle().getString("message.declaration.registration.execution.year.prefix");
-        String stringTemplate1 = getResourceBundle().getString("message.academicDocument.enrolment.declaration");
-        addParameter("thirdParagraph", MessageFormat.format(stringTemplate1, situation, student, executionYear,
-                getDocumentRequest().getExecutionYear().getYear().toString(), getCurricularYear(), getDegreeDescription(),
-                numberEnrolments, getApprovementInfo()));
-
-        addParameter("curricularYear", getCurricularYear());
-
-    }
-
-    protected void fillFirstParagraph(Employee loggedEmployee) {
 
         String coordinatorTitle;
-        //Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
-        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
-        setEmployeeFields(institutionName);
-        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
         if (coordinator.isMale()) {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
         } else {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
         }
+
+        String student, studentEnrolment;
+        if (registration.getStudent().getPerson().isMale()) {
+            student = getResourceBundle().getString("label.academicDocument.declaration.theMaleStudent");
+            studentEnrolment = getResourceBundle().getString("label.academicDocument.enrolment.declaration.maleEnrolment");
+        } else {
+            student = getResourceBundle().getString("label.academicDocument.declaration.theFemaleStudent");
+            studentEnrolment = getResourceBundle().getString("label.academicDocument.enrolment.declaration.femaleEnrolment");
+        }
+
+        addParameter("documentTitle", getResourceBundle().getString("label.academicDocument.title.declaration"));
+        addParameter("documentPurpose", getDocumentPurpose());
+        fillFirstParagraph(adminOfficeUnit, coordinatorTitle, coordinator);
+        fillSecondParagraph(registration, student);
+        fillthirdthParagraph(registration, numberEnrolments, studentEnrolment);
+        setEmployeeFields(institutionName, adminOfficeUnit);
+        //setFooter(registration, studentGender);
+        setFooter(getDocumentRequest(), false);
+    }
+
+    private void fillthirdthParagraph(Registration registration, Integer numberEnrolments, String studentEnrolment) {
+        String situation = "";
+        if (getDocumentRequest().hasExecutionYear()) {
+            situation = getResourceBundle().getString(getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
+        }
+
+        String executionYear = getResourceBundle().getString("message.declaration.registration.execution.year.prefix");
+        String stringTemplate1 = getResourceBundle().getString("message.academicDocument.enrolment.declaration");
+        addParameter("thirdParagraph", MessageFormat.format(stringTemplate1, situation, studentEnrolment, executionYear,
+                getDocumentRequest().getExecutionYear().getYear().toString(), getCurricularYear(), getDegreeDescription(),
+                numberEnrolments, getApprovementInfo()));
+
+    }
+
+    protected void fillFirstParagraph(Unit adminOfficeUnit, String coordinatorTitle, Person coordinator) {
+
+        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
+
         addParameter(
                 "firstParagraph",
                 "     "
@@ -96,13 +92,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
                                 universityName.toUpperCase(getLocale())));
     }
 
-    protected void fillSecondParagraph(Registration registration) {
-        String student;
-        if (registration.getStudent().getPerson().isMale()) {
-            student = getResourceBundle().getString("label.academicDocument.declaration.theMaleStudent");
-        } else {
-            student = getResourceBundle().getString("label.academicDocument.declaration.theFemaleStudent");
-        }
+    protected void fillSecondParagraph(Registration registration, String student) {
+
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.secondParagraph");
         addParameter("secondParagraph",
                 "      " + MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
@@ -189,56 +180,6 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         }
 
         return result.toString();
-    }
-
-    final private void setEmployeeFields(String institutionName) {
-
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
-
-        String stringTemplate = getResourceBundle().getString("label.academicDocument.irs.declaration.signer");
-        addParameter("signer",
-                MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
-
-        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
-        String location = adminOfficeUnit.getCampus().getLocation();
-        String dateDD = new LocalDate().toString("dd", getLocale());
-        String dateMMMM = new LocalDate().toString("MMMM", getLocale());
-        String dateYYYY = new LocalDate().toString("yyyy", getLocale());
-        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
-        addParameter("signerLocation",
-                MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
-        //addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
-
-        //addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
-
-    }
-
-    final private void setFooter(Registration registration) {
-        String student;
-
-        if (registration.getStudent().getPerson().isMale()) {
-            student = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
-        } else {
-            student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
-        }
-
-        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.studentNumber");
-        addParameter("studentNumber", MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
-
-        stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
-        addParameter("documentNumber",
-                MessageFormat.format(stringTemplate, getDocumentRequest().getServiceRequestNumber().toString().trim()));
-        //addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
-
-        addParameter("page", getResourceBundle().getString("label.academicDocument.declaration.footer.page"));
-        addParameter("pageOf", getResourceBundle().getString("label.academicDocument.declaration.footer.pageOf"));
     }
 
 }
