@@ -31,7 +31,13 @@ public enum AcademicServiceRequestType {
 
     PHD_STUDENT_REINGRESSION(true),
 
-    DUPLICATE_REQUEST(true);
+    DUPLICATE_REQUEST(true),
+
+    DIPLOMA_REQUEST(true),
+
+    DIPLOMA_SUPPLEMENT_REQUEST(true),
+
+    REGISTRY_DIPLOMA_REQUEST(true);
 
     private boolean isServiceRequest;
 

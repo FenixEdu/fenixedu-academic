@@ -133,6 +133,11 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     @Override
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+        return AcademicServiceRequestType.DIPLOMA_REQUEST;
+    }
+
+    @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
             if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {

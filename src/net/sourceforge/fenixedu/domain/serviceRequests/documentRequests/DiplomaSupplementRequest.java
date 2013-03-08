@@ -156,6 +156,11 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     }
 
     @Override
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+        return AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST;
+    }
+
+    @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         super.internalChangeState(academicServiceRequestBean);
         if (academicServiceRequestBean.isToProcess()) {

@@ -82,6 +82,11 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     }
 
     @Override
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+        return AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST;
+    }
+
+    @Override
     public String getDocumentTemplateKey() {
         return getClass().getName();
     }
