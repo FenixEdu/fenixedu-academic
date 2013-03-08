@@ -63,12 +63,15 @@ public class PersonUnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRe
 
     @Override
     protected String getLinkSequenceFor(Function function) {
-        return createLinkSequence(getAddPersonFunctionLink());
+        if (function.isVirtual()) {
+            return createLinkSequence(getAddPersonFunctionLink());
+        }
+        return null;
     }
 
     @Override
     protected String getLinkSequenceFor(PersonFunction personFunction) {
-        if (personFunction.hasCredits()) {
+        if (personFunction.hasCredits() || !personFunction.getFunction().isVirtual()) {
             return null;
         }
 
