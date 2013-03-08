@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ page import="net.sourceforge.fenixedu.domain.contacts.PartyContact" %>
 
 <html:xhtml/>
 
@@ -56,6 +57,8 @@
 			type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
 			<fr:slot name="person.username" key="label.username" />
 			<fr:slot name="person.name" key="label.name" />
+			<fr:slot name="person.defaultPhone.presentationValue" key="label.phone" >
+			</fr:slot>
 			<fr:slot name="person.email" key="label.email" />
 			<fr:slot name="cerimonyInquiryAnswer" layout="null-as-label"
 				key="label.publicRelationOffice.alumniCerimony.inquiry.people.answer">
@@ -65,8 +68,12 @@
 			</fr:slot>
 			<fr:slot name="comment" key="label.observations"/>
 		</fr:schema>
-		<fr:layout name="tabular">
+		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle1 tdcenter thlight" />
+			<fr:property name="sortParameter" value="sortBy"/>
+			<fr:property name="sortableSlots" value="person.username, person.name, cerimonyInquiryAnswer" />
+            <fr:property name="sortUrl" value='<%= "/alumniCerimony.do?method=viewInquiryPeople&amp;cerimonyInquiryId=" + cerimonyInquiryId.toString() %>'/>
+   	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "person.name=asc" : request.getParameter("sortBy") %>"/>
 		</fr:layout>
 	</fr:view>
 
