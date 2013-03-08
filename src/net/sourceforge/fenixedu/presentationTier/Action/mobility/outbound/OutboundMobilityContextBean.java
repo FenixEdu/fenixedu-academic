@@ -9,12 +9,14 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
@@ -225,7 +227,22 @@ public class OutboundMobilityContextBean implements Serializable {
             for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
                 mobilityGroup.addMobilityCoordinatorService(person);
             }
+            Role.getRoleByRoleType(RoleType.COORDINATOR).addAssociatedPersons(person);
         }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
