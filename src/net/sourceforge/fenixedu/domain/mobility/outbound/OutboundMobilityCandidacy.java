@@ -114,24 +114,3 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

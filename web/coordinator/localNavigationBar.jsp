@@ -7,14 +7,19 @@
 
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 
-<logic:present role="COORDINATOR">
-	
-	<ul>
-		<li class="navheader"><bean:message  key="label.coordinator.management"/></li>
+<ul>
+	<li class="navheader"><bean:message  key="label.coordinator.management"/></li>
+	<logic:present role="COORDINATOR">
 		<li>
 			<html:link page="/index.do"><bean:message  key="label.coordinator.degrees"/></html:link>
 		</li>
-		
+	</logic:present>
+	<li>
+		<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=prepare" %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/>
+		</html:link>
+	</li>
+	<logic:present role="COORDINATOR">
 		<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 		<li>
 			<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
@@ -40,5 +45,5 @@
 				</html:link>
 			</li>
 		</logic:equal>
-	</ul>
-</logic:present>
+	</logic:present>
+</ul>
