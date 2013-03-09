@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,13 +28,13 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/outboundMobilityCandidacy", module = "academicAdministration")
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
         @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
         @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp"),
-        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"),
-})
+        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"), })
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -185,8 +188,8 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return null;
     }
 
-    public ActionForward viewCandidate(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward viewCandidate(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
         final Person person = getDomainObject(request, "personOid");
         if (person != null) {
@@ -201,8 +204,8 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("viewCandidate");
     }
 
-    public ActionForward selectCandite(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward selectCandite(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityCandidacy candidacy = getDomainObject(request, "candidacyOid");
         candidacy.select();
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
@@ -212,8 +215,8 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("viewCandidate");
     }
 
-    public ActionForward unselectCandite(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward unselectCandite(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityCandidacy candidacy = getDomainObject(request, "candidacyOid");
         candidacy.unselect();
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
@@ -222,5 +225,38 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("viewCandidate");
     }
+
+    public ActionForward downloadCandidatesInformation(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+
+        final String filename =
+                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        "label.mobility.candidates.information.filename");
+
+        final Spreadsheet spreadsheet = new Spreadsheet(filename);
+        mobilityGroup.fillCandidatesInformation(spreadsheet, period);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+
+        final ServletOutputStream outputStream = response.getOutputStream();
+        spreadsheet.exportToXLSSheet(outputStream);
+        outputStream.close();
+
+        return null;
+    }
+
+    public ActionForward uploadClassifications(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        outboundMobilityContextBean.uploadClassifications();
+        RenderUtils.invalidateViewState();
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("manageCandidacies");
+    }
+
     
+
 }

@@ -102,7 +102,8 @@
 	<% } %>
 </h2>
 
-<ul>
+<table><tr>
+<td style="vertical-align: top;"><ul>
 	<li><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.executionYear"/>: <%= executionYear.getName() %></li>
 	<li><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.period"/>: <%= outboundMobilityContextBean.getCandidacyPeriods().first().getIntervalAsString() %></li>
 	<li>
@@ -134,7 +135,40 @@
 			</table>
 		<% } %>
 	</li>
-</ul>
+</ul></td>
+<td style="vertical-align: top;"><ul>
+	<li>
+		<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=downloadCandidatesInformation&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.download.candidates.information"/>
+		</html:link>
+	</li>
+	<li>
+		<a href="#" onclick="$('#UploadClassificationBlock').toggle()">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.upload.candidate.classification"/>
+		</a>
+	</li>
+	<li>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.select.candidates"/> (em desenvolvimento)
+	</li>
+</ul></td>
+</tr></table>
+
+<div id="UploadClassificationBlock" style="display: none;">
+	<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.upload.candidate.classification"/></h3>
+	<fr:edit id="uploadClassification" name="outboundMobilityContextBean" action="/outboundMobilityCandidacy.do?method=uploadClassifications">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="stream" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.stream"
+					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    			<fr:property name="fileNameSlot" value="fileName"/>
+    			<fr:property name="fileSizeSlot" value="fileSize"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+	</fr:edit>
+</div>
 
 <h3>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies"/>:

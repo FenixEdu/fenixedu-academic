@@ -5,10 +5,12 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
@@ -28,11 +30,13 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Service
-    public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final ExecutionDegree executionDegree, final MobilityProgram mobilityProgram,
-            final UniversityUnit unit, final Integer vacancies) {
+    public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final ExecutionDegree executionDegree,
+            final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer vacancies) {
         final MobilityAgreement mobilityAgreement = findOrCreateMobilityAgreement(mobilityProgram, unit);
-        final OutboundMobilityCandidacyContestGroup mobilityGroup = OutboundMobilityCandidacyContestGroup.findOrCreateGroup(executionDegree);
-        final OutboundMobilityCandidacyContest contest = new OutboundMobilityCandidacyContest(this, mobilityGroup, mobilityAgreement, vacancies);
+        final OutboundMobilityCandidacyContestGroup mobilityGroup =
+                OutboundMobilityCandidacyContestGroup.findOrCreateGroup(executionDegree);
+        final OutboundMobilityCandidacyContest contest =
+                new OutboundMobilityCandidacyContest(this, mobilityGroup, mobilityAgreement, vacancies);
 
         // TODO : This is a hack due to a bug in the consistency predicate or fenix-framework code.
         //        When the relation is initialized but never traversed, the consistency predicate always
@@ -43,8 +47,9 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Service
-    public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final OutboundMobilityCandidacyContestGroup mobilityGroup,
-            final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer vacancies) {
+    public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(
+            final OutboundMobilityCandidacyContestGroup mobilityGroup, final MobilityProgram mobilityProgram,
+            final UniversityUnit unit, final Integer vacancies) {
         final MobilityAgreement mobilityAgreement = findOrCreateMobilityAgreement(mobilityProgram, unit);
         return new OutboundMobilityCandidacyContest(this, mobilityGroup, mobilityAgreement, vacancies);
     }
@@ -82,6 +87,17 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
             result.add(contest.getOutboundMobilityCandidacyContestGroup());
         }
         return result;
+    }
+
+    public OutboundMobilityCandidacySubmission findSubmissionFor(final Person person) {
+        for (final Registration registration : person.getStudent().getRegistrations()) {
+            for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
+                if (submission.getOutboundMobilityCandidacyPeriod() == this) {
+                    return submission;
+                }
+            }
+        }
+        return null;
     }
 
 }

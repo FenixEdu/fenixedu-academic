@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,8 @@ public class OutboundMobilityContextBean implements Serializable {
     private ExecutionYear executionYear;
     private SortedSet<OutboundMobilityCandidacyPeriod> candidacyPeriods = new TreeSet<OutboundMobilityCandidacyPeriod>();
     private SortedSet<MobilityProgram> mobilityPrograms = new TreeSet<MobilityProgram>();
-    private SortedSet<OutboundMobilityCandidacyContestGroup> mobilityGroups = new TreeSet<OutboundMobilityCandidacyContestGroup>();
+    private SortedSet<OutboundMobilityCandidacyContestGroup> mobilityGroups =
+            new TreeSet<OutboundMobilityCandidacyContestGroup>();
 
     private DateTime startDateTime;
     private DateTime endDateTime;
@@ -35,6 +38,9 @@ public class OutboundMobilityContextBean implements Serializable {
     private UniversityUnit unit;
     private Integer vacancies;
     private Person person;
+    private transient InputStream stream;
+    private long fileSize;
+    private String fileName;
 
     public OutboundMobilityContextBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
@@ -200,7 +206,8 @@ public class OutboundMobilityContextBean implements Serializable {
         for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
             for (final OutboundMobilityCandidacyContest contest : candidacyPeriod.getOutboundMobilityCandidacyContestSet()) {
                 if (mobilityPrograms.contains(contest.getMobilityAgreement().getMobilityProgram())) {
-                    final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
+                    final OutboundMobilityCandidacyContestGroup mobilityGroup =
+                            contest.getOutboundMobilityCandidacyContestGroup();
                     if (mobilityGroups.contains(mobilityGroup)) {
                         result.add(contest);
                     }
@@ -231,18 +238,53 @@ public class OutboundMobilityContextBean implements Serializable {
         }
     }
 
+    public InputStream getStream() {
+        return stream;
+    }
+
+    public void setStream(InputStream stream) {
+        this.stream = stream;
+    }
+
+    public long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    protected String readStreamContents() throws IOException {
+        final InputStream stream = this.getStream();
+        final long fileLength = this.getFileSize();
+
+        if (stream == null || fileLength == 0) {
+            return null;
+        }
+
+        final byte[] contents = new byte[(int) fileLength];
+        stream.read(contents);
+
+        return new String(contents);
+    }
+
+    public void uploadClassifications() throws IOException {
+        final String contents = readStreamContents();
+        if (contents != null) {
+            for (final OutboundMobilityCandidacyContestGroup group : mobilityGroups) {
+                for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
+                    group.setGrades(candidacyPeriod, contents);
+                }
+            }
+        }
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

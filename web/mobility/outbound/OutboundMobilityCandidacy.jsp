@@ -68,7 +68,7 @@
 					</fr:layout>
 				</fr:edit>
 		<html:submit value="<%= BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.submit") %>"/>
-		<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+		<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 		<% if (outboundMobilityContextBean.getCandidacyPeriods().size() == 0) { %>
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="#" onclick="$('#outboundMobilityContextBeanCreateCandidacyPeriodBlock').toggle()">
@@ -87,7 +87,7 @@
 		<% } %>
 		</academic:allowed>
 		<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) { %>
-			<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+			<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="#" onclick="$('#outboundMobilityContextBeanAddDegreeToGroupBlock').toggle()">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.add.degree.to.group"/>
@@ -108,7 +108,7 @@
 		<% } %>
 	</fr:form>
 
-	<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+	<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 	<div id="outboundMobilityContextBeanAddMobilityCoordinatorBlock" style="display: none;">
 		<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.coordinator.group.add.member"/></h3>
 		<fr:edit id="outboundMobilityContextBeanAddMobilityCoordinator" name="outboundMobilityContextBean"
@@ -292,7 +292,7 @@
 							<th></th>
 							<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.username"/></th>
 							<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.name"/></th>
-							<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+							<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 								<th></th>
 							</academic:allowed>
 						</tr>
@@ -303,7 +303,7 @@
 									</td>
 									<td><%= person.getUsername() %></td>
 									<td><%= person.getName() %></td>
-									<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+									<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 										<td>
 											<a href="#" onclick="<%= "document.getElementById('removeMobilityCoordinatorForm').personOid.value = " + person.getExternalId() + " ; document.getElementById('removeMobilityCoordinatorForm').submit()" %>">
 												<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
@@ -345,7 +345,7 @@
 				<% } %>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"/></th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/></th>
-				<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+				<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 					<th></th>
 				</academic:allowed>
 		</tr>
@@ -379,7 +379,7 @@
 							</a>
 					<% } %>
 				</td>
-				<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+				<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 					<td>
 						<a href="#" onclick="<%= "document.getElementById('deleteContestForm').method.value = 'deleteContest' ; document.getElementById('deleteContestForm').contestOid.value = " + contest.getExternalId() + " ; document.getElementById('deleteContestForm').submit()" %>">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
