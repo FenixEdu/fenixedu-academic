@@ -17,7 +17,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
         public int compare(DomainOperationLog domainOperationLog1, DomainOperationLog domainOperationLog2) {
             final DateTime dateTime1 = domainOperationLog1.getWhenDateTime();
             final DateTime dateTime2 = domainOperationLog2.getWhenDateTime();
-            int res = dateTime1.compareTo(dateTime1);
+            int res = dateTime2.compareTo(dateTime1);
             return res;
         }
     };
