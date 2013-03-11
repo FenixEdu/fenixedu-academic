@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -287,6 +288,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         spreadsheet.setHeader(getResourceMessage("label.degree.name"));
         spreadsheet.setHeader(getResourceMessage("label.curricularCourse.name"));
         spreadsheet.setHeader(getResourceMessage("label.degree.numberOfEnrolments"));
+        spreadsheet.setHeader(getResourceMessage("label.degree.numberOfEnrolments.first.semester"));
+        spreadsheet.setHeader(getResourceMessage("label.degree.numberOfEnrolments.second.semester"));
     }
 
     private void addStatisticsInformation(final Spreadsheet spreadsheet, final ExecutionYear executionYear,
@@ -302,19 +305,22 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
                         row.setCell(degree.getPresentationName(executionYear));
                         row.setCell(curricularCourse.getName());
                         row.setCell(Integer.toString(enrolmentCount));
+                        row.setCell(Integer.toString(countEnrolments(curricularCourse, executionYear.getFirstExecutionPeriod())));
+                        row.setCell(Integer.toString(countEnrolments(curricularCourse, executionYear.getLastExecutionPeriod())));
                     }
                 }
             }
         }
     }
 
-    private int countEnrolments(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
+    private int countEnrolments(final CurricularCourse curricularCourse, final ExecutionInterval interval) {
         int c = 0;
         for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
                 final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-                if (executionYear == executionSemester.getExecutionYear()) {
+                if (interval == executionSemester
+                        || interval == executionSemester.getExecutionYear()) {
                     c++;
                 }
             }
