@@ -127,7 +127,7 @@ public class YearDelegate extends YearDelegate_Base {
                 }
             }
         }
-        for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
+        for (int iter = 1; iter <= degree.getDegreeType().getYears(); iter++) {
             YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
             if (yearDelegateForYear == null) {
                 executionCoursesToInquiries.addAll(getExecutionCoursesToInquiries(executionPeriod, executionDegree, iter));
