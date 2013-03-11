@@ -33,7 +33,7 @@
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 	</form>
 	 --%>
-	<form action="https://www.ist.utl.pt/search/"">
+	<form action="http://www.ist.utl.pt/search/">
 		<input type="hidden" name="cx" value="007266409324096302065:xkagxvojzme" />
 		<input type="hidden" name="cof" value="FORID:10" />
 		<input type="hidden" name="ie" value="UTF-8" />
