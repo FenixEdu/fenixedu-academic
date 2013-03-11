@@ -31,7 +31,7 @@
 	 	<tr>
 	 <% } %>
 		<td>
-			<bean:write name="degree" property="executionYear.nextExecutionYear.name"/>
+			<bean:write name="degree" property="executionYear.name"/>
 		</td>
 		<td>
 			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
