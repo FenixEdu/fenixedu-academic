@@ -210,7 +210,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
     public ActionForward createConvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        RenderUtils.invalidateViewState();
+
         ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("confirmConvokes").getMetaObject().getObject();
         List<VigilantWrapper> vigilantSugestion = bean.getVigilants();
         WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
