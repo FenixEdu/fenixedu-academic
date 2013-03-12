@@ -8,13 +8,16 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.Transformer;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -132,18 +135,14 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         return false;
     }
 
-    public void fillCandidatesInformation(final Spreadsheet spreadsheet, final OutboundMobilityCandidacyPeriod period) {
-        spreadsheet.setHeader(getString("label.username"));
-        spreadsheet.setHeader(getString("label.name"));
-        spreadsheet.setHeader(getString("label.degree"));
-        spreadsheet.setHeader(getString("label.candidate.classification"));
-        spreadsheet.setHeader(getString("label.curricular.year"));
-        spreadsheet.setHeader(getString("label.ects.completed.degree"));
-        spreadsheet.setHeader(getString("label.average.degree"));
-        spreadsheet.setHeader(getString("label.ects.completed.cycle.first"));
-        spreadsheet.setHeader(getString("label.average.cycle.first"));
-        spreadsheet.setHeader(getString("label.ects.completed.cycle.second"));
-        spreadsheet.setHeader(getString("label.average.cycle.second"));
+    public Spreadsheet getCandidatesInformationSpreadSheet(final OutboundMobilityCandidacyPeriod period) {
+        final String filename =
+                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        "label.mobility.candidates.information.filename");
+
+        final Spreadsheet spreadsheetCurricularInfo = new Spreadsheet(filename);
+        final Spreadsheet spreadsheetOptions = spreadsheetCurricularInfo.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        "label.mobility.candidates.options"));
 
         final Set<Registration> processed = new HashSet<Registration>();
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
@@ -152,34 +151,55 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                 final Registration registration = submission.getRegistration();
 
                 if (!processed.contains(registration)) {
-                    final Row row = spreadsheet.addRow();
                     final Person person = registration.getPerson();
+
+                    final Row row = spreadsheetCurricularInfo.addRow();
                     final BigDecimal candidacyGrade = submission.getGrade(this);
                     final ICurriculum curriculum = registration.getCurriculum();
-                    row.setCell(person.getUsername());
-                    row.setCell(person.getName());
-                    row.setCell(registration.getDegree().getSigla());
-                    row.setCell(candidacyGrade == null ? "" : candidacyGrade.toString());
-                    row.setCell(curriculum.getCurricularYear());
-                    row.setCell(curriculum.getSumEctsCredits().toString());
-                    row.setCell(curriculum.getAverage().toString());
-                    fillCycleDetails(row, CycleType.FIRST_CYCLE, registration);
-                    fillCycleDetails(row, CycleType.SECOND_CYCLE, registration);
+                    row.setCell(getString("label.username"), person.getUsername());
+                    row.setCell(getString("label.name"), person.getName());
+                    row.setCell(getString("label.degree"), registration.getDegree().getSigla());
+                    row.setCell(getString("label.candidate.classification"), candidacyGrade == null ? "" : candidacyGrade.toString());
+                    row.setCell(getString("label.curricular.year"), curriculum.getCurricularYear());
+                    row.setCell(getString("label.ects.completed.degree"), curriculum.getSumEctsCredits().toString());
+                    row.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
+                    fillCycleDetails(row, CycleType.FIRST_CYCLE, registration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
+                    fillCycleDetails(row, CycleType.SECOND_CYCLE, registration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
+
+                    for (final OutboundMobilityCandidacy c : submission.getSortedOutboundMobilityCandidacySet()) {
+                        final OutboundMobilityCandidacyContest contestFromCandidacy = c.getOutboundMobilityCandidacyContest();
+                        final MobilityAgreement mobilityAgreement = contestFromCandidacy.getMobilityAgreement();
+                        final UniversityUnit unit = mobilityAgreement.getUniversityUnit();
+                        final Country country = unit.getCountry();
+
+                        final Row row2 = spreadsheetOptions.addRow();
+                        row2.setCell(getString("label.username"), person.getUsername());
+                        row2.setCell(getString("label.preference.order"), c.getPreferenceOrder());
+                        row2.setCell(getString("label.degrees"), contestFromCandidacy.getOutboundMobilityCandidacyContestGroup().getDescription());
+                        row2.setCell(getString("label.mobility.program"), mobilityAgreement.getMobilityProgram().getRegistrationAgreement().getDescription());
+                        row2.setCell(getString("label.country"), country == null ? "" : country.getName());
+                        row2.setCell(getString("label.university"), unit.getPresentationName());
+                    }
 
                     processed.add(registration);
                 }
             }
         }
+
+        return spreadsheetCurricularInfo;
     }
 
-    private void fillCycleDetails(final Row row, final CycleType cycleType, final Registration registration) {
+    public void fillCandidateOptions(Spreadsheet spreadsheet, OutboundMobilityCandidacyPeriod period) {
+    }
+
+    private void fillCycleDetails(final Row row, final CycleType cycleType, final Registration registration, final String header1, final String header2) {
         if (isForCycle(cycleType, registration)) {
             ICurriculum curriculum = registration.getCurriculum(cycleType);
-            row.setCell(curriculum.getSumEctsCredits().toString());
-            row.setCell(curriculum.getAverage().toString());
+            row.setCell(header1, curriculum.getSumEctsCredits().toString());
+            row.setCell(header2, curriculum.getAverage().toString());
         } else {
-            row.setCell("");
-            row.setCell("");
+            row.setCell(header1, "");
+            row.setCell(header2, "");
         }
     }
 

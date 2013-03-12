@@ -235,13 +235,11 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
                 BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
                         "label.mobility.candidates.information.filename");
 
-        final Spreadsheet spreadsheet = new Spreadsheet(filename);
-        mobilityGroup.fillCandidatesInformation(spreadsheet, period);
-
-        response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+        response.setContentType("application/vnd.ms-excel");
 
         final ServletOutputStream outputStream = response.getOutputStream();
+        final Spreadsheet spreadsheet = mobilityGroup.getCandidatesInformationSpreadSheet(period);
         spreadsheet.exportToXLSSheet(outputStream);
         outputStream.close();
 
@@ -256,7 +254,5 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("manageCandidacies");
     }
-
-    
 
 }
