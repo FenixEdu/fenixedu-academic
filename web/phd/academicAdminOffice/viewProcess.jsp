@@ -62,7 +62,7 @@
 <p><strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong></p>
 
 <logic:equal name="process" property="candidacyProcess.publicCandidacy" value="true">
-<logic:equal name="process" property="candidacyProcess.validatedByCandidate" value="false">
+<logic:equal name="process" property="candidacyProcess.ongoingApplicationAndValidatedByApplicant" value="false">
 	<div class="warning1">
 		<p><bean:message key="message.phd.candidacy.not.submited.by.candidate" bundle="PHD_RESOURCES" /></p>
 	</div>

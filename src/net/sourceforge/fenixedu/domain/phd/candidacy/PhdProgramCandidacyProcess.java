@@ -259,6 +259,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         return getValidatedByCandidate() != null && getValidatedByCandidate().booleanValue();
     }
 
+    public boolean isOngoingApplicationAndValidatedByApplicant() {
+        return isValidatedByCandidate()
+                || getIndividualProgramProcess().getActiveState() != PhdIndividualProgramProcessState.CANDIDACY;
+    }
+
     public Set<PhdProgramProcessDocument> getStudyPlanRelevantDocuments() {
         final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
         result.addAll(getLatestDocumentsByType(PhdIndividualProgramDocumentType.STUDY_PLAN));
