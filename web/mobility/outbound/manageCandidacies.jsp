@@ -155,6 +155,9 @@
 
 <div id="UploadClassificationBlock" style="display: none;">
 	<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.upload.candidate.classification"/></h3>
+	<div class="section1">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.upload.candidate.classification.instructions"/>
+	</div>
 	<fr:edit id="uploadClassification" name="outboundMobilityContextBean" action="/outboundMobilityCandidacy.do?method=uploadClassifications">
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="stream" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.stream"
@@ -170,9 +173,14 @@
 	</fr:edit>
 </div>
 
+<div class="section1">
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.instructions"/>
+</div>
+
 <h3>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies"/>:
 </h3>
+
 
 <form id="mobilityGradeForm" action="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?mobilityGroupOid=" + mobilityGroup.getExternalId() %>"
 		method="post">
