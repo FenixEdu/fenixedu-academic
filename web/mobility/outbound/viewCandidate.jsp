@@ -113,6 +113,20 @@
 			</div> 
 		</td>
 		<td>
+			<table><tr>
+				<td><h4><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.information"/></h4></td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.email"/>
+					<bean:write name="person" property="emailForSendingEmails"/>
+					&nbsp;&nbsp;&nbsp;
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.phone"/>
+					<bean:write name="person" property="defaultPhoneNumber"/>
+					&nbsp;&nbsp;&nbsp;
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobile"/>
+					<bean:write name="person" property="defaultMobilePhoneNumber"/>
+				</td>
+			</tr></table>
 			<logic:notPresent name="person" property="student">
 				<br/> <br/>
 				<em style="color: red;">
@@ -121,7 +135,7 @@
 				<br/> <br/> <br/> <br/>
 			</logic:notPresent>
 			<logic:present name="person" property="student">
-				<div style="font-weight: bold; display: block;">
+				<div style="font-weight: bold;">
 					<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.registrations"/>
 				</div>
 				<table class="tstyle1 thlight mtop025">
@@ -173,6 +187,9 @@
 		</td>
 	</tr>
 </table>
+
+
+
 
 <h3 class="separator2">
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies"/>
