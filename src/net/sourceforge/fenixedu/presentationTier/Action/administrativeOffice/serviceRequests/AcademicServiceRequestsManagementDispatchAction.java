@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -372,8 +373,9 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
     public ActionForward concludeAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
+        Boolean sendEmail = true;
         RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+
         final AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
         if (academicServiceRequest.getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
             if (form.getDeferRequest() == null) {
@@ -384,9 +386,18 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
             academicServiceRequest = specialSeasonRequest;
         }
 
+        if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(academicServiceRequest.getRegistration()
+                .getRegistrationAgreement())) {
+            sendEmail = false;
+        }
+
+        if (academicServiceRequest.getAcademicServiceRequestType() == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
+            sendEmail = false;
+        }
+
         try {
             academicServiceRequest.conclude(getSituationDate(), getJustification(),
-                    form.getSendEmailToStudent() != null ? form.getSendEmailToStudent() : true);
+                    form.getSendEmailToStudent() != null ? form.getSendEmailToStudent() : sendEmail);
             addActionMessage(request, "academic.service.request.concluded.with.success");
 
             if (academicServiceRequest.isDocumentRequest()
