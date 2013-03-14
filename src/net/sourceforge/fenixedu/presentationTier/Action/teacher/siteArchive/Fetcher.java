@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -142,10 +143,17 @@ public class Fetcher {
         markAsFetched(resource);
 
         String url = prepareUrl(resource);
+        final int ls = File.ACTION_PATH.lastIndexOf('/');
         if (url.indexOf("dspace") >= 0) {
             getDspaceFile(stream, url);
-        } else {
+        } else if (url.indexOf(File.ACTION_PATH.substring(ls)) >= 0) {
             getLocalFile(stream, url);
+        } else {
+            RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
+            ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
+            FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
+
+            dispatcher.forward(request, response);
         }
     }
 

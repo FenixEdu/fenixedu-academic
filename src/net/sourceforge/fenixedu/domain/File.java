@@ -101,7 +101,7 @@ public abstract class File extends File_Base {
         }
     }
 
-    private static final String ACTION_PATH = PropertiesManager.getProperty("file.download.url.local.content");
+    public static final String ACTION_PATH = PropertiesManager.getProperty("file.download.url.local.content");
 
     /**
      * @return returns a public url that can be used by a client to download the
