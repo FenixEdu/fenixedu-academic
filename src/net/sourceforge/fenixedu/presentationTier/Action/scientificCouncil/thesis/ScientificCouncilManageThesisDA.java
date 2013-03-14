@@ -638,6 +638,11 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         spreadsheet.setHeader("Sigla Curso");
         spreadsheet.setHeader("Tese");
         spreadsheet.setHeader("Estado da tese");
+
+        spreadsheet.setHeader("Data da Discussão");
+        spreadsheet.setHeader("Resumo");
+        spreadsheet.setHeader("Abstract");
+
         spreadsheet.setHeader("Numero Orientador");
         spreadsheet.setHeader("Nome Orientador");
         spreadsheet.setHeader("Affiliacao Orientador");
@@ -648,8 +653,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         spreadsheet.setHeader("Distribuicao Creditos Corientador");
         spreadsheet.setHeader("Numero Presidente");
         spreadsheet.setHeader("Nome Presidente");
-        spreadsheet.setHeader("Affiliacao Presidente");
-        spreadsheet.setHeader("Nota Disserta��o");
+        spreadsheet.setHeader("Afiliação Presidente");
+        spreadsheet.setHeader("Nota Dissertação");
 
         for (final Thesis thesis : rootDomainObject.getThesesSet()) {
             final Enrolment enrolment = thesis.getEnrolment();
@@ -669,6 +674,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
                 row.setCell(degree.getSigla());
                 row.setCell(thesis.getTitle().getContent());
                 row.setCell(thesisPresentationState.getName());
+
+                if (thesis.getDiscussed() != null) {
+                    row.setCell(thesis.getDiscussed().toDate().toString());
+                }
+
+                row.setCell(thesis.getThesisAbstractPt());
+                row.setCell(thesis.getThesisAbstractEn());
 
                 addTeacherRows(thesis, row, ThesisParticipationType.ORIENTATOR);
                 addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
