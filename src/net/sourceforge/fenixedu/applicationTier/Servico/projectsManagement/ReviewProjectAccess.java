@@ -47,13 +47,7 @@ public class ReviewProjectAccess extends FenixService {
     }
 
     private Integer getPersonNumber(Person person) {
-        if (person.getEmployee() != null) {
-            return person.getEmployee().getEmployeeNumber();
-        }
-        if (person.getGrantOwner() != null) {
-            return person.getGrantOwner().getNumber();
-        }
-        return null;
+        return person.getEmployee() != null ? person.getEmployee().getEmployeeNumber() : null;
     }
 
     private void cleanProjectsAccess(Person person, Role role) throws FenixServiceException {

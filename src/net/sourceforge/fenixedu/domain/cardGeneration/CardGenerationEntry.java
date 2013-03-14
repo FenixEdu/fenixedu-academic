@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,10 +15,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
@@ -735,61 +730,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         stringBuilder.append("00");
         stringBuilder.append("00000000");
         stringBuilder.append(fillString(professionalCategory.getIdentificationCardLabel(), ' ', 17));
-        stringBuilder.append(" ");
-        stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
-        stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
-        stringBuilder.append("        ");
-        stringBuilder.append("            ");
-        stringBuilder.append("     "); // Academic year - no longer specified
-        // because the cards last for more than
-        // one year.
-        stringBuilder.append("        ");
-        stringBuilder.append("                       ");
-        stringBuilder.append(fillString(workingPlaceName, ' ', 42));
-        stringBuilder.append("     ");
-        stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
-        stringBuilder.append("\r\n");
-
-        return stringBuilder.toString();
-    }
-
-    public static String createLine(final GrantOwner grantOwner) {
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        final Person person = grantOwner.getPerson();
-
-        final GrantContract grantContract = grantOwner.getCurrentContract();
-        final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
-        final Teacher responsibleTeacher = grantCostCenter.getResponsibleTeacher();
-        final String costCenterNumber = grantCostCenter.getNumber();
-        final Unit unit = Unit.readByCostCenterCode(Integer.valueOf(costCenterNumber));
-        final String costCenterDesignation = unit == null ? grantCostCenter.getDesignation() : guessWorkingPlaceName(unit);
-        final String workingPlaceName = normalizeAndFlatten(costCenterDesignation);
-
-        final Department department = responsibleTeacher.getCurrentWorkingDepartment();
-        final DepartmentUnit departmentUnit = department.getDepartmentUnit();
-        final Campus campus = departmentUnit.getCampus();
-
-        stringBuilder.append(Campus.getUniversityCode(campus));
-        stringBuilder.append("9999");
-        stringBuilder.append("002");
-        stringBuilder.append("96");
-        final Integer employeeNumber = grantOwner.getNumber();
-        // final Integer istNumber = new
-        // Integer(person.getUsername().substring(3));
-        stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
-        stringBuilder.append("A");
-        stringBuilder.append(getExpirationDateForNewEntry());
-        stringBuilder.append(" ");
-        stringBuilder.append(" ");
-        stringBuilder.append("00");
-        stringBuilder.append("00");
-
-        stringBuilder.append("00");
-
-        stringBuilder.append("00");
-        stringBuilder.append("00000000");
-        stringBuilder.append(fillString("BOLSEIRO", ' ', 17));
         stringBuilder.append(" ");
         stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
         stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));

@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -307,7 +306,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private List<Person> getAllPersonsToSearchByClass() throws FenixServiceException, FenixFilterException {
         List<Person> allPersons = new ArrayList<Person>();
         RoleType personTypeAux = RoleType.valueOf(personType);
-        if (personTypeAux.equals(RoleType.EMPLOYEE) || personTypeAux.equals(RoleType.TEACHER)) {
+        if (personTypeAux.equals(RoleType.EMPLOYEE) || personTypeAux.equals(RoleType.TEACHER)
+                || personTypeAux.equals(RoleType.GRANT_OWNER)) {
             List<Employee> allEmployees = new ArrayList<Employee>();
             allEmployees.addAll(rootDomainObject.getEmployees());
             for (Employee employee : allEmployees) {
@@ -322,15 +322,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             for (Registration registration : allStudents) {
                 if (registration.getNumber().equals(personNumber)) {
                     allPersons.add(registration.getPerson());
-                    return allPersons;
-                }
-            }
-        } else if (personTypeAux.equals(RoleType.GRANT_OWNER)) {
-            List<GrantOwner> allGrantOwner = new ArrayList<GrantOwner>();
-            allGrantOwner.addAll(rootDomainObject.getGrantOwners());
-            for (GrantOwner grantOwner : allGrantOwner) {
-                if (grantOwner.getNumber().equals(personNumber)) {
-                    allPersons.add(grantOwner.getPerson());
                     return allPersons;
                 }
             }

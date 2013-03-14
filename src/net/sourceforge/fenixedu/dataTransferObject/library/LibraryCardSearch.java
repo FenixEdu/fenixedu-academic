@@ -85,8 +85,7 @@ public class LibraryCardSearch implements Serializable {
             }
             final int n = getNumber().intValue();
             return (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().intValue() == n)
-                    || (person.getStudent() != null && person.getStudent().getNumber().intValue() == n)
-                    || (person.getGrantOwner() != null && person.getGrantOwner().getNumber().intValue() == n);
+                    || (person.getStudent() != null && person.getStudent().getNumber().intValue() == n);
         }
     }
 

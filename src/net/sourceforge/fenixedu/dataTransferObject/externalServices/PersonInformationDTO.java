@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -180,9 +179,6 @@ public class PersonInformationDTO {
             }
         }
 
-        if (person.hasGrantOwner()) {
-            workingCostCenters.add(Person.getCostCenterForGrantOwner(new LocalDate(), person.getGrantOwner()));
-        }
         if (person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.TEACHER)) {
             final Collection<? extends Accountability> accountabilities =
                     person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);

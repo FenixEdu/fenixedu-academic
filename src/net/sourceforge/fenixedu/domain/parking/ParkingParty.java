@@ -20,9 +20,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -217,10 +214,7 @@ public class ParkingParty extends ParkingParty_Base {
                     }
                 }
             }
-            GrantOwner grantOwner = person.getGrantOwner();
-            if (person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner != null && grantOwner.hasCurrentContract()) {
-                roles.add(RoleType.GRANT_OWNER);
-            } else if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+            if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
                 PersonContractSituation currentGrantOwnerContractSituation =
                         person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
                                 .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
@@ -276,42 +270,7 @@ public class ParkingParty extends ParkingParty_Base {
                                 currentEmployeeContractSituation.getBeginDate(), currentEmployeeContractSituation.getEndDate());
                 occupations.add(thisOccupation);
             }
-            GrantOwner grantOwner = person.getGrantOwner();
-            if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
-                List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
-                StringBuilder stringBuilder =
-                        new StringBuilder(BundleUtil.getStringFromResourceBundle("resources.ParkingResources",
-                                "message.person.identification", new String[] { RoleType.GRANT_OWNER.getLocalizedName(),
-                                        grantOwner.getNumber().toString() }));
-
-                for (GrantContract contract : grantOwner.getGrantContracts()) {
-                    contractRegimeList.addAll(contract.getContractRegimes());
-                }
-                Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
-                for (GrantContractRegime contractRegime : contractRegimeList) {
-
-                    stringBuilder.append("<br/><strong>Inicio:</strong> "
-                            + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
-                    LocalDate endDate = contractRegime.getDateEndContractYearMonthDay().toLocalDate();
-                    boolean rescinded = false;
-                    if (contractRegime.getGrantContract().getRescissionDate() != null
-                            && endDate.isAfter(contractRegime.getGrantContract().getRescissionDate())) {
-                        endDate = contractRegime.getGrantContract().getRescissionDate();
-                        if (endDate.isBefore(new LocalDate())) {
-                            rescinded = true;
-                        }
-                    }
-                    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
-                            + endDate.toString("dd/MM/yyyy"));
-                    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Activo:</strong> ");
-                    if (contractRegime.isActive() && !rescinded) {
-                        stringBuilder.append("Sim");
-                    } else {
-                        stringBuilder.append("Nao");
-                    }
-                }
-                occupations.add(stringBuilder.toString());
-            } else if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+            if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
                 PersonContractSituation currentGrantOwnerContractSituation =
                         person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
                                 .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
@@ -502,19 +461,14 @@ public class ParkingParty extends ParkingParty_Base {
         if (getParty().isPerson()) {
             final Person person = (Person) getParty();
             final Employee employee = person.getEmployee();
-            final GrantOwner grantOwner = person.getGrantOwner();
-            boolean hasCurrentContract = grantOwner != null && grantOwner.hasCurrentContract();
             if (employee != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
-                            || person.hasRole(RoleType.RESEARCHER) || (person.hasRole(RoleType.GRANT_OWNER) && (grantOwner == null || !hasCurrentContract)))) {
+                            || person.hasRole(RoleType.RESEARCHER) || person.hasRole(RoleType.GRANT_OWNER))) {
                 result.add(employee.getEmployeeNumber().toString());
             }
             final Student student = person.getStudent();
             if (person.hasRole(RoleType.STUDENT)) {
                 result.add(student.getNumber().toString());
-            }
-            if (grantOwner != null && hasCurrentContract) {
-                result.add(grantOwner.getNumber().toString());
             }
         }
         return StringUtils.join(result, "\n");
@@ -556,11 +510,6 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
 
-            final GrantOwner grantOwner = person.getGrantOwner();
-
-            if (grantOwner != null && grantOwner.hasCurrentContract()) {
-                return grantOwner.getNumber();
-            }
             if (employee != null && isTeacher && isMonitor) {
                 return employee.getEmployeeNumber();
             }
@@ -669,15 +618,11 @@ public class ParkingParty extends ParkingParty_Base {
                 }
             }
             if (getParkingGroup().getGroupName().equalsIgnoreCase("Bolseiros")) {
-                if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
-                    return true;
-                } else if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+                if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
                     PersonContractSituation currentGrantOwnerContractSituation =
                             person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
                                     .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
-                    if (currentGrantOwnerContractSituation != null) {
-                        return true;
-                    }
+                    return currentGrantOwnerContractSituation != null;
                 }
                 return false;
             }

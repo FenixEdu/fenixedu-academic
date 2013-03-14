@@ -17,16 +17,16 @@ import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
@@ -210,12 +210,13 @@ public class LibraryAttendance implements Serializable {
                 researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
             }
 
-            if (person.hasGrantOwner() && person.getGrantOwner().isActive()) {
-                GrantContract contract = person.getGrantOwner().getCurrentContract();
-                GrantContractRegime regime = contract.getActiveRegime();
-                if (regime != null && contract.getGrantCostCenter() != null) {
-                    grantOwnerUnit = contract.getGrantCostCenter().getUnit();
-                    grantOwnerEnd = regime.getEndDateOrRescissionDate();
+            if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+                PersonContractSituation currentGrantOwnerContractSituation =
+                        person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
+                                .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
+                if (currentGrantOwnerContractSituation != null) {
+                    grantOwnerUnit = person.getWorkingPlaceUnitForAnyRoleType();
+                    grantOwnerEnd = currentGrantOwnerContractSituation.getEndDate();
                 }
             }
             if (person.hasStudent()) {

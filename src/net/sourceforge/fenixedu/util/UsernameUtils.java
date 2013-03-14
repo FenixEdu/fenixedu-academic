@@ -52,13 +52,9 @@ public class UsernameUtils extends FenixUtil {
             } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
                 istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
 
-            } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER) {
-                if (person.hasGrantOwner()) {
-                    istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
-                } else if (person.hasEmployee()) {
-                    istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
-                }
-
+            } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER
+                    && person.hasEmployee()) {
+                istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
             } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.CANDIDATE) {
                 if (person.hasStudent()) {
                     return ist + sumNumber(person.getStudent().getNumber(), 100000);
@@ -207,8 +203,8 @@ public class UsernameUtils extends FenixUtil {
             throw new DomainException("error.person.addingInvalidRole", RoleType.STUDENT.getName());
 
         } else if (roleType.equals(RoleType.GRANT_OWNER)) {
-            if (person.getGrantOwner() != null) {
-                return "B" + person.getGrantOwner().getNumber();
+            if (person.getEmployee() != null) {
+                return "B" + person.getEmployee().getEmployeeNumber();
             }
 
         } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)

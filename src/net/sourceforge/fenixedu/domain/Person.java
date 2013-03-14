@@ -76,10 +76,6 @@ import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
@@ -2577,9 +2573,6 @@ public class Person extends Person_Base {
         if (getEmployee() != null && getEmployee().isActive()) {
             return PartyClassification.EMPLOYEE;
         }
-        if (getGrantOwner() != null && getGrantOwner().hasCurrentContract()) {
-            return PartyClassification.GRANT_OWNER;
-        }
         if (getPersonRole(RoleType.GRANT_OWNER) != null && getEmployee() != null) {
             final PersonContractSituation currentGrantOwnerContractSituation =
                     getPersonProfessionalData() != null ? getPersonProfessionalData()
@@ -3420,8 +3413,8 @@ public class Person extends Person_Base {
         if (getStudent() != null) {
             return getStudent().getNumber();
         }
-        if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {
-            return getGrantOwner().getNumber();
+        if (getPartyClassification().equals(PartyClassification.GRANT_OWNER) && getEmployee() != null) {
+            return getEmployee().getEmployeeNumber();
         }
         return 0;
     }
@@ -3994,7 +3987,7 @@ public class Person extends Person_Base {
     }
 
     public Unit getWorkingPlaceUnitForAnyRoleType() {
-        if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE)) {
+        if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.GRANT_OWNER)) {
             return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
         }
         if (hasRole(RoleType.RESEARCHER)) {
@@ -4013,36 +4006,6 @@ public class Person extends Person_Base {
                 }
             }
         }
-        if (hasRole(RoleType.GRANT_OWNER)) {
-            final GrantOwner grantOwner = getGrantOwner();
-            if (grantOwner != null) {
-                final YearMonthDay today = new YearMonthDay();
-                for (final GrantContract grantContract : grantOwner.getGrantContracts()) {
-                    for (final GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
-                        if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
-                                && grantContractRegime.getDateEndContractYearMonthDay() != null
-                                && !today.isAfter(grantContractRegime.getDateEndContractYearMonthDay())) {
-                            final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
-                            final Person person = grantOwner.getPerson();
-                            if (grantCostCenter != null && person != null) {
-                                final String costCenterDesignation = grantCostCenter.getNumber();
-                                if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
-                                    return Unit.readByCostCenterCode(Integer.valueOf(grantCostCenter.getNumber()));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (getPersonProfessionalData() != null) {
-                PersonContractSituation currentPersonContractSituationByCategoryType =
-                        getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER);
-                if (currentPersonContractSituationByCategoryType != null) {
-                    return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
-                }
-            }
-        }
-
         return null;
     }
 
@@ -4068,48 +4031,7 @@ public class Person extends Person_Base {
     }
 
     public String readAllGrantOwnerInformation() {
-        final StringBuilder result = new StringBuilder();
-        final LocalDate today = new LocalDate();
-        for (final GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwnersSet()) {
-            final String costCenterDesignation = getCostCenterForGrantOwner(today, grantOwner);
-            if (costCenterDesignation != null) {
-                if (result.length() > 0) {
-                    result.append('|');
-                }
-                final Person person = grantOwner.getPerson();
-                result.append(person.getUsername());
-                result.append(':');
-                result.append(RoleType.GRANT_OWNER.name());
-                result.append(':');
-                result.append(costCenterDesignation);
-                result.append(':');
-                result.append("IST");
-            }
-        }
-
-        readAllInformation(result, RoleType.GRANT_OWNER, RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
-
-        return result.toString();
-    }
-
-    public static String getCostCenterForGrantOwner(final LocalDate today, final GrantOwner grantOwner) {
-        for (final GrantContract grantContract : grantOwner.getGrantContracts()) {
-            for (final GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
-                if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
-                        && grantContractRegime.getDateEndContractYearMonthDay() != null
-                        && !today.isAfter(grantContractRegime.getDateEndContractYearMonthDay())) {
-                    final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
-                    final Person person = grantOwner.getPerson();
-                    if (grantCostCenter != null && person != null) {
-                        final String costCenterDesignation = grantCostCenter.getNumber();
-                        if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
-                            return costCenterDesignation;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
+        return readAllInformation(RoleType.GRANT_OWNER, RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
     }
 
     public String readAllEmployerRelations() {

@@ -39,7 +39,9 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -401,8 +403,13 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 }
             }
         }
-        if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
-            return person.getGrantOwner().getNumber();
+        if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+            PersonContractSituation currentGrantOwnerContractSituation =
+                    person.getPersonProfessionalData() != null ? person.getPersonProfessionalData()
+                            .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
+            if (currentGrantOwnerContractSituation != null) {
+                return person.getEmployee().getEmployeeNumber();
+            }
         }
         if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
                 && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester()) && person.getEmployee() != null) {

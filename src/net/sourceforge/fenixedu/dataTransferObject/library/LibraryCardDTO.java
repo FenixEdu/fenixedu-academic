@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.library;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -10,9 +8,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -24,9 +19,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -114,21 +107,8 @@ public class LibraryCardDTO implements Serializable {
         if (isStudent(getPartyClassification())) {
             return getPerson().getStudent().getNumber();
         }
-        if (getPartyClassification() == PartyClassification.GRANT_OWNER) {
-            if (person.hasGrantOwner()) {
-                GrantContract contract = person.getGrantOwner().getCurrentContract();
-                if (contract.getGrantCostCenter() != null) {
-                    return getPerson().getGrantOwner().getNumber();
-                }
-            }
-            if (person.hasPersonProfessionalData() && person.hasEmployee()) {
-                PersonContractSituation currentPersonContractSituationByCategoryType =
-                        person.getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(
-                                CategoryType.GRANT_OWNER);
-                if (currentPersonContractSituationByCategoryType != null) {
-                    return person.getEmployee().getEmployeeNumber();
-                }
-            }
+        if (getPartyClassification() == PartyClassification.GRANT_OWNER && getPerson().getEmployee() != null) {
+            return getPerson().getEmployee().getEmployeeNumber();
         }
         return 0;
     }
@@ -390,28 +370,17 @@ public class LibraryCardDTO implements Serializable {
                 }
             }
         } else if (partyClassification.equals(PartyClassification.GRANT_OWNER)) {
-            GrantOwner grantOwner = getPerson().getGrantOwner();
-            if (grantOwner != null) {
-                List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
-
-                for (GrantContract contract : grantOwner.getGrantContracts()) {
-                    contractRegimeList.addAll(contract.getContractRegimes());
-                }
-                Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
-                GrantContractRegime currentOrLastContractRegime = null;
-                LocalDate today = new LocalDate();
-                for (GrantContractRegime contractRegime : contractRegimeList) {
-                    if (currentOrLastContractRegime == null) {
-                        currentOrLastContractRegime = contractRegime;
-                    } else if (contractRegime.getDateBeginContractYearMonthDay().isAfter(
-                            currentOrLastContractRegime.getDateBeginContractYearMonthDay())
-                            && contractRegime.getDateBeginContractYearMonthDay().isBefore(today)) {
-                        currentOrLastContractRegime = contractRegime;
+            if (getPerson().getEmployee() != null) {
+                PersonContractSituation currentOrLastGrantOwnerContractSituation =
+                        getPerson().getPersonProfessionalData() != null ? getPerson().getPersonProfessionalData()
+                                .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
+                if (currentOrLastGrantOwnerContractSituation != null) {
+                    dates.append(currentOrLastGrantOwnerContractSituation.getBeginDate()).append(separator);
+                    if (currentOrLastGrantOwnerContractSituation.getEndDate() != null) {
+                        dates.append(currentOrLastGrantOwnerContractSituation.getEndDate());
+                    } else {
+                        dates.append(nullValue);
                     }
-                }
-                if (currentOrLastContractRegime != null) {
-                    dates.append(currentOrLastContractRegime.getDateBeginContractYearMonthDay()).append(separator)
-                            .append(currentOrLastContractRegime.getDateEndContractYearMonthDay());
                 }
             }
         } else if (partyClassification.equals(PartyClassification.MASTER_DEGREE)

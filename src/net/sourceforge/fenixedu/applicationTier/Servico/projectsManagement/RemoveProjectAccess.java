@@ -55,12 +55,6 @@ public class RemoveProjectAccess extends FenixService {
     }
 
     private Integer getUserNumber(Person person) {
-        if (person.getEmployee() != null) {
-            return person.getEmployee().getEmployeeNumber();
-        }
-        if (person.getGrantOwner() != null) {
-            return person.getGrantOwner().getNumber();
-        }
-        return null;
+        return person.getEmployee() != null ? person.getEmployee().getEmployeeNumber() : null;
     }
 }
