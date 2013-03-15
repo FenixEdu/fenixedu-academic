@@ -121,12 +121,14 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     @Service
     public void selectOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
         setConfirmationOption(option);
+        setConfirmedPlacement(Boolean.TRUE);
     }
 
     @Service
     public void removeOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
         if (getConfirmationOption() == option) {
             removeConfirmationOption();
+            setConfirmedPlacement(Boolean.FALSE);
         }
     }
 
