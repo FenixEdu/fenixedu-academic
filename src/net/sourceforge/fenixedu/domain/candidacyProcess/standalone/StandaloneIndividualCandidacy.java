@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentStandaloneEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -207,6 +210,13 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     @Override
     public String getDescription() {
         return getCandidacyProcess().getDisplayName() + ": " + Degree.readEmptyDegree().getNameI18N();
+    }
+
+    @Override
+    public Collection<Degree> getAllDegrees() {
+        List<Degree> result = new ArrayList<Degree>();
+        result.add(EmptyDegree.getInstance());
+        return result;
     }
 
     @Override

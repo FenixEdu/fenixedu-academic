@@ -541,7 +541,6 @@ public abstract class Event extends Event_Base {
         return getPostingRule().calculateEntries(this, when);
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void open() {
 
         changeState(EventState.OPEN, new DateTime());
@@ -768,7 +767,6 @@ public abstract class Event extends Event_Base {
         recalculateState(transactionDetailDTO.getWhenRegistered());
     }
 
-    @Checked("AcademicPredicates.DEPOSIT_AMOUNT_ON_PAYMENT_EVENT")
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
             final AccountingTransactionDetailDTO transactionDetailDTO) {
 
@@ -781,7 +779,6 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    @Checked("AcademicPredicates.DEPOSIT_AMOUNT_ON_PAYMENT_EVENT")
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
             final AccountingTransactionDetailDTO transactionDetailDTO) {
 
@@ -973,7 +970,6 @@ public abstract class Event extends Event_Base {
         setWhenSentLetter(new LocalDate());
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void transferPaymentsAndCancel(Person responsible, Event targetEvent, String justification) {
 
         checkConditionsToTransferPaymentsAndCancel(targetEvent);

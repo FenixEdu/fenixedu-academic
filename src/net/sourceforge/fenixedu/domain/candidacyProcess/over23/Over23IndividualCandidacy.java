@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -176,6 +177,13 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
         for (final Over23IndividualCandidacyDegreeEntry entry : entries) {
             result.add(entry.getDegree());
         }
+        return result;
+    }
+
+    @Override
+    public Collection<Degree> getAllDegrees() {
+        List<Degree> result = new ArrayList<Degree>();
+        result.addAll(getSelectedDegrees());
         return result;
     }
 

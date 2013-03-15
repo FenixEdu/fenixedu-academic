@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -283,6 +284,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected ExecutionInterval getCandidacyExecutionInterval() {
         return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
+
+    abstract public Collection<Degree> getAllDegrees();
 
     protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
 

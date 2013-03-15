@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Formatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
@@ -343,6 +346,13 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Collection<Degree> getAllDegrees() {
+        List<Degree> result = new ArrayList<Degree>();
+        result.add(getSelectedDegree());
+        return result;
     }
 
     @Override

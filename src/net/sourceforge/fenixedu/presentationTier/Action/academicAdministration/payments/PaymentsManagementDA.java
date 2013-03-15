@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.payments;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,28 +42,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(path = "/paymentsManagement", module = "manager")
-@Forwards({
-        @Forward(name = "searchPersons", path = "/manager/payments/events/searchPersons.jsp"),
-        @Forward(name = "showEvents", path = "/manager/payments/events/showEvents.jsp"),
-        @Forward(name = "editCancelEventJustification", path = "/manager/payments/events/editCancelEventJustification.jsp"),
-        @Forward(name = "showPaymentsForEvent", path = "/manager/payments/events/showPaymentsForEvent.jsp"),
-        @Forward(name = "chooseTargetEventForPaymentsTransfer",
-                path = "/manager/payments/events/chooseTargetEventForPaymentsTransfer.jsp"),
-        @Forward(name = "annulTransaction", path = "/manager/payments/events/annulTransaction.jsp"),
-        @Forward(name = "showOperations", path = "/manager/payments/showOperations.jsp"),
-        @Forward(name = "showReceipts", path = "/manager/payments/receipts/showReceipts.jsp"),
-        @Forward(name = "showReceipt", path = "/manager/payments/receipts/showReceipt.jsp"),
-        @Forward(name = "depositAmount", path = "/manager/payments/events/depositAmount.jsp"),
-        @Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
-        @Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp"),
-        @Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp"),
-        @Forward(name = "viewEventsForCancellation", path = "/manager/payments/events/viewEventsForCancellation.jsp") })
 public class PaymentsManagementDA extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -128,7 +108,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
         return mapping.findForward("showPaymentsForEvent");
     }
 
-    private Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
+    protected Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
             throws FenixFilterException, FenixServiceException {
         final SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
@@ -310,6 +290,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
+        request.setAttribute("permission", true);
         request.setAttribute("person", getPerson(request));
 
         return mapping.findForward("showOperations");

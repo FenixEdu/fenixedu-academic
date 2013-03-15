@@ -122,6 +122,13 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     }
 
     @Override
+    public Collection<Degree> getAllDegrees() {
+        List<Degree> result = new ArrayList<Degree>();
+        result.add(getSelectedDegree());
+        return result;
+    }
+
+    @Override
     public String getDescription() {
         return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
     }

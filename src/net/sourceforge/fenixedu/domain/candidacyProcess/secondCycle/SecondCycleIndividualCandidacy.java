@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
@@ -359,6 +361,13 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     public String getDescription() {
         return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+    }
+
+    @Override
+    public Collection<Degree> getAllDegrees() {
+        List<Degree> result = new ArrayList<Degree>();
+        result.addAll(getSelectedDegrees());
+        return result;
     }
 
     @Override

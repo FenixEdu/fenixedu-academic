@@ -70,7 +70,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         throw new DomainException("error.GratuityEventWithPaymentPlan.do.not.use.this.method");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeGratuityPaymentPlan(final PaymentPlan paymentPlan) {
         if (paymentPlan instanceof GratuityPaymentPlan) {
             setGratuityPaymentPlan((GratuityPaymentPlan) paymentPlan);
@@ -81,7 +80,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void setGratuityPaymentPlan(final GratuityPaymentPlan paymentPlan) {
         if (paymentPlan != null) {
             ensureServiceAgreement();
@@ -89,7 +87,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void setGratuityPaymentPlan(final CustomGratuityPaymentPlan paymentPlan) {
         if (paymentPlan != null) {
             ensureServiceAgreement();

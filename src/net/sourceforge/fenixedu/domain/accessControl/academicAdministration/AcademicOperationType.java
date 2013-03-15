@@ -45,6 +45,7 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     RECTIFICATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
+    // AVMC: Migrated from Manager
     REMOVE_GRADES(true, true, Scope.ADMINISTRATION),
 
     DISSERTATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
@@ -68,6 +69,9 @@ public enum AcademicOperationType implements IPresentableEnum {
     // Student Section
 
     MANAGE_STUDENT_PAYMENTS(true, false, Scope.OFFICE),
+
+    // AVMC: Migrated from Manager
+    MANAGE_STUDENT_PAYMENTS_ADV(true, true, Scope.ADMINISTRATION),
 
     MANAGE_ACCOUNTING_EVENTS(true, true, Scope.OFFICE),
 

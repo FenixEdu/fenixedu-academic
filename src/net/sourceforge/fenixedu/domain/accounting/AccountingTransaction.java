@@ -18,7 +18,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 /**
@@ -112,7 +111,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         throw new DomainException("error.accounting.accountingTransaction.cannot.remove.entries");
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Override
     public void setEvent(Event event) {
         super.setEvent(event);
@@ -205,18 +203,15 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true, reimburseDate);
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
         return reimburseWithoutRules(responsibleUser, paymentMode, amountToReimburse, null);
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
             String comments) {
         return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, false);
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void annul(final User responsibleUser, final String reason) {
 
         if (StringUtils.isEmpty(reason)) {
@@ -309,7 +304,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return getFromAccount().getParty() == party;
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void delete() {
 
         super.setAdjustedTransaction(null);
