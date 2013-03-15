@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -67,6 +68,10 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     public int compareTo(final CandidacyPeriod cp) {
         int i = getStart().compareTo(cp.getStart());
         return i == 0 ? getExternalId().compareTo(cp.getExternalId()) : i;
+    }
+
+    public Interval getInterval() {
+        return new Interval(getStart(), getEnd());
     }
 
     public String getIntervalAsString() {

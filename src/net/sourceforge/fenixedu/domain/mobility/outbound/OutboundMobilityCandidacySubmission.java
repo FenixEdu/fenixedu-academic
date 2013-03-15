@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
@@ -93,6 +92,20 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
             }
         }
         new OutboundMobilityCandidacySubmissionGrade(this, mobilityGroup, grade);
+    }
+
+    public boolean hasConfirmedPlacement() {
+        final Boolean cp = getConfirmedPlacement();
+        return cp != null && cp.booleanValue();
+    }
+
+    public void select() {
+        for (final OutboundMobilityCandidacy candidacy : getSortedOutboundMobilityCandidacySet()) {
+            if (candidacy.getOutboundMobilityCandidacyContest().hasVacancy()) {
+                candidacy.select();
+                return;
+            }
+        }
     }
 
 }

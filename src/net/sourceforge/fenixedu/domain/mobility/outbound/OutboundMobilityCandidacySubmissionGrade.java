@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCandidacySubmissionGrade_Base {
+public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCandidacySubmissionGrade_Base implements Comparable<OutboundMobilityCandidacySubmissionGrade> {
 
     public OutboundMobilityCandidacySubmissionGrade(
             final OutboundMobilityCandidacySubmission submission,
@@ -18,6 +18,12 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
 
     public void edit(final BigDecimal grade) {
         setGrade(grade);
+    }
+
+    @Override
+    public int compareTo(final OutboundMobilityCandidacySubmissionGrade o) {
+        final int g = getGrade().compareTo(o.getGrade());
+        return g == 0 ? getExternalId().compareTo(o.getExternalId()) : g;
     }
 
 }

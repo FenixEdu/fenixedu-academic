@@ -8184,11 +8184,16 @@ class student.PersonalIngressionData extends DomainObject {
 class mobility.outbound.OutboundMobilityCandidacyPeriod extends period.CandidacyPeriod {
 }
 
+class mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption {
+	String optionValue;
+}
+
 class mobility.outbound.OutboundMobilityCandidacyContest extends DomainObject {
     Integer vacancies;
 }
 
 class mobility.outbound.OutboundMobilityCandidacySubmission extends DomainObject {
+	Boolean confirmedPlacement;
 }
 
 class mobility.outbound.OutboundMobilityCandidacySubmissionGrade extends DomainObject {
@@ -8215,6 +8220,24 @@ relation RootDomainObjectOutboundMobilityCandidacyContestGroup {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOutboundMobilityCandidacyPeriodConfirmationOption {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole outboundMobilityCandidacyPeriodConfirmationOption {
+		multiplicity *;
+	}
+}
+
+relation CandidacyPeriodOptions {
+	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
+		multiplicity 1..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole outboundMobilityCandidacyPeriodConfirmationOption {
 		multiplicity *;
 	}
 }
@@ -8368,6 +8391,23 @@ relation OutboundMobilityCandidacySubmissionRegistration {
 	}
 }
 
+relation ContestGroupPeriodCandidacySelectionConclusion {
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole concludedCandidateSelectionGroups {
+		multiplicity *;
+	}
+	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole concludedCandidateSelectionForPeriod {
+		multiplicity *;
+	}
+}
+
+relation ContestGroupPeriodSelectionResultNotification {
+	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole candidatesNotifiedOfSelectionResultsForGroups {
+		multiplicity *;
+	}
+	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole candidatesNotifiedOfSelectionResultsForPeriod {
+		multiplicity *;
+	}
+}
 
 relation DomainOperationLogPerson {
 	DomainOperationLog playsRole domainOperationLogs {

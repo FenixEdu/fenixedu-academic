@@ -22,6 +22,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.apache.commons.collections.CollectionUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -255,4 +258,85 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key, args);
     }
 
+    public boolean areAllStudentsGraded(final OutboundMobilityCandidacyPeriod period) {
+        for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
+            for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
+                final OutboundMobilityCandidacySubmission submission = candidacy.getOutboundMobilityCandidacySubmission();
+                if (submission.getOutboundMobilityCandidacyPeriod() == period && !hasGrade(submission)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean hasGrade(final OutboundMobilityCandidacySubmission submission) {
+        for (final OutboundMobilityCandidacySubmissionGrade grade : submission.getOutboundMobilityCandidacySubmissionGradeSet()) {
+            if (grade.getOutboundMobilityCandidacyContestGroup() == this) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isCandidacySelectionConcluded(final OutboundMobilityCandidacyPeriod period) {
+        return getConcludedCandidateSelectionForPeriodSet().contains(period);
+    }
+
+    public boolean areCandidatesNotofiedOfSelectionResults(final OutboundMobilityCandidacyPeriod period) {
+        return getCandidatesNotifiedOfSelectionResultsForPeriodSet().contains(period);
+    }
+
+    public boolean haveAllCandidatesConfirmed(final OutboundMobilityCandidacyPeriod period) {
+        for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
+            for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
+                final OutboundMobilityCandidacySubmission submission = candidacy.getSubmissionFromSelectedCandidacy();
+                if (submission != null) {
+                    if (!submission.hasConfirmedPlacement()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    @Service
+    public void selectCandidates(final OutboundMobilityCandidacyPeriod period) {
+        final SortedSet<OutboundMobilityCandidacySubmissionGrade> grades = new TreeSet<OutboundMobilityCandidacySubmissionGrade>();
+        collectGradesForGroup(grades, period);
+
+        for (final OutboundMobilityCandidacyContestGroup otherGroup : getRootDomainObject().getOutboundMobilityCandidacyContestGroupSet()) {
+            if (otherGroup != this && intersect(otherGroup)) {
+                otherGroup.collectGradesForGroup(grades, period);
+            }
+        }
+
+        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : grades) {
+            final BigDecimal grade = submissionGrade.getGrade();
+            if (grade.signum() == 1) {
+                submissionGrade.getOutboundMobilityCandidacySubmission().select();
+            }
+        }
+    }
+
+    private boolean intersect(final OutboundMobilityCandidacyContestGroup otherGroup) {
+        return CollectionUtils.containsAny(getExecutionDegreeSet(), otherGroup.getExecutionDegreeSet());
+    }
+
+    private void collectGradesForGroup(final SortedSet<OutboundMobilityCandidacySubmissionGrade> grades, final OutboundMobilityCandidacyPeriod period) {
+        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
+            final OutboundMobilityCandidacySubmission submission = submissionGrade.getOutboundMobilityCandidacySubmission();
+            if (submission.getOutboundMobilityCandidacyPeriod() == period) {
+                grades.add(submissionGrade);
+            }
+        }
+    }
+
+    @Service
+    public void concludeCandidateSelection(final OutboundMobilityCandidacyPeriod period) {
+        addConcludedCandidateSelectionForPeriod(period);
+    }
+
 }
+

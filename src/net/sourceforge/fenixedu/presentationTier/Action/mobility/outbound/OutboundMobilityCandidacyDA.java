@@ -255,4 +255,34 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("manageCandidacies");
     }
 
+    public ActionForward selectCandidates(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+
+        mobilityGroup.selectCandidates(period);
+
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));
+        outboundMobilityContextBean.setMobilityGroupsAsList(Collections.singletonList(mobilityGroup));
+
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("manageCandidacies");
+    }
+
+    public ActionForward concludeCandidateSelection(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+
+        mobilityGroup.concludeCandidateSelection(period);
+
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));
+        outboundMobilityContextBean.setMobilityGroupsAsList(Collections.singletonList(mobilityGroup));
+
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("manageCandidacies");
+    }
+
 }
