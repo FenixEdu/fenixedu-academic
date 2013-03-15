@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
+import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -118,4 +120,25 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     public SortedSet<OutboundMobilityCandidacyPeriodConfirmationOption> getSortedOptions() {
         return new TreeSet<OutboundMobilityCandidacyPeriodConfirmationOption>(getOutboundMobilityCandidacyPeriodConfirmationOptionSet());
     }
+
+    public SortedSet<OutboundMobilityCandidacySubmission> getSortedSubmissionSet(final OutboundMobilityCandidacyContestGroup mobilityGroup) {
+        final SortedSet<OutboundMobilityCandidacySubmission> result = new TreeSet<OutboundMobilityCandidacySubmission>(new Comparator<OutboundMobilityCandidacySubmission>() {
+            @Override
+            public int compare(OutboundMobilityCandidacySubmission o1, OutboundMobilityCandidacySubmission o2) {
+                final BigDecimal grade1 = o1.getGrade(mobilityGroup);
+                final BigDecimal grade2 = o2.getGrade(mobilityGroup);
+                if ((grade1 == null && grade2 == null) || (grade1 != null && grade1.equals(grade2))) {
+                    return o1.compareTo(o2);
+                }
+                return grade1 == null ? 1 : grade2 == null ? -1 : grade2.compareTo(grade1);
+            }
+        });
+        for (final OutboundMobilityCandidacySubmission submission : getOutboundMobilityCandidacySubmissionSet()) {
+            if (submission.hasContestInGroup(mobilityGroup)) {
+                result.add(submission);
+            }
+        }
+        return result;
+    }
+
 }

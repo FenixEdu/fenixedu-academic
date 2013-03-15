@@ -304,10 +304,9 @@
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contests"/></th>
 			</tr>
 <%
-    	for (final OutboundMobilityCandidacySubmission candidacySubmission : candidacyPeriod.getOutboundMobilityCandidacySubmissionSet()) {
+    	for (final OutboundMobilityCandidacySubmission candidacySubmission : candidacyPeriod.getSortedSubmissionSet(mobilityGroup)) {
     	    final Registration registration = candidacySubmission.getRegistration();
     	    final Person person = registration.getPerson();
-    	    if (mobilityGroup.handles(registration.getDegree())) {
     	        final BigDecimal grade = candidacySubmission.getGrade(mobilityGroup);
 				final String hideGradeID = "hideGrade" + candidacySubmission.getExternalId();
 				final String showGradeID = "showGrade" + candidacySubmission.getExternalId();
@@ -351,13 +350,22 @@
 							    	final MobilityAgreement mobilityAgreement = contest.getMobilityAgreement();
 									final Unit unit = mobilityAgreement.getUniversityUnit();
 							    	final Country country = unit.getCountry();
-							    	final String styleString = contest.getOutboundMobilityCandidacyContestGroup() == mobilityGroup ?
-							    	        "" : "color: grey;";
+							    	String styleString = "";
+							    	if (contest.getOutboundMobilityCandidacyContestGroup() != mobilityGroup) {
+							    	    if (candidacy.getSubmissionFromSelectedCandidacy() != null) {
+								    	    styleString = "color: lime; font-weight: bold; font-size: 150%";
+								    	} else {
+								    	    styleString = "color: grey;";
+								    	}
+							    	} else if (candidacy.getSubmissionFromSelectedCandidacy() != null) {
+							    	    styleString = "color: green; font-weight: bold; font-size: 120%";							    	    
+							    	}
+							    	
 							%>
 								<li <% if (candidacyCount++ > 4) { %> class="<%= "hide" + candidacySubmission.getExternalId() %>" <% } %>>
 									<div style="<%= styleString %>">
 										<%= unit.getPresentationName() %> -
-										<span style="color: gray;"><%= country.getName() %></span>
+										<span style="color: gray; font-size: 110%"><%= country.getName() %></span>
 										<%= mobilityAgreement.getMobilityProgram().getRegistrationAgreement().getDescription() %>
 									</div>
 								</li>
@@ -382,7 +390,6 @@
 					</td>
 				</tr>
 <%
-    	    }
 	    }
 %>
 		</table>
