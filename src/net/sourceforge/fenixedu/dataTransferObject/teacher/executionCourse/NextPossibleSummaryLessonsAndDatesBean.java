@@ -61,6 +61,10 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
         setRoom(room);
     }
 
+    public boolean getHasLessonInstance() {
+        return getLesson().getLessonInstanceFor(getDate()) != null;
+    }
+    
     public String getLessonInstancePrettyPrint() {
 
         if (isExtraLesson()) {

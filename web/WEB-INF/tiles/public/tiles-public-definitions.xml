@@ -280,7 +280,7 @@
     </definition>
 
     <definition name="definition.candidacy.process" extends="definition.public.mainPageIST" >
-		<put name="title" value="Candidaturas | IST" />	
+		<put name="bundle" value="TITLES_RESOURCES" />	
         <put name="serviceName" value="Instituto Superior Técnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />

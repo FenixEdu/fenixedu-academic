@@ -251,6 +251,7 @@
 	<slot name="shiftTypesPrettyPrint" key="label.lesson.type"/>
 	<slot name="shift" key="label.shift" layout="shift-plain"/>			
 	<slot name="writtenSummary" key="label.lesson.summary"/>
+	<slot name="hasLessonInstance" key="label.lesson.instance" />
 </schema>
 
 <!-- Access Groups Management -->

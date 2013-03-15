@@ -93,7 +93,14 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         try {
             DeleteLessonInstance.run(bean.getLesson(), bean.getDate());
-
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(null, new ActionError("message.deleteLesson", bean.getDate()));
+            saveErrors(request, actionErrors);
+        } catch (UnsupportedOperationException unsupportedOperationException) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(unsupportedOperationException.getMessage(),
+                    new ActionError("error.Lesson.not.instanced", bean.getDate()));
+            saveErrors(request, actionErrors);
         } catch (DomainException domainException) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage()));

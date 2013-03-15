@@ -9,6 +9,12 @@
 <h2><bean:message key="title.show.all.lesson.dates" bundle="SOP_RESOURCES"/></h2>
 
 <logic:present role="RESOURCE_ALLOCATION_MANAGER">
+
+	<p>
+	<span class="error0"><!-- Error messages go here -->
+		<html:errors/>
+	</span>
+	</p>
 			
 	<bean:define id="parameters"><%=PresentationConstants.LESSON_OID%>=<bean:write name="lesson_" property="idInternal"/>&amp;<%=PresentationConstants.SHIFT_OID%>=<bean:write name="shift" property="idInternal"/>&amp;<%=PresentationConstants.EXECUTION_COURSE_OID%>=<bean:write name="execution_course" property="idInternal"/>&amp;<%=PresentationConstants.ACADEMIC_INTERVAL%>=<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString()%>&amp;<%=PresentationConstants.CURRICULAR_YEAR_OID%>=<bean:write name="curricular_year" property="idInternal"/>&amp;<%=PresentationConstants.EXECUTION_DEGREE_OID%>=<bean:write name="execution_degree" property="idInternal"/></bean:define>	
 	<bean:define id="linkToReturn">/manageShift.do?method=prepareEditShift&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
