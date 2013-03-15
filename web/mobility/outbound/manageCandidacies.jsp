@@ -184,6 +184,11 @@
 </ul></td>
 <td style="vertical-align: top;"><ul>
 	<li>
+		<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=sendEmailToCandidates&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.email.to.candidates"/>
+		</html:link>
+	</li>
+	<li>
 		<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=downloadCandidatesInformation&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.download.candidates.information"/>
 		</html:link>

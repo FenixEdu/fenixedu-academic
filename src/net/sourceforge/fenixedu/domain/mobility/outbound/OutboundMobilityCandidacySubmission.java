@@ -108,4 +108,14 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         }
     }
 
+    public boolean hasContestInGroup(final OutboundMobilityCandidacyContestGroup mobilityGroup) {
+        for (final OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
+            final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
+            if (contest.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
+import net.sourceforge.fenixedu.domain.util.email.EmailBean;
+import net.sourceforge.fenixedu.domain.util.email.PersonSender;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -34,7 +43,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
         @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
         @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp"),
-        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"), })
+        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"),
+        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", contextRelative = true) })
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -283,6 +293,45 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("manageCandidacies");
+    }
+
+    public ActionForward sendEmailToCandidates(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+
+        final String toGroupName =
+                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        "label.send.email.to.candidates.group.to.name", mobilityGroup.getDescription(),
+                        period.getExecutionInterval().getName());
+        final GroupUnion group = new GroupUnion(getCandidateGroups(mobilityGroup, period));
+
+        final Recipient recipient = Recipient.newInstance(toGroupName, group);
+        final EmailBean bean = new EmailBean();
+        bean.setRecipients(Collections.singletonList(recipient));
+
+        final Person person = AccessControl.getPerson();
+        if (person != null) {
+            final PersonSender sender = person.getSender();
+            if (sender != null) {
+                bean.setSender(sender);
+            }
+        }
+
+        request.setAttribute("emailBean", bean);
+
+        return mapping.findForward("sendEmail");
+    }
+
+    private Collection<IGroup> getCandidateGroups(final OutboundMobilityCandidacyContestGroup mobilityGroup, 
+            final OutboundMobilityCandidacyPeriod period) {
+        final Collection<IGroup> groups = new HashSet<IGroup>();
+        for (final OutboundMobilityCandidacySubmission submission : period.getOutboundMobilityCandidacySubmissionSet()) {
+            if (submission.hasContestInGroup(mobilityGroup)) {
+                groups.add(new PersonGroup(submission.getRegistration().getPerson()));
+            }
+        }
+        return groups;
     }
 
 }
