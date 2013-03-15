@@ -111,7 +111,6 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
         Spreadsheet spreadsheet = new Spreadsheet("Delegados em falta");
         spreadsheet.setHeader("Curso");
         spreadsheet.setHeader("Delegado");
-        spreadsheet.setHeader("Tipo Delegado");
         spreadsheet.setHeader("Ano");
         spreadsheet.setHeader("Telefone");
         spreadsheet.setHeader("Email");
