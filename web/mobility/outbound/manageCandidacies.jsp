@@ -1,3 +1,4 @@
+<%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.CandidacyGroupContestState.CandidacyGroupContestStateStage"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.CandidacyGroupContestState"%>
 <%@page import="java.math.BigDecimal"%>
@@ -12,7 +13,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
-<%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
@@ -20,6 +20,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 <html:xhtml />
 
 <bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean"/>
@@ -216,6 +217,16 @@
 			</html:link>
 		</li>
 	<% } %>
+	<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
+		<% if (mobilityGroup.isCandidacySelectionConcluded(outboundMobilityContextBean.getCandidacyPeriods().first())
+		        && !mobilityGroup.isCandidateNotificationConcluded(outboundMobilityContextBean.getCandidacyPeriods().first())) { %>
+			<li>
+				<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=concludeCandidateNotification&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.conclude.candidate.notification"/>
+				</html:link>
+			</li>
+		<% } %>
+	</academic:allowed>
 </ul></td>
 </tr></table>
 

@@ -41,6 +41,8 @@ public class OutboundMobilityContextBean implements Serializable {
     private transient InputStream stream;
     private long fileSize;
     private String fileName;
+    private String optionIntroductoryDestription;
+    private String optionValue;
 
     public OutboundMobilityContextBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
@@ -262,6 +264,22 @@ public class OutboundMobilityContextBean implements Serializable {
         this.fileName = fileName;
     }
 
+    public String getOptionIntroductoryDestription() {
+        return optionIntroductoryDestription;
+    }
+
+    public void setOptionIntroductoryDestription(String optionIntroductoryDestription) {
+        this.optionIntroductoryDestription = optionIntroductoryDestription;
+    }
+
+    public String getOptionValue() {
+        return optionValue;
+    }
+
+    public void setOptionValue(String optionValue) {
+        this.optionValue = optionValue;
+    }
+
     protected String readStreamContents() throws IOException {
         final InputStream stream = this.getStream();
         final long fileLength = this.getFileSize();
@@ -283,6 +301,17 @@ public class OutboundMobilityContextBean implements Serializable {
                 for (final OutboundMobilityCandidacyPeriod candidacyPeriod : candidacyPeriods) {
                     group.setGrades(candidacyPeriod, contents);
                 }
+            }
+        }
+    }
+
+    public void addCandidateOption() {
+        for (final OutboundMobilityCandidacyPeriod period : candidacyPeriods) {
+            if (optionIntroductoryDestription != null && !optionIntroductoryDestription.isEmpty()) {
+                period.setOptionIntroductoryDestriptionService(optionIntroductoryDestription);
+            }
+            if (optionValue != null && !optionValue.isEmpty()) {
+                period.addOption(optionValue);
             }
         }
     }

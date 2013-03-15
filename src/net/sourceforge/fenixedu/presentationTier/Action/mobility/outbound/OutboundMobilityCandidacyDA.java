@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.PersonSender;
@@ -92,6 +93,16 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
         outboundMobilityContextBean.setExecutionYear((ExecutionYear) candidacyPeriod.getExecutionInterval());
         outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(candidacyPeriod));
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward addCandidateOption(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+
+        outboundMobilityContextBean.addCandidateOption();
+
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
     }
@@ -295,6 +306,21 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("manageCandidacies");
     }
 
+    public ActionForward concludeCandidateNotification(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+
+        mobilityGroup.concludeCandidateNotification(period);
+
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));
+        outboundMobilityContextBean.setMobilityGroupsAsList(Collections.singletonList(mobilityGroup));
+
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("manageCandidacies");
+    }
+
     public ActionForward sendEmailToCandidates(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
@@ -332,6 +358,20 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
             }
         }
         return groups;
+    }
+
+    public ActionForward deleteOption(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyPeriodConfirmationOption option = getDomainObject(request, "optionOid");
+
+        if (option != null) {
+            option.delete();
+        }
+
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));
+        return prepare(mapping, request, outboundMobilityContextBean);
     }
 
 }

@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
 <%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.Country"%>
@@ -79,6 +80,10 @@
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="#" onclick="$('#EditCandidacyPeriodBlock').toggle()">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.period"/>
+			</a>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="#" onclick="$('#EditCandidateOptionsBlock').toggle()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.candidate.options"/>
 			</a>
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="#" onclick="$('#outboundMobilityContextBeanCreateCandidacyContestBlock').toggle()">
@@ -217,6 +222,43 @@
 					<fr:slot name="start" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.startDate"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="end" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.endDate"
+							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>
+					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+			</fr:edit>
+		</div>
+
+		<div id="EditCandidateOptionsBlock" style="display: none;">
+			<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.candidate.options"/></h3>
+
+			<div class="section1">
+				<h4><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.optionIntroductoryDestription"/></h4>
+				<div style="margin-left: 25px;">
+					<%= candidacyPeriod.getOptionIntroductoryDestription() %>
+				</div>
+				<h4><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"/></h4>
+				<div style="margin-left: 25px;">
+					<ul>
+						<% for (final OutboundMobilityCandidacyPeriodConfirmationOption option : candidacyPeriod.getSortedOptions()) { %>
+							<li>
+								<%= option.getOptionValue() %>
+								&nbsp;&nbsp;
+								<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=deleteOption&candidacyPeriodOid=" + candidacyPeriod.getExternalId() + "&optionOid=" + option.getExternalId() %>"
+									style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png" %>" alt="remove"></html:link>
+								
+							</li>
+						<% } %>
+					</ul>
+				</div>
+			</div>
+			<fr:edit id="editCandidateOptions" name="outboundMobilityContextBean" action="/outboundMobilityCandidacy.do?method=addCandidateOption">
+				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+					<fr:slot name="optionIntroductoryDestription" bundle="ACADEMIC_OFFICE_RESOURCES" layout="rich-text" key="label.optionIntroductoryDestription"
+							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="optionValue" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				</fr:schema>
 				<fr:layout name="tabular">

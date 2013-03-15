@@ -1,3 +1,5 @@
+<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
+<%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@page import="net.sourceforge.fenixedu.domain.Country"%>
@@ -20,6 +22,7 @@
   #sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; }
   html>body #sortable li { line-height: 1.2em; }
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+  .ui-state-default-selected { border: 1px; border-color: green; border-style: solid; background: #CCFFCC url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #555555; }
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -87,14 +90,18 @@
 										style="width: 100%;" class="sortable">
 										<%
 											for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet() ) {
-											    final Unit unit = candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit();
+											    final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
+											    final OutboundMobilityCandidacyContestGroup group = contest.getOutboundMobilityCandidacyContestGroup();
+											    final Unit unit = contest.getMobilityAgreement().getUniversityUnit();
 											    final Country country = unit.getCountry();
+											    final String liClass = candidacy.getSubmissionFromSelectedCandidacy() != null
+											            && group.areCandidatesNotofiedOfSelectionResults(candidacyPeriod) ? "ui-state-default ui-state-default-selected" : "ui-state-default";
 										%>
-												<li class="ui-state-default" id="<%= candidacy.getExternalId() %>">
+												<li class="<%= liClass %>" id="<%= candidacy.getExternalId() %>">
 														<% final String name = unit.getName(); %>
 														<strong><%= name %></strong>
 														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
-														<%= candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
+														<%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %>
 														<%= country == null ? "" : "(" + country.getName() + ")" %>
 														<% if (candidacyPeriod.isOpen()) { %>
 															<div style="float: right;">
@@ -120,6 +127,43 @@
 							</div>
 						</td>
 						</tr></table>
+
+						<%
+							for (final OutboundMobilityCandidacy candidacy : submission.getSortedOutboundMobilityCandidacySet() ) {
+							    final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
+							    final OutboundMobilityCandidacyContestGroup group = contest.getOutboundMobilityCandidacyContestGroup();
+							    if (candidacy.getSubmissionFromSelectedCandidacy() != null && group.areCandidatesNotofiedOfSelectionResults(candidacyPeriod)) {
+						%>
+									<div class="section1">
+										<div>
+											<%= candidacyPeriod.getOptionIntroductoryDestription() %>
+										</div>
+										<h4><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"/></h4>
+										<div style="margin-left: 25px;">
+											<ul>
+												<% for (final OutboundMobilityCandidacyPeriodConfirmationOption option : candidacyPeriod.getSortedOptions()) { %>
+														<% if (submission.getConfirmationOption() == null) { %>
+															<li>
+																<html:link action="<%= "/erasmusOutboundManagement.do?method=selectOption&amp;optionOid=" + option.getExternalId() + "&submissionOid=" + submission.getExternalId() %>">
+																	<%= option.getOptionValue() %>
+																</html:link>
+															</li>
+														<% } else if (submission.getConfirmationOption() == option) { %>
+															<li>
+																<%= option.getOptionValue() %>
+																&nbsp;&nbsp;
+																<html:link action="<%= "/erasmusOutboundManagement.do?method=removeOption&amp;optionOid=" + option.getExternalId() + "&submissionOid=" + submission.getExternalId() %>"
+																		style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png"%>" alt="remove"></html:link>
+															</li>
+														<% } %>
+												<% } %>
+											</ul>
+										</div>
+									</div>
+						<% 		}
+							}%>
+
+						
 				<% } %>
 		<% } else { %>
 			<h3>

@@ -105,4 +105,17 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         return null;
     }
 
+    @Service
+    public void setOptionIntroductoryDestriptionService(final String optionIntroductoryDestription) {
+        setOptionIntroductoryDestription(optionIntroductoryDestription);        
+    }
+
+    @Service
+    public void addOption(final String optionValue) {
+        new OutboundMobilityCandidacyPeriodConfirmationOption(this, optionValue);        
+    }
+
+    public SortedSet<OutboundMobilityCandidacyPeriodConfirmationOption> getSortedOptions() {
+        return new TreeSet<OutboundMobilityCandidacyPeriodConfirmationOption>(getOutboundMobilityCandidacyPeriodConfirmationOptionSet());
+    }
 }

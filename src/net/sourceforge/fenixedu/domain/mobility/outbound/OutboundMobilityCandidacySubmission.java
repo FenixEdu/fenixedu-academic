@@ -118,4 +118,16 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         return false;
     }
 
+    @Service
+    public void selectOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
+        setConfirmationOption(option);
+    }
+
+    @Service
+    public void removeOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
+        if (getConfirmationOption() == option) {
+            removeConfirmationOption();
+        }
+    }
+
 }

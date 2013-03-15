@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -60,6 +62,22 @@ public class ErasmusOutboundManagement extends FenixDispatchAction {
         final int index = Integer.parseInt((String) getFromRequest(request, "index"));
         candidacy.reorder(index + 1);
         return prepare(mapping, request, student);
+    }
+
+    public ActionForward selectOption(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+        final OutboundMobilityCandidacySubmission submission = getDomainObject(request, "submissionOid");
+        final OutboundMobilityCandidacyPeriodConfirmationOption option = getDomainObject(request, "optionOid");
+        submission.selectOption(option);
+        return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward removeOption(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+        final OutboundMobilityCandidacySubmission submission = getDomainObject(request, "submissionOid");
+        final OutboundMobilityCandidacyPeriodConfirmationOption option = getDomainObject(request, "optionOid");
+        submission.removeOption(option);
+        return prepare(mapping, form, request, response);
     }
 
 }

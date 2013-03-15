@@ -8182,9 +8182,10 @@ class student.PersonalIngressionData extends DomainObject {
 }
 
 class mobility.outbound.OutboundMobilityCandidacyPeriod extends period.CandidacyPeriod {
+	String optionIntroductoryDestription;
 }
 
-class mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption {
+class mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption extends DomainObject {
 	String optionValue;
 }
 
@@ -8238,6 +8239,15 @@ relation CandidacyPeriodOptions {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole outboundMobilityCandidacyPeriodConfirmationOption {
+		multiplicity *;
+	}
+}
+
+relation SubmissionConfirmationOption {
+	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole confirmationOption {
+		multiplicity 0..1;
+	}
+	mobility.outbound.OutboundMobilityCandidacySubmission playsRole submissionsThatSelectedOption {
 		multiplicity *;
 	}
 }

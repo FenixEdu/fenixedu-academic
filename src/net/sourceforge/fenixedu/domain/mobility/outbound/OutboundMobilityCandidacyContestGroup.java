@@ -283,6 +283,10 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         return getConcludedCandidateSelectionForPeriodSet().contains(period);
     }
 
+    public boolean isCandidateNotificationConcluded(final OutboundMobilityCandidacyPeriod period) {
+        return getCandidatesNotifiedOfSelectionResultsForPeriodSet().contains(period);
+    }
+
     public boolean areCandidatesNotofiedOfSelectionResults(final OutboundMobilityCandidacyPeriod period) {
         return getCandidatesNotifiedOfSelectionResultsForPeriodSet().contains(period);
     }
@@ -336,6 +340,11 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     @Service
     public void concludeCandidateSelection(final OutboundMobilityCandidacyPeriod period) {
         addConcludedCandidateSelectionForPeriod(period);
+    }
+
+    @Service
+    public void concludeCandidateNotification(final OutboundMobilityCandidacyPeriod period) {
+        addCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
 
 }
