@@ -210,6 +210,9 @@
 							</logic:present>
 							<logic:present name="attendance" property="invitation">
 								<fr:slot name="invitation.endDate" key="label.person.invitationValidUntil"/>
+								<fr:slot name="invitation.unit.name" key="label.card.unitName"/>
+								<fr:slot name="invitation.responsiblePerson.name" key="label.person.responsiblePerson"/>
+								<fr:slot name="invitation.responsiblePerson.istUsername" key="label.person.responsiblePerson.istID"/>
 							</logic:present>
 						</fr:schema>
 						<fr:layout name="tabular">
