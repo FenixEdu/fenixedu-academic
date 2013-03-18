@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
+import net.sourceforge.fenixedu.domain.contents.Redirect;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -335,6 +336,11 @@ public abstract class Site extends Site_Base {
 
     @Override
     public Content getInitialContent() {
+        final Content content = super.getInitialContent();
+        if (content != null && content instanceof Redirect) {
+            return content;
+        }
+
         Content initialContent = null;
         if (hasRootDomainObject()) {
             final MetaDomainObjectPortal template = getTemplate();

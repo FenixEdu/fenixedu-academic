@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
+import net.sourceforge.fenixedu.domain.contents.Redirect;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -79,7 +80,10 @@ public class ContentFilter implements Filter {
             }
         }
 
-        if (content instanceof Section) {
+        if (content instanceof Redirect) {
+            final Redirect redirect = (Redirect) content;
+            sendRedirect(httpServletResponse, redirect.getUrl());
+        } else if (content instanceof Section) {
             dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
 
         } else if (content instanceof Item) {
@@ -103,10 +107,14 @@ public class ContentFilter implements Filter {
         final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 
         if (dispatcher == null) {
-            response.sendRedirect(request.getContextPath() + path);
+            sendRedirect(response, request.getContextPath() + path);
         } else {
             dispatcher.forward(request, response);
         }
+    }
+
+    protected void sendRedirect(final HttpServletResponse httpServletResponse, final String url) throws IOException {
+        httpServletResponse.sendRedirect(url);
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {

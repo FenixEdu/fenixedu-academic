@@ -6473,7 +6473,11 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
     }
 
         class contents.Element extends contents.Content {
-    }
+	    }
+
+	        class contents.Redirect extends contents.Element {
+	        	String url;
+		    }
         
         class contents.Attachment extends contents.Element {
 }
