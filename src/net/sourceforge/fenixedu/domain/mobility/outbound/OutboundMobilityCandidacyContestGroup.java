@@ -323,6 +323,17 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
 
     @Service
     public void selectCandidates(final OutboundMobilityCandidacyPeriod period) {
+        for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
+            if (contest.getOutboundMobilityCandidacyPeriod() == period) {
+                for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
+                    final OutboundMobilityCandidacySubmission submission = candidacy.getSubmissionFromSelectedCandidacy();
+                    if (submission != null) {
+                        candidacy.unselect();
+                    }
+                }
+            }
+        }
+
         final SortedSet<OutboundMobilityCandidacySubmissionGrade> grades = new TreeSet<OutboundMobilityCandidacySubmissionGrade>();
         collectGradesForGroup(grades, period);
 
@@ -333,6 +344,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         }
 
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : grades) {
+            System.out.println("Selecting for: " + submissionGrade.getOutboundMobilityCandidacySubmission().getRegistration().getPerson().getUsername());
             final BigDecimal grade = submissionGrade.getGrade();
             if (grade.signum() == 1) {
                 submissionGrade.getOutboundMobilityCandidacySubmission().select();
@@ -356,6 +368,11 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     @Service
     public void concludeCandidateSelection(final OutboundMobilityCandidacyPeriod period) {
         addConcludedCandidateSelectionForPeriod(period);
+    }
+
+    @Service
+    public void revertConcludeCandidateSelection(final OutboundMobilityCandidacyPeriod period) {
+        removeConcludedCandidateSelectionForPeriod(period);
     }
 
     @Service

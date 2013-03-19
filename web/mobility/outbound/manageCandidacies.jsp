@@ -204,7 +204,9 @@
 	<% if (!mobilityGroup.isCandidacySelectionConcluded(outboundMobilityContextBean.getCandidacyPeriods().first())
 	        && mobilityGroup.areAllStudentsGraded(outboundMobilityContextBean.getCandidacyPeriods().first())) { %>
 		<li>
-			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=selectCandidates&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=selectCandidates&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>"
+					onclick="<%= "return confirm('" + BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+	                        "label.mobility.candidates.select.candidates.warning") + "')" %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.select.candidates"/>
 			</html:link>
 		</li>
@@ -220,6 +222,13 @@
 	<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 		<% if (mobilityGroup.isCandidacySelectionConcluded(outboundMobilityContextBean.getCandidacyPeriods().first())
 		        && !mobilityGroup.isCandidateNotificationConcluded(outboundMobilityContextBean.getCandidacyPeriods().first())) { %>
+		    <logic:present role="MANAGER">
+				<li>
+					<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=revertConcludeCandidateSelection&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.conclude.candidate.selection.revert"/>
+					</html:link>
+				</li>
+		    </logic:present>
 			<li>
 				<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=concludeCandidateNotification&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.conclude.candidate.notification"/>

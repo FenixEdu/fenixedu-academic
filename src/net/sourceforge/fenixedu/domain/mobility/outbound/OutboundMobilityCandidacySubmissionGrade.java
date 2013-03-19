@@ -22,8 +22,15 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
 
     @Override
     public int compareTo(final OutboundMobilityCandidacySubmissionGrade o) {
-        final int g = getGrade().compareTo(o.getGrade());
+        final int g = o.getGrade().compareTo(getGrade());
         return g == 0 ? getExternalId().compareTo(o.getExternalId()) : g;
+    }
+
+    public void delete() {
+        removeOutboundMobilityCandidacyContestGroup();
+        removeOutboundMobilityCandidacySubmission();
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
 }

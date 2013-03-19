@@ -89,6 +89,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
             if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
                 submissionGrade.edit(grade);
+                return;
             }
         }
         new OutboundMobilityCandidacySubmissionGrade(this, mobilityGroup, grade);
