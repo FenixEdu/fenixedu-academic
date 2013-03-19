@@ -156,6 +156,8 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                         "label.mobility.outbound.period.export.selected.candiadates.filename");
 
         final Spreadsheet spreadsheetCandidates = new Spreadsheet(filename);
+        final Spreadsheet spreadsheetOtherCurricularInfo = spreadsheetCandidates.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.other.curricular.info"));
         for (final OutboundMobilityCandidacySubmission submission : getOutboundMobilityCandidacySubmissionSet()) {
             final OutboundMobilityCandidacy candidacy = submission.getSelectedCandidacy();
             if (candidacy != null) {
@@ -186,6 +188,21 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                 candidacyRow.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
                 group.fillCycleDetails(candidacyRow, CycleType.FIRST_CYCLE, registration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
                 group.fillCycleDetails(candidacyRow, CycleType.SECOND_CYCLE, registration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
+
+                for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
+                    if (otherRegistration != registration) {
+                        final Row rowOCI = spreadsheetOtherCurricularInfo.addRow();
+                        final ICurriculum curriculumOther = otherRegistration.getCurriculum();
+                        rowOCI.setCell(getString("label.username"), person.getUsername());
+                        rowOCI.setCell(getString("label.name"), person.getName());
+                        rowOCI.setCell(getString("label.degree"), otherRegistration.getDegree().getSigla());
+                        rowOCI.setCell(getString("label.curricular.year"), curriculumOther.getCurricularYear());
+                        rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits().toString());
+                        rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
+                        group.fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
+                        group.fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
+                    }
+                }
             }
         }
 
