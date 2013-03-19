@@ -183,7 +183,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                             rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits().toString());
                             rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
                             fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
-                            fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));                            
+                            fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
                         }
                     }
 
@@ -254,24 +254,40 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
             final String[] parts = line.split("\t");
             final Person person = Person.findByUsername(parts[0]);
             if (person == null) {
-                problems.append(getMessage("error.username.not.valid.on.line", parts[0], Integer.toString(l)));
+                // truncate to avoid long lines while printing code for username from an invalid file (xls)
+                problems.append(getMessage("error.mobility.outbound.username.not.valid.on.line", truncateDots(parts[0], 12),
+                        Integer.toString(l)));
+                problems.append("; ");
+                continue;
             }
             try {
                 final BigDecimal grade = new BigDecimal(parts[1]);
                 final OutboundMobilityCandidacySubmission submission = candidacyPeriod.findSubmissionFor(person);
                 submission.setGrade(this, grade);
             } catch (final NumberFormatException ex) {
-                problems.append(getMessage("error.invalid.grade.on.one", parts[1], Integer.toString(l)));
+                // truncate to avoid long lines while printing code for grade from an invalid file (xls)
+                problems.append(getMessage("error.mobility.outbound.invalid.grade.on.one", truncateDots(parts[1], 4),
+                        Integer.toString(l)));
+                problems.append("; ");
+            } catch (final ArrayIndexOutOfBoundsException ex) {
+                problems.append(getMessage("error.mobility.outbound.invalid.format.on.line", Integer.toString(l)));
+                problems.append(".");
+                break;
             }
         }
 
         if (problems.length() > 0) {
-            throw new DomainException("error.unable.to.set.grades", problems.toString());
+            throw new DomainException("error.mobility.outbound.unable.to.set.grades", problems.toString());
         }
     }
 
     private String getMessage(final String key, final String... args) {
         return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key, args);
+    }
+
+    // truncate string and add (...) if it is longer than length
+    private String truncateDots(String stringToTruncate, int length) {
+        return (stringToTruncate.length() > length) ? (stringToTruncate.substring(0, length) + "(...)") : stringToTruncate;
     }
 
     public boolean areAllStudentsGraded(final OutboundMobilityCandidacyPeriod period) {

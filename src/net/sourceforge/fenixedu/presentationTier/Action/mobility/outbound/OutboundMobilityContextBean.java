@@ -13,12 +13,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
@@ -302,6 +304,9 @@ public class OutboundMobilityContextBean implements Serializable {
                     group.setGrades(candidacyPeriod, contents);
                 }
             }
+        } else {
+            throw new DomainException("error.mobility.outbound.unable.to.set.grades", BundleUtil.getStringFromResourceBundle(
+                    "resources.AcademicAdminOffice", "error.mobility.outbound.null.file"));
         }
     }
 

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
@@ -270,7 +271,12 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
     public ActionForward uploadClassifications(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
-        outboundMobilityContextBean.uploadClassifications();
+        try {
+            outboundMobilityContextBean.uploadClassifications();
+            addActionMessage("success", request, "message.outbound.upload.success");
+        } catch (DomainException ex) {
+            addActionMessage("error", request, ex.getMessage(), ex.getArgs());
+        }
         RenderUtils.invalidateViewState();
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("manageCandidacies");

@@ -239,9 +239,23 @@
 </ul></td>
 </tr></table>
 
+<logic:messagesPresent message="true" property="success">
+	<div class="success0">
+		<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="success">
+			<span><bean:write name="messages" /></span>
+		</html:messages>
+	</div>
+</logic:messagesPresent>
+<logic:messagesPresent message="true" property="error">
+	<div class="error0">
+		<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
+			<span><bean:write name="messages" /></span>
+		</html:messages>
+	</div>
+</logic:messagesPresent>
 <div id="UploadClassificationBlock" style="display: none;">
 	<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.upload.candidate.classification"/></h3>
-	<div class="section1">
+	<div class="warning1">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.upload.candidate.classification.instructions"/>
 	</div>
 	<fr:edit id="uploadClassification" name="outboundMobilityContextBean" action="/outboundMobilityCandidacy.do?method=uploadClassifications">
