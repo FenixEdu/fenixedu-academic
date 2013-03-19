@@ -148,6 +148,8 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                         "label.mobility.candidates.options"));
         final Spreadsheet spreadsheetContactInformation = spreadsheetOptions.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
                 "label.contact.information"));
+        final Spreadsheet spreadsheetOtherCurricularInfo = spreadsheetOptions.addSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                "label.other.curricular.info"));
 
         final Set<Registration> processed = new HashSet<Registration>();
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
@@ -170,6 +172,20 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                     row.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
                     fillCycleDetails(row, CycleType.FIRST_CYCLE, registration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
                     fillCycleDetails(row, CycleType.SECOND_CYCLE, registration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
+                    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
+                        if (otherRegistration != registration) {
+                            final Row rowOCI = spreadsheetOtherCurricularInfo.addRow();
+                            final ICurriculum curriculumOther = otherRegistration.getCurriculum();
+                            rowOCI.setCell(getString("label.username"), person.getUsername());
+                            rowOCI.setCell(getString("label.name"), person.getName());
+                            rowOCI.setCell(getString("label.degree"), otherRegistration.getDegree().getSigla());
+                            rowOCI.setCell(getString("label.curricular.year"), curriculumOther.getCurricularYear());
+                            rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits().toString());
+                            rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
+                            fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
+                            fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));                            
+                        }
+                    }
 
                     for (final OutboundMobilityCandidacy c : submission.getSortedOutboundMobilityCandidacySet()) {
                         final OutboundMobilityCandidacyContest contestFromCandidacy = c.getOutboundMobilityCandidacyContest();
