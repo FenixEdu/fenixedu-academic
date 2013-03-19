@@ -268,6 +268,25 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward downloadSelectedCandidates(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+
+        final String filename =
+                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        "label.mobility.outbound.period.export.selected.candiadates.filename");
+
+        response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+        response.setContentType("application/vnd.ms-excel");
+
+        final ServletOutputStream outputStream = response.getOutputStream();
+        final Spreadsheet spreadsheet = period.getSelectedCandidateSpreadSheet(period);
+        spreadsheet.exportToXLSSheet(outputStream);
+        outputStream.close();
+
+        return null;
+    }
+
     public ActionForward uploadClassifications(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();

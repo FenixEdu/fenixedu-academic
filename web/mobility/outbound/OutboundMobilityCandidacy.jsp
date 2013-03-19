@@ -89,6 +89,10 @@
 			<a href="#" onclick="$('#outboundMobilityContextBeanCreateCandidacyContestBlock').toggle()">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.create.new.contest"/>
 			</a>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=downloadSelectedCandidates&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.period.export.selected.candidates"/>
+			</html:link>
 		<% } %>
 		</academic:allowed>
 		<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) { %>

@@ -220,7 +220,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     public void fillCandidateOptions(Spreadsheet spreadsheet, OutboundMobilityCandidacyPeriod period) {
     }
 
-    private void fillCycleDetails(final Row row, final CycleType cycleType, final Registration registration, final String header1, final String header2) {
+    void fillCycleDetails(final Row row, final CycleType cycleType, final Registration registration, final String header1, final String header2) {
         if (isForCycle(cycleType, registration)) {
             ICurriculum curriculum = registration.getCurriculum(cycleType);
             row.setCell(header1, curriculum.getSumEctsCredits().toString());

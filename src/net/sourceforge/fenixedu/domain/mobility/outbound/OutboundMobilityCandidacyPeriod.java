@@ -2,22 +2,31 @@ package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPeriod_Base implements Comparable<CandidacyPeriod> {
 
@@ -139,6 +148,68 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
             }
         }
         return result;
+    }
+
+    public Spreadsheet getSelectedCandidateSpreadSheet(final OutboundMobilityCandidacyPeriod period) {
+        final String filename =
+                BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                        "label.mobility.outbound.period.export.selected.candiadates.filename");
+
+        final Spreadsheet spreadsheetCandidates = new Spreadsheet(filename);
+        for (final OutboundMobilityCandidacySubmission submission : getOutboundMobilityCandidacySubmissionSet()) {
+            final OutboundMobilityCandidacy candidacy = submission.getSelectedCandidacy();
+            if (candidacy != null) {
+                final Registration registration = submission.getRegistration();
+                final Person person = registration.getPerson();
+                final ICurriculum curriculum = registration.getCurriculum();
+                final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
+                final OutboundMobilityCandidacyContestGroup group = contest.getOutboundMobilityCandidacyContestGroup();
+                final MobilityAgreement mobilityAgreement = contest.getMobilityAgreement();
+                final MobilityProgram mobilityProgram = mobilityAgreement.getMobilityProgram();
+                final RegistrationAgreement registrationAgreement = mobilityProgram.getRegistrationAgreement();
+                final UniversityUnit universityUnit = mobilityAgreement.getUniversityUnit();
+                final Country country = universityUnit.getCountry();
+
+                final Row candidacyRow  = spreadsheetCandidates.addRow();
+                candidacyRow.setCell(getString("label.mobility.program"), registrationAgreement.getDescription());
+                candidacyRow.setCell(getString("label.country"), country == null ? "" : country.getLocalizedName().toString());
+                candidacyRow.setCell(getString("label.university"), universityUnit.getPresentationName());
+                candidacyRow.setCell(getString("label.degrees"), group.getDescription());
+                candidacyRow.setCell(getString("label.vacancies"), contest.getVacancies());
+                candidacyRow.setCell(getString("label.username"), person.getUsername());
+                candidacyRow.setCell(getString("label.name"), person.getName());
+                candidacyRow.setCell(getString("label.degree"), registration.getDegree().getSigla());
+                candidacyRow.setCell(getString("label.candidate.classification"), getGrades(submission));
+                candidacyRow.setCell(getString("label.preference.order"), candidacy.getPreferenceOrder());
+                candidacyRow.setCell(getString("label.curricular.year"), curriculum.getCurricularYear());
+                candidacyRow.setCell(getString("label.ects.completed.degree"), curriculum.getSumEctsCredits().toString());
+                candidacyRow.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
+                group.fillCycleDetails(candidacyRow, CycleType.FIRST_CYCLE, registration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
+                group.fillCycleDetails(candidacyRow, CycleType.SECOND_CYCLE, registration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
+            }
+        }
+
+        return spreadsheetCandidates;
+    }
+
+    private String getGrades(final OutboundMobilityCandidacySubmission submission) {
+        final Set<BigDecimal> grades = new HashSet<BigDecimal>();
+        final StringBuilder builder = new StringBuilder();
+        for (final OutboundMobilityCandidacySubmissionGrade grade : submission.getOutboundMobilityCandidacySubmissionGradeSet()) {
+            final BigDecimal value = grade.getGrade();
+            if (!grades.contains(value)) {
+                grades.add(value);
+                if (builder.length() > 0) {
+                    builder.append(", ");
+                }
+                builder.append(value.toString());
+            }
+        }
+        return builder.toString();
+    }
+
+    private String getString(final String key) {
+        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key);
     }
 
 }
