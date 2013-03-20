@@ -339,6 +339,28 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
 
     @Service
     public void selectCandidates(final OutboundMobilityCandidacyPeriod period) {
+        unselectCandidates(period);
+
+        final SortedSet<OutboundMobilityCandidacySubmissionGrade> grades = new TreeSet<OutboundMobilityCandidacySubmissionGrade>();
+        collectGradesForGroup(grades, period);
+
+        for (final OutboundMobilityCandidacyContestGroup otherGroup : getRootDomainObject().getOutboundMobilityCandidacyContestGroupSet()) {
+            if (otherGroup != this && intersect(otherGroup)) {
+                otherGroup.unselectCandidates(period);
+
+                otherGroup.collectGradesForGroup(grades, period);
+            }
+        }
+
+        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : grades) {
+            final BigDecimal grade = submissionGrade.getGrade();
+            if (grade.signum() == 1) {
+                submissionGrade.getOutboundMobilityCandidacySubmission().select();
+            }
+        }
+    }
+
+    private void unselectCandidates(final OutboundMobilityCandidacyPeriod period) {
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
             if (contest.getOutboundMobilityCandidacyPeriod() == period) {
                 for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
@@ -347,23 +369,6 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                         candidacy.unselect();
                     }
                 }
-            }
-        }
-
-        final SortedSet<OutboundMobilityCandidacySubmissionGrade> grades = new TreeSet<OutboundMobilityCandidacySubmissionGrade>();
-        collectGradesForGroup(grades, period);
-
-        for (final OutboundMobilityCandidacyContestGroup otherGroup : getRootDomainObject().getOutboundMobilityCandidacyContestGroupSet()) {
-            if (otherGroup != this && intersect(otherGroup)) {
-                otherGroup.collectGradesForGroup(grades, period);
-            }
-        }
-
-        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : grades) {
-            System.out.println("Selecting for: " + submissionGrade.getOutboundMobilityCandidacySubmission().getRegistration().getPerson().getUsername());
-            final BigDecimal grade = submissionGrade.getGrade();
-            if (grade.signum() == 1) {
-                submissionGrade.getOutboundMobilityCandidacySubmission().select();
             }
         }
     }

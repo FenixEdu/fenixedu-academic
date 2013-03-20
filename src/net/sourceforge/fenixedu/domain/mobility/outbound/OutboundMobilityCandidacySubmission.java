@@ -101,10 +101,12 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     public void select() {
-        for (final OutboundMobilityCandidacy candidacy : getSortedOutboundMobilityCandidacySet()) {
-            if (candidacy.getOutboundMobilityCandidacyContest().hasVacancy()) {
-                candidacy.select();
-                return;
+        if (!hasSelectedCandidacy()) {
+            for (final OutboundMobilityCandidacy candidacy : getSortedOutboundMobilityCandidacySet()) {
+                if (candidacy.getOutboundMobilityCandidacyContest().hasVacancy()) {
+                    candidacy.select();
+                    return;
+                }
             }
         }
     }

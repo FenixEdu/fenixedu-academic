@@ -93,7 +93,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
         if (submission.getSelectedCandidacy() != this) {
             if (submission.getSelectedCandidacy() != null) {
-                throw new DomainException("error.message.cannot.select.multiple.candidacies");
+                throw new DomainException("error.message.cannot.select.multiple.candidacies", submission.getRegistration().getPerson().getUsername());
             }
 
             final OutboundMobilityCandidacyContest contest = getOutboundMobilityCandidacyContest();
@@ -109,8 +109,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
     @Service
     public void unselect() {
         setSelected(Boolean.FALSE);
-        final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
-        submission.setSelectedCandidacy(null);
+        removeSubmissionFromSelectedCandidacy();
     }
 
 }
