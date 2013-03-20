@@ -345,13 +345,28 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("manageCandidacies");
     }
-    
+
     public ActionForward concludeCandidateNotification(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
 
         mobilityGroup.concludeCandidateNotification(period);
+
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));
+        outboundMobilityContextBean.setMobilityGroupsAsList(Collections.singletonList(mobilityGroup));
+
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("manageCandidacies");
+    }
+
+    public ActionForward revertConcludeCandidateNotification(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
+
+        mobilityGroup.revertConcludeCandidateNotification(period);
 
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
         outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));

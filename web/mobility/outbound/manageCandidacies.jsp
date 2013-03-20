@@ -235,6 +235,15 @@
 				</html:link>
 			</li>
 		<% } %>
+		<% if (mobilityGroup.isCandidateNotificationConcluded(outboundMobilityContextBean.getCandidacyPeriods().first())) { %>
+		    <logic:present role="MANAGER">
+				<li>
+					<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=revertConcludeCandidateNotification&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.group.conclude.candidate.notification.revert"/>
+					</html:link>
+				</li>
+		    </logic:present>
+		<% } %>
 	</academic:allowed>
 </ul></td>
 </tr></table>

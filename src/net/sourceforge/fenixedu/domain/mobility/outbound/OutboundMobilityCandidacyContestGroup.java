@@ -396,5 +396,9 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         addCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
 
+    @Service
+    public void revertConcludeCandidateNotification(final OutboundMobilityCandidacyPeriod period) {
+        removeCandidatesNotifiedOfSelectionResultsForPeriod(period);
+    }
 }
 
