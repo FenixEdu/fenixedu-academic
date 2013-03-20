@@ -4,28 +4,26 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml />
-
 <logic:present role="MANAGER">
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.event.reports.request.errors" /></h2>
+
+<bean:define id="queueJob" name="queueJob" type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" />
+
+<fr:view name="queueJob">
+	<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" bundle="ACADEMIC_OFFICE_RESOURCES">		
+		<fr:slot name="errors" />
+	</fr:schema>
 	
-	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.event.reports.request.errors" /></h2>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle1" />
+	</fr:layout>
 	
-	<bean:define id="queueJob" name="queueJob" type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" />
-	
-	<fr:view name="queueJob">
-		<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" bundle="ACADEMIC_OFFICE_RESOURCES">		
-			<fr:slot name="errors" />
-		</fr:schema>
-		
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1" />
-		</fr:layout>
-		
-	</fr:view>
-	
-	<p>
-		<html:link action="/eventReports.do?method=listReports">
-			<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
-		</html:link>
-	</p>
-	
+</fr:view>
+
+<p>
+	<html:link action="/eventReports.do?method=listReports">
+		<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
+	</html:link>
+</p>
+
 </logic:present>

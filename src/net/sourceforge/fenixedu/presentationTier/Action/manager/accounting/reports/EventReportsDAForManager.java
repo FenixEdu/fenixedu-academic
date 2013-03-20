@@ -2,17 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.accounting.repo
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob;
 import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJobBean;
 import net.sourceforge.fenixedu.presentationTier.Action.accounting.reports.EventReportsDA;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -38,14 +30,4 @@ public class EventReportsDAForManager extends EventReportsDA {
     protected EventReportQueueJobBean createEventReportQueueJobBean() {
         return EventReportQueueJobBean.createBeanForManager();
     }
-
-    public ActionForward viewErrors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) {
-        EventReportQueueJob queueJob = readEventReportQueueJob(request);
-
-        request.setAttribute("queueJob", queueJob);
-
-        return mapping.findForward("viewErrors");
-    }
-
 }

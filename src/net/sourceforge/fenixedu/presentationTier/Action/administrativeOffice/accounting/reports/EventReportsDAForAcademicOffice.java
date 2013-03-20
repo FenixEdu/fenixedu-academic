@@ -17,7 +17,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/eventReports", module = "academicAdministration")
 @Forwards({ @Forward(name = "listReports", path = "/academicAdminOffice/accounting/reports/events/listReports.jsp"),
         @Forward(name = "createReportRequest", path = "/academicAdminOffice/accounting/reports/events/createReportRequest.jsp"),
-        @Forward(name = "viewRequest", path = "/academicAdminOffice/accounting/reports/events/viewRequest.jsp") })
+        @Forward(name = "viewRequest", path = "/academicAdminOffice/accounting/reports/events/viewRequest.jsp"),
+        @Forward(name = "viewErrors", path = "/academicAdminOffice/accounting/reports/events/viewErrors.jsp") })
 public class EventReportsDAForAcademicOffice extends EventReportsDA {
 
     @Override
@@ -39,5 +40,4 @@ public class EventReportsDAForAcademicOffice extends EventReportsDA {
         return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
                 AcademicOperationType.MANAGE_EVENT_REPORTS);
     }
-
 }
