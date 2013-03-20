@@ -188,6 +188,9 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                 candidacyRow.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
                 group.fillCycleDetails(candidacyRow, CycleType.FIRST_CYCLE, registration, getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
                 group.fillCycleDetails(candidacyRow, CycleType.SECOND_CYCLE, registration, getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
+                candidacyRow.setCell(getString("label.email"), person.getEmailForSendingEmails());
+                candidacyRow.setCell(getString("label.phone"), person.getDefaultPhoneNumber());
+                candidacyRow.setCell(getString("label.mobile"), person.getDefaultMobilePhoneNumber());
 
                 for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
                     if (otherRegistration != registration) {
