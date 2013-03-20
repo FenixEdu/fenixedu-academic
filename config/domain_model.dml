@@ -1112,8 +1112,8 @@ class DomainObject {
         }
 
         class WrittenEvaluation extends Evaluation {
-            HourMinuteSecond beginningDateHourMinuteSecond;
-            YearMonthDay dayDateYearMonthDay;
+            HourMinuteSecond beginningDateHourMinuteSecond (REQUIRED);
+            YearMonthDay dayDateYearMonthDay (REQUIRED);
             HourMinuteSecond endDateHourMinuteSecond;
             YearMonthDay enrollmentBeginDayDateYearMonthDay;
             HourMinuteSecond enrollmentBeginTimeDateHourMinuteSecond;
