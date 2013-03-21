@@ -39,7 +39,9 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
 
     public void delete() {
         canBeDeleted();
-        getInquiryBlocks().clear();
+        for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
+            removeInquiryBlocks(inquiryBlock);
+        }
         removeExecutionPeriod();
         removeRootDomainObject();
         deleteDomainObject();
