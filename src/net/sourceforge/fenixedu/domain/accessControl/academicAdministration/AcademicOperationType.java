@@ -8,8 +8,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 public enum AcademicOperationType implements IPresentableEnum {
     MANAGE_AUTHORIZATIONS(false, false, Scope.ADMINISTRATION),
 
-    // AVMC: Migrated from Manager
-    MANAGE_EQUIVALENCES(true, true, Scope.ADMINISTRATION),
+    MANAGE_EQUIVALENCES(true, true, Scope.ADMINISTRATION),  // Migrated from Manager
 
     /*
      * Student stuff
@@ -45,8 +44,7 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     RECTIFICATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
-    // AVMC: Migrated from Manager
-    REMOVE_GRADES(true, true, Scope.ADMINISTRATION),
+    REMOVE_GRADES(true, true, Scope.ADMINISTRATION),    // Migrated from Manager
 
     DISSERTATION_MARKSHEETS(true, true, Scope.ADMINISTRATION),
 
@@ -70,8 +68,9 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     MANAGE_STUDENT_PAYMENTS(true, false, Scope.OFFICE),
 
-    // AVMC: Migrated from Manager
-    MANAGE_STUDENT_PAYMENTS_ADV(true, true, Scope.ADMINISTRATION),
+    MANAGE_STUDENT_PAYMENTS_ADV(true, true, Scope.ADMINISTRATION),  // Migrated from Manager
+
+    CREATE_SIBS_PAYMENTS_REPORT(false, false, Scope.ADMINISTRATION),  // Migrated from Manager
 
     MANAGE_ACCOUNTING_EVENTS(true, true, Scope.OFFICE),
 
