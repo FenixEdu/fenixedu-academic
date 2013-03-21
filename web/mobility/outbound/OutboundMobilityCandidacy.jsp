@@ -134,6 +134,10 @@
 			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=downloadSelectedCandidates&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.period.export.selected.candidates"/>
 			</html:link>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=selectCandidatesForAllGroups&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.period.select.candidates.for.all.groups"/>
+			</html:link>
 		<% } %>
 		</academic:allowed>
 		<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) { %>
@@ -157,6 +161,19 @@
 			</a>
 		<% } %>
 	</fr:form>
+
+
+	<logic:present name="error">
+		<div class="error0" style="padding-left: 25px;">
+			<pre><bean:write name="error" /></pre>
+		</div>
+	</logic:present>
+	<logic:present name="result">
+		<div class="error0" style="padding-left: 25px;">
+			<pre><logic:empty name="result"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.no.changes"/></logic:empty><logic:notEmpty name="result"><bean:write name="result" /></logic:notEmpty></pre>
+		</div>
+	</logic:present>
+
 
 	<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 	<div id="outboundMobilityContextBeanAddMobilityCoordinatorBlock" style="display: none;">
