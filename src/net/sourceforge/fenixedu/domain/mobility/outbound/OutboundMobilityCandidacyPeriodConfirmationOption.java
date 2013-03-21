@@ -7,9 +7,10 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
         implements Comparable<OutboundMobilityCandidacyPeriodConfirmationOption> {
 
     public OutboundMobilityCandidacyPeriodConfirmationOption(final OutboundMobilityCandidacyPeriod period,
-            final String optionValue) {
+            final String optionValue, final Boolean availableForCandidates) {
         setRootDomainObject(RootDomainObject.getInstance());
         setOptionValue(optionValue);
+        setAvailableForCandidates(availableForCandidates);
         setOutboundMobilityCandidacyPeriod(period);
     }
 

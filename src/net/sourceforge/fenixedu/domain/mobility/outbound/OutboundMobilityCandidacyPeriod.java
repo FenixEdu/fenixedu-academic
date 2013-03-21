@@ -125,8 +125,8 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Service
-    public void addOption(final String optionValue) {
-        new OutboundMobilityCandidacyPeriodConfirmationOption(this, optionValue);        
+    public void addOption(final String optionValue, final Boolean availableForCandidates) {
+        new OutboundMobilityCandidacyPeriodConfirmationOption(this, optionValue, availableForCandidates);        
     }
 
     public SortedSet<OutboundMobilityCandidacyPeriodConfirmationOption> getSortedOptions() {
