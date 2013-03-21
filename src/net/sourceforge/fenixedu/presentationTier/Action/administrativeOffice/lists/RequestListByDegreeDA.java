@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DocumentRequestSearchBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -34,6 +35,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -268,12 +270,21 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
         setHeaders(spreadsheet);
         for (RegistrationAcademicServiceRequest request : requestList) {
+            RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(request.getRegistration());
             spreadsheet.newRow();
             spreadsheet.addCell(request.getServiceRequestNumber());
             spreadsheet.addCell(request.getRequestDate().toString(DATETIME_FORMAT));
             spreadsheet.addCell(request.getDescription());
             spreadsheet.addCell(request.getStudent().getNumber());
             spreadsheet.addCell(request.getStudent().getName());
+            spreadsheet.addCell(request.getRegistration().getDegree().getPresentationName());
+            //TO DO
+            if (!registrationConclusionBean.isByCycle() && registrationConclusionBean.getRegistration().isBolonha()) {
+                spreadsheet.addCell("-");
+            } else {
+                YearMonthDay conclusionDate = registrationConclusionBean.getConclusionDate();
+                spreadsheet.addCell(conclusionDate != null ? conclusionDate.getYear() : "");
+            }
         }
     }
 
@@ -285,6 +296,9 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
                 .addHeader(getResourceMessage("label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"));
         spreadsheet.addHeader(getResourceMessage("label.studentNumber"));
         spreadsheet.addHeader(getResourceMessage("label.student.name"));
+        spreadsheet.addHeader(getResourceMessage("degree.concluded"));
+        spreadsheet.addHeader(getResourceMessage("conclusion.date"));
+
     }
 
     static private String getResourceMessage(String key) {
