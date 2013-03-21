@@ -210,6 +210,14 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward editVacancies(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
+        final String vacancies = (String) getFromRequest(request, "vacancies");
+        contest.editVacancies(vacancies == null || vacancies.isEmpty() ? null : new Integer(vacancies));
+        return null;
+    }
+
     public ActionForward viewCandidate(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
