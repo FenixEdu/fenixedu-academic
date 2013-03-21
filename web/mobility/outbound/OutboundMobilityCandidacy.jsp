@@ -310,7 +310,9 @@
 								&nbsp;&nbsp;
 								<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=deleteOption&candidacyPeriodOid=" + candidacyPeriod.getExternalId() + "&optionOid=" + option.getExternalId() %>"
 									style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png" %>" alt="remove"></html:link>
-								
+								<% if (option.getAvailableForCandidates() != null && option.getAvailableForCandidates().booleanValue()) { %>
+									<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.isavailableForCandidates"/>
+								<% } %>
 							</li>
 						<% } %>
 					</ul>
@@ -322,6 +324,7 @@
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="optionValue" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="availableForCandidates" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.availableForCandidates"/>
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>

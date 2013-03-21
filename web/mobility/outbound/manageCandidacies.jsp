@@ -295,7 +295,7 @@
 		<% } %>
 	</tr></table></td></tr>
 	<tr><td align="center"><table class="legendTableStyle"><tr>
-		<td align="center"><strong> Legenda </strong></td>
+		<td align="center"><strong> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.legend"/> </strong></td>
 		<td class="box legend"></td>
 		<td><%= CandidacyGroupContestStateStage.NOT_STARTED.getLocalizedName() %></td>
 		<td class="box legend underWay"></td>
