@@ -249,7 +249,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         final StringBuilder problems = new StringBuilder();
 
         int l = 0;
-        for (final String line : contents.split("\n")) {
+        for (final String line : contents.split("\r?\n")) {
             l++;
             final String[] parts = line.split("\t");
             final Person person = Person.findByUsername(parts[0]);
@@ -406,4 +406,3 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         removeCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
 }
-
