@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<form-validation>
+  <formset>
+
+
+  <!-- validation for the Password Change form -->
+    <form name="changePasswordForm">
+      <field property="oldPassword" depends="required">
+        <arg0 key="label.candidate.oldPasswordError" />
+      </field>
+
+        <field property="newPassword"
+               depends="required,twoFields">
+                  <arg0 key="label.candidate.newPasswordError"/>
+                  <var>
+                     <var-name>secondProperty</var-name>
+                     <var-value>reTypeNewPassword</var-value>
+                  </var>
+        </field>
+    </form>
+
+     <!-- validation for the Edit Qualification form -->
+    <form name="qualificationForm">
+      <field property="mark" depends="" page="1">
+      	<arg0 key="label.qualification.mark" />
+  	  </field>
+  	  <field property="tempDate" depends="required, mask, date" page="1">
+		<msg name="date" key="errors.invalid.date.year"/>
+		<msg name="mask" key="errors.invalid.date.year"/>
+		<arg0 key="label.qualification.year"/>
+		<var>
+			<var-name>datePattern</var-name>
+			<var-value>yyyy</var-value>
+		</var>
+		<var>
+			<var-name>mask</var-name>
+			<var-value>^(....)$</var-value>
+		</var>
+	</field>
+     <field property="school" depends="required" page="1">
+      	<arg0 key="label.qualification.school" />
+  	  </field>
+  	  <field property="title" depends="required" page="1">
+      	<arg0 key="label.qualification.title" />
+  	  </field>	    
+    </form>
+    
+    <!-- validation for the Send SMS form -->
+	<form name="sendSmsForm">    	
+
+		<field property="destinationPhoneNumber" depends="required,integer,minlength" page="1">
+			<arg0 key="label.person.destinationPhoneNumber" />
+			<arg1 name="minlength" key="${var:minlength}" resource="false"/>
+			<var>
+				<var-name>minlength</var-name>
+				<var-value>9</var-value>
+			</var>	        
+		</field>	
+		
+		
+    	
+		<field property="message" depends="required,maxlength" page="1">
+			<arg0 key="label.person.message" />
+			<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+	        <var>
+				<var-name>maxlength</var-name>
+				<var-value>140</var-value>
+			</var>			
+		</field>	    	              
+
+    </form>
+        
+   <form name="findPersonForm">   	
+  	  <field property="name" depends="required" page="1">
+      	<arg0 key="label.name" />
+  	  </field>       	
+  	  <field property="startIndex" depends="integer" page="1">
+  	  </field> 		    		
+	</form> 
+  </formset>
+</form-validation>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<form-validation>
+  <formset>
+
+    <form name="changeApplicationInfoForm">
+    
+      <field property="email" depends="email" page="1">
+        <arg0 key="Este" resource="false" />
+      </field>
+
+
+      <field property="name" depends="required" page="2">
+        <arg0 key="label.person.name" />
+      </field>
+
+      <field property="areaOfAreaCode" depends="required" page="2">
+        <arg0 key="label.person.areaOfPostCode" />
+      </field>
+      
+      <field property="fatherName" depends="required" page="2">
+        <arg0 key="label.person.fatherName" />
+      </field>
+      
+      <field property="motherName" depends="required" page="2">
+        <arg0 key="label.person.motherName" />
+      </field>
+      
+      <field property="birthPlaceParish" depends="required" page="2">
+        <arg0 key="label.person.birthPlaceParish" />
+      </field>
+      
+      <field property="birthPlaceMunicipality" depends="required" page="2">
+        <arg0 key="label.person.birthPlaceMunicipality" />
+      </field>
+      
+      <field property="birthPlaceDistrict" depends="required" page="2">
+        <arg0 key="label.person.birthPlaceDistrict" />
+      </field>
+      
+      <field property="identificationDocumentNumber" depends="required" page="2">
+        <arg0 key="label.person.identificationDocumentNumber" />
+      </field>
+      
+      <field property="identificationDocumentIssuePlace" depends="required" page="2">
+        <arg0 key="label.person.identificationDocumentIssuePlace" />
+      </field>
+      
+      <field property="address" depends="required" page="2">
+        <arg0 key="label.person.address" />
+      </field>
+      
+      <field property="place" depends="required" page="2">
+        <arg0 key="label.person.place" />
+      </field>
+      
+      <field property="postCode" depends="required" page="2">
+        <arg0 key="label.person.postCode" />
+      </field>
+      
+      <field property="addressParish" depends="required" page="2">
+        <arg0 key="label.person.addressParish" />
+      </field>
+      
+      <field property="addressMunicipality" depends="required" page="2">
+        <arg0 key="label.person.addressMunicipality" />
+      </field>
+      
+      <field property="addressDistrict" depends="required" page="2">
+        <arg0 key="label.person.addressDistrict" />
+      </field>      
+      
+      <field property="contributorNumber" depends="required,integer" page="2">
+        <arg0 key="label.person.contributorNumber" />
+      </field>
+	
+      <field property="occupation" depends="required" page="2">
+        <arg0 key="label.person.occupation" />
+      </field>
+	
+        <field property="birthYear"
+	       depends="required, validateDate" page="2">
+              <arg0 key="label.person.birth" />
+	          <var>
+	             <var-name>month</var-name>
+	             <var-value>birthMonth</var-value>
+	          </var>
+	          <var>
+	             <var-name>day</var-name>
+	             <var-value>birthDay</var-value>
+	          </var>
+        </field>
+
+        <field property="idIssueDateYear"
+               depends="required, validateDate" page="2">
+                  <arg0 key="label.person.idIssueDate" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>idIssueDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>idIssueDateDay</var-value>
+                  </var>
+        </field>
+
+        <field property="idExpirationDateYear"
+               depends="required, validateDate" page="2">
+                  <arg0 key="label.person.idExpirationDate" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>idExpirationDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>idExpirationDateDay</var-value>
+                  </var>
+        </field>
+
+      <field property="postCode" depends="mask" page="2">
+        <msg name="mask" key="errors.invalid.zipCode"/>
+        <var>
+        	<var-name>mask</var-name>
+        	<var-value>^\d{4}(-\d{3})$</var-value>
+        </var>
+        
+      </field>
+      
+      
+      <field property="sex" depends="required" page="2">
+        <arg0 key="label.person.sex" />
+      </field>
+      
+      <field property="maritalStatus" depends="required" page="2">
+        <arg0 key="label.person.maritalStatus" />
+      </field>
+
+      <field property="nationality" depends="required" page="2">
+        <arg0 key="label.person.nationality" />
+      </field>
+    
+    
+    
+    
+    
+      <field property="majorDegree" depends="required" page="2">
+        <arg0 key="label.candidate.majorDegree" />
+      </field>
+
+      <field property="majorDegreeSchool" depends="required" page="2">
+        <arg0 key="label.candidate.majorDegreeSchool" />
+      </field>
+
+      <field property="majorDegreeYear" depends="required, integer, intRange" page="2">
+        <arg0 key="label.candidate.majorDegreeYear" />        
+        <arg1 key="${var:min}" name="intRange" resource="false"/>
+        <arg2 key="${var:max}" name="intRange" resource="false"/>            
+        <var>
+          <var-name>min</var-name>
+          <var-value>1900</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>2100</var-value>
+        </var>        
+      </field>
+
+      <field property="average" depends="required, double, doubleRange" page="2">        
+        <arg0 key="label.candidate.average"/>      
+        <arg1 key="${var:min}" name="doubleRange" resource="false"/>
+        <arg2 key="${var:max}" name="doubleRange" resource="false"/>            
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>20</var-value>
+        </var>
+      </field>
+
+    </form>
+
+  </formset>
+</form-validation>

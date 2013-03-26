@@ -1,0 +1,157 @@
+th.empty, td.empty {
+background: none;
+border-top: none;
+border-bottom: none;
+width: 10px !important;
+padding: 0 !important;
+}
+
+
+
+/*
+div.delegate-resume, div.teacher-resume, div.responsable-resume  {
+background: #ccc;    
+padding: 3px;
+margin: 15px 0;
+}
+div.delegate-resume table,div.teacher-resume table, div.responsable-resume table {
+margin: 0;
+}
+*/
+
+
+div.delegate-resume, div.teacher-resume, div.responsable-resume, div.coordinator-resume, div.department-resume {
+margin: 15px 0;
+}
+div.delegate-resume table, div.teacher-resume table, div.responsable-resume table, div.coordinator-resume table, div.department-resume table {
+margin: 0;
+border: 3px solid #ccc;
+}
+
+
+/* delegate */
+
+div.delegate-resume th.col-first { }
+div.delegate-resume th.col-degree { }
+div.delegate-resume th.col-bar { width: 70px; }
+div.delegate-resume th.col-fill { width: 80px; }
+div.delegate-resume th.col-actions { }
+
+div.delegate-resume td.col-first { text-align: left; }
+div.delegate-resume td.col-degree { }
+div.delegate-resume td.col-bar { }
+div.delegate-resume td.col-fill { }
+div.delegate-resume td.col-actions { white-space: nowrap; }
+
+
+/* teacher */
+
+div.teacher-resume th.col-first { width: 120px; }
+div.teacher-resume th.col-degree { width: 200px; }
+div.teacher-resume th.col-bar { width: 80px; }
+div.teacher-resume th.col-actions { }
+
+div.teacher-resume td.col-first { text-align: center; }
+div.teacher-resume td.col-degree { text-align: left; }
+div.teacher-resume td.col-bar { }
+div.teacher-resume td.col-actions { white-space: nowrap; padding: 0 10px;  }
+
+/* responsable */
+
+div.responsable-resume th.col-first { }
+div.responsable-resume th.col-degree { width: 160px; }
+div.responsable-resume th.col-bar { width: 80px; }
+div.responsable-resume th.col-actions { }
+
+div.responsable-resume td.col-first { text-align: left; }
+div.responsable-resume th.col-degree { }
+div.responsable-resume td.col-bar { }
+div.responsable-resume td.col-actions { white-space: nowrap; padding: 0 10px;  text-align: left;}
+
+/* coordinator */
+
+div.coordinator-resume th.col-first { }
+div.coordinator-resume th.col-bar { width: 70px; }
+div.coordinator-resume th.col-fill { width: 80px; }
+div.coordinator-resume th.col-actions { }
+
+div.coordinator-resume td.col-first { text-align: left; width: 260px; }
+div.coordinator-resume td.col-bar { }
+div.coordinator-resume td.col-fill { }
+div.coordinator-resume td.col-actions { text-align: left; }
+
+/* department */
+
+div.department-resume th.col-first { }
+div.department-resume th.col-course { }
+div.department-resume th.col-type { }
+div.department-resume th.col-bar { width: 70px; }
+div.department-resume th.col-fill { width: 80px; }
+div.department-resume th.col-actions { }
+
+div.department-resume td.col-first { text-align: left; width: 260px; }
+div.department-resume td.col-course { text-align: left;  }
+div.department-resume td.col-type { }
+div.department-resume td.col-bar { }
+div.department-resume td.col-fill { }
+div.department-resume td.col-actions { white-space: nowrap; text-align: left; }
+
+
+
+
+
+div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-purple, div.bar-grey {
+margin: 2px 0;
+}
+
+td.col-bar div div {
+padding: 2px 10px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+text-align: center;
+color: #fff;
+padding-top: 2px;
+font-weight: bold;
+margin: auto;
+display: inline;
+}
+
+div.bar-yellow div { background: #DDB75B; }
+div.bar-red div { background: #C04439; }
+div.bar-green div { background: #478F47; }
+div.bar-blue div { background: #0f6aa7; }
+div.bar-cyan div { background: #73a7ca; } /* 3781b4 */
+div.bar-purple div { background: #743E8C; }
+div.bar-grey div { background: #aaaaaa; }
+
+
+ul.legend-general {
+list-style: none;
+padding: 0;
+margin: 10px 0;
+color: #444;
+}
+ul.legend-general li {
+display: inline;
+padding: 2px 6px 0 0;
+}
+span.legend-bar-1,
+span.legend-bar-2,
+span.legend-bar-3,
+span.legend-bar-4,
+span.legend-bar-5,
+span.legend-bar-6,
+span.legend-bar-7 {
+-moz-border-radius: 3px;
+border-radius: 3px;
+padding: 1px 4px 0px 4px;
+font-size: 8px;
+font-weight: bold;
+}
+span.legend-bar-1 { background: #0f6aa7; }
+span.legend-bar-2 { background: #478F47; }
+span.legend-bar-3 { background: #DDB75B; }
+span.legend-bar-4 { background: #C04439; }
+span.legend-bar-5 { background: #aaaaaa; }
+span.legend-bar-6 { background: #743E8C; }
+span.legend-bar-7 { background: #5594bf; } /* 3781b4 */

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="false" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm" name="unitAnnouncementBoardsManagementForm"></form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward contextRelative="true" redirect="true" path="/mainPortalPage.jsp" name="home"></forward>
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+            <forward path="definition.out.of.period" name="globalOutOfPeriod"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!-- page fronting actions -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/manageInstitutionSite">
+                  <forward path="/announcementsManagement.do?method=start" name="Success"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/manageTutorSite">
+                  <forward path="/manageUnitSite.do?method=prepare" name="Success"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/manageAssemblySite">
+                  <forward path="/manageUnitSite.do?method=prepare" name="Success"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/manageStudentsSite">
+                  <forward path="/manageUnitSite.do?method=prepare" name="Success"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/manageManagementCouncilSite">
+                  <forward path="/manageUnitSite.do?method=prepare" name="Success"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/manageEdamSite">
+                  <forward path="/manageUnitSite.do?method=prepare" name="Success"></forward>
+            </action>
+            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA" path="/manageUnitSite">
+                  <forward path="basicUnitSite-start" name="start"></forward>
+                  <forward path="basicUnitSite-edit-introduction" name="editIntroduction"></forward>
+                  <forward path="basicUnitSite-edit-configuration" name="editConfiguration"></forward>
+                  <forward path="basicUnitSite-edit-side-banner" name="editSideBanner"></forward>
+                  <forward path="basicUnitSite-edit-logo" name="editLogo"></forward>
+                  <forward path="basicUnitSite-edit-banners" name="editBanners"></forward>
+                  <forward path="basicUnitSite-edit-top-navigation" name="editTopNavigation"></forward>
+                  <forward path="basicUnitSite-edit-footer-navigation" name="editFooterNavigation"></forward>
+                  <forward path="basicUnitSite-edit-organizeTopLinks" name="organizeTopLinks"></forward>
+                  <forward path="basicUnitSite-edit-organizeFooterLinks" name="organizeFooterLinks"></forward>
+                  <forward path="basicUnitSite-createSection" name="createSection"></forward>
+                  <forward path="basicUnitSite-sectionsManagement" name="sectionsManagement"></forward>
+                  <forward path="basicUnitSite-section" name="section"></forward>
+                  <forward path="basicUnitSite-editFileItemName" name="edit-fileItem-name"></forward>
+                  <forward path="basicUnitSite-editSection" name="editSection"></forward>
+                  <forward path="basicUnitSite-createItem" name="createItem"></forward>
+                  <forward path="basicUnitSite-editItem" name="editItem"></forward>
+                  <forward path="basicUnitSite-uploadFile" name="uploadFile"></forward>
+                  <forward path="basicUnitSite-editFile" name="editFile"></forward>
+                  <forward path="basicUnitSite-organizeItems" name="organizeItems"></forward>
+                  <forward path="basicUnitSite-organizeFiles" name="organizeFiles"></forward>
+                  <forward path="basicUnitSite-confirmSectionDelete" name="confirmSectionDelete"></forward>
+                  <forward path="basicUnitSite-editSectionPermissions" name="editSectionPermissions"></forward>
+                  <forward path="basicUnitSite-editItemPermissions" name="editItemPermissions"></forward>
+                  <forward path="basicUnitSite-editFile" name="editFile"></forward>
+                  <forward path="basicUnitSite-chooseIntroductionSections" name="chooseIntroductionSections"></forward>
+                  <forward path="basicUnitSite-addInstitutionSection" name="addInstitutionSection"></forward>
+                  <forward path="basicUnitSite-functionalitySection" name="functionalitySection"></forward>
+                  <forward path="basicUnitSite-editFunctionalitySection" name="editFunctionalitySection"></forward>
+                  <forward path="basicUnitSite-manageFunctions" name="manageFunctions"></forward>
+                  <forward path="basicUnitSite-manageExistingFunctions" name="manageExistingFunctions"></forward>
+                  <forward path="basicUnitSite-addFunction" name="addFunction"></forward>
+                  <forward path="basicUnitSite-editFunction" name="editFunction"></forward>
+                  <forward path="basicUnitSite-confirmDeleteFunction" name="confirmDeleteFunction"></forward>
+                  <forward path="basicUnitSite-organizeFunctions" name="organizeFunctions"></forward>
+                  <forward path="basicUnitSite-changePersonFunctions" name="changePersonFunctions"></forward>
+                  <forward path="basicUnitSite-createPersonFunction" name="createPersonFunction"></forward>
+                  <forward path="basicUnitSite-editPersonFunction" name="editPersonFunction"></forward>
+                  <forward path="basicUnitSite-chooseManagers" name="chooseManagers"></forward>
+                  <forward path="basicUnitSite-analytics" name="analytics"></forward>
+            </action>
+            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA" path="/manageScientificAreaSite">
+                  <forward path="basicUnitSite-start" name="start"></forward>
+                  <forward path="basicUnitSite-edit-introduction" name="editIntroduction"></forward>
+                  <forward path="basicUnitSite-edit-configuration" name="editConfiguration"></forward>
+                  <forward path="basicUnitSite-edit-side-banner" name="editSideBanner"></forward>
+                  <forward path="basicUnitSite-edit-logo" name="editLogo"></forward>
+                  <forward path="basicUnitSite-edit-banners" name="editBanners"></forward>
+                  <forward path="basicUnitSite-edit-top-navigation" name="editTopNavigation"></forward>
+                  <forward path="basicUnitSite-edit-footer-navigation" name="editFooterNavigation"></forward>
+                  <forward path="basicUnitSite-edit-organizeTopLinks" name="organizeTopLinks"></forward>
+                  <forward path="basicUnitSite-edit-organizeFooterLinks" name="organizeFooterLinks"></forward>
+                  <forward path="basicUnitSite-createSection" name="createSection"></forward>
+                  <forward path="basicUnitSite-sectionsManagement" name="sectionsManagement"></forward>
+                  <forward path="basicUnitSite-section" name="section"></forward>
+                  <forward path="basicUnitSite-editFileItemName" name="edit-fileItem-name"></forward>
+                  <forward path="basicUnitSite-editSection" name="editSection"></forward>
+                  <forward path="basicUnitSite-createItem" name="createItem"></forward>
+                  <forward path="basicUnitSite-editItem" name="editItem"></forward>
+                  <forward path="basicUnitSite-uploadFile" name="uploadFile"></forward>
+                  <forward path="basicUnitSite-editFile" name="editFile"></forward>
+                  <forward path="basicUnitSite-organizeItems" name="organizeItems"></forward>
+                  <forward path="basicUnitSite-organizeFiles" name="organizeFiles"></forward>
+                  <forward path="basicUnitSite-confirmSectionDelete" name="confirmSectionDelete"></forward>
+                  <forward path="basicUnitSite-editSectionPermissions" name="editSectionPermissions"></forward>
+                  <forward path="basicUnitSite-editItemPermissions" name="editItemPermissions"></forward>
+                  <forward path="basicUnitSite-editFile" name="editFile"></forward>
+                  <forward path="basicUnitSite-chooseIntroductionSections" name="chooseIntroductionSections"></forward>
+                  <forward path="basicUnitSite-addInstitutionSection" name="addInstitutionSection"></forward>
+                  <forward path="basicUnitSite-functionalitySection" name="functionalitySection"></forward>
+                  <forward path="basicUnitSite-editFunctionalitySection" name="editFunctionalitySection"></forward>
+                  <forward path="basicUnitSite-manageFunctions" name="manageFunctions"></forward>
+                  <forward path="basicUnitSite-manageExistingFunctions" name="manageExistingFunctions"></forward>
+                  <forward path="basicUnitSite-addFunction" name="addFunction"></forward>
+                  <forward path="basicUnitSite-editFunction" name="editFunction"></forward>
+                  <forward path="basicUnitSite-confirmDeleteFunction" name="confirmDeleteFunction"></forward>
+                  <forward path="basicUnitSite-organizeFunctions" name="organizeFunctions"></forward>
+                  <forward path="basicUnitSite-changePersonFunctions" name="changePersonFunctions"></forward>
+                  <forward path="basicUnitSite-createPersonFunction" name="createPersonFunction"></forward>
+                  <forward path="basicUnitSite-editPersonFunction" name="editPersonFunction"></forward>
+                  <forward path="basicUnitSite-chooseManagers" name="chooseManagers"></forward>
+                  <forward path="basicUnitSite-analytics" name="analytics"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="SITE_RESOURCES" parameter="resources.SiteResources"></message-resources>
+      <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>
+      <message-resources null="false" key="WEBSITEMANAGER_RESOURCES" parameter="resources.WebsiteManagerResources"></message-resources>
+      <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources null="false" key="RENDERER_RESOURCES" parameter="resources.RendererResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources null="false" key="DEPARTMENT_MEMBER_RESOURCES" parameter="resources.DepartmentMemberResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/websiteManager/tiles-website-manager-definitions.xml,/WEB-INF/tiles/websiteManager/tiles-website-manager-pages-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.websiteManager.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

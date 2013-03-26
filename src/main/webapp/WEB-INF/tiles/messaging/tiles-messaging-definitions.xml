@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.messaging.masterPage" extends="df.layout.two-column">
+		<put name="title" value="private.messaging"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
+		<put name="serviceName" value="Portal de Comunicação"/>
+		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+		<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>		
+		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
+		<put name="navLocal" value="/messaging/mainMenu.jsp"/>
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/messaging/welcomeScreen.jsp"/>
+		<put name="footer" value="/copyright.jsp"/>
+	</definition>
+</tiles-definitions>

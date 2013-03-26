@@ -1,0 +1,235 @@
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+<!--
+
+   This file contains the default Struts Validator pluggable validator
+   definitions.  It should be placed somewhere under /WEB-INF and
+   referenced in the struts-config.xml under the plug-in element
+   for the ValidatorPlugIn.
+
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,
+                                                  /WEB-INF/validation.xml"/>
+      </plug-in>
+
+   These are the default error messages associated with
+   each validator defined in this file.  They should be
+   added to your projects ApplicationResources.properties
+   file or you can associate new ones by modifying the
+   pluggable validators msg attributes in this file.
+
+   # Struts Validator Error Messages
+   errors.required={0} is required.
+   errors.minlength={0} can not be less than {1} characters.
+   errors.maxlength={0} can not be greater than {1} characters.
+   errors.invalid={0} is invalid.
+
+   errors.byte={0} must be an byte.
+   errors.short={0} must be an short.
+   errors.integer={0} must be an integer.
+   errors.long={0} must be an long.
+   errors.float={0} must be an float.
+   errors.double={0} must be an double.
+
+   errors.date={0} is not a date.
+   errors.range={0} is not in the range {1} through {2}.
+   errors.creditcard={0} is not a valid credit card number.
+   errors.email={0} is an invalid e-mail address.
+
+-->
+
+<form-validation>
+
+	<global>
+		<validator name="greaterThanOrEqual" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			method="validateGreaterThanOrEqual" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       oorg.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="error.greaterThanOrEqual"/>
+			
+		<validator name="greaterThan" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			method="validateGreaterThan" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="error.greaterThan"/>
+			
+		<validator name="Equal" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			method="validateEqual" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="error.equal"/>
+			
+		<validator name="lessThan" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			method="validateLessThan" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="error.lessThan"/>
+			
+		<validator name="lessThanOrEqual" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateCompareTwoFields" 
+			method="validateLessThanOrEqual" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="error.lessThanOrEqual"/>
+			
+		<validator name="twoFields" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateTwoFields" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.different.passwords"/>
+			
+		<validator name="validateDate" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateDate" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalid.date"/>
+			
+		<validator name="floatGreaterThen" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.GreaterThen" 
+			method="validateFloat" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalid.floatValue"/>
+			
+		<validator name="floatGreater" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.GreaterThen" 
+			method="validateFloat0" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalid.floatValue"/>
+			
+		<validator name="threeArgsDate" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateDate" 
+			method="threeArgsDate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.invalidThreeArgs.date"/>
+			
+		<validator name="multiBoxWithSelectAllCheckBox" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiBoxWithSelectAllCheckBox" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.required.checkbox" />
+			
+		<validator name="requiredAttributes" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidatePublicationForm" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="" />
+		<!-- 
+The validateMultiBox rule is used to ensure that multiboxes have at least one field selected!
+It uses two variables, arrayProperty and femininProperty. The arrayProperty is the name of the
+String Array used by the multibox form, the femininProperty is just for display purposes, 
+if equal to true, it will use the feminin error message (errors.required.a.checkbox), otherwise it will use the masculine
+error message (errors.required.checkbox).
+
+Example:
+
+<form name="addShiftToClasses">
+	<field property="classesList" depends="validateMultiBox" >
+	<arg0 key="turma" resource="true"/>
+		<var>
+        	<var-name>arrayProperty</var-name>
+            <var-value>classesList</var-value>
+        </var>
+        <var>
+        	<var-name>femininProperty</var-name>
+            <var-value>true</var-value>
+        </var>
+	</field>
+</form>  
+
+-->
+		<validator name="validateMultiBox" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiBox" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+                msg="errors.required.checkbox"
+                />             
+
+   	 <validator name="integerArray"
+            classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateIntegerArray"
+               method="validate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.integerArray"/>
+	
+	<validator name="multiRadioSelect" 
+			classname="net.sourceforge.fenixedu.presentationTier.validator.form.ValidateMultiRadioSelect" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.required.radioButtons" />
+	</global>
+
+</form-validation>

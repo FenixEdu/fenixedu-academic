@@ -1,0 +1,452 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.main" extends="definition.student.masterPage" >
+		<put name="body" value="/student/main_bd.jsp" />
+	</definition>
+
+	
+	<!-- STUDENT TESTS DEFINITIONS -->
+	
+	<definition name="view-Student-ExecutionCourses-With-Tests" extends="definition.student.masterPage">
+		<put name="body" value="/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp" />		
+	</definition>
+	
+	<definition name="tests-First-Page" extends="definition.student.masterPage">
+		<put name="body" value="/student/onlineTests/testsFirstPage_bd.jsp" />		
+	</definition>
+	
+	<definition name="do-Test" extends="definition.student.one-column">
+		<put name="body" value="/student/onlineTests/doTest_bd.jsp" />		
+	</definition>
+	<definition name="test-Error" extends="definition.student.masterPage">
+		<put name="body" value="/student/onlineTests/testError_bd.jsp" />		
+	</definition>
+	<definition name="show-Student-Test-Feedback" extends="definition.student.one-column">
+		<put name="body" value="/student/onlineTests/showStudentTestFeedback_bd.jsp" />		
+	</definition>
+	
+	<definition name="show-Test-Correction" extends="definition.student.one-column">
+		<put name="body" value="/student/onlineTests/showTestCorrection_bd.jsp" />		
+	</definition>
+	
+	<definition name="give-Up-Question" extends="definition.student.masterPage">
+		<put name="body" value="/student/onlineTests/giveUpQuestion.jsp" />		
+	</definition>
+	
+	<!-- END STUDENT TESTS DEFINITIONS -->
+	
+	<!-- SHIFT ENROLMENT DEFINITIONS -->
+	<definition name="df.page.shift.enrolment.chooseRegistration" extends="definition.student.masterPage">
+		<put name="title" value ="A"/>
+	    <put name="body" value="/student/enrollment/shifts/chooseRegistration.jsp" />
+	</definition>
+	<definition name="prepare-enrollment-view-warning" extends="definition.student.one-column">
+	    <put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value ="private.student.subscribe.classes"/>
+	    <put name="body" value="/student/enrollment/prepareEnrollmentViewWarning.jsp" />
+	</definition>
+	<definition name="show-courses-by-degree" extends="definition.student.one-column">
+		<put name="title" value ="C"/>
+	    <put name="body" value="/student/enrollment/showCoursesByDegree.jsp" />
+	</definition>
+	<definition name="show-shifts-enrollment" extends="definition.student.one-column">
+	    <put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value ="private.student.subscribe.classes"/>
+		<put name="body" value="/student/enrollment/showShiftsEnrollment.jsp" />		
+	</definition>
+	<definition name="show-shifts-to-enroll" extends="definition.student.masterPage">
+		<put name="title" value ="E"/>	
+		<put name="navLocal" value="/student/enrollment/listClasses.jsp" />
+		<put name="body" value="/student/enrollment/showShiftsToEnroll.jsp" />
+	</definition>
+	<definition name="enrollment-confirmation" extends="definition.student.one-column">
+		<put name="title" value ="F"/>
+		<put name="body" value="/student/enrollment/showShiftsEnrollment.jsp" />		
+	</definition>
+	
+	<!-- END OF SHIFT ENROLMENT DEFINITIONS -->
+
+	<definition name="df.page.notAuthorized" extends="definition.student.masterPage" >
+		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>	
+	<definition name="df.page.curriculum.chooseRegistration" extends="definition.student.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.curriculum"/>
+		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
+	</definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.student.masterPage">
+        
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="view-registration-curriculum" extends="definition.student.masterPage">
+        
+        <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+	<definition name="df.page.showStudentCurriculum" extends="definition.student.masterPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.curriculum"/>
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>	
+	<definition name="df.page.showStudentCurricularPlans" extends="definition.student.masterPage" >
+		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp" />
+	</definition>	
+	<definition name="df.page.showStudentTutorInfo" extends="definition.student.masterPage" >
+		<put name="body" value="/student/tutor/showStudentTutorInfo.jsp" />
+	</definition>
+		
+	<!-- YEAR DELEGATES ELECTIONS -->
+	<definition name="df.page.elections.yearDelegateManagement" extends="definition.student.masterPage" >
+		<put name="body" value="/student/elections/yearDelegateManagement.jsp" />
+	</definition>
+    
+    <!-- DELEGATES SEARCH -->
+ 	<definition name="showDegreeDelegates" extends="definition.student.masterPage">
+       <put name="body" value="/student/delegates/showDelegates.jsp"/>  
+    </definition>
+
+	<!-- GROUPS DEFINITIONS-->
+	<definition name="view-enroled-ExecutionCourses" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewEnroledExecutionCourses_bd.jsp" />		
+	</definition>
+	
+	<definition name="view-active-registrations" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewActiveRegistrations.jsp" />		
+	</definition>
+	
+	<definition name="view-ExecutionCourse-Projects" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewExecutionCourseProjects_bd.jsp" />		
+	</definition>
+	
+	<definition name="view-Shifts-Groups" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewShiftsAndGroups_bd.jsp" />		
+	</definition>
+
+	<definition name="view-StudentsAndGroups-ByShift" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentsAndGroupsByShift_bd.jsp" />		
+	</definition>
+
+	<definition name="view-StudentsAndGroups-WithoutShift" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentsAndGroupsWithoutShift_bd.jsp" />		
+	</definition>
+
+	<definition name="view-All-StudentsAndGroups" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewAllStudentsAndGroups_bd.jsp" />		
+	</definition>
+
+	<definition name="view-StudentGroup-Information" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentGroupInformation_bd.jsp" />		
+	</definition>
+
+	<definition name="remove-Student-InGroup" extends="definition.student.masterPage">
+		<put name="body" value="/student/removeStudentInGroup.jsp" />		
+	</definition>
+	
+	<definition name="group-student-enrolment" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewGroupStudentEnrolment_bd.jsp" />		
+	</definition>
+	<definition name="group-enrolment" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewGroupEnrolment_bd.jsp" />		
+	</definition>
+	
+	<definition name="edit-studentGroup-shift" extends="definition.student.masterPage">
+		<put name="body" value="/student/editStudentGroupShift_bd.jsp" />		
+	</definition>
+
+	<definition name="enroll-studentGroup-shift" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollStudentGroupShift_bd.jsp" />		
+	</definition>
+	
+	<definition name="definition.student.test" extends="definition.student.masterPage">
+		<put name="body" value="/student/test_bd.jsp" />		
+	</definition>
+	
+	<!-- END OF GROUPS DEFINITIONS -->
+
+	<!--  *******************  Enrollment ******************** -->
+	<definition name="df.page.warning" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/warning.jsp"/>
+	</definition>
+
+	<definition name="df.page.finalDegreeWork.candidacy" extends="definition.student.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.finalists.application"/>
+		<put name="body" value="/student/finalDegreeWork/candidacy.jsp"/>
+	</definition>
+	<definition name="df.page.finalDegreeWork.dissertations" extends="definition.student.masterPage">
+		<put name="body" value="/student/finalDegreeWork/dissertations.jsp"/>
+	</definition>
+	<definition name="df.page.finalDegreeWork.selectProposals" extends="definition.student.masterPage">
+		<put name="body" value="/student/finalDegreeWork/selectProposals.jsp"/>
+	</definition>
+	<definition name="df.page.finalDegreeWork.attribution" extends="definition.student.masterPage">
+		<put name="body" value="/student/finalDegreeWork/attribution.jsp"/>
+	</definition>
+	<definition name="df.page.finalDegreeWork.NoConfirmationInProcessException" extends="definition.student.masterPage">
+		<put name="body" value="/student/finalDegreeWork/noConfirmationInProcess.jsp"/>
+	</definition>
+	
+	<!-- SENIOR INFO DEFINITIONS -->
+	<definition name="senior-info-choose-registration" extends="definition.student.masterPage">
+		<put name="body" value="/student/senior/chooseRegistration.jsp" />
+	</definition>
+	<definition name="senior-info-management" extends="definition.student.masterPage">
+		<put name="body" value="/student/senior/seniorInfoManagement.jsp" />
+	</definition>
+	<definition name="senior-info" extends="definition.student.masterPage">
+		<put name="body" value="/student/senior/seniorInfo.jsp" />
+	</definition>
+	<!-- END SENIOR INFO DEFINITIONS -->
+	
+	<!-- =================== Fill Inquiries ============== -->
+	<definition name="inquiry-introduction" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/inquiryIntroduction.jsp"></put>
+	</definition>
+	<definition name="fill-inquiry"
+		extends="definition.student.masterPage">	
+		<put name="body" value="/student/inquiries/fillInquiry.jsp"></put>
+	</definition>
+	<definition name="confirm-inquiry-submition" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/confirmInquirySubmition.jsp"></put>
+	</definition>
+	<definition name="inquiry-submition-result" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/inquirySubmitionResult.jsp"></put>
+	</definition>
+	<definition name="unavailable-inquiry" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/unavailableInquiry.jsp"></put>
+	</definition>
+
+	<!-- =================== Pre-enrollment Inquiries ============== -->
+	<definition name="show-personal-data-use-inquiry" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/personalDataAuthorizationInquiry.jsp" />		
+	</definition>
+		<definition name="show-dislocated-student-inquiry" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/dislocatedStudentInquiry.jsp" />		
+	</definition>
+
+	<definition name="show-weekly-work-load" extends="definition.student.masterPage">
+		<put name="body" value="/student/weeklyWorkLoad.jsp" />
+	</definition>
+	
+	<definition name="view-foruns" extends="definition.student.masterPage">
+		<put name="body" value="/student/forums/viewExecutionCourseForuns.jsp" />
+	</definition>
+	
+	<definition name="view-forum" extends="definition.student.masterPage">
+		<put name="body-context" value="/student/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/viewForum.jsp" />
+	</definition>
+	
+	<definition name="create-thread-and-message" extends="definition.student.masterPage">
+		<put name="body-context" value="/student/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/createThreadAndMessage.jsp" />
+	</definition>
+	
+	<definition name="view-thread" extends="definition.student.masterPage">
+		<put name="body-context" value="/student/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/viewThread.jsp" />
+	</definition>
+	
+	<definition name="view-projects-with-online-submission" extends="definition.student.masterPage">
+		<put name="body" value="/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp" />
+	</definition>
+	
+	<definition name="view-project-submissions" extends="definition.student.masterPage">
+		<put name="body" value="/student/projectSubmissions/viewProjectSubmissions.jsp" />
+	</definition>
+	
+	<definition name="submit-project" extends="definition.student.masterPage">
+		<put name="body" value="/student/projectSubmissions/submitProject.jsp" />
+	</definition>
+
+	<!-- ADMINISTRATIVE OFFICE SERVICES -->
+	<definition name="df.page.administrativeOfficeServicesIndex" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/administrativeOfficeServicesIntro.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.createDocumentRequests" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createDocumentRequests.jsp" />
+	</definition>
+	
+	<definition name="df.page.documentRequest.chooseRegistration" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/chooseRegistration.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.viewDocumentRequestsToCreate" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequestsToCreate.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.createSuccess" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createSuccess.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.viewDocumentRequests" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.viewrequests"/>
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequests.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.viewDocumentRequest" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.viewrequests"/>
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequest.jsp" />
+	</definition>
+	
+	<definition name="df.page.documentRequest.prepareCancelAcademicServiceRequest" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/prepareCancelAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="df.page.documentRequest.cancelSuccess" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/cancelSuccess.jsp" />
+	</definition>
+	
+	
+	<definition name="df.page.documents.showAnnualIrsDocuments" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.annualirs"/>
+		<put name="body" value="/student/administrativeOfficeServices/generatedDocuments/showAnnualIRSDocuments.jsp" />
+	</definition>
+	
+
+	<!-- TimeTable -->
+	<definition name="df.timeTable.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/timeTable/chooseRegistration.jsp" />
+	</definition>
+    <definition name="df.timeTable.show" extends="student.print.masterPage">
+        <put name="body" value="/commons/student/timeTable/classTimeTable.jsp"></put>
+    </definition>
+		
+	<!-- ONLINE TESTS -->
+	
+	<definition name="viewTestsPage" extends="definition.student.masterPage">
+		<put name="body" value="/student/tests/viewTests.jsp" />
+	</definition>
+	
+	<definition name="viewTestPage" extends="definition.student.masterPage">
+		<put name="body" value="/student/tests/viewTest.jsp" />
+	</definition>
+	
+	<!-- Begin: Payments -->
+	<definition name="payments.management.showEvents" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.payments"/>
+		<put name="body" value="/student/administrativeOfficeServices/payments/showStudentEvents.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showEventDetails" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.payments"/>
+		<put name="body" value="/student/administrativeOfficeServices/payments/showEventDetails.jsp"/>
+	</definition>
+	<!-- End: Payments -->
+	
+	<!-- Begin: Prices -->
+	<definition name="prices.viewPrices" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.pricing"/>
+		<put name="body" value="/student/administrativeOfficeServices/prices/viewPrices.jsp"/>
+	</definition>
+	<!-- End: Prices -->
+
+
+	<!--  Begin: Residence Payments -->
+	<definition name="show-student-residence-payments" extends="definition.student.masterPage">
+		<put name="body" value="/student/residenceServices/showResidenceEvents.jsp" />
+	</definition>
+	<definition name="view-event-details" extends="definition.student.masterPage">
+		<put name="body" value="/student/residenceServices/showDetails.jsp" />
+	</definition>
+	<!--  End: Residence Payments -->
+	
+	
+	<definition name="enrolment.welcome" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/welcome.jsp"/>
+	</definition>	
+	<definition name="enrolment.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/chooseRegistration.jsp"/>
+	</definition>
+	<definition name="enrolment.choosePersonalDataAuthorizationChoice" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"/>
+	</definition>
+	<definition name="enrolment.selectAffinityToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/selectAffinityToEnrol.jsp"/>
+	</definition>
+	<definition name="enrolment.showAffinityToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/showAffinityToEnrol.jsp"/>
+	</definition>
+
+	<!-- Begin: Bolonha Student Enrolment -->
+	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
+
+		<put name="body" value="/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
+	</definition>
+	<definition name="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
+	</definition>
+	<definition name="enrolment.bolonha.enrollmentCannotProceed" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/enrollmentCannotProceed.jsp"/>
+	</definition>
+	<definition name="enrolment.bolonha.showEnrollmentInstructions" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/showEnrollmentInstructions.jsp"/>
+	</definition>
+	<definition name="enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"/>
+	</definition>
+	
+	<!-- End: Bolonha Student Enrolment -->
+
+    
+    <!-- Begin: Bolonha Transition Management -->
+	<definition name="transition.bolonha.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/transition/bolonha/chooseRegistration.jsp"/>
+	</definition>
+	<definition name="transition.bolonha.showStudentCurricularPlan" extends="definition.student.masterPage">
+		<put name="body" value="/student/transition/bolonha/showStudentCurricularPlan.jsp"/>
+	</definition>
+	<!-- End: Bolonha Transition Management -->
+	
+	
+	<!-- start: Edit Missing Candidacy Information -->
+	
+	<definition name="candidacy.edit.missing.candidacy.information" extends="df.layout.two-column.no-navigation">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student" />
+		<put name="serviceName" value="Portal do Estudante" />	
+		<put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
+		<put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
+		<put name="body" value="/student/candidacy/editMissingCandidacyInformation.jsp" />
+		<put name="footer" value="/copyright.jsp" />
+	</definition>
+	
+	
+	
+	<!-- end: Edit Missing Candidacy Information -->
+
+	<definition name="df.page.manage.passwords" extends="definition.student.masterPage">
+		<put name="body" value="/student/managePasswords.jsp"/>
+	</definition>
+	
+		<!-- start: ICalendar Informaton -->
+	<definition name="icalendar-view-options" extends="definition.student.masterPage">
+        <put name="body" value="/student/iCalendar/viewCalendarInformation.jsp"/>
+    </definition>
+    
+    <definition name="icalendar-choose-registration" extends="definition.student.masterPage">
+        <put name="body" value="/student/iCalendar/chooseRegistration.jsp"/>
+    </definition>
+    <!-- end: ICalendar Informaton -->
+
+</tiles-definitions>

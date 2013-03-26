@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name= "ConversionPattern" value= "%5p [%t] (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="BasicConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name= "ConversionPattern" value= "%m%n"/>
+		</layout>
+	</appender>
+
+	<logger name="org.apache.ojb.broker.accesslayer.sql">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.commons.validator.ValidatorResources">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.ojb.broker.accesslayer.StatementsForClass">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.ojb.broker.accesslayer.sql.SqlGeneratorDefaultImpl">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.ojb.odmg">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
+	<!-- Uncomment this logger to help locate errors im struts validation forms
+	<logger name="org.apache.struts.action.ActionServlet">
+		<level value="debug"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	-->
+
+	<logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses">
+		<level value="debug"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
+	<logger name="net.sourceforge.fenixedu" additivity="false">
+		<level value="warn"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
+	<logger name="pt.utl.ist.domain.DomainDMLOJBVerifier" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="BasicConsoleAppender"/>
+	</logger>
+
+	<logger name="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="BasicConsoleAppender"/>
+	</logger>
+
+    <logger name="net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="BasicConsoleAppender"/>
+    </logger>
+
+    <logger name="net.sourceforge.fenixedu.util.HostAccessControl" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="BasicConsoleAppender"/>
+    </logger>
+    
+    <logger name="net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="BasicConsoleAppender"/>
+    </logger>
+    
+	<root>
+		<priority value="info"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</root>
+
+</log4j:configuration>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean type="net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementsStartPageForm" name="announcementsStartPageForm"></form-bean>
+            <form-bean dynamic="false" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm" name="unitAnnouncementBoardsManagementForm"></form-bean>
+            <!-- ================= FIND PERSON FORM ===================-->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="findPersonForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="startIndex"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="viewPhoto"></form-property>
+                  <form-property type="java.lang.String" name="roleType"></form-property>
+                  <form-property type="java.lang.Integer" name="departmentId"></form-property>
+                  <form-property type="java.lang.String" name="degreeType"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeId"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!-- ========== FIND PERSON MANAGEMENT ========== -->
+            <action input="/findPerson.do?method=prepareFindPerson&amp;page=0" name="findPersonForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction" path="/findPerson">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.FenixActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"></exception>
+                  <forward path="/findPerson.do?method=prepareFindPerson&amp;page=0" name="prepareFindPerson"></forward>
+                  <forward path="find-person" name="findPerson"></forward>
+            </action>
+            <action input="findPerson" name="findPersonForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction" path="/preparePerson">
+                  <forward path="find-person" name="findPerson"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="SPACE_RESOURCES" parameter="resources.SpaceResources"></message-resources>
+      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.messaging.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
+            <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>
+            <set-property value="/WEB-INF/fenix-renderers-schemas.xml" property="schemas"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixMetaObjectFactory" property="metaObjectFactory"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixUserIdentityFactory" property="userIdentityFactory"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixSchemaFactory" property="schemaFactory"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

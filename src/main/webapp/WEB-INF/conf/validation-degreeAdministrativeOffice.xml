@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<form-validation>
+	<formset>
+		<form name="curricularCoursesEnrollmentForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+			<field property="specializationArea" depends="requiredif" page="2">
+		        <arg0 key="label.student.enrollment.specializationArea" />
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>secondaryArea</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>NOTNULL</var-value>
+				</var>        			
+			</field>
+			<field property="secondaryArea" depends="requiredif" page="2">
+		        <arg0 key="label.student.enrollment.secondaryArea" />
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>specializationArea</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>NOTNULL</var-value>
+				</var>        			
+			</field>
+		</form>
+
+		<form name="curriculumForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
+		
+		<!-- ****************** Improvment Enrollment **************************** -->
+		<form name="improvmentEnrolmentForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
+		<!-- ****************** Enrollment Without Rules **************************** -->
+		<form name="curricularCoursesEnrollmentWithoutRuleForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+			<field property="executionPeriod" depends="required" page="1">
+				<arg0 key="label.student.enrollment.executionPeriod" resource="true"/>
+			</field>
+			<field property="degreeType" depends="required" page="1">
+				<arg0 key="label.degree.type" resource="true"/>
+			</field>	
+			<field property="executionDegree" depends="required" page="2">
+				<arg0 key="label.degree.name" resource="true"/>
+			</field>		
+		</form>
+
+		<!-- =================== Change student areas =================== -->
+		<form name="changeStudentAreasForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
+		
+		<!-- =================== Print registration declaration =================== -->
+		<form name="studentNumberForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
+		
+		<!-- =================== Generate enrollment declaration =================== -->
+		<!--<form name="studentsNumbersBetweenForm">
+			<field property="firstStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+			<field property="lastStStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>-->
+		
+		<!-- ==================== View Curricular Course Historic ================== -->
+		<form name="executionYearDegreeCurricularPlanForm">
+			<field property="executionYearID" depends="required" page="1">
+				<arg0 key="message.error.curriculumHistoric.executionYear" resource="true"/>
+			</field>
+			<field property="degreeCurricularPlanID" depends="required" page="2">
+				<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" resource="true"/>
+			</field>
+		</form>
+		
+		<form name="printMarkSheetForm">
+			<field property="printerName" depends="required" page="1">
+				<arg0 key="label.printer" resource="true"/>
+			</field>
+		</form>
+
+		<form name="studentsNumbersBetweenForm">
+			<field property="firstStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.choose.firstStudent" resource="true"/>
+			</field>
+			<field property="lastStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.choose.lastStudent" resource="true"/>
+			</field>
+		</form>
+
+	</formset>
+</form-validation>

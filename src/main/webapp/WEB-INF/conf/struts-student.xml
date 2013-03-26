@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="changeLocaleForm">
+                  <form-property type="java.lang.String" name="windowLocation"></form-property>
+                  <form-property type="java.lang.String" name="newLanguage"></form-property>
+                  <form-property type="java.lang.String" name="newCountry"></form-property>
+                  <form-property type="java.lang.String" name="newVariant"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentShiftEnrollmentForm">
+                  <form-property type="java.lang.Integer" name="studentId"></form-property>
+                  <form-property type="java.lang.Integer" name="degree"></form-property>
+                  <form-property type="java.lang.Integer" name="wantedCourse"></form-property>
+                  <form-property type="java.lang.Integer" name="removedCourse"></form-property>
+                  <form-property type="java.util.HashMap" name="shiftMap"></form-property>
+                  <form-property type="java.lang.Integer[]" name="shifts"></form-property>
+                  <form-property type="java.lang.String" name="class"></form-property>
+                  <form-property type="java.lang.String" name="classId"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="selectShiftEnrollmentForm">
+                  <form-property type="java.lang.String" name="index"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="seminaryCandidacyFormNonComplete">
+                  <form-property type="java.lang.String" name="motivation"></form-property>
+                  <form-property type="java.lang.String" name="themeID"></form-property>
+                  <form-property type="java.lang.String" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="submition"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="seminaryCandidacySecondFormNonComplete">
+                  <form-property type="java.lang.String" name="motivation"></form-property>
+                  <form-property type="java.lang.String" name="themeID"></form-property>
+                  <form-property type="java.lang.String" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="submition"></form-property>
+                  <form-property type="java.lang.String[]" name="selectedCases"></form-property>
+                  <form-property type="java.lang.String[]" name="unselectedCases"></form-property>
+                  <form-property type="java.lang.String[]" name="hiddenSelectedCases"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="enroledExecutionCoursesForm">
+                  <form-property type="java.lang.String" name="executionCourseCode"></form-property>
+            </form-bean>
+            <!-- Student tests -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentTestForm">
+                  <form-property type="java.lang.String" name="testCode"></form-property>
+                  <form-property type="java.lang.String" name="student"></form-property>
+            </form-bean>
+            <!--
+	  <form-bean name="studentTestForm" 
+		type="net.sourceforge.fenixedu.presentationTier.formbeans.tests.TestForm">
+        <form-property name="testCode" type="java.lang.String"/>
+      </form-bean>
+-->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="groupEnrolmentForm">
+                  <!-- <form-property name="studentsNotEnroled" type="java.lang.Integer[]" /> -->
+                  <form-property type="java.lang.String[]" name="studentsNotEnroled"></form-property>
+                  <form-property type="java.lang.String" name="shift"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="showStudentGroupInfoForm">
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="password"></form-property>
+                  <form-property type="java.lang.String" name="ids"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+                  <form-property type="java.lang.String" name="studentCPID"></form-property>
+                  <form-property type="java.lang.String" name="select"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="organizedBy"></form-property>
+                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="viewType"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="finalDegreeWorkCandidacyForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="executionYearOID"></form-property>
+                  <form-property type="java.lang.String" name="executionDegreeOID"></form-property>
+                  <form-property type="java.lang.String[]" name="students"></form-property>
+                  <form-property type="java.lang.String" name="studentUsernameToAdd"></form-property>
+                  <form-property type="java.lang.String" name="studentToRemove"></form-property>
+                  <form-property type="java.lang.String" name="selectedProposal"></form-property>
+                  <form-property type="java.lang.String" name="selectedGroupProposal"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="finalDegreeWorkAttributionForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="executionYearOID"></form-property>
+                  <form-property type="java.lang.String" name="selectedGroupProposal"></form-property>
+                  <form-property type="java.lang.String" name="attributedByTeacher"></form-property>
+                  <form-property type="java.lang.String[]" name="confirmAttributions"></form-property>
+            </form-bean>
+            <!-- =================== Fill Inquiries ============== -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="inquiryNotAnsweredForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="inquiryRegistryID"></form-property>
+                  <form-property type="java.lang.String" name="notAnsweredJustification"></form-property>
+                  <form-property type="java.lang.String" name="notAnsweredOtherJustification"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="fillInquiriesForm">
+                  <form-property name="method" type="java.lang.String"></form-property>
+                  <form-property name="page" type="java.lang.Integer"></form-property>
+                  <form-property name="studentAttendsId" type="java.lang.Integer"></form-property>
+                  <form-property name="studentExecutionDegreeId" type="java.lang.Integer"></form-property>
+                  <form-property name="attendingCourseExecutionDegreeId" type="java.lang.Integer"></form-property>
+                  <form-property name="attendingExecutionCourseId" type="java.lang.Integer"></form-property>
+                  <form-property name="curricularYear" type="java.lang.Integer"></form-property>
+                  <form-property name="firstEnrollment" type="java.lang.Boolean"></form-property>
+                  <form-property name="attendingCourseSchoolClassId" type="java.lang.Integer"></form-property>
+                  <form-property name="executionCourseQuestion21" type="java.lang.Double"></form-property>
+                  <form-property name="executionCourseQuestion22" type="java.lang.Double"></form-property>
+                  <form-property name="executionCourseQuestion23" type="java.lang.Double"></form-property>
+                  <form-property name="executionCourseQuestion24" type="java.lang.Double"></form-property>
+                  <form-property name="executionCourseQuestion25" type="java.lang.Double"></form-property>
+                  <form-property name="executionCourseQuestion26" type="java.lang.Double"></form-property>
+                  <form-property name="executionCourseQuestion27" type="java.lang.Integer"></form-property>
+                  <form-property name="executionCourseQuestion28" type="java.lang.Double"></form-property>
+                  <form-property name="newAttendingCourseTeacherId" type="java.lang.Integer"></form-property>
+                  <form-property name="newAttendingCourseNonAffiliatedTeacherId" type="java.lang.Integer"></form-property>
+                  <form-property name="selectedAttendingCourseTeacherFormPosition" type="java.lang.Integer"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersId" type="java.lang.Integer[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeacherIsAffiliated" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeT" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeP" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeL" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeTP" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeS" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypePb" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeF" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeTr" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersClassTypeTO" type="java.lang.Boolean[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion33" type="java.lang.Integer[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion34" type="java.lang.Integer[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion35" type="java.lang.Double[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion36" type="java.lang.Double[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion37" type="java.lang.Double[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion38" type="java.lang.Double[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion39" type="java.lang.Double[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion310" type="java.lang.Double[]"></form-property>
+                  <form-property name="selectedAttendingCourseTeachersQuestion311" type="java.lang.Double[]"></form-property>
+                  <form-property name="currentAttendingCourseTeacherFormPosition" type="java.lang.Integer"></form-property>
+                  <form-property name="currentAttendingCourseTeacherClassType" type="java.lang.String[]"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion33" type="java.lang.Integer"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion34" type="java.lang.Integer"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion35" type="java.lang.Double"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion36" type="java.lang.Double"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion37" type="java.lang.Double"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion38" type="java.lang.Double"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion39" type="java.lang.Double"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion310" type="java.lang.Double"></form-property>
+                  <form-property name="currentAttendingCourseTeacherQuestion311" type="java.lang.Double"></form-property>
+                  <form-property name="newAttendingCourseRoomId" type="java.lang.Integer"></form-property>
+                  <form-property name="selectedAttendingCourseRoomId" type="java.lang.Integer"></form-property>
+                  <form-property name="selectedAttendingCourseRoomsId" type="java.lang.Integer[]"></form-property>
+                  <form-property name="selectedAttendingCourseRoomsQuestion41" type="java.lang.Integer[]"></form-property>
+                  <form-property name="selectedAttendingCourseRoomsQuestion42" type="java.lang.Integer[]"></form-property>
+                  <form-property name="selectedAttendingCourseRoomsQuestion43" type="java.lang.Integer[]"></form-property>
+                  <form-property name="currentAttendingCourseRoomId" type="java.lang.Integer"></form-property>
+                  <form-property name="currentAttendingCourseRoomQuestion41" type="java.lang.Integer"></form-property>
+                  <form-property name="currentAttendingCourseRoomQuestion42" type="java.lang.Integer"></form-property>
+                  <form-property name="currentAttendingCourseRoomQuestion43" type="java.lang.Integer"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentInquiryDataForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="authorizationAnswer"></form-property>
+                  <form-property type="java.lang.String" name="dislocatedAnswer"></form-property>
+                  <form-property type="java.lang.Integer" name="countryID"></form-property>
+                  <form-property type="java.lang.Integer" name="dislocatedCountryID"></form-property>
+                  <form-property type="java.lang.Integer" name="districtID"></form-property>
+                  <form-property type="java.lang.Integer" name="studentID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="weeklyWorkLoadForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodID"></form-property>
+                  <form-property type="java.lang.String" name="weekOffset"></form-property>
+                  <form-property type="java.lang.String" name="attendsID"></form-property>
+                  <form-property type="java.lang.String" name="contact"></form-property>
+                  <form-property type="java.lang.String" name="autonomousStudy"></form-property>
+                  <form-property type="java.lang.String" name="other"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="documentRequestCreateForm">
+                  <form-property type="java.lang.Integer" name="scpId"></form-property>
+                  <form-property type="java.lang.String[]" name="chosenDocumentRequestTypes"></form-property>
+                  <form-property type="java.lang.Integer" name="schoolRegistrationExecutionYearId"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="enrolmentDetailed"></form-property>
+                  <form-property type="java.lang.Integer" name="enrolmentExecutionYearId"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="degreeFinalizationAverage"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="degreeFinalizationDetailed"></form-property>
+                  <form-property type="java.lang.String" name="chosenDocumentPurposeType"></form-property>
+                  <form-property type="java.lang.String" name="otherPurpose"></form-property>
+                  <form-property type="java.lang.String" name="notes"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="urgentRequest"></form-property>
+                  <form-property type="java.lang.String" name="justification"></form-property>
+                  <form-property type="java.lang.Integer" name="numberOfPages"></form-property>
+                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentTimeTableForm">
+                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <!-- Payments -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="paymentsForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <!-- bolonhaEnrollmentForm -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="bolonhaEnrollmentForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+            </form-bean>
+            <!-- studentEnrollmentManagementForm -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentEnrollmentManagmentForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+            </form-bean>
+            <!-- bolonhaTransitionManagementForm -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="bolonhaTransitionManagementForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+            </form-bean>
+            <!-- vote -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="voteForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="studentId"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward contextRelative="true" redirect="true" path="/mainPortalPage.jsp" name="home"></forward>
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!-- page fronting actions -->
+            <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+                  <forward path="/showStudentPortal.do?method=prepare" name="Success"></forward>
+            </action>
+            <!-- SHIFT ENROLMENT -->
+            <action validate="true" input="/viewEnrolment.jsp" path="/viewShiftsList" type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowShiftListAction" scope="request" name="selectShiftEnrolmentForm">
+                  <forward path="/viewShiftsList.jsp" name="viewShiftsList"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction" parameter="method" scope="request" name="studentCurricularPlanAndEnrollmentsSelectionForm" path="/viewCurriculum">
+                  <!--        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->
+                  <forward path="df.page.curriculum.chooseRegistration" name="chooseRegistration"></forward>
+                  <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction" parameter="method" scope="request" name="studentCurricularPlanAndEnrollmentsSelectionForm" path="/viewStudentCurriculum">
+                  <!--        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->
+                  <forward path="df.page.curriculum.chooseRegistration" name="chooseRegistration"></forward>
+                  <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
+            </action>
+            <!-- Delegates Info -->
+            <!-- Year Delegate Elections -->
+            <!-- Student Shift Enrolment Manager-->
+            <action scope="request" path="/studentShiftEnrollmentOptions" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+                  <forward path="shift-enrolment-options" name="Success"></forward>
+            </action>
+            <action validate="true" name="shiftEnrollmentForm" scope="request" input="/viewShiftsList.do" path="/shiftEnrollment" type="net.sourceforge.fenixedu.presentationTier.Action.student.ShiftEnrollmentAction">
+                  <forward path="/viewEnrollment.do" name="sucess"></forward>
+            </action>
+            <action validate="true" path="/listAllSeminaries" type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ListAllSeminaries">
+                  <forward path="/viewSeminaries.jsp" name="listSeminaries"></forward>
+            </action>
+            <action validate="true" path="/candidacyOptions" type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyOptions">
+                  <forward path="/listAllSeminaries.do" name="candidaciesLimitReached"></forward>
+                  <forward path="/viewCandidacyOptions.jsp" name="showCandidacyOptions"></forward>
+                  <forward path="naoAutorizado.do" name="invalidQueryString"></forward>
+            </action>
+            <action validate="true" path="/fillCandidacy" type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyForm">
+                  <forward path="/viewCandidacyForm.jsp" name="showCandidacyFormNonCompleteModality"></forward>
+                  <forward path="naoAutorizado.do" name="invalidQueryString"></forward>
+            </action>
+            <action validate="true" name="seminaryCandidacyFormNonComplete" scope="request" input="/viewCandidacyForm.jsp" path="/submitCandidacyFirstInfo" type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacySecondForm">
+                  <forward path="/viewCandidacySecondForm.jsp" name="showCandidacyFormNonCompleteModalitySecondInfo"></forward>
+                  <forward path="/showCandidacy.jsp" name="candidacySubmited"></forward>
+                  <forward path="naoAutorizado.do" name="invalidQueryString"></forward>
+            </action>
+            <action name="seminaryCandidacySecondFormNonComplete" scope="request" path="/manageCaseStudyChoices" type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ManageCaseStudyChoices">
+                  <forward path="/showCandidacy.jsp" name="candidacySubmited"></forward>
+                  <forward path="/viewCandidacySecondForm.jsp" name="selectionChanged"></forward>
+                  <forward path="naoAutorizado.do" name="invalidQueryString"></forward>
+            </action>
+            <action scope="request" path="/candidacyDetails" type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyDetails">
+                  <forward path="/showCandidacyDetails.jsp" name="showCandidacyDetails"></forward>
+                  <forward path="naoAutorizado.do" name="invalidQueryString"></forward>
+            </action>
+            <!-- VIEW SCHEDULE -->
+            <!-- END OF GROUPS -->
+            <!-- TESTS -->
+            <!-- SENIOR INFORMATION -->
+            <!-- =================== Fill Inquiries ============== -->
+            <!-- ADMINISTRATIVE OFFICE SERVICES -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" parameter="method" path="/administrativeOfficeServicesSection">
+                  <forward path="df.page.administrativeOfficeServicesIndex" name="Success"></forward>
+            </action>
+            <!-- ONLINE TESTS -->
+            <!-- Begin : Payments -->
+            <!-- End : Payments -->
+            <!-- Begin : Prices -->
+            <!-- End : Payments -->
+            <!-- Begin : Student Enrollment Management -->
+            <!-- End : Student Enrollment Management-->
+            <!-- Begin : Bolonha Student Enrollment -->
+            <!-- End : Bolonha Student Enrollment -->
+            <!-- Start : Bolonha Transition Management -->
+            <!-- End : Bolonha Transition Management -->
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" parameter="resources.StudentResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="BOLONHA_MANAGER_RESOURCES" parameter="resources.BolonhaManagerResources"></message-resources>
+      <message-resources null="false" key="TESTS_RESOURCES" parameter="resources.TestsResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="DELEGATES_RESOURCES" parameter="resources.DelegateResources"></message-resources>
+      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="PEDAGOGICAL_COUNCIL" parameter="resources.PedagogicalCouncilResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-student.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/student/tiles-student-definitions.xml,/WEB-INF/tiles/student/tiles-student-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.student.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

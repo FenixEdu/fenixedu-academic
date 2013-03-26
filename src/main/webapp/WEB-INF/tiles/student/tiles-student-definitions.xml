@@ -1,0 +1,60 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.student.masterPage" extends="df.layout.two-column">
+	  <put name="title" value="private.student"/>
+	  <put name="bundle" value="TITLES_RESOURCES" />
+	  <put name="serviceName" value="Portal do Estudante" />	
+	  <put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
+	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.student.one-column" extends="df.layout.one-column">
+	  <put name="bundle" value="TITLES_RESOURCES" />
+	  <put name="title" value="private.student.subscribe.classes"/>
+	  <put name="serviceName" value="Portal do Estudante" />	
+	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyExamRooms">
+	</definition>
+	<definition name="definition.viewSeminaries" extends="definition.student.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.subscribe.seminars"/>
+		<put name="body" value="/student/viewSeminaries_bd.jsp"/>
+	</definition>
+	<definition name="definition.viewCandidacyOptions" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewCandidacyOptions_bd.jsp"/>
+	</definition>
+		<definition name="definition.viewCandidacyForm" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewCandidacyForm_bd.jsp"/>
+	</definition>
+	<definition name="definition.viewCandidacySecondForm" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewCandidacySecondForm_bd.jsp"/>
+	</definition>
+	<definition name="definition.showCandidacy" extends="definition.student.masterPage">
+		<put name="body" value="/student/showCandidacy_bd.jsp"/>
+	</definition>
+	<definition name="definition.candidacyLimitReached" extends="definition.student.masterPage">
+		<put name="body" value="/student/candidacyLimitReached_bd.jsp"/>
+	</definition>
+	<definition name="definition.showCandidacyDetails" extends="definition.student.masterPage">
+		<put name="body" value="/student/showCandidacyDetails_bd.jsp"/>
+	</definition>
+	<definition name="definition.gaugingTestResults" extends="definition.student.masterPage">
+		<put name="body" value="/student/gaugingTests/physics/viewGaugingTestResults.jsp"/>
+	</definition>
+	
+	<definition name="definition.student.administrativeOfficeServices" extends="definition.student.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices"/>
+		<put name="navLocal" value="/student/administrativeOfficeServices/administrativeOfficeServicesMenu.jsp"/>
+	</definition>
+
+	<definition name="student.print.masterPage" path="/commons/student/timeTable/classTimeTable.jsp">
+      <put name="body" value="/commons/blank.jsp" />
+	</definition>
+</tiles-definitions>

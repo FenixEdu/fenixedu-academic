@@ -1,0 +1,122 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="index" extends="pedagogicalCouncil.masterPage">
+        <put name="body" value="/pedagogicalCouncil/index.jsp"></put>
+    </definition>
+	<definition name="show-weekly-work-load" extends="pedagogicalCouncil.masterPage">
+		<put name="body" value="/pedagogicalCouncil/weeklyWorkLoad.jsp" />
+	</definition>
+	
+    <definition name="pedagogicalCouncil.communication" extends="pedagogicalCouncil.masterPage">
+    	<put name="body-context" value="/pedagogicalCouncil/communication/context.jsp"/>
+    </definition>
+	<definition name="manage-persisted-groups" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+    </definition>          
+    
+	<definition name="create-persisted-group" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="pedagogical-upload-file" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+	<definition name="pedagogical-edit-uploaders" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>  
+    
+   	<definition name="pedagogical-upload-file" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="pedagogical-manage-files" extends="pedagogicalCouncil.communication">
+   	   <put name="bundle" value="TITLES_RESOURCES"/>
+   	   <put name="title" value="private.pedagogiccouncil.communication.files"/>
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="pedagogical-edit-file" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+
+	<definition name="createEditCandidacyPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/createEditCandidacyPeriods.jsp"/>  
+    </definition>
+    
+    <definition name="createEditVotingPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/createEditVotingPeriods.jsp"/>  
+    </definition>
+
+	<definition name="showCandidacyPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showCandidacyPeriods.jsp"/>  
+    </definition>
+    
+	<definition name="showDegrees" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/sendEmailToStudents.jsp"/>  
+    </definition>
+    
+    <definition name="showVotingPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showVotingPeriods.jsp"/>  
+    </definition>
+    
+    <definition name="showCandidates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showCandidates.jsp"/>  
+    </definition>
+    
+    <definition name="showVotingResults" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showVotingResults.jsp"/>  
+    </definition>
+    
+    <definition name="secondRoundElections" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/secondRoundElections.jsp"/>  
+    </definition>
+
+    <definition name="createEditDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/delegates/createEditDelegates.jsp"/>  
+    </definition>
+    
+    <definition name="createEditGGAEDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/delegates/createEditGGAEDelegates.jsp"/>  
+    </definition>
+    
+    <definition name="showPossibleDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/delegates/showPossibleDelegates.jsp"/>  
+    </definition>
+
+	<definition name="searchDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/commons/delegates/searchDelegates.jsp"/>  
+    </definition>
+
+	<definition name="showDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/commons/delegates/showDelegates.jsp"/>  
+    </definition>
+    
+    <definition name="teacherSummariesControlList" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/control/teachersSummariesControlList.jsp"/>  
+    </definition>
+    
+    <definition name="evaluationMethodControl" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/control/evaluationMethodControl.jsp"/>  
+    </definition>
+    
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="pedagogicalCouncil.masterPage">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    
+    <definition name="view-registration-curriculum" extends="pedagogicalCouncil.masterPage">
+        <put name="body" value="/pedagogicalCouncil/tutorship/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+    
+     <definition name="df.page.send.email.redirect" extends="pedagogicalCouncil.masterPage">
+     	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.pedagogiccouncil.communication.sendingemail"/>
+        <put name="body" value="/email/sendEmailRedirect.jsp"/>
+    </definition>
+
+</tiles-definitions>

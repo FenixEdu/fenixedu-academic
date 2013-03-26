@@ -1,0 +1,242 @@
+/*  -------------------------------------
+	GESDIS CSS - PRINT | 01.04.2003
+	------------------------------------- */
+
+/*****************************************
+ 	propriedades gerais
+ *****************************************/
+
+body {
+	font: 11pt Arial, Helvetica, sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	}
+
+p 	{
+	font: 11pt/1.2em Arial, Helvetica, sans-serif;
+	color: #333;
+	margin-top: 0;
+	margin-bottom: 1em;
+	background-color: transparent;
+	}
+
+/* Nome da disciplina */
+h1 {
+	font: 16pt "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #333;
+	text-align: center;
+	margin: 2em 0 1.5em;
+	background-color: transparent;
+	}
+
+/* Tópicos */	
+h2 {
+	font: 14pt "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #333;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	background-color: transparent;
+	}
+	
+/* Sub-tópicos */
+h4	{
+	font: 11pt Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #999;
+	margin: 0;
+	padding-bottom: 0.2em;
+	background-color: transparent;
+	}
+
+
+/******************************************
+	links - geral
+*******************************************/
+
+a:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #00427b;
+	text-decoration: underline;
+	background-color: transparent;
+	}
+	
+
+/******************************************
+ 	elementos de estrutura e posicionamento
+ *******************************************/
+
+#container {
+	margin: 0;
+	border: 0;
+	}
+
+#principal {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: top;
+	}
+
+#header {
+	display: none;
+	}
+
+#barraist {
+	display: none;
+	}
+
+#barranav {
+	display: none;
+	}
+
+#anuncios {
+	margin: 0;
+	padding: 0;
+	border: 1px solid #333;
+	background-color: #ff9 !important;
+	}
+	
+#anuncios a:link {
+	color: #333;
+	text-decoration: underline;
+	}
+#invisible {
+	display: none;
+	}
+	
+.listClasses {
+	border: 1pt solid #000;
+	text-align: center;
+	height: 30px;
+	}	
+
+.listClasses-header {
+	font-weight: bold;
+	text-align: center;
+	border: 1pt solid #000;
+	background: #ccc;
+	}
+
+/******************************************
+ 	citação (opcional)
+ *******************************************/
+
+.citation	{
+	width: 100%;
+	}
+
+.citation p	{
+	width: 100%;
+	font: 11pt/1em Georgia, "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #666;
+	padding: 0 2em 0.2em 2em;
+	margin: 0;
+	border: 0;
+	}
+
+p.citation-author	{
+	font-style: italic;
+	padding-bottom: 2em;
+	}
+
+/******************************************
+ 	anúncios
+ *******************************************/
+
+.ultAnuncio {
+	font: 11pt/16pt Arial, Helvetica, sans-serif;
+	color: #333;
+	text-align: left;
+	padding: 20px;
+	background-color: transparent;
+	}
+
+/*
+.ultAnuncio {
+	font: 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	padding: 20px;
+	background-color: transparent;
+	}
+*/
+.ultAnuncioAviso {
+	font: 11pt Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #ccc;
+	text-align: left;
+	padding: 5px 20px 5px;
+	border-bottom: 1px solid #333;
+	background-color: #333;
+	}
+
+/*
+.ultAnuncioAviso {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+	font-weight: bold;
+	padding: 5px 30px 5px;
+	border-bottom: 1px solid #ccc;
+	background-color: #ccc;
+	}
+*/
+
+.mais-anuncio	{
+	font: 10pt Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	text-align: right;
+	background-color: transparent;
+	}
+
+.mais-anuncio a:link {
+	color: #333;
+	text-decoration: underline;
+	}
+
+/******************************************
+ 	post - date
+ *******************************************/
+ 
+ .post-date	{
+ 	display: inline;
+ 	color: #999;
+ 	}
+
+ /**********************************************
+	 FORMS Classes: inputs
+***********************************************/
+
+.error {
+	font: 11pt Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #900;
+	}
+	
+.inputlist {
+	font: 11pt Arial, Helvetica, sans-serif;
+	color: #333;
+	}
+	
+.inputbutton {
+	font: 11pt Arial, Helvetica, sans-serif;
+	color: #333;
+	width: 100px;
+	}
+	
+.inputbuttonSmall {
+	font: 11pt Arial, Helvetica, sans-serif;
+	color: #333;
+	}
+
+/**********************************************
+	Footer
+***********************************************/
+
+.footer {
+	display: none;
+	}

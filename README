@@ -1,0 +1,35 @@
+### ---- Using Maven ----    ###
+### davidmartinho@ist.utl.pt ###
+### sergio.silva@ist.utl.pt  ###
+
+Copy configuration.properties (old build.properties) to src/main/resources/configuration.properties
+
+A) compile and assemble a war file
+	
+	- mvn clean package
+
+	creates target/fenix-1.0-SNAPSHOT.war and target/fenix-1.0-SNAPSHOT/ 
+
+B) create jar for fenix scripts (without access control)
+	
+	- mvn clean test -Pjar
+
+	creates deploy/fenix-1.0-SNAPSHOT.jar 
+
+C) compile and run with jetty
+	
+	- mvn clean package jetty:start
+	
+	jetty runs on http://localhost:8080/fenix/
+
+	The port can be changed using 
+	
+	- mvn -Djetty.port=XXXX jetty:start
+
+	If Too many open files error occurs then change your OS open file limit with ulimit (man ulitmit) 
+
+D) run SQLUpdateGenerator
+	
+	- mvn clean test -PSQLUpdateGenerator
+	
+	creates or updates etc/database_operations/updates.sql

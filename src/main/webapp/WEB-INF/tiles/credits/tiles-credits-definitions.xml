@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.credits.two-column" extends="df.layout.two-column">
+	  <put name="serviceName" value="Portal Docente" />
+	  <put name="navGeral" value="/commons/homeLogoutGeneralNavigationBar.jsp" />
+	</definition>
+	<definition name="definition.credits.teacher.management" extends="definition.credits.two-column">
+		<put name="body-context" value="/credits/creditsTeacherContext.jsp"/>	
+	</definition>
+	
+	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
+				controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
+		<put name="title" value="/commons/blank.jsp"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
+	    <put name="link" value="/commons/blank.jsp"/>
+   	    <put name="professorshipList" />
+	</definition>
+	
+	<definition name="creditsLegend" page="/credits/commons/creditsLegend.jsp"/>
+	<definition name="creditsResume" page="/credits/commons/creditsResume.jsp">
+		<put name="infoCredits"/>
+	</definition>
+	
+	<definition name="creditsResumeLine" page="/credits/commons/creditsResumeLine.jsp">
+		<put name="creditLineDTO"/>
+	</definition>
+	
+	<definition name="creditsResumeWithDescription" page="/credits/commons/creditsResumeWithDescription.jsp">
+		<put name="creditLineDTO"/>
+	</definition>
+
+	<definition name="teacher-search-form-layout" page="/credits/commons/searchTeacherLayout.jsp">
+			<put name="searchInfo" value="/commons/blank.jsp"></put>
+	</definition>
+	
+	<definition name="teacher-search-layout" page="/credits/commons/searchTeacherPageLayout.jsp">
+			<put name="searchInfo" value="/commons/blank.jsp"></put>
+	</definition>	
+
+	<definition name="teacherContextTile" page="/credits/commons/teacherContextTile.jsp">
+			<put name="infoTeacher" value="/commons/blank.jsp"></put>
+	</definition>
+	
+</tiles-definitions>

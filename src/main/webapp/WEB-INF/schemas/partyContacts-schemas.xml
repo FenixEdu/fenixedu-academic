@@ -1,0 +1,383 @@
+<schema name="contacts.PartyContact.manage"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="party" hidden="true" />
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="defaultContact" key="label.partyContacts.defaultContact" />
+	<slot name="visibleToPublic" layout="option-select-postback"
+		key="label.contact.visible.to.public" default="false">
+		<property name="destination" value="postback-set-public" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="bodyText" value="label.contact.visible.to.public.description" />
+	</slot>
+	<slot name="visibleToStudents" layout="option-select-postback"
+		key="label.contact.visible.to.students" default="false">
+		<property name="destination" value="postback-set-elements" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="bodyText" value="label.contact.visible.to.students.description" />
+	</slot>
+	<slot name="visibleToAlumni" layout="option-select-postback"
+		key="label.contact.visible.to.alumni" default="false">
+		<property name="destination" value="postback-set-elements" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="bodyText" value="label.contact.visible.to.alumni.description" />
+	</slot>
+	<slot name="visibleToTeachers" layout="option-select-postback"
+		key="label.contact.visible.to.teachers" default="false">
+		<property name="destination" value="postback-set-elements" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="bodyText" value="label.contact.visible.to.teachers.description" />
+	</slot>
+	<slot name="visibleToEmployees" layout="option-select-postback"
+		key="label.contact.visible.to.employees" default="false">
+		<property name="destination" value="postback-set-elements" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="bodyText" value="label.contact.visible.to.employees.description" />
+	</slot>
+	<slot name="visibleToManagement" key="label.contact.visible.to.management" default="true">
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="bodyText" value="label.contact.visible.to.management.description" />
+		<property name="disabled" value="true" />
+	</slot>
+</schema>
+
+<schema name="contacts.Phone.manage"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
+	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="value" key="label.partyContacts.Phone">
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+         <validator class="pt.ist.fenixWebFramework.renderers.validators.PhoneValidator"/>
+   	</slot>
+</schema>
+
+<schema name="contacts.MobilePhone.manage"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
+	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="value" key="label.partyContacts.MobilePhone">
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.PhoneValidator"/>
+   	</slot>
+</schema>
+
+<schema name="contacts.EmailAddress.manage"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
+	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="value" key="label.partyContacts.EmailAddress">
+		<property name="size" value="50" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
+	</slot>
+</schema>
+
+<schema name="contacts.WebAddress.manage"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean"
+	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="value" key="label.partyContacts.WebAddress">
+		<property name="size" value="40" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+</schema>
+
+<schema name="contacts.PhysicalAddress.manage"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+	extends="contacts.PartyContact.manage" >
+
+	<slot name="address"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="areaCode">
+		<property name="size" value="10" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+			<property name="regexp" value="\d{4}-\d{3}" />
+			<property name="message" value="error.areaCode.invalidFormat" />
+			<property name="key" value="true" />
+			<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		</validator>
+	</slot>
+	<slot name="areaOfAreaCode"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="parishOfResidence"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtSubdivisionOfResidence"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtOfResidence"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="countryOfResidence" layout="menu-select"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" />
+	</slot>
+	<remove name="value" /> 
+	<remove name="visibleToPublic" /> 
+	<remove name="visibleToStudents" />
+	<remove name="visibleToAlumni" />
+	<remove name="visibleToTeachers" />
+	<remove name="visibleToEmployees" /> 
+	<remove name="visibleToManagement" />
+</schema>
+
+<schema name="contacts.PartyContact.view"
+	type="net.sourceforge.fenixedu.domain.contacts.PartyContact" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="defaultContact" key="label.partyContacts.defaultContact">
+		<property name="trueLabel" value="label.partyContacts.view.trueLabel" />
+		<property name="falseLabel" value="label.partyContacts.view.falseLabel" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+	</slot>
+	<slot name="type" />
+	<slot name="activeAndValid" key="label.partyContacts.isActiveAndValid">
+		<property name="trueLabel" value="label.yes.capitalized"/>
+		<property name="falseLabel" value="label.no.capitalized"/>
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="contacts.PhysicalAddress.view"
+	type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress"
+	extends="contacts.PartyContact.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="address" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="area" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="areaCode" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="areaOfAreaCode" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="parishOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="districtSubdivisionOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="districtOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+	<slot name="countryOfResidenceName" key="label.countryOfResidence" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+</schema>
+
+<schema name="contacts.PhysicalAddress.view-for-student"
+	type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress"
+	extends="contacts.PhysicalAddress.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<remove name="defaultContact" />
+</schema>
+
+<schema name="contacts.PhysicalAddress.manage-student" type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" extends="contacts.PhysicalAddress.manage">
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="excludedValues" value="INSTITUTIONAL"/>
+	</slot>
+</schema>
+
+<schema name="contacts.Institutional.PhysicalAddress.manage-student" type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" extends="contacts.PhysicalAddress.manage">
+</schema>
+
+
+<schema name="contacts.Phone.view" type="net.sourceforge.fenixedu.domain.contacts.Phone"
+	extends="contacts.PartyContact.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="number" />
+</schema>
+
+<schema name="contacts.MobilePhone.view" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone"
+	extends="contacts.PartyContact.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="number" />
+</schema>
+
+<schema name="contacts.EmailAddress.view"
+	type="net.sourceforge.fenixedu.domain.contacts.EmailAddress" extends="contacts.PartyContact.view"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="value" key="label.email" />
+</schema>
+
+<schema name="contacts.WebAddress.view" type="net.sourceforge.fenixedu.domain.contacts.WebAddress"
+	extends="contacts.PartyContact.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="url" key="label.webAddress" />
+</schema>
+
+<!-- student schemas -->
+<schema name="contacts.Phone.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
+	extends="contacts.Phone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
+</schema>
+
+<!-- <schema name="contacts.Institutional.Phone.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
+	extends="contacts.Phone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="value">
+		<property name="readOnly" value="true" />
+	</slot>
+</schema>
+ -->
+<schema name="contacts.MobilePhone.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
+	extends="contacts.MobilePhone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
+</schema>
+
+<!-- <schema name="contacts.Institutional.MobilePhone.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
+	extends="contacts.MobilePhone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="value">
+		<property name="readOnly" value="true" />
+	</slot>
+</schema> -->
+
+<schema name="contacts.EmailAddress.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
+	extends="contacts.EmailAddress.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
+</schema>
+
+<schema name="contacts.Institutional.EmailAddress.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
+	extends="contacts.EmailAddress.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="value">
+		<property name="readOnly" value="true" />
+	</slot>
+</schema>
+
+<schema name="contacts.WebAddress.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean"
+	extends="contacts.WebAddress.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
+</schema>
+
+<!-- <schema name="contacts.Institutional.Phone.manage"
+    type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
+	extends="contacts.Institutional.Phone.manage-student">
+</schema>
+ -->
+<!-- <schema name="contacts.Institutional.MobilePhone.manage"
+   type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
+	extends="contacts.Institutional.MobilePhone.manage-student">
+</schema>
+ -->
+<schema name="contacts.Institutional.EmailAddress.manage"
+     type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
+	extends="contacts.Institutional.EmailAddress.manage-student">
+</schema>
+
+<schema name="contacts.Institutional.PhysicalAddress.manage"
+     type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+	extends="contacts.PhysicalAddress.manage">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="address">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="area">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="areaCode">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="areaOfAreaCode">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="parishOfResidence">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="districtSubdivisionOfResidence">
+			<property name="readOnly" value="true" />
+	</slot>
+	<slot name="districtOfResidence">
+		<property name="readOnly" value="true" />
+	</slot>
+	<remove name="countryOfResidence" /> 
+	<slot name="countryOfResidence.name"  key="label.countryOfResidence">
+		<property name="readOnly" value="true" />		
+	</slot>
+</schema>
+
+
+<schema name="contacts.Institutional.WebAddress.manage-student"
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean"
+	extends="contacts.WebAddress.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="value">
+		<property name="readOnly" value="true" />
+	</slot>
+</schema>
+
+<schema name="contacts.PartyContact" type="net.sourceforge.fenixedu.domain.contacts.PartyContact">
+	<slot name="class" layout="label" bundle="RESEARCHER_RESOURCES" />
+	<slot name="type" />
+	<slot name="presentationValue" />
+</schema>
+
+<schema name="contacts.validate.PhysicalAddress" type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean">
+	<slot name="validationBean.stream" key="label.contacts.physicalAddress.upload.file" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<property name="fileNameSlot" value="validationBean.fileName" />
+		<property name="fileContentTypeSlot" value="validationBean.mimeType" />
+		<property name="fileSizeSlot" value="validationBean.fileSize" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3698688"/>
+			<property name="acceptedExtensions" value="gif,jpg,png,pdf,doc" />
+			<property name="required" value="true"/>
+		</validator>
+	</slot>
+</schema>
+
+<schema name="contacts.PhysicalAddressValidation.list" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="partyContact.party.name" key="label.name"/>
+	<slot name="requestDate"/>
+	<slot name="state"/>
+</schema>
+
+<schema name="contacts.PhysicalAddressValidation.view" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation" 
+	extends="contacts.PhysicalAddressValidation.list" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="description" key="label.description" bundle="APPLICATION_RESOURCES">
+		<property name="visibleIf" value="refused"/>
+	</slot>
+	<slot name="file" layout="link" key="label.contacts.physicalAddress.upload.file"/>
+</schema>

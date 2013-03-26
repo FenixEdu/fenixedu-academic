@@ -1,0 +1,239 @@
+<schema name="functionalities.functionality.input" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="executionPath" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="title">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="description" layout="area">
+        <property name="rows" value="10"/>
+        <property name="columns" value="40"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.parameter.view"
+        type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter"
+        bundle="FUNCTIONALITY_RESOURCES">
+        <slot name="name"/>
+        <slot name="type" layout="null-as-label">
+        	<property name="label" value="--"/>
+        	<property name="subLayout" value="values"/>
+        	<property name="subSchema" value="meta.type"/>
+        </slot>
+</schema>
+
+
+<schema name="meta.type"
+        type="net.sourceforge.fenixedu.domain.MetaDomainObject">
+        <slot name="concreteType.simpleName"/>
+</schema>        
+        
+        
+<schema name="functionalities.functionality.parameter.create"
+        type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter"
+        bundle="FUNCTIONALITY_RESOURCES" constructor="functionality, name">
+        <slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        <slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MetaDomainObjectProvider"/>
+        	<property name="eachLayout" value="values"/>
+        	<property name="eachSchema" value="meta.type"/>
+        </slot>
+        <slot name="functionality" hidden="true"/>
+</schema>
+
+
+<schema name="functionalities.module.input" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="prefix" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" default="/">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="title">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="description" layout="area">
+        <property name="rows" value="10"/>
+        <property name="columns" value="40"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.concrete.functionality.create" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        extends="functionalities.functionality.input"
+        bundle="FUNCTIONALITY_RESOURCES"
+        constructor="name">
+</schema>
+
+<schema name="functionalities.module.create" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        extends="functionalities.module.input"
+        bundle="FUNCTIONALITY_RESOURCES"
+        constructor="name,prefix">
+</schema>
+
+<schema name="functionalities.functionality.view.simple" 
+        type="net.sourceforge.fenixedu.domain.contents.Content"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name"/>
+    <slot name="path" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="title" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="description" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.view" 
+        type="net.sourceforge.fenixedu.domain.contents.Content"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name"/>
+    <slot name="executionPath" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="path" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="title" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="description" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.availability" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <!-- NOTE: only works for GroupAvailability -->
+    <slot name="availabilityPolicy" layout="null-as-label">
+        <property name="label" value="--"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="functionalities.availability.expression"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.availability.expression" 
+        type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="expression" layout="code-block"/>
+</schema>
+
+<schema name="functionalities.module.view.simple" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name"/>
+    <slot name="prefix"/>
+    <slot name="publicPrefix"/>
+    <slot name="path"/>
+    <slot name="title" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="description" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.edit" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        extends="functionalities.functionality.input"
+        bundle="FUNCTIONALITY_RESOURCES">
+</schema>
+
+<schema name="functionalities.module.edit" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        extends="functionalities.module.create"
+        bundle="FUNCTIONALITY_RESOURCES">
+</schema>
+        
+<schema name="functionalities.module.tree" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name" layout="link">
+        <property name="destination" value="module.view"/>
+        <property name="useParent" value="true"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.tree" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name" layout="link">
+        <property name="destination" value="functionality.view"/>
+        <property name="useParent" value="true"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.expression" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ExpressionBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="expression" layout="longText">
+        <property name="rows" value="5"/> 
+        <property name="columns" value="40"/> 
+    </slot>
+</schema>
+
+<schema name="functionalities.filter.select.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="personId">
+         <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+     </slot>
+    <slot name="parameters">
+        <property name="size" value="40"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.filter.result.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterResultBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="accessible"/>
+    <slot name="functionality.name" key="label.name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="viewModule"/>
+    </slot>
+    <slot name="publicPath" key="label.publicPath" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="testFilter"/>
+    </slot>
+    <slot name="functionality.parameters" key="label.parameters.required"/>
+</schema>
+
+<schema name="functionalities.availability.manage.context" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.AvailabilityBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="expression" layout="code-block"/>
+    <slot name="module.name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="viewModule"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.structure.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.StructureBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="stream">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+            <property name="required" value="true"/>
+            <property name="acceptedTypes" value="text/xml"/>
+        </validator>
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="principalPreserved"/>
+    <slot name="currentParentUsed"/>
+    <slot name="uuidUsed"/>
+</schema>
+
+<schema name="functionalities.groups.info" type="net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name"/>
+    <slot name="arguments"/>
+    <slot name="builder.class" layout="label">
+        <property name="bundle" value="FUNCTIONALITY_RESOURCES"/>
+    </slot>
+</schema>

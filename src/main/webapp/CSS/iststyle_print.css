@@ -1,0 +1,199 @@
+/* --------------------------------------------------------
+	print.css
+	made by: Bruno Monteiro (GAEL)
+	version date: 06.07.2004
+---------------------------------------------------------*/
+
+body { font: 11pt Arial, Helvetica, sans-serif; color: #333; margin: 1em; }
+h1 { font: 16pt/0.5em "Trebuchet MS", Arial, Helvetica, sans-serif; color: #069; }
+h2 { font: bold 14pt "Trebuchet MS", Arial, Helvetica, sans-serif; margin: 0.5em 0 0.5em 0; color: #c30; }
+h3 { font: bold 12pt Arial, Helvetica, sans-serif; color: #333; }
+img { border: 0; }
+a:link { font-weight: bold; text-decoration: underline; color: #000; }
+ul { list-style-type: square; line-height: 1.5em; }
+li { padding: 0.3em 0 0.3em 0; }
+
+/***********************************************************
+	structural classes: layout and position ids
+***********************************************************/
+
+#header * { display: none; } 
+#logoist { display: none; }
+#login_dotist, #logoutl { display: none; }
+
+/***********************************************************
+	sitewide profile navigation
+***********************************************************/
+
+#perfnav * { display: none; }
+	
+/****************************************************
+lat nav
+****************************************************/
+
+#latnav * { display: none; }
+td#latnav_container { display: none; }
+
+/***********************************************************
+	central content table & related elements
+***********************************************************/
+
+#bigtable { left: 0; }
+td#main { width: 100%; font: 11pt  Arial, Helvetica, sans-serif; color: #333; vertical-align: top; padding: 20px 30px; }
+td#main p { font: 11pt/1.5em Arial, Helvetica, sans-serif; color: #333; }
+.spot_event * { display: none; }
+.noticias, .eventos, .campus { font: bold 14pt "Trebuchet MS", Arial, Helvetica, sans-serif; color: #333; padding: 0 0 0 5px; height: 25px; }
+.info_cell_holder { font: 11pt  Arial, Helvetica, sans-serif; color: #333; vertical-align: top; border-right: 1pt solid #ccc; padding: 5px 10px 5px 10px; }
+.info_cell_holder_nobrd { font: 11pt Arial, Helvetica, sans-serif; color: #333; vertical-align: top; padding: 5px 10px 5px 10px; }
+
+/***********************************************************
+	page footer
+***********************************************************/
+
+#footer * { display: none; }
+	
+/***********************************************************
+	columns
+***********************************************************/
+
+.col_left { margin: 0 10px 0 0; }
+.col_right, .col_right_photo{ float: right; width: 150px; margin: 30px; }
+.col_right { width: 250px; }
+.col_right_photo img { border: 2pt solid #999; }
+.box { width: 250px; border: 1pt solid #999; }
+.box p { margin: 0; }
+.box img { border: 0; }
+.box_header { background: #ccc; padding: 3px 10px 3px 10px; }
+.box_cell { background: #eae7e4; padding: 10px; }
+.box ul { list-style-type: none; margin: 0; padding: 0; }
+
+/***********************************************************
+	text and other util widgets
+***********************************************************/
+
+.greytxt { color: #666; }
+.px10 { font-size: 9pt; } 
+.photoframer { display: block; border: 2pt solid #999; }
+.inline { display: inline; }
+.clear { clear: both; }
+.center { text-align: center; }
+.browser_upgrade {display: none; }
+
+/***********************************************************
+	general stripes layout table for www.ist.utl.pt
+***********************************************************/
+
+.tab_lay { border: 1pt solid #999; font-size: 11pt; }
+.tab_lay th { color: #333; background: #ccc; text-align: left; padding: 2.5pt; }
+.tab_lay td { padding: 5pt; height: 2em; }
+.tab_lay td.subheader { font: bold 11pt "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; color: #333; background: #e2e2e2; padding: 2.5pt 2.5pt 2.5pt 2.5pt; }
+.tab_lay td.bluecell { background: #EDF3FE; }
+.tab_themes { border: 1pt solid #999; font-size: 11pt; }
+.tab_themes td { line-height: 1.5em; padding: 2.5pt; height: 2em; }
+.tab_themes td.title { background: #e2e2e2; }
+.tab_themes h3 { color: #333; margin: 0; }
+
+
+/* ----------------------
+ ---- Classes ----------
+----------------------- */
+
+.p_mvert015 p { margin: 0.15em 0; }
+.smalltxt { font-size: 0.85em;}
+.prenomargin { margin: 0; padding: 0; }
+
+.aleft { text-align: left; }
+.aright { text-align: right; }
+.acenter { text-align: center; }
+.hidden { display: none; }
+.bold { font-weight: bold; }
+.nobullet { list-style: none; }
+.noindent { margin-left: 0; padding-left: 0; }
+
+.pbottom1 { padding-bottom: 1em;}
+.pbottom2 { padding-bottom: 2em;}
+.pbottom3 { padding-bottom: 3em;}
+.mtop0 { margin-top: 0;}
+.mtop05 { margin-top: 0.5em;}
+.mtop1 { margin-top: 1em;}
+.mtop2 { margin-top: 2em;}
+.mtop3 { margin-top: 3em;}
+.mbottom0 { margin-bottom: 0;}
+.mbottom1 { margin-bottom: 1em;}
+.mbottom2 { margin-bottom: 2em;}
+.mbottom3 { margin-bottom: 3em;}
+.mleft0 { margin-left: 0; }
+.mleft1 { margin-left: 1em; }
+.mvert0 { margin-top: 0; margin-bottom: 0; }
+.mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }
+.mvert1 { margin-top: 1em; margin-bottom: 1em; }
+.mvert2 { margin-top: 2em; margin-bottom: 2em; }
+.mvert3 { margin-top: 3em; margin-bottom: 3em; }
+.indent0 { margin-left: 0; }
+.indent1 { margin-left: 1em; }
+.indent2 { margin-left: 2em; }
+.indent3 { margin-left: 3em; }
+.indent4 { margin-left: 4em; }
+.indent5 { margin-left: 5em; }
+.indent6 { margin-left: 6em; }
+.indent9 { margin-left: 9em; }
+.indent12 { margin-left: 12em; }
+.indent15 { margin-left: 15em; }
+.valigntop { vertical-align: top; }
+
+ul.indent0 { margin-left: 0; padding-left: 0; }
+table.mtop05 { margin-top: 0.5em; }
+table.smallmargin td { padding: 0.25em; }
+td.pleft1 { padding-left: 1em; }
+td.pleft2 { padding-left: 2em; }
+td.pleft3 { padding-left: 3em; }
+td.pleft4 { padding-left: 4em; }
+td.pleft5 { padding-left: 5em; }
+td.pleft6 { padding-left: 6em; }
+
+.breakafter {page-break-after: always; }
+table.showborder { border-collapse: collapse; }
+table.showborder th, table.showborder td { padding: 4px 8px; }
+table.showborder th { border: 1px solid #aaa; }
+table.showborder td { border: 1px solid #aaa; }
+.printbold { font-weight: bold; }
+
+.toprint { display: block;}
+
+table.printborder { border-collapse: collapse; }
+table.printborder th, table.printborder td { border: 1px solid #888; }
+table.tpadding1 th, table.tpadding1 td { padding: 0.15em 0.5em;}
+
+
+.prtwidth100pc { width: 100%; }
+
+/* student curriculum display */
+.col01 { width: auto; }
+.col02 { width: 6%; }
+.col03 { width: 6%; }
+.col04 { width: 3%; }
+.col05 { width: 9%; }
+.col06 { width: 3%; }
+.col07 { width: 3%; }
+.col08 { width: 3%; }
+.col09 { width: 3%; }
+.col10 { width: 6%; }
+.col11 { width: 6%; }
+.col12 { width: 7%; }
+.col13 { width: 5%; }
+
+/*
+			<!-- Código e Disciplina --> 		col01 bgcolor04 aleft,
+			<!-- Curso  --> 					col02 bgcolor05 width5em acenter,
+			<!-- Opcional  -->					col03 bgcolor08 width5em acenter,
+			<!-- Caixa  -->						col04 bgcolor13 width2em acenter printhidden,
+			<!-- Reprovado Não Avaliado  -->	col05 bgcolor09 width8em acenter,
+			<!-- Nota  -->						col06 bgcolor10 width2em acenter,
+			<!-- Peso  -->						col07 bgcolor11 color888 width2em acenter,
+			<!-- ECTS  -->						col08 bgcolor12 color888 width2em acenter,
+			<!-- Época Normal -->				col09 bgcolor03 width1p5em acenter,
+			<!-- Ano -->						col10 bgcolor06 width5em acenter,
+			<!-- Semestre -->					col11 bgcolor07 width5em acenter,
+			<!-- Data do Exame -->				col12 bgcolor02 width6em acenter,
+			<!-- Pessoa Responsável Nota -->	col13 bgcolor01 width3em acenter
+*/

@@ -1,0 +1,26 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+	
+<tiles-definitions>
+	
+	<definition name="go-to-first-page" extends="resourceManager.masterPage" >
+	    <put name="body" value="/resourceManager/welcomeScreen.jsp" />
+	</definition>
+
+	<!-- =================== Material Management  =================== -->
+	<definition name="prepare-material-manage" extends="resourceManager.masterPage" >
+		<put name="body" value="/resourceManager/materialManagement/materialManagement.jsp" />
+	</definition>
+	<definition name="edit-material" extends="resourceManager.masterPage" >
+		<put name="body" value="/resourceManager/materialManagement/editMaterial.jsp" />
+	</definition>
+	
+	<!-- =================== Vehicle Management  =================== -->
+	<definition name="prepare-vehicle-manage" extends="resourceManager.masterPage" >
+		<put name="body" value="/resourceManager/vehicleManagement/vehicleManagement.jsp" />
+	</definition>
+	<definition name="edit-vehicle" extends="resourceManager.masterPage" >
+		<put name="body" value="/resourceManager/vehicleManagement/editVehicle.jsp" />
+	</definition>
+			
+</tiles-definitions>

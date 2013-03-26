@@ -1,0 +1,58 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+    
+<!-- Tiles definitions -->
+<tiles-definitions>
+
+    <definition name="functionalities.error.notAvailable" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/errors/notAvailable.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.module.view" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/view-module.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.module.edit" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/edit-module.jsp"/>
+    </definition>
+
+    <definition name="functionalities.module.create" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/create-module.jsp"/>
+    </definition>
+
+    <definition name="functionalities.module.upload" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/upload-structure.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.view" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/view-functionality.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.functionality.edit" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/edit-functionality.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.create" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/create-functionality.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.functionality.manage" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/manage-functionality.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.delete.confirm" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/confirm-delete.jsp"/>
+    </definition>
+
+    <definition name="functionalities.filter.index" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/filter/index.jsp"/>
+    </definition>
+
+    <definition name="functionalities.filter.results" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/filter/index.jsp"/>
+    </definition>
+
+    <definition name="functionalities.groupLanguage.show" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/group-language.jsp"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,333 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+	<definition name="domain.view" extends="researcher.masterPage" >
+	    <put name="body" value="/commons/renderers/view.jsp" />
+	</definition>
+    <definition name="index" extends="researcher.masterPage">
+        <put name="body" value="/researcher/index.jsp"></put>
+    </definition>
+    <definition name="viewCurriculum" extends="researcher.masterPage">
+        <put name="body" value="/researcher/viewCurriculum.jsp"></put>
+    </definition>
+    
+    <!-- projects definitions -->
+    <definition name="projects.projectsManagement" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/projectsManagement.jsp"></put>
+    </definition>
+    <definition name="projects.editProjectData" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectData.jsp"></put>
+    </definition>
+    <definition name="projects.editProjectParticipants" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectParticipants.jsp"></put>
+    </definition>
+    <definition name="projects.editProjectEventAssociations" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectEventAssociations.jsp"></put>
+    </definition>
+    
+    <definition name="projects.editProjectParticipantUnits" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectParticipantUnits.jsp"></put>
+    </definition>
+    
+    <definition name="projects.viewProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/viewProject.jsp"></put>
+    </definition>
+    <definition name="projects.createProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/createProject.jsp"></put>
+    </definition>
+    
+    <!-- interests definitions -->
+    <definition name="interests.interestsManagement" extends="researcher.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp"/>
+        <put name="body" value="/researcher/interests/interestsManagement.jsp"></put>
+    </definition>
+    <definition name="interests.insert.interest" extends="researcher.masterPage">
+        <put name="body" value="/researcher/interests/insertNewInterest.jsp"></put>
+    </definition>  
+    <definition name="interests.edit.interest" extends="researcher.masterPage">
+        <put name="body" value="/researcher/interests/editInterest.jsp"></put>
+    </definition>  
+    
+    <!-- activities definitions -->
+    <definition name="activities.activitiesManagement" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/activitiesManagement.jsp"></put>
+    </definition>
+    <definition name="activities.createEvent" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createEventParticipation.jsp"></put>
+    </definition>
+     <definition name="activities.createEventEdition" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createEventEditionParticipation.jsp"></put>
+    </definition>
+
+    <definition name="activities.createIssue" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createJournalIssueParticipation.jsp"></put>
+    </definition>
+    <definition name="activities.createScientificJournal" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createScientificJournalParticipation.jsp"></put>
+    </definition>
+    <definition name="activities.createCooperation" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/createCooperationParticipation.jsp"></put>
+    </definition>
+    <definition name="activities.editResearchActivity" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/editResearchActivity.jsp"></put>
+    </definition>     
+    <definition name="activities.editResearchActivityData" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/editResearchActivityData.jsp"></put>
+    </definition>
+    <definition name="activities.editResearchActivityParticipants" extends="researcher.masterPage">
+        <put name="body" value="/researcher/activities/editResearchActivityParticipants.jsp"></put>
+    </definition>
+    
+    <!-- Result definitions -->
+
+
+    <definition name="show-result-loggedin" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/showResearchResult.jsp"></put>
+    </definition>
+    <definition name="result.participation" extends="researcher.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp"/>
+        <put name="body" value="/researcher/result/participations/editResultParticipations.jsp"></put>
+    </definition>
+    <definition name="create.unit" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/participations/createExternalUnit.jsp"></put>
+    </definition>        
+    <definition name="result.unitAssociations" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/editResultUnitAssociations.jsp"></put>
+    </definition>
+    <definition name="result.eventAssociations" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/editResultEventAssociations.jsp"></put>
+    </definition>
+    <definition name="result.documentFiles" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/documents/editResultDocumentFiles.jsp"></put>
+    </definition>
+
+    <!-- Result patents definitions -->
+    <definition name="patents.list" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents"/>
+        <put name="body" value="/researcher/result/patents/managePatents.jsp"></put>
+    </definition>
+    <definition name="patents.create" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents"/>
+        <put name="body" value="/researcher/result/patents/createPatent.jsp"></put>
+    </definition>
+    <definition name="patents.edit" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents"/>
+        <put name="body" value="/researcher/result/patents/editPatent.jsp"></put>
+    </definition>
+    <definition name="patents.editData" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents"/>
+        <put name="body" value="/researcher/result/patents/editPatentData.jsp"></put>
+    </definition>
+    <definition name="patents.delete" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents"/>
+        <put name="body" value="/researcher/result/patents/deletePatent.jsp"></put>
+    </definition>
+    <definition name="patents.details" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/patentDetails.jsp"></put>
+    </definition>
+
+    <!-- Result publications definitions -->
+    <definition name="publications.publicationsManagement" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications"/>
+        <put name="body" value="/researcher/result/publications/publicationsManagement.jsp"/>
+
+    </definition>
+    <definition name="setUnitToAll.publicationsManagement" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.disassociatedisciplinesexecution"/>
+        <put name="body" value="/researcher/result/publications/setUnitToAllPublications.jsp"/>
+    </definition>
+    <definition name="publications.createPublication" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications"/>
+        <put name="body" value="/researcher/result/publications/createPublication.jsp"></put>
+    </definition>
+    <definition name="publications.editPublicationData" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/editPublicationData.jsp"></put>
+    </definition>
+    <definition name="publications.viewEditPublication" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/viewEditPublication.jsp"></put>
+    </definition>
+    <definition name="publications.deletePublication" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/deletePublication.jsp"></put>
+    </definition>
+    <definition name="publications.openBibtexFile" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications"/>
+        <put name="body" value="/researcher/result/publications/bibtex/openBibtexFile.jsp"></put>
+    </definition>
+    <definition name="publications.importBibtex" extends="researcher.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications"/>
+        <put name="body" value="/researcher/result/publications/bibtex/importBibtex.jsp"></put>
+    </definition> 
+    <definition name="publications.search" extends="researcher.masterPage">
+       
+        <put name="body" value="/researcher/result/publications/searchPublication.jsp"></put>
+    </definition>     
+	<definition name="publications.associate.prize" extends="researcher.masterPage">
+	   
+       <put name="body" value="/researcher/prizes/associatePrizeToResult.jsp"/>  
+    </definition> 
+    <definition name="list-prizes" extends="researcher.masterPage">
+       
+	    <put name="body" value="/researcher/prizes/listPrizes.jsp"/> 
+    </definition>     
+	<definition name="edit.prize" extends="researcher.masterPage">
+	   
+       <put name="body" value="/researcher/prizes/editPrize.jsp"/>  
+    </definition>           
+	<definition name="create-prize" extends="researcher.masterPage">
+	   
+       <put name="body" value="/researcher/prizes/createPrize.jsp"/>  
+    </definition>     
+	<definition name="view-prize" extends="researcher.masterPage">
+	   
+       <put name="body" value="/researcher/prizes/showPrize.jsp"/>  
+    </definition>          
+	<definition name="edit-prize-units" extends="researcher.masterPage">
+	   
+       <put name="body" value="/researcher/prizes/associateUnitToPrize.jsp"/>  
+    </definition>         
+	<definition name="edit-prize-people" extends="researcher.masterPage">
+	   
+       <put name="body" value="/researcher/prizes/associatePersonToPrize.jsp"/>  
+    </definition>          
+     
+    <definition name="show.journal" extends="researcher.masterPage">
+       <put name="body" value="/researcher/showJournal.jsp"/>  
+    </definition>
+    
+    <definition name="edit-journal" extends="researcher.masterPage">
+       <put name="body" value="/researcher/result/publications/editJournal.jsp"/>  
+    </definition>    
+    
+    <definition name="show.event" extends="researcher.masterPage">
+       <put name="body" value="/researcher/showEvent.jsp"/>  
+    </definition>
+
+	<definition name="edit-event" extends="researcher.masterPage">
+       <put name="body" value="/researcher/result/publications/editEvent.jsp"/>  
+    </definition>
+
+
+	<definition name="researcher.unit.functionalities" extends="researcher.masterPage">
+		<put name="body-context" value="/researcher/researchUnit/context.jsp"/>
+	</definition>
+
+	<definition name="show-unit-functionalities" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/showUnitFunctionalities.jsp"/>  
+    </definition>
+	
+	<definition name="manage-persisted-groups" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/managePersistedGroups.jsp"/>  
+    </definition>          
+    
+	<definition name="create-persisted-group" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="research-unit-upload-file" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+	<definition name="research-unit-edit-uploaders" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>      
+
+   	<definition name="research-unit-upload-file" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="research-unit-manage-files" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="research-unit-edit-file" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+
+	<definition name="research-unit-edit-publication-collaborators" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/managePublicationCollaborators.jsp"/>  
+    </definition>      
+
+	<definition name="research-unit-list-publications" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/listPublications.jsp"/>  
+    </definition>      
+
+	<!--  Researcher details, find an expert configuration -->
+	<definition name="view-researcher-details" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/viewResearcher.jsp"/>  
+    </definition>
+	
+	<definition name="edit-researcher-details" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/editResearcher.jsp"/>  
+    </definition>
+
+	<definition name="show-researchers-results" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/searchResearchers.jsp"/>  
+    </definition>
+    
+    <definition name="browse-researchers-results" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/browserResearchers.jsp"/>  
+    </definition>
+
+	<definition name="df.page.tfcSubmit" extends="researcher.masterPage">
+		<put name="body" value="/teacher/submitTFC_bd.jsp"></put>		
+	</definition>
+	<definition name="df.page.chooseDegreeForFinalWorkProposal" extends="researcher.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.curriculum.dissertations"/>
+		<put name="body" value="/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"/>
+	</definition>
+	<definition name="df.page.finalWorkSubmit" extends="researcher.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.curriculum.dissertations"/>
+		<put name="body" value="/teacher/submitFinalWorkProposal_bd.jsp"></put>
+	</definition>
+	<definition name="df.page.viewfinalDegreeWorkProposal" extends="researcher.masterPage">
+		<put name="bundle" value="private.curriculum.dissertations"/>
+		<put name="title" value="private.curriculum.dissertations"/>
+		<put name="body" value="/teacher/viewFinalDegreeWorkProposal_bd.jsp"></put>
+	</definition>	
+	<definition name="df.page.final.degree.work.print" extends="df.layout.print">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.curriculum.dissertations"/>
+		<put name="body" value="/teacher/printFinalDegreeWorkProposal_bd.jsp"></put>
+	</definition>
+	<definition name="df.page.showStudentCurricularPlans" extends="researcher.masterPage">
+		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
+	</definition>
+	<definition name="df.page.showStudentCurriculum" extends="researcher.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+	<definition name="df.page.notAuthorized" extends="researcher.masterPage" >
+		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>
+
+	<definition name="df.page.showThesisList" extends="researcher.masterPage">
+		<put name="body" value="/teacher/showThesisList.jsp" />
+	</definition>
+	<definition name="df.page.viewThesis" extends="researcher.masterPage">
+		<put name="body" value="/teacher/viewThesis.jsp"/>
+	</definition>
+
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="researcher.masterPage">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+
+    <definition name="view-registration-curriculum" extends="researcher.masterPage">
+        <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+
+</tiles-definitions>

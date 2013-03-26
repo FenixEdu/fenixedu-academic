@@ -1,0 +1,142 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+    <definition name="index" extends="definition.gep.two-column">
+        <put name="body" value="/gep/index.jsp"></put>
+    </definition>
+    <definition name="view-teachers-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/teachers/viewTeachersInformation.jsp"/>
+    </definition>
+    <definition name="view-teacher-information" extends="definition.gep.two-column">
+        <put name="body" value="/teacher/information/viewTeacherInformation.jsp"/>
+    </definition>
+    <definition name="search-teachers-information" extends="definition.gep.two-column">
+    	 
+    	<put name="title" value = "private.gep.gepportal.facultyinformation" />
+        <put name="body" value="/gep/teachers/searchTeachersInformation.jsp"/>
+    </definition>
+    <definition name="view-courses-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/courses/viewCoursesInformation.jsp"/>
+    </definition>
+    <definition name="view-course-information" extends="definition.gep.two-column">
+        <put name="body" value="/gep/courses/viewCourseInformation.jsp"/>
+    </definition>
+    <definition name="search-courses-information" extends="definition.gep.two-column">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value = "private.gep.gepportal.informationdisciplines" /> 
+        <put name="body" value="/gep/courses/searchCoursesInformation.jsp"/>
+    </definition>
+    <definition name="list-courses-information" extends="definition.gep.one-column">
+        <put name="body" value="/gep/courses/ectsInformation.jsp"/>
+    </definition>
+    <definition name="list-courses-information-english" extends="definition.gep.one-column">
+        <put name="body" value="/gep/courses/ectsInformation_en.jsp"></put>
+    </definition>
+    <definition name="list-courses-acreditation" extends="definition.gep.one-column">
+        <put name="body" value="/gep/courses/acreditationInformation.jsp"/>
+    </definition>
+     <definition name="list-teachers-acreditation" extends="definition.gep.one-column">
+        <put name="body" value="/gep/teachers/acreditationInformation.jsp"/>
+    </definition>
+    <definition name="view-teaching-report" extends="definition.gep.two-column">
+        <put name="body" value="/gesdis/viewTeachingReport.jsp"></put>
+    </definition>
+    <definition name="chooseExecutionYear" extends="definition.gep.two-column">
+        <put name="body" value="/gep/courses/viewCompetenceCoursesStatistics.jsp"></put>
+    </definition>    
+	<!-- ==================== View Curricular Course Historic ================== -->
+	<definition name="view-degree-curricular-plan-execution-year" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+	<definition name="show-active-curricular-scopes" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+	<definition name="view-curriculum-historic" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
+
+    <!-- ==================== Inquiries ================== -->
+	<definition name="choose-degree-curricular-plans" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/gep/inquiries/chooseDegreeCurricularPlans.jsp"></put>
+	</definition>
+	<definition name="show-report"
+		extends="definition.gep.two-column">
+		<put name="body" value="/gep/inquiries/showReport.jsp"></put>
+	</definition>
+	<definition name="define.response.periods" extends="definition.gep.two-column">
+		<put name="body" value="/gep/inquiries/defineResponsePeriods.jsp"></put>
+	</definition>
+
+	<definition name="teachingStaff.chooseExecutionYearAndDegreeCurricularPlan" extends="definition.gep.two-column">
+		<put name="body" value="/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp"></put>
+	</definition>
+	<definition name="teachingStaff.chooseExecutionCourse" extends="definition.gep.two-column">
+		<put name="body" value="/gep/teachingStaff/chooseExecutionCourse.jsp"></put>
+	</definition>
+	<definition name="teachingStaff.viewTeachingStaff" extends="definition.gep.two-column">
+		<put name="body" value="/gep/teachingStaff/viewTeachingStaff.jsp"></put>
+	</definition>
+	<definition name="chooseDegreeCurricularPlan" extends="definition.gep.two-column" >
+		<put name="body" value="/gep/inquiries/classifications/chooseDegreeCurricularPlan.jsp" />
+	</definition>
+	<definition name="show-execution-courses-for-inquiries" extends="definition.gep.two-column" >
+		<put name="body" value="/gep/inquiries/showExecutionCoursesForInquiries.jsp" />
+	</definition>
+    <!-- PROTOCOLS -->
+	<definition name="search-protocols" extends="definition.gep.two-column">
+        <put name="body" value="/protocols/searchProtocols.jsp"/>
+    </definition>	
+	<definition name="reports-by-degree-type" extends="definition.gep.two-column">
+        <put name="body" value="/gep/reportsByDegreeType.jsp"/>
+    </definition>	
+    <!-- ALUMNI -->
+	<definition name="alumni.showAlumniStatistics" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/alumniStatistics.jsp"/>
+    </definition>	
+	<definition name="alumni.showAlumniDetails" extends="definition.gep.two-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.gep.alumni.search"/>
+        <put name="body" value="/gep/alumni/alumniDetails.jsp"/>
+    </definition>
+    <definition name="view-reports" extends="definition.gep.two-column">
+        <put name="body" value="/gep/viewReports.jsp"/>
+    </definition>		
+    <definition name="alumni.prepare.sendEmail" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/prepareSendEmail.jsp"/>
+    </definition>    
+    <definition name="alumni.recipients.manage" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/manageRecipients.jsp"/>
+    </definition>
+    <definition name="alumni.recipients.add" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/addRecipients.jsp"/>
+    </definition>
+    <definition name="alumni.recipients.remove" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/removeRecipients.jsp"/>
+    </definition>
+    <definition name="student.viewRegistrationDetails" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewRegistrationDetails.jsp"></put>
+    </definition>     
+    <definition name="student.showStudentCurriculum" extends="definition.gep.two-column" >
+		<put name="body" value="/internationalRelatOffice/displayStudentCurriculum_bd.jsp" />
+	</definition>     
+	<definition name="students.search" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/searchStudents.jsp"></put>
+    </definition> 
+    <definition name="students.viewStudentDetails" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewStudentDetails.jsp"></put>
+    </definition> 
+    <definition name="student.viewPersonalData" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewPersonalData.jsp"></put>
+    </definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.gep.two-column">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="view-registration-curriculum" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+</tiles-definitions>

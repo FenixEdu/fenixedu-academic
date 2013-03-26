@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" 
+    "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="coordinationTeam" extends="definition.coordinator.two-column">
+	     
+	    <put name="title" value="private.coordinator.management.courses.management.coordinationteam" />
+		<put name="body" value="/coordinator/coordinationTeam/viewCoordinationTeam.jsp" />
+	</definition>
+	<definition name="chooseExecutionYear" extends="definition.coordinator.two-column">
+		 
+	    <put name="title" value="private.coordinator.management.courses.management.coordinationteam" />
+		<put name="body" value="/coordinator/coordinationTeam/chooseExecutionYear.jsp" />
+	</definition>
+	<definition name="df.page.notAuthorizedSimple" extends="definition.coordinator.two-column" >
+		<put name="body" value="/coordinator/notAuthorizedSimple.jsp" />
+	</definition>	
+	<definition name="addCoordinator" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
+	</definition>
+	<definition name="degreeSiteMenu" extends="definition.coordinator.two-column.extra-menu">
+		<put name="title" value="private.coordinator.management.courses.management.coursepage"/>
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/help.jsp" />
+	</definition>
+	<definition name="viewInformation" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
+	</definition>
+	<definition name="viewDescriptionCurricularPlan" 
+        extends="definition.coordinator.two-column.extra-menu">
+        
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp" />
+	</definition>
+	<definition name="editOK" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/editOK.jsp" />
+	</definition>
+	<definition name="viewHistoric" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/viewHistoric.jsp" />
+	</definition>
+	<definition name="viewSite" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
+	</definition>
+    <definition name="coordinator-announcements-no-boards" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/coordinator/degreeSite/announcements/noBoards.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-uploadFile" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+    </definition>    
+    <definition name="coordinator-announcements-editFile" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+    </definition>        
+    <definition name="coordinator-announcements-list-boards" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-list-announcements" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-add-announcement" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-view-announcement" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+    </definition>
+    <definition name="coordinator-announcements-edit-announcement" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+    </definition>
+	<definition name="coordinatorDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="title" value="private.coordinator.management.courses.management.curriculumplan"/>
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
+	</definition>
+	<definition name="coordinatorCompetenceCourses" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/commons/blank.jsp" />
+	</definition>
+	<definition name="activeDegreeCurricularPlan" extends="coordinatorDegreeCurricularPlan">
+		<put name="body" value="/coordinator/degreeCurricularPlan/showActiveDegreeCurricularPlan.jsp" />
+	</definition>
+	<definition name="degreeCurricularPlanHistory" extends="coordinatorDegreeCurricularPlan">
+		<put name="body" value="/coordinator/degreeCurricularPlan/showDegreeCurricularPlanHistory.jsp" />
+	</definition>
+	<definition name="viewCurricularCourseInformation" 
+        extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+		<put name="body" value="/coordinator/degreeCurricularPlan/viewCurricularCourseInformation.jsp" />
+	</definition>
+	<definition name="prepareViewCurricularCourseInformationHistory" 
+        extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+		<put name="body" 
+            value="/coordinator/degreeCurricularPlan/prepareViewCurricularCourseInformationHistory.jsp" 
+            />
+	</definition>
+	<definition name="editCurriculum" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculum.jsp" />
+	</definition>
+	<definition name="editCurriculumEn" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" 
+            />
+		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculumEn.jsp" />
+	</definition>
+	<definition name="view-course-information" extends="definition.coordinator.two-column">
+		<put name="body" value="/gesdis/viewCourseInformation.jsp">
+		</put>
+	</definition>
+	<definition name="view-teaching-report" extends="definition.coordinator.two-column">
+		<put name="body" value="/gesdis/viewTeachingReport.jsp">
+		</put>
+	</definition>
+	<definition name="view-teachers-information" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/teachers/viewTeachersInformation.jsp"/>
+	</definition>
+	<definition name="view-teacher-information" extends="definition.coordinator.two-column">
+		<put name="body" value="/teacher/information/viewTeacherInformation.jsp" />
+	</definition>
+
+	<definition name="chooseTutor" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/chooseTutor.jsp" />
+	</definition>
+	<definition name="notAuthorized" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/notAuthorized.jsp" />
+	</definition>
+	<definition name="showStudentsByTutor" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/tutorManagement.jsp" />
+	</definition>
+	<definition name="transferTutorships" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/transferTutorships.jsp" />
+	</definition>
+	<definition name="createTutorships" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/createTutorships.jsp" />
+	</definition>	
+	<definition name="changeTutorshipsEndDates" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/changeTutorshipsEndDates.jsp" />
+	</definition>
+	<definition name="showTutorshipHistory" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/viewTutorshipHistory.jsp" />
+	</definition>
+	<definition name="chooseTutorHistory" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/chooseTutorHistory.jsp" />
+	</definition>
+	<definition name="viewSearch" extends="definition.coordinator.two-column">
+		<put name="body" value="/teacher/viewAttendsSearch.jsp" />
+	</definition>
+
+	<!-- Enrollment -->
+	<definition name="firstPageStudentEnrollementSection" extends="definition.coordinator.two-column.extra-menu.student">
+		<put name="navLocalExtra" value="/coordinator/enrollment/enrollmentStudentMenu.jsp" />
+		<put name="body" value="/coordinator/enrollment/help.jsp" />
+	</definition>
+
+	<!-- ************************************** LEEC Enrollment ****************************-->
+	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.coordinator.two-column">
+		<put name="body" value="/teacher/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
+	</definition>
+	<definition name="df.page.showStudentCurricularPlans" extends="definition.coordinator.two-column.extra-menu.student">
+		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
+	</definition>
+	<definition name="df.page.notAuthorized" extends="definition.coordinator.two-column" >
+		<put name="title" value="private.coordinator.management.courses.students.curriculum"/>
+		<put name="body" value="/coordinator/student/notAuthorized_bd.jsp" />
+	</definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.coordinator.two-column.extra-menu.student">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="view-registration-curriculum" extends="definition.coordinator.two-column.extra-menu.student">
+        <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+	<definition name="df.page.showStudentCurriculum" extends="definition.coordinator.two-column.extra-menu.student" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+	<definition name="df.page.showStudentCurriculumForCoordinator" extends="definition.coordinator.two-column" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+
+	<definition name="df.page.displayStudentListByDegree" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/displayStudentListByDegree_bd.jsp" />
+		<put name="body-context" value="/coordinator/simpleContext.jsp" />
+	</definition>
+	<definition name="df.page.displayStudentListByCourse" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/displayStudentListByCourse_bd.jsp" />
+		<put name="body-context" value="/coordinator/simpleContext.jsp" />
+	</definition>
+	<definition name="df.page.chooseCurricularCourse" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/chooseCurricularCourse_bd.jsp" />
+		<put name="body-context" value="/coordinator/simpleContext.jsp" />
+	</definition>
+	<definition name="df.page.showFinalDegreeWorkList" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkList_bd.jsp" />
+	</definition>
+	<definition name="show-final-degree-work-info" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkInfo.jsp" />
+	</definition>
+	<definition name="show-proposals" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showProposals.jsp" />
+	</definition>
+	<definition name="show-proposal" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showProposal.jsp" />
+	</definition>
+	<definition name="edit-proposal" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/editProposal.jsp" />
+	</definition>
+	<definition name="show-candidates" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showCandidates.jsp" />
+	</definition>
+	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
+	</definition>
+	
+	<definition name="df.page.showFinalDegreeChooseExecutionDegree" extends="definition.coordinator.two-column">
+		<put name="title" value = "private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp" />
+	</definition>
+	<definition name="detailed-proposal-list" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/detailedProposalList_bd.jsp" />
+	</definition>
+	<definition name="chooseStudentsGratuityList" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/gratuity/chooseStudentsGratuityList.jsp"/>
+	</definition>
+	<definition name="studentsGratuityList" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/gratuity/studentsGratuityList.jsp"/>
+	</definition>
+	<definition name="df.page.manageFinalDegreeWorks" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/manageFinalDegreeWorks.jsp" />
+	</definition>
+	
+	<definition name="edit-final-degree-periods" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreePeriods.jsp" />
+	</definition>
+	
+	<definition name="edit-final-degree-requirements" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
+		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreeRequirements.jsp" />
+	</definition>
+	
+	
+
+	<!--  ================================= EVALUATIONS =========================-->
+	
+	<definition name="df.coordinator.evaluation-management" extends="definition.coordinator.two-column">
+	</definition>
+
+	<definition name="show-weekly-work-load" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/weeklyWorkLoad.jsp" />
+	</definition>
+
+    <!-- ===================== SITE ====================== -->
+
+    <definition name="definition.coordinator.siteManagement" extends="definition.coordinator.two-column.extra-menu" >
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body-context" value="/coordinator/degreeSite/siteContext.jsp" />
+    </definition>
+    
+    <definition name="manage-degree-sectionsManagement" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
+    </definition>
+    <definition name="manage-degree-section" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/section.jsp"/>
+    </definition>
+    <definition name="manage-degree-editSection" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition> 
+    <definition name="manage-degree-editFileItemName" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
+    </definition> 
+    <definition name="manage-degree-createSection" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="manage-degree-createItem" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editItem" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="manage-degree-uploadFile" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editFile" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="manage-degree-organizeItems" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="manage-degree-organizeFiles" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="manage-degree-confirmSectionDelete" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editSectionPermissions" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editItemPermissions" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="manage-degree-editFile" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>   
+    
+    <!-- ============ Thesis =========== -->
+    <definition name="thesis-search-student" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/searchStudent.jsp"/>
+    </definition>
+    <definition name="thesis-list" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/listThesis.jsp"/>
+    </definition>
+    <definition name="thesis-select-person" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/selectPerson.jsp"/>
+    </definition>
+    <definition name="thesis-select-unit" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/selectUnit.jsp"/>
+    </definition>
+    <definition name="thesis-change-information" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/changeInformation.jsp"/>
+    </definition>
+    <definition name="thesis-change-information-with-docs" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/changeInformationWithDocs.jsp"/>
+    </definition>
+    <definition name="thesis-collect-basic-information" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/collectBasicInformation.jsp"/>
+    </definition>
+    <definition name="thesis-edit" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/editThesis.jsp"/>
+    </definition>
+    <definition name="thesis-view-submitted" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewSubmitted.jsp"/>
+    </definition>
+    <definition name="thesis-review-proposal" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/reviewProposal.jsp"/>
+    </definition>
+    <definition name="thesis-view-approved" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewApproved.jsp"/>
+    </definition>
+    <definition name="thesis-view-confirmed" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewConfirmed.jsp"/>
+    </definition>
+    <definition name="thesis-view-evaluated" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/viewEvaluated.jsp"/>
+    </definition>
+    <definition name="thesis-edit-participant" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/editParticipant.jsp"/>
+    </definition>
+    
+      <definition name="thesis-view-operations" extends="definition.coordinator.two-column">
+        <put name="body" value="/student/thesis/viewOperationsThesis.jsp"/>
+    </definition>
+     
+    <!-- ========== Scientific Commission -->
+    <definition name="scientificCommission-view" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/scientificCommission/manageScientificCommission.jsp"/>
+    </definition>
+    
+    
+    <!-- Begin: Bolonha Transition Management -->
+	<definition name="transition.bolonha.chooseRegistration" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/transition/bolonha/chooseRegistration.jsp"/>
+	</definition>
+	<definition name="transition.bolonha.showStudentCurricularPlan" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/transition/bolonha/showStudentCurricularPlan.jsp"/>
+	</definition>
+	<!-- End: Bolonha Transition Management -->
+    
+	
+	<!-- Begin: View Student Curriculum -->
+	<definition name="student.curriculum.chooseStudent" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/curriculum/chooseStudent.jsp"/>
+	</definition>
+	<definition name="student.curriculum.chooseCurriculumType" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/curriculum/chooseCurriculumType.jsp"/>
+	</definition>
+	<!-- End: View Student Curriculum -->
+	
+	
+	<!-- Begin: Equivalence Management -->
+	<definition name="show-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
+	</definition>
+	<definition name="show-student-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
+	<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+	</definition>
+	
+	<!-- End: Equivalence Management -->
+</tiles-definitions>

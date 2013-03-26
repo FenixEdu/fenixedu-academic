@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <data-sources></data-sources>
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="voidForm">
+                  <form-property type="java.lang.Integer" name="voidProperty"></form-property>
+            </form-bean>
+            <!-- Dynamic-FormBean for Password Change -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="changePasswordForm">
+                  <form-property type="java.lang.String" name="oldPassword"></form-property>
+                  <form-property type="java.lang.String" name="newPassword"></form-property>
+                  <form-property type="java.lang.String" name="reTypeNewPassword"></form-property>
+            </form-bean>
+            <!-- Dynamic-FormBean for Qualification Edit-->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="qualificationForm">
+                  <form-property type="java.lang.String" name="tempDate"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="mark"></form-property>
+                  <form-property type="java.lang.String" name="school"></form-property>
+                  <form-property type="java.lang.String" name="degree"></form-property>
+                  <form-property type="java.lang.String" name="title"></form-property>
+                  <form-property type="java.lang.String" name="branch"></form-property>
+                  <form-property type="java.lang.String" name="specializationArea"></form-property>
+                  <form-property type="java.lang.String" name="degreeRecognition"></form-property>
+                  <form-property type="java.lang.String" name="tempEquivalenceDate"></form-property>
+                  <form-property type="java.lang.String" name="equivalenceSchool"></form-property>
+                  <form-property type="java.lang.Integer" name="countryIdInternal"></form-property>
+                  <form-property type="java.lang.Integer" name="infoPerson#idInternal"></form-property>
+            </form-bean>
+            <!-- Dynamic-FormBean for Qualification Edit-->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sendSmsForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.Integer" name="destinationPhoneNumber"></form-property>
+                  <form-property type="java.lang.String" name="message"></form-property>
+                  <form-property type="java.lang.String" name="charCount"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="homepageForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="activated"></form-property>
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="showUnit"></form-property>
+                  <form-property type="java.lang.String" name="showCategory"></form-property>
+                  <form-property type="java.lang.String" name="showPhoto"></form-property>
+                  <form-property type="java.lang.String" name="showEmail"></form-property>
+                  <form-property type="java.lang.String" name="showTelephone"></form-property>
+                  <form-property type="java.lang.String" name="showWorkTelephone"></form-property>
+                  <form-property type="java.lang.String" name="showMobileTelephone"></form-property>
+                  <form-property type="java.lang.String" name="showAlternativeHomepage"></form-property>
+                  <form-property type="java.lang.String" name="showResearchUnitHomepage"></form-property>
+                  <form-property type="java.lang.String" name="showCurrentExecutionCourses"></form-property>
+                  <form-property type="java.lang.String" name="showActiveStudentCurricularPlans"></form-property>
+                  <form-property type="java.lang.String" name="showAlumniDegrees"></form-property>
+                  <form-property type="java.lang.String" name="researchUnitHomepage"></form-property>
+                  <form-property type="java.lang.String" name="researchUnit"></form-property>
+                  <form-property type="java.lang.String" name="showCurrentAttendingExecutionCourses"></form-property>
+                  <form-property type="java.lang.String" name="showPublications"></form-property>
+                  <form-property type="java.lang.String" name="showPatents"></form-property>
+                  <form-property type="java.lang.String" name="showInterests"></form-property>
+                  <form-property type="java.lang.String" name="showParticipations"></form-property>
+                  <form-property type="java.lang.String" name="showPrizes"></form-property>
+            </form-bean>
+            <!-- ================= PARKING REQUEST FORM =================== -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="parkingForm">
+                  <form-property type="java.lang.String" name="driverLicense"></form-property>
+                  <form-property type="java.lang.String" name="registry1"></form-property>
+                  <form-property type="java.lang.String" name="insurance1"></form-property>
+                  <form-property type="java.lang.String" name="Id1"></form-property>
+                  <form-property type="java.lang.String" name="declaration1"></form-property>
+                  <form-property type="java.lang.String" name="registry2"></form-property>
+                  <form-property type="java.lang.String" name="insurance2"></form-property>
+                  <form-property type="java.lang.String" name="Id2"></form-property>
+                  <form-property type="java.lang.String" name="declaration2"></form-property>
+                  <form-property type="java.lang.Boolean" name="ownVehicle1"></form-property>
+                  <form-property type="java.lang.Boolean" name="ownVehicle2"></form-property>
+                  <form-property type="java.lang.Boolean" name="vehicle2"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward redirect="true" path="index.do" name="index"></forward>
+            <forward path="/index.do" name="firstPage"></forward>
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!-- page fronting actions -->
+            <action forward="show-change-password-link" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/changePasswordForward"></action>
+            <!--      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
+-->
+            <action type="org.apache.struts.actions.SwitchAction" path="/switchAction"></action>
+            <!-- Action for home portal -->
+            <action forward="/switchAction.do?prefix=&amp;page=/home.do" path="/home"></action>
+            <action parameter="/person/personMainPage.jsp" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/index"></action>
+            <!-- Action for Visualization Of the Person's Personal Information -->
+            <action input="visualize.personal.information" parameter="visualize.personal.information" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/visualizePersonalInfo"></action>
+            <!-- Action to Change Candidate's Password -->
+            <action scope="request" input="/changePassword.jsp" type="net.sourceforge.fenixedu.presentationTier.Action.person.ChangePersonPasswordAction" name="changePasswordForm" attribute="changePasswordForm" path="/changePasswordForm">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.InvalidPasswordActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException"></exception>
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.FenixActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"></exception>
+                  <forward path="/changePasswordSuccess.jsp" name="Success"></forward>
+            </action>
+            <!-- Action to manage a Qualification -->
+            <!-- ========== VIEW PHOTO ========== -->
+            <!-- ======== RENDERERS =========== -->
+            <!-- ======== PARKING =========== -->
+            <!-- ===== VIGILANCY ======== -->
+            <!-- ===== Contacts ======== -->
+            <!-- ===== Portal interface ====== -->
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>
+      <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="HOMEPAGE_RESOURCES" parameter="resources.HomepageResources"></message-resources>
+      <message-resources null="false" key="PARKING_RESOURCES" parameter="resources.ParkingResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="CONTENT_RESOURCES" parameter="resources.ContentResources"></message-resources>
+      <message-resources null="false" key="FUNCTIONALITY_RESOURCES" parameter="resources.FunctionalityResources"></message-resources>
+      <message-resources null="false" key="WEBSITEMANAGER_RESOURCES" parameter="resources.WebsiteManagerResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="ACCOUNTING_RESOURCES" parameter="resources.AccountingResources"></message-resources>
+      <message-resources null="false" key="TREASURY_RESOURCES" parameter="resources.TreasuryResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
+            <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml, /WEB-INF/tiles/person/tiles-person-pages-definitions.xml, /WEB-INF/tiles/person/tiles-person-definitions.xml, /WEB-INF/tiles/teacher/tiles-teacher-definitions.xml, /WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.person.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

@@ -1,0 +1,2538 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+
+	<application>
+		<locale-config>
+			<default-locale>pt</default-locale>
+		</locale-config>
+		<message-bundle>resources.ApplicationResources</message-bundle>
+	</application>
+	
+ 	<!-- <lifecycle>
+      <phase-listener>net.sourceforge.fenixedu.presentationTier.jsf.phaseListeners.PhaseTracker</phase-listener>
+    </lifecycle>-->
+
+	<converter>
+		<converter-id>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-id>
+		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-class>
+	</converter>
+
+	<converter>
+		<converter-for-class>net.sourceforge.fenixedu.domain.GradeScale</converter-for-class>
+		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.GradeScaleConverter</converter-class>
+	</converter>
+
+
+	<!-- MANAGED BEANS -->
+
+	<managed-bean>
+		<description>InfoExecutionPeriod</description>
+		<managed-bean-name>infoExecutionPeriod</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<description>name</description>
+			<property-name>name</property-name>
+			<value>O galo!</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<description>ExecutionPeriods</description>
+		<managed-bean-name>executionPeriods</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.example.ExecutionPeriods</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>listStudentThesis</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.ListStudentThesis</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>degreeCurricularPlanID</property-name>
+			<value>#{param.degreeCurricularPlanID}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>listFirstTimeEnrolmentMasterDegreeStudents</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.gep.ListFirstTimeEnrolmentMasterDegreeStudents</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+
+	<managed-bean>
+		<managed-bean-name>updateGratuitySituations</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.gratuity.UpdateGratuitySituations</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>displayCurricularPlan</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.DisplayCurricularPlan</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>createExecutionDegrees</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree.CreateExecutionDegreesForExecutionYearBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+
+	<managed-bean>
+		<managed-bean-name>createCourseReports</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse.CreateCourseReportsForExecutionPeriod</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Backbeans from department member subapplication -->
+	<managed-bean>
+		<managed-bean-name>viewDepartmentTeachers</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.ViewDepartmentTeachers</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+		
+	<managed-bean>
+		<managed-bean-name>viewTeacherService</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.teacherService.ViewTeacherService</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- End of Backbeans from department member subapplication -->
+
+	<!-- BEGIN: STUDENT Managed Beans -->
+	<managed-bean>
+		<description>DisplayEvaluationsForStudentToEnrol</description>
+		<managed-bean-name>displayEvaluationsToEnrol</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>ManageEvaluationsForStudent</description>
+		<managed-bean-name>manageEvaluationsForStudent</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.ManageEvaluationsForStudent</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- END: STUDENT Managed Beans -->
+	
+
+	<!-- BEGIN: COMMON Managed Beans -->
+	<managed-bean>
+		<managed-bean-name>SOPEvaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.SOPEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: COMMON Managed Beans -->
+
+
+	<!-- BEGIN: TEACHER Managed Beans -->
+
+	<managed-bean>
+		<description>EvaluationManagementBackingBean</description>
+		<managed-bean-name>evaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>EvaluationManagementMenuBackingBean</description>
+		<managed-bean-name>evaluationManagementMenuBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementMenuBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>ProjectManagementBackingBean</description>
+		<managed-bean-name>projectManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.ProjectManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>AdHocEvaluationManagementBackingBean</description>
+		<managed-bean-name>adHocEvaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.AdHocEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- END: TEACHER Managed Beans -->
+	
+	
+	<!-- BEGIN: Backbeans from department administrative office subapplication -->
+	
+	<managed-bean>
+		<description>ManagementGroupsBackingBean</description>
+		<managed-bean-name>ManagementGroupsBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.ManagementGroupsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- END: Backbeans from department administrative office subapplication -->
+
+	<!-- BEGIN: FunctionsManagement Managed Beans -->
+
+	<managed-bean>
+		<description>FunctionsManagementBackingBean</description>
+		<managed-bean-name>functionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>ManagerFunctionsManagementBackingBean</description>
+		<managed-bean-name>managerFunctionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>FacultyFunctionsManagementBackingBean</description>
+		<managed-bean-name>facultyAdmOfficeFunctionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice.FacultyAdmOfficeFunctionsManagement</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<description>ScientificCouncilFunctionsManagementBackingBean</description>
+		<managed-bean-name>scientificCouncilFunctionsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.ScientificCouncilFunctionsManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- END: FunctionsManagement Managed Beans -->
+
+	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
+	
+	<!-- END: AdvisoriesManagement Managed Beans -->
+	
+	<!-- BEGIN: COORDINATOR Managed Beans -->
+	<managed-bean>
+		<description>coordinatorEvaluationManagementBackingBean</description>
+		<managed-bean-name>coordinatorEvaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>CoordinatorWrittenTestsInformationBackingBean</description>
+		<managed-bean-name>coordinatorWrittenTestsInformationBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorWrittenTestsInformationBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<description>CoordinatorWrittenTestsManagementBackingBean</description>
+		<managed-bean-name>coordinatorWrittenTestsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorWrittenTestsManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>		
+	<managed-bean>
+		<description>CoordinatorProjectsInformationBackingBean</description>
+		<managed-bean-name>coordinatorProjectsInformationBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsInformationBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<managed-bean-name>CoordinatorEvaluationsBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorEvaluationsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<description>CoordinatorProjectsManagementBackingBean</description>
+		<managed-bean-name>coordinatorProjectsManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation.CoordinatorProjectsManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>CoordinatorStudentsBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.CoordinatorStudentsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: COORDINATOR Managed Beans -->
+
+	<managed-bean>
+		<managed-bean-name>publicEvaluations</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.PublicEvaluationsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>DepartmentManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.DepartmentManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>studentCalendar</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.StudentCalendarBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>writtenEvaluationsByRoom</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>publicWrittenEvaluationsByRoom</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.WrittenEvaluationsByRoomBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- BEGIN: Bolonha Management Beans -->
+	<managed-bean>
+		<description>DegreeManagement</description>
+		<managed-bean-name>DegreeManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>ManagerDegreeManagement</description>
+		<managed-bean-name>ManagerDegreeManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans.ManagerDegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>AcademicAdministrationDegreeManagement</description>
+		<managed-bean-name>AcademicAdministrationDegreeManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans.AcademicAdministrationDegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>DegreeCurricularPlanManagement</description>
+		<managed-bean-name>DegreeCurricularPlanManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeCurricularPlanManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>CurricularPlansMembersManagementBackingBean</description>
+		<managed-bean-name>CurricularPlansMembersManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.CurricularPlansMembersManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>CurricularCourseManagementBackingBean</description>
+		<managed-bean-name>CurricularCourseManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>ManagerCurricularCourseManagementBackingBean</description>
+		<managed-bean-name>ManagerCurricularCourseManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans.ManagerCurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>AcademicAdministrationCurricularCourseManagementBackingBean</description>
+		<managed-bean-name>AcademicAdministrationCurricularCourseManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans.AcademicAdministrationCurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<description>CompetenceCourseManagementBackingBean</description>
+		<managed-bean-name>CompetenceCourseManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses.CompetenceCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>CourseGroupManagementBackingBean</description>
+		<managed-bean-name>CourseGroupManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>BranchCourseGroupManagementBackingBean</description>
+		<managed-bean-name>BranchCourseGroupManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.BranchCourseGroupManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>CycleCourseGroupInformationManagementBackingBean</description>
+		<managed-bean-name>CycleCourseGroupInformationManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CycleCourseGroupInformationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>CourseGroupReportBackingBean</description>
+		<managed-bean-name>CourseGroupReport</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupReportBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: Bolonha Management Beans -->
+	
+	<!-- BEGIN: CurricularRules Management Beans -->
+	<managed-bean>
+		<description>CurricularRulesManagementBackingBean</description>
+		<managed-bean-name>CurricularRulesManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CurricularRulesManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<description>CompositeRulesManagementBackingBean</description>
+		<managed-bean-name>CompositeRulesManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CompositeRulesManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: CurricularRules Management Beans -->
+	
+	<!-- BEGIN: OrganizationalStructure Managed Beans -->
+	<managed-bean>
+		<managed-bean-name>organizationalStructure</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.person.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<!-- END: OrganizationalStructure Managed Beans -->
+	
+	
+	
+	
+	
+	<!-- MANAGER ORGANIZATIONAL STRUCTURE MANAGEMENT -->
+	
+	<managed-bean>
+		<managed-bean-name>organizationalStructureBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	
+	<navigation-rule>
+		<from-view-id>/messaging/organizationalStructure/structurePage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>choose</from-outcome>
+			<to-view-id>/messaging/organizationalStructure/structurePage.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>prepareCreateNewUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/createNewUnit.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/listUnitParentUnits.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/chooseParentUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listAllUnitsToChooseParentUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/createNewUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listAllUnits</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/createNewFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>					
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/editUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/createNewSubUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/chooseFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>		
+		<navigation-case>
+			<from-outcome>listAllUnits</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToUnitDetails</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/organizationalStructureManagament/unitDetails.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listAllUnits</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareEditUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/editUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareCreateNewFunction</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/createNewFunction.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>prepareCreateNewSubUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/createNewSubUnit.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>chooseInherentParentFunction</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/chooseUnit.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>prepareChooseParentUnit</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listAllUnitsToChooseParentUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>prepareChooseParentUnitToRemove</from-outcome>
+			<to-view-id>/manager/organizationalStructureManagament/listUnitParentUnits.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	<!-- DEPARTMENT MEMBER Managed Beans -->
+	<managed-bean>
+		<description>Provides statistics with various degrees of granularity</description>
+		<managed-bean-name>courseStatistics</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.CourseStatistics</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- END: DEPARTMENT MEMBER Managed Beans -->
+	
+	<!-- NAVIGATION RULES -->
+	
+	<navigation-rule>
+		<from-view-id>/departmentMember/courseStatistics/viewCompetenceCourses.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewDegreeCourses</from-outcome>
+			<to-view-id>/departmentMember/courseStatistics/viewDegreeCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/courseStatistics/viewDegreeCourses.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewExecutionCourses</from-outcome>
+			<to-view-id>/departmentMember/courseStatistics/viewExecutionCourses.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>backToCompetenceCourses</from-outcome>
+			<to-view-id>/departmentMember/courseStatistics/viewCompetenceCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/courseStatistics/viewExecutionCourses.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToDegreeCourses</from-outcome>
+			<to-view-id>/departmentMember/courseStatistics/viewDegreeCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manager/somePage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listExecutionPeriods</from-outcome>
+			<to-view-id>/manager/somePageListExecutionPeriods.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/bolonha/displayCurricularPlan.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/degree/chooseDegreeType.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>choose</from-outcome>
+			<to-view-id>/manager/degree/chooseDegreeCurricularPlans.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>	
+	
+	<navigation-rule>
+		<from-view-id>/manager/degree/chooseDegreeCurricularPlans.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
+		</navigation-case>			
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/manager/degree/chooseDegreeType.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/manager/degree/chooseDegreeType.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<!-- Navigation rules from department member subapplication -->
+	
+	<!-- View Department Teachers Process -->
+	<navigation-rule>
+		<from-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewDetails</from-outcome>
+			<to-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/viewTeacherService/chooseExecutionYear.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listDistributionTeachersByTeacher</from-outcome>
+			<to-view-id>/departmentMember/viewTeacherService/viewTeacherService.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listDistributionTeachersByCourse</from-outcome>
+			<to-view-id>/departmentMember/viewTeacherService/viewTeacherServiceByCourse.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/viewDepartmentTeachers/viewTeacherDetails.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/departmentMember/viewDepartmentTeachers/listDepartmentTeachers.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<!-- End Process -->
+	
+	<!-- Manage Teacher Personal Expectations Process -->
+	<!-- Create Personal Expectation SubProcess -->
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/chooseExecutionYear.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>view</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>next</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertInvestigationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>next</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertUniversityServiceExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>next</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/insertProfessionalActivityExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Create Personal Expectation SubProcess -->
+	
+	<!-- Edit Personal Expectation SubProcess -->
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/insertEducationExpectationData.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editEducationExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editEducationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+		<navigation-case>
+			<from-outcome>editInvestigationExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editInvestigationExpectationData.jsp</to-view-id>
+		</navigation-case>			
+		<navigation-case>
+			<from-outcome>editUniversityServiceExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editUniversityServiceExpectationData.jsp</to-view-id>
+		</navigation-case>			
+		<navigation-case>
+			<from-outcome>editProfessionalActivityExpectationData</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/editProfessionalActivityExpectationData.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editEducationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editInvestigationExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editUniversityServiceExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/departmentMember/expectationManagement/editProfessionalActivityExpectationData.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentMember/expectationManagement/viewPersonalExpectation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Edit Personal Expectation SubProcess -->
+	
+	<!-- End Process -->
+			
+	<!-- End Navigation rules from department member subapplication -->
+
+	<!-- BEGIN: STUDENT Navigation Rules -->
+	<!-- END: STUDENT Navigation Rules -->
+		
+	<!-- BEGIN: SOP Navigation Rules -->
+
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/showExecutionCourses.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>createWrittenEvaluation</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</to-view-id>
+		</navigation-case>			
+ 		<navigation-case>
+			<from-outcome>writtenEvaluationCalendar</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/commentExecutionCourse.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>writtenEvaluationCalendar</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>associateRoomToWrittenEvaluation</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>associateExecutionCourseToWrittenEvaluation</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>writtenEvaluationCalendar</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>createWrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>editWrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/editWrittenTest.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>createWrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>editWrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/editWrittenTest.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/editWrittenTest.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>associateRoomToWrittenEvaluation</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>associateExecutionCourseToWrittenEvaluation</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>writtenEvaluationCalendar</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/deleteWrittenEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>writtenEvaluationCalendar</from-outcome>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- END: SOP Navigation Rules -->
+
+		
+	<!-- BEGIN: TEACHER Navigation Rules -->
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/onlineTestsIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/writtenTestsIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterCreateWrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/createWrittenTest.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterEditEnrolmentPeriod</from-outcome>
+			<to-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterChooseRoom</from-outcome>
+			<to-view-id>/teacher/evaluation/chooseRoom.jsp</to-view-id>
+		</navigation-case>		
+ 		<navigation-case>
+			<from-outcome>enterShowStudentsEnroled</from-outcome>
+			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterDistributeStudentsByRooms</from-outcome>
+			<to-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterEditWrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/editWrittenTest.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/chooseRoom.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/examsIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterEditEnrolmentPeriod</from-outcome>
+			<to-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterShowStudentsEnroled</from-outcome>
+			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterDistributeStudentsByRooms</from-outcome>
+			<to-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>enterEditExam</from-outcome>
+			<to-view-id>/teacher/evaluation/editExam.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editExam.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/projectsIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterCreateProject</from-outcome>
+			<to-view-id>/teacher/evaluation/createProject.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>enterEditProject</from-outcome>
+			<to-view-id>/teacher/evaluation/editProject.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/createProject.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>projectsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/projectsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editProject.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>projectsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/projectsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterCreateAdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/createAdHocEvaluation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>enterEditAdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/editAdHocEvaluation.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/createAdHocEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>adHocEvaluationsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editAdHocEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>adHocEvaluationsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/showStudentsEnroled.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/createWrittenTest.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editWrittenTest.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/distributeStudentsByRooms.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterShowStudentsEnroled</from-outcome>
+			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editMarksList.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>OnlineTest</from-outcome>
+			<to-view-id>/teacher/evaluation/onlineTestsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>FinalEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/finalEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>AdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>		
+ 		<navigation-case>
+			<from-outcome>enterLoadMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/loadMarks.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/loadMarks.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/publishMarks.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>OnlineTest</from-outcome>
+			<to-view-id>/teacher/evaluation/onlineTestsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>FinalEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/finalEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>AdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/finalEvaluationIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/submitMarksList.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>		
+			<from-outcome>enterSubmitMarksList2</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList2.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/submitMarksList2.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>		
+			<from-outcome>enterSubmitMarksList2</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList2.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+	
+
+	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
+	
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/chooseFunction.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>confirmation</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/confirmation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chooseNewPerson</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/departmentAdmOffice/functionsManagement/confirmation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/chooseFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/departmentAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 		
+
+	<!-- MANAGER  -->
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/chooseFunction.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>confirmation</from-outcome>
+			<to-view-id>/manager/functionsManagement/confirmation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/listPersonFunctions.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chooseNewPerson</from-outcome>
+			<to-view-id>/manager/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/manager/functionsManagement/confirmation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/manager/functionsManagement/chooseFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 		
+	
+	<!-- FacultyAdmOffice -->
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/chooseFunction.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>confirmation</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/confirmation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chooseNewPerson</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/facultyAdmOffice/functionsManagement/confirmation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/chooseFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 		
+	
+	<!-- Scientific Council -->
+	
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/chooseFunction.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>confirmation</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/confirmation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/chooseUnit.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>backToList</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+		
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>prepareEditFunction</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/editFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chooseNewPerson</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>associateNewFunction</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deletePersonFunction</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/deletePersonFunction.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/deletePersonFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/editFunction.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 	
+	
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/functionsManagement/confirmation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>alterUnit</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/chooseUnit.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterFunction</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/chooseFunction.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/scientificCouncil/functionsManagement/listPersonFunctions.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 		
+		
+	<!-- END: FUNCTIONS_MANAGEMENT Navigation Rules -->
+	
+	<!-- BEGIN: ADVISORIES_MANAGEMENT Navigation Rules -->
+	
+	<navigation-rule>
+		<from-view-id>/manager/advisoriesManagement/listCurrentAdvisories.jsp</from-view-id> 
+		<navigation-case>
+			<from-outcome>prepareEditAdvisory</from-outcome>
+			<to-view-id>/manager/advisoriesManagement/editAdvisory.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/advisoriesManagement/editAdvisory.jsp</from-view-id> 
+		<navigation-case>
+			<from-outcome>editAdvisory</from-outcome>
+			<to-view-id>/manager/advisoriesManagement/listCurrentAdvisories.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- END: ADVISORIES_MANAGEMENT Navigation Rules -->
+	
+	<!-- BEGIN: ORGANIZATION_ STRUCTURE Navigation Rules -->
+	
+	<!-- END: ORGANIZATION_ STRUCTURE Navigation Rules -->
+	
+	<!-- END: TEACHER Navigation Rules -->
+		
+	<!-- BEGIN: COORDINATOR Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/showWrittenTestsForExecutionCourses.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showExecutionCourses.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>createWrittenTest</from-outcome>
+			<to-view-id>/coordinator/evaluation/createWrittenTest.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editWrittenTest</from-outcome>
+			<to-view-id>/coordinator/evaluation/editWrittenTest.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/createEvaluation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCalendar</from-outcome>
+			<to-view-id>/coordinator/evaluation/evaluationsCalendar.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewCreationPage</from-outcome>
+			<to-view-id>/coordinator/evaluation/createEvaluation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/editEvaluation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCalendar</from-outcome>
+			<to-view-id>/coordinator/evaluation/evaluationsCalendar.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewEditPage</from-outcome>
+			<to-view-id>/coordinator/evaluation/editEvaluation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/deleteEvaluation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCalendar</from-outcome>
+			<to-view-id>/coordinator/evaluation/evaluationsCalendar.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewDeletePage</from-outcome>
+			<to-view-id>/coordinator/evaluation/deleteEvaluation.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/showExecutionCourses.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/coordinator/evaluation/createWrittenTest.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Project</from-outcome>
+			<to-view-id>/coordinator/evaluation/createProject.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/createWrittenTest.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showWrittenTestsForExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showWrittenTestsForExecutionCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/editWrittenTest.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showWrittenTestsForExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showWrittenTestsForExecutionCourses.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/deleteWrittenTest.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showWrittenTestsForExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showWrittenTestsForExecutionCourses.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/showProjectsForExecutionCourses.jsp</from-view-id>		
+		<navigation-case>
+			<from-outcome>createProject</from-outcome>
+			<to-view-id>/coordinator/evaluation/createProject.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editProject</from-outcome>
+			<to-view-id>/coordinator/evaluation/editProject.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/createProject.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showProjectsForExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showProjectsForExecutionCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/editProject.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showProjectsForExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showProjectsForExecutionCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/coordinator/evaluation/deleteProject.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>showProjectsForExecutionCourses</from-outcome>
+			<to-view-id>/coordinator/evaluation/showProjectsForExecutionCourses.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: COORDINATOR Navigation Rules -->	
+	
+	<!-- BEGIN: Pedagogical Council Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/pedagogicalCouncil/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: Pedagogical Council Navigation Rules -->
+
+	<!-- BEGIN: Scientific Council Navigation Rules -->
+	<!-- Degree -->
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/scientificCouncil/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCourseManagementPostBack</from-outcome>
+			<to-view-id>/scientificCouncil/competenceCourses/showCompetenceCourse.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/competenceCourses/transferCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/scientificCouncil/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/createDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlanChoosed</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/createDegreeOfficialPublication.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/editDegreeOfficialPublication.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteDegreeOfficialPublication.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteDegreeSpecializationArea.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegreeOfficialPublication.jsp</to-view-id>
+	</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/createCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularRules.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/editCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- END: Scientific Council Navigation Rules -->
+
+	
+	<!-- BEGIN: Bolonha Navigation Rules -->
+	<!-- CompetenceCourse --> 
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/createCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCompetenceCourseLoad</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseLoad.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseLoad.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCompetenceCourseAdditionalInformation</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/editCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/deleteCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Degree -->
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>	
+	<!-- CurricularCourse -->
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/createCurricularCourse.jsp</from-view-id>		
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/editCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deleteCurricularCourseContext</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/deleteCurricularCourseContext.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/associateCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/deleteCurricularCourseContext.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- CourseGroup -->
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/createCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/associateCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/editCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/deleteCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/orderCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/createBranchCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: Bolonha Navigation Rules -->
+	
+	<!-- BEGIN: CurricularRules Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/createCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/editCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/deleteCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: CurricularRules Navigation Rules -->
+	
+	
+	<!-- BEGIN: MANAGER - Bolonha Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/editCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/editCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/deleteCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/orderCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/createCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/associateCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/editCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/setCurricularRules.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularRules/createCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularRules/editCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularRules/deleteCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/createCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/associateCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/editCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/curricularPlans/deleteCurricularCourseContext.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/manager/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/manager/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/competenceCourses/editCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/manager/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: MANAGER - Bolonha Navigation Rules -->
+
+
+
+	<!-- BEGIN: ACADEMIC ADMINISTRATION - Bolonha Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/deleteCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/orderCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/createCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/associateCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularRules/createCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularRules/editCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularRules/deleteCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/createCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/associateCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/deleteCurricularCourseContext.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: ACADEMIC ADMINISTRATION - Bolonha Navigation Rules -->
+
+
+	<!-- Custom Components -->
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditor
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIHtmlEditor
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIFenixCalendar
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIBreadCrumbs
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIBreadCrumbs
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandLink
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButton
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UICommandButton
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UISelectOne
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeater
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIContentLink
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIContentLink
+		</component-class>
+	</component>
+	
+	<validator>
+		<validator-id>regexValidator</validator-id>
+		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.RegexValidator</validator-class>
+		<attribute>
+			<attribute-name>regex</attribute-name>
+			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+	</validator>
+	<validator>
+		<validator-id>dateValidator</validator-id>
+		<validator-class>net.sourceforge.fenixedu.presentationTier.jsf.validators.DateValidator</validator-class>
+		<attribute>
+			<attribute-name>format</attribute-name>
+			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+		<attribute>
+			<attribute-name>strict</attribute-name>
+			<attribute-class>java.lang.Boolean</attribute-class>
+		</attribute>
+	</validator>
+	
+	<render-kit>
+		<renderer>
+			<component-family>DataRepeater</component-family>
+			<renderer-type>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterRenderer</renderer-type>
+			<renderer-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIDataRepeaterRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+	
+	<!-- End Custom Components -->
+	
+	<!-- Backing bean for evaluations consulting by delegates -->
+	<managed-bean>
+		<managed-bean-name>evaluationsForDelegates</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.delegate.EvaluationsForDelegatesConsultingBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+			
+</faces-config>

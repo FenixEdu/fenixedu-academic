@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<form-validation>
+   	<formset>
+		<form name="itemForm">
+		   	<field property="title" depends="required" page="1">
+		   		<arg0 key="message.title" resource="true"/>
+		   	</field>
+		   	<field property="mainEntryText" depends="required" page="1">
+		   		<arg0 key="message.mainEntryText" resource="true"/>
+		   	</field>
+		   	<field property="keywords" depends="required" page="1">
+		   		<arg0 key="message.keywords" resource="true"/>
+		   	</field>
+		   	<field property="authorEmail" depends="email" page="1">
+		   		<arg0 key="message.Email" resource="true"/>
+		   	</field>
+			<field property="creationDate" depends="required,mask,date" page="1" >
+				<msg name="date" key="errors.invalid.date"/>
+			   	<msg name="mask" key="errors.invalid.date"/>
+			   	<arg0 key="label.creation.date" resource="true"/>
+			   	<var>
+			   		<var-name>datePattern</var-name>
+			   		<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+			   		<var-name>mask</var-name>
+			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+		   	</field>
+			<field property="itemBeginDay" depends="requiredif,mask,date" page="1" >
+				<msg name="date" key="errors.invalid.date"/>
+			   	<msg name="mask" key="errors.invalid.date"/>
+			   	<arg0 key="message.itemDay" resource="true"/>
+			   	<var>
+			   		<var-name>datePattern</var-name>
+			   		<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+			   		<var-name>mask</var-name>
+			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>itemEndDay</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>NOTNULL</var-value>
+				</var>				
+		   	</field>
+			<field property="itemEndDay" depends="mask,date" page="1" >
+				<msg name="date" key="errors.invalid.date"/>
+			   	<msg name="mask" key="errors.invalid.date"/>
+			   	<arg0 key="message.itemDay" resource="true"/>
+			   	<var>
+			   		<var-name>datePattern</var-name>
+			   		<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+			   		<var-name>mask</var-name>
+			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+		   	</field>  	
+			<field property="onlineBeginDay" depends="requiredif,mask,date" page="1" >
+				<msg name="date" key="errors.invalid.date"/>
+			   	<msg name="mask" key="errors.invalid.date"/>
+			   	<arg0 key="message.onlineDay" resource="true"/>
+			   	<var>
+					<var-name>field[0]</var-name>
+					<var-value>publish</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>NOTNULL</var-value>
+				</var>
+			   	
+			   	<var>
+			   		<var-name>datePattern</var-name>
+			   		<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+			   		<var-name>mask</var-name>
+			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+				
+		   	</field>
+			<field property="onlineEndDay" depends="requiredif,mask,date" page="1" >
+				<msg name="date" key="errors.invalid.date"/>
+			   	<msg name="mask" key="errors.invalid.date"/>
+			   	<arg0 key="message.onlineDay" resource="true"/>
+			   	<var>
+			   		<var-name>datePattern</var-name>
+			   		<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+			   		<var-name>mask</var-name>
+			   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>publish</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>NOTNULL</var-value>
+				</var>				
+		   	</field>
+		</form>
+   	</formset>
+</form-validation>

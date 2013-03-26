@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="emailValidation" extends="definition.public.secondaryMainPageIST">
+		<put name="body" value="/publico/emailValidation.jsp"/>
+	</definition>
+	<definition name="phoneValidation" page="/publico/phoneValidation.jsp"/>
+</tiles-definitions>

@@ -1,0 +1,79 @@
+/* for finally results tables */
+
+.header-first{
+	text-align: center;
+	color: #333;
+	background: #ccc;
+	padding: 5px;
+	border: 1px solid #333;
+	}
+
+.header {
+	text-align: center;
+	color: #333;
+	background: #ccc;
+	padding: 5px;
+	border-top:1px solid #333;
+	border-bottom: 1px solid #333;
+	}
+	
+.header-last {
+	text-align: center;
+	color: #333;
+	padding: 5px;
+	background: #ccc;
+	border: 1px solid #333;
+	}
+	
+.cell-first {
+	color: #333;
+	padding: 5px;
+	border-top: 1px solid #333;
+	border-right: 1px solid #333;
+	border-left: 1px solid #333;
+	}
+	
+.cell-middle {
+	text-align: center;
+	border-top: 1px solid #333;
+	color: #333;
+	padding: 5px;
+	}
+	
+.cell-last{
+	text-align: center;
+	color: #333;
+	padding: 5px;
+	border-top: 1px solid #333;
+	border-right: 1px solid #333;
+	border-left: 1px solid #333;
+	}
+
+.results {
+	color: #333;
+	padding: 5px;
+	border-top: 1px solid #333;
+	}
+		
+.apura-final {
+	border: 1px solid #333;
+	padding: 5px;
+	}
+
+.homologo	{
+	float: left;
+	display: inline;
+	width: 30%;
+	margin-left: 100px;
+	padding-bottom: 4em;
+	border-bottom: 1px solid #333;
+	}
+	
+.consid	{	
+	float: right;
+	display: inline;
+	width: 30%;
+	margin-right: 100px;
+	padding-bottom: 4em;
+	border-bottom: 1px solid #333;
+	}

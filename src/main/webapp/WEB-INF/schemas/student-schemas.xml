@@ -1,0 +1,529 @@
+<schema name="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
+		type="net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDepartment"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select" key="label.executionYear">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+		<property name="format" value="${year}"/>
+	</slot>
+	<slot name="degrees" layout="option-select" key="label.degrees">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeSelectManySearchStudentsWithEnrolmentsByDepartment"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"/>
+		<property name="classes" value="list2"/>
+	</slot>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
+		type="net.sourceforge.fenixedu.domain.Degree">
+	<slot name="tipoCurso"/>
+	<slot name="name"/>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.StudentCurricularPlan.List"
+		type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="degreeCurricularPlan.degree.sigla"/>
+	<slot name="registration.student.number"/>
+	<slot name="registration.student.person.name"/>
+	<slot name="registration.student.person.email"/>
+</schema>
+
+<schema name="ViewSeniorInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="person.name" key="label.student.name"/>
+	<slot name="person.address" key="address"/>
+	<slot name="person.areaCode" key="areaCode"/>
+	<slot name="person.areaOfAreaCode" key="areaOfAreaCode"/>
+	<slot name="person.phone" key="phone"/>
+	<slot name="person.mobile" key="mobile"/>	
+	<slot name="person.email" key="email"/>	
+</schema>
+
+<schema name="EditSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="expectedDegreeTerminationYearMonthDay" key="label.senior.expectedDegreeTermination">
+		<property name="size" value="10" />
+		<property name="maxLength" value="10" />
+	</slot>
+	<slot name="expectedDegreeAverageGrade" key="label.senior.expectedDegreeAverageGrade">
+		<property name="size" value="2" />
+		<property name="maxLength" value="2" />
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+			<property name="lowerBound" value="0"/>
+			<property name="upperBound" value="20"/>
+		</validator>
+	</slot>
+</schema>
+
+<schema name="ViewSeniorExpectedInfo" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="expectedDegreeTerminationYearMonthDay" key="label.senior.expectedDegreeTermination" />
+	<slot name="expectedDegreeAverageGrade" key="label.senior.expectedDegreeAverageGrade" />
+</schema>
+
+<schema name="ViewSeniorInfoLastModificationDate" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="lastModificationDateDateTime" key="label.senior.lastModificationDate"/>
+</schema>
+
+<schema name="EditSeniorSpecialtyField" type="net.sourceforge.fenixedu.domain.student.Senior">
+	<slot name="specialtyField" layout="rich-text" key="label.senior.specialtyField">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorProfessionalInterests" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="professionalInterests" layout="rich-text" key="label.senior.professionalInterests">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorLanguageSkills" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="languageSkills" layout="rich-text" key="label.senior.languageSkills">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorInformaticsSkillss" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="informaticsSkills" layout="rich-text" key="label.senior.informaticsSkills">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorExtracurricularActivities" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="extracurricularActivities" layout="rich-text" key="label.senior.extracurricularActivities">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+<schema name="EditSeniorProfessionalExperience" type="net.sourceforge.fenixedu.domain.student.Senior" >
+	<slot name="professionalExperience" layout="rich-text" key="label.senior.professionalExperience">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+    </slot>
+</schema>
+
+<schema name="BolonhaStudentOptionalEnrollmentBean.chooseCriteria" bundle="STUDENT_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean">
+	<slot name="degreeType" key="label.degreeType"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="" />
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaDegreeTypesProvider" />
+		<property name="destination" value="updateComboBoxes"/>
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.DegreesByDegreeType" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="updateComboBoxes"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.DegreeCurricularPlansForDegree" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="updateComboBoxes"/>
+	</slot>
+</schema>
+
+<schema name="CycleEnrolmentBean.chooseCycleCourseGroupToEnrol" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="cycleCourseGroupToEnrol" 
+			layout="radio-select"
+			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.CompatibleCycleCourseGroupsProvider" />
+		<property name="eachSchema" value="CycleCourseGroup.view" />
+		<property name="eachLayout" value="values-dash" />
+	</slot>
+</schema>
+
+<schema name="CycleCourseGroup.view" type="net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup" bundle="APPLICATION_RESOURCES">
+	<slot name="name" />		
+	<slot name="parentDegreeCurricularPlan.name" />
+</schema>
+
+<schema name="CycleEnrolmentBean.showAffinityToEnrol.source" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean" bundle="APPLICATION_RESOURCES">
+	<slot name="sourceCycle.name" key="cycleCurriculumGroup" />
+	<slot name="sourceCycle.degreeCurricularPlanOfDegreeModule" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
+		<property name="format" value="${degree.name} - ${name}"/>
+	</slot>
+	<slot name="sourceCycle.concluded" key="label.student.curricular.plan.state">
+		<property name="trueLabel" value="label.concluded" />
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="CycleEnrolmentBean.showAffinityToEnrol.destination" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="cycleCourseGroupToEnrol.name" key="cycleCurriculumGroup" />
+	<slot name="cycleCourseGroupToEnrol.parentDegreeCurricularPlan" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
+		<property name="format" value="${degree.name} - ${name}"/>
+	</slot>
+</schema>
+
+<schema name="student.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="title"/>
+    <slot name="orientation" layout="flowLayout" key="label.thesis.orientation">
+        <property name="eachInline" value="true"/>
+        <property name="indented" value="false"/>
+        <property name="htmlSeparator" value=", "/>
+        <property name="eachLayout" value="values"/>
+        <property name="eachSchema" value="student.thesis.person.name"/>
+    </slot>
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="dataDependent"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="title" read-only="true"/>
+    <slot name="orientation" read-only="true" layout="flowLayout" key="label.thesis.orientation">
+        <property name="eachInline" value="true"/>
+        <property name="indented" value="false"/>
+        <property name="htmlSeparator" value=", "/>
+        <property name="eachLayout" value="values"/>
+        <property name="eachSchema" value="student.thesis.person.name"/>
+    </slot>
+    <slot name="discussed" key="label.thesis.evaluate.discussion.date">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+            <property name="required" value="true"/>
+        </validator>
+    </slot>
+</schema>
+
+<schema name="student.thesis.person.name" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="personName" layout="person-name"/>
+</schema>
+
+<schema name="student.thesis.details.abstract" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="thesisAbstractPt" layout="null-as-label" key="label.thesis.abstract.pt">
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
+    </slot>
+    <slot name="thesisAbstractEn" layout="null-as-label" key="label.thesis.abstract.en">
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.abstract.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+            <property name="type" value="word"/>
+            <property name="length" value="250"/>
+        </validator>
+         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        <property name="columns" value="65"/>
+        <property name="rows" value="12"/>
+    </slot>
+    <slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en">
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+            <property name="type" value="word"/>
+            <property name="length" value="250"/>
+        </validator>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        <property name="columns" value="65"/>
+        <property name="rows" value="12"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.keywords" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="keywordsPt" layout="null-as-label" key="label.thesis.keywords.pt">
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
+    </slot>
+    <slot name="keywordsEn" layout="null-as-label" key="label.thesis.keywords.en">
+        <property name="label" value="label.thesis.field.empty"/>
+        <property name="key" value="true"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.keywords.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="keywordsPt" key="label.thesis.keywords.pt"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="keywordsEn" key="label.thesis.keywords.en" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="size" value="60"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.file.dissertation" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+    <slot name="title" key="label.thesis.title"/>
+    <slot name="subTitle" key="label.thesis.subtitle" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+    <slot name="language" key="label.thesis.language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+    <slot name="displayName" layout="link" key="label.thesis.file.name">
+        <property name="useParent" value="true"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
+    </slot>
+    <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
+    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+</schema>
+
+<schema name="student.thesis.file" type="net.sourceforge.fenixedu.domain.thesis.ThesisFile">
+    <slot name="displayName" layout="link" key="label.thesis.file.name">
+        <property name="useParent" value="true"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
+    </slot>
+    <slot name="size" layout="fileSize" key="label.thesis.file.size"/>
+    <slot name="uploadTime" key="label.thesis.file.name.uploadTime"/>
+</schema>
+
+<schema name="student.thesisBean.upload" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean">
+    <slot name="file" key="label.thesis.file">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+            <property name="required" value="true"/>
+            <property name="typeMessage" value="student.thesis.document.type"/>
+            <property name="acceptedTypes" value="application/pdf"/>
+        </validator>
+        
+        <property name="size" value="60"/>
+        <property name="fileNameSlot" value="fileName"/>
+        <property name="fileSizeSlot" value="fileSize"/>
+    </slot>
+</schema>
+
+<schema name="student.thesisBean.upload.dissertation" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean">
+<!-- 
+    <slot name="title" key="label.thesis.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="subTitle" key="label.thesis.subtitle">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="language" key="label.thesis.language" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="includedValues" value="pt, en"/>
+    </slot>
+ -->
+    <slot name="file" key="label.thesis.file">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+            <property name="required" value="true"/>
+            <property name="typeMessage" value="student.thesis.document.type"/>
+            <property name="acceptedTypes" value="application/pdf"/>
+            <property name="maxSize" value="67108247"/>
+        </validator>
+        
+        <property name="size" value="60"/>
+        <property name="fileNameSlot" value="fileName"/>
+        <property name="fileSizeSlot" value="fileSize"/>
+    </slot>
+</schema>
+
+<schema name="student.thesis.details.declaration" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="declarationAccepted" key="label.thesis.declaration.state">
+        <property name="trueLabel" value="label.thesis.declaration.accepted"/>
+        <property name="falseLabel" value="label.thesis.declaration.notAccepted"/>
+    </slot>
+    <slot name="visibility" key="label.thesis.declaration.visibility" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+</schema>
+
+<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
+	<slot name="number" />
+	<slot name="identificationNumber" />
+	<slot name="documentType" key="label.idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
+	<slot name="name" />
+	<slot name="username" />
+</schema>
+
+<schema name="Student.view-with-number-and-name" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+	<slot name="number"/>
+	<slot name="person.name"/>
+</schema>
+
+<schema name="StudentNumberBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean" bundle="APPLICATION_RESOURCES">
+	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="student.tutorship.tutorInfo" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+	<slot name="teacher.person" key="label.name" layout="conditional-link">
+		<property name="visibleIf" value="homePageAvailable"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="student.tutorship.tutorInfo.showName"/>
+		<property name="blankTarget" value="true"/>
+		<property name="hasContext" value="true"/>
+	</slot>
+	<slot name="teacher.teacherId" key="label.teacherId"/>
+	<slot name="teacher.person.personWorkPhone.number" key="label.person.workPhone.short"/>
+	<slot name="teacher.person.activePersonSpaces" key="label.person.rooms">
+		<property name="classes" value="mvert05 ulindent0 nobullet" />
+		<property name="eachSchema" value="FindPersonSpaceSchema" />
+		<property name="eachLayout" value="values" />
+	</slot>
+	<slot name="teacher.category.name" key="label.teacher.category"/>
+	<slot name="teacher.currentWorkingDepartment.name" key="label.teacher.currentWorkingDepartment"/>
+	<slot name="teacher.person.email" key="label.email" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="mailto:${teacher.person.email}"/>
+	</slot>
+	<slot name="startDate" key="label.tutorship.startDate"/>
+	<slot name="endDate" key="label.tutorship.endDate"/>
+</schema>
+
+<schema name="student.tutorship.tutorInfo.showName"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" key="label.homepage"/>
+</schema>
+
+<schema name="person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="email" />
+</schema>
+
+<schema name="student.statistics.table" type="net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionPeriod" key="label.student.statistics.executionYear-semester">
+		<property name="format" value="${executionYear.year} - ${semester}"/>
+	</slot>
+	<slot name="totalEnrolmentsNumber" key="label.student.statistics.enrolmentsNumber"/>
+	<slot name="approvedEnrolmentsNumber" key="label.student.statistics.approvedEnrolmentsNumber"/>
+	<slot name="approvedRatio" key="label.student.statistics.approvedRatio"/>
+	<slot name="aritmeticAverage" key="label.student.statistics.aritmeticAverage"/>
+</schema>
+
+<schema name="student.registrations.with.transition.origin" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
+	<slot name="lastStudentCurricularPlan.registration.degreeNameWithDescription"/>
+	<slot name="sourceRegistrationForTransition.lastStudentCurricularPlan.registration.degreeNameWithDescription"/>
+</schema>
+
+<schema name="student.yearDelegateElection.candidates" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number" key="label.studentNumber" />
+	<slot name="person.name" key="label.name" />
+</schema>
+
+<schema name="student.yearDelegateElection.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+	<slot name="student"  key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearDelegateManagementProvider"/>
+		<property name="eachSchema" value="student.vote"/>
+		<property name="eachLayout" value="values-dash" />
+		
+	</slot>	
+</schema>
+
+<schema name="student.yearDelegateElection.photo" bundle="APPLICATION_RESOURCES"  type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number">
+		<property name="classes" value="column1"/>
+	</slot>	
+	<slot name="person.name" >
+		<property name="classes" value="column2"/>
+	</slot>
+	<slot name="person" key="label.empty" layout="view-as-image" bundle="DELEGATES_RESOURCES">
+		<property name="classes" value="column3"/>
+		<property name="contextRelative" value="true"/>
+		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${student.person.idInternal}"/>	
+	</slot>		
+</schema>
+
+<schema name="student.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number" read-only="true"/>
+	<slot name="person.name" read-only="true"/>
+</schema>
+
+<schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+	<slot name="student" key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
+		<property name="eachSchema" value="student.yearDelegateElection.photo"/>
+		<property name="eachLayout" value="values-dash" />
+		<property name="nullOptionKey" value="label.elections.votingPeriod.blankVote" />
+		<property name="nullOptionBundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="student.elections.electionPeriod" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+	<slot name="degree.name" key="label.Degree" read-only="true" />
+	<slot name="executionYear.year" key="label.executionYear"	/>
+	<slot name="curricularYear.year" key="label.curricularYear"	/>
+	<slot name="candidacyPeriod" layout="delegate-election-period" key="label.delegateCandidacyPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+	<slot name="lastVotingPeriod" layout="delegate-election-period" key="label.delegateVotingPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+</schema>
+
+<schema name="student.candidated.year.delegate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+	<slot name="degree.name" key="label.Degree" read-only="true" />
+	<slot name="executionYear.year" key="label.executionYear"	/>
+	<slot name="curricularYear.year" key="label.curricularYear"	/>
+</schema>
+
+<schema name="student.delegates.yearDelegate" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+	<slot name="person.name" key="label.name" />
+	<slot name="number" key="label.studentNumber"/>
+	<slot name="person.email" key="label.email" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="mailto:${person.email}"/>
+	</slot>
+</schema>
+
+<schema name="student.yearDelegateElection.showResults" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO">
+	<slot name="student.number" key="label.student.elections.results.studentNumber" />
+	<slot name="student.person.name" key="label.name" />
+	<slot name="votesNumber" key="label.student.elections.results.votes" />
+	<!--<slot name="votesRelativePercentage" key="label.student.elections.results.votesRelativePercentage" />-->
+</schema>
+
+<schema name="student.electionPeriod.showResults.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+	<slot name="degree.name" key="label.Degree" read-only="true" />
+	<slot name="executionYear.year" key="label.executionYear"	/>
+	<slot name="curricularYear.year" key="label.curricularYear"	/>
+	<slot name="candidacyPeriod" layout="delegate-election-period" key="label.student.elections.candidacyPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+	<slot name="lastVotingPeriod" layout="delegate-election-period" key="label.student.elections.votingPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+	<slot name="electedStudent" key="label.student.elections.electedDelegate" layout="null-as-label">
+		<property name="label" value="-" /> 
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="student.person.name"/>
+	</slot>
+</schema>
+
+<schema name="student.searchDelegates.selectDegreeTypeAndDegree" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="sortBy" value="year=desc"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="destination" value="post-back-executionyear"/>
+	</slot>
+	<slot name="degreeType" key="label.degreeType" layout="menu-select-postback" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean$DegreeTypesGivenExecutionYear"/> 
+		<property name="format" value="${localizedName}"/>
+		<property name="sortBy" value="academicPeriod"/>
+		<property name="saveOptions" value="true" />
+		<property name="nullOptionHidden" value="true" />
+		<property name="destination" value="post-back-degree-type"/>
+	</slot>
+	<slot name="degree" key="label.degree" layout="menu-select-postback" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean$DegreesGivenDegreeType"/> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
+		<property name="saveOptions" value="true" />
+		<property name="nullOptionHidden" value="true" />
+		<property name="destination" value="post-back-degree"/>
+	</slot>
+</schema>

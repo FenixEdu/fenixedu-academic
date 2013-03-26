@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<form-validation>
+   <formset>
+   <form name="testForm">
+   	<field property="title" depends="required" page="1">
+    	<arg0 key="message.title" resource="true"/>
+    </field>
+  	</form>
+   </formset>
+</form-validation>

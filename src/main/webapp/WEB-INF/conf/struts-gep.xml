@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <!-- Form vazio -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="searchInformationForm">
+                  <form-property type="java.lang.Integer" name="executionDegreeId"></form-property>
+                  <form-property type="java.lang.Boolean" name="basic"></form-property>
+                  <form-property type="java.lang.String" name="executionYear"></form-property>
+            </form-bean>
+            <!-- TEACHING REPORT FORM  -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingReportForm">
+                  <form-property type="java.lang.Integer" name="executionCourseId"></form-property>
+            </form-bean>
+            <!-- ==================== View Curricular Course Historic ================== -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionYearDegreeCurricularPlanForm">
+                  <form-property type="java.lang.String" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <!-- =================== Inquiries ============== -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sendEmailReminderForm">
+                  <form-property name="method" type="java.lang.String"></form-property>
+                  <form-property name="page" type="java.lang.Integer"></form-property>
+                  <form-property name="degreeCurricularPlanIds" type="java.lang.Integer[]"></form-property>
+                  <form-property name="bodyTextSubject" type="java.lang.String"></form-property>
+                  <form-property name="bodyTextIntro" type="java.lang.String"></form-property>
+                  <form-property name="bodyTextEnd" type="java.lang.String"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingStaffForm">
+                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.Integer" name="executionCourseID"></form-property>
+                  <form-property type="java.lang.String" name="nonAffiliatedTeacherName"></form-property>
+                  <form-property type="java.lang.Integer" name="nonAffiliatedTeacherID"></form-property>
+                  <form-property type="java.lang.Integer" name="nonAffiliatedTeacherInstitutionID"></form-property>
+                  <form-property type="java.lang.String" name="nonAffiliatedTeacherInstitutionName"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="defineResponsePeriodsForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="periodType"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodID"></form-property>
+                  <form-property type="java.lang.String" name="inquiryResponseBegin"></form-property>
+                  <form-property type="java.lang.String" name="inquiryResponseEnd"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createClassificationsForm">
+                  <form-property type="java.lang.Integer[]" name="entryGradeLimits"></form-property>
+                  <form-property type="java.lang.Integer[]" name="approvationRatioLimits"></form-property>
+                  <form-property type="java.lang.Integer[]" name="arithmeticMeanLimits"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="competenceCourseStatisticsForm">
+                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="registrationAgreement"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentManagementForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="registrationID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+                  <form-property type="java.lang.String" name="studentCPID"></form-property>
+                  <form-property type="java.lang.String" name="select"></form-property>
+                  <form-property type="java.lang.String" name="studentNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="organizedBy"></form-property>
+                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="viewType"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action forward="index" path="/index"></action>
+            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/searchTeachersInformation?method=searchForm" name="searchInformationForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchTeachersInformationAction" path="/searchTeachersInformation">
+                  <set-property value="ReadTeachersInformation" property="serviceName"></set-property>
+                  <set-property value="infoSiteTeacherInformation" property="objectAttribute"></set-property>
+                  <set-property value="infoSiteTeachersInformation" property="listAttribute"></set-property>
+                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
+                  <forward path="search-teachers-information" name="search-form"></forward>
+                  <forward path="view-teachers-information" name="list-one"></forward>
+                  <forward path="view-teachers-information" name="list-many"></forward>
+            </action>
+            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/searchCoursesInformation.do?method=searchForm" name="searchInformationForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/searchCoursesInformation">
+                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
+                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
+                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
+                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
+                  <forward path="search-courses-information" name="search-form"></forward>
+                  <forward path="view-courses-information" name="list-one"></forward>
+                  <forward path="view-courses-information" name="list-many"></forward>
+            </action>
+            <!-- Read Teacher Information -->
+            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listCoursesInformation.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/listCoursesInformation">
+                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
+                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
+                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
+                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
+                  <forward path="search-courses-information" name="search-form"></forward>
+                  <forward path="list-courses-information" name="list-one"></forward>
+                  <forward path="list-courses-information" name="list-many"></forward>
+            </action>
+            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listCoursesInformationEnglish.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/listCoursesInformationEnglish">
+                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
+                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
+                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
+                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
+                  <forward path="search-courses-information" name="search-form"></forward>
+                  <forward path="list-courses-information-english" name="list-one"></forward>
+                  <forward path="list-courses-information-english" name="list-many"></forward>
+            </action>
+            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listCoursesAcreditation.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/listCoursesAcreditation">
+                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
+                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
+                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
+                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
+                  <forward path="search-courses-information" name="search-form"></forward>
+                  <forward path="list-courses-acreditation" name="list-one"></forward>
+                  <forward path="list-courses-acreditation" name="list-many"></forward>
+            </action>
+            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listTeachersAcreditation.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchTeachersInformationAction" path="/listTeachersAcreditation">
+                  <set-property value="ReadTeachersInformation" property="serviceName"></set-property>
+                  <set-property value="infoSiteTeacherInformation" property="objectAttribute"></set-property>
+                  <set-property value="infoSiteTeachersInformation" property="listAttribute"></set-property>
+                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
+                  <forward path="search-teachers-information" name="search-form"></forward>
+                  <forward path="list-teachers-acreditation" name="list-one"></forward>
+                  <forward path="list-teachers-acreditation" name="list-many"></forward>
+            </action>
+            <!-- Teaching Report -->
+            <!-- ==================== View Curricular Course Historic ================== -->
+            <!-- ==================== Inquiries ================== -->
+            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction" name="createClassificationsForm" parameter="method" path="/createClassificationsForStudents">
+                  <forward path="chooseDegreeCurricularPlan" name="chooseDegreeCurricularPlan"></forward>
+            </action>
+            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction" name="createClassificationsForm" parameter="method" path="/createClassificationsForStudents">
+                  <forward path="chooseDegreeCurricularPlan" name="chooseDegreeCurricularPlan"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="IMAGE_RESOURCES" parameter="resources.ImageResources"></message-resources>
+      <message-resources null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlAltResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
+      <message-resources null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
+      <message-resources null="false" key="TEACHER_CREDITS_SHEET_RESOURCES" parameter="resources.TeacherCreditsSheetResources"></message-resources>
+      <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
+      <message-resources null="false" key="DEGREE_ADM_OFFICE" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
+      <message-resources null="false" key="CURRICULUM_HISTORIC_RESOURCES" parameter="resources.CurriculumHistoricResources"></message-resources>
+      <message-resources null="false" key="INQUIRIES_RESOURCES" parameter="resources.InquiriesResources"></message-resources>
+      <message-resources null="false" key="PUBLIC_DEGREE_INFORMATION" parameter="resources.PublicDegreeInformation"></message-resources>
+      <message-resources null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
+      <message-resources null="false" key="DOMAIN_EXCEPTION_RESOURCES" parameter="resources.DomainExceptionResources"></message-resources>
+      <message-resources null="false" key="RENDERER_RESOURCES" parameter="resources.RendererResources"></message-resources>
+      <message-resources null="false" key="ADMIN_OFFICE_RESOURCES" parameter="resources.AdminOffice"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="CANDIDATE_RESOURCES" parameter="resources.CandidateResources"></message-resources>
+      <message-resources null="false" key="VIGILANCY_RESOURCES" parameter="resources.VigilancyResources"></message-resources>
+      <message-resources null="false" key="TESTS_RESOURCES" parameter="resources.TestsResources"></message-resources>
+      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="ALUMNI_RESOURCES" parameter="resources.AlumniResources"></message-resources>
+      <message-resources null="false" key="PEDAGOGICAL_COUNCIL" parameter="resources.PedagogicalCouncilResources"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
+      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gep.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.gep.two-column" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

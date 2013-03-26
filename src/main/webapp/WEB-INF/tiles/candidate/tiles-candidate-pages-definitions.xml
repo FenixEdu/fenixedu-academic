@@ -1,0 +1,69 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="index" extends="candidate.masterPage">
+        <put name="body" value="/candidate/index.jsp"></put>
+    </definition>
+    
+    <definition name="changePersonalData" extends="candidate.masterPage">
+        <put name="body" value="/candidate/changePersonalData.jsp"></put>
+    </definition>
+
+    <definition name="cannotChangePersonalData" extends="candidate.masterPage">
+        <put name="body" value="/candidate/cannotChangePersonalData.jsp"></put>
+    </definition>
+
+    <definition name="changeSuccessPersonalData" extends="candidate.masterPage">
+        <put name="body" value="/candidate/changeSuccessPersonalData.jsp"></put>
+    </definition>
+        
+    <definition name="viewCandidacies" extends="candidate.masterPage">
+        <put name="body" value="/candidate/viewCandidacies.jsp"></put>
+    </definition>
+    
+    <definition name="viewCandidacyDetails" extends="candidate.masterPage">
+        <put name="body" value="/candidate/viewCandidacyDetails.jsp"></put>
+    </definition>
+    
+    <definition name="uploadDocuments" extends="candidate.masterPage">
+        <put name="body" value="/candidate/uploadDocuments.jsp"></put>
+    </definition>
+
+
+	<!-- Degree Appliance -->
+    <definition name="degreeCandidacy.show.welcome" extends="candidate.masterPage">
+            <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.candidate.applications"/>
+        <put name="body" value="/candidate/degree/showWelcome.jsp"></put>
+    </definition>
+
+    <definition name="degreeCandidacy.show.candidacy.details" extends="candidate.masterPage">
+        <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.candidate.applications"/>
+        <put name="body" value="/candidate/degree/showCandidacyDetails.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.show.data" extends="candidate.masterPage">
+            <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.candidate.applications"/>
+        <put name="body" value="/candidate/degree/showData.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.fill.data" extends="candidate.masterPage">
+            <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.candidate.applications"/>
+        <put name="body" value="/candidate/degree/fillData.jsp"></put>
+    </definition>
+    
+    <definition name="degreeCandidacy.show.operation.finished" extends="candidate.masterPage">
+            <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.candidate.applications"/>
+        <put name="body" value="/candidate/degree/showOperationFinished.jsp"></put>
+    </definition>
+   
+    <definition name="degreeCandidacy.fill.inquiry" extends="candidate.masterPage">
+            <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.candidate.applications"/>
+        <put name="body" value="/candidate/degree/fillFirstTimeCycleInquiry.jsp"></put>
+    </definition>
+</tiles-definitions>

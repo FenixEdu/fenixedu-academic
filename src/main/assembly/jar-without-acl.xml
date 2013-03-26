@@ -1,0 +1,53 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>jar-without-acl</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/classes</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>net/sourceforge/fenixedu/_development/**/*.class"</include>
+				<include>net/sourceforge/fenixedu/injectionCode/**/*.class</include>
+				<include>net/sourceforge/fenixedu/constants/**/*.class</include>
+				<include>net/sourceforge/fenixedu/commons/**/*.class</include>
+				<include>net/sourceforge/fenixedu/dataTransferObject/**/*.class</include>
+				<include>net/sourceforge/fenixedu/domain/**/*.class</include>
+				<include>net/sourceforge/fenixedu/fileSuport/**/*.class</include>
+				<include>net/sourceforge/fenixedu/middleware/**/*.class</include>
+				<include>net/sourceforge/fenixedu/integrationTier/**/*.class</include>
+				<include>net/sourceforge/fenixedu/applicationTier/**/*.class</include>
+				<include>net/sourceforge/fenixedu/persistenceTier/**/*.class</include>
+				<include>net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class</include>
+				<include>net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class</include>
+				<include>net/sourceforge/fenixedu/persistenceTierOracle/**/*.class</include>
+				<include>net/sourceforge/fenixedu/presentationTier/renderers/htmlEditor/*.class</include>
+				<include>net/sourceforge/fenixedu/presentationTier/docs/*.class</include>
+				<include>net/sourceforge/fenixedu/presentationTier/docs/**/*.class</include>
+				<include>net/sourceforge/fenixedu/util/**/*.class</include>
+				<include>net/sourceforge/fenixedu/utilInsc/**/*.class</include>
+				<include>net/sourceforge/fenixedu/utilTests/**/*.class</include>
+				<include>net/sourceforge/fenixedu/tools/**/*.class</include>
+				<include>net/sourceforge/fenixedu/framework/**/*.class</include>
+				<include>relations/*.class</include>
+				<include>org/**/*.class</include>
+				<include>pt/**/*.class</include>
+				<include>reports/**/*.*</include>
+				<include>reports.properties</include>
+			</includes>
+		</fileSet>
+	</fileSets><!-- 
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/</outputDirectory>
+			<useProjectArtifact>true</useProjectArtifact>
+			<unpack>false</unpack>
+			<scope>runtime</scope>
+		</dependencySet>
+	</dependencySets> -->
+</assembly>

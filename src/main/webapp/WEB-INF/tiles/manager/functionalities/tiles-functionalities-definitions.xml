@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="functionalities.master" extends="df.layout.two-column">
+	  <put name="title" value="private.personal.system.features" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
+      <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+	  <put name="serviceName" value="Gestão de funcionalidades" />
+	  <put name="navGeral" value="/person/commonNavGeralPerson.jsp"/>
+	  <put name="navLocal" value="/person/mainMenu.jsp"/>
+	  <put name="body-context" value="/commons/functionalities/breadCrumbs.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>	
+</tiles-definitions>

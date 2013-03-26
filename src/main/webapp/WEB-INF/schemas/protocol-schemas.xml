@@ -1,0 +1,576 @@
+<schema name="show.protocol.toList"	type="net.sourceforge.fenixedu.domain.protocols.Protocol">
+	<slot name="protocolNumber" key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="lastProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.toList" layout="flow"/>
+	<slot name="partners" key="label.protocol.partnerUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="view.unitName" layout="values-dash">
+		<property name="htmlSeparator" value=","/>
+	</slot>
+	<slot name="allResponsibles" key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="create.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="protocolNumber"	key="label.protocol.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
+		 bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+	</slot>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+	</slot>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="2" />
+	</slot>
+	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="classes" value="list2"/>
+	</slot>
+	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>
+	<slot name="observations" key="label.protocol.observations" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>	
+</schema>
+
+<schema name="edit.protocol.data" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="protocolNumber"	key="label.protocol.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+	</slot>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="40" />
+		<property name="rows" value="2" />
+	</slot>	
+	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="classes" value="list2"/>
+	</slot>
+	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>
+	<slot name="observations" key="label.protocol.observations" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>	
+</schema>
+
+<schema name="edit.protocol.totalData" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="protocolNumber"	key="label.protocol.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+	</slot>
+	<slot name="active" key="label.protocol.active" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="40" />
+		<property name="rows" value="2" />
+	</slot>	
+	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="classes" value="list2"/>
+	</slot>
+	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>
+	<slot name="observations" key="label.protocol.observations" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="columns" value="60" />
+		<property name="rows" value="5" />
+	</slot>	
+</schema>
+
+<schema name="show.protocol.data" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="actualProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.formatted" layout="flow"/>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="show.file" type="net.sourceforge.fenixedu.domain.protocols.ProtocolFile">
+	<slot name="filename" key="label.filename" layout="link" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="linkFormat" value="${downloadUrl}" />
+		<property name="useParent" value="true" />
+		<property name="contextRelative" value="false"/>
+	</slot>
+</schema>
+
+<schema name="search.istResponsible" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+    <slot name="istResponsible" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="istResponsibleIsPerson" key="label.protocol.responsibleType" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.person" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.function" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonorFunction"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="responsible" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="person.name"/>	
+		<property name="rawSlotName" value="responsibleName"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchTeachersByName"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>	
+
+<schema name="search.istResponsibleFunction" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+    <slot name="istResponsible" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="istResponsibleIsPerson" key="label.protocol.responsibleType" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.person" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.function" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonorFunction"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+     <slot name="functionByPerson" key="label.protocol.chooseFunction" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.byPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.byFunction" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changeFunctionByPerson"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+</schema>	
+
+<schema name="search.istResponsibleFunction.byPerson" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="responsible" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>	
+		<property name="rawSlotName" value="responsibleName"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchTeachersByName"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+<schema name="search.istResponsibleFunction.byUnit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+ 	<slot name="responsibleFunctionUnit" layout="autoComplete" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="name"/>		
+		<property name="rawSlotName" value="unitName"/>
+		<property name="format" value="${unit.presentationName}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>	
+		<property name="serviceArgs" value="slot=name"/>		
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="search.istResponsibleFunction.unitFunctions" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<!--  <slot name="istResponsible" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+    <slot name="istResponsibleIsPerson" key="label.protocol.responsibleType" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.person" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.function" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonorFunction"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="responsibleFunctionUnit" layout="autoComplete" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="name"/>		
+		<property name="rawSlotName" value="unitName"/>
+		<property name="format" value="${unit.presentationName}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>	
+		<property name="serviceArgs" value="slot=name"/>		
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>-->
+	<slot name="responsibleFunction" layout="menu-select" key="label.function" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FunctionProvider" />
+		<property name="format" value="${name}"/>
+	</slot>
+</schema>	
+
+<schema name="search.partnerResponsible" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+    <slot name="istResponsible" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="partnerResponsible" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="text"/>		
+		<property name="rawSlotName" value="responsibleName"/>		
+		<property name="format" value="${text}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalPersons"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="partnerResponsible.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="istResponsible" key="label.person.type" layout="radio" read-only="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>        
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+	<slot name="responsibleName" key="label.responsibleName" read-only="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="internalUnit" key="label.unit.type" layout="radio" read-only="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="unitObject" layout="autoComplete" key="label.unitName" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="unitName"/>		
+		<property name="format" value="${unit.presentationNameWithParents}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="partnerUnit.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="istResponsible" key="label.person.type" layout="radio" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>        
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+	<slot name="responsibleName" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="internalUnit" key="label.unit.type" layout="radio" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="unitName" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="partnerUnit.country" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="country" key="label.protocol.partnerCountry" layout="menu-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+		<property name="format" value="${name}"/>
+	</slot>
+</schema>
+
+<schema name="partnerUnit.creation" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="internalUnit" key="label.unit.type" layout="radio" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="unitName" key="label.name"/>		
+</schema>
+
+<schema name="search.unit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+    <slot name="internalUnit" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changeUnitType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="unitObject" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="unitName"/>
+		<property name="format" value="${unit.presentationName}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>	
+		<property name="serviceArgs" value="slot=name"/>		
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="search.partnerUnit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+    <slot name="internalUnit" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changeUnitType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+ 	<slot name="unitObject" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="unitName"/>		
+		<property name="format" value="${unit.presentationNameWithParents}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="edit.protocolFile" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="filePermissionType" key="label.filePermission" layout="radio" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="inputStream" key="label.file" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="fileNameSlot" value="fileName" />
+		<property name="size" value="60"/>
+	</slot>
+</schema>
+
+<schema name="show.protocol.responsible" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="unitText" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="show.protocol.responsibleFunction" type="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
+	<slot name="name" key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="unit.name" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+										
+<schema name="show.protocol.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="name" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="show.protocol.partnerUnit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="presentationNameWithParents" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="unit.type" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+    <slot name="internalUnit" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.protocol.internal.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.protocol.external.feminine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changePersonType"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>	
+</schema>
+
+<!-- ProtocolHistory -->
+<schema name="show.protocolHistories.alerts" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="protocol.protocolNumber" key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="show.protocolHistories" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+</schema>
+
+<schema name="show.protocolHistories.toList" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="beginDate" key="label.protocol.begin" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="endDate" key="label.protocol.end" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+</schema>
+
+<schema name="show.protocolHistories.formatted" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label"/>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="--"/>
+	</slot>
+</schema>
+
+<schema name="edit.protocolHistory" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="formatText" value=""/>		
+	</slot>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="formatText" value=""/>
+	</slot>
+</schema>
+
+<schema name="renew.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
+	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="maxLength" value="2"/>
+		<property name="size" value="3"/>
+	</slot>
+	<slot name="renewTime" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="edit.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
+<!-- show Protocol -->
+<schema name="view.protocol" type="net.sourceforge.fenixedu.domain.protocols.Protocol">
+	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolAction.procotolActionTypes" key="label.protocol.actionTypes" layout="tabular" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolAction.otherTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="view.personName" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name"/>
+</schema>
+	
+<schema name="view.unitName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="name"/>
+</schema>
+	
+<!-- Search Protocol -->
+<schema name="edit.protocolSearch.number" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="year" key="label.activeInYear" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+	<slot name="actives"	key="label.protocol.actives" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="option-select"/>
+	<slot name="inactives"	key="label.protocol.inactives" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="option-select"/>
+</schema>
+
+<schema name="edit.protocolSearch.protocolBeginDate" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="beginProtocolBeginDate" key="label.protocol.beginDate.between" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="formatText" value=""/>
+	</slot>
+	<slot name="endProtocolBeginDate" key="label.protocol.and" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch.protocolEndDate" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="beginProtocolEndDate" key="label.protocol.endDate.between" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="formatText" value=""/>
+	</slot>
+	<slot name="endProtocolEndDate" key="label.protocol.and" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch.signedDate" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="beginSignedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="formatText" value=""/>
+	</slot>
+	<slot name="endSignedDate" key="label.protocol.and" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+</schema>
+
+<schema name="edit.protocolSearch.allNationalityType" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="searchNationalityType" key="label.protocol.searchBy" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="destination" value="searchCountry"/>
+	</slot>
+</schema>
+<schema name="edit.protocolSearch.nationalityType" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="searchNationalityType" key="label.protocol.searchBy" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="excludedValues" value="WITHOUT_NATIONALITY" />
+		<property name="destination" value="searchCountry"/>
+	</slot>
+</schema>
+<schema name="edit.protocolSearch.country" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="country" key="label.protocol.country" layout="menu-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+		<property name="format" value="${name}"/>
+	</slot>
+</schema>
+
+<schema name="edit.protocolSearch" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="protocolActionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
+		<property name="eachLayout" value="this-does-not-exist"/>
+		<property name="classes" value="list2"/>
+	</slot>
+	<slot name="otherProtocolActionTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="partnerName" key="label.protocol.partner" layout="autoComplete" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="60"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="partnerNameString"/>		
+		<property name="format" value="${unit.presentationNameWithParents}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="edit.protocolSearch.active" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
+	<slot name="actives"	key="label.protocol.actives" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="option-select-postback"/>
+	<slot name="inactives"	key="label.protocol.inactives" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="option-select-postback"/>
+</schema>

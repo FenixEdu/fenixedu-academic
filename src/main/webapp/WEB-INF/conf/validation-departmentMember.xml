@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<form-validation>
+	<formset>
+		<constant>
+			<constant-name>minHours</constant-name>
+			<constant-value>0</constant-value>
+        </constant>
+        <constant>
+			<constant-name>maxHours</constant-name>
+			<constant-value>24</constant-value>
+        </constant>
+        <constant>
+			<constant-name>minMinutes</constant-name>
+			<constant-value>0</constant-value>
+        </constant>
+        <constant>
+			<constant-name>maxMinutes</constant-name>
+			<constant-value>59</constant-value>
+        </constant>
+
+<!-- Teacher Service Distribution -->
+        <constant>
+			<constant-name>maxLength</constant-name>
+			<constant-value>250</constant-value>
+        </constant>
+        <constant>
+			<constant-name>greaterThanZero</constant-name>
+        	<constant-value>(*this* >= 0)</constant-value>
+        </constant>
+         <constant>
+			<constant-name>minWeigth</constant-name>
+        	<constant-value>0.0</constant-value>
+        </constant>
+         <constant>
+			<constant-name>maxWeigth</constant-name>
+        	<constant-value>1.0</constant-value>
+        </constant>
+
+		<form name="viewDepartmentTeachersPersonalExpectationsForm">
+			<field property="executionYearID" depends="integer" page="1" >
+				<arg0 key="label.common.executionYear"/>
+			</field>
+		</form>    
+		<!-- ================================================================ -->    	
+	   	<form name="teacherInstitutionWorkingTimeForm">
+			<field property="startTimeHour" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.startTimeHour"/>
+				<msg name="intRange" key="errors.invalid.startTimeHour"/>				
+				<arg0 key="label.property.startTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="startTimeMinutes" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.startTimeMinutes"/>				
+				<msg name="intRange" key="errors.invalid.startTimeMinutes"/>
+				<arg0 key="label.property.startTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>
+			</field>
+			<field property="endTimeHour" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.endTimeHour"/>				
+				<msg name="intRange" key="errors.invalid.endTimeHour"/>								
+				<arg0 key="label.property.endTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="endTimeMinutes" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.endTimeMinutes"/>
+				<msg name="intRange" key="errors.invalid.endTimeMinutes"/>
+				<arg0 key="label.property.endTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>				
+			</field>
+	  		</form>
+		<!-- ================================================================ -->
+		<!-- ================================================================ -->    	
+    	<form name="teacherDegreeFinalProjectStudentForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<msg name="integer" key="errors.invalid.student-number"/>
+				<msg name="required" key="errors.invalid.student-number"/>				
+				<arg0 key="label.property.student-number" />
+			</field>
+			<field property="percentage" depends="required,double,doubleRange" page="1">
+				<arg0 key="label.teacher-dfp-student.percentage" />
+				<arg1 name="doubleRange" key="0" resource="false"/>
+				<arg2 name="doubleRange" key="100" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>100</var-value>
+				</var>						
+			</field>
+    	</form>
+		<!-- ================================================================ -->    			
+    	<form name="supportLessonForm">			
+			<field property="startTimeHour" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.startTimeHour"/>
+				<msg name="intRange" key="errors.invalid.startTimeHour"/>				
+				<arg0 key="label.property.startTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="startTimeMinutes" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.startTimeMinutes"/>				
+				<msg name="intRange" key="errors.invalid.startTimeMinutes"/>								
+				<arg0 key="label.property.startTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>					
+			</field>
+			<field property="endTimeHour" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.endTimeHour"/>				
+				<msg name="intRange" key="errors.invalid.endTimeHour"/>				
+				<arg0 key="label.property.endTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="endTimeMinutes" depends="required,integer,intRange" page="1">
+				<msg name="integer" key="errors.invalid.endTimeMinutes"/>
+				<msg name="intRange" key="errors.invalid.endTimeMinutes"/>				
+				<arg0 key="label.property.endTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>				
+			</field>
+			<field property="place" depends="required" page="1">
+				<arg0 key="label.property.support-lesson-place" />
+			</field>
+    	</form>
+    	
+<!-- Teacher Service Distribution -->
+    	<form name="tsdProcessForm">
+			<field property="name" depends="required" page="1">
+				<arg0 key="label.teacherServiceDistribution.name"/>
+			</field>
+    	</form>
+    	
+    	<form name="tsdProcessPhasesManagementForm">
+			<field property="name" depends="required" page="1">
+				<arg0 key="label.teacherServiceDistribution.name"/>
+			</field>
+    	</form>
+    	
+    	<form name="tsdSupportForm">
+			<field property="name" depends="required" page="1">
+				<arg0 key="label.teacherServiceDistribution.subGroupingName"/>
+			</field>
+    	</form>
+    	
+    	<form name="tsdTeachersGroupForm">
+			<field property="name" depends="validwhen" page="1">
+				<msg name="validwhen" key="errors.required"/>
+				<arg0 key="label.teacherServiceDistribution.name"/>
+				<var>
+          			<var-name>test</var-name>
+          			<var-value>((*this* != null) or (page > 2))</var-value>
+        		</var>
+			</field>
+			<field property="shiftTypesArray" depends="validateMultiBox" page="2">
+				<arg0 key="tipo de aula"/>
+				<var>
+		        	<var-name>arrayProperty</var-name>
+		            <var-value>shiftTypesArray</var-value>
+		        </var>
+			</field>			
+    	</form>
+    	
+    	<form name="tsdCourseForm">
+			<field property="tsdCurricularCourseArray" depends="integerArray" page="2">
+				<msg name="integerArray" key="errors.teacherServiceDistribution.selectOneElement"/>
+				<arg0 key="label.teacherServiceDistribution.course"/>
+			</field>
+		</form>
+		
+		<form name="tsdCourseValuationForm">
+			<field property="firstTimeEnrolledStudentsManual" depends="required,integer,validwhen" page="1">
+				<arg0 key="label.teacherServiceDistribution.firstTimeEnrolledStudents"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+	       			<var-name>test</var-name>
+	       			<var-value>${greaterThanZero}</var-value>
+	       		</var>			
+			</field>
+			<field property="secondTimeEnrolledStudentsManual" depends="required,integer,validwhen" page="1">
+				<arg0 key="label.teacherServiceDistribution.secondTimeEnrolledStudents"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+	       			<var-name>test</var-name>
+	       			<var-value>${greaterThanZero}</var-value>
+	       		</var>			
+			</field>
+			<field property="studentsPerShiftManual" depends="required,integer,validwhen" page="2">
+				<arg0 key="label.teacherServiceDistribution.studentsPerShift"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+	       			<var-name>test</var-name>
+	       			<var-value>${greaterThanZero}</var-value>
+	       		</var>			
+			</field>
+			<field property="shiftFrequency" depends="required,double,doubleRange" page="2">
+				<arg0 key="label.teacherServiceDistribution.shiftFrequency"/>
+				<arg1 name="doubleRange" key="${var:min}" resource="false"/>
+				<arg2 name="doubleRange" key="${var:max}" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minWeigth}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxWeigth}</var-value>
+				</var>	
+			</field>
+			<field property="weightFirstTimeEnrolledStudentsPerShiftManual" depends="required,double,doubleRange" page="3">
+				<arg0 key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerShift"/>
+				<arg1 name="doubleRange" key="${var:min}" resource="false"/>
+				<arg2 name="doubleRange" key="${var:max}" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minWeigth}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxWeigth}</var-value>
+				</var>	
+			</field>
+			<field property="weightSecondTimeEnrolledStudentsPerShiftManual" depends="required,double,doubleRange" page="3">
+				<arg0 key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerShift"/>
+				<arg1 name="doubleRange" key="${var:min}" resource="false"/>
+				<arg2 name="doubleRange" key="${var:max}" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minWeigth}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxWeigth}</var-value>
+				</var>	
+			</field>
+			<field property="hoursManual" depends="required,double,validwhen" page="4">
+				<arg0 key="label.teacherServiceDistribution.weeklyHours"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+          			<var-name>test</var-name>
+          			<var-value>${greaterThanZero}</var-value>
+        		</var>			
+			</field>
+			<field property="hoursPerShift" depends="required,double,validwhen" page="4">
+				<arg0 key="label.teacherServiceDistribution.shiftDuration"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+          			<var-name>test</var-name>
+          			<var-value>${greaterThanZero}</var-value>
+        		</var>			
+			</field>
+			<field property="hoursPerShift" depends="required,double,validwhen" page="4">
+				<arg0 key="label.teacherServiceDistribution.timeTableSlots"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+          			<var-name>test</var-name>
+          			<var-value>${greaterThanZero}</var-value>
+        		</var>			
+			</field>
+			
+		</form>
+			
+		
+		<form name="tsdProfessorshipForm">
+			<field property="hoursManual" depends="required,double,validwhen" page="1">
+				<arg0 key="label.teacherServiceDistribution.weeklyHours"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+          			<var-name>test</var-name>
+          			<var-value>${greaterThanZero}</var-value>
+        		</var>			
+			</field>
+			<field property="extraCreditsName" depends="required" page="3">
+				<arg0 key="label.teacherServiceDistribution.extraCreditsName"/>
+			</field>			
+			<field property="extraCreditsValue" depends="required,double,validwhen" page="3">
+				<arg0 key="label.teacherServiceDistribution.extraCreditsValue"/>
+				<msg name="validwhen" key="errors.teacherServiceDistribution.negativeValue"/>
+				<var>
+          			<var-name>test</var-name>
+          			<var-value>${greaterThanZero}</var-value>
+        		</var>			
+			</field>
+		</form>    	
+		
+<!-- End Teacher Service Distribution -->    	
+
+	</formset>
+</form-validation>
+

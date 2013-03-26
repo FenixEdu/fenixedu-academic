@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.teacher.one-column" extends="df.layout.one-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>	  
+		<put name="title" value="private.teacher" />
+		<put name="serviceName" value="Portal Docente" />
+	  	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>		
+	</definition>
+	<definition name="definition.teacher.two-column" extends="df.layout.two-column">
+	 	<put name="bundle" value="TITLES_RESOURCES"/>	  
+		<put name="title" value="private.teacher" />
+		<put name="serviceName" value="Portal Docente" />
+		<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+ 	  	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	<definition name="definition.teacher.testsPage" extends="df.layout.two-column.teacher">
+	  <put name="bundle" value="TITLES_RESOURCES"/>	
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/onlineTests/testsNavbar.jsp" />
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	  
+	</definition>
+	<definition name="copy.site.execution.course.page" extends="df.layout.two-column.teacher">
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/copyright.jsp" />	  
+	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+ 	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>	
+	<definition name="definition.teacher.summaryPage" extends="df.layout.two-column.teacher">
+	  <put name="serviceName" value="Portal Docente" />
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
+	  <put name="footer" value="/copyright.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	
+	<definition name="df.teacher.evaluation-management" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/evaluation/evaluationMenu.jsp"/>
+	    <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+  	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	
+	<definition name="df.teacher.credits-management" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/commons/creditsManagementLocalNavigationBar.jsp"/>	
+	    <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+   	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>	
+	    <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+   	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	<definition name="teacher-information" extends="df.page.teacher-index">
+    	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+    	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	<definition name="execution-course-administration" extends="definition.teacher.testsPage">
+		<put name="executionCourseName" value="/teacher/commons/manageExecutionCourseHeader.jsp"/>
+        <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+ 	<definition name="course-information" extends="definition.teacher.two-column">
+		<put name="body-context" value="/commons/blank.jsp"></put>
+        <!-- VER	/gesdis/courseInformationContext.jsp-->
+        <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
+        <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>        
+    </definition>
+    
+	<definition name="definition.teacher.two-column.extra-menu" extends="df.layout.two-column.extra-menu">
+		<put name="bundle" value="TITLES_RESOURCES"/>	  
+		<put name="title" value="private.teacher.managementmentoring.seetutorandos" />
+  		<put name="serviceName" value="Portal do Docente" />
+ 	   	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>   
+ 	   	<put name="navLocalExtra" value="/commons/blank.jsp" /> 	   
+ 	   	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	    <put name="body-context" value="/commons/blank.jsp" />  
+    	<put name="body" value="/commons/blank.jsp" />
+    	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+	
+	<definition name="definition.teacher.two-column.extra-menu.tutor" extends="definition.teacher.two-column.extra-menu">	  
+		<put name="body-context" value="/commons/blank.jsp" />  
+    	<put name="navLocalExtra" value="/teacher/tutor/tutorMenu.jsp" />
+    	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+
+	<definition name="definition.curriculum.historic" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/commons/blank.jsp"></put>
+		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>    
+
+	<!-- =================== View Old Inquiries Teacher's Results ============== -->
+	<definition name="view.old.inquiries.teachers.results.page" extends="df.layout.two-column.teacher">
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />
+	  <put name="link" value="/commons/blank.jsp"/>
+	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+ 	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	  
+	</definition>	
+</tiles-definitions>

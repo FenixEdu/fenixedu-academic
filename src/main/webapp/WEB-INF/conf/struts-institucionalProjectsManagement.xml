@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <data-sources></data-sources>
+      <!-- ========== Form Bean Definitions =================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="rubricForm">
+                  <form-property type="java.lang.String" name="rubric"></form-property>
+                  <form-property type="java.lang.String" name="reportType"></form-property>
+                  <form-property type="java.lang.String" name="projectCode"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="accessForm">
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="personCode"></form-property>
+                  <form-property type="java.lang.String" name="projectCode"></form-property>
+                  <form-property type="java.lang.String" name="projectCodes"></form-property>
+                  <form-property type="java.lang.String" name="beginDay"></form-property>
+                  <form-property type="java.lang.String" name="beginMonth"></form-property>
+                  <form-property type="java.lang.String" name="beginYear"></form-property>
+                  <form-property type="java.lang.String" name="endDay"></form-property>
+                  <form-property type="java.lang.String" name="endMonth"></form-property>
+                  <form-property type="java.lang.String" name="endYear"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions ============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+            <forward path="/index.do" name="index"></forward>
+            <forward path="/adistInstitucionalProjectIndex.do" name="adistInstitucionalProjectIndex"></forward>
+            <forward path="/istidInstitucionalProjectIndex.do" name="istidInstitucionalProjectIndex"></forward>
+            <forward path="/institucionalProjectIndex.do" name="institucionalProjectIndex"></forward>
+            <forward path="/itProjectIndex.do" name="itProjectIndex"></forward>
+            <forward path="/istidProjectIndex.do" name="istidProjectIndex"></forward>
+            <forward path="/adistProjectIndex.do" name="adistProjectIndex"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions ============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/index">
+                  <forward path="df.page.projectManager" name="success"></forward>
+            </action>
+<!-- 
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/itProjectIndex">
+                  <forward path="df.page.projectManager" name="success"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/istidProjectIndex">
+                  <forward path="df.page.projectManager" name="success"></forward>
+            </action>
+ -->
+            <action type="org.apache.struts.actions.SwitchAction" path="/switchAction"></action>
+            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction" parameter="method" scope="request" input="/projectAccess.do?method=showPersonAccesses&amp;page=0" name="accessForm" path="/projectAccess">
+                  <forward path="choose-Person" name="choosePerson"></forward>
+                  <forward path="show-Person-Accesses" name="showPersonAccesses"></forward>
+                  <forward path="edit-Project-Access" name="editProjectAccess"></forward>
+                  <forward path="show-Projects-Accesses" name="showProjectsAccesses"></forward>
+            </action>
+            <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction" parameter="method" scope="request" input="/projectAccess.do?method=prepareEditProjectAccess&amp;page=0" name="accessForm" path="/projectAccessEdition">
+                  <forward path="show-Person-Accesses" name="showPersonAccesses"></forward>
+                  <forward path="edit-Project-Access" name="editProjectAccess"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" parameter="resources.ProjectsManagementResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-projectsManagement.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/projectsManagement/tiles-institucionalProjectsManagement-definitions.xml,/WEB-INF/tiles/projectsManagement/tiles-institucionalProjectsManagement-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.projectManager.two-column" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="changeLocaleForm">
+                  <form-property type="java.lang.String" name="windowLocation"></form-property>
+                  <form-property type="java.lang.String" name="newLanguage"></form-property>
+                  <form-property type="java.lang.String" name="newCountry"></form-property>
+                  <form-property type="java.lang.String" name="newVariant"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="finalWorkInformationForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="role"></form-property>
+                  <form-property type="java.lang.String" name="executionYear"></form-property>
+                  <form-property type="java.lang.String" name="degree"></form-property>
+                  <form-property type="java.lang.String" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="title"></form-property>
+                  <form-property type="java.lang.String" name="orientatorOID"></form-property>
+                  <form-property type="java.lang.String" name="coorientatorOID"></form-property>
+                  <form-property type="java.lang.String" name="responsibleCreditsPercentage"></form-property>
+                  <form-property type="java.lang.String" name="coResponsibleCreditsPercentage"></form-property>
+                  <form-property type="java.lang.String" name="framing"></form-property>
+                  <form-property type="java.lang.String" name="objectives"></form-property>
+                  <form-property type="java.lang.String" name="description"></form-property>
+                  <form-property type="java.lang.String" name="requirements"></form-property>
+                  <form-property type="java.lang.String" name="deliverable"></form-property>
+                  <form-property type="java.lang.String" name="url"></form-property>
+                  <form-property size="0" type="java.lang.String[]" name="branchList"></form-property>
+                  <form-property type="java.lang.String" name="minimumNumberOfGroupElements"></form-property>
+                  <form-property type="java.lang.String" name="maximumNumberOfGroupElements"></form-property>
+                  <form-property type="java.lang.String" name="degreeType"></form-property>
+                  <form-property type="java.lang.String" name="observations"></form-property>
+                  <form-property type="java.lang.String" name="location"></form-property>
+                  <form-property type="java.lang.String" name="companyName"></form-property>
+                  <form-property type="java.lang.String" name="companyAdress"></form-property>
+                  <form-property type="java.lang.String" name="companionName"></form-property>
+                  <form-property type="java.lang.String" name="companionMail"></form-property>
+                  <form-property type="java.lang.String" name="companionPhone"></form-property>
+                  <form-property type="java.lang.String" name="responsableTeacherName"></form-property>
+                  <form-property type="java.lang.String" name="responsableTeacherId"></form-property>
+                  <form-property type="java.lang.String" name="coResponsableTeacherName"></form-property>
+                  <form-property type="java.lang.String" name="coResponsableTeacherId"></form-property>
+                  <form-property type="java.lang.String" name="alteredField"></form-property>
+                  <form-property type="java.lang.String" name="selectedGroupProposal"></form-property>
+                  <form-property type="java.lang.String[]" name="selectedGroupProposals"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="finalWorkAttributionForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="selectedGroupProposal"></form-property>
+                  <form-property type="java.lang.String[]" name="selectedGroupProposals"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+                  <form-property type="java.lang.String" name="studentCPID"></form-property>
+                  <form-property type="java.lang.String" name="select"></form-property>
+                  <form-property type="java.lang.String" name="studentNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="organizedBy"></form-property>
+                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="viewType"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!--  INTERESTS  -->
+            <!--  PROJECTS  -->
+            <!--  ACTIVITIES  -->
+            <!-- Results Management -->
+            <action forward="/publications/management.do?method={1}" path="/resultPublications/*"></action>
+            <action forward="/publications/bibtexManagement.do?method={1}" path="/bibtexManagement/*"></action>
+            <action forward="/patents/management.do?method={1}" path="/resultPatents/*"></action>
+            <action forward="/result/resultParticipationManagement.do?method={1}" path="/resultParticipations/*"></action>
+            <action forward="/result/resultDocumentFilesManagement.do?method={1}" path="/resultDocumentFiles/*"></action>
+            <action forward="/result/resultAssociationsManagement.do?method={1}" path="/resultAssociations/*"></action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction" parameter="method" path="/showResearchResult">
+                  <forward path="publications.viewEditPublication" name="ViewEditPublication"></forward>
+            </action>
+            <!-- Result Publications Management Action Mapping -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction" parameter="method" path="/publications/management">
+                  <forward path="publications.publicationsManagement" name="ListPublications"></forward>
+                  <forward path="setUnitToAll.publicationsManagement" name="setUnitToAll"></forward>
+                  <forward path="publications.viewEditPublication" name="ViewEditPublication"></forward>
+                  <forward path="publications.createPublication" name="PreparedToCreate"></forward>
+                  <forward path="publications.editPublicationData" name="PreparedToEdit"></forward>
+                  <forward path="publications.viewEditPublication" name="PreparedToDelete"></forward>
+                  <forward path="/resultPublications/listPublications.do" name="PublicationDeleted"></forward>
+                  <forward path="publications.search" name="SearchPublication"></forward>
+                  <forward path="show-result-loggedin" name="ShowResult"></forward>
+                  <forward path="edit-journal" name="editJournal"></forward>
+                  <forward path="edit-event" name="editEvent"></forward>
+                  <forward path="/resultPublications/listPublications.do" name="backFromDetails"></forward>
+                  <forward path="/researchUnitFunctionalities.do?method=preparePublications" name="ListUnitPublications"></forward>
+                  <forward path="publications.associate.prize" name="associatePrize"></forward>
+                  <forward path="edit.prize" name="editPrize"></forward>
+                  <forward path="/resultAssociations/prepareEditUnitAssociations.do" name="forwardToUnitAssociation"></forward>
+            </action>
+            <!-- Bibtex Publications Management Action Mapping -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.BibTexManagementDispatchAction" parameter="method" path="/publications/bibtexManagement">
+                  <forward path="/result/publications/bibtex/showPublicationBibtex.jsp" name="PublicationExportedToBibtex"></forward>
+                  <forward path="publications.openBibtexFile" name="OpenBibtexFile"></forward>
+                  <forward path="publications.importBibtex" name="ImportBibtex"></forward>
+                  <forward path="/resultPublications/listPublications.do" name="PublicationsManagement"></forward>
+            </action>
+            <!-- Result Publication Search Action  Mapping -->
+            <!-- Result Patents Management Action Mapping -->
+            <!-- Result Participation Management Action Mapping -->
+            <!-- Result Document Files Management Action Mapping -->
+            <!-- Result Associations Management Action Mapping -->
+            <action validate="true" scope="request" attribute="finalWorkInformationForm" name="finalWorkInformationForm" input="/finalWorkManagement.do?method=prepareFinalWorkInformation&amp;page=0" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction" path="/finalWorkManagement">
+                  <forward path="df.page.chooseDegreeForFinalWorkProposal" name="chooseDegreeForFinalWorkProposal"></forward>
+                  <forward path="df.page.finalWorkSubmit" name="submitFinalWorkProposal"></forward>
+                  <forward path="df.page.finalWorkSubmit" name="showTeacherName"></forward>
+                  <forward path="df.page.finalWorkSubmit" name="coorientatorVisibility"></forward>
+                  <forward path="/finalWorkManagement.do?method=chooseDegree&amp;page=0" name="OutOfSubmisionPeriod"></forward>
+                  <forward path="/finalWorkManagement.do?method=chooseDegree&amp;page=0" name="SubmitionOfFinalDegreeWorkProposalSucessful"></forward>
+                  <forward path="df.page.viewfinalDegreeWorkProposal" name="viewFinalDegreeWorkProposal"></forward>
+                  <forward path="df.page.showStudentCurricularPlans" name="ShowStudentCurricularPlans"></forward>
+                  <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
+                  <forward path="df.page.final.degree.work.print" name="print"></forward>
+            </action>
+            <action validate="true" scope="request" attribute="finalWorkInformationForm" name="finalWorkInformationForm" input="/finalWorkManagement.do?method=chooseDegree&amp;page=0" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction" path="/finalDegreeWorkAttribution">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.message.GroupAlreadyAttributed" type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork$GroupAlreadyAttributed"></exception>
+                  <forward path="/finalWorkManagement.do?method=chooseDegree&amp;page=0" name="sucess"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="DEPARTMENT_MEMBER_RESOURCES" parameter="resources.DepartmentMemberResources"></message-resources>
+      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-researcher.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/researcher/tiles-researcher-definitions.xml,/WEB-INF/tiles/researcher/tiles-researcher-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="researcher.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

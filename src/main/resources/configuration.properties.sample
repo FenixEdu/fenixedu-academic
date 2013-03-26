@@ -1,0 +1,678 @@
+#------------------------------------------------------------------------------
+# General Configuration
+#------------------------------------------------------------------------------
+#
+#   application: application to install. Valid options are: extranet, intranet
+#   index.html.link: initial page to be displayed from applications root
+#   login.page: absolute path to the login page
+#   institution.project: directory containing institution specific implementation (including style layouts)
+#
+
+manager.filter.pattern=nothing
+
+file.download.url.local.content=http://localhost:8080/ciapl/conteudos-publicos/ficheiros?oid=
+
+index.html.link.localhost=siteMap.do
+#index.html.link.<cidhcp000>=siteMap.do
+
+login.html.link.localhost=http://localhost:8080/ciapl/privado
+#login.html.link.<cidhcp000>=http://<cidhcp000>:8080/ciapl/privado
+
+login.page=http://localhost:8080/ciapl/privado
+institution.url=http://www.ist.utl.pt
+institution.acronym=IST
+
+#institution.project=/home/<user>/workspace/fenix-ist
+
+language=pt
+location=PT
+variant=
+
+#development.mode - if set to true it will change the appearance of the application
+# that is being run in test mode.
+development.mode=true
+debug.actions=true
+
+#------------------------------------------------------------------------------
+# Maven Specific
+# app.name: This MUST NOT be changed. Filtered by maven to match artifactId.
+#------------------------------------------------------------------------------
+app.name=${artifactId}
+
+#----------------------------------------------
+# Twilio configuration
+# http.protocol: http or https protocol where the application will run
+# http.host: host where the application will run
+# http.port: port on which the application will be available
+#----------------------------------------------
+#This is used by twilio so it can connect back to fenix
+http.protocol=http
+http.host=localhost
+http.port=8080
+twilio.sid=
+twilio.stoken=
+twilio.from.number=
+
+
+#----------------------------------------------
+# Barra as authentication broker
+#----------------------------------------------
+barra.as.authentication.broker=false
+barra.loginUrl=https://barra.ist.utl.pt/login
+
+#
+#
+#------------------------------------------------------------------------------
+# Web Container Configuration
+#------------------------------------------------------------------------------
+#
+#   app.path: relative path the application will be accesible under
+#   app.context: Must be changed to match tomcat context. If you're app is running in http://localhost:8080/xpto, app.context must be xpto.
+#   manager.username: username of web container manager for installing the app
+#   manager.password: the password of the web container manager
+#   manager.url: absolute path to the web container managment interface
+#
+#
+app.context=ciapl
+app.path=/${app.name}
+manager.username=admin
+manager.password=admin
+manager.url=http://localhost:8080/manager
+#
+#
+#------------------------------------------------------------------------------
+# Data Repository Configuration
+#------------------------------------------------------------------------------
+#
+#   default.persistenceSupport: fully qualified classname of the default
+#                               persistence support class. Available values:
+#         net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
+#         net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport
+#         net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport
+#   db.name: name of the database used by the application
+#
+#   db.user: username with necessary authorization to access the database
+#   db.pass: password for indicated username
+#   db.alias: alias used to connect to database
+#
+#   db.assiduousness.name: 
+#   db.assiduousness.platform: 
+#   db.assiduousness.driver: 
+#   db.assiduousness.protocol: 
+#   db.assiduousness.subprotocol: 
+#   db.assiduousness.user: 
+#   db.assiduousness.pass: 
+#   db.assiduousness.alias: 
+#   db.assiduousness.validationQuery: 
+#
+default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
+
+db.name=ciapl
+db.user=root
+db.pass=
+db.alias=//localhost:3306/ciapl?useUnicode=true&characterEncoding=utf8&clobCharacterEncoding=utf8&zeroDateTimeBehavior=convertToNull&statementInterceptors=net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixStatementInterceptor
+
+db.assiduousness.name=AssiduidadeOracleTeste
+db.assiduousness.platform=MySQL
+db.assiduousness.driver=com.mysql.jdbc.Driver
+db.assiduousness.protocol=jdbc
+db.assiduousness.subprotocol=mysql
+db.assiduousness.user=root
+db.assiduousness.pass=
+db.assiduousness.alias=//localhost:3306/AssiduidadeOracleTeste
+db.assiduousness.validationQuery=select 1
+
+db.projectManagement.name=AssiduidadeOracleTeste
+db.projectManagement.platform=MySQL
+db.projectManagement.driver=com.mysql.jdbc.Driver
+db.projectManagement.protocol=jdbc
+db.projectManagement.subprotocol=mysql
+db.projectManagement.user=root
+db.projectManagement.pass=
+db.projectManagement.alias=//localhost:3306/AssiduidadeOracleTeste
+db.projectManagement.validationQuery=select 1
+
+db.giaf.user=root
+db.giaf.pass=
+db.giaf.alias=//localhost:3306/AssiduidadeOracleTeste
+
+script.isAlive.check.db=false
+#
+#
+#------------------------------------------------------------------------------
+# Security Configuration
+#------------------------------------------------------------------------------
+#
+#  filter.hostnames: comma seperated list of hostnames. The specified hostname
+#                    can is expected to be anything following the http:// 
+#                    string.
+#  filter.hostname.<hostname>: comma seperated list of RoleTypes that are to
+#                              be provided by the server <hostname>.
+#
+#  filter.request.with.digest: if set to true, will rewrite all generated html
+#                              and add a digest to every link and form. For 
+#                              every request, the digest will be calculated and
+#                              checked against the provided checksum.  
+#
+#
+filter.hostnames=localhost
+#,<cidhcp000>
+filter.hostname.localhost=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, TUTORSHIP, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,PERSONNEL_SECTION, \
+        MANAGER, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, \
+    SCIENTIFIC_COUNCIL, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER, BOLONHA_MANAGER,CMS_MANAGER, \
+    SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING, \
+    LIBRARY, INTERNATIONAL_RELATION_OFFICE, IDENTIFICATION_CARD_MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, \
+    RESIDENCE_MANAGER, NAPE, RECTORATE
+#filter.hostname.<cidhcp000>=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, TUTORSHIP, \
+#        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,PERSONNEL_SECTION, \
+#        MANAGER, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, \
+#    SCIENTIFIC_COUNCIL, OPERATOR, \
+#    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
+#    GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER,BOLONHA_MANAGER,CMS_MANAGER, \
+#    SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING, \
+#    LIBRARY, INTERNATIONAL_RELATION_OFFICE, IDENTIFICATION_CARD_MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, \
+#    RESIDENCE_MANAGER, NAPE, RECTORATE
+
+filter.request.with.digest=true
+#
+#
+#------------------------------------------------------------------------------
+# FTP Configuration's
+#------------------------------------------------------------------------------
+#
+#   ftp.IST.server.user: 
+#   ftp.IST.server.pass: 
+#   ftp.IST.server.address: 
+#	ftp.IST.scp.command:
+#	ftp.IST.scp.args:
+#   ftp.degree.grades.server.user: 
+#   ftp.degree.grades.server.pass: 
+#   ftp.degree.grades.server.address: 
+#
+ftp.degree.grades.server.user=user
+ftp.degree.grades.server.pass=pass
+ftp.degree.grades.server.address=address
+
+#
+#
+#------------------------------------------------------------------------------
+# HTTP Response Cache Configuration
+#------------------------------------------------------------------------------
+#
+#	response.cache.timeout : public pages cache timeout; subject to change in the manager interface
+#
+response.cache.timeout=600
+#
+#
+#------------------------------------------------------------------------------
+# SMS Configuration
+#------------------------------------------------------------------------------
+#
+#   sms.gateway.host:
+#   sms.gateway.port:
+#   sms.gateway.uri:
+#   sms.gateway.protocol:
+#   sms.gateway.username:
+#   sms.gateway.password:
+#   sms.delivery.host:
+#   sms.delivery.port:
+#   sms.delivery.uri:
+#   sms.delivery.protocol:
+#   sms.delivery.username:
+#   sms.delivery.password:
+#
+sms.gateway.host=localhost
+sms.gateway.port=13013
+sms.gateway.uri=/cgi-bin/sendsms
+sms.gateway.protocol=http
+sms.gateway.username=
+sms.gateway.password=
+sms.delivery.host=localhost
+sms.delivery.port=8080
+sms.delivery.uri=/ciapl/publico/smsController.do
+sms.delivery.protocol=http
+sms.delivery.username=
+sms.delivery.password=
+#
+#
+#------------------------------------------------------------------------------
+# Auto Task Configuration
+#------------------------------------------------------------------------------
+#
+#   gratuity.situation.creator.task.hour: Hour at which the task will be
+#                                         launched to create the gratuity
+#                                         situations. set to -1 to deactivate.
+#
+gratuity.situation.creator.task.hour=-1
+#
+#
+#------------------------------------------------------------------------------
+# Logging Configuration
+#------------------------------------------------------------------------------
+#
+#   log.profile.dir: name of dir where profiling log will be stored
+#   log.profile.filename: name of file where profiling log will be stored
+#   log.image.directory: directory to where dynamic images for log reports
+#                        are generated. It must end with the applications
+#                        context followed by images/logs
+#   log4j.email.smtp.host: 
+#   log4j.email.smtp.from: 
+#   log4j.email.smtp.to: 
+#   log4j.email.smtp.subject: 
+#
+log.profile.dir=/tmp
+log.profile.filename=profileing.log
+log.image.directory=/home/<user>/workspace/fenix-head/web/images/logs
+
+
+#-----------------------------------------------------------------------------
+# Cms Configuration
+#-----------------------------------------------------------------------------
+mail.smtp.host=
+mail.smtp.name=
+mailingList.host.name=
+mailSender.max.recipients=50
+
+
+#-----------------------------------------------------------------------------
+# Authentication Service
+#-----------------------------------------------------------------------------
+#
+#   authenticationService: Known implementations:
+#         Authenticate
+#         AuthenticateKerberos
+#   changePassService: Known implementations:
+#         ChangePassword
+#         ChangePasswordKerberos
+#   enableExternalLoginService Known implementations:
+#         net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLogin
+#         net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos
+#   password.generator: Known implementations:
+#         net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordKerberos
+#
+#----------------------------------------------
+authenticationService=Authenticate
+changePassService=ChangePassword
+enableExternalLoginService=net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos
+password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase
+
+#----------------------------------------------
+# Host access control, filter configuration
+#----------------------------------------------
+#
+# Configure the PathAccessControlfilter and the host control mechanism.
+#
+# All properties with the form 
+#
+#	host.control.path.${path}=${host list}
+#
+# will be used as the filter configuration. The host list indicates
+# the hosts that are allowed to access the given servlet paths. IPs
+# are also allowed.
+#
+# Properties with the form
+#
+#   host.control.name.${name}=${host list}
+#
+# will be used in the generic mechains for host control were ${name}
+# is associated with the ${host list}. A request can be verified
+# against the ${host list} with HostAccessControl.isAllowed(name, request).
+#
+# Example:
+# 	host.control.path./login.do=localhost,trusted.example.net
+# 	host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=localhost,trusted.example.net
+# 	host.control.name.checkPassword=localhost,trusted.example.net
+#
+
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.CheckLocalPasswordAction=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.RetrieveUserInformation=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.UserPermissionCheck=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.GroupCheck=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction=127.0.0.1,0:0:0:0:0:0:0:1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.AnnouncementBoardExport=127.0.0.1,0:0:0:0:0:0:0:1
+host.control.name.net.sourceforge.fenixedu.webServices.PersonManagement=
+host.control.name.net.sourceforge.fenixedu.webServices.AnnouncementManagement=127.0.0.1,193.136.128.66,www.ist.utl.pt,wonderland.ist.utl.pt,0:0:0:0:0:0:0:1
+
+#----------------------------------------------
+# CAS configuration
+#----------------------------------------------
+localhost.cas.enabled=false
+localhost.cas.loginUrl=https://localhost:8443/cas/login
+localhost.cas.validateUrl=https://localhost:8443/cas/serviceValidate
+localhost.cas.logoutUrl=https://localhost:8443/cas/logout
+localhost.cas.serviceUrl=https://localhost:8443/ciapl/loginCAS.do
+
+validateExpirationDate=false
+
+
+#------------------------------------------------------------------------------
+# External Services
+#------------------------------------------------------------------------------
+#
+# email.admin.allowed.hosts: comma seperated values of hosts and/or ip addresses
+#                            that are allowed to call external email administration
+# email.admin.password: password required to call external email administration
+#
+email.admin.allowed.hosts=
+email.admin.password=xPtO!)&#.
+consult.roles.admin.allowed.hosts=127.0.0.1,localhost,192.168.1.101
+consult.roles.admin.password=xPtO
+parkingCardId.admin.allowed.hosts=localhost,0:0:0:0:0:0:0:1
+parkingCardId.admin.password=pass
+externalServices.StudentInfoByUsername.externalAppPassword=xpto
+webServices.PersonManagement.getPersonInformation.username=u
+webServices.PersonManagement.getPersonInformation.password=p
+webServices.LibraryManagement.getPersonInformation.username=u
+webServices.LibraryManagement.getPersonInformation.password=p
+webServices.PersonInformation.getPersonInformation.username=u
+webServices.PersonInformation.getPersonInformation.password=p
+webServices.PaymentManagement.username=u
+webServices.PaymentManagement.password=p
+
+#---------------------------------------------------------------
+# Credentials for Koha application to retireve data
+#---------------------------------------------------------------
+externalServices.koha.username=abc
+externalServices.koha.password=123
+
+#---------------------------------------------------------------
+# This equivalences workflow process now uses jersey so it uses its credentials
+#---------------------------------------------------------------
+external.application.workflow.equivalences.uri=http://localhost:8080/dot/jersey/equivalenceplan/acceptNewProcess
+jersey.username=jersey
+jersey.password=password
+
+#------------------------------------------------------------------------------
+# Miscellaneous 
+#------------------------------------------------------------------------------
+
+## Characters that can't be used directly in ant build files
+line.seperator=\n
+character.lessthan=<
+character.dollar=$
+
+## Complex constructions that contain characters that's can't
+## be used directly in ant build files
+allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="UTF-8"?>\n \
+		\t<project default="generate-properties-file" name="Auto-Generated-Build-File">\n \
+			\t\t<property file="build.properties"/>\n \
+			\t\t<target name="generate-properties-file"> \n\n
+allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
+allowed-roles.newline.instruction=${line.seperator}
+
+#----------------------------------------------------------------
+# Printers
+#----------------------------------------------------------------
+filter.printers=graduacao,pos.graduacao,graduacao-tagus
+markSheet.printers.graduacao=
+markSheet.printers.pos.graduacao=
+markSheet.printers.graduacao-tagus=
+
+#----------------------------------------------------------------
+# File Manager
+#----------------------------------------------------------------
+file.manager.factory.implementation.class=pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory
+dspace.client.transport.class=pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient
+dspace.rmi.server.name=DSpaceRMIRemoteManager
+
+jndi.properties.file=classpath://dspace.jndi.properties
+rmi.registry.port=1091
+rmi.port=0
+rmi.ssl=1
+rmi.ssl.truststore=classpath://DSpaceClient.truststore
+rmi.ssl.truststore.password=dspace
+rmi.stream.bytes.min=2048
+rmi.stream.bytes.max=32768
+rmi.stream.bytes.block=512
+
+
+#----------------------------------------------------------------
+# File Manager - Dspace Configuration
+#----------------------------------------------------------------
+dspace.serverUrl=https://localhost:8443/dspace
+dspace.downloadUriFormat=bitstream/{0}/{1}
+dspace.username=ist12628
+dspace.password=pass
+
+dspace.generated.document.store=true
+
+#----------------------------------------------------------------
+# Sibs Configuration
+#
+# - sibs.entityCode: institution entity code to be used in atm
+#   machines with reference to perform payments
+#
+# - sibs.sourceInstitutionId: used in header payments file, and
+#   represents institution identification accordding to transfer service (i.e. sibs).
+#	Must be given by the entity that is peforming this service.
+#    Format: '9XXXXXXX'
+#
+# - sibs.destinationInstitutionId: used in header payments file and represents entity 
+#	service identification (i.e. sibs). Default value '50000000' (sibs identification)
+#
+#----------------------------------------------------------------
+sibs.entityCode=1111
+sibs.sourceInstitutionId=11111111
+sibs.destinationInstitutionId=11111111
+
+#----------------------------------------------------------------
+# WebServices - External Services Urls
+#----------------------------------------------------------------
+# webServices.external.urls: comma seperated values of wsdl valid urls.
+#							 Example: http://localhost:8080/ciapl/services/InstitutionalEmailManagement?wsdl
+
+webServices.external.urls=http://localhost:8080/ciapl/services/PersonManagement?wsdl
+
+#----------------------------------------------------------------
+# Merge Units - Emails for log
+#----------------------------------------------------------------
+# merge.units.emails: comma separated emails of persons who want to receive emails about merge of units.
+#							 
+
+merge.units.emails=
+
+#------------------------------------------------------------------------------
+# Persistence delete error/warning configuration 
+#------------------------------------------------------------------------------
+#
+#  error.if.deleted.object.not.disconnected:
+#      If false issues a warning whenever an object is deleted but still has
+#      some connections to other objects. If true throw an error.
+#
+#  error.if.changing.deleted.object:
+#      If false issues a warning whenever an object is changed in any way 
+#      after it is deleted. If true thow an error.
+#
+#------------------------------------------------------------------------------
+
+error.if.deleted.object.not.disconnected=true
+error.if.changing.deleted.object=true
+
+
+#------------------------------------------------------------------------------
+# Configuration properties for data dependend propetires
+#------------------------------------------------------------------------------
+#
+#   year.for.from.mark.sheet.managment and semester.for.from.mark.sheet.managment:
+#       identifies the execution period after which mark 
+#       sheet are to be managed in the fenix system.
+#
+#------------------------------------------------------------------------------
+
+year.for.from.mark.sheet.managment=2005/2006
+semester.for.from.mark.sheet.managment=2
+
+year.for.from.enrolments=2004/2005
+semester.for.from.enrolments=1
+
+year.for.from.enrolments.leec=2003/2004
+semester.for.from.enrolments.leec=2
+
+
+#----------------------------------------------------------------
+# Bolonha configuration
+#----------------------------------------------------------------
+start.year.for.bolonha.degrees=2006/2007
+start.semester.for.bolonha.degrees=1
+start.year.for.bolonha.transition=2007/2008
+start.semester.for.bolonha.transition=1
+
+#---------------------------------------------------------------
+# Receipts configuration
+#---------------------------------------------------------------
+#Inclusive
+receipt.min.year.to.create=2006
+receipt.numberSeries.for.years=
+
+
+#---------------------------------------------------------------
+# Deploy notifier activation
+#--------------------------------------------------------------
+notifier.active=false
+
+
+#---------------------------------------------------------------
+# Name resolution service
+#--------------------------------------------------------------
+
+nameresolution.name=fenixRemoteRequests
+nameresolution.password=password
+
+
+#---------------------------------------------------------------
+# PhdProcess properties
+# 
+# set all properties with prefix 'phd.'
+#--------------------------------------------------------------
+phd.public.candidacy.access.link=https://fenix.ist.utl.pt/candidacies/phd-program/access
+phd.public.candidacy.submission.link=https://fenix.ist.utl.pt/candidacies/phd-program/submission
+phd.public.candidacy.referee.form.link=https://fenix.ist.utl.pt/candidacies/phd-program/referee-form
+phd.public.external.access.link=https://fenix.ist.utl.pt/phd-program/access
+
+phd.institution.public.candidacy.access.link.PT=https://fenix.ist.utl.pt/candidaturas/phd/acesso
+phd.institution.public.candidacy.submission.link.PT=https://fenix.ist.utl.pt/candidaturas/phd/submissao
+phd.institution.public.candidacy.referee.form.link.PT=https://fenix.ist.utl.pt/candidaturas/phd/recomendacao
+
+phd.institution.public.candidacy.access.link.EN=https://fenix.ist.utl.pt/applications/phd/access
+phd.institution.public.candidacy.submission.link.EN=https://fenix.ist.utl.pt/applications/phd/submission
+phd.institution.public.candidacy.referee.form.link.EN=https://fenix.ist.utl.pt/applications/phd/referee-form
+
+phd.epfl.public.candidacy.access.link=http://fenix.ist.utl.pt/applications/epfl/access
+phd.epfl.public.candidacy.submission.link=http://fenix.ist.utl.pt/applications/epfl/submission
+phd.epfl.public.candidacy.referee.form.link=http://fenix.ist.utl.pt/applications/epfl/referee-form
+
+#-----------------------------------------------------------------
+# Unfortunately phd program process documents are write to DSpace when
+# they're attached to a process. This brings trouble when using
+# Fenix system without DSpace
+#-----------------------------------------------------------------
+phd.write.documents.on.dspace=true
+
+
+#---------------------------------------------------------------
+# Pending requests
+# 
+# -> indicates if pending request should be stored in database to 
+# recover current session after new login
+#--------------------------------------------------------------
+store.pending.request=true
+
+
+
+#---------------------------------------------------------------
+# LDAP USER IMPORTATION REQUEST SERVICE
+#---------------------------------------------------------------
+ldap.user.importation.service.url=https://ciist.ist.utl.pt/ciistadmin/api/users/
+ldap.user.importation.service.username=xpto
+ldap.user.importation.service.password=password
+
+
+#---------------------------------------------------------------
+# Fenix Framework Plugin Configurations.
+#---------------------------------------------------------------
+
+plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin,pt.ist.fenixframework.plugins.scheduler.SchedulerPlugin
+
+
+#---------------------------------------------------------------
+# Latex service for pdf generation using tex strings
+#---------------------------------------------------------------
+latex.service.protocol=http
+latex.service.host=anna.bounceme
+latex.service.port=80
+latex.service.uri=/
+
+#---------------------------------------------------------------
+# Flag to activate in app schedule system.
+# To activate the value must be "active". Any other value is inactive.
+#---------------------------------------------------------------
+schedule.system=not active
+
+#---------------------------------------------------------------
+# Url of sentry service
+#---------------------------------------------------------------
+#sentry.url=
+
+#---------------------------------------------------------------
+# Old configuration.properties at /etc/configuration.properties
+#---------------------------------------------------------------
+
+#Kerberos/LDAP
+changePassScript=/usr/local/bin/fenix_change_password
+createUserScript=/usr/local/bin/fenix_create_user
+verifyPassScript=/usr/local/bin/fenix_check_password
+passExpirationScript=/usr/local/bin/fenix_password_expiration
+scriptTimeout=15000
+
+#pass Generator
+passVerifier=net.sourceforge.fenixedu.applicationTier.utils.PasswordVerifier3Classes
+passSize=10
+
+#Credits configurations
+startYearForCredits=2002/2003
+lastYearForCredits=2010/2011
+startSemesterForCredits=2
+startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments=2006/2007
+
+#Teacher Service Distribution
+studentsPerTheoreticalShift=120
+studentsPerPraticalShift=25
+studentsPerTheoPratShift=25
+studentsPerLaboratorialShift=25
+weightFirstTimeEnrolledStudentsPerTheoShift=1.0
+weightFirstTimeEnrolledStudentsPerPratShift=1.0
+weightFirstTimeEnrolledStudentsPerTheoPratShift=1.0
+weightFirstTimeEnrolledStudentsPerLabShift=1.0
+weightSecondTimeEnrolledStudentsPerTheoShift=1.0
+weightSecondTimeEnrolledStudentsPerPratShift=1.0
+weightSecondTimeEnrolledStudentsPerTheoPratShift=1.0
+weightSecondTimeEnrolledStudentsPerLabShift=1.0
+
+tsdProcess.chart.width=640
+tsdProcess.chart.height=480
+
+#CIIST CostCenterCode
+ciistCostCenterCode=8431
+
+#DWG Processor Configurations
+scaleRatio=1200
+fontSize=0.007
+padding=0.025
+xAxisOffset=0.075
+yAxisOffset=0.3
+
+#
+#
+#
+#
+#------------------------------------------------------------------------------
+# End of build.properties.sample file
+#------------------------------------------------------------------------------
+# Property format: <subjectName>.<property>
+
+
+

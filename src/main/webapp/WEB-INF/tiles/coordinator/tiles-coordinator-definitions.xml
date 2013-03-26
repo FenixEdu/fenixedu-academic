@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>	
+	
+	<definition name="definition.coordinator.two-column" extends="df.layout.two-column">	  
+	   <put name="title" value="private.coordinator" />
+	   <put name="bundle" value="TITLES_RESOURCES" />
+  	   <put name="serviceName" value="Portal do Coordenador" />
+ 	   <put name="navLocal" value="/coordinator/coordinatorMainMenu.jsp" />
+ 	   <put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp" />
+       <put name="body-context" value="/coordinator/context.jsp"/>  
+       <put name="body" value="/commons/blank.jsp" />
+       <put name="footer" value="/copyright.jsp" />
+	</definition>
+	
+	<definition name="definition.coordinator.two-column.extra-menu" extends="df.layout.two-column.extra-menu">	  
+		<put name="title" value="private.coordinator" />
+		<put name="bundle" value="TITLES_RESOURCES" />
+  		<put name="serviceName" value="Portal do Coordenador" />
+ 	   	<put name="navLocal" value="/coordinator/coordinatorMainMenu.jsp" /> 	   
+ 	   	<put name="navLocalExtra" value="/commons/blank.jsp" /> 	   
+ 	   	<put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp" />
+	    <put name="body-context" value="/coordinator/context.jsp" />  
+    	<put name="body" value="/commons/blank.jsp" />
+	    <put name="footer" value="/copyright.jsp" />
+	</definition>
+	
+	<definition name="definition.coordinator.two-column.extra-menu.student" extends="definition.coordinator.two-column.extra-menu">	  
+		<put name="body-context" value="/commons/blank.jsp" /> 
+		<put name="navLocalExtra" value="/coordinator/enrollment/enrollmentStudentMenu.jsp" />		
+	</definition>
+
+	<!-- =================== View Old Inquiries Teacher's Results ============== -->
+	<definition name="view.old.inquiries.teachers.results.page" extends="definition.coordinator.two-column">	  
+	</definition>
+	
+</tiles-definitions>		

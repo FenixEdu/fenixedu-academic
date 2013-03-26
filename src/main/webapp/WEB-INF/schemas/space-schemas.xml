@@ -1,0 +1,690 @@
+<schema name="CampusFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+</schema>
+<schema name="CampusFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="ViewCampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+</schema>
+<schema name="EditCampusInformation" type="net.sourceforge.fenixedu.domain.space.CampusInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editCampusCharacteristics(name, validFrom, validUntil, blueprintNumber)" />
+</schema>
+<schema name="BuildingFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+	<slot name="emails" key="title.building.emails"/>
+</schema>
+<schema name="EditBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<slot name="emails" key="title.building.emails"/>
+	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil, blueprintNumber,emails)"/>
+</schema>
+<schema name="ViewBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+</schema>
+<schema name="FloorFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="level" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="FloorFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="level" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="EditFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>
+	<slot name="level" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editFloorCharacteristics(level, validFrom, validUntil, blueprintNumber)"/>
+</schema>
+<schema name="ViewFloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber"/>	
+	<slot name="level" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+</schema>
+<schema name="RoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification" />
+	<slot name="doorNumber" />
+	<slot name="description" />
+	<slot name="roomClassification"  key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
+	</slot>		
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>				
+	<slot name="area" />
+	<slot name="heightQuality" />
+	<slot name="illuminationQuality" />
+	<slot name="distanceFromSanitaryInstalationsQuality" />
+	<slot name="securityQuality" />
+	<slot name="ageQuality" />
+	<slot name="observations"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+</schema>
+<schema name="RoomFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
+	</slot>				
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>		
+	<slot name="area"/>
+	<slot name="heightQuality"/>
+	<slot name="illuminationQuality"/>
+	<slot name="distanceFromSanitaryInstalationsQuality"/>
+	<slot name="securityQuality"/>
+	<slot name="ageQuality"/>
+	<slot name="observations"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="LimitedRoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification" />
+	<slot name="doorNumber" />
+	<slot name="description" />
+	<slot name="roomClassification"  key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
+	</slot>				
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>			
+	<slot name="observations"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+</schema>
+<schema name="LimitedRoomFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryEditor" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
+	</slot>			
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>				
+	<slot name="observations"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="ViewRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="roomClassification-label" />
+	</slot>
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>	
+	<slot name="area"/>
+	<slot name="heightQuality"/>
+	<slot name="illuminationQuality"/>
+	<slot name="distanceFromSanitaryInstalationsQuality"/>
+	<slot name="securityQuality"/>
+	<slot name="ageQuality"/>
+	<slot name="observations"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>		
+</schema>
+<schema name="EditRoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
+	</slot>				
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>				
+	<slot name="area"/>
+	<slot name="emails" key="title.building.emails"/>
+	<slot name="heightQuality"/>
+	<slot name="illuminationQuality"/>
+	<slot name="distanceFromSanitaryInstalationsQuality"/>
+	<slot name="securityQuality"/>
+	<slot name="ageQuality"/>
+	<slot name="observations"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+    <setter signature="editRoomCharacteristics(blueprintNumber, identification, description, roomClassification, area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, validFrom, validUntil, doorNumber, normalCapacity, examCapacity, emails)" />
+</schema>
+<schema name="EditRoomInformationLimited" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
+	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="identification"/>
+	<slot name="doorNumber" />
+	<slot name="description"/>
+	<slot name="roomClassification" key="label.classification" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomClassificationsProvider"/>		
+		<property name="format"	value="${presentationCode} (${parentRoomClassification.name}) - ${name}" />
+	</slot>						
+	<slot name="normalCapacity" key="label.room.normal.capacity"/>
+	<slot name="examCapacity" key="label.room.exam.capacity"/>		
+	<slot name="observations"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editLimitedRoomCharacteristics(blueprintNumber, identification, description, roomClassification, observations, validFrom, validUntil, doorNumber, normalCapacity, examCapacity)" />
+</schema>
+
+<schema name="RoomSubdivisionFactoryCreator" type="net.sourceforge.fenixedu.domain.space.RoomSubdivision$RoomSubdivisionFactoryCreator" bundle="SPACE_RESOURCES">	
+	<slot name="identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+</schema>
+<schema name="RoomSubdivisionFactoryEditor" type="net.sourceforge.fenixedu.domain.space.RoomSubdivision$RoomSubdivisionFactoryEditor" bundle="SPACE_RESOURCES">	
+	<slot name="identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="ViewRoomSubdivisionInformation" type="net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation" bundle="SPACE_RESOURCES">	
+	<slot name="identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+</schema>
+<schema name="EditRoomSubdivisionInformation" type="net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation" bundle="SPACE_RESOURCES">
+	<slot name="identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editRoomSubdivisionCharacteristics(identification, validFrom, validUntil)" />
+</schema>
+
+<schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
+	<slot name="code" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+</schema>
+<schema name="RoomClassificationInList" type="net.sourceforge.fenixedu.domain.space.RoomClassification" bundle="SPACE_RESOURCES">
+	<slot name="presentationCode"/>
+	<slot name="name"/>
+</schema>
+
+<!-- Changes in the spaces -->
+<schema name="ListChangesInTheSpacesSchema" type="net.sourceforge.fenixedu.domain.DomainObjectActionLog" bundle="SPACE_RESOURCES">
+	<slot name="personName" layout="null-as-label" key="label.person.name">
+		<property name="label" value="error.inexistente.person"/>
+	</slot>
+	<slot name="personUsername" key="label.username"/>
+	<slot name="action" key="label.action.in.the.space"/>
+	<slot name="instant" key="label.action.in.the.space.instant"/>	
+	<slot name="changedDomainObject" key="label.changedDomainObject"/>	
+	<slot name="presentationEntries" key="label.domainObjectActionLogEntries"/>	
+</schema>
+
+<schema name="PersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
+	<slot name="person.name"/>
+	<slot name="person.username"/>
+	<slot name="begin"/>
+	<slot name="end"/>
+</schema>
+<schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
+	<slot name="person.name"/>
+	<slot name="person.username"/>		
+</schema>
+<schema name="EditPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">	
+	<slot name="begin" key="label.begin.date">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+	<setter signature="setOccupationInterval(begin, end)"/>
+</schema>
+<schema name="AddPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" 
+		constructor="space, person, begin, end" bundle="SPACE_RESOURCES">
+	<slot name="space" hidden="true"/>
+	<slot name="begin" key="label.begin.date">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+	<slot name="person" layout="username-as-person" key="label.person">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />			
+	</slot>
+</schema>
+<schema name="search.external.party.autocomplete" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="SPACE_RESOURCES">
+	<slot name="party" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.name">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${nameWithAcronym}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="ExternalUnitSearchService"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+		<property name="minChars" value="3"/>
+		<property name="maxCount" value="100"/>		
+		<property name="rawSlotName" value="partyName"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+<schema name="ViewSpaceResponsibleUnitsWithInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
+	<slot name="unit.nameWithAcronym" key="label.unit.name"/>				
+	<slot name="unit.costCenterCode"/>	
+	<slot name="begin" key="label.begin.date" />
+	<slot name="end" key="label.end.date" />
+</schema>
+<schema name="ViewSpaceResponsibleUnits" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
+	<slot name="unit.nameWithAcronym" key="label.unit.name"/>				
+	<slot name="unit.costCenterCode"/>	
+</schema>
+<schema name="CreateSpaceResponsibilityInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES"
+	constructor="space, unit, begin, end">	
+	<slot name="space" hidden="true"/>
+	<slot name="unit" hidden="true"/>
+	<slot name="begin" key="label.begin.date">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+</schema>
+<schema name="EditSpaceResponsibility" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">	
+	<slot name="begin" key="label.begin.date">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+	<setter signature="setSpaceResponsibilityInterval(begin, end)"/>
+</schema>
+<schema name="ViewUnitSpaceOccupationsWithInterval" type="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" bundle="SPACE_RESOURCES">
+	<slot name="unit.nameWithAcronym" key="label.unit.name"/>				
+	<slot name="unit.costCenterCode"/>	
+	<slot name="begin" key="label.begin.date" />
+	<slot name="end" key="label.end.date" />
+</schema>
+<schema name="ViewUnitSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" bundle="SPACE_RESOURCES">
+	<slot name="unit.nameWithAcronym" key="label.unit.name"/>				
+	<slot name="unit.costCenterCode"/>	
+</schema>
+<schema name="CreateUnitSpaceOccupationInterval" type="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" bundle="SPACE_RESOURCES"
+	constructor="unit, space, begin, end">	
+	<slot name="space" hidden="true"/>
+	<slot name="unit" hidden="true"/>
+	<slot name="begin" key="label.begin.date">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+</schema>
+<schema name="EditUnitSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" bundle="SPACE_RESOURCES">	
+	<slot name="begin" key="label.begin.date">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+	<setter signature="setOccupationInterval(begin, end)"/>
+</schema>
+<schema name="BlueprintSubmission.edit" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean" bundle="SPACE_RESOURCES">
+	<slot name="inputStream" key="label.blueprintSubmission.blueprintFile" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="filename"/>
+	</slot>
+</schema>
+<schema name="ViewSubSpacesState" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="spaceState" key="label.view.subspaces" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">						
+		<property name="destination" value="postBack"/>
+		<property name="classes" value="list2 liinline"/>			
+    </slot>        
+</schema>
+
+<!-- Material  -->
+<schema name="ViewMaterialDetails" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES">
+	<slot name="class" layout="label">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>	
+	<slot name="presentationDetails" key="label.material.details"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber"/>	
+	<slot name="owner" key="label.material.owner">	
+		<property name="format" value="${presentationName}"/>
+	</slot>					
+</schema>
+<schema name="ViewSpaceMaterial" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES" extends="ViewMaterialDetails">
+</schema>
+<schema name="ViewMaterialSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">
+	<slot name="material.class" layout="label">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+	<slot name="material.barCodeNumber"/>
+	<slot name="material.presentationDetails" key="label.material.details"/>
+	<slot name="material.owner" key="label.material.owner">	
+		<property name="format" value="${presentationName}"/>
+	</slot>
+	<slot name="begin" />
+	<slot name="end" />					
+</schema>
+<schema name="ChooseMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" bundle="SPACE_RESOURCES">
+	<slot name="materialType" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="excludedValues" value="FIRE_EXTINGUISHER" />	
+		<property name="bundle" value="SPACE_RESOURCES"/>
+		<property name="destination" value="postBack"/>			
+    </slot>        
+</schema>
+<schema name="AddNewMaterialSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">
+	<slot name="begin" key="label.begin.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end.date"/>
+</schema>
+
+<!-- Material: Extension  -->
+<schema name="ChooseExtension" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" bundle="SPACE_RESOURCES">
+	<slot name="material" layout="extensionNumber-as-extension" key="label.extension" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />		
+</schema>	
+<schema name="AddNewExtensionSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation" 
+	extends="AddNewMaterialSpaceOccupation" bundle="SPACE_RESOURCES" constructor="space, extension, begin, end">
+	<slot name="space" hidden="true"/>
+	<slot name="extension" hidden="true"/>
+</schema>
+<schema name="EditExtensionSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES" >
+	<slot name="begin" key="label.begin.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end.date"/>
+	<setter signature="setOccupationInterval(begin, end)" />
+</schema>
+
+<!-- Access Groups -->
+<schema name="ViewPersonToListAccessGroups" type="net.sourceforge.fenixedu.domain.Person" bundle="SPACE_RESOURCES">
+	<slot name="name" />
+	<slot name="username"/>	
+</schema>	
+<schema name="AddPersonToAccessGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" bundle="SPACE_RESOURCES">
+	<slot name="accessGroupType" key="label.access.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="person" layout="username-as-person" key="label.person" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
+	<slot name="maintainElements" layout="radio" key="label.maintain.elements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="list2 liinline" />
+	</slot>
+</schema>
+<schema name="AddPersistentGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" bundle="SPACE_RESOURCES">
+	<slot name="accessGroupType" key="label.access.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="persistentGroupMembers" layout="menu-select" key="label.access.persistent.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.PersistentGroupMembersProvider"/>
+		<property name="format"	value="${name}" />  
+	</slot>		
+	<slot name="maintainElements" layout="radio" key="label.maintain.elements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="list2 liinline" />
+	</slot>
+</schema>		
+<schema name="AddRoleTypeGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" bundle="SPACE_RESOURCES">
+	<slot name="accessGroupType" key="label.access.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="roleType" key="label.role.type.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />		
+	<slot name="maintainElements" layout="radio" key="label.maintain.elements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="list2 liinline" />
+	</slot>
+</schema>		
+
+<!-- Move Space -->
+<schema name="SpaceMoveUp" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="selectedParentSpace" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.PossibleParentSpacesToMoveSpaceUpProvider"/>
+		<property name="format"	value="${spaceInformation.presentationName}" />  
+     </slot>        
+</schema>	
+
+<schema name="SpaceMoveDown" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="selectedParentSpace" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.PossibleParentSpacesToMoveSpaceDownProvider"/>
+		<property name="format"	value="${spaceInformation.presentationName}" />  
+     </slot>        
+</schema>	
+
+<!-- Merge Rooms -->
+<schema name="FindMergeDestinationRoom" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="spaceName" key="label.identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />						         
+</schema>	
+
+<schema name="ViewDestinationRoomInfo" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.identification" key="label.identification"/>	
+	<slot name="spaceFloor.spaceInformation.presentationName" key="label.room.floor"/>
+	<slot name="spaceBuilding.spaceInformation.presentationName" key="label.room.building"/>
+	<slot name="spaceCampus.spaceInformation.presentationName" key="label.room.campus"/>
+	<slot name="class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>	 
+	<slot name="activeFlag" key="label.space.active.flag">
+		<property name="trueLabel" value="label.active.space.true" />
+		<property name="falseLabel" value="label.active.space.false" />
+		<property name="bundle" value="SPACE_RESOURCES"/>
+	</slot>	        
+</schema>	
+
+<schema name="ViewRoomImportantAssociationsBeforeMerge" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="containedSpacesCount" key="label.room.subspaces"/>	
+	<slot name="resourceAllocationsResume" key="label.room.resource.allocations"/>
+	<slot name="spaceResponsibilityCount" key="label.room.responsibility"/>
+	<slot name="associatedInquiriesRoomsCount" key="label.room.inquiries"/>	
+	<slot name="writtenEvaluationEnrolmentsCount" key="label.room.written.evaluation.enrolments"/>
+	<slot name="associatedSummariesCount" key="label.room.summaries"/>	
+</schema>
+
+<!-- Search Spaces Schemas -->
+
+<schema name="SearchSpaceEvents" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.SearchSpaceEventsBean" bundle="SPACE_RESOURCES">
+	<slot name="start" layout="picker" key="label.search.spaces.events.start" 
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="end" layout="picker" key="label.search.spaces.events.end" 
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
+	<slot name="building" key="label.search.spaces.events.building" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.AllBuildingsProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />	
+	</slot>
+	<slot name="types" key="label.search.spaces.events.occupationType" layout="option-select">
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.OccupationTypeProvider" />
+		<property name="classes" value="list2"/>
+	</slot>	
+</schema>
+
+<schema name="SpaceOccupationEventBean" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.SpaceOccupationEventBean" bundle="SPACE_RESOURCES">
+	<slot name="day" key="label.search.spaces.events.day"/>
+	<slot name="startTime" key="label.search.spaces.events.start"/>
+	<slot name="endTime" key="label.search.spaces.events.end"/>
+	<slot name="spaceName" key="label.search.spaces.events.spaceName"/>
+	<slot name="occupationType" key="label.search.spaces.events.occupationType"/>
+	<slot name="description" key="label.search.spaces.events.description"/>
+</schema>
+
+
+
+
+<schema name="SearchSpace" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="spaceName" key="label.identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />						         
+</schema>	
+
+<schema name="FoundSpaceInfo" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.presentationName" key="label.identification"/>	
+	<slot name="spaceFloor" key="label.room.floor" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>
+	<slot name="spaceBuilding" key="label.room.building" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>
+	<slot name="spaceCampus" key="label.room.campus" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>	    
+	<slot name="activeFlag" key="label.space.active.flag">
+		<property name="trueLabel" value="label.active.space.true" />
+		<property name="falseLabel" value="label.active.space.false" />
+		<property name="bundle" value="SPACE_RESOURCES"/>
+	</slot>	
+</schema>
+
+<schema name="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="searchType" key="label.find.space.search.type" layout="radio">
+		<property name="bundle" value="DEFAULT" />
+		<property name="classes" value="liinline" />
+	</slot>
+	<slot name="labelToSearch" key="label.find.spaces.label">
+		<property name="size" value="30"/>
+	</slot>							        
+</schema>
+
+<schema name="PublicFindSpacesWithExtraOptions" extends="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="searchType" key="label.find.space.search.type" layout="radio">
+		<property name="bundle" value="DEFAULT" />
+		<property name="classes" value="list2 liinline" />
+	</slot>			
+	<slot name="campus" key="label.find.spaces.campus" layout="menu-select-postback">	
+		<property name="size" value="30"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />
+		<property name="destination" value="postBack"/>	
+	</slot>
+	<slot name="building" key="label.find.spaces.building" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.BuildingProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />	
+	</slot>								       
+</schema>
+
+<schema name="PublicFoundSpaceInfo" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="spacePath" key="label.find.spaces.identification" layout="list-link">
+		<property name="linkFormat" value="/findSpaces.do?method=${method}&amp;spaceID=${id}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true"/>
+	</slot>
+	<slot name="space.class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="FindPersonSpaceSchema" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceFullPath" layout="separator-list">		
+		<property name="eachSchema" value="FindPersonSpaceNameSchema" />	
+		<property name="eachLayout" value="values" />
+		<property name="param" value="idInternal/spaceID" />
+		<property name="link" value="/publico/findSpaces.do?method=viewSpace" />
+		<property name="targetBlank" value="true" />		
+	</slot>
+</schema>
+
+<schema name="FindPersonSpaceNameSchema" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.presentationName"/>
+</schema>
+
+<schema name="ViewSelectedSpaceInfo" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="space.spaceInformation.presentationName" key="label.find.spaces.space.name"/>
+	<slot name="suroundingSpacePath" key="label.find.spaces.location" layout="list-link">
+		<property name="linkFormat" value="/findSpaces.do?method=${method}&amp;spaceID=${id}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true"/>
+	</slot>
+	<slot name="space.class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+	<slot name="space.spaceInformation.roomClassification" layout="null-as-label" key="label.space.classification">
+		<property name="label" value="--"/>
+		<property name="subLayout" value="roomClassification-label" />
+	</slot>
+	<slot name="space.normalCapacity" layout="null-as-label" key="label.space.normal.capacity">
+		<property name="label" value="--"/>		
+	</slot>
+	<slot name="space.examCapacity" layout="null-as-label" key="label.space.exam.capacity">
+		<property name="label" value="--"/>		
+	</slot>	
+	<slot name="space.activeSpaceExtensions" layout="separator-list" key="label.space.extensions">
+		<property name="separator" value=", "/>
+		<property name="eachSchema" value="SelectedSpaceExtensionsSchema" />	
+		<property name="eachLayout" value="values" />
+		<property name="emptyLabel" value="--" />		
+	</slot>
+</schema>
+
+
+
+<schema name="SelectedSpaceExtensionsSchema" type="net.sourceforge.fenixedu.domain.material.Extension" bundle="DEFAULT">
+	<slot name="number"/>	
+</schema>
+
+<schema name="ViewSelectedSpaceContainedSpaces" type="net.sourceforge.fenixedu.domain.space.Space" bundle="DEFAULT">
+	<slot name="class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>	
+	<slot name="spaceInformation.presentationName" key="label.find.spaces.space.name"/>
+</schema>
+
+<schema name="ViewActivePersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
+	<slot name="person.name" layout="conditional-link">
+		<property name="useParent" value="true"/>
+		<property name="visibleIf" value="person.homePageAvailable"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${person.istUsername}"/>	
+		<property name="blankTarget" value="true"/>
+		<property name="hasContext" value="true"/>
+	</slot>		
+</schema>
+
+<schema name="ViewYearsAndMonthsToViewEventSpaceOccupationsSchema" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.ViewEventSpaceOccupationsBean" bundle="SPACE_RESOURCES">				
+	<slot name="year" key="label.year" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.YearsPartialProvider"/>
+		<property name="eachLayout" value="year-partial" />	
+		<property name="destination" value="postBack"/>			
+		<property name="saveOptions" value="true"/>
+    </slot>        
+	<slot name="month" key="label.month" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MonthsPartialProvider" />		
+		<property name="destination" value="postBack"/>		
+		<property name="eachLayout" value="month" />
+		<property name="saveOptions" value="true"/>
+    </slot>     	
+</schema>
+
+<schema name="ViewWeeksToViewEventSpaceOccupationsSchema" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.ViewEventSpaceOccupationsBean" bundle="SPACE_RESOURCES">				
+	<slot name="day" key="label.week" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.MonthMondayDaysProvider"/>	
+		<property name="destination" value="postBack"/>				
+		<property name="saveOptions" value="true"/>
+    </slot>     	
+</schema>
+
+<schema name="ViewEventSpaceOccupationsSpaceInfoSchema" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.presentationName" key="label.space.name"/>
+	<slot name="spaceFullPath" layout="separator-list" key="label.space.fullPath">		
+		<property name="eachSchema" value="FindPersonSpaceNameSchema" />	
+		<property name="eachLayout" value="values" />
+		<property name="param" value="spaceInformation.idInternal/spaceInformationID" />
+		<property name="link" value="/SpaceManager/manageSpaces.do?method=manageSpace" />			
+	</slot>
+	<slot name="class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+	<slot name="spaceInformation.roomClassification" layout="null-as-label" key="label.space.classification">
+		<property name="label" value="--"/>
+		<property name="subLayout" value="roomClassification-label" />
+	</slot>
+	<slot name="normalCapacity" layout="null-as-label" key="label.space.normal.capacity">
+		<property name="label" value="--"/>		
+	</slot>
+	<slot name="examCapacity" layout="null-as-label" key="label.space.exam.capacity">
+		<property name="label" value="--"/>		
+	</slot>		
+</schema>

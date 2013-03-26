@@ -1,0 +1,1071 @@
+<schema name="PostingRule.view"
+	type="net.sourceforge.fenixedu.domain.accounting.PostingRule"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.creationDate" />
+	<slot name="startDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.startDate" />
+	<slot name="endDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.endDate"/>
+</schema>
+
+<schema name="PostingRule.view-with-eventType"
+	type="net.sourceforge.fenixedu.domain.accounting.PostingRule" extends="PostingRule.view"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="eventType" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.eventType"/>
+</schema>
+
+<schema name="ImprovementOfApprovedEnrolmentPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty"/>
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+</schema>
+
+<schema name="DegreeTransferIndividualCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+</schema>
+
+<schema name="FixedAmountPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+</schema>
+
+<schema name="DeclarationRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="DiplomaRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR"
+	bundle="APPLICATION_RESOURCES" extends="SecondCycleIndividualCandidacyPR.view">
+</schema>
+
+<schema name="Over23IndividualCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.Over23IndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="FixedAmountWithPenaltyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+</schema>
+
+<schema name="FixedAmountWithPenaltyFromDatePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
+</schema>
+
+<schema name="AdministrativeOfficeFeePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.view">
+
+</schema>
+
+<schema name="DFACandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
+<schema name="DfaRegistrationPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
+<schema name="SpecializationDegreeRegistrationPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
+<schema name="PhdRegistrationFeePR.view"
+	type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
+<schema name="PhdProgramCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="PhdThesisRequestFeePR.view"
+	type="net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="DFAGratuityPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"  
+		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
+	<slot name="dfaTotalAmount" />
+	<slot name="dfaPartialAcceptedPercentage" />
+</schema>
+
+<schema name="DFAGratuityByAmountPerEctsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR"  
+		extends="DFAGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEctsCredit" />
+</schema>
+
+<schema name="DFAGratuityByNumberOfEnrolmentsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR"  
+		extends="DFAGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="DFAGratuityByEnrolmentsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR"  
+		extends="DFAGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEnrolment" />
+</schema>
+
+<schema name="SpecializationDegreeGratuityPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR"  
+		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
+	<slot name="specializationDegreeTotalAmount" />
+	<slot name="specializationDegreePartialAcceptedPercentage" />
+</schema>
+
+<schema name="SpecializationDegreeGratuityByAmountPerEctsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR"  
+		extends="SpecializationDegreeGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="specializationDegreeAmountPerEctsCredit" />
+</schema>
+
+<schema name="DFAGratuityPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR$DFAGratuityPREditor"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	
+	<slot name="dfaTotalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="dfaPartialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="DFAGratuityByAmountPerEctsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR$DFAGratuityByAmountPerEctsPREditor"
+		extends="DFAGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="DFAGratuityByNumberOfEnrolmentsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR$DFAGratuityByNumberOfEnrolmentsPREditor"
+		extends="DFAGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="DFAGratuityByEnrolmentsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR$DFAGratuityByEnrolmentsPREditor"
+		extends="DFAGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEnrolment" /> 
+</schema>
+
+<schema name="SpecializationDegreeGratuityPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR$SpecializationDegreeGratuityPREditor"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	
+	<slot name="specializationDegreeTotalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="specializationDegreePartialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="SpecializationDegreeGratuityByAmountPerEctsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR$SpecializationDegreeGratuityByAmountPerEctsPREditor"
+		extends="SpecializationDegreeGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="specializationDegreeGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="specializationDegreeAmountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="BaseAmountPlusAmountPerUnitPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
+	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
+</schema>
+
+<schema name="BaseAmountPlusAmountPerPagePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="CertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.view">
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+</schema>
+
+<schema name="CertificateRequestWithoutBasePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+<schema name="EnrolmentCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
+</schema>
+
+<schema name="StandaloneEnrolmentCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+
+<schema name="EquivalencePlanRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
+</schema>
+
+<schema name="ExtraCurricularEnrolmentCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+<schema name="PhotocopyRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="CourseLoadRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="ExternalCourseLoadRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
+	extends="CourseLoadRequestPR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ProgramCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="ExternalProgramCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
+	extends="ProgramCertificateRequestPR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExamDateCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ImprovementOfApprovedEnrolmentPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
+</schema>
+
+<schema name="DegreeTransferIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
+</schema>
+
+<schema name="FixedAmountPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<setter signature="edit(fixedAmount)"/>
+</schema>
+
+<schema name="DeclarationRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="DiplomaRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR"
+	bundle="APPLICATION_RESOURCES" extends="SecondCycleIndividualCandidacyPR.edit">
+</schema>
+
+<schema name="Over23IndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.Over23IndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="InsurancePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.InsurancePR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<setter signature="edit(fixedAmount)"/>
+</schema>
+
+<schema name="FixedAmountWithPenaltyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
+</schema>
+
+<schema name="FixedAmountWithPenaltyFromDatePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
+	<setter signature="edit(fixedAmount,fixedAmountPenalty,whenToApplyFixedAmountPenalty)"/>
+</schema>
+
+<schema name="AdministrativeOfficeFeePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.edit">
+	<slot name="startDate" key="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR.startDate" />
+	
+	<setter signature="edit(startDate, fixedAmount,fixedAmountPenalty,whenToApplyFixedAmountPenalty)"/>
+</schema>
+
+<schema name="DFACandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
+<schema name="DfaRegistrationPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
+<schema name="SpecializationDegreeRegistrationPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
+<schema name="PhdRegistrationFeePR.edit"
+	type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
+<schema name="PhdProgramCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="PhdThesisRequestFeePR.edit"
+	type="net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="BaseAmountPlusAmountPerUnitPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
+	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
+	<slot name="maximumAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
+</schema>
+
+<schema name="BaseAmountPlusAmountPerPagePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="CertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.edit">
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="CertificateRequestWithoutBasePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+</schema>
+
+<schema name="EnrolmentCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="StandaloneEnrolmentCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
+<schema name="EquivalencePlanRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountPerUnit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="maximumAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<setter signature="edit(amountPerUnit, maximumAmount)"/>
+</schema>
+
+<schema name="ExtraCurricularEnrolmentCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
+<schema name="PhotocopyRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="CourseLoadRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
+</schema>
+
+<schema name="ExternalCourseLoadRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
+	extends="CourseLoadRequestPR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ProgramCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
+	<slot  name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
+</schema>
+
+<schema name="ExternalProgramCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
+	extends="ProgramCertificateRequestPR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExamDateCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
+	<setter signature="edit(baseAmount,amountPerPage)"/>
+</schema>
+
+<!-- Student Prices View -->
+<schema name="PostingRule.view-student"	type="net.sourceforge.fenixedu.domain.accounting.PostingRule" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ImprovementOfApprovedEnrolmentPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+</schema>
+
+<schema name="FixedAmountPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+</schema>
+
+<schema name="InsurancePR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.InsurancePR"
+	extends="FixedAmountPR.view-student"
+	bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="DeclarationRequestPR.view-student" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR" 
+		extends="FixedAmountPR.view-student" 
+		bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="DiplomaRequestPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR"
+	bundle="APPLICATION_RESOURCES" extends="SecondCycleIndividualCandidacyPR.view-student">
+</schema>
+
+<schema name="Over23IndividualCandidacyPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.Over23IndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="FixedAmountWithPenaltyPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR" extends="FixedAmountPR.view-student" bundle="APPLICATION_RESOURCES" >
+	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
+</schema>
+
+<schema name="FixedAmountWithPenaltyFromDatePR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="whenToApplyFixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty" />
+</schema>
+
+<schema name="DFACandidacyPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="DfaRegistrationPR.view-student" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" 
+	extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="SpecializationDegreeRegistrationPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR"
+	extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PhdRegistrationFeePR.view-student" type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PhdProgramCandidacyPR.view-student" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="PhdThesisRequestFeePR.view-student" type="net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="AdministrativeOfficeFeePR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.view-student">
+</schema>
+
+<schema name="BaseAmountPlusAmountPerUnitPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
+	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
+</schema>
+
+<schema name="BaseAmountPlusAmountPerPagePR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="CertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+</schema>
+
+<schema name="CertificateRequestWithoutBasePR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR" extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="EnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+		<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
+</schema>
+
+<schema name="ExtraCurricularEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="StandaloneEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="EquivalencePlanRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR" 
+		extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
+</schema>
+
+<schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="CourseLoadRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="ExternalCourseLoadRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
+	extends="CourseLoadRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ProgramCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="ExternalProgramCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
+	extends="ProgramCertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExamDateCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="CreateDFAGratuityPostingRuleBean.choose-type" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule" layout="menu-select" key="label.class.name">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.postingRules.gratuity.DFAGratuityPRTypeProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="eachSchema" value="ClassName.view.as.label"/>
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByNumberOfEnrolmentsPR" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="partialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="totalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByAmountPerEctsPR" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES"
+		extends="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByNumberOfEnrolmentsPR">
+	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="CreateSpecializationDegreeGratuityPostingRuleBean.choose-type" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule" layout="menu-select" key="label.class.name">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.postingRules.gratuity.SpecializationDegreeGratuityPRTypeProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="eachSchema" value="ClassName.view.as.label"/>
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="CreateSpecializationDegreeGratuityPostingRuleBean.edit-SpecializationDegreeGratuityByAmountPerEctsPR" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="partialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="totalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>		
+	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="EnrolmentOutOfPeriodPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount"/>
+	<slot name="amountPerDay"/>
+	<slot name="maxAmount"/>
+</schema>
+
+<schema name="EnrolmentOutOfPeriodPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+	<slot name="baseAmount"/>
+	<slot name="amountPerDay"/>
+	<slot name="maxAmount"/>
+</schema>
+
+<schema name="EnrolmentOutOfPeriodPR.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="amountPerDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="maxAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<setter signature="edit(baseAmount,amountPerDay,maxAmount)"/>
+</schema>
+
+<schema name="StandaloneEnrolmentGratuityPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="ectsForYear" />
+</schema>
+
+<schema name="StandaloneEnrolmentGratuityPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="ectsForYear">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="gratuityFactor">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="ectsFactor">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<setter signature="edit(ectsForYear,gratuityFactor,ectsFactor)"/>
+</schema>
+
+<schema name="StandaloneEnrolmentGratuityPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+	<slot name="ectsForYear" />
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+</schema>
+
+<schema name="DegreeTransferIndividualCandidacyPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+</schema>
+
+
+<schema name="PaymentPlanBean.edit"
+	type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="changeExecutionYearPostback"/>
+	</slot>
+	<slot name="main" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="forPartialRegime" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="forSecondCurricularYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="forFirstTimeInstitutionStudents" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="forStudentEnroledOnSecondSemesterOnly" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GraduationDegreeCurricularPlansProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="eachSchema" value="DegreeCurricularPlan.view"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+		<property name="classes" value="nobullet noindent"/>
+		<property name="sortBy" value="degree.name=ASC" />
+		<property name="selectAllShown" value="true" />
+	</slot>
+</schema>
+
+<schema name="InstallmentBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amount" />
+	<slot name="ectsForAmount" />
+	<slot name="executionSemesters" layout="option-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.paymentPlans.ExecutionSemestersForInstallmentCreationProvider" />
+		<property name="format" value="${name}" />
+        <property name="saveOptions" value="true"/>        
+		<property name="eachSchema" value="ExecutionSemester.view.name.only"/>
+        <property name="eachLayout" value="values"/>
+		<property name="classes" value="nobullet noindent"/>
+	</slot>
+	<slot name="startDate" />
+	<slot name="endDate" />
+	<slot name="penaltyAppliable" />
+	<slot name="montlyPenaltyPercentage" />
+	<slot name="whenToStartApplyPenalty" />
+	<slot name="maxMonthsToApplyPenalty" />
+	<slot name="numberOfDaysToStartApplyingPenalty" />
+</schema>
+
+<schema name="ExecutionSemester.view.name.only" type="net.sourceforge.fenixedu.domain.ExecutionSemester">
+	<slot name="name" />
+</schema>
+
+<schema name="InstallmentBean.view.selectable" type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="selected"/>
+	<slot name="amount" read-only="true"/>
+	<slot name="ectsForAmount" read-only="true"/>
+	<slot name="executionSemesters" read-only="true" layout="values" schema="ExecutionSemester.view.name.only">
+		<property name="htmlSeparator" value=", " />
+	</slot>
+	<slot name="startDate" read-only="true"/>
+	<slot name="endDate" read-only="true"/>
+	<slot name="penaltyAppliable" read-only="true" />
+	<slot name="montlyPenaltyPercentage" read-only="true"/>
+	<slot name="whenToStartApplyPenalty" read-only="true"/>
+	<slot name="maxMonthsToApplyPenalty" read-only="true"/>
+	<slot name="numberOfDaysToStartApplyingPenalty" read-only="true" />
+</schema>
+
+<schema name="CreateGratuityPostingRuleBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="changeExecutionYearPostback"/>
+	</slot>
+	<slot name="rule" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.postingRules.gratuity.GraduationGratuityPRTypeProvider" />
+		<property name="eachSchema" value="ClassName.view.as.label"/>
+		<property name="eachLayout" value="values" />
+	</slot>
+	<slot name="startDate"/>
+	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GraduationDegreeCurricularPlansProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="eachSchema" value="DegreeCurricularPlan.view"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+		<property name="classes" value="nobullet noindent"/>
+		<property name="sortBy" value="degree.name=ASC" />
+		<property name="selectAllShown" value="true" />
+	</slot>
+</schema>
+
+<schema name="CreateStandaloneEnrolmentGratuityPRBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="changeExecutionYearPostback"/>
+	</slot>
+	<slot name="startDate" />
+	<slot name="ectsForYear" />
+	<slot name="gratuityFactor" />
+	<slot name="ectsFactor" />
+	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GraduationDegreeCurricularPlansProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="eachSchema" value="DegreeCurricularPlan.view"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+		<property name="classes" value="nobullet noindent"/>
+		<property name="sortBy" value="degree.name=ASC" />
+		<property name="selectAllShown" value="true" />
+	</slot>
+</schema>
+
+<schema name="ClassName.view.as.label" type="java.lang.Class"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="name" layout="slot-as-label" />
+</schema>
+
+<schema name="PostingRule.view.with.formula.description"
+	type="net.sourceforge.fenixedu.domain.accounting.PostingRule"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-with-eventType">
+	<slot name="formulaDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.formulaDescription" />
+</schema>
+
+
+
+<schema name="EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="EnrolmentCertificateRequestPR.view">
+</schema>
+
+<schema name="EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR.view-student" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR" 
+		extends="EnrolmentCertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="EnrolmentCertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="DegreeFinalizationCertificateRequestPR.view">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="DegreeFinalizationCertificateRequestPR.view-student">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="DegreeFinalizationCertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="ApprovementCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+<schema name="ApprovementCertificateRequestPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view-student">
+</schema>
+
+<schema name="ApprovementCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="PartialRegistrationRegimeRequestPR.view"
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR" 
+		extends="FixedAmountPR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PartialRegistrationRegimeRequestPR.view-student"
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR" 
+		extends="FixedAmountPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PartialRegistrationRegimeRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<setter signature="edit(fixedAmount)"/>
+</schema>
+
+<schema name="StandaloneIndividualCandidacyPR.view" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view" />
+
+<schema name="StandaloneIndividualCandidacyPR.view-student" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student" />
+
+<schema name="StandaloneIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit"/>
+
+<schema name="PhdFinalizationCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view" />
+
+<schema name="PhdFinalizationCertificateRequestPR.view-student" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student" />
+
+<schema name="PhdFinalizationCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit"/>
+
+<schema name="DuplicateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DuplicateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+</schema>
+
+<schema name="DuplicateRequestPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DuplicateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+</schema>

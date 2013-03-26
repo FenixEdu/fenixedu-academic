@@ -1,0 +1,1084 @@
+<schema name="candidacy.choose.executionDegree"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="degree" key="label.degree" 
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DFATypeDegrees" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreePostBack"/>
+	</slot>
+	<slot name="executionYear" layout="menu-select-postback" key="label.executionYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.ExecutionYearsForDegree"/>
+		<property name="format" value="${year}"/>
+		<property name="destination" value="degreeCurricularPlanPostBack"/>				
+	</slot>	
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCurricularPlansForDegreeAndExecutionYear" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreeCurricularPlanPostBack"/>		
+	</slot>
+</schema>
+<schema name="candidacy.choose.executionDegree.toCreate"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="degree" key="label.degree" 
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DFATypeDegrees" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreePostBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCurricularPlansForDegree" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreeCurricularPlanPostBack"/>		
+	</slot>
+	<slot name="executionYear" layout="menu-select-postback" key="label.executionYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForCandidacyProvider"/>
+		<property name="format" value="${year}"/>
+		<property name="destination" value="degreeCurricularPlanPostBack"/>				
+	</slot>	
+</schema>
+
+<schema name="candidacy.create.choose.person"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="name" key="label.name">
+		<property name="size" value="52" />
+		<property name="maxLength" value="50" />
+	</slot>	
+	<slot name="identificationNumber" key="label.identificationNumber"
+			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="22" />
+		<property name="maxLength" value="20" />
+	</slot>		
+	<slot name="idDocumentType" key="label.idDocumentType" 
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
+	<slot name="contributorNumber" key="label.contributorNumber" />	
+	<slot name="candidacyDate" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="pastOrToday" />
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>	
+</schema>	
+<schema name="candidacy.show.candidady"
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="person.name" key="label.name"/>
+	<slot name="person.documentIdNumber" key="label.identificationNumber"/>		
+	<slot name="person.idDocumentType" key="label.idDocumentType"/>	
+	<slot name="person.username" key="label.username"/>				
+</schema>
+<schema name="candidacy.show.candidacyWithIstUsername" extends="candidacy.show.candidady"
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="ADMIN_OFFICE_RESOURCES">
+	<remove name="person.username" />
+	<slot name="person.istUsername" key="label.username"/>				
+</schema>
+<schema name="candidacy.show.list.candidady"
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="number" key="label.candidacy.number"/>
+	<slot name="person.name" key="label.name"/>
+	<slot name="executionDegree" layout="format" key="label.degree" >
+		<property name="format" value="${degreeCurricularPlan.degree.name} - ${degreeCurricularPlan.name}" />
+	</slot>		
+	<slot name="activeCandidacySituation.description" key="label.candidacySituation"/>
+</schema>
+<schema name="candidate.personalData-edit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" > 
+	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="emissionLocationOfDocumentId" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="emissionDateOfDocumentIdYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="expirationDateOfDocumentId" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="socialSecurityNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="profession"/>
+	<slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />  
+</schema>
+
+<schema name="candidate.filiation-edit" type="net.sourceforge.fenixedu.domain.Person"  bundle="CANDIDATE_RESOURCES" >
+	<slot name="dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+		<property name="format" value="${nationality}" />
+		<property name="sortBy" value="nationality"/>
+	</slot>
+	<slot name="parishOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="countryOfBirth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
+	</slot>
+	<slot name="nameOfFather" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="nameOfMother" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
+</schema>
+
+<schema name="candidate.address-edit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" >
+	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="areaCode">
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}-\d{3}"/>
+            <property name="message" value="error.areaCode.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+	</slot>
+	<slot name="areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="parishOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtSubdivisionOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>		
+	</slot>	
+</schema>
+
+<schema name="candidate.contacts-edit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" >
+	<slot name="phone">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+	<slot name="mobile">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="webAddress"/>
+</schema>
+
+<schema name="candidate.precedentDegreeInformation-edit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES" >
+	<slot name="degreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+    </slot>
+	<slot name="conclusionGrade">
+    	<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+	</slot>
+    <slot name="conclusionYear">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+		<property name="rawSlotName" value="institutionName"/>
+	</slot>		
+	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>	
+</schema>
+
+<schema name="candidacy.short" type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="number" />
+	<slot name="description" />
+</schema>
+
+<schema name="candidacy.short.withNumber" extends="candidacy.short" 
+	type="net.sourceforge.fenixedu.domain.candidacy.Candidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="registration.number" key="label.studentNumber"/>
+</schema>
+
+<schema name="candidacy.short.forRegistration" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="candidacy.number" read-only="true" />
+	<slot name="candidacy.description" read-only="true" key="label.description" />
+	<slot name="enrolmentModel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="startDate" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="pastOrToday" />
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
+<schema name="registration.short" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="CANDIDATE_RESOURCES">
+	<slot name="number"/>
+	<slot name="activeStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
+		<property name="format" value="${degree.name} - ${name}" />
+	</slot>		
+</schema>
+
+<schema name="candidacySituation.full" type="net.sourceforge.fenixedu.domain.candidacy.CandidacySituation" bundle="CANDIDATE_RESOURCES">
+	<slot name="situationDate"/>
+	<slot name="description"/>
+	<slot name="person.name" key="label.name"/>
+</schema>
+
+<schema name="candidacySituation.candidate.view" extends="candidacySituation.full" type="net.sourceforge.fenixedu.domain.candidacy.CandidacySituation">
+	<remove name="person.name" />
+</schema>
+
+<schema name="candidacyDocuments.full" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="documentDescription" read-only="true" />
+	<slot name="actualFile" read-only="true" />
+	<slot name="fileInputStream" >
+		<property name="fileNameSlot" value="filename"/>
+	</slot>	
+</schema>
+
+<schema name="candidacyDocuments.view" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean" extends="candidacyDocuments.full">
+	<remove name="fileInputStream" />
+</schema>
+
+<schema name="candidate.personalData" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES">
+	<slot name="name"/>
+	<slot name="gender"/>
+	<slot name="emissionLocationOfDocumentId"/>
+	<slot name="emissionDateOfDocumentIdYearMonthDay"/>
+	<slot name="expirationDateOfDocumentId"/>
+	<slot name="socialSecurityNumber"/>
+	<slot name="profession" />
+	<slot name="maritalStatus"/>  
+</schema>
+
+<schema name="candidate.filiation" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES">
+	<slot name="dateOfBirth" />
+	<slot name="nationality" layout="format">
+		<property name="format" value="${nationality}"/>
+	</slot>
+	<slot name="parishOfBirth" />
+	<slot name="districtSubdivisionOfBirth" />
+	<slot name="districtOfBirth" />
+	<slot name="countryOfBirth" layout="format">
+		<property name="format" value="${name}"/>
+	</slot>
+	<slot name="nameOfFather"  />
+	<slot name="nameOfMother"  />	
+</schema>
+
+<schema name="candidate.address" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES">
+	<slot name="address"  />
+	<slot name="area"  />
+	<slot name="areaCode" />
+	<slot name="areaOfAreaCode"  />
+	<slot name="parishOfResidence"  />
+	<slot name="districtSubdivisionOfResidence"  />
+	<slot name="districtOfResidence"  />
+	<slot name="countryOfResidence" layout="format">
+		<property name="format" value="${name}"/>
+	</slot>	
+</schema>
+
+<schema name="candidate.contacts" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES">
+	<slot name="phone"/>
+	<slot name="mobile"/>
+	<slot name="email"  />
+	<slot name="webAddress"/>
+</schema>
+
+<schema name="candidate.precedentDegreeInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="degreeDesignation"  />
+	<slot name="conclusionGrade"  />
+	<slot name="conclusionYear"> 
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>	
+	<slot name="institution" layout="format">
+		<property name="format" value="${name}"/>
+	</slot>	
+	<slot name="country" layout="format">
+		<property name="format" value="${name}"/>
+	</slot>	
+</schema>
+
+<schema name="candidate.personalData-freeEdit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" > 
+	<slot name="name" >
+		<property name="size" value="70"/>
+	</slot>
+	<slot name="gender" />
+	<slot name="emissionLocationOfDocumentId" />
+	<slot name="emissionDateOfDocumentIdYearMonthDay" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="expirationDateOfDocumentId" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="socialSecurityNumber" />
+	<slot name="profession" />
+	<slot name="maritalStatus" />  
+</schema>
+
+<schema name="candidate.filiation-freeEdit" type="net.sourceforge.fenixedu.domain.Person"  bundle="CANDIDATE_RESOURCES" >
+	<slot name="dateOfBirth" >
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="nationality" layout="menu-select" key="label.nationality" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+		<property name="format" value="${nationality}"/>
+		<property name="sortBy" value="nationality"/>
+	</slot>
+	<slot name="parishOfBirth" />
+	<slot name="districtSubdivisionOfBirth" />
+	<slot name="districtOfBirth" />
+	<slot name="countryOfBirth" layout="menu-select" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
+	</slot>
+	<slot name="nameOfFather" />
+	<slot name="nameOfMother" />	
+</schema>
+
+<schema name="candidate.address-freeEdit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" >
+	<slot name="address" />
+	<slot name="area" />
+	<slot name="areaCode" />
+	<slot name="areaOfAreaCode" />
+	<slot name="parishOfResidence" />
+	<slot name="districtSubdivisionOfResidence" />
+	<slot name="districtOfResidence" />
+	<slot name="countryOfResidence" layout="menu-select" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
+	</slot>	
+</schema>
+
+<schema name="candidate.contacts-freeEdit" type="net.sourceforge.fenixedu.domain.Person" bundle="CANDIDATE_RESOURCES" >
+	<slot name="phone"/>
+	<slot name="mobile"/>
+	<slot name="email" />
+	<slot name="webAddress"/>
+</schema>
+
+<schema name="candidacy.show.listForSelection"
+		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="candidacy.number" key="label.candidacy.number" read-only="true"/>
+	<slot name="candidacy.person.name" key="label.name" read-only="true"/>	
+	<slot name="selectionSituation" key="label.selectionSituationState"	layout="menu-select">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SituationTypesForCandidacySelection" />
+		<property name="eachLayout" value=""/>	
+	</slot>		
+	<slot name="remarks" key="label.remarks" />
+</schema>
+
+<schema name="candidacy.show.listSubstitutesForSelection" extends="candidacy.show.listForSelection" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="order" key="label.candidacyOrder" />
+</schema>
+
+<schema name="DegreeCandidacy.view" type="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="number" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.number"/>
+	<slot name="executionDegree" key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" layout="format">
+		<property name="format" value="${degreeCurricularPlan.degree.name} - ${degreeCurricularPlan.name}" />
+	</slot>
+	<slot name="activeCandidacySituation.candidacySituationType" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType"/>
+</schema>
+
+<schema name="DegreeCandidacy.view-with-person-details" type="net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="person.name" key="label.net.sourceforge.fenixedu.domain.Person.name"/>
+	<slot name="person.student.number" key="label.studentNumber"/>
+	<slot name="person.istUsername" key="label.net.sourceforge.fenixedu.domain.Person.istUsername"/>
+	<slot name="number" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.number"/>
+	<slot name="executionDegree" key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" layout="format">
+		<property name="format" value="${degreeName} - ${degreeCurricularPlan.name}" />
+	</slot>
+	<slot name="activeCandidacySituation.candidacySituationType" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType"/>
+</schema>
+
+<schema name="FillPersonalDataWelcomeForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.FillPersonalDataWelcomeForm" bundle="CANDIDATE_RESOURCES">
+    <slot name="formDescription" read-only="true"/>
+</schema>
+
+<!-- First Time Student Schemas -->
+<schema name="PasswordForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm" bundle="CANDIDATE_RESOURCES">
+    <slot name="username" read-only="true" />
+    <slot name="oldPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
+	    <property name="size" value="40"/>
+		<property name="maxLength" value="40"/>
+    </slot>
+    <slot name="newPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
+   	    <property name="size" value="40"/>
+		<property name="maxLength" value="40"/>
+    </slot>
+    <slot name="confirmationPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password" key="label.net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm.confirmationPassword">
+   	    <property name="size" value="40"/>
+		<property name="maxLength" value="40"/>
+    </slot>
+</schema>
+
+<schema name="PersonalInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm" bundle="CANDIDATE_RESOURCES">
+    <slot name="name" read-only="true" />
+    <slot name="username" read-only="true"/>
+    <slot name="gender" read-only="true"/>
+    <slot name="documentIdNumber" read-only="true"/>
+    <slot name="idDocumentType" read-only="true"/>
+<!-- 
+    <slot name="identificationDocumentExtraDigit">
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    </slot>
+ -->
+    <slot name="identificationDocumentSeriesNumber">
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]|([0-9][a-zA-Z][a-zA-Z][0-9])"/>
+            <property name="message" value="error.firstTimeStudent.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES" />
+        </validator>
+    </slot>
+    <slot name="documentIdEmissionLocation">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="documentIdEmissionDate">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
+    </slot>
+    <slot name="documentIdExpirationDate">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
+    </slot>
+    <slot name="socialSecurityNumber">
+    	<property name="size" value="9"/>
+		<property name="maxLength" value="9"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{9})?"/>
+            <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES" />
+        </validator>
+    </slot>
+    <slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+	</slot>
+    <slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+    </slot>
+    <slot name="profession">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="excludedValues" value="UNKNOWN" />
+    </slot>
+    <slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+   	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="1"/>
+		<property name="rawSlotName" value="grantOwnerProviderName"/>
+	</slot>
+</schema>
+
+<schema name="FiliationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="countryOfBirth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+   	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
+		<property name="format" value="${nationality}"/>
+		<property name="sortBy" value="nationality=asc" />
+	</slot>
+    <slot name="dateOfBirth">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
+    </slot>
+    <slot name="districtOfBirth" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistrictsProviderAsString" />
+    	<property name="destination" value="districtSelectionPostback" /> 
+    </slot>
+    <slot name="districtSubdivisionOfBirth" layout="menu-select">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DistrictSubdivisionForFiliationFormProvider" /> 
+    </slot>
+    <slot name="parishOfBirth">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="fatherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+	</slot>
+    <slot name="motherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+</schema>
+
+
+<schema name="HouseholdInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.HouseholdInformationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+	</slot>
+	<slot name="motherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+	</slot>
+
+	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+	</slot>
+	<slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+	</slot>
+</schema>
+
+<schema name="ResidenceInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="destination" value="countrySelectionPostback" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+    <slot name="address">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="areaCode">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4}-\d{3})|()"/>
+            <property name="message" value="error.areaCode.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+    <slot name="areaOfAreaCode" />
+    <slot name="area"/>
+    <slot name="districtOfResidence" layout="menu-select-postback" >
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DistrictsForResidenceInformationFormProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="destination" value="districtSelectionPostback" />
+		<property name="sortBy" value="name=asc" />
+    </slot>
+    <slot name="districtSubdivisionOfResidence" layout="menu-select">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DistrictSubdivisionForResidenceInformationFormProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+    </slot>
+    <slot name="parishOfResidence">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  >
+    	<property name="trueLabel" value="label.true" />
+		<property name="falseLabel" value="label.false" />
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+    <slot name="schoolTimeAddress">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="schoolTimeAreaCode">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4}-\d{3})|()"/>
+            <property name="message" value="error.areaCode.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+    <slot name="schoolTimeAreaOfAreaCode" />
+    <slot name="schoolTimeArea"/>
+    <slot name="schoolTimeDistrictOfResidence" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistrictsProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="destination" value="districtSelectionPostback" />
+		<property name="sortBy" value="name=asc" />
+    </slot>
+    <slot name="schoolTimeDistrictSubdivisionOfResidence" layout="menu-select">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolTimeDistrictSubdivisionForResidenceInformationFormProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+    </slot>
+    <slot name="schoolTimeParishOfResidence">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+</schema>
+
+
+<schema name="ContactsForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ContactsForm" bundle="CANDIDATE_RESOURCES">
+    <slot name="phoneNumber">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+    <slot name="mobileNumber">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+	</slot>
+    <slot name="email"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator">
+    	<property name="size" value="30"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="webAddress">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="200"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
+			<property name="required" value="false" />
+		</validator>
+    </slot>
+    <slot name="emailAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="homepageAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="InquiryAboutYieldingPersonalDataForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES">	
+	<slot name="personalDataAuthorizationForStudentsAssociation" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="trueLabel" value="label.true" />
+		<property name="falseLabel" value="label.false" />
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="personalDataAuthorizationChoice" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
+	</slot>
+</schema>
+
+<schema name="OriginInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+		<property name="destination" value="institutionPostBack" />
+	</slot>
+	<slot name="otherSchoolLevel" />
+	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+		<property name="rawSlotName" value="institutionName"/>
+	</slot>
+    <slot name="degreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+    </slot>
+	<slot name="conclusionGrade">
+    	<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+	</slot>    
+    <slot name="conclusionYear">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+</schema>
+
+<schema name="OriginInformationForm.higherEducation" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>	
+	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+		<property name="destination" value="institutionPostBack" />
+	</slot>
+	<slot name="otherSchoolLevel" />
+	<slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchRaidesDegreeUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="4"/>
+		<property name="rawSlotName" value="institutionName"/>
+		<property name="destination" value="institutionPostBack"/> 
+	</slot>
+    <slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	   	<property name="size" value="50"/>
+		<property name="labelField" value="description"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchRaidesDegreeDesignations"/>
+		<property name="serviceArgs" value="slot=description,size=50,filterSchoolLevelName=${schoolLevel.name},filterUnitOID=${institution.externalId}"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
+		<property name="minChars" value="3"/>
+	</slot>
+	<slot name="conclusionGrade">
+    	<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+	</slot>    
+    <slot name="conclusionYear">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+    
+</schema><schema name="OriginInformationForm.higherEducationNoInstitution" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>	
+	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+		<property name="destination" value="institutionPostBack" />
+	</slot>
+	<slot name="otherSchoolLevel" />
+	<slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchRaidesDegreeUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="4"/>
+		<property name="rawSlotName" value="institutionName"/>
+		<property name="destination" value="institutionPostBack"/> 
+	</slot>
+    <slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	   	<property name="size" value="50"/>
+		<property name="labelField" value="description"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchRaidesDegreeDesignations"/>
+		<property name="serviceArgs" value="slot=description,size=50,filterSchoolLevelName==null,filterUnitOID=null"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
+		<property name="minChars" value="3"/>
+	</slot>
+	<slot name="conclusionGrade">
+    	<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+	</slot>    
+    <slot name="conclusionYear">
+       	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}"/>
+            <property name="message" value="error.conclusionYear.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+        </validator>
+    </slot>
+</schema>
+
+<schema name="OriginInformationForm.highSchoolOrEquivalent" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm">
+	<slot name="highSchoolType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+	</slot>
+</schema>
+
+<schema name="OriginInformationForm.higherEducation.highSchoolOrEquivalent" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm.higherEducation">
+	<slot name="highSchoolType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+	</slot>
+</schema>
+
+<schema name="ResidenceApplianceInquiryForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="toApplyForResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="notesAboutApplianceForResidence" layout="longText">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="15" />
+    </slot>
+</schema>
+
+<!-- End of First Time Student Schemas -->
+
+
+<!-- Employee Candidacy Schemas -->
+<schema name="PasswordForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm" bundle="CANDIDATE_RESOURCES">
+    <slot name="username" read-only="true" />
+    <slot name="oldPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
+	    <property name="size" value="40"/>
+		<property name="maxLength" value="40"/>
+    </slot>
+    <slot name="newPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
+   	    <property name="size" value="40"/>
+		<property name="maxLength" value="40"/>
+    </slot>
+    <slot name="confirmationPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password" key="label.net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm.confirmationPassword">
+   	    <property name="size" value="40"/>
+		<property name="maxLength" value="40"/>
+    </slot>
+</schema>
+
+<schema name="PersonalInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm" bundle="CANDIDATE_RESOURCES" extends="PersonalInformationForm">
+    <slot name="name" read-only="true" />
+    <slot name="username" read-only="true"/>
+    <slot name="gender" read-only="true"/>
+    <slot name="documentIdNumber" read-only="true"/>
+    <slot name="idDocumentType" read-only="true"/>
+    <slot name="documentIdEmissionLocation" read-only="true" />
+    <slot name="documentIdEmissionDate" read-only="true"/>
+    <slot name="documentIdExpirationDate" read-only="true"/>
+    <slot name="socialSecurityNumber" read-only="true"/>
+    <slot name="profession">
+    	<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+    </slot>
+    <slot name="maritalStatus" read-only="true"/>
+    <slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+   	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="1"/>
+		<property name="rawSlotName" value="grantOwnerProviderName"/>
+	</slot>
+</schema>
+
+<schema name="FiliationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm" bundle="CANDIDATE_RESOURCES" extends="FiliationForm">
+   	<slot name="dateOfBirth" read-only="true"/>	
+    <slot name="fatherName" read-only="true" />
+    <slot name="motherName" read-only="true" />
+</schema>
+
+
+<schema name="HouseholdInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.HouseholdInformationForm" bundle="CANDIDATE_RESOURCES" extends="HouseholdInformationForm">
+
+</schema>
+
+<schema name="ResidenceInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES" extends="ResidenceInformationForm">
+
+</schema>
+
+
+<schema name="ContactsForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ContactsForm" bundle="CANDIDATE_RESOURCES" extends="ContactsForm">
+</schema>
+
+<schema name="InquiryAboutYieldingPersonalDataForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES" extends="InquiryAboutYieldingPersonalDataForm">
+</schema>
+
+<schema name="OriginInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm">
+</schema>
+
+<schema name="OriginInformationForm.highSchoolOrEquivalent.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm.highSchoolOrEquivalent">
+</schema>
+
+<schema name="OriginInformationForm.higherEducation.highSchoolOrEquivalent.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm.higherEducation.highSchoolOrEquivalent">
+</schema>
+
+<schema name="ResidenceApplianceInquiryForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm" bundle="CANDIDATE_RESOURCES" extends="ResidenceApplianceInquiryForm">
+</schema>
+
+<!-- End of Employee Candidacy Schemas -->
+
+
+<schema name="StudentCandidacy.view" type="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy" bundle="CANDIDATE_RESOURCES">
+	<slot name="number" key="label.net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.number" />
+	<slot name="person.username" key="label.net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.person.username" />
+	<slot name="person.name" key="label.net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.person.name" />
+</schema>
+
+
+<schema name="DFAPeriodsManagement.ExecutionDegree.view" type="net.sourceforge.fenixedu.domain.ExecutionDegree" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="degreeCurricularPlan" key="label.degree">
+		<property name="format" value="${degree.name} - ${name}" />
+	</slot>
+</schema>
+
+
+<schema name="EnrolmentPeriod.edit" type="net.sourceforge.fenixedu.domain.EnrolmentPeriod"  bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="startDateDateTime" key="label.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDateDateTime" key="label.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="EnrolmentPeriod.create" type="net.sourceforge.fenixedu.domain.EnrolmentPeriod"  bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="degreeCurricularPlan" hidden="true" />
+	<slot name="startDateDateTime" key="label.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="endDateDateTime" key="label.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="CandidacyPeriodInDegreeCurricularPlan.create" 
+		type="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan"  
+		bundle="ADMIN_OFFICE_RESOURCES" 
+		extends="EnrolmentPeriod.create"
+		constructor="degreeCurricularPlan,executionYear,startDateDateTime,endDateDateTime">
+	<slot name="executionYear" hidden="true" />
+</schema>
+
+<schema name="CandidacyPeriodInDegreeCurricularPlan.edit" type="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan"  bundle="ADMIN_OFFICE_RESOURCES" extends="EnrolmentPeriod.edit">
+</schema>
+
+<schema name="RegistrationPeriodInDegreeCurricularPlan.create" 
+		type="net.sourceforge.fenixedu.domain.RegistrationPeriodInDegreeCurricularPlan"  
+		bundle="ADMIN_OFFICE_RESOURCES" 
+		extends="EnrolmentPeriod.create"
+		constructor="degreeCurricularPlan,executionYear,startDateDateTime,endDateDateTime">
+	<slot name="executionYear" hidden="true" />
+</schema>
+
+<schema name="RegistrationPeriodInDegreeCurricularPlan.edit" type="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan"  bundle="ADMIN_OFFICE_RESOURCES" extends="EnrolmentPeriod.edit">
+</schema>
+
+<schema name="PersonalInformationBean.editPersonalInformation" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" 
+		bundle="APPLICATION_RESOURCES">
+
+	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${localizedName}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+	<slot name="districtSubdivisionOfResidence" layout="autoComplete">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${name} - (${district.name})"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchDistrictSubdivisions"/>
+		<property name="serviceArgs" value="slot=name,size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
+		<property name="minChars" value="1"/>
+	</slot>
+	<slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="dinline liinline nobullet"/>
+	</slot>
+	<slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name"/>
+		<property name="format" value="${name} - (${district.name})"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchDistrictSubdivisions"/>
+		<property name="serviceArgs" value="slot=name,size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
+		<property name="minChars" value="1"/>
+	</slot>
+	<slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+   	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="1"/>
+		<property name="rawSlotName" value="grantOwnerProviderName"/>
+	</slot>
+	<slot name="highSchoolType" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="UNKNOWN" />
+	</slot>
+	<slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+	</slot>
+	<slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+	</slot>
+	<slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>	
+	<slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+	</slot>
+	<slot name="motherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>	
+	<slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+	</slot>
+	<slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>

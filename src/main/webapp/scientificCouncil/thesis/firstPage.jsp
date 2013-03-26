@@ -1,0 +1,130 @@
+<%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%>
+<%@page import="java.util.Set"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean.Counter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean.ThesisPresentationStateCountMap"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ManageSecondCycleThesisSearchBean"%>
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<html:xhtml/>
+
+<jsp:include page="styles.jsp"/>
+
+<em><bean:message key="scientificCouncil"/></em>
+<h2><bean:message key="title.scientificCouncil.thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
+
+
+<div class="cf"> 
+	<div class="grey-box first-box">
+		<jsp:include page="filterSearchForm.jsp"/>
+	</div>
+	<div class="grey-box">
+		<jsp:include page="searchPersonForm.jsp"/>
+	</div>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<%
+		final ManageSecondCycleThesisSearchBean bean = (ManageSecondCycleThesisSearchBean) request.getAttribute("manageSecondCycleThesisSearchBean");
+		final ThesisPresentationStateCountMap map = bean.getThesisPresentationStateCountMap();
+		for (final Entry<ThesisPresentationState, Counter> entry : map.entrySet()) {
+		    final ThesisPresentationState thesisPresentationState = entry.getKey();
+		    final Counter counter = entry.getValue();
+		    final String style = thesisPresentationState == bean.getPresentationState() ? "font-weight: bold; font-size: 1.0em;" : "color: graytext;";
+	%>
+			<span style="<%= style %>">
+				<%= thesisPresentationState.getLabel() %>
+			</span>
+			 :
+			 <%= counter.getCount() %>
+			<br/>
+	<%
+		}
+	%>
+	<br/>
+	<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
+		<tr>
+			<th>
+				<bean:message key="label.student.number.short" bundle="APPLICATION_RESOURCES"/>
+			</th>
+			<th>
+				<bean:message key="student" bundle="APPLICATION_RESOURCES"/>
+			</th>
+			<th>
+				<bean:message key="label.degree" bundle="APPLICATION_RESOURCES"/>
+			</th>
+			<th>
+				<bean:message key="label.thesis.state" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			</th>
+			<th>
+				<bean:message key="label.scientificCouncil.title" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			</th>
+		</tr>
+		<logic:iterate id="enrolment" name="enrolments" type="net.sourceforge.fenixedu.domain.Enrolment">
+			<%
+				final Set<Thesis> theses = enrolment.getThesesSet();
+				if (theses.isEmpty()) {
+			%>
+					<tr>
+						<td>
+							<%= enrolment.getStudent().getNumber() %>
+						</td>
+						<td>
+							<html:link action="<%= "/manageSecondCycleThesis.do?method=showPersonThesisDetails&amp;personOid=" + enrolment.getStudent().getPerson().getExternalId() %>">
+								<%= enrolment.getStudent().getPerson().getName() %>
+							</html:link>
+						</td>
+							<td>
+								<%= enrolment.getDegreeCurricularPlanOfDegreeModule().getDegree().getSigla() %>
+							</td>
+						<td>
+							<%= ThesisPresentationState.getThesisPresentationState(enrolment).getLabel() %>
+						</td>
+						<td>
+						</td>
+					</tr>
+			<%
+				} else {
+				    for (final Thesis thesis : theses) {
+			%>
+						<tr>
+							<td>
+								<%= enrolment.getStudent().getNumber() %>
+							</td>
+							<td>
+								<html:link action="<%= "/manageSecondCycleThesis.do?method=showPersonThesisDetails&amp;personOid=" + enrolment.getStudent().getPerson().getExternalId() %>">
+									<%= enrolment.getStudent().getPerson().getName() %>
+								</html:link>
+							</td>
+							<td>
+								<%= enrolment.getDegreeCurricularPlanOfDegreeModule().getDegree().getSigla() %>
+							</td>
+							<td>
+								<%= ThesisPresentationState.getThesisPresentationState(enrolment).getLabel() %>
+							</td>
+							<td>
+								<html:link action="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>">
+									<%= thesis.getTitle() == null ? "" : thesis.getTitle().getContent() %>
+								</html:link>
+							</td>
+						</tr>
+			<%
+				    }
+				}
+			%>
+		</logic:iterate>
+	</table>
+</div> 
+

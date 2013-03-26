@@ -1,0 +1,121 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+
+<tiles-definitions>
+	<definition name="df.layout.blank" page="/layout/fenixLayout_blank.jsp" >
+		 <put name="bundle" value="TITLES_RESOURCES" />	
+		 <put name="serviceName" value="/commons/blank.jsp" />
+		 <put name="header" value="/commons/blank.jsp" />
+         <put name="navGeral" value="/commons/blank.jsp" />
+		 <put name="body" value="/commons/blank.jsp"/>		 
+		 <put name="footer" value="/commons/blank.jsp" />
+	</definition>
+	<definition name="df.layout.one-column" page="/layout/fenixLayout_1col.jsp" >
+		 <put name="bundle" value="TITLES_RESOURCES" />	
+		 <put name="serviceName" value="/commons/blank.jsp" />
+		 <put name="header" value="/commons/blank.jsp" />
+         <put name="navGeral" value="/generalNavigationBar.jsp" />
+		 <put name="body" value="/commons/blank.jsp"/>		 
+		 <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<!-- TODO, really no need for this specific teacher layout - check if can be removed -->
+	<definition name="df.layout.two-column.teacher" page="/layout/teacherLayout_2col.jsp">
+		<put name="bundle" value="TITLES_RESOURCES" />
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/generalNavigationBar.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+	</definition>
+	<definition name="df.layout.two-column" page="/layout/fenixLayout_2col.jsp" >
+		<put name="bundle" value="TITLES_RESOURCES" />
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/generalNavigationBar.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>
+	<definition name="df.layout.two-column.contents" page="/layout/fenixLayout_2col_contents.jsp" >
+		<put name="title" value="/commons/functionalities/title.jsp"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
+		<put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
+		<put name="body-context" value="/commons/functionalities/breadCrumbs.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>
+	<definition name="df.layout.two-column.extra-menu" page="/layout/fenixLayout_2col_extraMenu.jsp" >
+		<put name="bundle" value="TITLES_RESOURCES" />
+		<put name="serviceName" value="/commons/blank.jsp" />
+		<put name="navGeral" value="/generalNavigationBar.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="navLocalExtra" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>    
+	<definition name="df.layout.two-column-photo" page="/layout/fenixLayout_2col_photo.jsp" >
+		<put name="bundle" value="TITLES_RESOURCES" />
+		<put name="serviceName" value="/commons/blank.jsp" />
+		<put name="navGeral" value="/generalNavigationBar.jsp" />
+		<put name="photos" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp" />		
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/copyright.jsp" />
+  	</definition>
+	<definition name="df.layout.two-column.posGrad" page="/layout/fenixLayout_posGrad.jsp" >
+		<put name="bundle" value="TITLES_RESOURCES" />
+        <put name="head" value="/commons/blank.jsp" />
+		<put name="serviceName" value="/commons/blank.jsp" />
+		<put name="navGeral" value="/generalNavigationBar.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>
+    
+	<!-- TODO, check if can be removed -->
+	<definition name="df.layout.error" page="/layout/errorLayout.jsp" />
+	
+	<definition name="df.layout.notAuthorized" page="/layout/fenixLayout_error.jsp" >
+		<put name="title" value="title.notAuthorized" />
+		<put name="bundle" value="TITLES_RESOURCES" />	
+		<put name="serviceName" value="title.notAuthorized" />
+		<put name="header" value="/commons/blank.jsp" />
+        <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
+		<put name="body" value="/exception/notAuthorized.jsp"/>		 
+		<put name="footer" value="/copyright.jsp" />		 
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>			 
+	</definition>
+	
+	<!-- TODO, try to eliminate one of these print layouts -->
+	<definition name="df.layout.print.alternative" page="/layout/fenixLayoutPrint.jsp" />
+	<definition name="df.layout.print" page="/layout/fenixPrint.jsp" >
+		 <put name="body" value="/commons/blank.jsp"/>		 
+	</definition>
+	
+	
+	<definition name="df.layout.two-column.no-navigation" page="/layout/fenixLayout_2col_no_navigation.jsp" >
+		<put name="bundle" value="TITLES_RESOURCES" />
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/commons/blank.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>
+		    
+</tiles-definitions>
