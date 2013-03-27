@@ -90,6 +90,8 @@
 						<annotationProcessor>pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationProcessor</annotationProcessor>
 						<annotationProcessor>pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor</annotationProcessor>
 					</annotationProcessors>
+					<maxmem>2048</maxmem>
+					<meminitial>1536</meminitial>
 				</configuration>
 			</plugin>
 			<plugin>
