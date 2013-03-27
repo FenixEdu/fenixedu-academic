@@ -183,6 +183,14 @@ public class AcademicPredicates {
         };
     };
 
+    public static final AccessControlPredicate<Object> MANAGE_ENROLMENT_PERIODS = new AccessControlPredicate<Object>() {
+        @Override
+        public boolean evaluate(final Object degree) {
+            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_ENROLMENT_PERIODS).contains(degree);
+        };
+    };
+
     public static final AccessControlPredicate<Object> CREATE_SIBS_PAYMENTS_REPORT = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(final Object unused) {

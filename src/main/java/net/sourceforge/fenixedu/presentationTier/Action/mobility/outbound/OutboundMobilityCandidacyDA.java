@@ -210,6 +210,14 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward editVacancies(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
+        final String vacancies = (String) getFromRequest(request, "vacancies");
+        contest.editVacancies(vacancies == null || vacancies.isEmpty() ? null : new Integer(vacancies));
+        return null;
+    }
+
     public ActionForward viewCandidate(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
@@ -314,6 +322,25 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("manageCandidacies");
+    }
+
+    public ActionForward selectCandidatesForAllGroups(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
+
+        try {
+            final String result = period.selectCandidatesForAllGroups();
+            request.setAttribute("result", result);
+        } catch (final DomainException ex) {
+            final String error = ex.getKey();
+            request.setAttribute("error", error);
+        }
+
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        outboundMobilityContextBean.setCandidacyPeriodsAsList(Collections.singletonList(period));
+
+        request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+        return mapping.findForward("prepare");
     }
 
     public ActionForward concludeCandidateSelection(final ActionMapping mapping, final ActionForm actionForm,

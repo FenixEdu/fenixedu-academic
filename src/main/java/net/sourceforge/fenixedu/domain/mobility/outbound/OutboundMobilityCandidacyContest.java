@@ -179,4 +179,9 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         return vacancies == null || vacancies.intValue() > countSelectedCandidates();
     }
 
+    @Service
+    public void editVacancies(final Integer vacancies) {
+        setVacancies(vacancies);
+    }
+
 }

@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -122,8 +125,8 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Service
-    public void addOption(final String optionValue) {
-        new OutboundMobilityCandidacyPeriodConfirmationOption(this, optionValue);
+    public void addOption(final String optionValue, final Boolean availableForCandidates) {
+        new OutboundMobilityCandidacyPeriodConfirmationOption(this, optionValue, availableForCandidates);        
     }
 
     public SortedSet<OutboundMobilityCandidacyPeriodConfirmationOption> getSortedOptions() {
@@ -236,8 +239,81 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         return builder.toString();
     }
 
-    private String getString(final String key) {
-        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key);
+    private String getString(final String key, final String... args) {
+        return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key, args);
+    }
+
+    @Service
+    public String selectCandidatesForAllGroups() {
+        boolean hasSomePlacement = false;
+
+        final StringBuilder error = new StringBuilder();
+
+        final Map<OutboundMobilityCandidacySubmission, OutboundMobilityCandidacy> selections = new HashMap<OutboundMobilityCandidacySubmission, OutboundMobilityCandidacy>();
+        for (final OutboundMobilityCandidacySubmission submission : getOutboundMobilityCandidacySubmissionSet()) {
+            final OutboundMobilityCandidacy selectedCandidacy = submission.getSelectedCandidacy();
+            selections.put(submission, selectedCandidacy);
+
+            if (selectedCandidacy != null) {
+                hasSomePlacement = true;
+            }
+
+            BigDecimal gv = null;
+            for (final OutboundMobilityCandidacySubmissionGrade grade : submission.getOutboundMobilityCandidacySubmissionGradeSet()) {
+                if (gv == null) {
+                    gv = grade.getGrade();
+                } else {
+                    if (!gv.equals(grade.getGrade())) {
+                        final Registration registration = submission.getRegistration();
+                        error.append(getString("label.error.student.has.different.grades.in.different.groups", registration.getPerson().getUsername(), registration.getDegree().getSigla()));
+                        error.append("\n");
+                    }
+                }
+            }
+        }
+        if (error.length() > 0) {
+            throw new DomainException(error.toString());
+        }
+
+        for (final OutboundMobilityCandidacyContestGroup group : getOutboundMobilityCandidacyContestGroupSet()) {
+            for (final OutboundMobilityCandidacyContest contest : group.getOutboundMobilityCandidacyContestSet()) {
+                for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
+                    candidacy.unselect();
+                }
+            }
+        }
+
+        for (final OutboundMobilityCandidacyContestGroup group : getOutboundMobilityCandidacyContestGroupSet()) {
+            group.selectCandidates(this);            
+        }
+
+        final StringBuilder result = new StringBuilder();
+        final SortedSet<OutboundMobilityCandidacySubmission> submissions = new TreeSet<OutboundMobilityCandidacySubmission>(new Comparator<OutboundMobilityCandidacySubmission>() {
+            @Override
+            public int compare(OutboundMobilityCandidacySubmission o1, OutboundMobilityCandidacySubmission o2) {
+                final int cd = o1.getRegistration().getDegree().compareTo(o2.getRegistration().getDegree());
+                return cd == 0 ? o1.compareTo(o2) : cd;
+            }
+        });
+        submissions.addAll(getOutboundMobilityCandidacySubmissionSet());
+        int selectedCandidateCount = 0;
+        for (final OutboundMobilityCandidacySubmission submission : submissions) {
+            final OutboundMobilityCandidacy selectedCandidacy = submission.getSelectedCandidacy();
+            if (selectedCandidacy != null) {
+                selectedCandidateCount++;
+            }
+            if (selectedCandidacy != selections.get(submission)) {
+                final Registration registration = submission.getRegistration();
+                result.append(getString("label.changed.candidate.selection", registration.getPerson().getUsername(), registration.getDegree().getSigla(),
+                        printPlacement(selections.get(submission)), printPlacement(selectedCandidacy)));
+                result.append("\n");
+            }
+        }
+        return hasSomePlacement ? result.toString() : getString("label.count.placed.candidates", "" + selectedCandidateCount);
+    }
+
+    private String printPlacement(final OutboundMobilityCandidacy candidacy) {
+        return candidacy == null ? "-----" : candidacy.getOutboundMobilityCandidacyContest().getMobilityAgreement().getUniversityUnit().getPresentationName();
     }
 
 }

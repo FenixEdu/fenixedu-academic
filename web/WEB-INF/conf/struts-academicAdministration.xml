@@ -88,6 +88,18 @@
               <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
               <form-property type="java.lang.String" name="viewType"></form-property>
         </form-bean>
+        <!-- MANAGE ENROLMENT PERIODS  -->
+        <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="enrolementPeriodsForm">
+              <form-property type="java.lang.Integer" name="page"></form-property>
+              <form-property type="java.lang.String" name="executionPeriodID"></form-property>
+              <form-property type="java.lang.String" name="enrolmentPeriodID"></form-property>
+              <form-property type="java.lang.String" name="startDate"></form-property>
+              <form-property type="java.lang.String" name="endDate"></form-property>
+              <form-property type="java.lang.String" name="startTime"></form-property>
+              <form-property type="java.lang.String" name="endTime"></form-property>
+              <form-property type="java.lang.String" name="degreeType"></form-property>
+              <form-property type="java.lang.String" name="enrolmentPeriodClass"></form-property>
+        </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>

@@ -528,7 +528,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
         for (Iterator<AcademicServiceRequest> iter = remainingRequests.iterator(); iter.hasNext();) {
             final AcademicServiceRequest academicServiceRequest = iter.next();
             if (bean.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW) {
-                if (!academicServiceRequest.getActiveSituation().hasCreator()) {
+                if (!academicServiceRequest.getActiveSituation().hasCreator()
+                        || academicServiceRequest.getActiveSituation().getCreator().equals(academicServiceRequest.getPerson())) {
                     iter.remove();
                     result.add(academicServiceRequest);
                 }

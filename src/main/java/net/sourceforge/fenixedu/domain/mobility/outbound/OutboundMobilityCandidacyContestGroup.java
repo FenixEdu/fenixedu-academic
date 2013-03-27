@@ -261,7 +261,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         final StringBuilder problems = new StringBuilder();
 
         int l = 0;
-        for (final String line : contents.split("\n")) {
+        for (final String line : contents.split("\r?\n")) {
             l++;
             final String[] parts = line.split("\t");
             final Person person = Person.findByUsername(parts[0]);
@@ -379,6 +379,19 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
             final BigDecimal grade = submissionGrade.getGrade();
             if (grade.signum() == 1) {
                 submissionGrade.getOutboundMobilityCandidacySubmission().select();
+            }
+        }
+    }
+
+    private void unselectCandidates(final OutboundMobilityCandidacyPeriod period) {
+        for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
+            if (contest.getOutboundMobilityCandidacyPeriod() == period) {
+                for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
+                    final OutboundMobilityCandidacySubmission submission = candidacy.getSubmissionFromSelectedCandidacy();
+                    if (submission != null) {
+                        candidacy.unselect();
+                    }
+                }
             }
         }
     }

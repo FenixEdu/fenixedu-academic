@@ -130,7 +130,7 @@
 				</fr:slot>
 				<fr:slot name="student.name"
 					key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name" />
-				<fr:slot name="registration.degree.presentationName" key="label.degree"/>			
+				<fr:slot name="registration.degree.presentationName" key="label.degree"/>	
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter mtop05" />

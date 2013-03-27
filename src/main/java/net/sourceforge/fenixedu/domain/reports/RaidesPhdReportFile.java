@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.phd.ExternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -177,6 +178,13 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         spreadsheet.setHeader("doutoramento: inscrito parte curricular");
         spreadsheet.setHeader("nº doutoramento");
         spreadsheet.setHeader("istId orientadores");
+        /* Início - Alterações Ticket 366904*/
+
+        spreadsheet.setHeader("istId co-orientadores");
+        spreadsheet.setHeader("Nome do Orientador Externo");
+        spreadsheet.setHeader("Nome do Co-Orientador Externo");
+
+        /* Fim - Alterações Ticket 366904*/
         spreadsheet.setHeader("estado processo doutoramento");
         spreadsheet.setHeader("Ambito");
         spreadsheet.setHeader("data de candidatura");
@@ -184,6 +192,10 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         spreadsheet.setHeader("data de inicio dos estudos");
         spreadsheet.setHeader("data e hora da prova");
         spreadsheet.setHeader("tipo de acordo");
+
+        // Alterações Ticket 366904
+
+        spreadsheet.setHeader("Data de Apresentação Pública da CAT");
     }
 
     private void reportRaidesGraduate(Spreadsheet spreadsheet, PhdIndividualProgramProcess process, ExecutionYear executionYear) {
@@ -522,6 +534,54 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         }
         row.setCell(guidings.toString());
 
+        // ist id dos co-orientadores
+        int countAssistantGuidings = 0;
+        StringBuilder assistantGuidings = new StringBuilder();
+        for (PhdParticipant phdParticipant : process.getAssistantGuidings()) {
+            if (phdParticipant.isInternal()) {
+                if (countAssistantGuidings > 0) {
+                    assistantGuidings.append(";");
+                }
+                assistantGuidings.append(((InternalPhdParticipant) phdParticipant).getPerson().getIstUsername());
+                countAssistantGuidings++;
+            }
+        }
+        row.setCell(assistantGuidings.toString());
+
+        // Nome do Orientador Externo
+        int countExternalGuidings = 0;
+        StringBuilder externalGuidingNames = new StringBuilder();
+        for (PhdParticipant phdParticipant : process.getGuidings()) {
+            if (!phdParticipant.isInternal()) {
+                if (countExternalGuidings > 0) {
+                    externalGuidingNames.append(";");
+                }
+                externalGuidingNames.append(((ExternalPhdParticipant) phdParticipant).getName());
+                externalGuidingNames.append(" (");
+                externalGuidingNames.append(((ExternalPhdParticipant) phdParticipant).getInstitution());
+                externalGuidingNames.append(")");
+                countExternalGuidings++;
+            }
+        }
+        row.setCell(externalGuidingNames.toString());
+
+        // Nome do Co-Orientador Externo
+        int countExternalAssistantGuidings = 0;
+        StringBuilder externalAssistantGuidingNames = new StringBuilder();
+        for (PhdParticipant phdParticipant : process.getAssistantGuidings()) {
+            if (!phdParticipant.isInternal()) {
+                if (countExternalAssistantGuidings > 0) {
+                    externalAssistantGuidingNames.append(";");
+                }
+                externalAssistantGuidingNames.append(((ExternalPhdParticipant) phdParticipant).getName());
+                externalAssistantGuidingNames.append(" (");
+                externalAssistantGuidingNames.append(((ExternalPhdParticipant) phdParticipant).getInstitution());
+                externalAssistantGuidingNames.append(")");
+                countExternalAssistantGuidings++;
+            }
+        }
+        row.setCell(externalAssistantGuidingNames.toString());
+
         PhdProgramProcessState lastActiveState = process.getMostRecentState();
         row.setCell(lastActiveState != null ? lastActiveState.getType().getLocalizedName() : "n/a");
 
@@ -558,6 +618,13 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // Tipo de Acordo (AFA, AM, ERASMUS, etc)
         row.setCell(registration != null ? registration.getRegistrationAgreement() != null ? registration
                 .getRegistrationAgreement().getName() : "" : "");
+
+        // Data de Apresentação Pública da CAT
+        if (process.hasSeminarProcess() && process.getSeminarProcess().getPresentationDate() != null) {
+            row.setCell(process.getSeminarProcess().getPresentationDate().toString("dd/MM/yyyy"));
+        } else {
+            row.setCell("n/a");
+        }
     }
 
     private int calculateNumberOfEnrolmentYears(Registration registration) {

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodType;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -42,22 +43,12 @@ import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 
-@Mapping(module = "manager", path = "/manageEnrolementPeriods", input = "/manageEnrolementPeriods.do?method=prepare&page=0",
-        attribute = "enrolementPeriodsForm", formBean = "enrolementPeriodsForm", scope = "request", parameter = "method")
-@Forwards({
-        @Forward(name = "editEnrolmentInstructions", path = "/manager/enrolmentPeriodManagement/editEnrolmentInstructions.jsp"),
-        @Forward(name = "showEnrolementPeriods", path = "/manager/enrolmentPeriodManagement/enrolementPeriods.jsp"),
-        @Forward(name = "createPeriod", path = "/manager/enrolmentPeriodManagement/createPeriod.jsp"),
-        @Forward(name = "changePeriodValues", path = "/manager/enrolmentPeriodManagement/changePeriodValues.jsp") })
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
@@ -103,6 +94,10 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
                         new HashMap<Class<? extends EnrolmentPeriod>, EnrolmentPeriodTypeConfiguration>();
                 for (final EnrolmentPeriod period : semester.getEnrolmentPeriod()) {
                     if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
+                        if (!AcademicPredicates.MANAGE_ENROLMENT_PERIODS.evaluate(period.getDegree())) {
+                            continue;
+                        }
+
                         if (!map.containsKey(period.getClass())) {
                             map.put(period.getClass(), new EnrolmentPeriodTypeConfiguration(period.getClass(), semester));
                         }
@@ -117,11 +112,11 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
     }
 
     public static class EnrolmentPeriodTypeConfiguration implements Serializable, Comparable<EnrolmentPeriodTypeConfiguration> {
-        private Class<? extends EnrolmentPeriod> type;
+        protected Class<? extends EnrolmentPeriod> type;
 
-        private ExecutionSemester semester;
+        protected ExecutionSemester semester;
 
-        private Map<Interval, EnrolmentPeriodConfigurationForEdit> configurations =
+        protected Map<Interval, EnrolmentPeriodConfigurationForEdit> configurations =
                 new HashMap<Interval, EnrolmentPeriodConfigurationForEdit>();
 
         public EnrolmentPeriodTypeConfiguration(Class<? extends EnrolmentPeriod> type, ExecutionSemester semester) {
@@ -250,12 +245,17 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
         private void addIfNotUsedInPeriod(SortedSet<DegreeCurricularPlan> possible, DegreeCurricularPlan dcp) {
             boolean found = false;
+            boolean hasAccess = false;
             for (EnrolmentPeriod period : dcp.getEnrolmentPeriods()) {
+                if (AcademicPredicates.MANAGE_ENROLMENT_PERIODS.evaluate(period.getDegree())) {
+                    hasAccess = true;
+                }
+
                 if (type.is(period) && period.getExecutionPeriod().equals(semester)) {
                     found = true;
                 }
             }
-            if (!found) {
+            if (!found && hasAccess) {
                 possible.add(dcp);
             }
         }
@@ -267,13 +267,16 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
     }
 
     public static class EnrolmentPeriodConfigurationForEdit extends AbstractEnrolmentPeriodConfiguration {
-        private Set<EnrolmentPeriod> periods = new HashSet<EnrolmentPeriod>();
+        protected Set<EnrolmentPeriod> periods = new HashSet<EnrolmentPeriod>();
 
         public EnrolmentPeriodConfigurationForEdit(Interval interval, ExecutionSemester semester) {
             super(interval, semester);
         }
 
         public void addPeriod(EnrolmentPeriod period) {
+            if (!AcademicPredicates.MANAGE_ENROLMENT_PERIODS.evaluate(period.getDegree())) {
+                return;
+            }
             periods.add(period);
             scope.add(period.getDegreeCurricularPlan());
         }

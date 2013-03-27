@@ -45,6 +45,7 @@ public class OutboundMobilityContextBean implements Serializable {
     private String fileName;
     private String optionIntroductoryDestription;
     private String optionValue;
+    private Boolean availableForCandidates;
 
     public OutboundMobilityContextBean() {
         setExecutionYear(ExecutionYear.readCurrentExecutionYear());
@@ -282,6 +283,14 @@ public class OutboundMobilityContextBean implements Serializable {
         this.optionValue = optionValue;
     }
 
+    public Boolean getAvailableForCandidates() {
+        return availableForCandidates;
+    }
+
+    public void setAvailableForCandidates(Boolean availableForCandidates) {
+        this.availableForCandidates = availableForCandidates;
+    }
+
     protected String readStreamContents() throws IOException {
         final InputStream stream = this.getStream();
         final long fileLength = this.getFileSize();
@@ -316,7 +325,7 @@ public class OutboundMobilityContextBean implements Serializable {
                 period.setOptionIntroductoryDestriptionService(optionIntroductoryDestription);
             }
             if (optionValue != null && !optionValue.isEmpty()) {
-                period.addOption(optionValue);
+                period.addOption(optionValue, availableForCandidates);
             }
         }
     }

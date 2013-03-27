@@ -19,6 +19,9 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
@@ -146,19 +149,24 @@ public class Fetcher {
         final int ls = File.ACTION_PATH.lastIndexOf('/');
         if (url.indexOf("dspace") >= 0) {
             getDspaceFile(stream, url);
-        } else if (url.indexOf(File.ACTION_PATH.substring(ls)) >= 0) {
-            getLocalFile(stream, url);
-        } else {
-            RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
-            ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
-            FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
-
-            dispatcher.forward(request, response);
+            return;
+        } else if (url.lastIndexOf(File.ACTION_PATH.substring(ls)) >= 0) {
+            final int lastIndex = url.lastIndexOf(File.ACTION_PATH.substring(ls));
+            final String oid = url.substring(lastIndex + 1);
+            if (StringUtils.isNumeric(oid)) {
+                getLocalFile(stream, oid);
+                return;
+            }
         }
+        RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
+        ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
+        FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
+
+        dispatcher.forward(request, response);
     }
 
-    private void getLocalFile(final OutputStream stream, final String url) throws IOException {
-        final File file = getFileFromUrl(url);
+    private void getLocalFile(final OutputStream stream, final String oid) throws IOException {
+        final File file = getFileFromUrl(oid);
         final byte[] contents = file.getContents();
         stream.write(contents);
         stream.close();
@@ -179,9 +187,7 @@ public class Fetcher {
         stream.close();
     }
 
-    private File getFileFromUrl(final String url) {
-        final int i = url.lastIndexOf('/');
-        final String oid = url.substring(i + 1);
+    private File getFileFromUrl(final String oid) {
         return AbstractDomainObject.fromExternalId(oid);
     }
 

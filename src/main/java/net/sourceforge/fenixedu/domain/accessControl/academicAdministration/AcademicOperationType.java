@@ -36,6 +36,8 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     MANAGE_REGISTERED_DEGREE_CANDIDACIES(true, true, Scope.ADMINISTRATION),
 
+    MANAGE_ENROLMENT_PERIODS(true, true, Scope.ADMINISTRATION),     // Migrated from Manager
+
     /*
      * Mark Sheets
      */
