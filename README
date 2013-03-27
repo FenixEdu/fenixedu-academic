@@ -2,8 +2,10 @@
 ### davidmartinho@ist.utl.pt ###
 ### sergio.silva@ist.utl.pt  ###
 
-Copy configuration.properties (old build.properties) to src/main/resources/configuration.properties
-
+1.) Setup environment
+	Copy configuration.properties (old build.properties) to src/main/resources/configuration.properties
+	export MAVEN_OPTS="-Xms256m -X"
+	
 A) compile and assemble a war file
 	
 	- mvn clean package
@@ -49,7 +51,8 @@ F) For fenix bootstrap and initialization with a empty database please follow th
 1) Too many open files error when running jetty
 
 	- Please change limit of open files to a higher level (man ulimit)
-	- http://pro.benjaminste.in/post/318453669/increase-the-number-of-file-descriptors-on-centos-and
+	- RedHat based : http://pro.benjaminste.in/post/318453669/increase-the-number-of-file-descriptors-on-centos-and
+	- Ubuntu : http://posidev.com/blog/2009/06/04/set-ulimit-parameters-on-ubuntu/
 
 2) When compiling, maven hangs while compiling jasper reports
 	- Please try to decrease the number of threads

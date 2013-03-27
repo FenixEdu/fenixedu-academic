@@ -66,40 +66,40 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                 return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization", "errors.noAuthorization");
             }
 
-            final HttpSession session = request.getSession(false);
+            final HttpSession httpSession = request.getSession(false);
 
             UserView.setUser(userView);
             String pendingRequest = request.getParameter("pendingRequest");
             if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
                     && AbstractDomainObject.fromExternalId(pendingRequest) != null
                     && isValidChecksumForUser((PendingRequest) AbstractDomainObject.fromExternalId(pendingRequest))) {
-                return handleSessionRestoreAndGetForward(request, form, userView, session);
+                return handleSessionRestoreAndGetForward(request, form, userView, httpSession);
             } else if (hasMissingTeacherService(userView)) {
-                return handleSessionCreationAndForwardToTeachingService(request, userView, session);
+                return handleSessionCreationAndForwardToTeachingService(request, userView, httpSession);
             } else if (hasMissingRAIDESInformation(userView)) {
-                return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isAlumniAndHasInquiriesToResponde(userView)) {
-                return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isStudentAndHasQucInquiriesToRespond(userView)) {
-                return handleSessionCreationAndForwardToQucInquiriesResponseQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToQucInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isDelegateAndHasInquiriesToRespond(userView)) {
-                return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isTeacherAndHasInquiriesToRespond(userView)) {
-                return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isRegentAndHasInquiriesToRespond(userView)) {
-                return handleSessionCreationAndForwardToRegentInquiriesResponseQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToRegentInquiriesResponseQuestion(request, userView, httpSession);
             } else if (isCoordinatorAndHasReportsToRespond(userView)) {
-                return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
+                return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, httpSession);
             } else if (isStudentAndHasFirstTimeCycleInquiryToRespond(userView)) {
-                return handleSessionCreationAndForwardToFirstTimeCycleInquiry(request, userView, session);
+                return handleSessionCreationAndForwardToFirstTimeCycleInquiry(request, userView, httpSession);
             } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
-                return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
+                return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, httpSession);
             } else if (isAlumniWithNoData(userView)) {
-                return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
+                return handleSessionCreationAndForwardToAlumniReminder(request, userView, httpSession);
             } else if (hasPendingPartyContactValidationRequests(userView)) {
-                return handlePartyContactValidationRequests(request, userView, session);
+                return handlePartyContactValidationRequests(request, userView, httpSession);
             } else {
-                return handleSessionCreationAndGetForward(mapping, request, userView, session);
+                return handleSessionCreationAndGetForward(mapping, request, userView, httpSession);
             }
         } catch (ExcepcaoAutenticacao e) {
             return getAuthenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");

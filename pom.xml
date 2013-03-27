@@ -13,6 +13,7 @@
 		<maven.build.timestamp.format>yyyy/MM/dd HH:mm:ss</maven.build.timestamp.format>
 		<buildNumber>${maven.build.timestamp}</buildNumber>
 		<jasper.threads>2</jasper.threads>
+		<skipTests>true</skipTests>
 	</properties>
 
 	<build>
@@ -97,7 +98,7 @@
 			<plugin>
 				<groupId>dml</groupId>
 				<artifactId>dml-maven-plugin</artifactId>
-				<version>1.1.5</version>
+				<version>1.1.6</version>
 				<executions>
 					<execution>
 						<goals>
@@ -192,7 +193,7 @@
 		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>fenix-framework-core</artifactId>
-			<version>1.1.5</version>
+			<version>1.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>antlr</groupId>
@@ -521,7 +522,7 @@
 			<artifactId>dwr</artifactId>
 			<version>1.1-beta-3</version>
 		</dependency>
-					            
+
 	</dependencies>
 
 	<profiles>
