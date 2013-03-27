@@ -8189,6 +8189,7 @@ class mobility.outbound.OutboundMobilityCandidacyPeriod extends period.Candidacy
 
 class mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption  {
 	String optionValue;
+	Boolean availableForCandidates;
 }
 
 class mobility.outbound.OutboundMobilityCandidacyContest  {
