@@ -1,3 +1,0 @@
-# Module XviewsYear
-# RPC service class, partial path of RPC policy file
-net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.InarService, 65E8973E7A4431281FA81DAE9B41252E.gwt.rpc
