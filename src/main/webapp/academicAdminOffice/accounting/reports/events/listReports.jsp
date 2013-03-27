@@ -53,8 +53,8 @@
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />
     	    <fr:property name="sortBy" value="requestDate=desc"/>
 
-			<fr:link label="label.view,APPLICATION_RESOURCES" name="view" 
-				link="/eventReports.do?method=viewRequest&queueJobId=${externalId}" />
+			<fr:link label="label.view,APPLICATION_RESOURCES" name="view"
+				link="/eventReports.do?method=viewRequest&queueJobId=${externalId}" order="1"/>
 			
 			<fr:link label="label.event.reports.file.download,ACADEMIC_OFFICE_RESOURCES" name="download" 
 				link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module="" order="2" condition="!brokenInThree"/>
@@ -67,7 +67,9 @@
 
 			<fr:link label="label.event.reports.file.transactions,ACADEMIC_OFFICE_RESOURCES" name="transactions" 
 				link="${transactions.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
-				
+
+			<fr:link label="link.event.reports.file.view.errors,ACADEMIC_OFFICE_RESOURCES" name="errors"
+				link="/eventReports.do?method=viewErrors&queueJobId=${externalId}" order="3"/>
 		</fr:layout>				
 	</fr:view>
 </logic:notEmpty>
@@ -105,3 +107,4 @@
 		
 	</fr:view>
 </logic:notEmpty>
+

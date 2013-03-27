@@ -56,11 +56,13 @@
 			<bean:message key="submit.submit" bundle="HTMLALT_RESOURCES" />
 		</html:submit>
 	</fr:form>
-	
+
 	<logic:notEmpty name="searchBean" property="executionCourseLogs">
 		<bean:size id="size" name="searchBean" property="executionCourseLogs"/>
-		<h3> <bean:write name="size"/>
+		<h3> <bean:write name="size"/> /
+			 <bean:write name="executionCourse" property="executionCourseLogsCount"/>
 			<bean:message key="log.total.entries"/>
+
 		</h3>
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 			<div style="word-wrap: break-word">

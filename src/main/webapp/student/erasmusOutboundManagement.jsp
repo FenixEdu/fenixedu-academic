@@ -142,7 +142,7 @@
 										<div style="margin-left: 25px;">
 											<ul>
 												<% for (final OutboundMobilityCandidacyPeriodConfirmationOption option : candidacyPeriod.getSortedOptions()) { %>
-														<% if (submission.getConfirmationOption() == null) { %>
+														<% if (submission.getConfirmationOption() == null && (option.getAvailableForCandidates() != null && option.getAvailableForCandidates().booleanValue())) { %>
 															<li>
 																<html:link action="<%= "/erasmusOutboundManagement.do?method=selectOption&amp;optionOid=" + option.getExternalId() + "&submissionOid=" + submission.getExternalId() %>">
 																	<%= option.getOptionValue() %>
@@ -151,9 +151,11 @@
 														<% } else if (submission.getConfirmationOption() == option) { %>
 															<li>
 																<%= option.getOptionValue() %>
+																<% if (option.getAvailableForCandidates() != null && option.getAvailableForCandidates().booleanValue()) { %>
 																&nbsp;&nbsp;
 																<html:link action="<%= "/erasmusOutboundManagement.do?method=removeOption&amp;optionOid=" + option.getExternalId() + "&submissionOid=" + submission.getExternalId() %>"
 																		style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png"%>" alt="remove"></html:link>
+																<% } %>
 															</li>
 														<% } %>
 												<% } %>

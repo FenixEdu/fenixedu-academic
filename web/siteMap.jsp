@@ -28,7 +28,7 @@
 
 			<div class="breadcumbs"> </div><br/><br/>
 
-			&nbsp;&nbsp;<html:link href="loginPage.jsp">Login Page</html:link>
+			&nbsp;&nbsp;<html:link href="loginPage.jsp">Login Page Jetty 2</html:link>
 <%--
 			&nbsp;&nbsp;<A href="#degrees">Degrees</A>
 			&nbsp;&nbsp;<A href="#units">Units</A>

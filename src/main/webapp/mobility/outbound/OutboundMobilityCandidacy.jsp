@@ -25,7 +25,48 @@
 	}
 	.fullSpace { width: 100%; }
 	.fullSpace th { width: 15%; }
+	.savedGrade { font-size: large; color: green; font-weight: bold; }
 </style>
+<script type="text/javascript">
+	function EscapeKeyAbort (event, toggle1, toggle2) {
+		if (event.keyCode == 27) {
+			ToggleVacanciesInput(toggle1, toggle2);
+		}
+	};
+
+	function ToggleVacanciesInput (toggle1, toggle2) {
+		var t1 = '#' + toggle1;
+		$(t1).toggle();
+		var t2 = '#' + toggle2;
+		$(t2).toggle();
+	};
+
+	function SaveVacancies (contestOid, inputBox, gradeText, toggle1, toggle2) {
+		var gt = '#' + gradeText;
+		var ib = '#' + inputBox;
+		var vacancies = $(ib).val();
+		var checksum = $(("#deleteContestForm > input[name='_request_checksum_']")).attr("value");
+		var contextPath = $(("#deleteContestForm > input[name='contentContextPath_PATH']")).attr("value");
+		$.post($("#deleteContestForm").attr("action"), {
+			method: "editVacancies",
+			_request_checksum_: checksum,
+			contentContextPath_PATH: contextPath,
+			contestOid: contestOid,
+			vacancies: vacancies
+			}, function(data) {
+				$(gt).empty().append( vacancies );
+				$(gt).addClass('savedGrade');
+
+				var t1 = '#' + toggle1;
+				$(t1).toggle();
+
+				var t2 = '#' + toggle2;
+				$(t2).fadeIn(1000, function() {
+	                $(gt).removeClass("savedGrade").fadeIn(550);             
+	            });
+			});
+	};
+</script>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/></h2>
 
@@ -93,6 +134,10 @@
 			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=downloadSelectedCandidates&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.period.export.selected.candidates"/>
 			</html:link>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=selectCandidatesForAllGroups&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.period.select.candidates.for.all.groups"/>
+			</html:link>
 		<% } %>
 		</academic:allowed>
 		<% if (outboundMobilityContextBean.getMobilityGroups().size() == 1) { %>
@@ -116,6 +161,19 @@
 			</a>
 		<% } %>
 	</fr:form>
+
+
+	<logic:present name="error">
+		<div class="error0" style="padding-left: 25px;">
+			<pre><bean:write name="error" /></pre>
+		</div>
+	</logic:present>
+	<logic:present name="result">
+		<div class="error0" style="padding-left: 25px;">
+			<pre><logic:empty name="result"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.no.changes"/></logic:empty><logic:notEmpty name="result"><bean:write name="result" /></logic:notEmpty></pre>
+		</div>
+	</logic:present>
+
 
 	<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 	<div id="outboundMobilityContextBeanAddMobilityCoordinatorBlock" style="display: none;">
@@ -252,7 +310,9 @@
 								&nbsp;&nbsp;
 								<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=deleteOption&candidacyPeriodOid=" + candidacyPeriod.getExternalId() + "&optionOid=" + option.getExternalId() %>"
 									style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png" %>" alt="remove"></html:link>
-								
+								<% if (option.getAvailableForCandidates() != null && option.getAvailableForCandidates().booleanValue()) { %>
+									<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.isavailableForCandidates"/>
+								<% } %>
 							</li>
 						<% } %>
 					</ul>
@@ -264,6 +324,7 @@
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="optionValue" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="availableForCandidates" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.availableForCandidates"/>
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1"/>
@@ -389,7 +450,7 @@
 				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
 					<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.program"/></th>
 				<% } %>
-				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"/></th>
+				<th>&nbsp;&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.vacancies"/>&nbsp;&nbsp;</th>
 				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.candidacy.count"/></th>
 				<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
 					<th></th>
@@ -398,6 +459,10 @@
 		<% for (final OutboundMobilityCandidacyContest contest : contests) {
 		    final Unit unit = contest.getMobilityAgreement().getUniversityUnit();
 		    final Country country = unit.getCountry();
+			final String hideVacanciesID = "hideVacancies" + contest.getExternalId();
+			final String showVacanciesID = "showVacancies" + contest.getExternalId();
+			final String inputVacanciesID = "inputVacancies" + contest.getExternalId();
+			final String vacanciesText = contest.getExternalId();
 		%>
 			<tr>
 				<% if (outboundMobilityContextBean.getCandidacyPeriods().size() > 1) { %>
@@ -415,7 +480,23 @@
 				<% if (outboundMobilityContextBean.getMobilityPrograms().size() > 1) { %>
 					<td><%= contest.getMobilityAgreement().getMobilityProgram().getRegistrationAgreement().getDescription() %></td>
 				<% } %>
-				<td><%= contest.getVacancies() == null ? "" : contest.getVacancies() %></td>
+				<td>
+						<span id="<%= showVacanciesID %>">
+							<em id="<%= vacanciesText %>"><%= contest.getVacancies() == null ? "" : contest.getVacancies().toString() %></em>
+							&nbsp;
+							<a href="#" onclick="<%= "ToggleVacanciesInput('" + showVacanciesID + "', '" + hideVacanciesID + "'); $('#" + inputVacanciesID + "').focus()" %>"
+									style="border-bottom: 0px; float: right; vertical-align: middle;">
+								<img src="<%= request.getContextPath() +"/images/iconEditOn.png" %>" />
+								&nbsp;&nbsp;
+							</a>
+						</span>
+						<span id="<%= hideVacanciesID %>" style="display: none;">
+							<input id="<%= inputVacanciesID %>" name="grade" value="<%= contest.getVacancies() == null ? "" : contest.getVacancies().toString() %>"
+								onchange="<%= "document.getElementById('deleteContestForm').method.value = 'editVacancies' ; SaveVacancies('" + contest.getExternalId() + "', '" + inputVacanciesID + "', '" + vacanciesText + "', '" + hideVacanciesID + "', '" + showVacanciesID + "');" %>"
+								onkeydown="<%= "EscapeKeyAbort(event, '" + hideVacanciesID + "', '" + showVacanciesID + "');" %>"
+								size="5"/>
+						</span>
+				</td>
 				<td>
 					<% if (contest.getOutboundMobilityCandidacyCount() == 0) { %>
 							0
