@@ -5,11 +5,9 @@
 
 <html:xhtml />
 
-<h2>
-	<bean:message bundle="MANAGER_RESOURCES" key="title.manage.enrolement.period" />
-</h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.enrolment.period.manage"/></h2>
 
-<h3>Criar Periodo</h3>
+<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.enrolment.period.create"/></h3>
 
 <bean:define id="semester" name="configuration" property="semester.externalId" />
 <fr:edit id="configuration" name="configuration" action="/manageEnrolementPeriods.do?method=createPeriods">

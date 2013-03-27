@@ -5,7 +5,7 @@
 <html:xhtml />
 
 <h2>
-	<bean:message bundle="MANAGER_RESOURCES" key="title.manage.enrolement.period" />
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.enrolment.period.manage" />
 </h2>
 
 <span class="error"> <!-- Error messages go here --> <html:errors />
@@ -40,8 +40,8 @@
 	<p>
 		<html:link action="/manageEnrolementPeriods.do?method=prepareCreatePeriod" paramId="semester"
 			paramName="executionSemester" paramProperty="semester.externalId">
-		Criar período
-	</html:link>
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.enrolment.period.create" />
+		</html:link>
 	</p>
 
 </logic:present>

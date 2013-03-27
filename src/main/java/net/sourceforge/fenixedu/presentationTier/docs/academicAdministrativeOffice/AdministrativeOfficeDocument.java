@@ -494,8 +494,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("studentNumber", MessageFormat.format(stringTemplate, student, registration.getNumber().toString()));
 
         stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
-        addParameter("documentNumber",
-                MessageFormat.format(stringTemplate, documentRequest.getServiceRequestNumber().toString().trim()));
+        addParameter("documentNumber", MessageFormat.format(stringTemplate, documentRequest.getServiceRequestNumberYear()));
         if (checked) {
             addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
         }

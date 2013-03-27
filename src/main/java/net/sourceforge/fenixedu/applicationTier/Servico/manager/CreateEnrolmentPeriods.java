@@ -17,13 +17,11 @@ import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateEnrolmentPeriods {
 
     @Service
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     public static void run(ExecutionSemester executionSemester, DegreeType degreeType, EnrolmentPeriodType enrolmentPeriodType,
             DateTime start, DateTime end, List<DegreeCurricularPlan> dcps) {
         final Date startDate = start.toDate();
