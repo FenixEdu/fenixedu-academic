@@ -26,10 +26,31 @@ C) compile and run with jetty
 	
 	- mvn -Djetty.port=XXXX jetty:start
 
-	If Too many open files error occurs then change your OS open file limit with ulimit (man ulitmit) 
-
 D) run SQLUpdateGenerator
 	
 	- mvn clean test -PSQLUpdateGenerator
 	
 	creates or updates etc/database_operations/updates.sql
+
+E) running jetty with debugger
+
+	- export MAVEN_OPTS="$MAVEN_OPTS -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n"
+	- run C)
+	
+	change suspend to y if debugging startup process is needed.
+	change address to prefered debug port 8000.
+
+
+
+# Troubleshooting
+
+1) Too many open files error when running jetty
+
+	- Please change limit of open files to a higher level (man ulimit)
+	- http://pro.benjaminste.in/post/318453669/increase-the-number-of-file-descriptors-on-centos-and
+
+2) When compiling, maven hangs while compiling jasper reports
+	- Please try to decrease the number of threads
+ 		worst case is : mvn -Djasper.threads=1 clean package
+
+

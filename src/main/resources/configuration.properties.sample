@@ -35,9 +35,9 @@ debug.actions=true
 
 #------------------------------------------------------------------------------
 # Maven Specific
-# app.name: This MUST NOT be changed. Filtered by maven to match artifactId.
+# app.name: This MUST NOT be changed. It must match war artifactId which is fenix.
 #------------------------------------------------------------------------------
-app.name=${artifactId}
+app.name=fenix
 
 #----------------------------------------------
 # Twilio configuration
