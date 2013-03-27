@@ -40,8 +40,10 @@ E) running jetty with debugger
 	change suspend to y if debugging startup process is needed.
 	change address to prefered debug port 8000.
 
-
-
+F) For fenix bootstrap and initialization with a empty database please follow the instructions here: 
+	
+	- https://fenix-ashes.ist.utl.pt/fenixWiki/FenixSetup
+	
 # Troubleshooting
 
 1) Too many open files error when running jetty
