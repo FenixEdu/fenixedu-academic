@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -70,6 +71,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     private String prevailingScientificArea;
 
     private Integer selectedExecutionYearID;
+
+    private String academicAdminOfficeId;
 
     private HtmlInputText nameInputComponent;
 
@@ -207,6 +210,18 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
+    public List<SelectItem> getAcademicAdminOffices() {
+
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
+
+        for (AdministrativeOffice administrativeOffice : rootDomainObject.getAdministrativeOfficesSet()) {
+            result.add(new SelectItem(administrativeOffice.getExternalId(), administrativeOffice.getUnit().getName()));
+        }
+
+        return result;
+    }
+
     public List<SelectItem> getGradeScales() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
@@ -218,10 +233,12 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String createDegree() {
-        if (this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// ||
-            // this.gradeScale.equals(this.NO_SELECTION))
-            // {
-            this.setErrorMessage(scouncilBundle.getString("choose.request"));
+        if (this.bolonhaDegreeType.equals(this.NO_SELECTION)) {
+            this.setErrorMessage(scouncilBundle.getString("choose.degreeType"));
+            return "";
+        }
+        if (getAcademicAdminOfficeId().equals(this.NO_SELECTION)) {
+            this.setErrorMessage(scouncilBundle.getString("choose.administrativeOffice"));
             return "";
         }
 
@@ -232,8 +249,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         try {
+            AdministrativeOffice administrativeOffice = AdministrativeOffice.fromExternalId(getAcademicAdminOfficeId());
             CreateDegree.run(this.name, this.nameEn, this.acronym, DegreeType.valueOf(this.bolonhaDegreeType),
-                    this.getEctsCredits(), null, this.prevailingScientificArea);
+                    this.getEctsCredits(), null, this.prevailingScientificArea, administrativeOffice);
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
             return "curricularPlansManagement";
@@ -446,6 +464,14 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         return officialPublicationsBeanPrettyPrints;
+    }
+
+    public String getAcademicAdminOfficeId() {
+        return academicAdminOfficeId;
+    }
+
+    public void setAcademicAdminOfficeId(String academicAdminOfficeId) {
+        this.academicAdminOfficeId = academicAdminOfficeId;
     }
 
     public class OfficialPubBeanPrint {

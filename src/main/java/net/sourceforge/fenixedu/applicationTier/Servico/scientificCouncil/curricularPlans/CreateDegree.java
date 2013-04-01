@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -18,7 +19,8 @@ public class CreateDegree extends FenixService {
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
     public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-            GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException {
+            GradeScale gradeScale, String prevailingScientificArea, AdministrativeOffice administrativeOffice)
+            throws FenixServiceException {
 
         if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
@@ -39,7 +41,7 @@ public class CreateDegree extends FenixService {
             }
         }
 
-        new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea);
+        new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, administrativeOffice);
     }
 
 }

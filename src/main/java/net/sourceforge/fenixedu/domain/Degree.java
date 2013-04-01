@@ -21,6 +21,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -129,10 +130,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
-            String prevailingScientificArea) {
+            String prevailingScientificArea, AdministrativeOffice administrativeOffice) {
         this();
         commonFieldsChange(name, nameEn, acronym, gradeScale, ExecutionYear.readCurrentExecutionYear());
         newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
+        setAdministrativeOffice(administrativeOffice);
     }
 
     private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale, ExecutionYear executionYear) {

@@ -1229,7 +1229,7 @@ public class CreateTestData {
             if (degreeType.isBolonhaType()) {
                 degree =
                         new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, 0d,
-                                gradeScale, null);
+                                gradeScale, null, RootDomainObject.getInstance().getAdministrativeOfficesIterator().next());
                 degreeCurricularPlan = degree.createBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", gradeScale, person);
                 degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
             } else {

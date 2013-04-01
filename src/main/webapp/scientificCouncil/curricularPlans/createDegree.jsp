@@ -57,6 +57,17 @@
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['academicAdminOffice']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:selectOneMenu id="academicAdminOffice" value="#{DegreeManagement.academicAdminOfficeId}">
+				<f:selectItems value="#{DegreeManagement.academicAdminOffices}" />
+			</h:selectOneMenu>			
+			<h:message for="academicAdminOffice" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
 
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th>#{scouncilBundle['ectsCredits']}:</th><td>" escape="false"/>
