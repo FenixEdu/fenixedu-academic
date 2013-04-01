@@ -44,7 +44,6 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
         if (facultyEvaluationProcess.getAllowNoEval()) {
             new NoEvaluation(this);
         }
-        new RadistEvaluation(this);
     }
 
     public TeacherEvaluation getCurrentTeacherEvaluation() {
