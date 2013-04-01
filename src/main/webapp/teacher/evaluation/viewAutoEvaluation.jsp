@@ -44,6 +44,7 @@
 	</fr:view>
 
 	<bean:define id="processId" name="process" property="externalId" />
+	<%-- 
 	<logic:equal name="process" property="inAutoEvaluation" value="true">
 		<p class="mtop0 mbottom15">
 			<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
@@ -63,6 +64,7 @@
 			</logic:equal>
 		</p>
 	</logic:equal>
+	--%>
 
 	<div id="<%="warning" + processId%>" class="dnone">
 		<div class="warning1">
