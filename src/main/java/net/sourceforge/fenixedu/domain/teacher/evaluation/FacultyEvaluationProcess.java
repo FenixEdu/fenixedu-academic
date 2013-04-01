@@ -163,8 +163,10 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
             if (!string.isEmpty() && StringUtils.isNumeric(string)) {
                 final int number = Integer.parseInt(string);
                 if (number > 0) {
-                    final Teacher teacher = Employee.readByNumber(new Integer(number)).getPerson().getTeacher();
-                    return teacher == null ? null : teacher.getPerson();
+                    Employee employee = Employee.readByNumber(new Integer(number));
+                    if (employee != null && employee.hasPerson() && employee.getPerson().hasTeacher()) {
+                        return employee.getPerson();
+                    }
                 }
             }
         }
