@@ -302,7 +302,11 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward deleteFacultyEvaluationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
-        facultyEvaluationProcess.delete();
+        if (facultyEvaluationProcess.hasAnyTeacherEvaluationProcess()) {
+            addActionMessage(request, "error.teacher.evaluation.facultyEvaluationProcess.undeletable");
+        } else {
+            facultyEvaluationProcess.delete();
+        }
         return viewManagementInterface(mapping, form, request, response);
     }
 

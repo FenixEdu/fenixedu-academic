@@ -126,6 +126,13 @@
 			</html:link>
 		</li>
 		<% } %>
+		<logic:present role="MANAGER,OPERATOR">
+		<li>
+			<html:link page="/teacherEvaluation.do?method=deleteFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
+				<bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</li>
+		</logic:present>
 	</ul>
 	
 	
