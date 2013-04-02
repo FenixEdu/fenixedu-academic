@@ -14,12 +14,10 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInN
 import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateAcademicCalendarEntry extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static AcademicCalendarEntry run(CalendarEntryBean bean, boolean toCreate) {
 

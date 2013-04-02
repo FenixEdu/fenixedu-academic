@@ -14,6 +14,10 @@
 			<form-property type="java.lang.String" name="oldCurricularCourseID"></form-property>
 			<form-property type="java.lang.String" name="curricularCourseEquivalencyID"></form-property>
 		</form-bean>
+		<!-- ACADEMIC CALENDAR - MIGRATED FROM MANAGER -->
+		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="academicCalendarsManagementForm">
+            <form-property type="java.lang.String" name="method"></form-property>
+        </form-bean>
         <!-- Bean for Student Dismissal -->
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentDismissalForm">
               <form-property type="java.lang.String[]" name="creditsToDelete"></form-property>
@@ -88,7 +92,7 @@
               <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
               <form-property type="java.lang.String" name="viewType"></form-property>
         </form-bean>
-        <!-- MANAGE ENROLMENT PERIODS  -->
+        <!-- MANAGE ENROLMENT PERIODS - MIGRATED FROM MANAGER -->
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="enrolementPeriodsForm">
               <form-property type="java.lang.Integer" name="page"></form-property>
               <form-property type="java.lang.String" name="executionPeriodID"></form-property>

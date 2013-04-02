@@ -10,6 +10,8 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     MANAGE_EQUIVALENCES(true, true, Scope.ADMINISTRATION),  // Migrated from Manager
 
+    MANAGE_ACADEMIC_CALENDARS(false, false, Scope.ADMINISTRATION),  // Migrated from Manager
+
     /*
      * Student stuff
      */

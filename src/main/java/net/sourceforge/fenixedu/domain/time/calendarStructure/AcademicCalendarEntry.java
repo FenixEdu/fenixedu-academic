@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -56,25 +55,22 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     };
 
-    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     protected AcademicCalendarEntry() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public void delete(AcademicCalendarRootEntry rootEntry) {
-        if (canBeDeleted(rootEntry)) {
-            getBasedEntries().clear();
-            super.setParentEntry(null);
-            super.setTemplateEntry(null);
-            removeRootDomainObject();
-            deleteDomainObject();
+        if (!canBeDeleted(rootEntry)) {
+            throw new DomainException("error.now.its.impossible.delete.entry.but.in.the.future.will.be.possible");
         }
-        throw new DomainException("error.now.its.impossible.delete.entry.but.in.the.future.will.be.possible");
+        getBasedEntries().clear();
+        super.setParentEntry(null);
+        super.setTemplateEntry(null);
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
-    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
             AcademicCalendarRootEntry rootEntry, AcademicCalendarEntry templateEntry) {
 

@@ -37,6 +37,14 @@ public class AcademicPredicates {
         };
     };
 
+    public static final AccessControlPredicate<Object> MANAGE_ACADEMIC_CALENDARS = new AccessControlPredicate<Object>() {
+        @Override
+        public boolean evaluate(Object unused) {
+            return new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_ACADEMIC_CALENDARS).isMember(AccessControl
+                    .getPerson());
+        };
+    };
+
     public static final AccessControlPredicate<Object> CREATE_REGISTRATION = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {

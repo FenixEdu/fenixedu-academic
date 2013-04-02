@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEn
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
+@Deprecated
 public class AcademicCalendarPredicates {
 
     public static final AccessControlPredicate<AcademicCalendarEntry> checkPermissionsToManageAcademicCalendarEntry =
