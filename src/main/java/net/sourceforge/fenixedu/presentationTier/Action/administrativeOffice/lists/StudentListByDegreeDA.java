@@ -521,13 +521,17 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             }
         }
 
-        spreadsheet
-                .addCell(majorBranches.length() > 0 ? majorBranches.deleteCharAt(majorBranches.length() - 1).toString() : majorBranches
-                        .toString());
+        if (majorBranches.length() > 0) {
+            spreadsheet.addCell(majorBranches.deleteCharAt(majorBranches.length() - 1).toString());
+        } else {
+            spreadsheet.addCell("");
+        }
 
-        spreadsheet
-                .addCell(minorBranches.length() > 0 ? minorBranches.deleteCharAt(minorBranches.length() - 1).toString() : minorBranches
-                        .toString());
+        if (minorBranches.length() > 0) {
+            spreadsheet.addCell(minorBranches.deleteCharAt(minorBranches.length() - 1).toString());
+        } else {
+            spreadsheet.addCell("");
+        }
     }
 
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {

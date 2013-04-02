@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -51,7 +52,8 @@ public class RaidesCommonReportFieldsWrapper {
         spreadsheet.setHeader("tipo curso");
         spreadsheet.setHeader("nome curso");
         spreadsheet.setHeader("sigla curso");
-        spreadsheet.setHeader("ramo");
+        spreadsheet.setHeader("Ramo Principal");
+        spreadsheet.setHeader("Ramo Secundáro");
         spreadsheet.setHeader("ano curricular");
         spreadsheet.setHeader("ano ingresso curso actual");
         spreadsheet.setHeader("nº. anos lectivos inscrição curso actual");
@@ -135,8 +137,7 @@ public class RaidesCommonReportFieldsWrapper {
         if (graduation) {
             row.setCell(concluded ? printBigDecimal(average.setScale(0, BigDecimal.ROUND_HALF_EVEN)) : printBigDecimal(average));
         } else {
-            row.setCell(concluded ? registration.getLastStudentCurricularPlan().getCycle(cycleType).getCurriculum().getAverage()
-                    .toPlainString() : "n/a");
+            row.setCell(concluded ? lastStudentCurricularPlan.getCycle(cycleType).getCurriculum().getAverage().toPlainString() : "n/a");
         }
 
         // Data de Conclusão
@@ -184,8 +185,30 @@ public class RaidesCommonReportFieldsWrapper {
         // Sigla Curso
         row.setCell(registration.getDegree().getSigla());
 
-        // Ramo (caso se aplique)
-        row.setCell("não determinável");
+        // Ramos do currículo do aluno
+        final StringBuilder majorBranches = new StringBuilder();
+        final StringBuilder minorBranches = new StringBuilder();
+        for (final BranchCurriculumGroup group : lastStudentCurricularPlan.getBranchCurriculumGroups()) {
+            if (group.isMajor()) {
+                majorBranches.append(group.getName().toString()).append(",");
+            } else if (group.isMinor()) {
+                minorBranches.append(group.getName().toString()).append(",");
+            }
+        }
+
+        // Ramo Principal
+        if (majorBranches.length() > 0) {
+            row.setCell(majorBranches.deleteCharAt(majorBranches.length() - 1).toString());
+        } else {
+            row.setCell("");
+        }
+
+        // Ramo Secundáro
+        if (minorBranches.length() > 0) {
+            row.setCell(minorBranches.deleteCharAt(minorBranches.length() - 1).toString());
+        } else {
+            row.setCell("");
+        }
 
         // Ano Curricular
         row.setCell(registration.getCurricularYear());
