@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 
 import org.joda.time.DateTime;
 
@@ -55,6 +57,12 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
         }
     }
 
+    @Override
+    public void editStateDate(PhdProcessStateBean bean) {
+        super.editStateDate(bean);
+        getProcess().getStudent().updateStudentRole();
+    }
+
     protected void init(final Person person, final String remarks, DateTime stateDate) {
         throw new RuntimeException("invoke other init");
     }
@@ -66,6 +74,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 
         super.init(person, remarks, stateDate, type);
         setType(type);
+        process.getStudent().updateStudentRole();
     }
 
     private void check(PhdIndividualProgramProcess process, PhdIndividualProgramProcessState type) {
@@ -123,8 +132,10 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 
     @Override
     public void delete() {
+        Student student = getProcess().getStudent();
         removeProcess();
         super.delete();
+        student.updateStudentRole();
     }
 
     @Override
