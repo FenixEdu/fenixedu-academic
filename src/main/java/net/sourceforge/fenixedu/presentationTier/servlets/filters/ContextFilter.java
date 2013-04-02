@@ -65,7 +65,8 @@ public class ContextFilter implements Filter {
                 || path.startsWith("/showErrorPageRegistered.do") || path.startsWith("/services")
                 || path.contains("/loginExpired.do") || path.contains("/summariesRSS.do") || path.startsWith("/gwt")
                 || path.startsWith("/remote") || path.startsWith("/jersey") || path.startsWith("/downloadFile")
-                || (path.indexOf("/google") >= 0 && path.endsWith(".html"));
+                || (path.indexOf("/google") >= 0 && path.endsWith(".html"))
+                || path.startsWith("/privado");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
