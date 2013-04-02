@@ -142,7 +142,8 @@ public class LoginAlias extends LoginAlias_Base {
         if (login != null && username != null) {
             final LoginAlias loginAlias = readLoginByUsername(username);
             if (loginAlias != null && loginAlias.getLogin() != login) {
-                throw new DomainException("error.alias.already.exists");
+                System.out.println("Other alias exists: " + loginAlias.getExternalId() + " with same username: " + username);
+                throw new DomainException("error.alias.already.exists", username);
             }
         }
     }
