@@ -6,7 +6,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@ taglib uri="/WEB-INF/joda.tld" prefix="joda" %>
 
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
