@@ -191,6 +191,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>string</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>fenix-framework-core</artifactId>
 			<version>1.1.6</version>
