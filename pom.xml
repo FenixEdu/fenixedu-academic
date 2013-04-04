@@ -146,6 +146,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
+					<compiler>de.enovationbtc.jasperreport.JRJavacCompiler</compiler>
 					<outputDirectory>${project.build.outputDirectory}/reports</outputDirectory>
 					<numberOfThreads>${jasper.threads}</numberOfThreads>
 				</configuration>
