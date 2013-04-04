@@ -192,6 +192,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.alexnederlof</groupId>
+			<artifactId>jasperreports-plugin</artifactId>
+			<version>1.5-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>string</artifactId>
 			<version>1.0.1</version>
