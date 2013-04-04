@@ -7,7 +7,7 @@
 <br /><br />
 
 <%
-	final InputStream inputStream = this.getClass().getResourceAsStream("/.build.version");
+	final InputStream inputStream = this.getClass().getResourceAsStream("/build.version");
 %>
 
 BuildVersion: <%= FileUtils.readFile(inputStream).toString() %>
