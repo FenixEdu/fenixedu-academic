@@ -165,7 +165,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 
             return data;
         } catch (JRException e) {
-            throw new DomainException("error.documentRequest.errorGeneratingDocument");
+            throw new DomainException("error.documentRequest.errorGeneratingDocument", e);
         }
     }
 
