@@ -202,10 +202,10 @@ public class UsernameUtils extends FenixUtil {
 
             throw new DomainException("error.person.addingInvalidRole", RoleType.STUDENT.getName());
 
-        } else if (roleType.equals(RoleType.GRANT_OWNER)) {
-            if (person.getEmployee() != null) {
-                return "B" + person.getEmployee().getEmployeeNumber();
-            }
+//        } else if (roleType.equals(RoleType.GRANT_OWNER)) {
+//            if (person.getEmployee() != null) {
+//                return "B" + person.getEmployee().getEmployeeNumber();
+//            }
 
         } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
                 || roleType.equals(RoleType.IT_PROJECTS_MANAGER) || roleType.equals(RoleType.ISTID_PROJECTS_MANAGER)
