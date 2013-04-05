@@ -292,7 +292,7 @@ public class Login extends Login_Base {
     }
 
     private String makeNewAliasGrantOwner(final Person person) {
-        return person.hasEmployee() ? "B" + person.getEmployee().getEmployeeNumber() : null;
+        return person.hasEmployee() ? "F" + person.getEmployee().getEmployeeNumber() : null;
     }
 
 }
