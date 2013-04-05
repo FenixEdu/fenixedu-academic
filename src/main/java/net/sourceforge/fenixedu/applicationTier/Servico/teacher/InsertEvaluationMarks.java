@@ -61,6 +61,7 @@ public class InsertEvaluationMarks extends FenixService {
             Attends attend = (Attends) iterAttends.next();
 
             String mark = (String) hashMarks.get(attend.getRegistration().getNumber().toString());
+            mark = mark.replace(",", ".");
             hashMarks.remove(attend.getRegistration().getNumber().toString());
 
             if (mark != null && mark.length() > 0) {
