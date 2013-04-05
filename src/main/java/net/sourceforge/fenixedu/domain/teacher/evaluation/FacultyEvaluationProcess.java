@@ -26,14 +26,12 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
         @Override
         public int compare(FacultyEvaluationProcess p1, FacultyEvaluationProcess p2) {
             if (p1.getAutoEvaluationInterval().getStart().compareTo(p2.getAutoEvaluationInterval().getStart()) != 0) {
-                return p1.getAutoEvaluationInterval().getStart().compareTo(p2.getAutoEvaluationInterval().getStart());
-            } else {
-                if (p1.getTitle().compareTo(p2.getTitle()) != 0) {
-                    return p1.getTitle().compareTo(p2.getTitle());
-                } else {
-                    return p1.getExternalId().compareTo(p2.getExternalId());
-                }
+                return -p1.getAutoEvaluationInterval().getStart().compareTo(p2.getAutoEvaluationInterval().getStart());
             }
+            if (p1.getTitle().compareTo(p2.getTitle()) != 0) {
+                return p1.getTitle().compareTo(p2.getTitle());
+            }
+            return p1.getExternalId().compareTo(p2.getExternalId());
         }
     };
 
