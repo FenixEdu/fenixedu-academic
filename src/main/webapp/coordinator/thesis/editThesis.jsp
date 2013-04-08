@@ -177,6 +177,12 @@
     </ul>
     </div>
 </logic:notEmpty>
+<p>
+	<bean:message key="label.coordinator.thesis.jury" bundle="COORDINATOR_RESOURCES"/>
+	<html:link target="_blank" href="http://da.ist.utl.pt/dissertacao-de-mestrado/">
+		<bean:message key="link.coordinator.thesis.consultHere" bundle="APPLICATION_RESOURCES"/>
+	</html:link>.
+</p>
 
 <%-- Orientation --%>
 <h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation" bundle="APPLICATION_RESOURCES"/></h4>
