@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentMember;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,10 +12,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ViewTeacherCreditsDA;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,7 +38,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
         @Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp", tileProperties = @Tile(
                 title = "private.department.credits")),
         @Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp", tileProperties = @Tile(
-                title = "private.department.credits")) })
+                title = "private.department.credits")),
+        @Forward(name = "showTeacherCreditsManagementFunctions", path = "/credits/showTeacherCreditsManagementFunctions.jsp",
+                tileProperties = @Tile(title = "private.department.credits")) })
 public class DepartmentMemberViewTeacherCreditsDA extends ViewTeacherCreditsDA {
 
     @Override
@@ -63,4 +73,16 @@ public class DepartmentMemberViewTeacherCreditsDA extends ViewTeacherCreditsDA {
         return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.DEPARTMENT_MEMBER);
     }
 
+    public ActionForward showTeacherManagementFunctions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+        final IUserView userView = UserView.getUser();
+        if (userView.getPerson().getTeacher() != null) {
+            List<PersonFunction> personFunctions =
+                    new ArrayList<PersonFunction>(userView.getPerson().getPersonFunctions(
+                            AccountabilityTypeEnum.MANAGEMENT_FUNCTION));
+            Collections.sort(personFunctions, new ReverseComparator(new BeanComparator("beginDate")));
+            request.setAttribute("personFunctions", personFunctions);
+        }
+        return mapping.findForward("showTeacherCreditsManagementFunctions");
+    }
 }

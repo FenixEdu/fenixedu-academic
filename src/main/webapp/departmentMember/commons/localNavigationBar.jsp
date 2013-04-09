@@ -9,8 +9,21 @@
 
 <logic:present role="DEPARTMENT_MEMBER">
 
-	
-	<ul>
+	<ul>	
+		<li class="navheader"><bean:message key="label.teacher"/></li>
+		<li>
+		  	<html:link page="/credits.do?method=showTeacherCredits">
+		  		<bean:message key="link.teacher.credits"/>
+		  	</html:link>  
+		</li>
+		<li>
+		  	<html:link page="/credits.do?method=showTeacherManagementFunctions">
+		  		<bean:message key="label.teacher.details.functionsInformation"/>
+		  	</html:link>  
+		</li>
+	</ul>
+	<ul>	
+		<li class="navheader"><bean:message key="title.department"/></li>
 		<li>
 			<html:link page="/viewDepartmentTeachers/listDepartmentTeachers.faces">
 				<bean:message key="link.departmentTeachers"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -45,11 +58,6 @@
 		  		<bean:message key="link.teacher.credits"/>
 		  	</html:link>  
 		</li>--%>
-		<li>
-		  	<html:link page="/credits.do?method=showTeacherCredits">
-		  		<bean:message key="link.teacher.credits"/>
-		  	</html:link>  
-		</li>
 		<li>
 			<html:link page="/exportCredits.do?method=prepareExportDepartmentCourses">
 				<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
