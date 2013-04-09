@@ -74,7 +74,9 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 
         super.init(person, remarks, stateDate, type);
         setType(type);
-        process.getStudent().updateStudentRole();
+        if (process.getStudent() != null) {
+            process.getStudent().updateStudentRole();
+        }
     }
 
     private void check(PhdIndividualProgramProcess process, PhdIndividualProgramProcessState type) {
