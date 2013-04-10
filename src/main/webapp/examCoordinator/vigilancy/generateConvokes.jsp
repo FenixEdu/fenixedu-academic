@@ -81,12 +81,17 @@
 </p>
 
 <p class="mtop15 mbottom05"><strong><bean:message key="label.vigilancy.vigilantsThatTeachCourse" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
+<logic:notEmpty name="bean" property="selectedTeachers">
 <fr:edit id="selectVigilantsThatAreTeachers" name="bean" schema="selectVigilantsThatAreTeachers">
 	<fr:layout>
 		<fr:property name="displayLabel" value="false"/>
 		<fr:property name="classes" value="mtop0" />
 	</fr:layout>
 </fr:edit>
+</logic:notEmpty>
+<logic:empty name="bean" property="selectedTeachers">
+	<bean:message key="label.vigilancy.noVigilantsThatTeachCourse" bundle="VIGILANCY_RESOURCES"/>
+</logic:empty>
 
 <a name="vigilantTable"></a>
 <logic:notEmpty name="incompatiblePersons">
