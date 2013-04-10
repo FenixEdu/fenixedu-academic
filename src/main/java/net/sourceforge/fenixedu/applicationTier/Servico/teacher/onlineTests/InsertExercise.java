@@ -5,12 +5,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +29,7 @@ import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
-import org.apache.commons.lang.CharEncoding;
-import org.apache.fop.tools.IOUtil;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.tools.zip.ZipEntry;
-import org.apache.tools.zip.ZipFile;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
@@ -162,39 +158,67 @@ public class InsertExercise extends FenixService {
 
     private Map<String, List<LabelValueBean>> readFromZip(Map<String, List<LabelValueBean>> xmlListMap,
             InputStream zipInputStream, String dirBaseName) throws IOException {
-        File tmpFile = File.createTempFile("tmpZipFile", "zip");
-        FileOutputStream fout = new FileOutputStream(tmpFile);
-        IOUtil.copyStream(zipInputStream, fout);
-        ZipFile zip = new ZipFile(tmpFile, CharEncoding.UTF_8);
-        Enumeration entries = zip.getEntries();
-        while (entries.hasMoreElements()) {
-            ZipEntry entry = (ZipEntry) entries.nextElement();
-            final int posSlash = entry.getName().lastIndexOf('/');
-            final List<LabelValueBean> labelValueBeans;
-            final String dirName = (posSlash > 0) ? entry.getName().substring(0, posSlash) : dirBaseName;
-            if (xmlListMap.containsKey(dirName)) {
-                labelValueBeans = xmlListMap.get(dirName);
+
+        File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(zipInputStream);
+        File unzipDir = null;
+        try {
+            unzipDir = pt.utl.ist.fenix.tools.file.utils.FileUtils.unzipFile(zipFile);
+            if (!unzipDir.isDirectory()) {
+                throw new IOException("error");
+            }
+            for (final File ofile : unzipDir.listFiles()) {
+                if (ofile.getName().equals(zipFile.getName())) {
+                    ofile.delete();
+                }
+            }
+        } catch (Exception e) {
+            throw new IOException(e.getMessage());
+        } finally {
+            zipFile.delete();
+        }
+
+        recursiveZipProcess(unzipDir, dirBaseName, xmlListMap);
+        return xmlListMap;
+    }
+
+    private void recursiveZipProcess(File unzipDir, String dirBaseName, Map<String, List<LabelValueBean>> xmlListMap)
+            throws IOException {
+        File[] filesInZip = unzipDir.listFiles();
+        Arrays.sort(filesInZip);
+
+        for (File file : filesInZip) {
+            if (file.isDirectory()) {
+                recursiveZipProcess(file, dirBaseName, xmlListMap);
             } else {
-                labelValueBeans = new ArrayList<LabelValueBean>();
-                xmlListMap.put(dirName, labelValueBeans);
+                FileInputStream is = new FileInputStream(file);
+                if (file.getName().endsWith("zip")) {
+                    xmlListMap = readFromZip(xmlListMap, is, file.getName());
+                } else {
+                    final int posSlash = file.getName().lastIndexOf('/');
+                    final List<LabelValueBean> labelValueBeans;
+                    final String dirName = (posSlash > 0) ? file.getName().substring(0, posSlash) : dirBaseName;
+                    if (xmlListMap.containsKey(dirName)) {
+                        labelValueBeans = xmlListMap.get(dirName);
+                    } else {
+                        labelValueBeans = new ArrayList<LabelValueBean>();
+                        xmlListMap.put(dirName, labelValueBeans);
+                    }
+                    final StringBuilder stringBuilder = new StringBuilder();
+                    final byte[] b = new byte[1000];
+
+                    for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
+                        // nothing to do :o)
+                    }
+                    if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
+                        labelValueBeans.add(new LabelValueBean(file.getName(), stringBuilder.toString()));
+                    } else {
+                        labelValueBeans.add(new LabelValueBean(file.getName(), null));
+                    }
+
+                }
             }
 
-            final StringBuilder stringBuilder = new StringBuilder();
-            final byte[] b = new byte[1000];
-            InputStream is = zip.getInputStream(entry);
-            if (entry.getName().endsWith("zip")) {
-                xmlListMap = readFromZip(xmlListMap, is, entry.getName());
-            } else {
-                for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
-                    // nothing to do :o)
-                }
-                if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
-                    labelValueBeans.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
-                } else {
-                    labelValueBeans.add(new LabelValueBean(entry.getName(), null));
-                }
-            }
+            unzipDir.delete();
         }
-        return xmlListMap;
     }
 }
