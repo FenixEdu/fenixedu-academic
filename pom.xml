@@ -626,7 +626,7 @@
 								<include>org/**/*.class</include>
 								<include>pt/**/*.class</include>
 								<include>reports/**/*.*</include>
-								<include>reports.properties</include>
+								<include>**/*.properties</include>
 							</includes>
 						</configuration>
 					</plugin>
