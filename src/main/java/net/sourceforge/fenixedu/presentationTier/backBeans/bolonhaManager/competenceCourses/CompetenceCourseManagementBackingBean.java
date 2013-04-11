@@ -1062,11 +1062,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
-            if (getCompetenceCourse().hasCompetenceCourseInformationFor(currentSemester)) {
-                executionSemesterID = currentSemester.getIdInternal();
-            } else {
-                executionSemesterID = getCompetenceCourse().getStartExecutionSemester().getIdInternal();
-            }
+        	executionSemesterID = currentSemester.getIdInternal();
         }
         if (executionSemesterID == null) {
             executionSemesterID = currentSemester.getIdInternal();
@@ -1162,7 +1158,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private TreeSet<ExecutionSemester> getOrderedCompetenceCourseExecutionSemesters() {
         final TreeSet<ExecutionSemester> result =
-                new TreeSet<ExecutionSemester>(Collections.reverseOrder(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+                new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
         ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
         result.add(semester);
         while (semester.hasNextExecutionPeriod()) {
