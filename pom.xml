@@ -414,11 +414,6 @@
 			<version>20090211</version>
 		</dependency>
 		<dependency>
-			<groupId>net.kencochrane</groupId>
-			<artifactId>raven-java</artifactId>
-			<version>0.6-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.ostermiller</groupId>
 			<artifactId>utils</artifactId>
 			<version>1.07.00</version>
@@ -521,7 +516,7 @@
 		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>jodaplace</artifactId>
-			<version>1.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
