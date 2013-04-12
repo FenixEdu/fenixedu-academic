@@ -127,11 +127,14 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     protected void setChooseMobilityProgramBean(HttpServletRequest request) {
         ChooseMobilityProgramBean chooseMobilityProgramBean =
                 (ChooseMobilityProgramBean) getObjectFromViewState("choose.mobility.program.bean");
-
         if (chooseMobilityProgramBean == null) {
             chooseMobilityProgramBean = new ChooseMobilityProgramBean(getProcess(request));
+            String mobilityProgramEid = request.getParameter("mobilityProgramEid");
+            if (mobilityProgramEid != null && !mobilityProgramEid.isEmpty()) {
+                MobilityProgram mobilityProgram = AbstractDomainObject.fromExternalId(mobilityProgramEid);
+                chooseMobilityProgramBean.setMobilityProgram(mobilityProgram);
+            }
         }
-
         request.setAttribute("chooseMobilityProgramBean", chooseMobilityProgramBean);
     }
 
@@ -141,11 +144,14 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     protected void setChooseDegreeBean(HttpServletRequest request) {
         ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
-
         if (chooseDegreeBean == null) {
             chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
+            String degreeEid = request.getParameter("degreeEid");
+            if (degreeEid != null && !degreeEid.isEmpty()) {
+                Degree degree = AbstractDomainObject.fromExternalId(degreeEid);
+                chooseDegreeBean.setDegree(degree);
+            }
         }
-
         request.setAttribute("chooseDegreeBean", chooseDegreeBean);
     }
 

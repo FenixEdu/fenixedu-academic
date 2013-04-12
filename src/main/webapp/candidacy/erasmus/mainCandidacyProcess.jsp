@@ -3,6 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.ChooseDegreeBean" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA.ChooseMobilityProgramBean" %>
+
 
 <html:xhtml/>
 
@@ -62,7 +65,9 @@
 	<bean:define id="processId" name="process" property="idInternal" />
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
-
+	
+	<bean:define id="degreeBean" name="chooseDegreeBean"/>
+	<bean:define id="mobilityProgramBean" name="chooseMobilityProgramBean"/>
 	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
 	<logic:equal name="canCreateProcess" value="true">
 		<p>
@@ -133,9 +138,7 @@
 		</fr:edit>
 		
 	</html:form>
-	
-	
-	
+		
 	
 	<logic:notEmpty name="processActivities">
 		<%-- list main process activities --%>
@@ -235,11 +238,39 @@
 	
 	<%-- show child processes --%>
 	<logic:notEmpty name="childProcesses">
+	
+	<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/dataTables/media/js/jquery.dataTables.js"%>"></script>
+
+		<script type="text/javascript" charset="utf-8">		
+			$(document).ready(function() {
+	    		$('.results').dataTable( {
+	    			"iDisplayLength": false,
+	    			"oLanguage" : {
+	    				"sProcessing": "Processing...",
+	    				"sLengthMenu": "Mostrar _MENU_ registos",
+	    				"sZeroRecords": "No Records",
+	    				"sInfo": "_START_ - _END_ de _TOTAL_",
+	    				"sInfoEmpty": "0 - 0 de 0",
+	    				"sInfoFiltered": "(filtrado de _MAX_ total de registos)",
+	    				"sInfoPostFix": "",
+	    				"sSearch": "Search",
+	    				"sFirst": "First",
+	    				"sPrevious": "Previous",
+	    				"sNext": "Next",
+	    				"sLast": "Last"},
+	    			"aaSorting": false,
+	    			"bPaginate" : false
+	    		}
+			 );
+			});
+		</script>
+		
 		<fr:view name="childProcesses">
 			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="candidacyDate" key="label.candidacy.date" />
 				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
-				<fr:slot name="personalDetails.name" key="label.name" />
+				<fr:slot name="personalDetails.name" key="label.name" />			
+				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.degree.sigla" key="label.Degree" />
 				<fr:slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 				<fr:slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 				<fr:slot name="validatedByGri" key="label.erasmus.validated.by.gri" bundle="ACADEMIC_OFFICE_RESOURCES" />
@@ -252,17 +283,17 @@
 				
 			</fr:schema>
 		
-			<fr:layout name="tabular-sortable">
-				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
+			<fr:layout name="tabular-sortable"> 
+				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter results"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
-
-				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
+				<fr:property name="renderCompliantTable" value="true"/>
+				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' /> 
 				<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 							
 				<fr:property name="sortParameter" value="sortBy"/>
-	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'/>
-    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
+	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() + (((ChooseDegreeBean)degreeBean).getDegree() != null ? "&amp;degreeEid=" + ((ChooseDegreeBean)degreeBean).getDegree().getExternalId() : "") + (((ChooseMobilityProgramBean)mobilityProgramBean).getMobilityProgram() != null ? "&amp;mobilityProgramEid=" + ((ChooseMobilityProgramBean)mobilityProgramBean).getMobilityProgram().getExternalId() : "") %>'/>
+    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/> 
 			</fr:layout>
 		</fr:view>
 		<bean:size id="childProcessesSize" name="childProcesses" />
