@@ -54,7 +54,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 
     public void uploadEvaluators(final byte[] bytes) {
         final String contents = new String(bytes);
-        final String[] lines = contents.split("\n");
+        final String[] lines = contents.split("[\\r\\n]+");
         int lineNumber = 0;
         final StringBuilder stringBuilder = new StringBuilder();
         final Set<Person> evaluees = new HashSet<Person>();
