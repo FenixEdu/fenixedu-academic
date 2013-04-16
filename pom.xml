@@ -111,7 +111,7 @@
 			<plugin>
 				<groupId>pt.ist</groupId>
 				<artifactId>fenix-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>1.0.0</version>
 				<executions>
 					<execution>
 						<id>fenix-process-classes</id>
@@ -124,7 +124,7 @@
 			<plugin>
 				<groupId>com.alexnederlof</groupId>
 				<artifactId>jasperreports-plugin</artifactId>
-				<version>1.5-SNAPSHOT</version>
+				<version>1.5.0</version>
 				<executions>
 					<execution>
 						<phase>compile</phase>
@@ -194,7 +194,7 @@
 		<dependency>
 			<groupId>com.alexnederlof</groupId>
 			<artifactId>jasperreports-plugin</artifactId>
-			<version>1.5-SNAPSHOT</version>
+			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
@@ -563,7 +563,7 @@
 					<plugin>
 						<groupId>pt.ist</groupId>
 						<artifactId>fenix-maven-plugin</artifactId>
-						<version>1.0-SNAPSHOT</version>
+						<version>1.0.0</version>
 						<executions>
 							<execution>
 								<id>fenix-process-classes</id>
