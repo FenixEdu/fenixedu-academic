@@ -51,9 +51,9 @@ public enum RegistrationAgreement {
 
     TECMIC(false, false), IST_UCP(false, false), IST_USP(false, false), CLUSTER(false, false), EUSYSBIO(false, false),
 
-    IST_ISA(false, false),
+    IST_ISA(false, false), IST_PHARMACY_FACULTY(false, false),
 
-    IBERO_SANTANDER(false, false),
+    IBERO_SANTANDER(false, false), BRAZIL_SANTANDER(false, false),
 
     CHINA_AGREEMENTS(false, false), RUSSIA_AGREEMENTS(false, false),
 
