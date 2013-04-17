@@ -36,7 +36,12 @@ public class PersonFunctionShared extends PersonFunctionShared_Base {
             throw new DomainException("label.percentage.exceededMaxAllowed");
         }
         super.setPercentage(percentage);
-        if (getSharedFunction().getCredits() != null) {
+        recalculateCredits();
+    }
+
+    public void recalculateCredits() {
+        BigDecimal percentage = getPercentage();
+        if (percentage != null && getSharedFunction().getCredits() != null) {
             setCredits(getSharedFunction().getCredits().multiply(percentage.divide(MAX_PERCENTAGE))
                     .setScale(2, RoundingMode.HALF_UP).doubleValue());
         } else {
