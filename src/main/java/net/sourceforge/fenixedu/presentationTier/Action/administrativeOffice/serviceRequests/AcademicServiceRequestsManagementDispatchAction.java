@@ -195,7 +195,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     private List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations(AcademicServiceRequest serviceRequest) {
         final List<AcademicServiceRequestSituation> result =
                 new ArrayList<AcademicServiceRequestSituation>(serviceRequest.getAcademicServiceRequestSituations());
-        Collections.sort(result, AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID);
+        Collections.sort(result, AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID);
         return result;
     }
 

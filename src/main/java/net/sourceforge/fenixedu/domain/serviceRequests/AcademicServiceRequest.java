@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Academi
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -37,7 +36,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
@@ -378,7 +376,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public AcademicServiceRequestSituation getActiveSituation() {
         return hasAnyAcademicServiceRequestSituations() ? Collections.min(getAcademicServiceRequestSituations(),
-                AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID) : null;
+                AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID) : null;
     }
 
     final public DateTime getActiveSituationDate() {
@@ -422,15 +420,12 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void checkRulesToChangeState(final AcademicServiceRequestSituationType situationType) {
 
         if (!isAcceptedSituationType(situationType)) {
-            final LabelFormatter sourceLabelFormatter =
-                    new LabelFormatter().appendLabel(getActiveSituation().getAcademicServiceRequestSituationType()
-                            .getQualifiedName(), "enum");
-            final LabelFormatter targetLabelFormatter =
-                    new LabelFormatter().appendLabel(situationType.getQualifiedName(), "enum");
+            String sourceState = getActiveSituation().getAcademicServiceRequestSituationType().getLocalizedName();
+            String targetState = situationType.getLocalizedName();
 
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state",
-                    sourceLabelFormatter, targetLabelFormatter);
+            throw new DomainException(
+                    "error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state", sourceState,
+                    targetState);
         }
     }
 

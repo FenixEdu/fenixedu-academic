@@ -338,7 +338,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         try {
             documentRequest = (DocumentRequest) executeFactoryMethod();
         } catch (DomainException ex) {
-            addActionMessage(request, ex.getKey());
+            addActionMessage(request, ex.getKey(), ex.getArgs());
             return mapping.findForward("viewRegistrationDetails");
         } catch (ConsistencyException ce) {
             addActionMessage(request, "error." + ce.getMethodFullname());

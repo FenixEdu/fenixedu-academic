@@ -207,7 +207,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     private boolean isPastDiplomaRequestHack() {
         TreeSet<AcademicServiceRequestSituation> sortedSituations =
                 new TreeSet<AcademicServiceRequestSituation>(
-                        AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID);
+                        AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID);
         sortedSituations.addAll(getAcademicServiceRequestSituationsSet());
 
         AcademicServiceRequestSituation deliveredSituation, concludedSituation, receivedSituation, sentSituation, processedSituation, newSituation;
