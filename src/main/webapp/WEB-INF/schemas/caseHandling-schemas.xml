@@ -2727,8 +2727,9 @@
 </schema>
 
 <schema name="MobilityCoordinator.list" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="degree.nameI18N" key="label.erasmus.degree" />
+	<slot name="degree.presentationName" key="label.erasmus.degree" />
 	<slot name="teacher.person.name" key="label.erasmus.coordinator.teacher"/>
+	<slot name="teacher.person.istUsername" key="label.erasmus.coordinator.teacher.id"/>
 </schema>
 
 <schema name="ErasmusChooseDegreeBean.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="APPLICATION_RESOURCES">

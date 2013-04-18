@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 public class PersonInformationLog extends PersonInformationLog_Base {
 
     public PersonInformationLog() {
@@ -14,6 +16,14 @@ public class PersonInformationLog extends PersonInformationLog_Base {
             setPersonViewed(personViewed);
         }
         setDescription(description);
+    }
+
+    public String getPersonName() {
+        return hasPerson() ? getPerson().getName() : StringUtils.EMPTY;
+    }
+
+    public String getIstUsername() {
+        return hasPerson() ? getPerson().getIstUsername() : StringUtils.EMPTY;
     }
 
     private static String generateLabelDescription(String bundle, String key, String... args) {

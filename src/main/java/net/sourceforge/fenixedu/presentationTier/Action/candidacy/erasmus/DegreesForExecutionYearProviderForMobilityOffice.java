@@ -16,13 +16,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesForExecutionYearProviderForMobilityOffice implements DataProvider {
 
+    @Override
     public Object provide(Object source, Object currentValue) {
 
         final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
 
         for (final Degree degree : Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-                DegreeType.BOLONHA_MASTER_DEGREE)) {
+                DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_DEGREE)) {
 
             if (degree.getSigla().equals("MSCIT")) {
                 continue;
@@ -62,6 +63,7 @@ public class DegreesForExecutionYearProviderForMobilityOffice implements DataPro
         return false;
     }
 
+    @Override
     public Converter getConverter() {
         return new DomainObjectKeyConverter();
     }

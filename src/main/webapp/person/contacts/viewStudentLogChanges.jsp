@@ -62,9 +62,9 @@
 	
 	<fr:view name="logsList">
 		<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="APPLICATION_RESOURCES">
-			<fr:slot name="person.istUsername" key="label.istid" >
-				<fr:property name="classes" value="nobullet noindent"/>   
-		   	</fr:slot>
+			<fr:slot name="istUsername" key="label.istid" >
+		    	<fr:property name="classes" value="nobullet noindent"/>  
+	    	</fr:slot>
 		   	<fr:slot name="whenDateTime" bundle="ENUMERATION_RESOURCES" key="DATE">
 				<fr:property name="classes" value="nobullet noindent"/>   
 		    </fr:slot>

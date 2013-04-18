@@ -331,7 +331,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         public Object provide(Object source, Object currentValue) {
             final List<Degree> degrees =
                     new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-                            DegreeType.BOLONHA_MASTER_DEGREE));
+                            DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_DEGREE));
 
             degrees.remove(Degree.readBySigla("MSCIT"));
 

@@ -188,6 +188,10 @@
     <slot name="name" layout="allow-case-change"/>
   </schema>
   
+  <schema name="person.istUsername" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="istUsername"/>
+  </schema>
+
   <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="net.sourceforge.fenixedu.domain.Person">
   	<slot name="teacher.teacherId" />
     <slot name="teacher.person.name" />

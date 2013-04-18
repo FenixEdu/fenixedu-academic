@@ -29,7 +29,7 @@
 </html:link>
 <br/>
 
-<p><bean:message key="title.erasmus.erasmus.coordinators.list" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
+<p><bean:message key="title.mobility.mobilityCoordinators" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 
 
 <logic:empty name="process" property="coordinators">
@@ -40,7 +40,7 @@
 	<fr:view name="process" property="coordinators" schema="MobilityCoordinator.list">
 				<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,width40em"/>
+		        <fr:property name="columnClasses" value="width45em,width40em,width10em,width10em"/>
 		        <fr:property name="sortBy" value="degree.presentationName=asc,teacher.person.name=asc" />
 	
 				<fr:property name="linkFormat(remove)" value="<%= String.format("/caseHandlingMobilityApplicationProcess.do?method=executeRemoveTeacherFromCoordinators&amp;processId=%s&amp;erasmusCoordinatorExternalId=${externalId}", processId.toString()) %>" />

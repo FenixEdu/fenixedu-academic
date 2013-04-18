@@ -1962,3 +1962,11 @@
 		type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram">
 	<slot name="registrationAgreement.description"/>
 </schema>
+  
+<schema name="person.photo" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="person" layout="view-as-image">
+		<property name="classes" value="column3"/>
+		<property name="contextRelative" value="true"/>
+		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.idInternal}"/>	
+	</slot>		
+</schema>

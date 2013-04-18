@@ -8427,7 +8427,7 @@ relation DomainOperationLogPerson {
 		multiplicity*;
 	}
 	Person playsRole person{
-		multiplicity 1..1;
+		multiplicity 0..1;
 	}
 }
 
