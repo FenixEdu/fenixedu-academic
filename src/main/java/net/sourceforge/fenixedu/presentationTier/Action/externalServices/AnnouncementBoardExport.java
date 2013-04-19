@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 import org.joda.time.IllegalFieldValueException;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -105,11 +106,16 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
             new Comparator<Announcement>() {
                 @Override
                 public int compare(Announcement o1, Announcement o2) {
-                    if (o1.getReferedSubjectBegin() != null && o2.getReferedSubjectBegin() != null) {
-                        int result = o1.getReferedSubjectBegin().compareTo(o2.getReferedSubjectBegin());
-                        return (result != 0) ? -(result) : o1.getIdInternal().compareTo(o2.getIdInternal());
-                    }
-                    return Announcement.NEWEST_FIRST.compare(o1, o2);
+                    final DateTime d1 = getDateTime(o1);
+                    final DateTime d2 = getDateTime(o2);
+                    final int c = d1.compareTo(d2);
+                    return c == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : c;
+                }
+
+                private DateTime getDateTime(final Announcement a) {
+                    final DateTime rdt = a.getReferedSubjectBegin();
+                    final DateTime pdt = a.getPublicationBegin();
+                    return rdt == null ? (pdt == null ? a.getCreationDate() : pdt) : rdt;
                 }
             };
 
@@ -118,7 +124,8 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
                 @Override
                 public int compare(Announcement o1, Announcement o2) {
                     if (o1.getSticky() && o2.getSticky()) {
-                        return o1.getPriority() - o2.getPriority();
+                        final int p = o1.getPriority() - o2.getPriority();
+                        return p == 0 ? EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST.compare(o1, o2) : p;
                     } else if (o1.getSticky()) {
                         return -1;
                     } else if (o2.getSticky()) {
