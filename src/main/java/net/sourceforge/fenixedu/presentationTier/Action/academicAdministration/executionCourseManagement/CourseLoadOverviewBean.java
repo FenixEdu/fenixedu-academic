@@ -48,7 +48,7 @@ public class CourseLoadOverviewBean implements Serializable {
     public StyledExcelSpreadsheet getInconsistencySpreadsheet() {
         final StyledExcelSpreadsheet spreadsheet =
                 new StyledExcelSpreadsheet(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
-                        "label.course.load.inconsistency.filename"));
+                        "label.course.load.inconsistency.filename") + "_" + executionSemester.getExecutionYear().getYear().replace('/', '_') + "_" + executionSemester.getSemester());
         HSSFCellStyle normalStyle = spreadsheet.getExcelStyle().getValueStyle();
         normalStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
@@ -77,6 +77,8 @@ public class CourseLoadOverviewBean implements Serializable {
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.curricularCourse"));
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.executionCourse"));
         spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.lessonInstances"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.lesson.count"));
+        spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.load.lessonInstances.count"));
 
         for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
             for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
@@ -107,10 +109,16 @@ public class CourseLoadOverviewBean implements Serializable {
                         spreadsheet.addCell(executionLoad);
                     }
                     if (!shiftCourseLoad.equals(executionLoad)) {
-                        spreadsheet.addCell(shiftCourseLoad, yellowStyle);
+                        if (isLargeDifference(shiftCourseLoad, executionLoad, competenceCourseLoad.divide(new BigDecimal(14), 2, RoundingMode.HALF_EVEN))) {
+                            spreadsheet.addCell(shiftCourseLoad, redStyle);
+                        } else {
+                            spreadsheet.addCell(shiftCourseLoad, yellowStyle);
+                        }
                     } else {
                         spreadsheet.addCell(shiftCourseLoad);
                     }
+                    spreadsheet.addCell(shift.getAssociatedLessonsCount());
+                    spreadsheet.addCell(getLessonInstanceCount(shift));
                 }
             }
         }
@@ -128,6 +136,10 @@ public class CourseLoadOverviewBean implements Serializable {
         sheet.autoSizeColumn(9, true);
 
         return spreadsheet;
+    }
+
+    private boolean isLargeDifference(final BigDecimal value1, final BigDecimal value2, final BigDecimal unitValue) {
+        return value1.subtract(value2).abs().compareTo(unitValue) > 0;
     }
 
     private String getCompetenceCourseLoadStrings(final CourseLoad courseLoad) {
@@ -211,6 +223,14 @@ public class CourseLoadOverviewBean implements Serializable {
             }
         }
         return result;
+    }
+
+    private Integer getLessonInstanceCount(final Shift shift) {
+        int result = 0;
+        for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+            result += lesson.getAllLessonIntervals().size();
+        }
+        return Integer.valueOf(result);
     }
 
     private Object getDepartmentString(final ExecutionCourse executionCourse) {
