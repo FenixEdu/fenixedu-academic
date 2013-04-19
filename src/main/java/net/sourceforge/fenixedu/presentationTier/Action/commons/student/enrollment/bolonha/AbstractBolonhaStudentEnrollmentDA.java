@@ -36,24 +36,19 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forwards({
 
         @Forward(name = "showDegreeModulesToEnrol",
-                path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp", tileProperties = @Tile(
-                        title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+                path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
 
         @Forward(name = "chooseOptionalCurricularCourseToEnrol",
-                path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp",
-                tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+                path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"),
 
         @Forward(name = "chooseCycleCourseGroupToEnrol",
-                path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp",
-                tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+                path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"),
 
-        @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp", tileProperties = @Tile(
-                title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
+        @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp")
 
 })
 public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAction {
