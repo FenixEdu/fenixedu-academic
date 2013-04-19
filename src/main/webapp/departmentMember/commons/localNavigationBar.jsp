@@ -13,7 +13,7 @@
 		<li class="navheader"><bean:message key="label.teacher"/></li>
 		<li>
 		  	<html:link page="/credits.do?method=showTeacherCredits">
-		  		<bean:message key="link.teacher.credits"/>
+		  		<bean:message key="link.teacher.credits"/> (RSD)
 		  	</html:link>  
 		</li>
 		<li>

@@ -29,6 +29,9 @@
 	</fr:view></td>
 	</tr></table>
 
+	<br/><br/>
+	<span class="error">Para efeitos da avaliação de docentes consulte a tabela disponível na página do <a href="http://fenix.ist.utl.pt/ccad" target="_blank">CCAD</a></span>
+	<br/>
 	<logic:notEmpty name="personFunctions">
 		<table class="tstyle2 thlight thleft mtop05 mbottom05">
 			<tr>
