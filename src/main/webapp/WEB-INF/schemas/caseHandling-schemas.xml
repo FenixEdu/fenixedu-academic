@@ -2740,7 +2740,7 @@
     </slot>
 </schema>
 
-<schema name="MobilityChooseProgramBean.selectMobilityProgram" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ChooseMobilityProgramBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="MobilityChooseProgramBean.selectMobilityProgram" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseMobilityProgramBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="mobilityProgram" layout="menu-select-postback" key="label.mobility.program" >
 		<property name="format" value="${registrationAgreement.description}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$MobilityApplicationsMobilityProgramsProvider" />

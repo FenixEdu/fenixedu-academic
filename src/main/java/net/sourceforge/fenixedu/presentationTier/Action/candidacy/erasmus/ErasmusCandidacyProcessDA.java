@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -366,41 +365,6 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             return mobilityPrograms;
         }
 
-    }
-
-    public static class ChooseMobilityProgramBean implements Serializable {
-        /**
-	 * 
-	 */
-        private static final long serialVersionUID = 1L;
-
-        private MobilityProgram mobilityProgram;
-
-        private CandidacyProcess candidacyProcess;
-
-        public ChooseMobilityProgramBean() {
-
-        }
-
-        public ChooseMobilityProgramBean(final CandidacyProcess process) {
-            this.candidacyProcess = process;
-        }
-
-        public MobilityProgram getMobilityProgram() {
-            return this.mobilityProgram;
-        }
-
-        public void setMobilityProgram(MobilityProgram mobilityProgram) {
-            this.mobilityProgram = mobilityProgram;
-        }
-
-        public CandidacyProcess getCandidacyProcess() {
-            return candidacyProcess;
-        }
-
-        public void setCandidacyProcess(final CandidacyProcess process) {
-            this.candidacyProcess = process;
-        }
     }
 
 }

@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDe
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -299,6 +300,41 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
         }
     }
 
+    public static class ChooseMobilityProgramBean implements Serializable {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 8772267678901956140L;
+
+        private MobilityProgram mobilityProgram;
+
+        private CandidacyProcess candidacyProcess;
+
+        public ChooseMobilityProgramBean() {
+
+        }
+
+        public ChooseMobilityProgramBean(final CandidacyProcess process) {
+            this.candidacyProcess = process;
+        }
+
+        public MobilityProgram getMobilityProgram() {
+            return this.mobilityProgram;
+        }
+
+        public void setMobilityProgram(MobilityProgram mobilityProgram) {
+            this.mobilityProgram = mobilityProgram;
+        }
+
+        public CandidacyProcess getCandidacyProcess() {
+            return candidacyProcess;
+        }
+
+        public void setCandidacyProcess(final CandidacyProcess process) {
+            this.candidacyProcess = process;
+        }
+    }
+
     @Override
     public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
@@ -420,10 +456,11 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public static class ChooseDegreeBean implements Serializable {
+
         /**
-	 * 
-	 */
-        private static final long serialVersionUID = 1L;
+         * 
+         */
+        private static final long serialVersionUID = -7544460988553206034L;
 
         private Degree degree;
 
