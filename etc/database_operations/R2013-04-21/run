@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 
+execute "Adding OID_DOMAIN_META_OBJECT column to all tables (over 1h)" addMetaObjectColumn.sql
