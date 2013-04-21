@@ -108,7 +108,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
                 public int compare(Announcement o1, Announcement o2) {
                     final DateTime d1 = getDateTime(o1);
                     final DateTime d2 = getDateTime(o2);
-                    final int c = d1.compareTo(d2);
+                    final int c = d2.compareTo(d1);
                     return c == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : c;
                 }
 
