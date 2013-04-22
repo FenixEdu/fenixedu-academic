@@ -404,6 +404,7 @@ specificOperator returns [OperatorArgument operator]
 	| operator=enumOperator
 	| operator=numberOperator
 	| operator=classOperator
+	| operator=oidOperator
 	;
 
 idOperator returns [IdOperator operator] 
