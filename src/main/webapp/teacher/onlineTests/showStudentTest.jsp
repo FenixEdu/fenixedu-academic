@@ -194,7 +194,7 @@
 				<bean:define id="checkDisable" value="true"/>
 				<logic:equal name="pageType" value="doTest">
 					<logic:notEmpty name="testQuestion" property="response">
-						<logic:notEmpty name="question" name="testQuestion" property="response.response">
+						<logic:notEmpty name="testQuestion" property="response.response">
 							<%if(((Integer)testType).intValue()!=1){%>
 								<bean:define id="checkDisable" value="false"/>
 							<%}%>
