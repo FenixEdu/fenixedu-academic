@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class FixedSetGroup extends LeafGroup {
 
@@ -107,7 +108,7 @@ public class FixedSetGroup extends LeafGroup {
 
         int index = 0;
         for (Person person : persons) {
-            arguments[index++] = new StaticArgument(person.getIdInternal());
+            arguments[index++] = new StaticArgument(person.getExternalId());
         }
 
         return arguments;
@@ -128,6 +129,8 @@ public class FixedSetGroup extends LeafGroup {
                         throw new GroupDynamicExpressionException("accessControl.group.builder.fixed.id.notPerson",
                                 object.toString());
                     }
+                } else if (object instanceof String) {
+                    person = AbstractDomainObject.fromExternalId((String) object);
                 } else if (object instanceof Person) {
                     person = (Person) object;
                 } else {

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class PersonGroup extends DomainBackedGroup<Person> {
 
@@ -47,7 +48,7 @@ public class PersonGroup extends DomainBackedGroup<Person> {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new StaticArgument(getPerson().getIdInternal()) };
+        return new Argument[] { new StaticArgument(getPerson().getExternalId()) };
     }
 
     /**
@@ -82,27 +83,20 @@ public class PersonGroup extends DomainBackedGroup<Person> {
             }
 
             if (person == null) {
-                Integer oid;
 
                 if (argument instanceof String) {
+                    person = AbstractDomainObject.fromExternalId((String) argument);
+                } else if (argument instanceof Integer) {
                     try {
-                        oid = new Integer((String) argument);
-                    } catch (NumberFormatException e) {
-                        throw new GroupDynamicExpressionException(e, "accessControl.group.builder.person.argument.convert",
+                        person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, (Integer) argument);
+                    } catch (ClassCastException e) {
+                        throw new GroupDynamicExpressionException(e, "accessControl.group.builder.person.id.notValid",
                                 String.valueOf(argument));
                     }
-                } else if (argument instanceof Integer) {
-                    oid = (Integer) argument;
                 } else {
                     throw new WrongTypeOfArgumentException(1, Integer.class, argument.getClass());
                 }
 
-                try {
-                    person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, oid);
-                } catch (ClassCastException e) {
-                    throw new GroupDynamicExpressionException(e, "accessControl.group.builder.person.id.notValid",
-                            String.valueOf(argument));
-                }
             }
 
             if (person == null) {
