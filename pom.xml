@@ -98,7 +98,7 @@
 			<plugin>
 				<groupId>dml</groupId>
 				<artifactId>dml-maven-plugin</artifactId>
-				<version>1.2.1</version>
+				<version>1.2.2</version>
 				<executions>
 					<execution>
 						<goals>
@@ -204,7 +204,7 @@
 		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>fenix-framework-core</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>antlr</groupId>
