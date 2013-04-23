@@ -67,7 +67,7 @@
 </logic:empty>
 <logic:notEmpty name="associations">
 	<logic:present name="editExisting">
-		<fr:edit id="editRole" name="associations"schema="resultUnitAssociation.details" action="<%= prepareEdit %>">
+		<fr:edit id="editRole" name="associations" schema="resultUnitAssociation.details" action="<%= prepareEdit %>">
 			<fr:layout name="tabular-row">
 				<fr:property name="classes" value="tstyle2" />
 				<fr:property name="columnClasses" value=",acenter,acenter"/>
@@ -77,7 +77,7 @@
 		</fr:edit>
 	</logic:present>
 	<logic:notPresent name="editExisting">	
-		<fr:view name="associations"schema="resultUnitAssociation.details">
+		<fr:view name="associations" schema="resultUnitAssociation.details">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2" />
 				<fr:property name="columnClasses" value=",acenter,acenter"/>
