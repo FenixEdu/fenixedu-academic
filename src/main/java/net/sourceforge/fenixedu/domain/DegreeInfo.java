@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,6 +17,17 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
+
+    public static Comparator<DegreeInfo> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<DegreeInfo>() {
+        @Override
+        public int compare(DegreeInfo info1, DegreeInfo info2) {
+            int result = ExecutionYear.COMPARATOR_BY_YEAR.compare(info1.getExecutionYear(), info2.getExecutionYear());
+            if (result != 0) {
+                return result;
+            }
+            return COMPARATOR_BY_ID.compare(info1, info2);
+        }
+    };
 
     protected DegreeInfo(Degree degree, ExecutionYear executionYear) {
         super();
