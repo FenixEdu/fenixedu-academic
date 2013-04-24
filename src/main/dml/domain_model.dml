@@ -170,7 +170,6 @@ enum net.sourceforge.fenixedu.util.RegimeType                                   
 enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
 enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
-enum net.sourceforge.fenixedu.domain.accessControl.PermissionType                                                         as PermissionType;
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType                                                   as AnnouncementCategoryType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
