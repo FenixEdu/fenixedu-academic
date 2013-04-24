@@ -75,7 +75,13 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherEvaluationTypeSelection selection = getRenderedObject("process-selection");
         selection.createEvaluation();
-        return viewAutoEvaluation(mapping, form, request, response);
+        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER))
+                && selection.getProcess().getEvaluee() != AccessControl.getPerson()) {
+            request.setAttribute("process", selection.getProcess());
+            return mapping.findForward("viewEvaluationByCCAD");
+        } else {
+            return viewAutoEvaluation(mapping, form, request, response);
+        }
     }
 
     @Deprecated
@@ -110,7 +116,13 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherEvaluationProcess process = getDomainObject(request, "process");
         process.getCurrentTeacherEvaluation().lickAutoEvaluationStamp();
-        return viewAutoEvaluation(mapping, form, request, response);
+        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER))
+                && process.getEvaluee() != AccessControl.getPerson()) {
+            request.setAttribute("process", process);
+            return mapping.findForward("viewEvaluationByCCAD");
+        } else {
+            return viewAutoEvaluation(mapping, form, request, response);
+        }
     }
 
     public ActionForward lockEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -206,7 +218,13 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             request.setAttribute("evalueeOID", fileUploadBean.getTeacherEvaluationProcess().getEvaluee().getExternalId());
             return viewEvaluation(mapping, form, request, response);
         } else {
-            return viewAutoEvaluation(mapping, form, request, response);
+            if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER))
+                    && fileUploadBean.getTeacherEvaluationProcess().getEvaluee() != AccessControl.getPerson()) {
+                request.setAttribute("process", fileUploadBean.getTeacherEvaluationProcess());
+                return mapping.findForward("viewEvaluationByCCAD");
+            } else {
+                return viewAutoEvaluation(mapping, form, request, response);
+            }
         }
     }
 

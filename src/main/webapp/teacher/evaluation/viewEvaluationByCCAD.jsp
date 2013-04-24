@@ -62,6 +62,91 @@
 		<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.unlock" />
 	</html:link>
 </logic:equal></p>
+
+	<% if (!((net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess) request.getAttribute("process")).isAutoEvaluationLocked()) { %>
+		<bean:define id="processId" name="process" property="externalId" />
+		<p class="mtop0 mbottom15">
+			<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
+				paramProperty="externalId">
+				<logic:empty name="process" property="type">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.setEvaluationType" />
+				</logic:empty>
+				<logic:notEmpty name="process" property="type">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
+				</logic:notEmpty>
+			</html:link><logic:equal name="process" property="possibleToLockAutoEvaluation" value="true"> | <a href="#"
+					style="cursor: pointer;"
+					onclick="<%="check(document.getElementById('warning"
+									+ processId + "'));return false;"%>"> <bean:message
+					bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.lock" /> </a>
+	
+			</logic:equal>
+		</p>
+
+		<div id="<%="warning" + processId%>" class="dnone">
+			<div class="warning1">
+				<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm"
+					bundle="RESEARCHER_RESOURCES" /></p>
+				<div class="mtop1 mbottom05">
+					<form method="post" id="lockMark"
+						action="<%=request.getContextPath()
+											+ "/researcher/teacherEvaluation.do?method=lockAutoEvaluation&process="
+											+ processId%>">
+						<html:submit> Lacrar</html:submit> <input value="Cancelar"
+							onclick="check(document.getElementById('<%="warning" + processId%>'));return false;" type="button"></form>
+				</div>
+			</div>
+		</div>
+
+	<script type="text/javascript">
+		function check(e,v){
+			if (e.className == "dnone") {
+			  e.className = "dblock";
+			  v.value = "-";
+			} else {
+			  e.className = "dnone";
+		  	  v.value = "+";
+			}
+		}
+	</script>
+
+	<logic:present name="process" property="currentTeacherEvaluation">
+		<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
+			name="process" property="facultyEvaluationProcess.title" />)</strong></p>
+
+		<logic:notEmpty name="process" property="teacherAutoEvaluationFileBeanSet">
+			<bean:define id="externalId" name="process" property="externalId" />
+			<fr:view name="process" property="teacherAutoEvaluationFileBeanSet">
+				<fr:schema bundle="RESEARCHER_RESOURCES"
+					type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
+					<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
+					<fr:slot name="teacherEvaluationFile" layout="link" key="label.teacher.evaluation.file" />
+					<fr:slot name="teacherEvaluationFileUploadDate" key="label.teacher.evaluation.date" layout="null-as-label" />
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1 thlight mtop05" />
+					
+					<%--
+					<fr:property name="headerClasses" value=",,,thclear" />
+					<fr:property name="columnClasses" value=",,,tdclear" />
+					--%>
+					
+					<fr:property name="link(upload)"
+						value="<%= "/teacherEvaluation.do?method=prepareUploadAutoEvaluationFile&OID="+externalId %>" />
+					<fr:property name="key(upload)" value="label.teacher.evaluation.upload" />
+					<fr:property name="param(upload)" value="teacherEvaluationFileType/type" />
+					<fr:property name="bundle(upload)" value="RESEARCHER_RESOURCES" />
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+
+		<logic:empty name="process" property="teacherAutoEvaluationFileBeanSet">
+			<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning" /></p>
+		</logic:empty>
+	</logic:present>
+
+	<% } %>
+
 <% } %>
 <logic:equal name="process" property="readyForCCADConsideration" value="true">
 	<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view

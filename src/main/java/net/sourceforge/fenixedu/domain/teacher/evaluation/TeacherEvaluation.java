@@ -59,11 +59,15 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 
     protected void internalLickingBusiness() {
         setAutoEvaluationLock(new DateTime());
+        final Person who = AccessControl.getPerson();
+        setUserWhoLockedAutoEvaluation(who == null ? null : who.getUser());
     }
 
     @Service
     public void lickEvaluationStamp() {
         setEvaluationLock(new DateTime());
+        final Person who = AccessControl.getPerson();
+        setUserWhoLockedEvaluation(who == null ? null : who.getUser());
 
         final TeacherEvaluationProcess teacherEvaluationProcess = getTeacherEvaluationProcess();
         final Person evaluee = teacherEvaluationProcess.getEvaluee();

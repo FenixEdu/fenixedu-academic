@@ -19954,6 +19954,20 @@ relation RootDomainObjectTeacherEvaluation {
 	}
 }
 
+relation TeacherEvaluationAutoEvaluationLockUser {
+	teacher.evaluation.TeacherEvaluation playsRole lockedTeacherAutoEvaluations {
+		multiplicity *;
+	}
+	User playsRole userWhoLockedAutoEvaluation;
+}
+
+relation TeacherEvaluationEvaluationLockUser {
+	teacher.evaluation.TeacherEvaluation playsRole lockedTeacherEvaluations {
+		multiplicity *;
+	}
+	User playsRole userWhoLockedEvaluation;
+}
+
 relation FacultyEvaluationProcessTeacherEvaluationProcess {
 	teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess;
 	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess {
