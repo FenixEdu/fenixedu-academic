@@ -17,7 +17,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ConcludePhdProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType" %>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">

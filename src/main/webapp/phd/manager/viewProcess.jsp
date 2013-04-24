@@ -14,7 +14,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration" %>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType" %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>

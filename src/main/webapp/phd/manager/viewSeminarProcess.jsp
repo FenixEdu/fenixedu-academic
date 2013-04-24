@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType" %>
 
 <logic:notEmpty name="process" property="seminarProcess">
 <logic:equal name="process" property="activeState.active" value="true">

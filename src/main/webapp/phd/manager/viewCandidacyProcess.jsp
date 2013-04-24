@@ -13,7 +13,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState" %>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
 
