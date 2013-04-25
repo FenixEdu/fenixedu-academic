@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 
+execute "Update teacher evaluation stuff." updates.sql
