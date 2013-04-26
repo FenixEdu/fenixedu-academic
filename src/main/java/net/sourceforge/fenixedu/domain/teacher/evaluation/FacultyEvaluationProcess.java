@@ -20,7 +20,7 @@ import org.joda.time.Interval;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
+public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base implements Comparable<FacultyEvaluationProcess> {
 
     public static Comparator<FacultyEvaluationProcess> COMPARATOR_BY_INTERVAL = new Comparator<FacultyEvaluationProcess>() {
         @Override
@@ -323,4 +323,8 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
         return result;
     }
 
+    @Override
+    public int compareTo(FacultyEvaluationProcess o) {
+        return COMPARATOR_BY_INTERVAL.compare(this, o);
+    }
 }

@@ -15,33 +15,29 @@
 
 
 <table class="tstyle1 thlight thleft mtop15">
+	<tr><th>Docente</th>
+	<logic:iterate id="evaluationProcess" name="processes">
+			<th><bean:write name="evaluationProcess" property="title"/></th>
+	</logic:iterate>
+	</tr>
 
-<logic:iterate id="entries" name="processes" indexId="index">
-	<logic:equal name="index" value="0">
-		<tr><th>Docente</th>
-		<logic:iterate id="evaluationProcess" name="entries" property="value">
-				<th><bean:write name="evaluationProcess" property="facultyEvaluationProcess.title"/></th>
-		</logic:iterate>
-		</tr>
-	</logic:equal>
+<logic:iterate id="evaluee" name="evaluees" indexId="index">
 	<tr>
-		<bean:define id="personId" name="entries" property="key.externalId"/>
-		<td><fr:view name="entries" property="key.name">
+		<bean:define id="personId" name="evaluee" property="evaluee.externalId"/>
+		<td><fr:view name="evaluee" property="evaluee.presentationName">
 			<fr:layout name="link">
 				<fr:property name="linkFormat" value="<%= "/teacherEvaluation.do?method=viewEvaluation&evalueeOID="+personId%>"/>
 				<fr:property name="contextRelative" value="true"/>
 				<fr:property name="moduleRelative" value="true"/>
 			</fr:layout>
 		</fr:view></td>
-		<logic:iterate id="evaluationProcess" name="entries" property="value">
-			<td><fr:view name="evaluationProcess" layout="values">
-				<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess">
-					<fr:slot name="state" key="label.teacher.evaluation.state">
-						<fr:property name="eachSchema" value="" />
-						<fr:property name="eachLayout" value="values" />
-					</fr:slot>
-				</fr:schema>
-			</fr:view></td>
+		<logic:iterate id="process" name="evaluee" property="processes">
+			<td>
+			<logic:present name="process">
+				<fr:view name="process" property="state" />
+			</logic:present>
+			<logic:notPresent name="process">-</logic:notPresent>
+			</td>
 		</logic:iterate>
 	</tr>
 </logic:iterate>

@@ -2,6 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -75,7 +80,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherEvaluationTypeSelection selection = getRenderedObject("process-selection");
         selection.createEvaluation();
-        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER))
+        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(
+                RoleType.MANAGER))
                 && selection.getProcess().getEvaluee() != AccessControl.getPerson()) {
             request.setAttribute("process", selection.getProcess());
             return mapping.findForward("viewEvaluationByCCAD");
@@ -116,7 +122,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherEvaluationProcess process = getDomainObject(request, "process");
         process.getCurrentTeacherEvaluation().lickAutoEvaluationStamp();
-        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER))
+        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(
+                RoleType.MANAGER))
                 && process.getEvaluee() != AccessControl.getPerson()) {
             request.setAttribute("process", process);
             return mapping.findForward("viewEvaluationByCCAD");
@@ -148,20 +155,45 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         return mapping.findForward("viewEvaluationByCCAD");
     }
 
+    public class EvalueesMap implements Serializable {
+        private Person evaluee;
+
+        private SortedMap<FacultyEvaluationProcess, TeacherEvaluationProcess> processes =
+                new TreeMap<FacultyEvaluationProcess, TeacherEvaluationProcess>();
+
+        public EvalueesMap(Person evaluee) {
+            this.evaluee = evaluee;
+            final Set<FacultyEvaluationProcess> facultyEvaluationProcessSet = rootDomainObject.getFacultyEvaluationProcessSet();
+            for (FacultyEvaluationProcess process : facultyEvaluationProcessSet) {
+                processes.put(process, null);
+            }
+        }
+
+        public Person getEvaluee() {
+            return evaluee;
+        }
+
+        public List<TeacherEvaluationProcess> getProcesses() {
+            List<TeacherEvaluationProcess> list = new ArrayList<TeacherEvaluationProcess>();
+            for (TeacherEvaluationProcess process : processes.values()) {
+                list.add(process);
+            }
+            return list;
+        }
+    }
+
     public ActionForward viewEvaluees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        SortedMap<Person, SortedSet<TeacherEvaluationProcess>> processes =
-                new TreeMap<Person, SortedSet<TeacherEvaluationProcess>>(Person.COMPARATOR_BY_NAME_AND_ID);
+        Map<Person, EvalueesMap> evaluees = new HashMap<Person, EvalueesMap>();
         final Person loggedPerson = getLoggedPerson(request);
-        for (TeacherEvaluationProcess teacherEvaluationProcess : loggedPerson.getTeacherEvaluationProcessFromEvaluator()) {
-            SortedSet<TeacherEvaluationProcess> sortedSet = processes.get(teacherEvaluationProcess.getEvaluee());
-            if (sortedSet == null) {
-                sortedSet = new TreeSet<TeacherEvaluationProcess>(TeacherEvaluationProcess.COMPARATOR_BY_INTERVAL);
-                processes.put(teacherEvaluationProcess.getEvaluee(), sortedSet);
+        for (TeacherEvaluationProcess process : loggedPerson.getTeacherEvaluationProcessFromEvaluator()) {
+            if (!evaluees.containsKey(process.getEvaluator())) {
+                evaluees.put(process.getEvaluee(), new EvalueesMap(process.getEvaluee()));
             }
-            sortedSet.add(teacherEvaluationProcess);
+            evaluees.get(process.getEvaluee()).processes.put(process.getFacultyEvaluationProcess(), process);
         }
-        request.setAttribute("processes", processes.entrySet());
+        request.setAttribute("processes", rootDomainObject.getFacultyEvaluationProcessSet());
+        request.setAttribute("evaluees", evaluees.values());
         return mapping.findForward("viewEvaluees");
     }
 
@@ -218,7 +250,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             request.setAttribute("evalueeOID", fileUploadBean.getTeacherEvaluationProcess().getEvaluee().getExternalId());
             return viewEvaluation(mapping, form, request, response);
         } else {
-            if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER))
+            if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(
+                    RoleType.MANAGER))
                     && fileUploadBean.getTeacherEvaluationProcess().getEvaluee() != AccessControl.getPerson()) {
                 request.setAttribute("process", fileUploadBean.getTeacherEvaluationProcess());
                 return mapping.findForward("viewEvaluationByCCAD");
