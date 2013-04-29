@@ -43,7 +43,7 @@ public enum RegistrationAgreement {
 
     ANGOLA_TELECOM(false, true),
 
-    ERASMUS_MUNDUS(false, false),
+    ERASMUS_MUNDUS(false, true),
 
     ALMEIDA_GARRETT(false, false),
 
@@ -59,7 +59,7 @@ public enum RegistrationAgreement {
 
     AFRICA_AGREEMENTS(false, false), BRAZIL_AGREEMENTS(false, false),
 
-    SCIENCE_WITHOUT_BORDERS(false, false);
+    SCIENCE_WITHOUT_BORDERS(false, false), USA_AGREEMENTS(false, true), KIC_INNOENERGY(false, true);
 
     private boolean enrolmentByStudentAllowed;
 
@@ -130,10 +130,10 @@ public enum RegistrationAgreement {
         return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
-    final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP, ALMEIDA_GARRETT);
+    final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP);
 
     final public static List<RegistrationAgreement> MOBILITY_AGREEMENTS = Arrays.asList(ERASMUS, SMILE, CLUSTER, TIME,
             BILATERAL_AGREEMENT, ERASMUS_MUNDUS, IBERO_SANTANDER, SCIENCE_WITHOUT_BORDERS, CHINA_AGREEMENTS, RUSSIA_AGREEMENTS,
-            AFRICA_AGREEMENTS, BRAZIL_AGREEMENTS);
+            AFRICA_AGREEMENTS, BRAZIL_AGREEMENTS, ALMEIDA_GARRETT, ERASMUS_MUNDUS, USA_AGREEMENTS, KIC_INNOENERGY);
 
 }

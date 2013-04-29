@@ -59,7 +59,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     @Override
     public boolean isFreeProcessed() {
         if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
-                && RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
+                && (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) || RegistrationAgreement.EXEMPTED_AGREEMENTS
+                        .contains(getRegistration().getRegistrationAgreement()))) {
             return true;
         } else {
             return false;

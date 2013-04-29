@@ -1364,7 +1364,11 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     };
 
     private void createRegistration() {
-        getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
+        if (getCandidacy().getCandidacyProcess().getDegreeCurricularPlan(this).isFirstCycle()) {
+            getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.FIRST_CYCLE, null);
+        } else {
+            getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
+        }
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final MobilityIndividualApplicationProcess candidacyProcess) {
