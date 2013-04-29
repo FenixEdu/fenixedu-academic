@@ -144,7 +144,8 @@ abstract public class StudentCurricularPlanEnrolment {
     protected void checkEnrolmentWithoutRules() {
         if (isEnrolmentWithoutRules()
                 && !AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                        AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())) {
+                        AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())
+                && !isResponsibleInternationalRelationOffice()) {
             throw new DomainException("error.permissions.cannot.enrol.without.rules");
         }
     }
