@@ -424,8 +424,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return null;
     }
 
-    public static OccupationPeriod createOccupationPeriodForLesson(final ExecutionCourse executionCourse, final YearMonthDay beginDate,
-            final YearMonthDay endDate) {
+    public static OccupationPeriod createOccupationPeriodForLesson(final ExecutionCourse executionCourse,
+            final YearMonthDay beginDate, final YearMonthDay endDate) {
         OccupationPeriod result = null;
         boolean ok = true;
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
@@ -450,14 +450,16 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         }
         for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
             if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
-                    && occupationPeriod.getStartYearMonthDay().equals(beginDate) && occupationPeriod.getEndYearMonthDay().equals(endDate)) {
+                    && occupationPeriod.getStartYearMonthDay().equals(beginDate)
+                    && occupationPeriod.getEndYearMonthDay().equals(endDate)) {
                 return occupationPeriod;
             }
         }
         return new OccupationPeriod(beginDate, endDate);
     }
 
-    private static OccupationPeriod createNewPeriodWithExclusions(final YearMonthDay beginDate, final YearMonthDay endDate, final OccupationPeriod result) {
+    private static OccupationPeriod createNewPeriodWithExclusions(final YearMonthDay beginDate, final YearMonthDay endDate,
+            final OccupationPeriod result) {
         final SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();
 
         dates.add(beginDate);
@@ -468,7 +470,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             if (pop.getEndYearMonthDay().isAfter(beginDate) && pop.getEndYearMonthDay().isBefore(endDate)) {
                 dates.add(pop.getEndYearMonthDay());
             }
-            if (nop.getStartYearMonthDay().isAfter(beginDate) && nop.getStartYearMonthDay().isBefore(endDate)){
+            if (nop.getStartYearMonthDay().isAfter(beginDate) && nop.getStartYearMonthDay().isBefore(endDate)) {
                 dates.add(nop.getStartYearMonthDay());
             }
         }
