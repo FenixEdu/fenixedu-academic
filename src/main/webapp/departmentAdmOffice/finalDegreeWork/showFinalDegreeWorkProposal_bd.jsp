@@ -9,8 +9,6 @@
 <bean:define id="executionDegreeOID" name="executionDegreeOID" type="String" scope="request" />
 <bean:define id="proposalOID" name="proposalOID" type="String" scope="request" />
 
-
-
 <style>
 input.teacherNameDisplay {
 background: none;
@@ -114,17 +112,12 @@ color: #000;
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6"/>
-				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='orientator';document.forms[0].submit();"/>
-				
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6" disabled="true"/>
 			</td>
 			<td width="1%"/>
 			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
 			<td width="66%" id='respName'>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="true"/>
 			</td>
 		</tr>
 	</table>
@@ -136,16 +129,12 @@ color: #000;
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherId" size="6"/>
-				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='coorientator';document.forms[0].submit();"/>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherId" size="6" disabled="true"/>
 			</td>
 			<td width="1%"/>
 			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
 			<td width="66%" id='coRespName'>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="true"/>
 			</td>
 		</tr>
 	</table>
