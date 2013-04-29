@@ -108,10 +108,7 @@ public class Lesson extends Lesson_Base {
             if (endDate == null || endDate.isAfter(maxLessonsPeriod.getRight())) {
                 throw new DomainException("error.invalid.new.date");
             }
-            period = OccupationPeriod.readOccupationPeriod(executionCourse, beginDate, endDate);
-            if (period == null) {
-                period = new OccupationPeriod(beginDate, endDate);
-            }
+            period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
         }
 
         setRootDomainObject(RootDomainObject.getInstance());

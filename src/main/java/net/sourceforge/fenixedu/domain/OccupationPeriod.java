@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -422,6 +424,58 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return null;
     }
 
+    public static OccupationPeriod createOccupationPeriodForLesson(final ExecutionCourse executionCourse, final YearMonthDay beginDate,
+            final YearMonthDay endDate) {
+        OccupationPeriod result = null;
+        boolean ok = true;
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+                if (executionCourse.getExecutionYear() == executionDegree.getExecutionYear()) {
+                    final OccupationPeriod occupationPeriod =
+                            executionDegree.getPeriodLessons(executionCourse.getExecutionPeriod());
+                    if (result == null) {
+                        result = occupationPeriod;
+                    } else if (result != occupationPeriod) {
+                        ok = false;
+                    }
+                }
+            }
+        }
+        if (ok && result != null) {
+            if (result.getStartYearMonthDay().equals(beginDate) && result.getEndYearMonthDayWithNextPeriods().equals(endDate)) {
+                return result;
+            }
+            return createNewPeriodWithExclusions(beginDate, endDate, result);
+        }
+        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+            if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
+                    && occupationPeriod.getStartYearMonthDay().equals(beginDate) && occupationPeriod.getEndYearMonthDay().equals(endDate)) {
+                return occupationPeriod;
+            }
+        }
+        return new OccupationPeriod(beginDate, endDate);
+    }
+
+    private static OccupationPeriod createNewPeriodWithExclusions(final YearMonthDay beginDate, final YearMonthDay endDate, final OccupationPeriod result) {
+        final SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();
+
+        dates.add(beginDate);
+        dates.add(endDate);
+
+        OccupationPeriod pop = result;
+        for (OccupationPeriod nop = result.getNextPeriod(); nop != null; pop = nop, nop = nop.getNextPeriod()) {
+            if (pop.getEndYearMonthDay().isAfter(beginDate) && pop.getEndYearMonthDay().isBefore(endDate)) {
+                dates.add(pop.getEndYearMonthDay());
+            }
+            if (nop.getStartYearMonthDay().isAfter(beginDate) && nop.getStartYearMonthDay().isBefore(endDate)){
+                dates.add(nop.getStartYearMonthDay());
+            }
+        }
+
+        return new OccupationPeriod(dates.toArray(new YearMonthDay[0]));
+    }
+
     public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {
         OccupationPeriod firstOccupationPeriod = this;
         while (firstOccupationPeriod != null) {
@@ -588,4 +642,5 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         }
 
     }
+
 }
