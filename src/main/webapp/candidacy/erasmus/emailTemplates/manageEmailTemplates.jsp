@@ -21,6 +21,12 @@
 				<fr:property name="format" value="${localizedName}" />
 				<fr:property name="sortBy" value="localizedName"/>
 			</fr:slot>
+			<fr:slot name="mobilityProgram" layout="menu-select-postback">
+				<fr:property name="destination" value="postback" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramAllProvider" />
+				<fr:property name="format" value="${name}" />
+				<fr:property name="sortBy" value="name"/>
+			</fr:slot>
 		</fr:schema>
 		
 		<fr:layout name="tabular">
@@ -42,6 +48,7 @@
 </logic:empty>
 
 <logic:notEmpty name="mobilityEmailTemplateBean" property="type">
+<logic:notEmpty name="mobilityEmailTemplateBean" property="mobilityProgram">
 	<div class="mbottom3">
 		<fr:form action="<%= "/caseHandlingMobilityApplicationProcess.do?method=previewEmailTemplate&processId=" + processId %>">
 			<fr:edit id="mobilityEmailTemplateBean" name="mobilityEmailTemplateBean" visible="false" />
@@ -73,5 +80,5 @@
 		
 		<bean:message key="<%= "message.instructions." + typeName %>" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</div>
-
+</logic:notEmpty>
 </logic:notEmpty>

@@ -435,7 +435,7 @@ public class ErasmusCandidacyProcessDA extends
 
         request.setAttribute("mobilityEmailTemplateBean", bean);
         request.setAttribute("hasMobilityPrograms", !mobilityPrograms.isEmpty());
-
+        request.setAttribute("mobilityPrograms", mobilityPrograms);
         return mapping.findForward("manageEmailTemplates");
     }
 
@@ -444,8 +444,7 @@ public class ErasmusCandidacyProcessDA extends
         MobilityEmailTemplateBean bean = getMobilityEmailTemplateBean();
         MobilityApplicationProcess process = getProcess(request);
         MobilityApplicationPeriod candidacyPeriod = process.getCandidacyPeriod();
-        MobilityEmailTemplate emailTemplate = candidacyPeriod.getEmailTemplateFor(bean.getType());
-
+        MobilityEmailTemplate emailTemplate = candidacyPeriod.getEmailTemplateFor(bean.getMobilityProgram(), bean.getType());
         if (emailTemplate != null) {
             bean.setSubject(emailTemplate.getSubject());
             bean.setBody(emailTemplate.getBody());

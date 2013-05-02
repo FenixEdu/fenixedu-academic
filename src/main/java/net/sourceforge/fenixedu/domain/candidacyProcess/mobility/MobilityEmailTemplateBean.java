@@ -9,6 +9,7 @@ public class MobilityEmailTemplateBean implements Serializable {
     private MobilityEmailTemplateType type;
     private String subject;
     private String body;
+    private MobilityProgram mobilityProgram;
 
     public MobilityEmailTemplateBean() {
 
@@ -40,6 +41,14 @@ public class MobilityEmailTemplateBean implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public MobilityProgram getMobilityProgram() {
+        return mobilityProgram;
+    }
+
+    public void setMobilityProgram(MobilityProgram mobilityProgram) {
+        this.mobilityProgram = mobilityProgram;
     }
 
 }
