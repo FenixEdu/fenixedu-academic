@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.util.report;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -287,42 +288,33 @@ public class ReportsUtils extends PropertiesManager {
     static private Map<FontKey, PdfFont> createFontMap() {
         final Map<FontKey, PdfFont> result = new HashMap<FontKey, PdfFont>(4);
 
-        GenericPair<FontKey, PdfFont> aux = createFont("Quadraat-Regular", "/QUAD____.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Quadraat-Regular", "FritzRegular.ttf", BaseFont.CP1252);
 
-        aux = createFont("Quadraat-Bold", "QUADBD__.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Quadraat-Bold", "FritzBold.ttf", BaseFont.CP1252);
 
-        aux = createFont("Quadraat-Italic", "QUADI___.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Quadraat-Italic", "Fritz-Quad.ttf", BaseFont.CP1252);
 
-        aux = createFont("Quadraat-BoldItalic", "QUADBDI_.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Quadraat-BoldItalic", "FritzBold.ttf", BaseFont.CP1252);
 
-        aux = createFont("Arial", "Arial.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Arial", "Arial.ttf", BaseFont.CP1252);
 
-        aux = createFont("Arial Black", "Arial_Black.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Arial Black", "Arial_Black.ttf", BaseFont.CP1252);
 
-        aux = createFont("Lucida Handwriting", "LucidaHandwrit.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Lucida Handwriting", "LucidaHandwriting.ttf", BaseFont.CP1252);
 
-        aux = createFont("Garamond", "AGaramond.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Garamond", "AdobeGaramondPro.ttf", BaseFont.CP1252);
 
-        aux = createFont("Garamond Bold", "AGaramondBold.ttf", BaseFont.CP1252);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Garamond Bold", "AdobeGaramondBold.ttf", BaseFont.CP1252);
 
-        aux = createFont("Arial Unicode MS", "arialuni.ttf", BaseFont.IDENTITY_H);
-        result.put(aux.getLeft(), aux.getRight());
+        addFont(result, "Arial Unicode MS", "ArialUnicodeMSRegular.ttf", BaseFont.IDENTITY_H);
 
         return result;
     }
 
-    static private GenericPair<FontKey, PdfFont> createFont(final String fontName, final String pdfFontName, final String baseFont) {
-        return new GenericPair<FontKey, PdfFont>(new FontKey(fontName, false, false), new PdfFont(System.getenv("JAVA_HOME")
-                + "/jre/lib/fonts/" + pdfFontName, baseFont, true));
+    static private void addFont(final Map<FontKey, PdfFont> result, final String fontName, final String pdfFontName,
+            final String baseFont) {
+        final URL url = ReportsUtils.class.getResource("/fonts/" + pdfFontName);
+        result.put(new FontKey(fontName, false, false), new PdfFont(url.getFile(), baseFont, true));
     }
 
 }

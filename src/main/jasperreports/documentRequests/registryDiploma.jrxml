@@ -71,7 +71,7 @@
 						key="staticText-1"/>
 					<box></box>
 					<textElement textAlignment="Right">
-						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwrit.ttf" size="12" isPdfEmbedded ="true"/>
+						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwriting.ttf" size="12" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[REPÚBLICA]]></text>
 				</staticText>
@@ -85,7 +85,7 @@
 						key="staticText-2"/>
 					<box></box>
 					<textElement textAlignment="Left">
-						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwrit.ttf" size="12" isPdfEmbedded ="true"/>
+						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwriting.ttf" size="12" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[PORTUGUESA]]></text>
 				</staticText>
@@ -98,7 +98,7 @@
 						key="staticText-3"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwrit.ttf" size="12" isPdfEmbedded ="true"/>
+						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwriting.ttf" size="12" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[DIPLOMA DE REGISTO]]></text>
 				</staticText>
@@ -123,7 +123,7 @@
 						key="textField-1"/>
 					<box></box>
 					<textElement>
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[($P{principal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{university} + ($P{principal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{principal}.getValidatedName() + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
 				</textField>
@@ -137,7 +137,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
-						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond Bold" pdfFontName="AdobeGaramondBold.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
 				</textField>
@@ -151,7 +151,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement>
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do " + $P{idDocType} + " nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + ", concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
 				</textField>
@@ -165,7 +165,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
-						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond Bold" pdfFontName="AdobeGaramondBold.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institution}]]></textFieldExpression>
 				</textField>
@@ -179,7 +179,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement>
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["desta Universidade, no " + $P{conclusionDay} + ", tendo-lhe sido atribuído o grau de"]]></textFieldExpression>
 				</textField>
@@ -193,7 +193,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
-						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond Bold" pdfFontName="AdobeGaramondBold.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
 				</textField>
@@ -209,7 +209,7 @@
 						</reportElement>
 					<box></box>
 					<textElement>
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + " Valores (" + $P{finalAverageQualified} + "), pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
 				</textField>
@@ -225,7 +225,7 @@
 						</reportElement>
 					<box></box>
 					<textElement>
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + ", pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
 				</textField>
@@ -250,7 +250,7 @@
 						key="textField-8"/>
 					<box></box>
 					<textElement>
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{university} + ", " + $P{date} + "."]]></textFieldExpression>
 				</textField>
@@ -282,7 +282,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["O Presidente do " + $P{institution}]]></textFieldExpression>
 				</textField>
@@ -296,7 +296,7 @@
 						positionType="Float"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+						<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{principal}.isMale() ? "O Reitor" : "A Reitora"]]></textFieldExpression>
 				</textField>
