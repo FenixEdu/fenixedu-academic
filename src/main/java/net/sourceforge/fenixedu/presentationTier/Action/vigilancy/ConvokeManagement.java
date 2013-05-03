@@ -228,23 +228,36 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward confirmConvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ConvokeBean beanWithTeachers =
-                (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreTeachers").getMetaObject().getObject();
-
+    	Boolean havingVigilantsThatAreTeachers = false;
+    	
+        ConvokeBean beanWithTeachers = null;
+        
+         if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
+        	 beanWithTeachers = (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreTeachers").getMetaObject().getObject();
+         }
+    	
         ConvokeBean beanWithVigilants = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
-
+        
         ConvokeBean beanWithUnavailables =
                 (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreUnavailable").getMetaObject().getObject();
-        List<VigilantWrapper> teachers, vigilants, unavailables;
+        List<VigilantWrapper> teachers = null;
+        List<VigilantWrapper> vigilants, unavailables;
 
-        teachers = beanWithTeachers.getSelectedTeachers();
+        if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
+        	teachers = beanWithTeachers.getSelectedTeachers();
+        }
+        
         vigilants = beanWithVigilants.getVigilants();
         unavailables = beanWithUnavailables.getSelectedUnavailableVigilants();
 
         String convokedVigilants = beanWithVigilants.getTeachersAsString();
-        String teachersVigilancies = beanWithTeachers.getVigilantsAsString();
+        String teachersVigilancies = null;
 
-        vigilants.addAll(teachers);
+        if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
+        	teachersVigilancies = beanWithTeachers.getVigilantsAsString();
+        	vigilants.addAll(teachers);
+        }
+        
         vigilants.addAll(unavailables);
         beanWithVigilants.setVigilants(vigilants);
 
