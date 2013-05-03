@@ -240,6 +240,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         
         ConvokeBean beanWithUnavailables =
                 (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreUnavailable").getMetaObject().getObject();
+
         List<VigilantWrapper> teachers = null;
         List<VigilantWrapper> vigilants, unavailables;
 
