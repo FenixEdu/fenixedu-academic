@@ -75,10 +75,6 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     private String remarks;
 
-    private String latexThesisTitle;
-
-    private String latexThesisTitleEn;
-
     private LocalDate stateDate;
 
     public PhdIndividualProgramProcessBean() {
@@ -115,9 +111,6 @@ public class PhdIndividualProgramProcessBean implements Serializable {
         setWhenStartedStudies(process.getWhenStartedStudies());
 
         setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
-
-        setLatexThesisTitle(process.getLatexThesisTitle());
-        setLatexThesisTitleEn(process.getLatexThesisTitleEn());
     }
 
     public List<PhdThesisSubjectOrderBean> getThesisSubjectBeans() {
@@ -315,22 +308,6 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
-    }
-
-    public String getLatexThesisTitle() {
-        return latexThesisTitle;
-    }
-
-    public void setLatexThesisTitle(String latexThesisTitle) {
-        this.latexThesisTitle = latexThesisTitle;
-    }
-
-    public String getLatexThesisTitleEn() {
-        return latexThesisTitleEn;
-    }
-
-    public void setLatexThesisTitleEn(String latexThesisTitleEn) {
-        this.latexThesisTitleEn = latexThesisTitleEn;
     }
 
     public LocalDate getStateDate() {

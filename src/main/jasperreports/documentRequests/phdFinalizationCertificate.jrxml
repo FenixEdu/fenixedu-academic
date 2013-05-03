@@ -56,9 +56,6 @@
 	<parameter name="urgentAmount" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="originalAmount" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="totalAmount" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="useLatex" isForPrompting="false" class="java.lang.Boolean">
-		<defaultValueExpression ><![CDATA[false]]></defaultValueExpression>
-	</parameter>
 	<parameter name="serviceRequestNumberYear" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="presentationOnDoctoralGrade" isForPrompting="false" class="java.lang.String"/>
 
@@ -323,16 +320,14 @@
 						width="465"
 						height="47"
 						key="textField-47"
-						positionType="Float">
-							<printWhenExpression><![CDATA[!$P{useLatex}]]></printWhenExpression>
-						</reportElement>
+						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="10" isItalic="true"/>
+						<font fontName="DejaVu Serif Bold" pdfFontName="DejaVuSerif-Bold.ttf" size="8" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["\"" + $P{thesisTitle} + "\""]]></textFieldExpression>
 				</textField>
@@ -350,7 +345,8 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="10" isItalic="true"/>
+						<font fontName="Arial Unicode MS" pdfFontName="Helvetica" size="10" isBold="false" isItalic="true" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="cp1252" isStrikeThrough="false" />
+						<!--<font pdfFontName="Courier-Oblique" size="10" isItalic="true"/>-->
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.city") + ", " + $P{day}]]></textFieldExpression>
 				</textField>

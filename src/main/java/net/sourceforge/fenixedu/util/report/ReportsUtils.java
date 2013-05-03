@@ -36,7 +36,6 @@ import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.export.PdfFont;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 import net.sourceforge.fenixedu.util.PrinterManager;
@@ -307,6 +306,8 @@ public class ReportsUtils extends PropertiesManager {
         addFont(result, "Garamond Bold", "AdobeGaramondBold.ttf", BaseFont.CP1252);
 
         addFont(result, "Arial Unicode MS", "ArialUnicodeMSRegular.ttf", BaseFont.IDENTITY_H);
+
+        addFont(result, "DejaVu Serif Bold", "DejaVuSerif-Bold.ttf", BaseFont.IDENTITY_H);
 
         return result;
     }

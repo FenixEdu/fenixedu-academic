@@ -5132,8 +5132,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             }
                         
         class phd.serviceRequests.PhdAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
-        	Integer horizontalOffset;
-        	Integer verticalOffset;
         }
         
         	class phd.serviceRequests.PhdStudentReingressionRequest extends phd.serviceRequests.PhdAcademicServiceRequest {
@@ -7402,8 +7400,6 @@ class phd.PhdProgramProcess extends caseHandling.Process {
 class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
     String thesisTitle;
     String thesisTitleEn;
-    String latexThesisTitle;
-    String latexThesisTitleEn;
     PhdIndividualProgramCollaborationType collaborationType;
     String otherCollaborationType;
     Boolean qualificationExamsRequired;

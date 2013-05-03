@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
 
 abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceRequest_Base {
 
@@ -53,11 +52,5 @@ abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceReques
 
     public Campus getCampus() {
         return Campus.readActiveCampusByName("Alameda");
-    }
-
-    @Service
-    public void editDisplacement(PhdAcademicServiceRequestDisplacementBean bean) {
-        setHorizontalOffset(bean.getHorizontalOffset());
-        setVerticalOffset(bean.getVerticalOffset());
     }
 }

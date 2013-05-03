@@ -22,12 +22,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFontSize;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererException;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererService;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
@@ -239,31 +235,14 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
             final List<AdministrativeOfficeDocument> documents =
                     AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
 
-            String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();
-
-            for (AdministrativeOfficeDocument administrativeOfficeDocument : documents) {
-                administrativeOfficeDocument.addParameter("useLatex", !StringUtils.isEmpty(latexThesisTitle));
-            }
-
             final AdministrativeOfficeDocument[] array = {};
             byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-
-            if (!StringUtils.isEmpty(latexThesisTitle)) {
-                LatexStringRendererService latexService = new LatexStringRendererService();
-                byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.NORMALSIZE);
-                Integer xOffset = getHorizontalOffset() != null ? getHorizontalOffset() : 0;
-                Integer yOffset = getVerticalOffset() != null ? getVerticalOffset() : 0;
-
-                data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0 + xOffset, -365 + yOffset);
-            }
 
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;
         } catch (JRException e) {
             e.printStackTrace();
             throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
-        } catch (LatexStringRendererException e) {
-            throw new DomainException("error.phdDiplomaRequest.latex.service", e);
         }
     }
 

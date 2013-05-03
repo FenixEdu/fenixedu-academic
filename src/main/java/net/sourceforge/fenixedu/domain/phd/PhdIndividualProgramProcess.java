@@ -113,7 +113,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -471,9 +470,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         getPhdIndividualProcessNumber().edit(bean);
-
-        setLatexThesisTitle(bean.getLatexThesisTitle());
-        setLatexThesisTitleEn(bean.getLatexThesisTitleEn());
 
         return this;
     }
@@ -1371,10 +1367,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public String getThesisTitleForCertificateGeneration() {
-        if (!StringUtils.isEmpty(getLatexThesisTitle())) {
-            return getLatexThesisTitle();
-        }
-
         return getThesisTitle();
     }
 
