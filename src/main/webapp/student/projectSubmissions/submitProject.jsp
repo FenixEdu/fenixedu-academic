@@ -25,10 +25,16 @@
 <bean:define id="attendsId" name="attends" property="idInternal" />
 <bean:define id="projectId" name="project" property="idInternal" />
 
-<fr:edit id="createProjectSubmission"
-	name="projectSubmission"
-	schema="projectSubmission.create"
-	action="<%="/projectSubmission.do?method=submitProject&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
+<fr:edit id="createProjectSubmission" name="projectSubmission" action="<%="/projectSubmission.do?method=submitProject&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
+	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean" bundle="STUDENT_RESOURCES">
+		<fr:slot name="inputStream" key="label.projectSubmission.projectFile" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:property name="fileNameSlot" value="filename"/>
+			<fr:property name="maxSize" value="63mb"/>
+			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+				<fr:property name="maxSize" value="63mb"/>
+			</fr:validator>	
+		</fr:slot>
+	</fr:schema>
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thmiddle mtop1 mbottom11" />
