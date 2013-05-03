@@ -12,6 +12,10 @@ public class OtherService extends OtherService_Base {
         setValues(teacherService, credits, reason, correctedExecutionSemester);
     }
 
+    public OtherService() {
+        super();
+    }
+
     public OtherService(TeacherService teacherService, Double credits, String reason) {
         setValues(teacherService, credits, reason, null);
     }

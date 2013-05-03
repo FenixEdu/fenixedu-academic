@@ -18,6 +18,13 @@ public class TeacherServiceLog extends TeacherServiceLog_Base implements Compara
         setDescription(description);
     }
 
+    public void delete() {
+        removeTeacherService();
+        removeRootDomainObject();
+        removeUser();
+        super.deleteDomainObject();
+    }
+
     @Override
     public int compareTo(final TeacherServiceLog o) {
         if (o == null) {

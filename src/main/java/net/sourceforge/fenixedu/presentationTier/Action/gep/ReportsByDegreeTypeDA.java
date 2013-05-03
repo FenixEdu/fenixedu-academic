@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
 import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelDegreeReportFile;
+import net.sourceforge.fenixedu.domain.reports.EffectiveTeachingLoadReportFile;
 import net.sourceforge.fenixedu.domain.reports.EtiReportFile;
 import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
@@ -558,6 +559,20 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         return selectDegreeType(mapping, actionForm, request, response);
     }
 
+    public ActionForward downloadEffectiveTeachingLoadReportFile(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+            return selectDegreeType(mapping, actionForm, request, response);
+        }
+        final DegreeType degreeType = getDegreeType(request);
+        final ExecutionYear executionYear = getExecutionYear(request);
+        final String format = getFormat(request);
+
+        prepareNewJobResponse(request, ReportFileFactory.createEffectiveTeachingLoadReportFile(format, degreeType, executionYear));
+
+        return selectDegreeType(mapping, actionForm, request, response);
+    }
+
     private void prepareNewJobResponse(HttpServletRequest request, GepReportFile job) {
 
         ReportBean reportBean = getRenderedObject();
@@ -622,6 +637,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
             return WrittenEvaluationReportFile.class;
         case 23:
             return TeacherCreditsReportFile.class;
+        case 24:
+            return EffectiveTeachingLoadReportFile.class;
         default:
             return null;
         }

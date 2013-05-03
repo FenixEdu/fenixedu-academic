@@ -476,6 +476,7 @@
 <bean:define id="urlTeachersFromAplica" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersListFromAplica&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="urlTeachersFromGiaf" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersListFromGiaf&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="urlTeacherCreditsReportFile" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeacherCreditsReportFile&amp;<bean:write name="args" filter="false"/></bean:define>
+<bean:define id="urlEffectiveTeachingLoadReportFile" type="java.lang.String">/reportsByDegreeType.do?method=downloadEffectiveTeachingLoadReportFile&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 <table class="tstyle1 thleft thlight mtop05">
 	<logic:notPresent name="reportBean" property="degreeType">
@@ -624,6 +625,27 @@
 		<td>
 			<html:link page="<%= viewReports + "&type=23" %>">
 				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType23"/>)
+			</html:link>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 350px;">
+			<bean:message key="label.report.effectiveTeachingLoad" bundle="GEP_RESOURCES"/>
+		</td>
+		<td>
+			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlEffectiveTeachingLoadReportFile" filter="false"/>&amp;format=csv&amp;type=24</bean:define>
+			<html:link page="<%= urlTeachersCsv %>">
+				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+			</html:link>
+			|
+			<bean:define id="urlTeachersXls" type="java.lang.String"><bean:write name="urlEffectiveTeachingLoadReportFile" filter="false"/>&amp;format=xls&amp;type=24</bean:define>
+			<html:link page="<%= urlTeachersXls %>">
+				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+		<td>
+			<html:link page="<%= viewReports + "&type=24" %>">
+				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType24"/>)
 			</html:link>
 		</td>
 	</tr>

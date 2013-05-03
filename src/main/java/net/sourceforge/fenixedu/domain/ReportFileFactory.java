@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
 import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelDegreeReportFile;
+import net.sourceforge.fenixedu.domain.reports.EffectiveTeachingLoadReportFile;
 import net.sourceforge.fenixedu.domain.reports.EtiReportFile;
 import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
@@ -245,5 +246,15 @@ public class ReportFileFactory {
         TeacherCreditsReportFile.setDegreeType(degreeType);
         TeacherCreditsReportFile.setExecutionYear(executionYear);
         return TeacherCreditsReportFile;
+    }
+
+    @Service
+    public static GepReportFile createEffectiveTeachingLoadReportFile(String type, DegreeType degreeType,
+            ExecutionYear executionYear) {
+        final EffectiveTeachingLoadReportFile effectiveTeachingLoadReportFile = new EffectiveTeachingLoadReportFile();
+        effectiveTeachingLoadReportFile.setType(type);
+        effectiveTeachingLoadReportFile.setDegreeType(degreeType);
+        effectiveTeachingLoadReportFile.setExecutionYear(executionYear);
+        return effectiveTeachingLoadReportFile;
     }
 }

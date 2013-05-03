@@ -5711,6 +5711,11 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             Double credits;
             String reason;
         }
+        
+        class teacher.DegreeTeachingServiceCorrection extends teacher.OtherService {
+           BigDecimal correction;
+        }
+        
 
         class teacher.TeacherAdviseService extends teacher.TeacherServiceItem {
             Double percentage;
@@ -7222,6 +7227,7 @@ class reports.DissertationsWithExternalAffiliationsReportFile extends reports.Ge
 class reports.TimetablesReportFile extends reports.GepReportFile {}
 class reports.TeachersListFromGiafReportFile extends reports.GepReportFile {}
 class reports.TeacherCreditsReportFile extends reports.GepReportFile {}
+class reports.EffectiveTeachingLoadReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 class reports.TutorshipProgramReportFile extends reports.GepReportFile {}
 class reports.RaidesGraduationReportFile extends reports.GepReportFile {}
@@ -11130,6 +11136,13 @@ relation DegreeModulePrecedenceRule {
 
 relation DegreeTeachingServiceProfessorship {
     teacher.DegreeTeachingService playsRole degreeTeachingServices {
+        multiplicity *;
+    }
+    Professorship playsRole professorship;
+}
+
+relation DegreeTeachingServiceCorrectionProfessorship {
+   	teacher.DegreeTeachingServiceCorrection playsRole degreeTeachingServiceCorrections {
         multiplicity *;
     }
     Professorship playsRole professorship;
