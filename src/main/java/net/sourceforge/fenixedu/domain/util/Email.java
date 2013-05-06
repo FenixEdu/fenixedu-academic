@@ -368,7 +368,7 @@ public class Email extends Email_Base {
         // if (bccAddresses != null && !bccAddresses.isEmpty()) {
         // addresses.addAll(bccAddresses.toCollection());
         // }
-        if (recipients != null) {
+        if (recipients != null && recipients.length > 0) {
             for (final Address address : recipients) {
                 final String[] replyTos = getReplyTos() == null ? null : getReplyTos().toArray();
                 final Email email =
@@ -382,7 +382,7 @@ public class Email extends Email_Base {
     }
 
     public void deliver() {
-        if (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow()) {
+        if (!hasAnyRecipients() || (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow())) {
             removeRootDomainObjectFromEmailQueue();
         } else {
             final EmailAddressList toAddresses = getToAddresses();
@@ -419,6 +419,11 @@ public class Email extends Email_Base {
 
     private boolean hasAnyRecipients(final EmailAddressList emailAddressList) {
         return emailAddressList != null && !emailAddressList.isEmpty();
+    }
+
+    @Override
+    public void setFromName(final String fromName) {
+        super.setFromName(fromName.replace(",", ""));
     }
 
 }
