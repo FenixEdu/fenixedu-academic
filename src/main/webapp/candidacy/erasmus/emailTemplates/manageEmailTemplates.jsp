@@ -5,9 +5,16 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2>Email Templates</h2>
+
+<h2><bean:message key="label.emailTemplates" bundle="APPLICATION_RESOURCES"/></h2>
 
 <bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processName" name="processName" />
+
+<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+</html:link>
+<br/>
 
 <logic:equal name="hasMobilityPrograms" value="true">
 <fr:form action="/caseHandlingMobilityApplicationProcess.do">
