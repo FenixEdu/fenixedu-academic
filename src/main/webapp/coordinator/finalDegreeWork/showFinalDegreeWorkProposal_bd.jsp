@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
 <%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -95,11 +96,13 @@ color: #000;
 		%>
 	</logic:empty>
 	<%
-	final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.ExecutionDegree.fromExternalId((String)request.getAttribute("executionDegreeOID"));
+	final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = ExecutionDegree.fromExternalId((String)request.getAttribute("executionDegreeOID"));
 	final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
 	if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 		showCoordinator = true;
 		showCompanion = true;
+	} else {
+		showCompanion = false;
 	}
 	request.setAttribute("showCoordinator", showCoordinator);
 	request.setAttribute("showCompanion", showCompanion);
@@ -107,49 +110,70 @@ color: #000;
 
 	<p class="mtop2 mbottom05"><bean:message key="label.teacher.finalWork.title"/>:</p>
 	<p><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/></p>
-
-
+	
 	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.responsable"/></b></p>
 	<table width="100%">
 		<tr>
-			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</td>
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td style="width: 120px;">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6"/>
-				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='orientator';document.forms[0].submit();"/>
-				
+				<logic:present name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" maxlength="9" size="7"
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getIstUsername() %>'
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
+				</logic:present>
+				<logic:notPresent name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" maxlength="9" size="7"
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
+				</logic:notPresent>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
 				</html:submit>
 			</td>
 			<td><bean:message key="label.teacher.finalWork.name"/>:</td>
-			<td id='respName'>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
+			<td>
+				<logic:present name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getName().toString() %>'/>
+				</logic:present>
+				<logic:notPresent name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
+				</logic:notPresent>
 			</td>
 		</tr>
 	</table>
+	<br/><br/>
 
-
-	<logic:equal name="showCoordinator" value="true">
-	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.coResponsable"/></b></p>
+	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
 			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</td>
 			<td style="width: 120px;">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherId" size="6"/>
-				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='coorientator';document.forms[0].submit();"/>
+				<logic:present name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" maxlength="9" size="7"
+						value='<%= ((Person) pageContext.findAttribute("coorientator")).getIstUsername() %>'
+						onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  />
+				</logic:present>
+				<logic:notPresent name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" maxlength="9" size="7" 
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"/>
+				</logic:notPresent>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
 				</html:submit>
 			</td>
 			<td><bean:message key="label.teacher.finalWork.name"/>:</td>
-			<td id='coRespName'>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
+			<td>
+				<logic:present name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
+						value='<%= ((Person) pageContext.findAttribute("coorientator")).getName().toString() %>'/>
+				</logic:present>
+				<logic:notPresent name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
+				</logic:notPresent>
 			</td>
 		</tr>
 	</table>
-	</logic:equal>
-
-
+	<br/><br/>
 
 	<logic:equal name="showCompanion" value="true">
 	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.companion"/></b></p>

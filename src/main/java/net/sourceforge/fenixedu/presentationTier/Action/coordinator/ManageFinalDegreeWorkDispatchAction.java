@@ -66,6 +66,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -930,7 +931,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         if ("orientator".equals(alteredField)) {
             number = (String) finalWorkForm.get("responsableTeacherId");
-        } else if ("coorientator".equals(alteredField)) {
+        }
+        
+        if ("coorientator".equals(alteredField)) {
             number = (String) finalWorkForm.get("coResponsableTeacherId");
         }
 
@@ -946,10 +949,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return prepareFinalWorkInformation(mapping, form, request, response);
         }
 
-        // final Employee employee =
-        // Employee.readByNumber(Integer.valueOf(number));
-        // final Person person = employee.getPerson();
-        Person person = Person.readPersonByIstUsername(number);
+        Person person = null;
+        if (number.substring(0, 3).equals("ist")) {
+            person = Person.readPersonByIstUsername(number);
+        }
         if (StringUtils.isNumeric(number)) {
             final Integer n = new Integer(number);
             final Employee employee = Employee.readByNumber(n);
@@ -957,10 +960,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 person = employee.getPerson();
             }
         }
-        if (person == null /*
-                           * || !(person.hasRole(RoleType.TEACHER) ||
-                           * person.hasRole(RoleType.RESEARCHER))
-                           */) {
+        if (person == null || !(person.hasRole(RoleType.TEACHER)) || !(person.hasRole(RoleType.RESEARCHER) || !(person.hasAnyProfessorships()))) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                     "finalWorkInformationForm.unexistingTeacher"));
@@ -972,22 +972,20 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
             finalWorkForm.set("responsableTeacherName", person.getName());
             request.setAttribute("orientator", person);
-        } else {
-            if ("coorientator".equals(alteredField)) {
-                finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
-                finalWorkForm.set("coResponsableTeacherName", person.getName());
-                request.setAttribute("coorientator", person);
-                if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
-                    finalWorkForm.set("companionName", "");
-                    finalWorkForm.set("companionMail", "");
-                    finalWorkForm.set("companionPhone", "");
-                    finalWorkForm.set("companyAdress", "");
-                    finalWorkForm.set("companyName", "");
-                    finalWorkForm.set("alteredField", "");
-                }
+        }
+        if ("coorientator".equals(alteredField)) {
+        	finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
+            finalWorkForm.set("coResponsableTeacherName", person.getName());
+            request.setAttribute("coorientator", person);
+            if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
+            	finalWorkForm.set("companionName", "");
+                finalWorkForm.set("companionMail", "");
+                finalWorkForm.set("companionPhone", "");
+                finalWorkForm.set("companyAdress", "");
+                finalWorkForm.set("companyName", "");
+                finalWorkForm.set("alteredField", "");
             }
         }
-
         return createNewFinalDegreeWorkProposal(mapping, form, request, response);
     }
 

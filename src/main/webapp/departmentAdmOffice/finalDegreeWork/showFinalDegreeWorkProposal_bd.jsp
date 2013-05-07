@@ -7,7 +7,6 @@
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" type="String" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" type="String" scope="request" />
-<bean:define id="proposalOID" name="proposalOID" type="String" scope="request" />
 
 <style>
 input.teacherNameDisplay {
@@ -27,7 +26,7 @@ color: #000;
 	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 </h3>	
 
-<p><html:link page="<%= "/manageFinalDegreeWork.do?method=showProposal&proposalOID=" + proposalOID + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="label.return"/></html:link></p>
+<p><html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="label.return"/></html:link></p>
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
@@ -55,8 +54,9 @@ color: #000;
 <html:form action="/finalDegreeWorkProposal">
 	
 	<%
-	    boolean showCoordinator = false; 
+	    boolean showCoordinator = false;
 	    boolean showCompanion = false;
+	    String proposalOID = (String) request.getAttribute("proposalOID");
 	%>
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
@@ -98,6 +98,8 @@ color: #000;
 	if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 		showCoordinator = true;
 		showCompanion = true;
+	} else {
+		showCompanion = false;
 	}
 	request.setAttribute("showCoordinator", showCoordinator);
 	request.setAttribute("showCompanion", showCompanion);
@@ -107,40 +109,73 @@ color: #000;
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
 	<hr/><br/>
 
-	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.responsable"/></b></p>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
-			<td width="10%">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6" disabled="true"/>
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</th>
+			<td style="width: 120px;">
+				<logic:present name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" maxlength="9" size="7"
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getIstUsername() %>'
+						onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
+						/>
+				</logic:present>
+				<logic:notPresent name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" maxlength="9" size="7"
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
+				</logic:notPresent>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
-			<td width="1%"/>
-			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
-			<td width="66%" id='respName'>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="true"/>
+			<td><bean:message key="label.teacher.finalWork.name"/>:</td>
+			<td>
+				<logic:present name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getName().toString() %>'
+						onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
+				</logic:present>
+				<logic:notPresent name="orientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
+				</logic:notPresent>
 			</td>
 		</tr>
 	</table>
 	<br/><br/>
 
-	<logic:equal name="showCoordinator" value="true">
 	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
-			<td width="10%">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherId" size="6" disabled="true"/>
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</td>
+			<td style="width: 120px;">
+				<logic:present name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" maxlength="9" size="7"
+						value='<%= ((Person) pageContext.findAttribute("coorientator")).getIstUsername() %>'
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  />
+				</logic:present>
+				<logic:notPresent name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" maxlength="9" size="7" 
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
+					/>
+				</logic:notPresent>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
-			<td width="1%"/>
-			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
-			<td width="66%" id='coRespName'>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="true"/>
+			<td><bean:message key="label.teacher.finalWork.name"/>:</td>
+			<td>
+				<logic:present name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
+						value='<%= ((Person) pageContext.findAttribute("coorientator")).getName().toString() %>'/>
+				</logic:present>
+				<logic:notPresent name="coorientator">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
+				</logic:notPresent>
 			</td>
 		</tr>
 	</table>
 	<br/><br/>
-	</logic:equal>
-
+	
 	<logic:equal name="showCompanion" value="true">
 	<b><bean:message key="label.teacher.finalWork.companion"/>:</b>
 	<table width="100%">
