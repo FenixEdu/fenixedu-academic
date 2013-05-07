@@ -41,8 +41,9 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
                 if (event instanceof InsuranceEvent) {
                     Person person = (Person) party;
                     final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
-                    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear())
-                            || person.hasInsuranceEventFor(insuranceEvent.getExecutionYear())) {
+                    if (person != null
+                            && (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear()) || person
+                                    .hasInsuranceEventFor(insuranceEvent.getExecutionYear()))) {
                         throw new DomainException(
                                 "error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
 
