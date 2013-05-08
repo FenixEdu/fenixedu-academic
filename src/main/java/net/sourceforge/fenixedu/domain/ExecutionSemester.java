@@ -481,6 +481,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             throw new Error("cannot.delete.execution.period.because.enrolments.exist");
         }
         super.setExecutionYear(null);
+        removeRootDomainObjectForExecutionPeriod();
         removeRootDomainObject();
         deleteDomainObject();
     }
