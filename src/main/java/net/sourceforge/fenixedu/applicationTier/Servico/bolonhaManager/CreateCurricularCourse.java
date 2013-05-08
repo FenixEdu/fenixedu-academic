@@ -3,33 +3,29 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateCurricularCourse extends FenixService {
+public class CreateCurricularCourse {
 
-    private DegreeCurricularPlan degreeCurricularPlan = null;
+    @Service
+    public static void run(CreateCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
 
-    private CourseGroup parentCourseGroup = null;
-
-    private CurricularPeriod curricularPeriod = null;
-
-    private ExecutionSemester beginExecutionPeriod = null;
-
-    private ExecutionSemester endExecutionPeriod = null;
-
-    public void run(CreateCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
-
-        readDomainObjects(curricularCourseArgs);
+        DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(curricularCourseArgs);
+        CourseGroup parentCourseGroup = readParentCourseGroup(curricularCourseArgs);
+        CurricularPeriod curricularPeriod = readCurricularPeriod(curricularCourseArgs, degreeCurricularPlan);
+        ExecutionSemester beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
+        ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         final CompetenceCourse competenceCourse =
-                rootDomainObject.readCompetenceCourseByOID(curricularCourseArgs.getCompetenceCourseID());
+                RootDomainObject.getInstance().readCompetenceCourseByOID(curricularCourseArgs.getCompetenceCourseID());
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
@@ -52,49 +48,73 @@ public class CreateCurricularCourse extends FenixService {
      * @param createOptionalCurricularCourseArgs
      * @throws FenixServiceException
      */
-    public void run(CreateOptionalCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
+    @Service
+    public static void run(CreateOptionalCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
 
-        readDomainObjects(curricularCourseArgs);
+        DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(curricularCourseArgs);
+        CourseGroup parentCourseGroup = readParentCourseGroup(curricularCourseArgs);
+        CurricularPeriod curricularPeriod = readCurricularPeriod(curricularCourseArgs, degreeCurricularPlan);
+        ExecutionSemester beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
+        ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         degreeCurricularPlan.createOptionalCurricularCourse(parentCourseGroup, curricularCourseArgs.getName(),
                 curricularCourseArgs.getNameEn(), CurricularStage.DRAFT, curricularPeriod, beginExecutionPeriod,
                 endExecutionPeriod);
     }
 
-    protected void readDomainObjects(CurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
-
-        degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(curricularCourseArgs.getDegreeCurricularPlanID());
+    private static DegreeCurricularPlan readDegreeCurricularPlan(CurricularCourseArgs curricularCourseArgs)
+            throws FenixServiceException {
+        DegreeCurricularPlan degreeCurricularPlan =
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(curricularCourseArgs.getDegreeCurricularPlanID());
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
+        return degreeCurricularPlan;
+    }
 
-        parentCourseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(curricularCourseArgs.getParentCourseGroupID());
+    private static CourseGroup readParentCourseGroup(CurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
+        CourseGroup parentCourseGroup =
+                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseArgs.getParentCourseGroupID());
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
+        return parentCourseGroup;
+    }
 
+    private static CurricularPeriod readCurricularPeriod(CurricularCourseArgs curricularCourseArgs,
+            DegreeCurricularPlan degreeCurricularPlan) {
         // TODO this is not generic thinking... must find a way to abstract from
         // years/semesters
-        curricularPeriod =
+        CurricularPeriod curricularPeriod =
                 degreeCurricularPlan.getCurricularPeriodFor(curricularCourseArgs.getYear(), curricularCourseArgs.getSemester());
         if (curricularPeriod == null) {
             curricularPeriod =
                     degreeCurricularPlan.createCurricularPeriodFor(curricularCourseArgs.getYear(),
                             curricularCourseArgs.getSemester());
         }
-
-        beginExecutionPeriod = getBeginExecutionPeriod(curricularCourseArgs);
-        endExecutionPeriod =
-                (curricularCourseArgs.getEndExecutionPeriodID() == null) ? null : rootDomainObject
-                        .readExecutionSemesterByOID(curricularCourseArgs.getEndExecutionPeriodID());
+        return curricularPeriod;
     }
 
-    private ExecutionSemester getBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
+    private static ExecutionSemester readBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
+        ExecutionSemester beginExecutionPeriod;
         if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
-            return ExecutionSemester.readActualExecutionSemester();
+            beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
-            return rootDomainObject.readExecutionSemesterByOID(curricularCourseArgs.getBeginExecutionPeriodID());
+            beginExecutionPeriod =
+                    RootDomainObject.getInstance().readExecutionSemesterByOID(curricularCourseArgs.getBeginExecutionPeriodID());
         }
+        return beginExecutionPeriod;
+    }
+
+    private static ExecutionSemester readEndExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
+        ExecutionSemester endExecutionPeriod;
+        if (curricularCourseArgs.getEndExecutionPeriodID() == null) {
+            endExecutionPeriod = null;
+        } else {
+            endExecutionPeriod =
+                    RootDomainObject.getInstance().readExecutionSemesterByOID(curricularCourseArgs.getEndExecutionPeriodID());
+        }
+        return endExecutionPeriod;
     }
 
     private abstract static class CurricularCourseArgs {

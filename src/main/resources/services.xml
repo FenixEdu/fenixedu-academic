@@ -26,24 +26,6 @@
     </service>
 
     <service>
-        <name>AddContextToCourseGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCourseGroup</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>AddContextToCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>AddCoordinator</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator</implementationClass>
         <isTransactional>true</isTransactional>
@@ -353,15 +335,6 @@
     </service>
 
     <service>
-        <name>CreateCompositeRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompositeRule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CreateConversationMessage</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationMessage</implementationClass>
         <isTransactional>true</isTransactional>
@@ -373,24 +346,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationThreadAndMessage</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>
-
-    <service>
-        <name>CreateCourseGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCourseGroup</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularCourse</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
     </service>
 
     <service>
@@ -515,15 +470,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.CreateResultPublication</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>
-
-    <service>
-        <name>CreateRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateRule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
     </service>
 
     <service>
@@ -706,29 +652,11 @@
     </service>
 
     <service>
-        <name>DeleteContextFromDegreeModule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeleteCurricularCourseEquivalency</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCourseEquivalency</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerOrDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteCurricularRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCurricularRule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
         </filterChains>
     </service>
 
@@ -1192,47 +1120,11 @@
     </service>
 
     <service>
-        <name>EditContextFromCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditContextFromCurricularCourse</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditCourseGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>EditCourseInformation</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.EditCourseInformation</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="EditCourseInformationAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditCurricularCourseBolonhaManager</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularCourse</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditCurricularRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularRule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
         </filterChains>
     </service>
 
@@ -1961,15 +1853,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>OrderDegreeModule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.OrderDegreeModule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
         </filterChains>
     </service>
 

@@ -45,6 +45,16 @@ public class AcademicPredicates {
         };
     };
 
+    public static final AccessControlPredicate<Object> MANAGE_DEGREE_CURRICULAR_PLANS = new AccessControlPredicate<Object>() {
+        @Override
+        public boolean evaluate(final Object degree) {
+            Set<Degree> allowedDegrees = new HashSet<Degree>();
+            allowedDegrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS));
+            return allowedDegrees.contains(degree);
+        };
+    };
+
     public static final AccessControlPredicate<Object> CREATE_REGISTRATION = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {

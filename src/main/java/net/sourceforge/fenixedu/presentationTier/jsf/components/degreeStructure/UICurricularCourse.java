@@ -304,13 +304,15 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
-        encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID="
-                + this.curricularCourse.getIdInternal(), false, "edit");
-        // if (this.executionYear == null) {
-        writer.append(" , ");
-        encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getIdInternal()
-                + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "delete");
-        // }
+        if (loggedPersonCanManageDegreeCurricularPlans()) {
+            encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getIdInternal()
+                    + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "edit");
+            // if (this.executionYear == null) {
+            writer.append(" , ");
+            encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getIdInternal()
+                    + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "delete");
+            // }
+        }
         writer.endElement("td");
     }
 
@@ -318,8 +320,10 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
-        encodeLink(module + "/curricularRules/createCurricularRule.faces",
-                "&degreeModuleID=" + this.curricularCourse.getIdInternal(), false, "setCurricularRule");
+        if (loggedPersonCanManageDegreeCurricularPlans()) {
+            encodeLink(module + "/curricularRules/createCurricularRule.faces",
+                    "&degreeModuleID=" + this.curricularCourse.getIdInternal(), false, "setCurricularRule");
+        }
         writer.endElement("td");
     }
 

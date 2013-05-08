@@ -12,8 +12,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditContextFromCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
@@ -37,9 +40,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -369,8 +372,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public boolean isToDelete() {
         if (getCurricularCourse() != null) {
-            toDelete = getCurricularCourse().getParentContextsCount() == 1; // Last
-            // context?
+            toDelete = getCurricularCourse().getParentContextsCount() == 1; // Last context?
         }
         return toDelete;
     }
@@ -479,15 +481,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         try {
             checkCourseGroup();
             checkCurricularSemesterAndYear();
-
-            ServiceUtils.executeService("CreateCurricularCourse", getArgumentsToCreate());
+            runCreateCurricularCourse();
 
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
-        } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-            return "buildCurricularPlan";
         } catch (FenixServiceException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
@@ -502,52 +500,48 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "buildCurricularPlan";
     }
 
-    private Object[] getArgumentsToCreate() throws FenixActionException {
+    private void runCreateCurricularCourse() throws FenixActionException, FenixServiceException {
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
 
             checkCompetenceCourse();
-            return new Object[] { new CreateCurricularCourse.CreateCurricularCourseArgs(getWeight(), getPrerequisites(),
+            CreateCurricularCourse.run(new CreateCurricularCourse.CreateCurricularCourseArgs(getWeight(), getPrerequisites(),
                     getPrerequisitesEn(), getCompetenceCourseID(), getCourseGroupID(), getCurricularYearID(),
                     getCurricularSemesterID(), getDegreeCurricularPlanID(), getBeginExecutionPeriodID(),
-                    getFinalEndExecutionPeriodID()) };
+                    getFinalEndExecutionPeriodID()));
 
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
 
             checkCurricularCourseNameAndNameEn();
-            return new Object[] { new CreateCurricularCourse.CreateOptionalCurricularCourseArgs(getDegreeCurricularPlanID(),
+            CreateCurricularCourse.run(new CreateCurricularCourse.CreateOptionalCurricularCourseArgs(getDegreeCurricularPlanID(),
                     getCourseGroupID(), getName(), getNameEn(), getCurricularYearID(), getCurricularSemesterID(),
-                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID()) };
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID()));
 
         }
-        return null;
     }
 
-    public String editCurricularCourse() throws FenixFilterException {
+    public String editCurricularCourse() {
         try {
-            ServiceUtils.executeService("EditCurricularCourseBolonhaManager", getArgumentsToEdit());
-            setContextID(0); // resetContextID
+            runEditCurricularCourse();
+            addInfoMessage(bolonhaBundle.getString("curricularCourseEdited"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
-        addInfoMessage(bolonhaBundle.getString("curricularCourseEdited"));
+        setContextID(0); // resetContextID
         return "";
     }
 
-    private Object[] getArgumentsToEdit() throws FenixActionException {
+    private void runEditCurricularCourse() throws FenixActionException, FenixServiceException {
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
             checkCompetenceCourse();
-            Object args[] =
-                    { getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourse() };
-            return args;
+            EditCurricularCourse.run(getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(),
+                    getCompetenceCourse());
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
-            Object args[] = { getCurricularCourse(), getName(), getNameEn() };
-            return args;
+            EditCurricularCourse.run(getCurricularCourse(), getName(), getNameEn());
         }
-        return null;
     }
 
     private void checkCompetenceCourse() throws FenixActionException {
@@ -595,48 +589,40 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             checkCourseGroup();
             checkCurricularCourse();
             checkCurricularSemesterAndYear();
-            Object args[] =
-                    { getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID(),
-                            getCurricularYearID(), getCurricularSemesterID() };
-
-            ServiceUtils.executeService("AddContextToCurricularCourse", args);
-
+            AddContextToCurricularCourse.run(getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(),
+                    getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID());
+            addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
-        } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-            return "buildCurricularPlan";
         } catch (FenixServiceException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessages(bolonhaBundle, e.getMessage(), e.getArgs());
             return "";
         } catch (Exception e) {
             this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
         }
-        addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
         setContextID(0); // resetContextID
         return "buildCurricularPlan";
     }
 
-    public String editContext() throws FenixFilterException {
+    public String editContext() {
         try {
             checkCourseGroup();
-            Object args[] =
-                    { getCurricularCourse(), getContext(getContextID()), getCourseGroup(), getCurricularYearID(),
-                            getCurricularSemesterID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService("EditContextFromCurricularCourse", args);
-            setContextID(0); // resetContextID
-        } catch (FenixServiceException e) {
-            addErrorMessage(e.getMessage());
+            EditContextFromCurricularCourse
+                    .run(getCurricularCourse(), getContext(getContextID()), getCourseGroup(), getCurricularYearID(),
+                            getCurricularSemesterID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
+        } catch (IllegalDataAccessException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
         } catch (DomainException e) {
             addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
+        setContextID(0); // resetContextID
         return "";
     }
 
@@ -646,7 +632,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                 "endExecutionPeriodID");
     }
 
-    public void tryDeleteContext(ActionEvent event) throws FenixFilterException {
+    public void tryDeleteContext(ActionEvent event) {
         if (!isToDelete()) {
             deleteContext(event);
         } else {
@@ -654,17 +640,18 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public void deleteContext(ActionEvent event) throws FenixFilterException {
+    public void deleteContext(ActionEvent event) {
         try {
-            Object args[] = { getCurricularCourseID(), getContextIDToDelete() };
-            ServiceUtils.executeService("DeleteContextFromDegreeModule", args);
-            setContextID(0); // resetContextID
+            DeleteContextFromDegreeModule.run(getCurricularCourseID(), getContextIDToDelete());
             addInfoMessage(bolonhaBundle.getString("successAction"));
+        } catch (IllegalDataAccessException e) {
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
             addErrorMessage(getFormatedMessage(domainExceptionBundle, e.getKey(), e.getArgs()));
         }
+        setContextID(0); // resetContextID
     }
 
     public String cancel() {

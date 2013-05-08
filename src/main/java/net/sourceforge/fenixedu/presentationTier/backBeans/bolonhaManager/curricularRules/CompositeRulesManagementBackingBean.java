@@ -10,11 +10,11 @@ import javax.faces.component.UISelectItems;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompositeRule;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 public class CompositeRulesManagementBackingBean extends CurricularRulesManagementBackingBean {
@@ -94,8 +94,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
 
     public String createCompositeRule() throws FenixFilterException {
         try {
-            final Object args[] = { LogicOperator.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs() };
-            ServiceUtils.executeService("CreateCompositeRule", args);
+            CreateCompositeRule.run(LogicOperator.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs());
             removeSelectedCurricularRuleIDs();
             getCurricularRuleItems().setValue(readCurricularRulesLabels());
         } catch (FenixFilterException e) {

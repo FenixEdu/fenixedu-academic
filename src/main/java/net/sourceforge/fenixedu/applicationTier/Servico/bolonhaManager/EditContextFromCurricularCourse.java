@@ -1,18 +1,20 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class EditContextFromCurricularCourse extends FenixService {
+public class EditContextFromCurricularCourse {
 
-    public void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup, Integer year, Integer semester,
-            Integer beginExecutionPeriodID, Integer endExecutionPeriodID) {
+    @Service
+    public static void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup, Integer year,
+            Integer semester, Integer beginExecutionPeriodID, Integer endExecutionPeriodID) {
 
         final CurricularPeriod degreeCurricularPeriod =
                 context.getParentCourseGroup().getParentDegreeCurricularPlan().getDegreeStructure();
@@ -49,17 +51,18 @@ public class EditContextFromCurricularCourse extends FenixService {
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+    private static ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
-            return rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
+            return RootDomainObject.getInstance().readExecutionSemesterByOID(beginExecutionPeriodID);
         }
     }
 
-    private ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
+    private static ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : RootDomainObject.getInstance().readExecutionSemesterByOID(
+                        endExecutionPeriodID);
         return endExecutionPeriod;
     }
 }

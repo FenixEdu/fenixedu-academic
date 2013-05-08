@@ -334,4 +334,12 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         return this.gradeScale;
     }
 
+    public boolean isToAddNewContext() {
+        String isToAdd = getRequestParameter("toAddNewContext");
+        if (isToAdd == null) {
+            return false;
+        } else {
+            return new Boolean(isToAdd);
+        }
+    }
 }

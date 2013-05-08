@@ -43,6 +43,7 @@
 			<h:outputLink value="#{CompetenceCourseManagement.request.contextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularCourse.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
 				<f:param name="action" value="close"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
 				<f:param name="executionYearID" value="#{CompetenceCourseManagement.executionYearID}"/>
 			</h:outputLink>
@@ -164,8 +165,8 @@
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
 			<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
 			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{bolonhaBundle['title']}:</span>" escape="false"/>
-			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
-			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{(!empty bibliographicReference.url) and (bibliographicReference.url != 'http://')}" escape="false"/>
+			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{(empty bibliographicReference.url) or (bibliographicReference.url == 'http://')}" escape="false"/>
 			
 			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{bolonhaBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
@@ -188,8 +189,8 @@
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
 			<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					
 			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{bolonhaBundle['title']}:</span>" escape="false"/>
-			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
-			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{(!empty bibliographicReference.url) and (bibliographicReference.url != 'http://')}" escape="false"/>
+			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{(empty bibliographicReference.url) or (bibliographicReference.url == 'http://')}" escape="false"/>
 				
 			<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px;'>#{bolonhaBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>

@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -417,6 +418,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
         return result;
+    }
+
+    public boolean getCanBeAccessedByUser() {
+        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this);
     }
 
     public List<ExecutionDegree> getExecutionDegrees() {

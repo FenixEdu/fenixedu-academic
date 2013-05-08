@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -53,6 +52,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -1177,8 +1177,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getPerson();
-        return person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)
-                || person.hasRole(RoleType.OPERATOR) || this.getCurricularPlanMembersGroup().isMember(person);
+        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this.getDegree())
+                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person) : false);
     }
 
     public Boolean getCanModify() {

@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class UICourseGroup extends UIDegreeModule {
     public static final String COMPONENT_TYPE =
@@ -100,8 +98,10 @@ public class UICourseGroup extends UIDegreeModule {
                 if (!this.toOrder) {
                     writer.startElement("p", this);
                     writer.writeAttribute("style", "mtop05", null);
-                    encodeLink("createCourseGroup.faces", "&parentCourseGroupID=" + this.courseGroup.getIdInternal()
-                            + "&toOrder=false", false, "create.course.group.root");
+                    if (loggedPersonCanManageDegreeCurricularPlans()) {
+                        encodeLink("createCourseGroup.faces", "&parentCourseGroupID=" + this.courseGroup.getIdInternal()
+                                + "&toOrder=false", false, "create.course.group.root");
+                    }
                     writer.endElement("p");
                 }
             }
@@ -267,14 +267,16 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeOrderOptions() throws IOException {
         writer.startElement("td", this);
-        writer.append("(");
+        if (loggedPersonCanManageDegreeCurricularPlans()) {
+            writer.append("(");
 
-        encodeOrderOption(0, "top", false);
-        encodeOrderOption(this.previousContext.getParentCourseGroup().getChildContextsCount() - 1, "end", false);
-        encodeOrderOption(this.previousContext.getChildOrder() - 1, "up", false);
-        encodeOrderOption(this.previousContext.getChildOrder() + 1, "down", true);
+            encodeOrderOption(0, "top", false);
+            encodeOrderOption(this.previousContext.getParentCourseGroup().getChildContextsCount() - 1, "end", false);
+            encodeOrderOption(this.previousContext.getChildOrder() - 1, "up", false);
+            encodeOrderOption(this.previousContext.getChildOrder() + 1, "down", true);
 
-        writer.append(") ");
+            writer.append(") ");
+        }
     }
 
     private void encodeOrderOption(Integer posToTest, String label, boolean lastOption) throws IOException {
@@ -288,42 +290,43 @@ public class UICourseGroup extends UIDegreeModule {
     private void encodeEditOptions() throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aleft", null);
-        writer.append("(");
+
         String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
         String editAndDeleteAditionalParameters =
                 "&courseGroupID=" + this.courseGroup.getIdInternal()
                         + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "")
                         + "&toOrder=false";
 
-        encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
-        if (!this.courseGroup.isRoot() && !this.courseGroup.isBranchCourseGroup()) {
-            writer.append(" , ");
-            encodeLink("createBranchCourseGroup.faces", createAssociateAditionalParameters, false, "create.branch.group");
-        }
-        if (loggedPersonHasRoleManager()) {
+        if (loggedPersonCanManageDegreeCurricularPlans()) {
+            writer.append("(");
+
+            encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
+
+            if (!this.courseGroup.isRoot() && !this.courseGroup.isBranchCourseGroup()) {
+                writer.append(" , ");
+                encodeLink("createBranchCourseGroup.faces", createAssociateAditionalParameters, false, "create.branch.group");
+            }
+
             writer.append(" , ");
             encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
-        }
-        if (!this.courseGroup.isRoot()) {
-            writer.append(" , ");
-            encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
-        }
-        if (!this.courseGroup.isRoot() /* && this.executionYear == null */) {
-            writer.append(" , ");
-            encodeLink("deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
-        }
 
-        if (this.courseGroup.isCycleCourseGroup() && loggedPersonHasRoleManager()) {
-            writer.append(" , ");
-            encodeLink("editCycleCourseGroupInformation.faces", editAndDeleteAditionalParameters, false, "editInformation");
-        }
+            if (!this.courseGroup.isRoot()) {
+                writer.append(" , ");
+                encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
+            }
 
-        writer.append(") ");
+            if (!this.courseGroup.isRoot() /* && this.executionYear == null */) {
+                writer.append(" , ");
+                encodeLink("deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
+            }
+
+            if (this.courseGroup.isCycleCourseGroup()) {
+                writer.append(" , ");
+                encodeLink("editCycleCourseGroupInformation.faces", editAndDeleteAditionalParameters, false, "editInformation");
+            }
+            writer.append(") ");
+        }
         writer.endElement("td");
-    }
-
-    private Boolean loggedPersonHasRoleManager() {
-        return AccessControl.getPerson().hasRole(RoleType.MANAGER);
     }
 
     private void encodeCourseGroupOptions() throws IOException {
@@ -331,7 +334,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (this.showRules) {
-            if (!this.courseGroup.isRoot() || loggedPersonHasRoleManager()) {
+            if (!this.courseGroup.isRoot() || loggedPersonCanManageDegreeCurricularPlans()) {
                 encodeLink(module + "/curricularRules/createCurricularRule.faces",
                         "&degreeModuleID=" + this.courseGroup.getIdInternal(), false, "setCurricularRule");
             }

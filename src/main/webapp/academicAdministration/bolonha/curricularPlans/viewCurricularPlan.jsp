@@ -16,6 +16,13 @@
 	
 	<h:panelGroup rendered="#{empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.executionDegrees}">
 		<h:outputText value="<p><em>#{bolonhaBundle['error.curricularPlanHasNoExecutionDegrees']}</em><p>" escape="false"/>
+		
+		<h:form>
+			<h:outputText value="<p> " escape="false"/>
+				<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['return']}" action="curricularPlansManagement"/>
+			<h:outputText value="</p> " escape="false"/>
+		</h:form>
+		
 	</h:panelGroup>
 
 	<h:panelGroup rendered="#{!empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.executionDegrees}">

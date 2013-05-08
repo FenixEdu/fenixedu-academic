@@ -3,21 +3,24 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateRule extends FenixService {
+public class CreateRule {
 
-    public void run(Integer degreeModuleToApplyRuleID, CurricularRuleType selectedCurricularRuleType,
+    @Service
+    public static void run(Integer degreeModuleToApplyRuleID, CurricularRuleType selectedCurricularRuleType,
             CurricularRuleParametersDTO parametersDTO, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
             throws FenixServiceException {
 
-        final DegreeModule degreeModuleToApplyRule = rootDomainObject.readDegreeModuleByOID(degreeModuleToApplyRuleID);
+        final DegreeModule degreeModuleToApplyRule =
+                RootDomainObject.getInstance().readDegreeModuleByOID(degreeModuleToApplyRuleID);
         if (degreeModuleToApplyRule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }
@@ -26,11 +29,12 @@ public class CreateRule extends FenixService {
         if (beginExecutionPeriodID == null) {
             beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
-            beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
+            beginExecutionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(beginExecutionPeriodID);
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : RootDomainObject.getInstance().readExecutionSemesterByOID(
+                        endExecutionPeriodID);
 
         CurricularRulesManager.createCurricularRule(degreeModuleToApplyRule, beginExecutionPeriod, endExecutionPeriod,
                 selectedCurricularRuleType, parametersDTO);

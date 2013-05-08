@@ -2367,6 +2367,10 @@
 			<from-outcome>buildCurricularPlan</from-outcome>
 			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>deleteCurricularCourseContext</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/deleteCurricularCourseContext.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/academicAdministration/bolonha/curricularPlans/deleteCurricularCourseContext.jsp</from-view-id>
@@ -2394,6 +2398,20 @@
 		<navigation-case>
 			<from-outcome>editCompetenceCourseMainPage</from-outcome>
 			<to-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/createBranchCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCycleCourseGroupInformation.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<!-- END: ACADEMIC ADMINISTRATION - Bolonha Navigation Rules -->

@@ -10,7 +10,11 @@ import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCourseGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCourseGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.OrderDegreeModule;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -19,8 +23,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -105,14 +109,9 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String createCourseGroup() {
         try {
-            final Object args[] =
-                    { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-                            getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService("CreateCourseGroup", args);
+            CreateCourseGroup.run(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(),
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
-            return "editCurricularPlanStructure";
-        } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -124,13 +123,11 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String editCourseGroup() {
         try {
-            final Object args[] =
-                    { getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-                            getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService("EditCourseGroup", args);
+            EditCourseGroup.run(getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
+                    getFinalEndExecutionPeriodID());
             addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
             return "editCurricularPlanStructure";
-        } catch (FenixFilterException e) {
+        } catch (final IllegalDataAccessException e) {
             this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
@@ -143,11 +140,10 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String deleteCourseGroup() {
         try {
-            final Object args[] = { getCourseGroupID(), getContextID() };
-            ServiceUtils.executeService("DeleteContextFromDegreeModule", args);
+            DeleteContextFromDegreeModule.run(getCourseGroupID(), getContextID());
             addInfoMessage(bolonhaBundle.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";
-        } catch (FenixFilterException e) {
+        } catch (final IllegalDataAccessException e) {
             this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
@@ -162,17 +158,12 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String addContext() {
         try {
             checkCourseGroup();
-            Object args[] =
-                    { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()), getBeginExecutionPeriodID(),
-                            getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService("AddContextToCourseGroup", args);
+            AddContextToCourseGroup.run(getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()),
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
             return "editCurricularPlanStructure";
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-        } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
-            return "editCurricularPlanStructure";
         } catch (FenixServiceException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (DomainException e) {
@@ -224,12 +215,8 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String orderCourseGroup() {
         try {
-            Object args[] = { getContextID(), getPosition() };
-            ServiceUtils.executeService("OrderDegreeModule", args);
+            OrderDegreeModule.run(getContextID(), getPosition());
             addInfoMessage(bolonhaBundle.getString("courseGroupMoved"));
-            return "editCurricularPlanStructure";
-        } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
             this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));

@@ -1,21 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateOldCurricularCourse extends FenixService {
+public class CreateOldCurricularCourse {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
             final String acronym, final Integer minimumValueForAcumulatedEnrollments,
@@ -24,12 +22,12 @@ public class CreateOldCurricularCourse extends FenixService {
             final Integer beginExecutionPeriodId, final Integer endExecutionPeriodId, final GradeScale gradeScale)
             throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
+        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(dcpId);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.degreeCurricularPlan");
         }
 
-        final CourseGroup courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(cgId);
+        final CourseGroup courseGroup = (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(cgId);
         if (courseGroup == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
         }
@@ -50,8 +48,10 @@ public class CreateOldCurricularCourse extends FenixService {
         curricularCourse.setGradeScale(gradeScale);
 
         final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
-        final ExecutionSemester beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodId);
-        final ExecutionSemester endExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodId);
+        final ExecutionSemester beginExecutionPeriod =
+                RootDomainObject.getInstance().readExecutionSemesterByOID(beginExecutionPeriodId);
+        final ExecutionSemester endExecutionPeriod =
+                RootDomainObject.getInstance().readExecutionSemesterByOID(endExecutionPeriodId);
 
         courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }

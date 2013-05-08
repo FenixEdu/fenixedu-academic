@@ -6,15 +6,11 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateBranchCourseGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BranchCourseGroupManagementBackingBean extends CourseGroupManagementBackingBean {
@@ -56,8 +52,8 @@ public class BranchCourseGroupManagementBackingBean extends CourseGroupManagemen
 
     public String createBranchCourseGroup() {
         try {
-            executeCreation(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(), getBranchType(),
-                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
+            CreateBranchCourseGroup.run(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(),
+                    getBranchType(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             addInfoMessage(bolonhaBundle.getString("branchCourseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (IllegalDataAccessException e) {
@@ -70,34 +66,4 @@ public class BranchCourseGroupManagementBackingBean extends CourseGroupManagemen
         }
         return "";
     }
-
-    @Service
-    @Checked("RolePredicates.BOLOGNA_OR_DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_OR_MANAGER_OR_OPERATOR_PREDICATE")
-    private void executeCreation(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID, final String name,
-            final String nameEn, final BranchType branchType, final Integer beginExecutionPeriodID,
-            final Integer endExecutionPeriodID) throws FenixServiceException {
-
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("error.noDegreeCurricularPlan");
-        }
-        final CourseGroup parentCourseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(parentCourseGroupID);
-        if (parentCourseGroup == null) {
-            throw new FenixServiceException("error.noCourseGroup");
-        }
-
-        final ExecutionSemester beginExecutionPeriod;
-        if (beginExecutionPeriodID == null) {
-            beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
-        }
-
-        final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
-
-        degreeCurricularPlan.createBranchCourseGroup(parentCourseGroup, name, nameEn, branchType, beginExecutionPeriod,
-                endExecutionPeriod);
-    }
-
 }

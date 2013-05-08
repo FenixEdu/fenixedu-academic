@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -185,7 +186,7 @@ public class UIDegreeModule extends UIInput {
             for (CurricularRule curricularRule : curricularRulesToEncode) {
                 writer.startElement("tr", this);
                 encodeCurricularRule(curricularRule);
-                if (this.toEdit) {
+                if (this.toEdit && loggedPersonCanManageDegreeCurricularPlans()) {
                     encodeCurricularRuleOptions(curricularRule);
                 }
                 writer.endElement("tr");
@@ -210,15 +211,20 @@ public class UIDegreeModule extends UIInput {
     private void encodeCurricularRuleOptions(CurricularRule curricularRule) throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
-        if (this.executionYear != null) {
-            encodeLink(module + "/curricularRules/editCurricularRule.faces",
-                    "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
-            writer.append(", ");
+        if (loggedPersonCanManageDegreeCurricularPlans()) {
+            if (this.executionYear != null) {
+                encodeLink(module + "/curricularRules/editCurricularRule.faces",
+                        "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
+                writer.append(", ");
+            }
+            encodeLink(module + "/curricularRules/deleteCurricularRule.faces",
+                    "&curricularRuleID=" + curricularRule.getIdInternal(), false, "delete");
         }
-        encodeLink(module + "/curricularRules/deleteCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(),
-                false, "delete");
-
         writer.endElement("td");
+    }
+
+    protected Boolean loggedPersonCanManageDegreeCurricularPlans() {
+        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(degreeModule.getDegree());
     }
 
 }

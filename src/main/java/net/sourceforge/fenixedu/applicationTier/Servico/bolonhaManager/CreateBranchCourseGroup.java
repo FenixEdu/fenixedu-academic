@@ -4,15 +4,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateCourseGroup {
+public class CreateBranchCourseGroup {
 
     @Service
     public static void run(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID, final String name,
-            final String nameEn, final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID)
-            throws FenixServiceException {
+            final String nameEn, final BranchType branchType, final Integer beginExecutionPeriodID,
+            final Integer endExecutionPeriodID) throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan =
                 RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
@@ -36,6 +37,7 @@ public class CreateCourseGroup {
                 (endExecutionPeriodID == null) ? null : RootDomainObject.getInstance().readExecutionSemesterByOID(
                         endExecutionPeriodID);
 
-        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod);
+        degreeCurricularPlan.createBranchCourseGroup(parentCourseGroup, name, nameEn, branchType, beginExecutionPeriod,
+                endExecutionPeriod);
     }
 }

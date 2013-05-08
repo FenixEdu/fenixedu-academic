@@ -13,6 +13,9 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateRule;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCurricularRule;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularRule;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
@@ -38,7 +41,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -694,10 +696,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String createCurricularRule() {
         try {
             checkSelectedAttributes();
-            final Object[] args =
-                    { getDegreeModuleID(), CurricularRuleType.valueOf(getSelectedCurricularRuleType()),
-                            buildCurricularRuleParametersDTO(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService("CreateRule", args);
+            CreateRule.run(getDegreeModuleID(), CurricularRuleType.valueOf(getSelectedCurricularRuleType()),
+                    buildCurricularRuleParametersDTO(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             return "setCurricularRules";
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -715,11 +715,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String editCurricularRule() {
         try {
-            final Object[] args = { getCurricularRuleID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService("EditCurricularRule", args);
+            EditCurricularRule.run(getCurricularRuleID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID());
             return "setCurricularRules";
-        } catch (FenixFilterException e) {
-            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (DomainException e) {
@@ -730,12 +727,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String deleteCurricularRule() {
         try {
-            final Object[] args = { getCurricularRuleID() };
-            ServiceUtils.executeService("DeleteCurricularRule", args);
+            DeleteCurricularRule.run(getCurricularRuleID());
             addInfoMessage(bolonhaResources.getString("curricularRule.deleted"));
             return "setCurricularRules";
-        } catch (FenixFilterException e) {
-            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (DomainException e) {

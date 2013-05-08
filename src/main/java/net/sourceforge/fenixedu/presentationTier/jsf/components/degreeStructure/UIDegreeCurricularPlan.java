@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class UIDegreeCurricularPlan extends UIInput {
@@ -76,7 +77,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         module = facesContext.getExternalContext().getRequestContextPath() + (String) this.getAttributes().get(MODULE);
 
-        final DegreeCurricularPlan dcp = (DegreeCurricularPlan) this.getAttributes().get(DCP);
+        final DegreeCurricularPlan dcp = getDegreeCurricularPlanAttribute();
         if (dcp.isBoxStructure()) {
             this.toEdit =
                     (this.getBooleanAttribute(TO_EDIT) != null) ? (Boolean) this.getBooleanAttribute(TO_EDIT) : Boolean.FALSE;
@@ -204,7 +205,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("th", this);
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
-        if (!this.showRules) {
+        if (!this.showRules && loggedPersonCanManageDegreeCurricularPlans(getDegreeCurricularPlanAttribute())) {
             encodeLink("createCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder()
                     + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "create.curricular.course");
             writer.append(" , ");
@@ -402,6 +403,14 @@ public class UIDegreeCurricularPlan extends UIInput {
             writer.append(explanation);
         }
         writer.endElement("li");
+    }
+
+    private Boolean loggedPersonCanManageDegreeCurricularPlans(DegreeCurricularPlan degreeCurricularPlan) {
+        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(degreeCurricularPlan.getDegree());
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlanAttribute() {
+        return (DegreeCurricularPlan) this.getAttributes().get(DCP);
     }
 
 }
