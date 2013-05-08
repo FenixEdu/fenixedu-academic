@@ -132,7 +132,8 @@
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToEdit.jsp"/>
     </definition>
     <definition name="show-scientific-journal-edit-page" extends="scientificCouncil.masterPage">
-        
+        <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.administrator.scientificactivities.editjournal"/>
     	<put name="body" value="/scientificCouncil/researchActivity/showEditScientificJournal.jsp"/>
     </definition>    
 	<definition name="show-scientific-journal-merge-list" extends="scientificCouncil.masterPage">

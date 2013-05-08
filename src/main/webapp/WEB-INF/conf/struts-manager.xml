@@ -741,14 +741,15 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditScientificJournalDA" scope="request" parameter="method" path="/editScientificJournal">
                   <forward path="show-scientific-journal-list-page" name="show-research-activity-list"></forward>
                   <forward path="show-scientific-journal-edit-page" name="show-research-activity-edit"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditEventDA" scope="request" parameter="method" path="/editEvent">
-                  <forward path="show-event-list-page" name="show-research-activity-list"></forward>
-                  <forward path="show-event-edit-page" name="show-research-activity-edit"></forward>
+                  <forward path="/mergeJournalIssues.do?method=prepare" name="prepareChooseJournalIssueToMerge"></forward>
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditScientificJournalDA" scope="request" parameter="method" path="/editScientificJournalMergeJournalIssues">
                   <forward path="show-scientific-journal-list-page-merge-jounal-issues" name="show-research-activity-list"></forward>
                   <forward path="/mergeJournalIssues.do?method=prepareMerge" name="prepareChooseJournalIssueToMerge"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditEventDA" scope="request" parameter="method" path="/editEvent">
+                  <forward path="show-event-list-page" name="show-research-activity-list"></forward>
+                  <forward path="show-event-edit-page" name="show-research-activity-edit"></forward>
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditEventDA" scope="request" parameter="method" path="/editEventMergeEventEditions">
                   <forward path="show-event-list-page-merge-event-editions" name="show-research-activity-list"></forward>

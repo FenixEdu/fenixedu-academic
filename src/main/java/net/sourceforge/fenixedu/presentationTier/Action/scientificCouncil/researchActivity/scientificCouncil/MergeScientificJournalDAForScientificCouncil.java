@@ -9,10 +9,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = {
         @Forward(name = "show-research-activity-merge-list",
                 path = "/scientificCouncil/researchActivity/showScientificJournalsToMergeList.jsp", tileProperties = @Tile(
-                        title = "private.administrator.scientificactivities.mergejournals")),
+                        title = "private.scientificcouncil.scientificactivities.mergejournals")),
         @Forward(name = "show-research-activity-merge-page",
                 path = "/scientificCouncil/researchActivity/showScientificJournalsToMerge.jsp", tileProperties = @Tile(
-                        title = "private.administrator.scientificactivities.mergejournals")) })
+                        title = "private.scientificcouncil.scientificactivities.mergejournals")) })
 public class MergeScientificJournalDAForScientificCouncil extends
         net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeScientificJournalDA {
 }
