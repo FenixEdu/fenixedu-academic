@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -12,12 +16,30 @@ public class DegreesGivenDegreeTypeForDelegatesManagement implements DataProvide
     @Override
     public Object provide(Object source, Object currentValue) {
 
+        ExecutionYear executionYear;
+        DegreeType degreeType;
+
         if (source instanceof DelegateBean) {
-            return Degree.readAllByDegreeType(((DelegateBean) source).getDegreeType());
+            executionYear = ((DelegateBean) source).getExecutionYear();
+            degreeType = ((DelegateBean) source).getDegreeType();
         } else {
-            return Degree.readAllByDegreeType(((DelegateSearchBean) source).getDegreeType());
+            executionYear = ((DelegateSearchBean) source).getExecutionYear();
+            degreeType = ((DelegateSearchBean) source).getDegreeType();
         }
 
+        List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
+        List<Degree> result = Degree.readAllByDegreeType(degreeType);
+
+        if (executionYear == null) {
+            executionYear = ExecutionYear.readCurrentExecutionYear();
+        }
+
+        for (Degree degree : degrees) {
+            if (degree.getDegreeCurricularPlansForYear(executionYear).isEmpty()) {
+                result.remove(degree);
+            }
+        }
+        return result;
     }
 
     @Override

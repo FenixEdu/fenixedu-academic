@@ -73,7 +73,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
             RenderUtils.invalidateViewState("delegateBean");
         }
 
-        bean.setDegree(getDefaultDegreeGivenDegreeType(bean.getDegreeType()));
+        bean.setDegree(getDefaultDegreeGivenDegreeTypeAndExecutionYear(bean.getDegreeType(), currentExecutionYear));
         request.setAttribute("delegateBean", bean);
         request.setAttribute("currentExecutionYear", currentExecutionYear);
         return prepareViewDelegates(mapping, actionForm, request, response);
@@ -87,7 +87,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         RenderUtils.invalidateViewState("delegateBean");
 
         if (bean.getDegree() == null) {
-            bean.setDegree(getDefaultDegreeGivenDegreeType(bean.getDegreeType()));
+            bean.setDegree(getDefaultDegreeGivenDegreeTypeAndExecutionYear(bean.getDegreeType(), currentExecutionYear));
         }
 
         request.setAttribute("delegateBean", bean);
@@ -551,9 +551,15 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         return bean;
     }
 
-    private Degree getDefaultDegreeGivenDegreeType(DegreeType degreeType) {
-        List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-        return degrees.get(0);
+    private Degree getDefaultDegreeGivenDegreeTypeAndExecutionYear(DegreeType degreeType, ExecutionYear executionYear) {
+        // ist150958: return changed: instead of the first of all degrees, return only the first with a curricular plan for the
+        // selected year.
+        for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
+            if (!degree.getDegreeCurricularPlansForYear(executionYear).isEmpty()) {
+                return degree;
+            }
+        }
+        return null;
     }
 
     private List<DelegateBean> getGGAEDelegateBeans() {
