@@ -110,6 +110,37 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         return viewAllLessonDates(mapping, form, request, response);
     }
 
+    public ActionForward deleteLessonInstances(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        final SortedSet<NextPossibleSummaryLessonsAndDatesBean> set = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>();
+        for (final String lessonDate : request.getParameterValues("lessonDatesToDelete")) {
+            set.add(NextPossibleSummaryLessonsAndDatesBean.getNewInstance(lessonDate));
+        }
+
+        try {
+            DeleteLessonInstance.run(set);
+            ActionErrors actionErrors = new ActionErrors();
+            for (final NextPossibleSummaryLessonsAndDatesBean n : set) {
+                actionErrors.add(null, new ActionError("message.deleteLesson", n.getDate()));
+            }
+            saveErrors(request, actionErrors);
+        } catch (UnsupportedOperationException unsupportedOperationException) {
+            ActionErrors actionErrors = new ActionErrors();
+            for (final NextPossibleSummaryLessonsAndDatesBean n : set) {
+                actionErrors.add(unsupportedOperationException.getMessage(),
+                        new ActionError("error.Lesson.not.instanced", n.getDate()));
+            }
+            saveErrors(request, actionErrors);
+        } catch (DomainException domainException) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage()));
+            saveErrors(request, actionErrors);
+        }
+
+        return viewAllLessonDates(mapping, form, request, response);
+    }
+
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

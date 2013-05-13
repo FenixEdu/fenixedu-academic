@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
-public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
+public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Comparable<NextPossibleSummaryLessonsAndDatesBean> {
 
     public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
     public static final Comparator<NextPossibleSummaryLessonsAndDatesBean> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
@@ -200,5 +200,10 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
     public void setLessonType(ShiftType lessonType) {
         this.lessonType = lessonType;
+    }
+
+    @Override
+    public int compareTo(final NextPossibleSummaryLessonsAndDatesBean o) {
+        return date.compareTo(o.getDate());
     }
 }

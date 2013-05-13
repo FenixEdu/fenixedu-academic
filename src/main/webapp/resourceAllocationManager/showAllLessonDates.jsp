@@ -31,17 +31,46 @@
 	</p>
 				
 	<%-- Delete Lesson Instances --%>		
-	<bean:define id="linkToDelete">/manageLesson.do?method=deleteLessonInstance&amp;<bean:write name="parameters" filter="false"/></bean:define>				
-	<fr:view name="lessonDates" schema="LessonDatesList">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 mtop025 mbottom0 tdcenter"/>
-			<fr:property name="columnClasses" value=",,,,,smalltxt,,"/>
-			<fr:property name="link(delete)" value="<%= linkToDelete %>"/>
-	        <fr:property name="param(delete)" value="checkBoxValue/lessonDate"/>
-	        <fr:property name="key(delete)" value="label.delete"/>
-	        <fr:property name="order(delete)" value="0"/>
-	        <fr:property name="visibleIf(delete)" value="isPossibleDeleteLessonInstance"/>	        
-		</fr:layout>
-	</fr:view>	
-		
+	<bean:define id="linkToDelete">/manageLesson.do?method=deleteLessonInstance&amp;<bean:write name="parameters" filter="false"/></bean:define>
+	<bean:define id="linkToDeleteMultiple">/resourceAllocationManager/manageLesson.do?method=deleteLessonInstances&amp;<bean:write name="parameters" filter="false"/></bean:define>
+	<form action="<%= request.getContextPath() + linkToDeleteMultiple %>" method="post">
+		<table class="tstyle1 mtop025 mbottom0 tdcenter">
+			<tr>
+				<th></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.day"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.month"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.year"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.type"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.shift"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.summary"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.instance"/></th>
+				<th></th>
+			</tr>
+			<logic:iterate id="lessonDate" name="lessonDates">
+				<bean:define id="selectableValue" name="lessonDate" property="checkBoxValue"/>
+				<tr>
+					<td>
+						<logic:equal name="lessonDate" property="isPossibleDeleteLessonInstance" value="true">
+							<input type="checkbox" name="lessonDatesToDelete" value="<%= selectableValue %>"/>
+						</logic:equal>
+					</td>
+					<td><bean:write name="lessonDate" property="date.dayOfMonth"/></td>
+					<td><bean:write name="lessonDate" property="monthString"/></td>
+					<td><bean:write name="lessonDate" property="date.year"/></td>
+					<td><bean:write name="lessonDate" property="lessonInstancePrettyPrint"/></td>
+					<td><bean:write name="lessonDate" property="shiftTypesPrettyPrint"/></td>
+					<td class="smalltxt"><fr:view name="lessonDate" property="shift" layout="shift-plain"/></td>
+					<td><fr:view name="lessonDate" property="writtenSummary"/></td>
+					<td><fr:view name="lessonDate" property="hasLessonInstance"/></td>
+					<td>
+						<logic:equal name="lessonDate" property="isPossibleDeleteLessonInstance" value="true">
+							<html:link action="<%= linkToDelete %>" paramId="lessonDate" paramName="lessonDate" paramProperty="checkBoxValue"><bean:message bundle="SOP_RESOURCES" key="label.delete"/></html:link>
+						</logic:equal>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+		<html:submit><bean:message bundle="SOP_RESOURCES" key="label.delete"/></html:submit>
+	</form>
 </logic:present>
