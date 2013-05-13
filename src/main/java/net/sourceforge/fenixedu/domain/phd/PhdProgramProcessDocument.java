@@ -181,6 +181,10 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         return isVersioned();
     }
 
+    public boolean isOtherType() {
+        return hasType(PhdIndividualProgramDocumentType.OTHER);
+    }
+
     public boolean isVersioned() {
         return getDocumentType().isVersioned();
     }

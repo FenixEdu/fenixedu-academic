@@ -1033,6 +1033,15 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     @Override
+    public ActionForward deleteDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        prepareDocumentsToUpload(request);
+        return executeActivity(net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteDocument.class,
+                getDomainObject(request, "documentId"), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
+                "message.document.deleted.successfuly");
+    }
+
+    @Override
     public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         prepareDocumentsToUpload(request);

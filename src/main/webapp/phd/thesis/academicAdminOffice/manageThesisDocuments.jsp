@@ -74,15 +74,15 @@
 						link="<%= "/phdThesisProcess.do?method=prepareReplaceDocument&type=${documentType}&processId=" + processId %>" 
 						label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.replace,PHD_RESOURCES" order="1" 
 						condition="replaceable"/>
-
-		<%-- To delete, we must have interface to add more ... 				
+				
 			<fr:property name="linkFormat(delete)" value="/phdThesisProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>
 			<fr:property name="key(delete)" value="label.delete"/>
 			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
 			<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />
 			<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+			<fr:property name="visibleIf(delete)" value="otherType" />
 			<fr:property name="order(delete)" value="1" />
-		--%>	
+	
 			<fr:property name="sortBy" value="documentType=asc" />
 		</fr:layout>
 	</fr:view>

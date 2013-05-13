@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ConcludePhdProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument;
@@ -144,6 +145,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
         activities.add(new ConcludePhdProcess());
         activities.add(new SetPhdJuryElementRatificationEntity());
         activities.add(new UploadDocuments());
+        activities.add(new DeleteDocument());
     }
 
     @Override
