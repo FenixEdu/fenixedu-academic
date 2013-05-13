@@ -9,6 +9,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,12 +21,15 @@ public class SwitchPublishedExamsFlag extends FenixService {
     @Service
     public static void run(AcademicInterval academicInterval) {
         final List<ExecutionDegree> executionDegrees = ExecutionDegree.filterByAcademicInterval(academicInterval);
+        ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        if (!executionDegrees.isEmpty()) {
-            final Boolean examsPublicationState = new Boolean(!executionDegrees.get(0).getTemporaryExamMap().booleanValue());
+        final Boolean isToRemove = new Boolean(executionDegrees.get(0).getPublishedExamMapsSet().contains(executionSemester));
 
-            for (final ExecutionDegree executionDegree : executionDegrees) {
-                executionDegree.setTemporaryExamMap(examsPublicationState);
+        for (final ExecutionDegree executionDegree : executionDegrees) {
+            if (isToRemove) {
+                executionDegree.getPublishedExamMapsSet().remove(executionSemester);
+            } else {
+                executionDegree.getPublishedExamMapsSet().add(executionSemester);
             }
         }
     }

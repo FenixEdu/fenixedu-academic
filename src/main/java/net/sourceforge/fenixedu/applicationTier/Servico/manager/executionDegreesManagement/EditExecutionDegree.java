@@ -18,7 +18,7 @@ public class EditExecutionDegree extends FenixService {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean temporaryExamMap,
+    public static void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean publishedExamMap,
             Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
             Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
@@ -59,7 +59,7 @@ public class EditExecutionDegree extends FenixService {
         final OccupationPeriod gradeSubmissionSpecialSeason =
                 getOccupationPeriod(periodExamsSpecialSeasonBegin, gradeSubmissionSpecialSeasonEndDate);
 
-        executionDegree.edit(executionYear, campus, temporaryExamMap, periodLessonsFirstSemester, periodExamsFirstSemester,
+        executionDegree.edit(executionYear, campus, publishedExamMap, periodLessonsFirstSemester, periodExamsFirstSemester,
                 periodLessonsSecondSemester, periodExamsSecondSemester, periodExamsSpecialSeason, gradeSubmissionNormalSeason1,
                 gradeSubmissionNormalSeason2, gradeSubmissionSpecialSeason);
     }

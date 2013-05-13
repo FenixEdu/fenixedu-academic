@@ -49,19 +49,19 @@
 				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/> </th>
 				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/>
-					1� <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+					1º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
 				</th>
 				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/>
-					1� <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+					1º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
 				</th>
 				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/>
-					2� <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+					2º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
 				</th>
 				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/>
-					2� <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+					2º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
 				</th>
 				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.examsSpecialSeason"/>					
@@ -75,7 +75,6 @@
 				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionSpecialSeason"/>					
 				</th>
-				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap"/> </th>
 				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator"/> </th>
 				<th class='listClasses-header'> </th>
 			</tr>
@@ -185,14 +184,6 @@
 						<logic:empty name="executionDegree" property="periodGradeSubmissionSpecialSeason">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
 						</logic:empty>
-					</td>
-					<td class='listClasses'>
-						<logic:equal name="executionDegree" property="temporaryExamMap" value="true">
-							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.yes" />
-						</logic:equal>
-						<logic:notEqual name="executionDegree" property="temporaryExamMap" value="true">
-							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.no" />
-						</logic:notEqual>
 					</td>
 					<td class='listClasses'>
 						<logic:notEmpty name="executionDegree"  property="coordinatorsList">

@@ -87,6 +87,9 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                         .getAcademicInterval()));
         Collections.sort(executionDegrees, executionDegreeComparator);
         request.setAttribute("executionDegrees", executionDegrees);
+        ExecutionSemester executionSemester =
+                (ExecutionSemester) ExecutionInterval.getExecutionInterval(contextSelectionBean.getAcademicInterval());
+        request.setAttribute("executionSemester", executionSemester);
 
         AcademicCalendarEntry academicCalendarEntry = contextSelectionBean.getAcademicInterval().getAcademicCalendarEntry();
         while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {

@@ -25,7 +25,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
     @Service
     public static List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
             final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID, final String campusName,
-            final Boolean temporaryExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
+            final Boolean publishedExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
             final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate,
             final Calendar lessonSeason2BeginDatePart2, final Calendar lessonSeason2EndDatePart2,
             final Calendar examsSeason1BeginDate, final Calendar examsSeason1EndDate, final Calendar examsSeason2BeginDate,
@@ -67,7 +67,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
             }
 
             final ExecutionDegree executionDegree =
-                    degreeCurricularPlan.createExecutionDegree(executionYear, campus, temporaryExamMap);
+                    degreeCurricularPlan.createExecutionDegree(executionYear, campus, publishedExamMap);
             setPeriods(executionDegree, examsSeason1, examsSeason2, examsSpecialSeason, lessonSeason1, lessonSeason2,
                     gradeSubmissionNormalSeason1, gradeSubmissionNormalSeason2, gradeSubmissionSpecialSeason);
             created.add(degreeCurricularPlan);

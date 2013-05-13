@@ -85,8 +85,7 @@ public class Exam extends Exam_Base {
                 final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                 for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                     if (executionCourse.getExecutionPeriod().getExecutionYear() == executionDegree.getExecutionYear()
-                            && (executionDegree.getTemporaryExamMap() == null || !executionDegree.getTemporaryExamMap()
-                                    .booleanValue())) {
+                            && (executionDegree.isPublishedExam(executionCourse.getExecutionPeriod()))) {
                         return true;
                     }
                 }

@@ -58,9 +58,10 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
     }
 
     private void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {
-        if (infoExamsMap != null && infoExamsMap.getInfoExecutionDegree() != null
-                && infoExamsMap.getInfoExecutionDegree().getTemporaryExamMap() != null
-                && infoExamsMap.getInfoExecutionDegree().getTemporaryExamMap().booleanValue()) {
+        if (infoExamsMap != null
+                && infoExamsMap.getInfoExecutionDegree() != null
+                && infoExamsMap.getInfoExecutionDegree().isPublishedExam(
+                        infoExamsMap.getInfoExecutionPeriod().getExecutionPeriod())) {
             for (Object element : infoExamsMap.getExecutionCourses()) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) element;
                 infoExecutionCourse.getAssociatedInfoExams().clear();

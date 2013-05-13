@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -96,8 +98,10 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("infoExecutionYearsList", infoExecutionYearList);
         request.setAttribute("infoCampusList", infoCampusList);
-
-        dynaForm.set("tempExamMap", oldInfoExecutionDegree.getTemporaryExamMap().toString());
+        ExecutionSemester executionSemester =
+                (ExecutionSemester) ExecutionInterval.getExecutionInterval(oldInfoExecutionDegree.getExecutionDegree()
+                        .getAcademicInterval());
+        dynaForm.set("tempExamMap", String.valueOf(oldInfoExecutionDegree.isPublishedExam(executionSemester)));
         // dynaForm.set("coordinatorNumber",
         // oldInfoExecutionDegree.getInfoCoordinator().getTeacherNumber()
         // .toString());

@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -52,8 +53,8 @@ public class InfoExecutionDegree extends InfoObject {
         return InfoDegreeCurricularPlan.newInfoFromDomain(getExecutionDegree().getDegreeCurricularPlan());
     }
 
-    public Boolean getTemporaryExamMap() {
-        return getExecutionDegree().getTemporaryExamMap();
+    public boolean isPublishedExam(ExecutionSemester executionSemester) {
+        return getExecutionDegree().getPublishedExamMapsSet().contains(executionSemester);
     }
 
     public InfoCampus getInfoCampus() {

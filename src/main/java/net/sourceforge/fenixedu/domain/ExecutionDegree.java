@@ -120,7 +120,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Campus campus,
-            Boolean temporaryExamMap) {
+            Boolean publishedExamMap) {
         this();
 
         if (degreeCurricularPlan == null || executionYear == null || campus == null) {
@@ -130,7 +130,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         setDegreeCurricularPlan(degreeCurricularPlan);
         setExecutionYear(executionYear);
         setCampus(campus);
-        setTemporaryExamMap(temporaryExamMap);
+
+        if (publishedExamMap) {
+            getPublishedExamMaps().addAll(executionYear.getExecutionPeriods());
+        }
+
     }
 
     public boolean canBeDeleted() {
@@ -171,7 +175,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
     }
 
-    public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
+    public void edit(ExecutionYear executionYear, Campus campus, Boolean publishedExamMap,
             OccupationPeriod periodLessonsFirstSemester, OccupationPeriod periodExamsFirstSemester,
             OccupationPeriod periodLessonsSecondSemester, OccupationPeriod periodExamsSecondSemester,
             OccupationPeriod periodExamsSpecialSeason, OccupationPeriod gradeSubmissionNormalSeasonFirstSemester,
@@ -179,7 +183,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
         setExecutionYear(executionYear);
         setCampus(campus);
-        setTemporaryExamMap(temporaryExamMap);
+
+        for (ExecutionSemester executionSemester : this.getExecutionYear().getExecutionPeriods()) {
+            if (publishedExamMap) {
+                this.getPublishedExamMaps().add(executionSemester);
+            } else {
+                this.getPublishedExamMaps().remove(executionSemester);
+            }
+        }
 
         if (periodLessonsFirstSemester != getPeriodLessonsFirstSemester()) {
             setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
@@ -1212,6 +1223,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
         });
 
+    }
+
+    public boolean isPublishedExam(ExecutionSemester executionSemester) {
+        return this.getPublishedExamMapsSet().contains(executionSemester);
     }
 
 }

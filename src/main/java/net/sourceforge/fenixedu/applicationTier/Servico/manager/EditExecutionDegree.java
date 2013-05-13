@@ -34,7 +34,9 @@ public class EditExecutionDegree extends FenixService {
 
         oldExecutionDegree.setCampus(campus);
         oldExecutionDegree.setExecutionYear(executionYear);
-        oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
+        if (!infoExecutionDegree.getTemporaryExamMap()) {
+            oldExecutionDegree.getPublishedExamMaps().addAll(executionYear.getExecutionPeriods());
+        }
     }
 
 }

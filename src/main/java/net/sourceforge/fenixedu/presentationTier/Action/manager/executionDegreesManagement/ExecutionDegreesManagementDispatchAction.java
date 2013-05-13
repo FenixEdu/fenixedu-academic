@@ -244,7 +244,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             final Date periodGradeSubmissionSpecialSeasonEnd =
                     DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionSpecialSeasonEnd"));
 
-            EditExecutionDegree.run(executionDegreeID, executionYearID, campusID, temporaryExamMap,
+            EditExecutionDegree.run(executionDegreeID, executionYearID, campusID, !temporaryExamMap,
                     periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin,
                     periodExamsFirstSemesterEnd, periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
                     periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd, periodExamsSpecialSeasonBegin,

@@ -1395,7 +1395,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return curricularCourseScopes;
     }
 
-    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap) {
+    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus, Boolean publishedExamMap) {
 
         if (isBolonhaDegree() && isDraft()) {
             throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
@@ -1406,7 +1406,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     executionYear.getYear());
         }
 
-        return new ExecutionDegree(this, executionYear, campus, temporaryExamMap);
+        return new ExecutionDegree(this, executionYear, campus, publishedExamMap);
     }
 
     public CurricularPeriod getCurricularPeriodFor(int year, int semester) {

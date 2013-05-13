@@ -308,7 +308,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
             createdDegreeCurricularPlans =
                     CreateExecutionDegreesForExecutionYear.run(getChoosenDegreeCurricularPlansIDs(),
                             getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
-                            getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate, lessonSeason2BeginDate,
+                            !getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate, lessonSeason2BeginDate,
                             lessonSeason2EndDate, lessonSeason2BeginDatePart2, lessonSeason2EndDatePart2, examsSeason1BeginDate,
                             examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate, examsSpecialSeasonBeginDate,
                             examsSpecialSeasonEndDate, gradeSubmissionNormalSeason1EndDate, gradeSubmissionNormalSeason2EndDate,

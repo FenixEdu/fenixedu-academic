@@ -11660,6 +11660,15 @@ relation ExecutionDegreeExecutionYear {
     ExecutionYear playsRole executionYear;
 }
 
+relation ExecutionDegreeExecutionSemesterExamMap {
+    ExecutionDegree playsRole executionDegreesExamMaps {
+        multiplicity *;
+    }
+    ExecutionSemester playsRole publishedExamMaps {
+    	multiplicity *;
+    }
+}
+
 relation OccupationPeriodReferenceExecutionDegree {
 	ExecutionDegree playsRole executionDegree;
 	OccupationPeriodReference playsRole occupationPeriodReferences {

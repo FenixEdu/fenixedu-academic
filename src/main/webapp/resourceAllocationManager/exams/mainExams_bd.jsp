@@ -8,11 +8,9 @@
 <%@page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
-<em><bean:message key="title.resourceAllocationManager.management" /></em>
-<h2>Avaliações Escritas</h2>
-<p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a
-calendariza&ccedil&atilde;o das avaliações escritas. Em baixo pode alterar o período de
-execu&ccedil&atilde;o seleccionado.</p>
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="label.selected.space.written.evaluations"/></h2>
+<p><bean:message key="label.selected.space.written.evaluations.information"/></p>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
@@ -44,6 +42,7 @@ execu&ccedil&atilde;o seleccionado.</p>
 		<bean:message key="label.change.published.state" />
 	</html:submit></p>
 
+	<bean:define id="executionSemester" name="executionSemester" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 	<logic:present name="executionDegrees">
 		<table class="tstyle4">
 			<tr>
@@ -51,16 +50,18 @@ execu&ccedil&atilde;o seleccionado.</p>
 				<th><bean:message key="label.degree" /></th>
 				<th><bean:message key="label.exams.map.temp.state" /></th>
 			</tr>
-			<logic:iterate id="executionDegree" name="executionDegrees">
+			<logic:iterate id="executionDegree" name="executionDegrees" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
 				<tr>
 					<td><bean:message name="executionDegree"
 						property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES" /></td>
 					<td><bean:write name="executionDegree" property="degreeCurricularPlan.degree.nome" /></td>
-					<td><logic:equal name="executionDegree" property="temporaryExamMap" value="true">
-						<bean:message key="label.change.published.state.temp" />
-					</logic:equal> <logic:equal name="executionDegree" property="temporaryExamMap" value="false">
-						<bean:message key="label.change.published.state.published" />
-					</logic:equal></td>
+					<td>
+						<% if(executionDegree.isPublishedExam(executionSemester)) { %>
+							<bean:message key="label.change.published.state.published" />
+						<% } else { %>							
+							<bean:message key="label.change.published.state.temp" />
+						<% } %>
+					</td>
 				</tr>
 			</logic:iterate>
 		</table>
