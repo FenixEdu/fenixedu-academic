@@ -226,16 +226,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return numberOfCards > 9 ? Integer.toString(numberOfCards) : "0" + numberOfCards;
     }
 
-    @Override
-    public void setLine(final String line) {
-        final String name = line.substring(178, 262);
-        for (int i = 0; i < name.length(); i++) {
-            char c = name.charAt(i);
-            if (c != '\r' && c != '\n' && c != ' ' && !Character.isLetter(c) && c != '-' && c != '\'') {
-                registerProblem("person.has.unallowed.char.in.name", line);
-            }
-        }
-
+    public static String fix(final String line) {
         final StringBuilder sb = new StringBuilder();
         sb.append(line.substring(0, 108));
 
@@ -247,11 +238,26 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
         sb.append(line.substring(178));
 
+        return sb.toString();
+    }
+
+    @Override
+    public void setLine(final String line) {
+        final String name = line.substring(178, 262);
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
+            if (c != '\r' && c != '\n' && c != ' ' && !Character.isLetter(c) && c != '-' && c != '\'') {
+                registerProblem("person.has.unallowed.char.in.name", line);
+            }
+        }
+
+        final String sb = fix(line);
+
         if (line.length() != 264 || sb.length() != 264) {
             registerProblem("line.has.incorrect.length", line);
         }
 
-        super.setLine(sb.toString());
+        super.setLine(sb);
     }
 
     protected void registerProblem(final String message, final String args) {
