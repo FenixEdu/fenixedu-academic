@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -87,11 +87,11 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        List<IdOperator> degreeArguments = new ArrayList<IdOperator>();
+        List<OidOperator> degreeArguments = new ArrayList<OidOperator>();
         for (Degree degree : getDegrees()) {
-            degreeArguments.add(new IdOperator(degree));
+            degreeArguments.add(new OidOperator(degree));
         }
-        Argument[] returnArguments = new Argument[] { new IdOperator(getRegistrationEnd()) };
+        Argument[] returnArguments = new Argument[] { new OidOperator(getRegistrationEnd()) };
         return (Argument[]) ArrayUtils.addAll(returnArguments, degreeArguments.toArray());
     }
 

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 
 public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCourseTeachersGroup {
 
@@ -24,7 +24,7 @@ public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCo
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getObject()) };
+        return new Argument[] { new OidOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {

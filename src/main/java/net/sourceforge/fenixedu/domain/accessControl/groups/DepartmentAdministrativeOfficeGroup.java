@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -59,7 +59,7 @@ public class DepartmentAdministrativeOfficeGroup extends DomainBackedGroup<Depar
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getObject()) };
+        return new Argument[] { new OidOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {

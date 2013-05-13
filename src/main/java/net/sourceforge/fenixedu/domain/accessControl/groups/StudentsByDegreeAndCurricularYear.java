@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.LeafGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class StudentsByDegreeAndCurricularYear extends LeafGroup {
@@ -40,8 +40,8 @@ public class StudentsByDegreeAndCurricularYear extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getDegree()), new IdOperator(getCurricularYear()),
-                new IdOperator(getExecutionYear()) };
+        return new Argument[] { new OidOperator(getDegree()), new OidOperator(getCurricularYear()),
+                new OidOperator(getExecutionYear()) };
     }
 
     public Degree getDegree() {

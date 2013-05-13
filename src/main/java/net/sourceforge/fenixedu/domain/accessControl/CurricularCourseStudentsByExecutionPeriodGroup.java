@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 
 public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
     private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionPeriod()) };
+        return new Argument[] { new OidOperator(getCurricularCourse()), new OidOperator(getExecutionPeriod()) };
     }
 
     public static class Builder implements GroupBuilder {

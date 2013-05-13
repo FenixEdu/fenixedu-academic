@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 
 public class VigilancyGroup extends DomainBackedGroup<Vigilancy> {
@@ -50,7 +50,7 @@ public class VigilancyGroup extends DomainBackedGroup<Vigilancy> {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getObject()) };
+        return new Argument[] { new OidOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -59,9 +59,9 @@ public class DelegateStudentsGroup extends LeafGroup {
     @Override
     protected Argument[] getExpressionArguments() {
         if (functionType == null) {
-            return new Argument[] { new IdOperator(getPersonFunction()) };
+            return new Argument[] { new OidOperator(getPersonFunction()) };
         } else {
-            return new Argument[] { new IdOperator(getPersonFunction()), new StaticArgument(functionType.getName()) };
+            return new Argument[] { new OidOperator(getPersonFunction()), new StaticArgument(functionType.getName()) };
         }
     }
 

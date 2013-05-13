@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 
 public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
@@ -28,7 +28,7 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getObject()) };
+        return new Argument[] { new OidOperator(getObject()) };
     }
 
     @Override

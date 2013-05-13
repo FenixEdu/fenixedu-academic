@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
@@ -43,7 +43,7 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionYear()) };
+        return new Argument[] { new OidOperator(getCurricularCourse()), new OidOperator(getExecutionYear()) };
     }
 
     public static class Builder implements GroupBuilder {

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 
 public class ProjectDepartmentAccessGroup extends DomainBackedGroup<Project> {
 
@@ -46,7 +46,7 @@ public class ProjectDepartmentAccessGroup extends DomainBackedGroup<Project> {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getObject()) };
+        return new Argument[] { new OidOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {

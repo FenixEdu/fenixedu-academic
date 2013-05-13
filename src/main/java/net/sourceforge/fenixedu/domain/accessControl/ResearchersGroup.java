@@ -6,7 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 
 public class ResearchersGroup extends DomainBackedGroup<ResearchUnit> {
@@ -27,7 +27,7 @@ public class ResearchersGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getObject()) };
+        return new Argument[] { new OidOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {

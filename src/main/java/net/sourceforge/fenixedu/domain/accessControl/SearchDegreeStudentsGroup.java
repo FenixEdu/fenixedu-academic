@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -208,7 +208,7 @@ public class SearchDegreeStudentsGroup extends Group {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] { new IdOperator(getDegreeCurricularPlan()), new IdOperator(getExecutionYear()),
+        return new Argument[] { new OidOperator(getDegreeCurricularPlan()), new OidOperator(getExecutionYear()),
                 new StaticArgument(getSortBy()), new StaticArgument(getRegistrationStateType()),
                 new StaticArgument(getMinGrade()), new StaticArgument(getMaxGrade()), new StaticArgument(getMinNumberApproved()),
                 new StaticArgument(getMaxNumberApproved()), new StaticArgument(getMinStudentNumber()),

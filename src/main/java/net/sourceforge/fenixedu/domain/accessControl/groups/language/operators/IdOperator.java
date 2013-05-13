@@ -19,6 +19,7 @@ import pt.ist.fenixframework.DomainObject;
  * 
  * @author cfgi
  */
+@Deprecated
 public class IdOperator extends OperatorArgument {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +35,6 @@ public class IdOperator extends OperatorArgument {
 
         addArgument(parameter);
         addArgument(type);
-    }
-
-    public IdOperator(DomainObject object) {
-        this(new StaticArgument(object.getIdInternal()), new StaticArgument(ClassOperator.simplify(object.getClass().getName())));
     }
 
     @Override

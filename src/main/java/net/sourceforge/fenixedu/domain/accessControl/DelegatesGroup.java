@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -56,7 +56,8 @@ public class DelegatesGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-        final Argument argument = functionType == null ? new IdOperator(getDegree()) : new StaticArgument(functionType.getName());
+        final Argument argument =
+                functionType == null ? new OidOperator(getDegree()) : new StaticArgument(functionType.getName());
         return new Argument[] { argument };
     }
 
