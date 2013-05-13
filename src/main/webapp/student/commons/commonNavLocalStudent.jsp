@@ -91,7 +91,4 @@
 			<li><html:link page="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"><bean:message key="link.finalDegreeWork.confirmAttribution"/></html:link></li>
 		</ul>
 	</li>
-
-	<li class="navheader"><bean:message key="label.information.export" bundle="STUDENT_RESOURCES"/></li>
-	<li><html:link page="/managePasswords.do?method=managePasswords" titleKey="label.information.export.manage.passwords"><bean:message key="label.information.export.manage.passwords"/></html:link></li>
 </ul>

@@ -1853,14 +1853,6 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public void generateExportInformationPassword() {
-        setExportInformationPassword(new GeneratePasswordBase().generatePassword(getPerson()));
-    }
-
-    public void deleteExportInformationPassword() {
-        setExportInformationPassword(null);
-    }
-
     public int getNrVotesLastElection() {
         DelegateElection delegateElection =
                 DelegateElection.readCurrentDelegateElectionByDegree(getLastActiveRegistration().getDegree());

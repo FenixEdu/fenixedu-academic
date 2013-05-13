@@ -5317,7 +5317,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class student.Student  {
         Integer number;
-        String exportInformationPassword;
     }
     
     class student.StudentNumber  {
