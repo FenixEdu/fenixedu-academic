@@ -11,6 +11,6 @@
 	<br />
 	<br />
 	<h:form>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.List Execution Periods']}" value="List Execution Periods" action="listExecutionPeriods"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.List.Execution.Periods']}" value="List Execution Periods" action="listExecutionPeriods"/>
 	</h:form>
 </ft:tilesView>

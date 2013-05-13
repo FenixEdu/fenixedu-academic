@@ -130,7 +130,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
-					<h:inputText alt="#{htmlAltBundle['inputText.number]']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
+					<h:inputText alt="#{htmlAltBundle['inputText.number']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
 				</h:column>
 			</h:dataTable>
 			
