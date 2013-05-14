@@ -107,7 +107,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["images/LogoIST.gif"]]></imageExpression>
 				</image>
 				<line direction="TopDown">
 					<reportElement

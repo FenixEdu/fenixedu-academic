@@ -275,7 +275,7 @@
 						<subreportParameterExpression><![CDATA[$P{isForPhd}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection) $P{dummyDataSource}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -396,7 +396,7 @@
 						<subreportParameterExpression><![CDATA[$P{isForPhd}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{entries}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody2.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody2.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -503,7 +503,7 @@
 						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{dummyDataSource}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody3.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody3.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -610,7 +610,7 @@
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{dummyDataSource}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody4.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody4.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -720,7 +720,7 @@
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{dummyDataSource}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody5.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody5.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -841,7 +841,7 @@
 						<subreportParameterExpression><![CDATA[$P{isForPhd}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{dummyDataSource}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody2_without_entries.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody2_without_entries.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>

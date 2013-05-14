@@ -45,7 +45,7 @@
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "images/higher-education-diagram-" + $P{langSuffix} + ".jpg"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/higher-education-diagram-" + $P{langSuffix} + ".jpg"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

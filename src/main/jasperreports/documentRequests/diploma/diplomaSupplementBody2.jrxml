@@ -1225,7 +1225,7 @@
 						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{academicUnitIdentifiers}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody2_1.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody2_1.jasper"]]></subreportExpression>
 				</subreport>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
