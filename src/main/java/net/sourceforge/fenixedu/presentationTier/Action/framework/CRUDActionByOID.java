@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -30,34 +29,31 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
-public class CRUDActionByOID extends FenixDispatchAction {
+public abstract class CRUDActionByOID extends FenixDispatchAction {
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        CRUDMapping crudMapping = (CRUDMapping) mapping;
-        Object[] args = { getOIDProperty(crudMapping, form) };
-        ServiceUtils.executeService(crudMapping.getDeleteService(), args);
-        return crudMapping.findForward("successfull-delete");
+        Object[] args = { getOIDProperty(form) };
+        ServiceUtils.executeService(getDeleteService(), args);
+        return mapping.findForward("successfull-delete");
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        CRUDMapping crudMapping = (CRUDMapping) mapping;
-        InfoObject infoObject = populateInfoObjectFromForm(form, crudMapping);
-        Object[] args = getEditServiceArguments(form, crudMapping, infoObject, request);
-        ServiceUtils.executeService(crudMapping.getEditService(), args);
-        return crudMapping.findForward("successfull-edit");
+        InfoObject infoObject = populateInfoObjectFromForm(form);
+        Object[] args = getEditServiceArguments(form, infoObject, request);
+        ServiceUtils.executeService(getEditService(), args);
+        return mapping.findForward("successfull-edit");
     }
 
-    protected Object[] getEditServiceArguments(ActionForm form, CRUDMapping crudMapping, InfoObject infoObject,
-            HttpServletRequest request) {
-        Object[] args = { getOIDProperty(crudMapping, form), infoObject };
+    protected Object[] getEditServiceArguments(ActionForm form, InfoObject infoObject, HttpServletRequest request) {
+        Object[] args = { getOIDProperty(form), infoObject };
         return args;
     }
 
-    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) throws FenixActionException {
+    protected InfoObject populateInfoObjectFromForm(ActionForm form) throws FenixActionException {
         try {
-            InfoObject infoObject = (InfoObject) Class.forName(mapping.getInfoObjectClassName()).newInstance();
+            InfoObject infoObject = (InfoObject) Class.forName(getInfoObjectClassName()).newInstance();
 
             Map formPropertiesHashMap = PropertyUtils.describe(form);
             Iterator iterator = formPropertiesHashMap.entrySet().iterator();
@@ -97,9 +93,9 @@ public class CRUDActionByOID extends FenixDispatchAction {
         }
     }
 
-    private Integer getOIDProperty(CRUDMapping crudMapping, ActionForm form) {
+    private Integer getOIDProperty(ActionForm form) {
         try {
-            return new Integer(BeanUtils.getProperty(form, crudMapping.getOidProperty()));
+            return new Integer(BeanUtils.getProperty(form, "idInternal"));
         } catch (NumberFormatException e) {
         } catch (Exception e) {
         }
@@ -135,14 +131,13 @@ public class CRUDActionByOID extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CRUDMapping crudMapping = (CRUDMapping) mapping;
-        InfoObject infoObject = readInfoObject(crudMapping, form, request);
+        InfoObject infoObject = readInfoObject(form, request);
         if (!hasErrors(request) && infoObject != null) {
             populateFormFromInfoObject(mapping, infoObject, form, request);
         }
         prepareFormConstants(mapping, form, request);
-        setInfoObjectToRequest(request, infoObject, crudMapping);
-        return crudMapping.findForward("show-form");
+        setInfoObjectToRequest(request, infoObject);
+        return mapping.findForward("show-form");
     }
 
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request) throws Exception {
@@ -150,27 +145,36 @@ public class CRUDActionByOID extends FenixDispatchAction {
 
     public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        CRUDMapping crudMapping = (CRUDMapping) mapping;
-        InfoObject infoObject = readInfoObject(crudMapping, form, request);
-        setInfoObjectToRequest(request, infoObject, crudMapping);
-        return crudMapping.findForward("sucessfull-read");
+        InfoObject infoObject = readInfoObject(form, request);
+        setInfoObjectToRequest(request, infoObject);
+        return mapping.findForward("sucessfull-read");
     }
 
-    private InfoObject readInfoObject(CRUDMapping crudMapping, ActionForm form, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+    private InfoObject readInfoObject(ActionForm form, HttpServletRequest request) throws FenixServiceException,
+            FenixFilterException {
         IUserView userView = UserView.getUser();
-        Integer oid = getOIDProperty(crudMapping, form);
+        Integer oid = getOIDProperty(form);
         InfoObject infoObject = null;
         if (oid != null) {
-            Object[] args = { getOIDProperty(crudMapping, form) };
-            infoObject = (InfoObject) ServiceUtils.executeService(crudMapping.getReadService(), args);
+            Object[] args = { getOIDProperty(form) };
+            infoObject = (InfoObject) ServiceUtils.executeService(getReadService(), args);
         }
         return infoObject;
     }
 
-    private void setInfoObjectToRequest(HttpServletRequest request, InfoObject infoObject, CRUDMapping crudMapping) {
+    private void setInfoObjectToRequest(HttpServletRequest request, InfoObject infoObject) {
         if (infoObject != null) {
-            request.setAttribute(crudMapping.getRequestAttribute(), infoObject);
+            request.setAttribute(getRequestAttribute(), infoObject);
         }
     }
+
+    protected abstract String getReadService();
+
+    protected abstract String getRequestAttribute();
+
+    protected abstract String getDeleteService();
+
+    protected abstract String getEditService();
+
+    protected abstract String getInfoObjectClassName();
 }

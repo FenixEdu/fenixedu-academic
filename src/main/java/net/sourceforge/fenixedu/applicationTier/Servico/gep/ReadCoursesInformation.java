@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Leonor Almeida
@@ -23,7 +24,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 public class ReadCoursesInformation extends FenixService {
 
-    public List<InfoSiteCourseInformation> run(final ExecutionDegree executionDegree, final Boolean basic,
+    @Service
+    public static List<InfoSiteCourseInformation> run(final ExecutionDegree executionDegree, final Boolean basic,
             final String executionYearString) {
         final ExecutionYear executionYear;
         if (executionYearString == null) {
@@ -76,7 +78,7 @@ public class ReadCoursesInformation extends FenixService {
         return result;
     }
 
-    private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
+    private static List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 
         for (final ExecutionDegree executionDegree : executionDegrees) {

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -16,10 +15,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadTeachersInformation extends FenixService {
 
-    public List run(Integer executionDegreeId, Boolean basic, String executionYearString) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionDegreeId, Boolean basic, String executionYearString) {
 
         List<Professorship> professorships = null;
         ExecutionYear executionYear = null;
@@ -87,7 +88,7 @@ public class ReadTeachersInformation extends FenixService {
 
     }
 
-    private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
+    private static List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
             result.add(executionDegree.getDegreeCurricularPlan());

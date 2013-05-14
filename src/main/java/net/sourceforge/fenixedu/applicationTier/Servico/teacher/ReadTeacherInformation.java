@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -49,7 +48,7 @@ import org.joda.time.YearMonthDay;
 
 public class ReadTeacherInformation extends FenixService {
 
-    public SiteView run(String user, String argExecutionYear) throws FenixServiceException {
+    public SiteView run(String user, String argExecutionYear) {
 
         InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
 

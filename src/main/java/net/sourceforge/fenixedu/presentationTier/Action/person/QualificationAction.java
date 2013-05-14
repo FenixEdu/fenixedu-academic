@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
-import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -29,11 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author barbosa
  */
 @Mapping(module = "person", path = "/qualificationForm", input = "/qualificationForm.do?method=prepareEdit&page=0",
-        attribute = "qualificationForm", formBean = "qualificationForm", scope = "request", parameter = "method",
-        customMappingClass = net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping.class,
-        customMappingProperties = { "editService", "EditQualification", "deleteService", "DeleteQualification", "readService",
-                "ReadQualification", "oidProperty", "idInternal", "requestAttribute", "infoQualification", "infoObjectClassName",
-                "infoObjectClassName" })
+        attribute = "qualificationForm", formBean = "qualificationForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "successfull-delete", path = "/readQualifications.do?page=0"),
         @Forward(name = "successfull-edit", path = "/readQualifications.do?page=0"),
         @Forward(name = "successfull-read", path = "/readQualifications.do?page=0"),
@@ -77,9 +72,9 @@ public class QualificationAction extends CRUDActionByOID {
      * presentationTier.mapping.framework.CRUDMapping)
      */
     @Override
-    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) throws FenixActionException {
+    protected InfoObject populateInfoObjectFromForm(ActionForm form) throws FenixActionException {
         try {
-            InfoQualification infoQualification = (InfoQualification) super.populateInfoObjectFromForm(form, mapping);
+            InfoQualification infoQualification = (InfoQualification) super.populateInfoObjectFromForm(form);
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -98,6 +93,31 @@ public class QualificationAction extends CRUDActionByOID {
         } catch (ParseException e) {
             throw new FenixActionException(e.getMessage());
         }
+    }
+
+    @Override
+    protected String getReadService() {
+        return "ReadQualification";
+    }
+
+    @Override
+    protected String getRequestAttribute() {
+        return "infoQualification";
+    }
+
+    @Override
+    protected String getDeleteService() {
+        return "DeleteQualification";
+    }
+
+    @Override
+    protected String getEditService() {
+        return "EditQualification";
+    }
+
+    @Override
+    protected String getInfoObjectClassName() {
+        return "infoObjectClassName";
     }
 
 }

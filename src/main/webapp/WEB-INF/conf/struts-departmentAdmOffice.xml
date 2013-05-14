@@ -373,11 +373,7 @@
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <!-- USE CASE: Management Teacher Credits =================================== -->
             <!-- ======= USE CASE: Associate teacher to executionCourse ================= -->
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" parameter="method" scope="request" name="personSearchForm" input="search-for-shift-management" path="/teacherSearchForExecutionCourseAssociation">
-                  <set-property value="FindPersonService" property="serviceName"></set-property>
-                  <set-property value="infoPerson" property="objectAttribute"></set-property>
-                  <set-property value="infoPersonList" property="listAttribute"></set-property>
-                  <set-property value="errors.teacher.not.found" property="notFoundMessageKey"></set-property>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation" parameter="method" scope="request" name="personSearchForm" input="search-for-shift-management" path="/teacherSearchForExecutionCourseAssociation">
                   <forward path="search-for-teacherExecutionCourseAssociation-management" name="search-form"></forward>
                   <forward path="/showTeacherProfessorshipsForManagement.do" name="list-one"></forward>
                   <forward path="" name="list-many"></forward>
@@ -404,11 +400,7 @@
                   <forward path="createProfessorship" name="third-step"></forward>
                   <forward path="/teacherSearchForExecutionCourseAssociation.do?method=doSearch&amp;page=1" name="final-step"></forward>
             </action>
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" parameter="method" scope="request" name="teacherSearchForm" input="search-for-shift-management" path="/teacherSearchForSummariesManagement">
-                  <set-property value="FindTeachersServiceForDepartmentOffice" property="serviceName"></set-property>
-                  <set-property value="infoTeacher" property="objectAttribute"></set-property>
-                  <set-property value="infoTeacherList" property="listAttribute"></set-property>
-                  <set-property value="errors.teacher.not.found" property="notFoundMessageKey"></set-property>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForSummariesManagement" parameter="method" scope="request" name="teacherSearchForm" input="search-for-shift-management" path="/teacherSearchForSummariesManagement">
                   <exception path="search-for-teacherExecutionCourseAssociation-management-summaries" key="message.teacher-not-belong-to-department" type="java.lang.Exception"></exception>
                   <forward path="search-for-teacherExecutionCourseAssociation-management-summaries" name="search-form"></forward>
                   <forward path="/showTeacherProfessorshipsForSummariesManagement.do" name="list-one"></forward>
