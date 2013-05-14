@@ -118,40 +118,6 @@
 			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
 		</fr:edit>
 		</logic:equal>
-
-		<h2 class="mtop15 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-		<p><em>Note: The master programmes are given in english</em></p>
-		
-		<p><strong>Do you intent to participate in the intensive Portuguese Language Course</strong></p>
-		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.FIRST_SEMESTER.name() %>">
-			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
-						name="individualCandidacyProcessBean"
-						property="mobilityStudentDataBean"
-						schema="MobilityStudentData.languageCompetence.intensive.portuguese.course">
-				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
-			        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
-			        <fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-			</fr:edit>
-		</logic:equal>
-		
-		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.SECOND_SEMESTER.name() %>">
-			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
-						name="individualCandidacyProcessBean"
-						property="mobilityStudentDataBean">
-				<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
-					<fr:slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" layout="radio"/>
-				</fr:schema>
-						
-				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
-			        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
-			        <fr:property name="requiredMarkShown" value="true" />
-			        <fr:property name="requiredMessageShown" value="false" />
-				</fr:layout>
-			</fr:edit>
-		</logic:equal>
 		
 		<h2 class="mtop15 mbottom05"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
 		<fr:edit id="individualCandidacyProcessBean.observations"

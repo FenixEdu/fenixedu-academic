@@ -319,19 +319,6 @@
 	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
-	
-
-	<h2 class="mtop1 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-	
-	<p class="mbottom05"><strong>Intensive Portuguese Course</strong></p>
-	<fr:view	name="individualCandidacyProcess"
-				property="candidacy.mobilityStudentData"
-				schema="MobilityStudentData.languageCompetence.intensive.portuguese.course.view">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thleft mtop025"/>
-	        <fr:property name="columnClasses" value="width175px,,,,"/>
-		</fr:layout>
-	</fr:view>
 
 	<%-- Observations --%>
 	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
