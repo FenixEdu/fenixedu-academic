@@ -187,7 +187,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         Map<Person, EvalueesMap> evaluees = new HashMap<Person, EvalueesMap>();
         final Person loggedPerson = getLoggedPerson(request);
         for (TeacherEvaluationProcess process : loggedPerson.getTeacherEvaluationProcessFromEvaluator()) {
-            if (!evaluees.containsKey(process.getEvaluator())) {
+            if (!evaluees.containsKey(process.getEvaluee())) {
                 evaluees.put(process.getEvaluee(), new EvalueesMap(process.getEvaluee()));
             }
             evaluees.get(process.getEvaluee()).processes.put(process.getFacultyEvaluationProcess(), process);
