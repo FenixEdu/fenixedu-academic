@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
 
-public class PersonAutoCompleteProvider implements AutoCompleteProvider {
+public class PersonAutoCompleteProvider implements AutoCompleteProvider<Person> {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection<Person> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final String searchValue = StringUtils.normalize(value);
 
         final List<Person> result = new ArrayList<Person>();

@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class MobilityProgramProvider implements AutoCompleteProvider {
+public class MobilityProgramProvider implements AutoCompleteProvider<MobilityProgram> {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection<MobilityProgram> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final String nvalue = StringNormalizer.normalize(value);
         final List<MobilityProgram> result = new ArrayList<MobilityProgram>();
         for (final Program program : RootDomainObject.getInstance().getProgramsSet()) {
