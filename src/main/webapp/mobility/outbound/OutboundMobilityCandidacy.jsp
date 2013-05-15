@@ -181,8 +181,8 @@
 		<fr:edit id="outboundMobilityContextBeanAddMobilityCoordinator" name="outboundMobilityContextBean"
 				action="/outboundMobilityCandidacy.do?method=addMobilityCoordinator">
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-				<fr:slot name="person" layout="simpleAutoComplete" key="label.person" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-  					<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.person.PersonAutoCompleteProvider" />
+				<fr:slot name="person" layout="autoComplete" key="label.person" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+  					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.PersonAutoCompleteProvider" />
         			<fr:property name="labelField" value="presentationName"/>
    	    			<fr:property name="format" value="${presentationName}"/>
       				<fr:property name="classes" value="inputsize500px"/>
@@ -223,12 +223,13 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.add.degree.to.group"/>
 				<%= mobilityGroup.getDescription() %>
 			</h3>
-			<bean:define id="providerArgs2" type="java.lang.String">provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider,executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
+			<bean:define id="providerArgs2" type="java.lang.String">executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
 			<fr:edit id="outboundMobilityContextBeanCreateCandidacyPeriod" name="outboundMobilityContextBean"
 					action="/outboundMobilityCandidacy.do?method=addDegreeToGroup">
 				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-   					<fr:slot name="executionDegree" layout="simpleAutoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+   					<fr:slot name="executionDegree" layout="autoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
        					<fr:property name="args" value="<%= providerArgs2 %>" />
+       					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
         				<fr:property name="labelField" value="presentationName"/>
    	    				<fr:property name="format" value="${presentationName}"/>
        					<fr:property name="classes" value="inputsize500px"/>
@@ -335,12 +336,12 @@
 
 		<div id="outboundMobilityContextBeanCreateCandidacyContestBlock" style="display: none;">
 			<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.create.new.contest"/></h3>
-			<bean:define id="providerArgs" type="java.lang.String">provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider,executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
+			<bean:define id="providerArgs" type="java.lang.String">executionYearOid=<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %></bean:define>
 			<fr:edit id="outboundMobilityContextBeanCreateCandidacyContest" name="outboundMobilityContextBean"
 					action="/outboundMobilityCandidacy.do?method=createNewOutboundMobilityCandidacyContest">
 				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	    			<fr:slot name="mobilityProgram" layout="simpleAutoComplete" key="label.mobilityProgram" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-    	    			<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.MobilityProgramProvider" />
+	    			<fr:slot name="mobilityProgram" layout="autoComplete" key="label.mobilityProgram" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+    	    			<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.MobilityProgramProvider" />
         				<fr:property name="labelField" value="registrationAgreement.description"/>
         				<fr:property name="format" value="${registrationAgreement.description}"/>
         				<fr:property name="classes" value="inputsize500px"/>
@@ -349,8 +350,9 @@
 						<fr:property name="saveOptions" value="true"/>
     				</fr:slot>
 					<% if (outboundMobilityContextBean.getMobilityGroups().size() == 0) { %>
-    					<fr:slot name="executionDegree" layout="simpleAutoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+    					<fr:slot name="executionDegree" layout="autoComplete" key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
         					<fr:property name="args" value="<%= providerArgs %>" />
+        					<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreeAutoCompleteProvider" />
 	        				<fr:property name="labelField" value="presentationName"/>
     	    				<fr:property name="format" value="${presentationName}"/>
         					<fr:property name="classes" value="inputsize500px"/>
@@ -359,8 +361,8 @@
 							<fr:property name="saveOptions" value="true"/>
     					</fr:slot>
 					<% } %>
-    				<fr:slot name="unit" layout="simpleAutoComplete" key="label.university" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
-        				<fr:property name="args" value="provider=net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
+    				<fr:slot name="unit" layout="autoComplete" key="label.university" bundle="ACADEMIC_OFFICE_RESOURCES" required="true">
+        				<fr:property name="provider" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExternalUniversityUnitAutoCompleteProvider" />
 	        			<fr:property name="labelField" value="presentationName"/>
     	    			<fr:property name="format" value="${presentationName}"/>
         				<fr:property name="classes" value="inputsize500px"/>
