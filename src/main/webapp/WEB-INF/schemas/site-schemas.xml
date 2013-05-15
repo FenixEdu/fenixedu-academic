@@ -181,8 +181,8 @@
 		<property name="rawSlotName" value="personNameString"/>
 		<property name="labelField" value="text"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchPersonsForParticipations"/>
-		<property name="serviceArgs" value="slot=name"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
+		<property name="args" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
@@ -206,8 +206,8 @@
 		<property name="rawSlotName" value="personNameString"/>
 		<property name="labelField" value="text"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchExternalPersons"/>
-		<property name="serviceArgs" value="slot=name"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
+		<property name="args" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>

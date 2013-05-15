@@ -47,8 +47,8 @@
 					<fr:property name="labelField" value="name"/>
 					<fr:property name="format" value="${presentationName}"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="serviceName" value="SearchAllActiveInternalUnits"/>	
-					<fr:property name="serviceArgs" value="slot=name"/>		
+					<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveInternalUnits"/>	
+					<fr:property name="args" value="slot=name"/>		
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>	
 					<fr:property name="errorStyleClass" value="error0"/>

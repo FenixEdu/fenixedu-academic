@@ -100,8 +100,8 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
-		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
+		<property name="args" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
@@ -131,8 +131,8 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
-		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
+		<property name="args" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
@@ -158,8 +158,8 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
-		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
+		<property name="args" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
@@ -428,8 +428,8 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchPartiesBySocialSecurityNumber"/>
-		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartiesBySocialSecurityNumber"/>
+		<property name="args" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
@@ -504,8 +504,8 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
-		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartySocialSecurityNumber"/>
+		<property name="args" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>

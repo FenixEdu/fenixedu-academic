@@ -1413,13 +1413,6 @@
     </service>
 
     <service>
-        <name>ExternalUnitSearchService</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ExternalUnitSearchService</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>FindTeachersService</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.FindTeachersService</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2749,71 +2742,8 @@
     </service>
 
     <service>
-        <name>SearchAcademicUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchAcademicUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-    
-   	<service>
-        <name>SearchPartyByNif</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPartyByNif</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>SearchActiveInternalUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchActiveInternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchAllActiveInternalUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveInternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchAllActiveParties</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveParties</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchAllActivePartiesByName</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchCurrentExecutionCourses</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchCurrentExecutionCourses</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-    
-    <service>
-        <name>SearchCurriculumGroupsForRegistration</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchCurriculumGroupsForRegistration</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchDistrictSubdivisions</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchEmployeesAndTeachers</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeesAndTeachers</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
@@ -2828,97 +2758,6 @@
     </service>
 
     <service>
-        <name>SearchExternalPersonForParticipations</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchExternalPersonForParticipations</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchExternalPersons</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchExternalUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchInternalPersons</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchInternalPersonsByNameHavingTeacherOrIsResearcher</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchInternalUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchInternalUnitsByType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchInternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchOrganizationalUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchOrganizationalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchAllUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchAllUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchOtherFormationInstitutions</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.SearchOtherFormationInstitutions</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchPartiesBySocialSecurityNumber</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPartiesBySocialSecurityNumber</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchPeople</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeople</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-    
-    <service>
-        <name>SearchPeopleByNameOrISTID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>SearchPerson</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2929,47 +2768,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPersonWithCard</implementationClass>
         <isTransactional>true</isTransactional>
        <filterChains />
-    </service>
-    <service>
-        <name>SearchPersonsForParticipations</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchPresidentForThesis</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPresidentForThesis</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchResearchUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchResearchUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchTeachersByName</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByName</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-    
-    <service>
-        <name>SearchTeachersByNameOrISTID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByNameOrISTID</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
     </service>
 
     <service>
@@ -3464,38 +3262,5 @@
             <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
-	<service>
-        <name>SearchPaymentCodesByExecutionYear</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.SearchPaymentCodesByExecutionYear</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>
-	<service>
-        <name>SearchPhdParticipantsByProcess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.phd.SearchPhdParticipantsByProcess</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>    
-    <service>
-        <name>SearchRaidesDegreeUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
-        <name>SearchRaidesDegreeDesignations</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>   
-    <service>
-        <name>SearchExternalUnitsWithScore</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnitsWithScore</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>  
+
 </serviceDefinitions>

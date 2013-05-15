@@ -76,8 +76,8 @@
 								<fr:property name="labelField" value="person.name"/>
 								<fr:property name="format" value="${person.name} (${person.user.userUId})" />
 								<fr:property name="indicatorShown" value="true"/>		
-								<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
-								<fr:property name="serviceArgs" value="size=50"/>
+								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
+								<fr:property name="args" value="size=50"/>
 								<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 								<fr:property name="minChars" value="4"/>	
 								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" />			

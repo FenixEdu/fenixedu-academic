@@ -136,8 +136,8 @@
 		<property name="size" value="70" />
 		<property name="labelField" value="name" />
 		<property name="indicatorShown" value="true" />
-		<property name="serviceName" value="SearchPolymorphicObjects" />
-		<property name="serviceArgs" value="slot=name" />
+		<property name="provider" value="SearchPolymorphicObjects" />
+		<property name="args" value="slot=name" />
 		<property name="className"
 			value="net.sourceforge.fenixedu.domain.organizationalStructure.Party" />
 		<property name="minChars" value="4" />

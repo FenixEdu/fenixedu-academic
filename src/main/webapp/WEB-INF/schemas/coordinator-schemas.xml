@@ -233,8 +233,8 @@
         <property name="labelField" value="text"/>
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
-        <property name="serviceName" value="SearchPersonsForParticipations"/>
-        <property name="serviceArgs" value="slot=name"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
+        <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
@@ -247,8 +247,8 @@
         <property name="labelField" value="text"/>
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
-        <property name="serviceName" value="SearchPersonsForParticipations"/>
-        <property name="serviceArgs" value="slot=name"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
+        <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
@@ -261,8 +261,8 @@
         <property name="labelField" value="text"/>
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
-        <property name="serviceName" value="SearchPresidentForThesis"/>
-        <property name="serviceArgs" value="thesis=${thesis.idInternal}"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPresidentForThesis"/>
+        <property name="args" value="thesis=${thesis.idInternal}"/>
         <property name="minChars" value="0"/>
     </slot>
 </schema>
@@ -275,8 +275,8 @@
         <property name="labelField" value="text"/>
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
-        <property name="serviceName" value="SearchPersonsForParticipations"/>
-        <property name="serviceArgs" value="slot=name"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations"/>
+        <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
@@ -295,8 +295,8 @@
         <property name="labelField" value="text"/>
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
-        <property name="serviceName" value="SearchExternalPersons"/>
-        <property name="serviceArgs" value="slot=name"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
+        <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
@@ -312,8 +312,8 @@
         <property name="rawSlotName" value="rawUnitName"/>
         <property name="labelField" value="unit.nameWithAcronym"/>
         <property name="indicatorShown" value="true"/>
-        <property name="serviceName" value="SearchExternalUnits"/>
-        <property name="serviceArgs" value="slot=name"/>
+        <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+        <property name="args" value="slot=name"/>
         <property name="minChars" value="3"/>
     </slot>
 </schema>
