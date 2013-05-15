@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -30,9 +32,9 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] argumentos = request.getServiceParameters().parametersArray();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
                 || (id.getRoleTypes() == null)) {
@@ -67,7 +69,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
 
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

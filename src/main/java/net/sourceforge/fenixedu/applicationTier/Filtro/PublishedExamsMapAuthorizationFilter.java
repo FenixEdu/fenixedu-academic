@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.Predicate;
 
@@ -21,8 +22,8 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class PublishedExamsMapAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView userView = AccessControl.getUserView();
 
         if (response.getReturnObject() instanceof ExecutionCourseSiteView) {
 

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.CoordinatorAu
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -16,14 +17,14 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
     @Override
-    protected ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response) {
+    protected ExecutionYear getSpecificExecutionYear(ServiceRequest request) {
         Object argument = request.getServiceParameters().getParameter(0);
 
         ExecutionCourse executionCourse;
         if (argument instanceof InfoExecutionCourse) {
-            executionCourse = rootDomainObject.readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
+            executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
         } else {
-            executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argument);
+            executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID((Integer) argument);
         }
 
         return (executionCourse == null) ? null : executionCourse.getExecutionYear();

@@ -4,14 +4,15 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
 public class ResearchSiteManagerAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
         UnitSite site = (UnitSite) request.getServiceParameters().getParameter(0);

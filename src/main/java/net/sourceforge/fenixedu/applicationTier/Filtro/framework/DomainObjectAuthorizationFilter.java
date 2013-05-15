@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -24,10 +25,10 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
     abstract protected RoleType getRoleType();
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    public void execute(ServiceRequest request) throws FilterException, Exception {
         try {
-            Object[] arguments = getServiceCallArguments(request);
-            IUserView id = getRemoteUser(request);
+            Object[] arguments = request.getServiceParameters().parametersArray();
+            IUserView id = AccessControl.getUserView();
             Integer idInternal;
             if (arguments[0] instanceof Integer) {
                 idInternal = (Integer) arguments[0];

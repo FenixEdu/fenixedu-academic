@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -16,13 +17,13 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Object[] serviceArgs = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        Object[] serviceArgs = request.getServiceParameters().parametersArray();
         Integer executionCourseDestinationId = (Integer) serviceArgs[0];
         Integer executionCourseSourceId = (Integer) serviceArgs[1];
 
-        ExecutionCourse executionCourseDestination = rootDomainObject.readExecutionCourseByOID(executionCourseDestinationId);
-        ExecutionCourse executionCourseSource = rootDomainObject.readExecutionCourseByOID(executionCourseSourceId);
+        ExecutionCourse executionCourseDestination = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseDestinationId);
+        ExecutionCourse executionCourseSource = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseSourceId);
 
         long now = System.currentTimeMillis();
         if (executionCourseDestination.getExecutionPeriod().getBeginDate().getTime() < now

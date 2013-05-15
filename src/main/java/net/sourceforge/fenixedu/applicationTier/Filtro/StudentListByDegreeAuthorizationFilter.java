@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -32,9 +34,9 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] argumentos = request.getServiceParameters().parametersArray();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
                 || (id.getRoleTypes() == null)) {
@@ -62,7 +64,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
         Integer degreeCurricularPlanID = (Integer) arguments[0];
         DegreeType degreeType = (DegreeType) arguments[1];
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getDegreeType().equals(degreeType))) {
             return false;

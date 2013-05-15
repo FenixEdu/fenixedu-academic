@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 
 /**
@@ -29,7 +30,7 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends Abs
         Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
 
         TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
-                rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
+                RootDomainObject.getInstance().readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
         return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher().getIdInternal() : null;
     }
 

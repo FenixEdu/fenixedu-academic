@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -36,7 +37,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, request.getServiceParameters().parametersArray()))
@@ -68,7 +69,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
         } catch (Exception e) {
             return false;
         }

@@ -8,9 +8,11 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -34,9 +36,9 @@ public class CandidacyAccessFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws FilterException, Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] argumentos = request.getServiceParameters().parametersArray();
 
         if ((!this.checkCandidacyOwnership(id, argumentos)) && (!this.checkCoordinatorRole(id, argumentos))) {
             throw new NotAuthorizedException();
@@ -65,7 +67,7 @@ public class CandidacyAccessFilter extends Filtro {
 
         Registration registration = Registration.readByUsername(id.getUtilizador());
         if (registration != null) {
-            SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
+            SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(candidacyID);
             //
             if ((candidacy != null)
                     && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal().intValue())) {

@@ -8,7 +8,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class SiteManagerScormFileAuthorizationFilter extends SiteManagerAuthorizationFilter {
 
     @Override
-    protected Site getSite(ServiceRequest request, ServiceResponse response) {
+    protected Site getSite(ServiceRequest request) {
         CreateScormFileItemForItemArgs args = (CreateScormFileItemForItemArgs) request.getServiceParameters().getParameter(0);
         return args.getSite();
     }

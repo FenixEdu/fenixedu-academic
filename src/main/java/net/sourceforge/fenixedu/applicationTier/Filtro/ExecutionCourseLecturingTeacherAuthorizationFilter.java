@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -32,9 +34,9 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, arguments)) {
@@ -72,11 +74,11 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 
         } else if (argument instanceof InfoExecutionCourse) {
             final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
-            return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+            return RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 
         } else if (argument instanceof Integer) {
             final Integer executionCourseID = (Integer) argument;
-            return rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            return RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
         } else if (argument instanceof SummariesManagementBean) {
             return ((SummariesManagementBean) argument).getExecutionCourse();

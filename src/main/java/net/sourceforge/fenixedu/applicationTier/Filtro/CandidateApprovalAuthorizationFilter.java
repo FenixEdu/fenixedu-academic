@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -47,7 +49,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
             for (String id2 : ids) {
 
-                MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(id2));
+                MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(new Integer(id2));
 
                 // modified by Tânia Pousão
                 Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
@@ -70,11 +72,11 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView userView = AccessControl.getUserView();
         if ((userView != null && userView.getRoleTypes() != null && !containsRoleType(userView.getRoleTypes()))
                 || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView,
-                        getServiceCallArguments(request))) || (userView == null) || (userView.getRoleTypes() == null)) {
+                        request.getServiceParameters().parametersArray())) || (userView == null) || (userView.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

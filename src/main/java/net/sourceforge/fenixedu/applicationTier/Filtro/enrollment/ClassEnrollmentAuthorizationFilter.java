@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -34,10 +35,10 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Person person = getRemoteUser(request).getPerson();
+    public void execute(ServiceRequest request) throws Exception {
+        Person person = AccessControl.getUserView().getPerson();
 
-        final Registration registration = (Registration) getServiceCallArguments(request)[0];
+        final Registration registration = (Registration) request.getServiceParameters().parametersArray()[0];
 
         if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
                 registration.getDegree())) {

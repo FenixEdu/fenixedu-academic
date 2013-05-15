@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -19,17 +20,17 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class SubmitFinalWorkProposalAuthorization extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
         final IUserView userView = (IUserView) request.getRequester();
         final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) request.getServiceParameters().getParameter(0);
         if (infoProposalEditor.getIdInternal() != null) {
-            final Proposal proposal = rootDomainObject.readProposalByOID(infoProposalEditor.getIdInternal());
+            final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getIdInternal());
             if (!authorized(userView.getPerson(), proposal)) {
                 throw new NotAuthorizedFilterException();
             }
         } else {
             final Integer executionDegreeId = infoProposalEditor.getExecutionDegree().getIdInternal();
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+            final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
             final Scheduleing scheduleing = executionDegree.getScheduling();
             if (!authorized(userView.getPerson(), scheduleing)) {
                 throw new NotAuthorizedFilterException();

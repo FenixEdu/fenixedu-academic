@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 
 /**
@@ -20,7 +21,7 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
     protected Integer getTeacherId(Object[] arguments) {
         Integer supportLessonId = (Integer) arguments[0];
 
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonId);
+        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonId);
         return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal() : null;
     }
 

@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -22,9 +24,9 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] argumentos = request.getServiceParameters().parametersArray();
 
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
@@ -51,7 +53,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
             Integer candidateID = (Integer) arguments[1];
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;
@@ -69,7 +71,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                 // Modified by Fernanda Quitério
 
                 CurricularCourse curricularCourse =
-                        (CurricularCourse) rootDomainObject.readDegreeModuleByOID(selectedCurricularCourse);
+                        (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(selectedCurricularCourse);
                 if (!curricularCourse.getDegreeCurricularPlan().equals(
                         masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                     return false;

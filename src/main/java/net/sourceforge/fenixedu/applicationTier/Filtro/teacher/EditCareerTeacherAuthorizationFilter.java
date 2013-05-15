@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.EditDomainObjec
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -32,7 +33,7 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthor
             return true;
         }
 
-        final Career career = rootDomainObject.readCareerByOID(infoCareer.getIdInternal());
+        final Career career = RootDomainObject.getInstance().readCareerByOID(infoCareer.getIdInternal());
 
         return career.getTeacher() == teacher;
     }

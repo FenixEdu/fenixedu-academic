@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -23,9 +25,9 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
 
         try {
             // Verify if needed fields are null
@@ -63,7 +65,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         if (isNew) {
             return true;
         }
-        final Qualification qualification = rootDomainObject.readQualificationByOID(infoQualification.getIdInternal());
+        final Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(infoQualification.getIdInternal());
         return qualification.getPerson() == userView.getPerson();
     }
 }

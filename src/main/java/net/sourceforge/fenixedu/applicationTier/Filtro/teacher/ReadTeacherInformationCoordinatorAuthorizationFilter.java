@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -33,7 +32,7 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
     }
 
     @Override
-    public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception {
+    public void execute(ServiceRequest arg0) throws FilterException, Exception {
         IUserView id = (IUserView) arg0.getRequester();
         Object[] arguments = arg0.getArguments();
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)

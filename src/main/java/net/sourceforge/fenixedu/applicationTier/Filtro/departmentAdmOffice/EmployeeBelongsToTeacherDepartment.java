@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -20,10 +21,10 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public class EmployeeBelongsToTeacherDepartment extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    public void execute(ServiceRequest request) throws FilterException, Exception {
 
-        final IUserView userView = getRemoteUser(request);
-        final Object[] argumentos = getServiceCallArguments(request);
+        final IUserView userView = AccessControl.getUserView();
+        final Object[] argumentos = request.getServiceParameters().parametersArray();
 
         final Department teacherDepartment = getTeacherDepartment(argumentos);
         final Department employeeDepartment = getEmployeeDepartment(userView);

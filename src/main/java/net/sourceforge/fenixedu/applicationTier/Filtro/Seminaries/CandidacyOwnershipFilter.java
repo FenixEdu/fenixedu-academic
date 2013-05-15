@@ -7,8 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -31,11 +33,11 @@ public class CandidacyOwnershipFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
+    public void execute(ServiceRequest request) throws Exception {
+        Integer candidacyID = (Integer) request.getServiceParameters().parametersArray()[0];
 
-        Registration registration = Registration.readByUsername(getRemoteUser(request).getUtilizador());
-        SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
+        Registration registration = Registration.readByUsername(AccessControl.getUserView().getUtilizador());
+        SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(candidacyID);
         //
         if ((candidacy != null) && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal().intValue())) {
             throw new NotAuthorizedException();

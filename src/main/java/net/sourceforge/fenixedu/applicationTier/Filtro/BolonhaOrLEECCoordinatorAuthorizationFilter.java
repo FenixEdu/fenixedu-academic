@@ -7,7 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -19,14 +21,14 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Person person = getRemoteUser(request).getPerson();
+    public void execute(ServiceRequest request) throws Exception {
+        Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
             throw new NotAuthorizedFilterException();
         }
 
-        Object[] args = getServiceCallArguments(request);
+        Object[] args = request.getServiceParameters().parametersArray();
         Integer executionDegreeID = (Integer) args[0];
 
         if (!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID))) {
@@ -39,7 +41,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
             return false;
         }
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
 
         if (executionDegree.isBolonhaDegree() && executionDegree.getDegree().getSigla().equals("LEEC-pB")) {
             return true;
@@ -53,7 +55,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
             return false;
         }
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
 
         List<Coordinator> coordinators = new ArrayList<Coordinator>();
         coordinators.addAll(person.getCoordinators());

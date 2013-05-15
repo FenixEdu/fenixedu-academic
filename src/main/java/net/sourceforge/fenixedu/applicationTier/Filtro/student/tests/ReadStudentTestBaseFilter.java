@@ -8,10 +8,10 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -20,14 +20,14 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
     @Override
-    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-        super.execute(request, response);
+    final public void execute(ServiceRequest request) throws FilterException, Exception {
+        super.execute(request);
 
         Object object = request.getServiceParameters().parametersArray()[1];
         DistributedTest distributedTest = null;
         if (object instanceof Integer) {
             final Integer testId = (Integer) object;
-            distributedTest = rootDomainObject.readDistributedTestByOID(testId);
+            distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(testId);
         } else if (object instanceof DistributedTest) {
             distributedTest = (DistributedTest) object;
         }

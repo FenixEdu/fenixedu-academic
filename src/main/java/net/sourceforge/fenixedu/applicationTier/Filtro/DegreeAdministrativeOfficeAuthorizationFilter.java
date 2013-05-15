@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -39,10 +38,10 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    public void execute(ServiceRequest request) throws FilterException, Exception {
         IUserView userView = (IUserView) request.getRequester();
         if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-            super.execute(request, response);
+            super.execute(request);
         }
 
     }

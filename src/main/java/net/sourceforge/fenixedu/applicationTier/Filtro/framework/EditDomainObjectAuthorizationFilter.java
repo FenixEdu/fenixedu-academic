@@ -27,7 +27,7 @@ public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationB
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    public void execute(ServiceRequest request) throws FilterException, Exception {
         try {
             Object[] arguments = request.getServiceParameters().parametersArray();
             IUserView id = (IUserView) request.getRequester();

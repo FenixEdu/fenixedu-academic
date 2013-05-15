@@ -1,30 +1,35 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import java.util.Collection;
+
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
 
-/**
- * This class is the superclass of all Filter. A Filter class is responsible for
- * ensuring that a given service can be invoked by a certain user or by changing
- * the arguments that should be processed by the service. Filter classes must
- * also define a public static method, called getInstance, that returns an
- * instance of the filter class. This method is called through reflection. If
- * the Filter class does not maintain any state, then this method should return
- * a singleton instance.
- * 
- * @author Joao Pereira
- * @version
- */
+abstract public class Filtro extends AccessControlFilter {
 
-abstract public class Filtro extends AccessControlFilter
-/* implements IFilter */
-{
-    protected IUserView getRemoteUser(ServiceRequest request) {
-        return (IUserView) request.getRequester();
+    /**
+     * @return The Needed Roles to Execute The Service
+     */
+    protected Collection<RoleType> getNeededRoleTypes() {
+        return null;
     }
 
-    protected Object[] getServiceCallArguments(ServiceRequest request) {
-        return request.getServiceParameters().parametersArray();
+    protected boolean containsRoleType(Collection<RoleType> roleTypes) {
+        final Collection<RoleType> neededRoleTypes = getNeededRoleTypes();
+        if (neededRoleTypes == null || neededRoleTypes.isEmpty()) {
+            return true;
+        }
+        if (roleTypes != null) {
+            for (final RoleType roleType : roleTypes) {
+                if (neededRoleTypes.contains(roleType)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+
+    abstract public void execute(ServiceRequest request) throws Exception;
 
 }

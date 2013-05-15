@@ -14,7 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -31,9 +33,9 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
 
         try {
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
@@ -49,7 +51,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         final Person person = id.getPerson();
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 
         List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 

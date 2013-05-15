@@ -5,14 +5,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
 public class ManageUnitPersistentGroup extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
         PersistentGroupMembers group = null;

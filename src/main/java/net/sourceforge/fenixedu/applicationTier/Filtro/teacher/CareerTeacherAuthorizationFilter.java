@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -22,7 +23,7 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectAuthorizationF
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
-        final Career career = rootDomainObject.readCareerByOID(objectId);
+        final Career career = RootDomainObject.getInstance().readCareerByOID(objectId);
         return teacher != null && career.getTeacher() == teacher;
     }
 

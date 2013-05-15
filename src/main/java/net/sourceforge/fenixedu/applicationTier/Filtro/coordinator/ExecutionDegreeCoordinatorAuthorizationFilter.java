@@ -18,12 +18,14 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -35,9 +37,9 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        final IUserView userView = getRemoteUser(request);
-        final Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        final IUserView userView = AccessControl.getUserView();
+        final Object[] arguments = request.getServiceParameters().parametersArray();
         if (arguments == null || arguments.length < 1 || arguments[0] == null) {
             throw new NotAuthorizedFilterException();
         }
@@ -59,7 +61,7 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
         if (id != null) {
             final Person person = id.getPerson();
             if (person != null) {
-                final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(objectId);
+                final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(objectId);
                 if (person.hasRole(RoleType.COORDINATOR)) {
                     for (final Coordinator coordinator : person.getCoordinators()) {
                         if (executionDegree.getCoordinatorsListSet().contains(coordinator)) {

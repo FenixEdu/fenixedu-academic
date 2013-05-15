@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -31,9 +33,9 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !attendsEvaluationExecutionCourse(id, arguments)) {
@@ -59,7 +61,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             } else {
                 return false;
             }
-            final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationID);
+            final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationID);
 
             final String studentUsername = (String) args[0];
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {

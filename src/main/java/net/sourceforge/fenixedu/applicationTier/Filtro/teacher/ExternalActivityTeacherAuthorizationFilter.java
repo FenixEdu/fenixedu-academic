@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
@@ -22,7 +23,7 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuth
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         final Person person = id.getPerson();
         final Teacher teacher = person != null ? person.getTeacher() : null;
-        final ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(objectId);
+        final ExternalActivity externalActivity = RootDomainObject.getInstance().readExternalActivityByOID(objectId);
         return externalActivity.getTeacher() == teacher;
     }
 

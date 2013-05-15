@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -26,12 +27,12 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
 
         try {
-            IUserView userViewLogged = getRemoteUser(request);
+            IUserView userViewLogged = AccessControl.getUserView();
 
-            Object[] arguments = getServiceCallArguments(request);
+            Object[] arguments = request.getServiceParameters().parametersArray();
             Professorship professorshipLogged = getProfessorshipLogged(arguments);
             Summary summary = getSummary(arguments);
 

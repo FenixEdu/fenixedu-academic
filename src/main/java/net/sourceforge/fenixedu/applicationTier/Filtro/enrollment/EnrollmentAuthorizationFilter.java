@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -158,7 +159,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected boolean verifyCoordinator(Person person, Object[] args) {
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) args[0]);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) args[0]);
         if (executionDegree == null) {
             return false;
         }

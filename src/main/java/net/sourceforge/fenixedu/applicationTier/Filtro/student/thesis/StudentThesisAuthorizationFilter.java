@@ -5,13 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
 public class StudentThesisAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
         Student student = getStudent(request);
 
         if (student == null) {
@@ -29,7 +30,7 @@ public class StudentThesisAuthorizationFilter extends Filtro {
     }
 
     private Student getStudent(ServiceRequest request) {
-        IUserView userView = getRemoteUser(request);
+        IUserView userView = AccessControl.getUserView();
         return userView.getPerson().getStudent();
     }
 

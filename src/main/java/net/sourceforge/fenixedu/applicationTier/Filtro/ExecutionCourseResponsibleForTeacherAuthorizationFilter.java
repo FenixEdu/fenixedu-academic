@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -31,9 +33,9 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
@@ -61,9 +63,9 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         try {
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+                executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
+                executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID((Integer) argumentos[0]);
             }
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());

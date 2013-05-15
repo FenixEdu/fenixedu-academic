@@ -5,6 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.OutOfPeriodFilterException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -12,7 +13,7 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 public class SubmitMarksPeriodFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
         String startString = "2006-01-04";
         String endString = "2006-02-25";
         Date start = DateFormatUtil.parse("yyyy-MM-dd", startString);
@@ -20,8 +21,8 @@ public class SubmitMarksPeriodFilter extends Filtro {
         Date now = new Date();
         Integer executionPeriodId = 83;
 
-        Object[] arguments = getServiceCallArguments(request);
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) arguments[0]);
+        Object[] arguments = request.getServiceParameters().parametersArray();
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID((Integer) arguments[0]);
         if (executionCourse != null) {
             if (executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
                 if (now.after(start) && now.before(end)) {

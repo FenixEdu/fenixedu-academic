@@ -16,7 +16,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 public abstract class AuthorizationByManyRolesFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         String messageException = hasPrevilege(id, request.getServiceParameters().parametersArray());
 

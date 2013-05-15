@@ -39,7 +39,7 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(ServiceRequest request) throws Exception {
         List serviceResult = (List) response.getReturnObject();
         ServiceParameters parameters = request.getServiceParameters();
 

@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
@@ -24,7 +25,7 @@ public class EditTeacherDegreeFinalProjectStudentAuthorization extends AbstractT
                 (InfoTeacherDegreeFinalProjectStudent) arguments[1];
 
         Teacher teacher =
-                rootDomainObject.readTeacherByOID(infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
+                RootDomainObject.getInstance().readTeacherByOID(infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
         return teacher != null ? teacher.getIdInternal() : null;
     }
 

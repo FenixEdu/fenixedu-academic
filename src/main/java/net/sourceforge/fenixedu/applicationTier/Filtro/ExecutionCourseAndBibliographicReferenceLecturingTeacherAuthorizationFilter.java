@@ -12,8 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -33,9 +35,9 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
             throw new NotAuthorizedFilterException();
@@ -50,7 +52,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         boolean result = false;
         final Integer bibliographicReferenceID = getBibliographicReference(args);
         final BibliographicReference bibliographicReference =
-                rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
+                RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceID);
         final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
         if (bibliographicReference != null && teacher != null) {

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAut
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -30,7 +31,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
             return false;
         }
 
-        final Proposal proposal = rootDomainObject.readProposalByOID(objectId);
+        final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(objectId);
         if (proposal == null) {
             return false;
         }

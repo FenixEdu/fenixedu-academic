@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ReadCourseInformationCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
     @Override
-    protected ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response) {
+    protected ExecutionYear getSpecificExecutionYear(ServiceRequest request) {
         Integer id = (Integer) request.getServiceParameters().getParameter(0);
         ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(id);
 

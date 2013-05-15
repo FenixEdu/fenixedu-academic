@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class ScientificComissionMemberAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -17,10 +17,10 @@ public class ScientificComissionMemberAuthorizationFilter extends AuthorizationB
     }
 
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        super.execute(request, response);
+    public void execute(ServiceRequest request) throws Exception {
+        super.execute(request);
 
-        IUserView userView = getRemoteUser(request);
+        IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
         // first argument must be a degree curricularPlan

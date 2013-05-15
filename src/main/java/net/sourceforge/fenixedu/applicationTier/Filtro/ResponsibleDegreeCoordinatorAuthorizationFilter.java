@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -42,9 +44,9 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
      * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(ServiceRequest request) throws Exception {
+        IUserView id = AccessControl.getUserView();
+        Object[] arguments = request.getServiceParameters().parametersArray();
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
@@ -69,7 +71,7 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
         try {
             final Person person = id.getPerson();
 
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) argumentos[0]);
             Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
             result = (coordinator != null) && coordinator.getResponsible().booleanValue();
