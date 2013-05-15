@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -49,7 +47,8 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
             for (String id2 : ids) {
 
-                MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(new Integer(id2));
+                MasterDegreeCandidate masterDegreeCandidate =
+                        RootDomainObject.getInstance().readMasterDegreeCandidateByOID(new Integer(id2));
 
                 // modified by Tânia Pousão
                 Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
@@ -72,11 +71,11 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         if ((userView != null && userView.getRoleTypes() != null && !containsRoleType(userView.getRoleTypes()))
-                || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView,
-                        request.getServiceParameters().parametersArray())) || (userView == null) || (userView.getRoleTypes() == null)) {
+                || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView, parameters))
+                || (userView == null) || (userView.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

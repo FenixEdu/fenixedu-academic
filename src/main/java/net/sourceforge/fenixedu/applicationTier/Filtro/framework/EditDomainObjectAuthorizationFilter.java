@@ -9,8 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -27,15 +26,14 @@ public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationB
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws FilterException, Exception {
+    public void execute(Object[] parameters) throws FilterException, Exception {
         try {
-            Object[] arguments = request.getServiceParameters().parametersArray();
-            IUserView id = (IUserView) request.getRequester();
-            Integer idInternal = ((InfoObject) arguments[1]).getIdInternal();
+            IUserView id = AccessControl.getUserView();
+            Integer idInternal = ((InfoObject) parameters[1]).getIdInternal();
             boolean isNew = (idInternal == null) || idInternal.equals(Integer.valueOf(0));
 
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, (InfoObject) arguments[1])))) {
+                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, (InfoObject) parameters[1])))) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {

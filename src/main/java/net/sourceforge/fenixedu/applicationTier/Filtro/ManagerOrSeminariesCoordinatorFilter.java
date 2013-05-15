@@ -9,15 +9,13 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Integer SCPIDINternal = (Integer) request.getServiceParameters().getParameter(1);
+        Integer SCPIDINternal = (Integer) parameters[1];
 
         boolean seminaryCandidate = false;
         if (SCPIDINternal != null) {

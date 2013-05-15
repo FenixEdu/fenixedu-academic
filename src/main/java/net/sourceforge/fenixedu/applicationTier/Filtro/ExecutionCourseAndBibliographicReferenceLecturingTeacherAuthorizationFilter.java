@@ -35,9 +35,9 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
     }
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = request.getServiceParameters().parametersArray();
+        Object[] arguments = parameters;
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
             throw new NotAuthorizedFilterException();

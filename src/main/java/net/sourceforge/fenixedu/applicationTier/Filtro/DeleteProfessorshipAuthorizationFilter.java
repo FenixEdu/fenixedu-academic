@@ -20,9 +20,9 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
     }
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = request.getServiceParameters().parametersArray();
+        Object[] arguments = parameters;
 
         try {
 

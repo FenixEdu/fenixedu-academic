@@ -12,7 +12,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class SpaceAdministratorAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         if (userView != null) {
             Person person = userView.getPerson();

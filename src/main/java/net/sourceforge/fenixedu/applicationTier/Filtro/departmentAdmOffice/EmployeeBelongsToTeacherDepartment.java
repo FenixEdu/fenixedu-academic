@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -21,12 +19,11 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public class EmployeeBelongsToTeacherDepartment extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws FilterException, Exception {
+    public void execute(Object[] parameters) throws FilterException, Exception {
 
         final IUserView userView = AccessControl.getUserView();
-        final Object[] argumentos = request.getServiceParameters().parametersArray();
 
-        final Department teacherDepartment = getTeacherDepartment(argumentos);
+        final Department teacherDepartment = getTeacherDepartment(parameters);
         final Department employeeDepartment = getEmployeeDepartment(userView);
 
         if (!employeeDepartment.getName().equals(teacherDepartment.getName())) {

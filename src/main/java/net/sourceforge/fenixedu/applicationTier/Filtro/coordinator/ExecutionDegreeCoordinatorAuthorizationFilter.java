@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Leonor Almeida
@@ -37,14 +35,13 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         final IUserView userView = AccessControl.getUserView();
-        final Object[] arguments = request.getServiceParameters().parametersArray();
-        if (arguments == null || arguments.length < 1 || arguments[0] == null) {
+        if (parameters == null || parameters.length < 1 || parameters[0] == null) {
             throw new NotAuthorizedFilterException();
         }
         final Integer idInternal =
-                (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject) arguments[0]).getIdInternal();
+                (parameters[0] instanceof Integer) ? (Integer) parameters[0] : ((InfoObject) parameters[0]).getIdInternal();
 
         if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, idInternal)) {
             throw new NotAuthorizedFilterException();

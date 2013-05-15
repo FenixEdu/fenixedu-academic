@@ -13,8 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -37,11 +36,11 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        IUserView id = (IUserView) request.getRequester();
+    public void execute(Object[] parameters) throws Exception {
+        IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, request.getServiceParameters().parametersArray()))
-                || (id == null) || (id.getRoleTypes() == null)) {
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, parameters)) || (id == null)
+                || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }

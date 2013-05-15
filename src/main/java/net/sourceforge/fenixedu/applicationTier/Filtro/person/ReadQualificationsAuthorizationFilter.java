@@ -5,8 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class ReadQualificationsAuthorizationFilter extends Filtro {
 
@@ -18,9 +16,8 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
     }
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = request.getServiceParameters().parametersArray();
         try {
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {

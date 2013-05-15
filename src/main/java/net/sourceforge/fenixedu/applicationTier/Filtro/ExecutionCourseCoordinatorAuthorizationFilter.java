@@ -17,12 +17,13 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
     @Override
-    protected ExecutionYear getSpecificExecutionYear(ServiceRequest request) {
-        Object argument = request.getServiceParameters().getParameter(0);
+    protected ExecutionYear getSpecificExecutionYear(Object[] parameters) {
+        Object argument = parameters[0];
 
         ExecutionCourse executionCourse;
         if (argument instanceof InfoExecutionCourse) {
-            executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
+            executionCourse =
+                    RootDomainObject.getInstance().readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
         } else {
             executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID((Integer) argument);
         }

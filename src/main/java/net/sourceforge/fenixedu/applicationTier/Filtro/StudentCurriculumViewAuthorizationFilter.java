@@ -12,7 +12,7 @@ public class StudentCurriculumViewAuthorizationFilter extends Filtro {
     public final static StudentCurriculumViewAuthorizationFilter instance = new StudentCurriculumViewAuthorizationFilter();
 
     @Override
-    final public void execute(ServiceRequest request) throws FilterException, Exception {
+    final public void execute(Object[] parameters) throws FilterException, Exception {
         if (!AcademicPredicates.VIEW_FULL_STUDENT_CURRICULUM.evaluate(AccessControl.getUserView().getPerson())) {
             throw new NotAuthorizedFilterException();
         }

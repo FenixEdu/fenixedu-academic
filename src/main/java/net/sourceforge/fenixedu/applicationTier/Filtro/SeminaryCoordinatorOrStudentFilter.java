@@ -32,7 +32,7 @@ public class SeminaryCoordinatorOrStudentFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
 
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType1()) && !id.hasRoleType(getRoleType2())))

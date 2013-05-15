@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -20,10 +19,10 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
     @Override
-    final public void execute(ServiceRequest request) throws FilterException, Exception {
-        super.execute(request);
+    final public void execute(Object[] parameters) throws FilterException, Exception {
+        super.execute(parameters);
 
-        Object object = request.getServiceParameters().parametersArray()[1];
+        Object object = parameters[1];
         DistributedTest distributedTest = null;
         if (object instanceof Integer) {
             final Integer testId = (Integer) object;

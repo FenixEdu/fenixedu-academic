@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -21,15 +19,14 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
     }
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
             throw new NotAuthorizedFilterException();
         }
 
-        Object[] args = request.getServiceParameters().parametersArray();
-        Integer executionDegreeID = (Integer) args[0];
+        Integer executionDegreeID = (Integer) parameters[0];
 
         if (!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID))) {
             throw new NotAuthorizedFilterException();

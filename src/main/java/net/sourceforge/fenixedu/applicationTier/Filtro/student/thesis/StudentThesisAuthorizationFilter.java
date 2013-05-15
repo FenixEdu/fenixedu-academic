@@ -6,20 +6,18 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class StudentThesisAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        Student student = getStudent(request);
+    public void execute(Object[] parameters) throws Exception {
+        Student student = getStudent(parameters);
 
         if (student == null) {
             abort();
         }
 
-        Thesis thesis = (Thesis) request.getServiceParameters().getParameter(0);
+        Thesis thesis = (Thesis) parameters[0];
         if (thesis.getStudent() != student) {
             abort();
         }
@@ -29,7 +27,7 @@ public class StudentThesisAuthorizationFilter extends Filtro {
         throw new NotAuthorizedFilterException();
     }
 
-    private Student getStudent(ServiceRequest request) {
+    private Student getStudent(Object[] parameters) {
         IUserView userView = AccessControl.getUserView();
         return userView.getPerson().getStudent();
     }

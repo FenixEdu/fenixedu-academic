@@ -45,9 +45,9 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
      * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = request.getServiceParameters().parametersArray();
+        Object[] argumentos = parameters;
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !isCoordinatorOfCurrentExecutionDegree(id, argumentos)) {

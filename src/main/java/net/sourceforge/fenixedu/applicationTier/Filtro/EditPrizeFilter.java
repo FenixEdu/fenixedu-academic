@@ -5,19 +5,17 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class EditPrizeFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
         Prize prize = null;
-        if (request.getServiceParameters().getParameter(1) instanceof Prize) {
-            prize = (Prize) request.getServiceParameters().getParameter(1);
+        if (parameters[1] instanceof Prize) {
+            prize = (Prize) parameters[1];
         }
         if (prize != null) {
             if (!prize.isEditableByUser(person)) {

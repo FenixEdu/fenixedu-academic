@@ -12,12 +12,12 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class EditWrittenEvaluationAuthorization extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         final IUserView userView = AccessControl.getUserView();
 
         if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 
-            final Object[] arguments = request.getServiceParameters().parametersArray();
+            final Object[] arguments = parameters;
             final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
 
             if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {

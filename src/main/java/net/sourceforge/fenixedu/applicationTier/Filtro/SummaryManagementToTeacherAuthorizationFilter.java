@@ -27,12 +27,12 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
     }
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
 
         try {
             IUserView userViewLogged = AccessControl.getUserView();
 
-            Object[] arguments = request.getServiceParameters().parametersArray();
+            Object[] arguments = parameters;
             Professorship professorshipLogged = getProfessorshipLogged(arguments);
             Summary summary = getSummary(arguments);
 

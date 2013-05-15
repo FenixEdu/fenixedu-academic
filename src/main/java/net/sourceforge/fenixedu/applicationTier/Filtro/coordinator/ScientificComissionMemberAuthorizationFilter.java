@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
 
 public class ScientificComissionMemberAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -17,14 +16,14 @@ public class ScientificComissionMemberAuthorizationFilter extends AuthorizationB
     }
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        super.execute(request);
+    public void execute(Object[] parameters) throws Exception {
+        super.execute(parameters);
 
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
         // first argument must be a degree curricularPlan
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request.getServiceParameters().getParameter(0);
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) parameters[0];
 
         if (!degreeCurricularPlan.getDegree().isMemberOfCurrentScientificCommission(person)) {
             throw new NotAuthorizedFilterException("degree.scientificCommission.notMember");

@@ -5,13 +5,12 @@ import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.berserk.ServiceRequest;
 
 public class DeleteFileContentFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        FileContent fileContent = getFileContent(request);
+    public void execute(Object[] parameters) throws Exception {
+        FileContent fileContent = getFileContent(parameters);
         Site site = fileContent.getSite();
 
         if (site != null) {
@@ -28,7 +27,7 @@ public class DeleteFileContentFilter extends Filtro {
 
     }
 
-    protected FileContent getFileContent(ServiceRequest request) {
-        return (FileContent) request.getServiceParameters().getParameter(0);
+    protected FileContent getFileContent(Object[] parameters) {
+        return (FileContent) parameters[0];
     }
 }

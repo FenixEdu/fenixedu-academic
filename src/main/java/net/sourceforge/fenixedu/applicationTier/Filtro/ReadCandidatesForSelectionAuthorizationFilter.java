@@ -34,10 +34,10 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
 
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = request.getServiceParameters().parametersArray();
+        Object[] argumentos = parameters;
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
                 || (id.getRoleTypes() == null)) {

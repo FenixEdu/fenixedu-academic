@@ -4,13 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.berserk.ServiceRequest;
 
 public class SiteManagerAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        Site site = getSite(request);
+    public void execute(Object[] parameters) throws Exception {
+        Site site = getSite(parameters);
 
         IGroup owner = site.getOwner();
 
@@ -23,8 +22,8 @@ public class SiteManagerAuthorizationFilter extends Filtro {
         }
     }
 
-    protected Site getSite(ServiceRequest request) {
-        return (Site) request.getServiceParameters().getParameter(0);
+    protected Site getSite(Object[] parameters) {
+        return (Site) parameters[0];
     }
 
 }

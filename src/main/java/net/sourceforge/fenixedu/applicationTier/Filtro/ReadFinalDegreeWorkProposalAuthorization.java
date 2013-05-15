@@ -19,9 +19,9 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Integer finalDegreeWorkProposalOID = (Integer) request.getServiceParameters().parametersArray()[0];
+        Integer finalDegreeWorkProposalOID = (Integer) parameters[0];
         if (finalDegreeWorkProposalOID != null) {
             Proposal proposal = RootDomainObject.getInstance().readProposalByOID(finalDegreeWorkProposalOID);
             if (proposal != null) {

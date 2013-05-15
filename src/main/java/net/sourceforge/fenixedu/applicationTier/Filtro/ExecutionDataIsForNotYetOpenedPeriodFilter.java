@@ -17,8 +17,8 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        Object[] serviceArgs = request.getServiceParameters().parametersArray();
+    public void execute(Object[] parameters) throws Exception {
+        Object[] serviceArgs = parameters;
         Integer executionCourseDestinationId = (Integer) serviceArgs[0];
         Integer executionCourseSourceId = (Integer) serviceArgs[1];
 

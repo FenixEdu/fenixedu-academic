@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -33,8 +31,8 @@ public class CandidacyOwnershipFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        Integer candidacyID = (Integer) request.getServiceParameters().parametersArray()[0];
+    public void execute(Object[] parameters) throws Exception {
+        Integer candidacyID = (Integer) parameters[0];
 
         Registration registration = Registration.readByUsername(AccessControl.getUserView().getUtilizador());
         SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(candidacyID);

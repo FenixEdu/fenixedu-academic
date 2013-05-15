@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
@@ -36,11 +34,10 @@ public class CandidacyAccessFilter extends Filtro {
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
     @Override
-    public void execute(ServiceRequest request) throws FilterException, Exception {
+    public void execute(Object[] parameters) throws FilterException, Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = request.getServiceParameters().parametersArray();
 
-        if ((!this.checkCandidacyOwnership(id, argumentos)) && (!this.checkCoordinatorRole(id, argumentos))) {
+        if ((!this.checkCandidacyOwnership(id, parameters)) && (!this.checkCoordinatorRole(id, parameters))) {
             throw new NotAuthorizedException();
         }
 

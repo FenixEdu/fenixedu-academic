@@ -14,15 +14,14 @@ import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class SubmitFinalWorkProposalAuthorization extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
-        final IUserView userView = (IUserView) request.getRequester();
-        final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) request.getServiceParameters().getParameter(0);
+    public void execute(Object[] parameters) throws Exception {
+        final IUserView userView = AccessControl.getUserView();
+        final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) parameters[0];
         if (infoProposalEditor.getIdInternal() != null) {
             final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getIdInternal());
             if (!authorized(userView.getPerson(), proposal)) {

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
 
 /**
  * Base filter for all resources that can be accessed by an degree coordinator.
@@ -22,7 +21,7 @@ import pt.utl.ist.berserk.ServiceRequest;
 public abstract class CoordinatorAuthorizationFilter extends Filtro {
 
     @Override
-    public void execute(ServiceRequest request) throws Exception {
+    public void execute(Object[] parameters) throws Exception {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(RoleType.COORDINATOR)) {
@@ -36,7 +35,7 @@ public abstract class CoordinatorAuthorizationFilter extends Filtro {
             deny();
         }
 
-        ExecutionYear executionYear = getSpecificExecutionYear(request);
+        ExecutionYear executionYear = getSpecificExecutionYear(parameters);
 
         Coordinator coordinator = coordinators.first();
         ExecutionYear coordinatorExecutionYear = coordinator.getExecutionDegree().getExecutionYear();
@@ -50,7 +49,7 @@ public abstract class CoordinatorAuthorizationFilter extends Filtro {
      * @return the execution year that represents the scope of the resource
      *         being accessed.
      */
-    protected abstract ExecutionYear getSpecificExecutionYear(ServiceRequest request);
+    protected abstract ExecutionYear getSpecificExecutionYear(Object[] parameters);
 
     public void deny() throws NotAuthorizedFilterException {
         throw new NotAuthorizedFilterException();
