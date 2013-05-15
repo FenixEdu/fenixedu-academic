@@ -5,16 +5,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import com.google.common.base.Predicate;
 
-public class SearchTeachersByName extends FenixService implements AutoCompleteSearchService {
+public class SearchTeachersByName implements AutoCompleteProvider<Teacher> {
 
-    protected Collection search(final String value, final int size) {
+    protected Collection<Teacher> search(final String value, final int size) {
         final Predicate<Person> predicate = new Predicate<Person>() {
             @Override
             public boolean apply(final Person person) {
@@ -31,8 +30,8 @@ public class SearchTeachersByName extends FenixService implements AutoCompleteSe
     }
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        return search(value, limit);
+    public Collection<Teacher> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        return search(value, maxCount);
     }
 
 }

@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-public class SearchAcademicUnits extends SearchParties {
+public class SearchAcademicUnits extends SearchParties<Unit> {
 
     @Override
-    protected Collection search(String value, int size) {
+    protected Collection<Unit> search(String value, int size) {
         Collection<UnitName> unitNames = UnitName.findInternalUnitWithType(value, size, DegreeUnit.class);
         List<Unit> units = new ArrayList<Unit>();
 

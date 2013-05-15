@@ -7,34 +7,33 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
 
-import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class SearchObjectsByMultiLanguageString extends FenixService implements AutoCompleteSearchService {
+public class SearchEventEditionByMultiLanguageString implements AutoCompleteProvider<EventEdition> {
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        List<DomainObject> result = new ArrayList<DomainObject>();
+    public Collection<EventEdition> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        List<EventEdition> result = new ArrayList<EventEdition>();
 
-        String slotName = arguments.get("slot");
-        Collection<DomainObject> objects = RootDomainObject.readAllDomainObjects(type);
+        String slotName = argsMap.get("slot");
+        Collection<EventEdition> objects = RootDomainObject.getInstance().getEventEditionsSet();
 
         if (value == null) {
             result.addAll(objects);
         } else {
             String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-            for (DomainObject object : objects) {
+            for (EventEdition object : objects) {
                 try {
                     MultiLanguageString objectMLS = (MultiLanguageString) PropertyUtils.getProperty(object, slotName);
 
@@ -62,7 +61,7 @@ public class SearchObjectsByMultiLanguageString extends FenixService implements 
                         }
                     }
 
-                    if (result.size() >= limit) {
+                    if (result.size() >= maxCount) {
                         break;
                     }
 
@@ -79,4 +78,5 @@ public class SearchObjectsByMultiLanguageString extends FenixService implements 
         Collections.sort(result, new BeanComparator(slotName + ".content"));
         return result;
     }
+
 }

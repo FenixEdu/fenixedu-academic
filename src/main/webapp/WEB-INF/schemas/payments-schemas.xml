@@ -100,7 +100,7 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
 		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
@@ -131,7 +131,7 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
 		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
@@ -158,7 +158,7 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
 		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>
@@ -504,7 +504,7 @@
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPartySocialSecurityNumber"/>
 		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber"/>
 		<property name="minChars" value="1"/>

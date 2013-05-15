@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 import org.joda.time.YearMonthDay;
 
-public class SearchAllActiveParties extends SearchParties {
+public class SearchAllActiveParties extends SearchParties<Party> {
 
     @Override
-    protected Collection search(String value, int size) {
+    protected Collection<Party> search(String value, int size) {
         ArrayList<Party> result = new ArrayList<Party>();
 
         if (value.length() > 3 && value.substring(0, 3).equals("ist")) {

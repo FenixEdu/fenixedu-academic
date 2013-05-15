@@ -4,10 +4,10 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-public class SearchExternalUnitsWithScore extends SearchParties {
+public class SearchExternalUnitsWithScore extends SearchParties<UnitName> {
 
     @Override
-    protected Collection search(String value, int size) {
+    protected Collection<UnitName> search(String value, int size) {
         return UnitName.findExternalInstitutionUnitWithScore(value, size);
     }
 

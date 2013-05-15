@@ -8,9 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.Search
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-public class SearchAllUnits extends SearchParties {
+public class SearchAllUnits extends SearchParties<Unit> {
+
     @Override
-    protected Collection search(String value, int size) {
+    protected Collection<Unit> search(String value, int size) {
         Collection<UnitName> unitNames = UnitName.find(value, size);
         List<Unit> resultUnits = new ArrayList<Unit>();
         for (UnitName name : unitNames) {

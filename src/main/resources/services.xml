@@ -2819,13 +2819,6 @@
     </service>
 
     <service>
-        <name>SearchEventsByType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.activity.SearchEventsByType</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>SearchExecutionCourses</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SearchExecutionCourses</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2879,20 +2872,6 @@
     <service>
         <name>SearchInternalUnitsByType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchInternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchObjects</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchObjects</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchObjectsByMultiLanguageString</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchObjectsByMultiLanguageString</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
@@ -2954,13 +2933,6 @@
     <service>
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchPolymorphicObjects</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPolymorphicObjects</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>

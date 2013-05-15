@@ -148,7 +148,7 @@
 		<property name="rawSlotName" value="eventName"/>
 		<property name="labelField" value="name.content"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceName" value="SearchEventEditionByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="5"/>
@@ -174,7 +174,7 @@
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name} - ${eventType}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchResearchEvent"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
@@ -239,7 +239,7 @@
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name} - ${eventType}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchResearchEvent"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
@@ -519,7 +519,7 @@ extends="eventCreation">
 		<property name="rawSlotName" value="scientificJournalName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchScientificJournals"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
 		<property name="minChars" value="3"/>
@@ -552,7 +552,7 @@ extends="eventCreation">
 		<property name="rawSlotName" value="scientificJournalName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchScientificJournals"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
 		<property name="minChars" value="3"/>
@@ -1346,7 +1346,7 @@ extends="eventCreation">
 		<property name="rawSlotName" value="countryName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchCountry"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}  (${nationality})"/>
@@ -1426,7 +1426,7 @@ extends="eventCreation">
 		<property name="rawSlotName" value="countryName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchCountry"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}  (${nationality})"/>
@@ -1478,7 +1478,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 		<property name="rawSlotName" value="scientificJournalName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchScientificJournals"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
 		<property name="minChars" value="3"/>
@@ -1583,7 +1583,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="rawSlotName" value="journalName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchScientificJournals"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal"/>				
 		<property name="minChars" value="3"/>
@@ -1773,7 +1773,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchResearchEvent"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
@@ -2045,7 +2045,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 		<property name="rawSlotName" value="countryName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchCountry"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${name}  (${nationality})"/>
