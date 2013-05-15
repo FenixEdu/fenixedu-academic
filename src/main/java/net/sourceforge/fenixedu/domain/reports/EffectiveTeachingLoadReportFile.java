@@ -61,18 +61,20 @@ public class EffectiveTeachingLoadReportFile extends EffectiveTeachingLoadReport
             for (TeacherService teacherService : executionSemester.getTeacherServices()) {
                 for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
                     double efectiveLoad = degreeTeachingService.getEfectiveLoad();
-                    if (!degreeTeachingService.getShift().getExecutionCourse().getProjectTutorialCourse() && efectiveLoad != 0.0) {
+                    if ((!degreeTeachingService.getProfessorship().getExecutionCourse().isDissertation())
+                            && (!degreeTeachingService.getProfessorship().getExecutionCourse().getProjectTutorialCourse())
+                            && efectiveLoad != 0.0) {
                         Map<ExecutionCourse, BigDecimal> executionCourseLoad =
                                 teachingLoad.get(degreeTeachingService.getTeacherService().getTeacher());
                         if (executionCourseLoad == null) {
                             executionCourseLoad = new HashMap<ExecutionCourse, BigDecimal>();
                         }
-                        BigDecimal load = executionCourseLoad.get(degreeTeachingService.getShift().getExecutionCourse());
+                        BigDecimal load = executionCourseLoad.get(degreeTeachingService.getProfessorship().getExecutionCourse());
                         if (load == null) {
                             load = BigDecimal.ZERO;
                         }
-                        load = load.add(new BigDecimal(efectiveLoad));
-                        executionCourseLoad.put(degreeTeachingService.getShift().getExecutionCourse(), load);
+                        load = load.add(new BigDecimal(efectiveLoad).setScale(2, BigDecimal.ROUND_HALF_UP));
+                        executionCourseLoad.put(degreeTeachingService.getProfessorship().getExecutionCourse(), load);
                         teachingLoad.put(degreeTeachingService.getTeacherService().getTeacher(), executionCourseLoad);
                     }
                 }

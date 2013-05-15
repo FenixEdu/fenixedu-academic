@@ -598,24 +598,16 @@ public class Teacher extends Teacher_Base {
 
     public BigDecimal getProjectsTutorialsCredits(ExecutionYear executionYear) {
         BigDecimal result = BigDecimal.ZERO;
-        ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
-        for (Professorship professorship : getPerson().getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(previousExecutionYear)
-                    && professorship.getExecutionCourse().getProjectTutorialCourse()
-                    && !professorship.getExecutionCourse().isDissertation()) {
-                Integer percentageValue = 0;
-                for (DegreeProjectTutorialService degreeProjectTutorialService : professorship.getDegreeProjectTutorialServices()) {
-                    if (degreeProjectTutorialService.getAttend().getEnrolment() != null
-                            && degreeProjectTutorialService.getAttend().getEnrolment().isApproved()) {
-                        percentageValue = percentageValue + degreeProjectTutorialService.getPercentageValue();
-                    }
+        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
+            if (teacherService != null) {
+                for (DegreeProjectTutorialService degreeProjectTutorialService : teacherService
+                        .getDegreeProjectTutorialServices()) {
+                    result = result.add(degreeProjectTutorialService.getDegreeProjectTutorialServiceCredits());
                 }
-                result =
-                        result.add(BigDecimal.valueOf((percentageValue / 100)
-                                * (professorship.getExecutionCourse().getEctsCredits() / 100)));
             }
         }
-        return result.setScale(2, BigDecimal.ROUND_HALF_UP);
+        return result;
     }
 
     public double getManagementFunctionsCredits(ExecutionSemester executionSemester) {

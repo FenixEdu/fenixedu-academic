@@ -21,9 +21,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
@@ -65,6 +62,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("Departamento - último");
         spreadsheet.setHeader("Departamento - dominante");
         spreadsheet.setHeader("CLE");
+        spreadsheet.setHeader("CLE - correcções");
         spreadsheet.setHeader("CL");
         spreadsheet.setHeader("CG");
         spreadsheet.setHeader("O");
@@ -121,6 +119,9 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
 
                     TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
                     row.setCell(teacherService == null ? 0 : teacherService.getTeachingDegreeHours());// CLE
+
+                    row.setCell(teacherService == null ? 0 : teacherService.getTeachingDegreeCorrections());// CLE corrections
+
                     row.setCell(teacherService == null ? 0 : teacherService.getTeachingDegreeCredits());// CL
 
                     row.setCell(teacher.getManagementFunctionsCredits(executionSemester)); // CG
@@ -161,30 +162,11 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                         row.setCell(annualTeachingCreditsBean.getFinalCredits());//CF
                         row.setCell(annualTeachingCreditsBean.getAccumulatedCredits());//CLA			
                     }
-
-                    row.setCell(getMasterDegreeThesesNumber(executionYear, teacher));
-
                 }
             }
         }
 
         spreadsheet.exportToXLSSheet(new File("Serviço_Docência_ " + executionYear.getQualifiedName().replace("/", "") + ".xls"));
-    }
-
-    public int getMasterDegreeThesesNumber(ExecutionYear executionYear, Teacher teacher) {
-        int total = 0;
-        if (!executionYear.getYear().equals("2011/2012")) {
-            for (ThesisEvaluationParticipant participant : teacher.getPerson().getThesisEvaluationParticipants()) {
-                Thesis thesis = participant.getThesis();
-                if (thesis.isEvaluated()
-                        && thesis.hasFinalEnrolmentEvaluation()
-                        && thesis.getEvaluation().getYear() == executionYear.getBeginCivilYear()
-                        && (participant.getType() == ThesisParticipationType.ORIENTATOR || participant.getType() == ThesisParticipationType.COORIENTATOR)) {
-                    total++;
-                }
-            }
-        }
-        return total;
     }
 
     private ProfessionalRegime getProfessionalRegime(PersonContractSituation teacherContractSituation, Interval interval) {

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -17,8 +18,8 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
         setRootDomainObject(RootDomainObject.getInstance());
         setProfessorship(professorship);
         TeacherService teacherService =
-                professorship.getTeacher().getTeacherServiceByExecutionPeriod(
-                        professorship.getExecutionCourse().getExecutionYear().getNextExecutionYear().getFirstExecutionPeriod());
+                TeacherService.getTeacherService(professorship.getTeacher(), professorship.getExecutionCourse()
+                        .getExecutionYear().getNextExecutionYear().getFirstExecutionPeriod());
         setTeacherService(teacherService);
         setAttend(attend);
         setPercentageValue(percentageValue);
@@ -81,5 +82,13 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
         removeAttend();
         removeProfessorship();
         super.delete();
+    }
+
+    public BigDecimal getDegreeProjectTutorialServiceCredits() {
+        if (getAttend().getEnrolment() != null && getAttend().getEnrolment().isApproved()) {
+            return new BigDecimal((((double) getPercentageValue()) / 100)
+                    * (getAttend().getExecutionCourse().getEctsCredits() / 60)).setScale(2, BigDecimal.ROUND_HALF_UP);
+        }
+        return BigDecimal.ZERO;
     }
 }

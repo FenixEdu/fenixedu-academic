@@ -106,7 +106,21 @@ public class TeacherService extends TeacherService_Base {
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             if ((!degreeTeachingService.getProfessorship().getExecutionCourse().isDissertation())
                     && (!degreeTeachingService.getProfessorship().getExecutionCourse().getProjectTutorialCourse())) {
-                hours += degreeTeachingService.getHours();
+                hours += degreeTeachingService.getEfectiveLoad();
+            }
+        }
+        return round(hours);
+    }
+
+    public Double getTeachingDegreeCorrections() {
+        double hours = 0;
+        for (OtherService otherService : getOtherServices()) {
+            if (otherService instanceof DegreeTeachingServiceCorrection) {
+                DegreeTeachingServiceCorrection degreeTeachingServiceCorrection = (DegreeTeachingServiceCorrection) otherService;
+                if ((!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse().isDissertation())
+                        && (!degreeTeachingServiceCorrection.getProfessorship().getExecutionCourse().getProjectTutorialCourse())) {
+                    hours += degreeTeachingServiceCorrection.getCorrection().doubleValue();
+                }
             }
         }
         return round(hours);
@@ -219,6 +233,15 @@ public class TeacherService extends TeacherService_Base {
             @Override
             public boolean evaluate(Object arg0) {
                 return arg0 instanceof DegreeTeachingService;
+            }
+        });
+    }
+
+    public List<DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
+        return (List<DegreeProjectTutorialService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                return arg0 instanceof DegreeProjectTutorialService;
             }
         });
     }
