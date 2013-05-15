@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
@@ -22,6 +23,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ReadFilteredExamsMap extends FenixService {
 
@@ -46,6 +49,10 @@ public class ReadFilteredExamsMap extends FenixService {
         List<InfoExecutionCourse> infoExecutionCourses =
                 obtainInfoExecutionCourses(curricularYears, infoExecutionPeriod, executionDegree);
         result.setExecutionCourses(infoExecutionCourses);
+
+        if (!AccessControl.getUserView().hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+            PublishedExamsMapAuthorizationFilter.execute(result);
+        }
 
         return result;
     }

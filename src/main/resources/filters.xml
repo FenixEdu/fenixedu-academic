@@ -335,13 +335,6 @@
     </filter>
 
     <filter>
-        <name>ExecutionPeriodsEnrollmentFenix</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionPeriodsEnrollmentFenix</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>ExternalActivityTeacherAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ExternalActivityTeacherAuthorizationFilter</implementationClass>
         <description></description>
@@ -407,13 +400,6 @@
     <filter>
         <name>PedagogicalCouncilAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.PedagogicalCouncilAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>PublishedExamsMapAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter</implementationClass>
         <description></description>
         <isTransactional>false</isTransactional>
     </filter>

@@ -78,13 +78,6 @@
     </filterChain>
 
     <filterChain>
-        <name>ConsultExamsMap</name>
-        <expression>ResourceAllocationManagerAuthorization || PublishedExamsMapAuthorization</expression>
-        <invocationTiming>2</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
         <name>CoordinatorAuthorization</name>
         <expression>CoordinatorAuthorization</expression>
         <invocationTiming>1</invocationTiming>
@@ -347,13 +340,6 @@
     <filterChain>
         <name>ExecutionDataManipulation</name>
         <expression>ManagerAuthorization || ResourceAllocationManagerAuthorization || OperatorAuthorization</expression>
-        <invocationTiming>2</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
-        <name>ExecutionPeriodsEnrollmentFenix</name>
-        <expression>ExecutionPeriodsEnrollmentFenix</expression>
         <invocationTiming>2</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>

@@ -1398,9 +1398,7 @@
         <name>ExecutionCourseSiteComponentService</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ConsultExamsMap"/>
-        </filterChains>
+        <filterChains />
     </service>
 
     <service>
@@ -2157,9 +2155,7 @@
         <name>ReadExecutionPeriodsEnrollmentFenix</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsEnrolment</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ExecutionPeriodsEnrollmentFenix"/>
-        </filterChains>
+        <filterChains />
     </service>
 
     <service>
@@ -2184,18 +2180,14 @@
         <name>ReadFilteredExamsMap</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ConsultExamsMap"/>
-        </filterChains>
+        <filterChains />
     </service>
 
     <service>
         <name>ReadFilteredExamsMapList</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMapList</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ConsultExamsMap"/>
-        </filterChains>
+        <filterChains />
     </service>
 
     <service>
