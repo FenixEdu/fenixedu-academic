@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob;
@@ -83,11 +85,31 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         setName(name);
     }
 
+    private void checkDatesIntersection(YearMonthDay begin, YearMonthDay end) {
+        List<InfoExecutionPeriod> infoExecutionPeriods = ReadExecutionPeriods.run();
+        if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+
+            Collections.sort(infoExecutionPeriods, InfoExecutionPeriod.COMPARATOR_BY_YEAR_AND_SEMESTER);
+
+            for (InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
+                ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
+                YearMonthDay beginDate = executionSemester.getBeginDateYearMonthDay();
+                YearMonthDay endDate = executionSemester.getEndDateYearMonthDay();
+                if (begin.isAfter(endDate) || end.isBefore(beginDate) || executionSemester.equals(this)) {
+                    continue;
+                } else {
+                    throw new DomainException("error.ExecutionPeriod.intersection.dates");
+                }
+            }
+        }
+    }
+
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     public void editPeriod(YearMonthDay begin, YearMonthDay end) {
         if (begin == null || end == null || end.isBefore(begin)) {
             throw new DomainException("error.ExecutionPeriod.invalid.dates");
         }
+        checkDatesIntersection(begin, end);
         setBeginDateYearMonthDay(begin);
         setEndDateYearMonthDay(end);
     }

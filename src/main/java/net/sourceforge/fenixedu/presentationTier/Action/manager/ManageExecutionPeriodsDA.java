@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPer
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.AlterExecutionPeriodState;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -35,8 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "EditExecutionPeriod", path = "/manager/editExecutionPeriodDates.jsp") })
 public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         List infoExecutionPeriods = ReadExecutionPeriods.run();
 
@@ -49,7 +49,6 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
             }
 
         }
-
         return mapping.findForward("Manage");
     }
 
@@ -70,14 +69,17 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         final String idInternal = request.getParameter("executionPeriodID");
-        ExecutionSemester executionSemester =
-                (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer.valueOf(idInternal));
-        request.setAttribute("executionPeriod", executionSemester);
+        try {
+            ExecutionSemester executionSemester =
+                    (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer.valueOf(idInternal));
+            request.setAttribute("executionPeriod", executionSemester);
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getMessage());
+        }
+
         return mapping.findForward("EditExecutionPeriod");
     }
-
 }
