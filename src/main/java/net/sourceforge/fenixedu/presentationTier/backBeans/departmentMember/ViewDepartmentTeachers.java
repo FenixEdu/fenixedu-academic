@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -115,9 +115,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<Teacher> result =
-                new ArrayList<Teacher>((List<Teacher>) ServiceUtils.executeService(
-                        "ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] { getDepartment().getIdInternal(),
-                                executionYearID }));
+                new ArrayList<Teacher>((List<Teacher>) ServiceManagerServiceFactory.executeService("ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] { getDepartment().getIdInternal(),
+                executionYearID }));
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("teacherId"));
@@ -143,7 +142,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
         if (this.selectedTeacher == null) {
             this.selectedTeacher =
-                    (InfoTeacher) ServiceUtils.executeService("ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
+                    (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
         }
 
         return this.selectedTeacher;
@@ -211,9 +210,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<ExecutionCourse> lecturedExecutionCourses =
-                (List<ExecutionCourse>) ServiceUtils.executeService(
-                        "ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType", new Object[] {
-                                getSelectedTeacherID(), executionYearID, degreeType });
+                (List<ExecutionCourse>) ServiceManagerServiceFactory.executeService("ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType", new Object[] {
+                getSelectedTeacherID(), executionYearID, degreeType });
 
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
@@ -276,9 +274,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             List<Advise> result =
-                    new ArrayList<Advise>((List<Advise>) ServiceUtils.executeService(
-                            "ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] {
-                                    AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID }));
+                    new ArrayList<Advise>((List<Advise>) ServiceManagerServiceFactory.executeService("ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] {
+                    AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID }));
 
             ComparatorChain comparatorChain = new ComparatorChain();
             BeanComparator executionYearComparator = new BeanComparator("student.number");
@@ -303,9 +300,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             this.guidedMasterDegreeThesisList =
-                    (List<MasterDegreeThesisDataVersion>) ServiceUtils.executeService(
-                            "ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] { getSelectedTeacherID(),
-                                    executionYearID });
+                    (List<MasterDegreeThesisDataVersion>) ServiceManagerServiceFactory.executeService("ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] { getSelectedTeacherID(),
+                    executionYearID });
         }
 
         return this.guidedMasterDegreeThesisList;

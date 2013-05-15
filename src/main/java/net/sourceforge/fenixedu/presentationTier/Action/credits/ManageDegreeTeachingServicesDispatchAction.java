@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -101,7 +101,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 
         try {
             Object[] args = { professorshipID, shiftIDPercentages, roleType };
-            ServiceUtils.executeService("UpdateDegreeTeachingServices", args);
+            ServiceManagerServiceFactory.executeService("UpdateDegreeTeachingServices", args);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));

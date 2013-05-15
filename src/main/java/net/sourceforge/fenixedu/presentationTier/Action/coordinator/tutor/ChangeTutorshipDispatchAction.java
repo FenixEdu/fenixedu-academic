@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -75,7 +76,7 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
 
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService("ChangeTutorship", args);
+                tutorshipsNotChanged = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("ChangeTutorship", args);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }
@@ -121,7 +122,7 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
 
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService("ChangeTutorship", args);
+                tutorshipsNotChanged = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("ChangeTutorship", args);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }

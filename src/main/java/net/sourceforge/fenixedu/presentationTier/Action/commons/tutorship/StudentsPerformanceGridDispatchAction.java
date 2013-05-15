@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatchAction {
@@ -28,8 +29,8 @@ public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatc
         PerformanceGridTableDTO performanceGridTable = null;
         try {
             performanceGridTable =
-                    (PerformanceGridTableDTO) executeService("CreatePerformanceGridTable", new Object[] { tutors, entryYear,
-                            monitoringYear });
+                    (PerformanceGridTableDTO) ServiceManagerServiceFactory.executeService("CreatePerformanceGridTable", new Object[] { tutors, entryYear,
+                    monitoringYear });
         } catch (FenixServiceException ex) {
             addActionMessage(request, ex.getMessage(), ex.getArgs());
         }

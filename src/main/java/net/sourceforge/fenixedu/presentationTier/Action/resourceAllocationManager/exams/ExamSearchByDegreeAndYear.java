@@ -21,9 +21,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -175,7 +175,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         InfoExamsMap infoRoomExamsMaps = null;
 
         Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-        infoRoomExamsMaps = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
+        infoRoomExamsMaps = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
 
         return infoRoomExamsMaps;
     }
@@ -192,7 +192,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 
             Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 
-            infoRoomExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
+            infoRoomExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
             infoExamsMaps.add(infoRoomExamsMap);
         }
         return infoExamsMaps;

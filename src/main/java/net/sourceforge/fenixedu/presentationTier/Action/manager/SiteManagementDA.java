@@ -35,10 +35,10 @@ import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -121,7 +121,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
             try {
                 final Object[] args = { section.getSite(), item };
-                executeService("DeleteItem", args);
+                ServiceManagerServiceFactory.executeService("DeleteItem", args);
             } catch (DomainException e) {
                 addErrorMessage(request, "items", e.getKey(), (Object[]) e.getArgs());
             }
@@ -220,7 +220,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
                 Section superiorSection = section.getSuperiorSection();
 
                 Site site = section.getSite();
-                executeService("DeleteSection", new Object[] { site, section });
+                ServiceManagerServiceFactory.executeService("DeleteSection", new Object[] { site, section });
 
                 section = superiorSection;
             } catch (DomainException e) {
@@ -424,8 +424,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            executeService(service, new Object[] { bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
-                    bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
+            ServiceManagerServiceFactory.executeService(service, new Object[] { bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
+            bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
         } catch (FileManagerException e) {
             addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
@@ -536,7 +536,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
                             bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request),
                             bean.getEducationalLearningResourceType()) };
 
-            executeService("CreateScormFile", args);
+            ServiceManagerServiceFactory.executeService("CreateScormFile", args);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
             RenderUtils.invalidateViewState("scormPackage");
@@ -605,7 +605,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         }
 
         try {
-            ServiceUtils.executeService("DeleteFileContent", new Object[] { fileContent });
+            ServiceManagerServiceFactory.executeService("DeleteFileContent", new Object[] { fileContent });
         } catch (FileManagerException e1) {
             addErrorMessage(request, "items", "errors.unableToDeleteFile");
         }
@@ -677,7 +677,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
         try {
             Site site = fileItem.getSite();
-            ServiceUtils.executeService("EditFilePermissions", new Object[] { site, fileItem, bean.getPermittedGroup() });
+            ServiceManagerServiceFactory.executeService("EditFilePermissions", new Object[] { site, fileItem, bean.getPermittedGroup() });
             return mapping.findForward("section");
         } catch (FileManagerException ex) {
             addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");

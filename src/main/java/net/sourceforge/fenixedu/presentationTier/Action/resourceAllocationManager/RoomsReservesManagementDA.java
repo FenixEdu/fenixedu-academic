@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RequestState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -263,7 +264,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
         try {
             bean.setRequestor(getLoggedPerson(request));
-            executeService("CreateNewRoomsReserveComment", new Object[] { bean, reOpen, resolveRequest });
+            ServiceManagerServiceFactory.executeService("CreateNewRoomsReserveComment", new Object[] { bean, reOpen, resolveRequest });
         } catch (DomainException e) {
             saveMessages(request, e);
         }

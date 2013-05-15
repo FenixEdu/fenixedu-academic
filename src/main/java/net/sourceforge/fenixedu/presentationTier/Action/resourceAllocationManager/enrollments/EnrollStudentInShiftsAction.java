@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollm
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -45,8 +45,8 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
         try {
             ShiftEnrollmentErrorReport errorReport =
-                    (ShiftEnrollmentErrorReport) ServiceUtils.executeService("EnrollStudentInShifts", new Object[] {
-                            getRegistration(request), shiftId });
+                    (ShiftEnrollmentErrorReport) ServiceManagerServiceFactory.executeService("EnrollStudentInShifts", new Object[] {
+                    getRegistration(request), shiftId });
 
             if (errorReport.getUnAvailableShifts().size() > 0) {
                 for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {

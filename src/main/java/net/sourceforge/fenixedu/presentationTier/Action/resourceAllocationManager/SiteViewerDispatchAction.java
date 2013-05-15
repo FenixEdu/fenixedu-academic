@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -60,7 +60,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
         boolean result = true;
         try {
             ExecutionCourseSiteView siteView =
-                    (ExecutionCourseSiteView) ServiceUtils.executeService("ExecutionCourseSiteComponentService", args);
+                    (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService("ExecutionCourseSiteComponentService", args);
             request.setAttribute("objectCode", objectCode);
             if (siteView == null) {
                 result = false;

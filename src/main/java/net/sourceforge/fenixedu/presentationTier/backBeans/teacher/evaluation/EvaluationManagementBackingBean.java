@@ -56,10 +56,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -568,7 +568,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                         enrolmentBeginTime.getTime(), enrolmentEndTime.getTime() };
 
         try {
-            ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
         } catch (Exception e) {
             addErrorMessage(e.getMessage());
             String errorMessage = e.getMessage();
@@ -646,7 +646,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
                         executionCourseIDs, degreeModuleScopesIDs, null, this.getGradeScale(), season, this.getDescription() };
         try {
-            ServiceUtils.executeService("CreateWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -786,7 +786,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                         executionCourseIDs, degreeModuleScopesIDs, null, this.evaluationID, season, this.getDescription(),
                         this.getGradeScale() };
         try {
-            ServiceUtils.executeService("EditWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {
@@ -846,7 +846,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String deleteWrittenTest() throws FenixFilterException, FenixServiceException {
         final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
         try {
-            ServiceUtils.executeService("DeleteWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {
@@ -946,7 +946,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             final Boolean distributeOnlyEnroledStudents = Boolean.valueOf(this.getDistributeEnroledStudentsOption());
             final Object[] args =
                     { getExecutionCourseID(), getEvaluationID(), getRoomIDs(), Boolean.FALSE, distributeOnlyEnroledStudents };
-            ServiceUtils.executeService("WrittenEvaluationRoomDistribution", args);
+            ServiceManagerServiceFactory.executeService("WrittenEvaluationRoomDistribution", args);
             return "enterShowStudentsEnroled";
         } catch (Exception e) {
             setErrorMessage(e.getMessage());
@@ -1061,7 +1061,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             final Object[] args =
                     { this.getExecutionCourseID(), this.getEvaluationID(), this.getPublishMarksMessage(), this.getSendSMS(),
                             announcementTitle };
-            ServiceUtils.executeService("PublishMarks", args);
+            ServiceManagerServiceFactory.executeService("PublishMarks", args);
         } catch (Exception e) {
             this.setErrorMessage(e.getMessage());
             return "";
@@ -1228,8 +1228,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public String editEvaluationRooms() throws FenixFilterException, FenixServiceException {
 
-        ServiceUtils.executeService("TeacherEditWrittenTestRooms", new Object[] { getExecutionCourse(),
-                AccessControl.getPerson().getTeacher(), (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()) });
+        ServiceManagerServiceFactory.executeService("TeacherEditWrittenTestRooms", new Object[] { getExecutionCourse(),
+        AccessControl.getPerson().getTeacher(), (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()) });
         setRoomsToAssociate(null);
 
         return "";

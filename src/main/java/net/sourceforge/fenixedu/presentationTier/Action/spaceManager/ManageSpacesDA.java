@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
@@ -394,7 +395,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         Space fromRoom = bean.getSpace();
         Space destinationRoom = bean.getSelectedParentSpace();
 
-        executeService("MergeRooms", new Object[] { fromRoom, destinationRoom });
+        ServiceManagerServiceFactory.executeService("MergeRooms", new Object[] { fromRoom, destinationRoom });
 
         return returnToManageSpacePage(mapping, request, destinationRoom.getSpaceInformation());
     }

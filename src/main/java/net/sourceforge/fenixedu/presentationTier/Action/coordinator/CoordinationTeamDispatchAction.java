@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -54,7 +54,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         }
 
         Object[] args = { degreeCurricularPlanID };
-        List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+        List executionDegrees = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
         request.setAttribute("executionDegrees", executionDegrees);
 
@@ -79,7 +79,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Object[] args = { executionDegreeID };
         List coordinators = new ArrayList();
         try {
-            coordinators = (List) ServiceUtils.executeService("ReadCoordinationTeam", args);
+            coordinators = (List) ServiceManagerServiceFactory.executeService("ReadCoordinationTeam", args);
         } catch (NotAuthorizedFilterException e) {
             actionErrors.add("error", new ActionError("noAuthorization"));
             saveErrors(request, actionErrors);
@@ -92,7 +92,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Boolean result = Boolean.FALSE;
         Object[] args1 = { executionDegreeID, userView };
         try {
-            result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
+            result = (Boolean) ServiceManagerServiceFactory.executeService("ReadCoordinationResponsibility", args1);
         } catch (FenixServiceException e) {
             actionErrors.add("error", new ActionError(e.getMessage()));
             saveErrors(request, actionErrors);
@@ -117,7 +117,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Boolean result = new Boolean(false);
         Object[] args1 = { infoExecutionDegreeId, userView };
         try {
-            result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
+            result = (Boolean) ServiceManagerServiceFactory.executeService("ReadCoordinationResponsibility", args1);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -139,7 +139,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId, istUsername };
         try {
-            ServiceUtils.executeService("AddCoordinator", args);
+            ServiceManagerServiceFactory.executeService("AddCoordinator", args);
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
@@ -178,7 +178,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId, coordinators };
         try {
-            ServiceUtils.executeService("RemoveCoordinators", args);
+            ServiceManagerServiceFactory.executeService("RemoveCoordinators", args);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

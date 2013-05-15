@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWrittenTestsInformationBackingBean {
 
@@ -39,7 +39,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
                     { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
                             executionCourseIDs, degreeModuleScopeIDs, null, null, null, this.getDescription() };
 
-            ServiceUtils.executeService("CreateWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -68,7 +68,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
                             this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, this.getEvaluationID(),
                             null, this.getDescription(), null };
 
-            ServiceUtils.executeService("EditWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -84,7 +84,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
     public String deleteWrittenTest() {
         try {
             final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
-            ServiceUtils.executeService("DeleteWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {

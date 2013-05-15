@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -104,7 +104,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     public String enrolStudent() {
         try {
             final Object args[] = { getUserView().getUtilizador(), getEvaluationID() };
-            ServiceUtils.executeService("EnrolStudentInWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("EnrolStudentInWrittenEvaluation", args);
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
@@ -119,7 +119,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     public String unenrolStudent() {
         try {
             final Object args[] = { getUserView().getUtilizador(), getEvaluationID() };
-            ServiceUtils.executeService("UnEnrollStudentInWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("UnEnrollStudentInWrittenEvaluation", args);
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());

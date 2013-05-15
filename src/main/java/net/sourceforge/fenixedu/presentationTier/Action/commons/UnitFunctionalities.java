@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.PersistentGroupMembersBean;
 import net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.UnitFileBean;
@@ -72,8 +73,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
             if (bean.getIstId() != null) {
                 bean.getPeople().add(bean.getIstId());
             }
-            executeService("CreatePersistentGroup",
-                    new Object[] { bean.getUnit(), bean.getName(), bean.getPeople(), bean.getType() });
+            ServiceManagerServiceFactory.executeService("CreatePersistentGroup", new Object[] { bean.getUnit(), bean.getName(), bean.getPeople(), bean.getType() });
         }
 
         return configureGroups(mapping, form, request, response);
@@ -84,7 +84,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
         PersistentGroupMembers group = getGroup(request);
         if (group != null) {
             try {
-                executeService("DeletePersistentGroup", new Object[] { group });
+                ServiceManagerServiceFactory.executeService("DeletePersistentGroup", new Object[] { group });
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }
@@ -108,8 +108,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
                 if (bean.getIstId() != null) {
                     bean.getPeople().add(bean.getIstId());
                 }
-                executeService("EditPersistentGroup",
-                        new Object[] { bean.getGroup(), bean.getName(), bean.getPeople(), bean.getUnit() });
+                ServiceManagerServiceFactory.executeService("EditPersistentGroup", new Object[] { bean.getGroup(), bean.getName(), bean.getPeople(), bean.getUnit() });
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }

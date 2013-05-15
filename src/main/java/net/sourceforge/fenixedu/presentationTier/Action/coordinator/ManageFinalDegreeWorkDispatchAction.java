@@ -68,13 +68,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.AttributionFilter;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.StatusCountPair;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.WithCandidatesFilter;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.presentationTier.util.CollectionFilter;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
@@ -444,8 +444,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         List finalDegreeWorkProposalHeaders = null;
         try {
             finalDegreeWorkProposalHeaders =
-                    (List) ServiceUtils.executeService("ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan",
-                            new Object[] { executionDegree });
+                    (List) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", new Object[] { executionDegree });
 
             if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty()) {
                 Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
@@ -617,7 +616,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
             Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService("ReadFinalDegreeWorkProposal", args);
+                InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
 
                 if (infoProposal != null) {
                     DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -897,7 +896,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         try {
             Object argsProposal[] = { infoFinalWorkProposal };
-            ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
+            ServiceManagerServiceFactory.executeService("SubmitFinalWorkProposal", argsProposal);
             request.setAttribute("proposalOID", infoFinalWorkProposal.getProposalOID());
         } catch (Exception e) {
             if (e instanceof OutOfPeriodException) {
@@ -1172,7 +1171,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
                             Integer.valueOf(otherExecutionDegreeIDString));
             final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-            executeService("AddExecutionDegreeToScheduling", args);
+            ServiceManagerServiceFactory.executeService("AddExecutionDegreeToScheduling", args);
         }
         dynaActionForm.set("otherExecutionDegreeID", null);
         return prepare(mapping, form, request, response);
@@ -1189,7 +1188,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, Integer.valueOf(otherExecutionDegreeIDString));
 
         final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-        executeService("RemoveExecutionDegreeToScheduling", args);
+        ServiceManagerServiceFactory.executeService("RemoveExecutionDegreeToScheduling", args);
 
         dynaActionForm.set("otherExecutionDegreeID", null);
 

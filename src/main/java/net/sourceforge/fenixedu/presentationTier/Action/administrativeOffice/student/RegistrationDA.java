@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 
@@ -296,7 +297,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
         final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-        executeService("WriteStudentAttendingCourse", new Object[] { registration, executionCourse.getIdInternal() });
+        ServiceManagerServiceFactory.executeService("WriteStudentAttendingCourse", new Object[] { registration, executionCourse.getIdInternal() });
 
         return viewAttends(mapping, actionForm, request, response);
     }

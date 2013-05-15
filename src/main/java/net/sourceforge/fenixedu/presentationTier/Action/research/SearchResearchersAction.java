@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.Researcher;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -101,7 +102,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
             CollectionPager<Person> result = null;
             try {
-                result = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
+                result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
             } catch (FenixFilterException e) {
                 e.printStackTrace();
             } catch (FenixServiceException e) {

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -211,7 +212,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
         RoomsReserveBean bean = (RoomsReserveBean) viewState.getMetaObject().getObject();
 
         try {
-            executeService("CreateNewRoomsReserveComment", new Object[] { bean, reOpen, resolveRequest });
+            ServiceManagerServiceFactory.executeService("CreateNewRoomsReserveComment", new Object[] { bean, reOpen, resolveRequest });
         } catch (DomainException e) {
             saveMessages(request, e);
         }

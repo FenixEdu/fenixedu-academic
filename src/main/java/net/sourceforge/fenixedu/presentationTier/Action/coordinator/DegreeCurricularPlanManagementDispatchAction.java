@@ -25,11 +25,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -82,7 +82,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         List activeCurricularCourseScopes = null;
         final Object[] args = { degreeCurricularPlanID };
         try {
-            activeCurricularCourseScopes = (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlanScopes", args);
+            activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlanScopes", args);
 
         } catch (NonExistingServiceException e) {
             addErrorMessage(request, "chosenDegree", "error.coordinator.noExecutionDegree");
@@ -237,7 +237,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         Object[] infoArgs = { degreeCurricularPlanID };
 
         InfoExecutionDegree infoExecutionDegree =
-                (InfoExecutionDegree) executeService("ReadCurrentExecutionDegreeByDegreeCurricularPlanID", infoArgs);
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionDegreeByDegreeCurricularPlanID", infoArgs);
 
         infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
 
@@ -479,7 +479,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
                 { infoExecutionDegreeCode, infoCurriculumCode, infoCurricularCourseCode, infoCurriculum,
                         userView.getUtilizador(), language };
         try {
-            result = (Boolean) ServiceUtils.executeService("EditCurriculumForCurricularCourse", args);
+            result = (Boolean) ServiceManagerServiceFactory.executeService("EditCurriculumForCurricularCourse", args);
         } catch (NonExistingServiceException e) {
             if (e.getMessage().equals("noCurricularCourse")) {
                 addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

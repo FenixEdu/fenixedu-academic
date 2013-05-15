@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RoleOperationLog;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -118,7 +119,7 @@ public class ManageRolesDA extends FenixDispatchAction {
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
         final Collection<Person> persons =
-                ((CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate }))
+                ((CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate }))
                         .getCollection();
 
         return persons.isEmpty() ? null : persons.iterator().next();

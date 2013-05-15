@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.joda.time.DateTime;
@@ -140,7 +140,7 @@ public class CourseStatistics extends FenixBackingBean {
         Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
         Object args[] = { departmentID, this.getExecutionPeriodId() };
         competenceCourses =
-                (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService("ComputeCompetenceCourseStatistics", args);
+                (List<CompetenceCourseStatisticsDTO>) ServiceManagerServiceFactory.executeService("ComputeCompetenceCourseStatistics", args);
     }
 
     public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
@@ -153,8 +153,8 @@ public class CourseStatistics extends FenixBackingBean {
 
     private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
         degreeCourses =
-                (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService("ComputeDegreeCourseStatistics", new Object[] {
-                        getCompetenceCourseId(), getExecutionPeriodId() });
+                (List<DegreeCourseStatisticsDTO>) ServiceManagerServiceFactory.executeService("ComputeDegreeCourseStatistics", new Object[] {
+                getCompetenceCourseId(), getExecutionPeriodId() });
     }
 
     public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws FenixFilterException, FenixServiceException {
@@ -167,8 +167,7 @@ public class CourseStatistics extends FenixBackingBean {
 
     private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
         executionCourses =
-                (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService("ComputeExecutionCourseStatistics",
-                        new Object[] { this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
+                (List<ExecutionCourseStatisticsDTO>) ServiceManagerServiceFactory.executeService("ComputeExecutionCourseStatistics", new Object[] { this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
     }
 
     public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixFilterException, FenixServiceException {

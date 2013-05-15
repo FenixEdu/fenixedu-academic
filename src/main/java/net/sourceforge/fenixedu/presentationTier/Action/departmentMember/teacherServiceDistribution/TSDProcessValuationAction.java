@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionChart;
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionSpreadsheet;
 
@@ -513,8 +513,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDTeacherDTOEntry>) ServiceUtils.executeService("ReadTSDTeachersFromTSDProcesses",
-                new Object[] { tsdProcessIdMap });
+        return (List<TSDTeacherDTOEntry>) ServiceManagerServiceFactory.executeService("ReadTSDTeachersFromTSDProcesses", new Object[] { tsdProcessIdMap });
     }
 
     @SuppressWarnings("unchecked")
@@ -526,8 +525,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDCourseDTOEntry>) ServiceUtils.executeService("ReadTSDCoursesFromTSDProcesses",
-                new Object[] { tsdProcessIdMap });
+        return (List<TSDCourseDTOEntry>) ServiceManagerServiceFactory.executeService("ReadTSDCoursesFromTSDProcesses", new Object[] { tsdProcessIdMap });
     }
 
     private void setInformationTableParameters(DynaActionForm dynaForm, HttpServletRequest request) {

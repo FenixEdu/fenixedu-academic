@@ -48,8 +48,8 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -1145,7 +1145,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
                         degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription() };
         try {
-            ServiceUtils.executeService("CreateWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -1209,7 +1209,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
                         degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription(), null };
         try {
-            ServiceUtils.executeService("EditWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();

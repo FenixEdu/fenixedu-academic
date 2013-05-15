@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -124,7 +125,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
         CollectionPager<Person> result = null;
         try {
-            result = (CollectionPager<Person>) executeService("SearchPerson", args);
+            result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
         } catch (FenixServiceException e) {
             addActionMessage(request, "error.delegates.searchDelegates.impossibleToFindDelegate", e.getMessage());

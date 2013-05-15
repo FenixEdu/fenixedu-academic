@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
@@ -322,7 +323,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
         if (thesis != null) {
             try {
-                executeService("ApproveThesisProposal", new Object[] { thesis });
+                ServiceManagerServiceFactory.executeService("ApproveThesisProposal", new Object[] { thesis });
                 final ThesisPresentationState thesisPresentationState =
                         ThesisPresentationState.getThesisPresentationState(thesis);
                 request.setAttribute("thesisPresentationState", thesisPresentationState);
@@ -366,7 +367,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
         if (thesis != null) {
             try {
-                executeService("ApproveThesisDiscussion", new Object[] { thesis });
+                ServiceManagerServiceFactory.executeService("ApproveThesisDiscussion", new Object[] { thesis });
                 addActionMessage("mail", request, "thesis.evaluated.mail.sent");
                 final ThesisPresentationState thesisPresentationState =
                         ThesisPresentationState.getThesisPresentationState(thesis);
@@ -464,10 +465,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
             try {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                executeService(
-                        "CreateThesisDissertationFile",
-                        new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
-                                bean.getSubTitle(), bean.getLanguage() });
+                ServiceManagerServiceFactory.executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
+                bean.getSubTitle(), bean.getLanguage() });
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();
@@ -488,10 +487,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
             try {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                executeService(
-                        "CreateThesisAbstractFile",
-                        new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
-                                bean.getSubTitle(), bean.getLanguage() });
+                ServiceManagerServiceFactory.executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
+                bean.getSubTitle(), bean.getLanguage() });
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();

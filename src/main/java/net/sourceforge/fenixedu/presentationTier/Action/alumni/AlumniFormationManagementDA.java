@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -86,9 +87,9 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
         try {
             if (formationInfo.hasAssociatedFormation()) {
-                executeService("EditFormation", new Object[] { formationInfo });
+                ServiceManagerServiceFactory.executeService("EditFormation", new Object[] { formationInfo });
             } else {
-                executeService("CreateFormation", new Object[] { getAlumniFromLoggedPerson(request), formationInfo });
+                ServiceManagerServiceFactory.executeService("CreateFormation", new Object[] { getAlumniFromLoggedPerson(request), formationInfo });
             }
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());
@@ -124,7 +125,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
         if (getFromRequest(request, "cancel") == null) {
             try {
-                executeService("DeleteQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
+                ServiceManagerServiceFactory.executeService("DeleteQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }

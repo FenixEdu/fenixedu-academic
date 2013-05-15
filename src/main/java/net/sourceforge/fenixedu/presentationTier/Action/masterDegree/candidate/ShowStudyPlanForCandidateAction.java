@@ -58,8 +58,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         Object[] args = { candidateID };
 
         try {
-            return (ArrayList) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
+            return (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
         } catch (Exception e) {
             return null;
         }

@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -53,7 +53,7 @@ public class SaveTeachersBodyAction extends FenixAction {
         Boolean result;
 
         try {
-            result = (Boolean) ServiceUtils.executeService("SaveTeachersBody", args);
+            result = (Boolean) ServiceManagerServiceFactory.executeService("SaveTeachersBody", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
@@ -61,7 +61,7 @@ public class SaveTeachersBodyAction extends FenixAction {
 
         Object args1[] = { nonAffilTeachersIds, executionCourseId };
         try {
-            ServiceUtils.executeService("UpdateNonAffiliatedTeachersProfessorship", args1);
+            ServiceManagerServiceFactory.executeService("UpdateNonAffiliatedTeachersProfessorship", args1);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));

@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -90,7 +90,7 @@ public class TSDProcessAction extends FenixDispatchAction {
         Object[] parameters =
                 new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId, userView.getPerson().getIdInternal(), name };
 
-        TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService("CreateTSDProcess", parameters);
+        TSDProcess tsdProcess = (TSDProcess) ServiceManagerServiceFactory.executeService("CreateTSDProcess", parameters);
 
         return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
     }
@@ -285,7 +285,7 @@ public class TSDProcessAction extends FenixDispatchAction {
                 new Object[] { selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
                         userView.getPerson().getIdInternal(), name };
 
-        TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService("CopyTSDProcess", parameters);
+        TSDProcess tsdProcess = (TSDProcess) ServiceManagerServiceFactory.executeService("CopyTSDProcess", parameters);
 
         request.setAttribute("tsdProcess", tsdProcess);
         return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
@@ -296,7 +296,7 @@ public class TSDProcessAction extends FenixDispatchAction {
         Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
         IUserView userView = UserView.getUser();
 
-        ServiceUtils.executeService("DeleteTSDProcess", new Object[] { tsdProcessId });
+        ServiceManagerServiceFactory.executeService("DeleteTSDProcess", new Object[] { tsdProcessId });
 
         return prepareForTSDProcessEdition(mapping, form, request, response);
     }

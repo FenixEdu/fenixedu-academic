@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -91,7 +92,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
             throw new InvalidPeriodException();
         }
         try {
-            executeService("EditSupportLesson", new Object[] { supportLessonDTO, roleType });
+            ServiceManagerServiceFactory.executeService("EditSupportLesson", new Object[] { supportLessonDTO, roleType });
         } catch (DomainException e) {
             saveMessages(request, e);
         }
@@ -103,7 +104,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer supportLessonID = (Integer) supportLessonForm.get("supportLessonID");
         try {
-            executeService("DeleteSupportLesson", new Object[] { supportLessonID, roleType });
+            ServiceManagerServiceFactory.executeService("DeleteSupportLesson", new Object[] { supportLessonID, roleType });
         } catch (DomainException e) {
             saveMessages(request, e);
         }

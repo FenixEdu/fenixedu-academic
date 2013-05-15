@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ChangeCandidacyApprovanceStatus;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -58,7 +58,7 @@ public class SelectCandidacies extends FenixDispatchAction {
         Object[] args = { new Boolean(false), seminaryID };
         try {
             SelectCandidaciesDTO serviceResult =
-                    (SelectCandidaciesDTO) ServiceUtils.executeService("SelectCandidaciesService", args);
+                    (SelectCandidaciesDTO) ServiceManagerServiceFactory.executeService("SelectCandidaciesService", args);
             request.setAttribute("seminaries", serviceResult.getSeminaries());
             request.setAttribute("candidacies", serviceResult.getCandidacies());
         } catch (FenixServiceException e) {

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -86,7 +87,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
         final CollectionPager<Person> result =
-                (CollectionPager<Person>) executeService("SearchPerson", new Object[] { searchParameters, predicate });
+                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { searchParameters, predicate });
 
         return result.getCollection();
     }

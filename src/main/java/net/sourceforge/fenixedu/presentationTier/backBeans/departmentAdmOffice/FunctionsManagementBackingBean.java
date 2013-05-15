@@ -37,8 +37,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -137,7 +137,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 final Object[] argsToRead =
                         { this.getFunctionID(), this.getPersonID(), credits, YearMonthDay.fromDateFields(beginDate_),
                                 YearMonthDay.fromDateFields(endDate_) };
-                ServiceUtils.executeService("AssociateNewFunctionToPerson", argsToRead);
+                ServiceManagerServiceFactory.executeService("AssociateNewFunctionToPerson", argsToRead);
                 setErrorMessage("message.success");
                 return "success";
 
@@ -175,7 +175,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             final Object[] argsToRead =
                     { this.getPersonFunctionID(), this.getFunctionID(), YearMonthDay.fromDateFields(beginDate_),
                             YearMonthDay.fromDateFields(endDate_), credits };
-            ServiceUtils.executeService("EditPersonFunction", argsToRead);
+            ServiceManagerServiceFactory.executeService("EditPersonFunction", argsToRead);
             setErrorMessage("message.success");
             return "alterFunction";
 
@@ -191,7 +191,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
         final Object[] argsToRead = { this.getPersonFunctionID() };
-        ServiceUtils.executeService("DeletePersonFunction", argsToRead);
+        ServiceManagerServiceFactory.executeService("DeletePersonFunction", argsToRead);
         setErrorMessage("message.success");
         return "success";
     }
@@ -297,8 +297,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
         CollectionPager<Person> allPersons =
-                (CollectionPager<Person>) ServiceUtils.executeService("SearchPerson",
-                        new Object[] { searchParameters, predicate });
+                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { searchParameters, predicate });
 
         return allPersons.getCollection();
     }

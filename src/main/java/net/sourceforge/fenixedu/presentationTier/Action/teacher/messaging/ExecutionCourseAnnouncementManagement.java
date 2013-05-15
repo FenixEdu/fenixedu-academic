@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,8 +43,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
             HttpServletResponse response) throws Exception {
         org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).findForwardConfigs();
         final SiteView siteView =
-                (SiteView) ServiceUtils.executeService("ReadCourseInformation",
-                        new Object[] { this.getRequestedExecutionCourseId(request) });
+                (SiteView) ServiceManagerServiceFactory.executeService("ReadCourseInformation", new Object[] { this.getRequestedExecutionCourseId(request) });
         request.setAttribute("siteView", siteView);
 
         return super.execute(mapping, actionForm, request, response);

@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -254,7 +254,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
             params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
             params.unitId = form.getKeyUnit();
 
-            ServiceUtils.executeService("EditUnitAnnouncementBoard", new Object[] { board, params });
+            ServiceManagerServiceFactory.executeService("EditUnitAnnouncementBoard", new Object[] { board, params });
 
             if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
                 ActionForward destination = new ActionForward();

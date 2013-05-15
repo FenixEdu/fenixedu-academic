@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionForm;
@@ -71,7 +71,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
         Object args[] = { guideNumber, guideYear, guideVersion };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
 
             request.setAttribute(PresentationConstants.GUIDE, infoGuide);
         } catch (FenixServiceException e) {
@@ -100,7 +100,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
         try {
             Object args[] = { number, year, version };
-            InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+            InfoGuide infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
 
             if (infoGuide.getInfoGuideEntries().size() != valuesList.length) {
                 throw new FenixActionException("Incoerent guide entries number", mapping.findForward("start"));

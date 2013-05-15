@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -97,7 +98,7 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         MergeResearchActivityPageContainerBean researchActivityPageContainerBean = getRenderedObject("researchActivity");
 
-        executeService(getServiceName(), new Object[] { researchActivityPageContainerBean });
+        ServiceManagerServiceFactory.executeService(getServiceName(), new Object[] { researchActivityPageContainerBean });
 
         researchActivityPageContainerBean.reset();
         return setObjects(mapping, form, request, response, researchActivityPageContainerBean);

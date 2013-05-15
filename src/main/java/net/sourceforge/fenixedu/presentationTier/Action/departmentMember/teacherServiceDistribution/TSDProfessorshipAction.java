@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorsh
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Transformer;
@@ -104,7 +104,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         Object[] parameters =
                 new Object[] { tsdCourse.getIdInternal(), selectedTSDTeacher.getIdInternal(), tsdProfessorshipParameters };
 
-        ServiceUtils.executeService("SetTSDProfessorship", parameters);
+        ServiceManagerServiceFactory.executeService("SetTSDProfessorship", parameters);
 
         return loadTSDProfessorships(mapping, form, request, response);
     }
@@ -116,7 +116,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         TSDProfessorship selectedTSDProfessorship = getSelectedTSDProfessorship(userView, dynaForm);
 
-        ServiceUtils.executeService("DeleteTSDProfessorship", new Object[] { selectedTSDProfessorship.getIdInternal() });
+        ServiceManagerServiceFactory.executeService("DeleteTSDProfessorship", new Object[] { selectedTSDProfessorship.getIdInternal() });
 
         return loadTSDProfessorships(mapping, form, request, response);
     }
@@ -147,7 +147,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         Object[] arguments =
                 new Object[] { selectedTSDTeacher.getIdInternal(), extraCreditsName, extraCreditsValue, usingExtraCredits };
 
-        ServiceUtils.executeService("SetExtraCreditsToTSDTeacher", arguments);
+        ServiceManagerServiceFactory.executeService("SetExtraCreditsToTSDTeacher", arguments);
 
         return loadTSDProfessorships(mapping, form, request, response);
     }

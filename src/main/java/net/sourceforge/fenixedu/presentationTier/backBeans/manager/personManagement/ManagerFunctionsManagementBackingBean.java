@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -55,7 +55,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
             final Object[] argsToRead =
                     { this.getFunctionID(), this.getPersonID(), credits, YearMonthDay.fromDateFields(beginDate_),
                             YearMonthDay.fromDateFields(endDate_) };
-            ServiceUtils.executeService("AssociateNewFunctionToPerson", argsToRead);
+            ServiceManagerServiceFactory.executeService("AssociateNewFunctionToPerson", argsToRead);
             setErrorMessage("message.success");
             return "success";
 

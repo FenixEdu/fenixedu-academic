@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -120,7 +121,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 
         try {
             teacherPersonalExpectation =
-                    (TeacherPersonalExpectation) executeService("InsertTeacherPersonalExpectation", new Object[] { bean });
+                    (TeacherPersonalExpectation) ServiceManagerServiceFactory.executeService("InsertTeacherPersonalExpectation", new Object[] { bean });
 
         } catch (DomainException exception) {
             saveMessages(request, exception);

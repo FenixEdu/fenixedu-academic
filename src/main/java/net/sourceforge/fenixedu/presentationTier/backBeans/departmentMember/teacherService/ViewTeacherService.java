@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.Distribu
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -228,8 +228,7 @@ public class ViewTeacherService extends FenixBackingBean {
                 { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs };
 
         this.teacherServiceDTO =
-                (List<TeacherDistributionServiceEntryDTO>) ServiceUtils.executeService(
-                        "ReadTeacherServiceDistributionByTeachers", args);
+                (List<TeacherDistributionServiceEntryDTO>) ServiceManagerServiceFactory.executeService("ReadTeacherServiceDistributionByTeachers", args);
 
     }
 
@@ -241,8 +240,7 @@ public class ViewTeacherService extends FenixBackingBean {
                 { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs };
 
         this.executionCourseServiceDTO =
-                (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils.executeService(
-                        "ReadTeacherServiceDistributionByCourse", args);
+                (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceManagerServiceFactory.executeService("ReadTeacherServiceDistributionByCourse", args);
 
     }
 

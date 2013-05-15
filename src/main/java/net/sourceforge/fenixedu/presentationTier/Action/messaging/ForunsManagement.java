@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
@@ -72,7 +73,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
                         .getObject();
 
         try {
-            executeService("CreateConversationThreadAndMessage", new Object[] { createConversationThreadAndMessageBean });
+            ServiceManagerServiceFactory.executeService("CreateConversationThreadAndMessage", new Object[] { createConversationThreadAndMessageBean });
         } catch (DomainException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));
@@ -134,7 +135,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
                 (CreateConversationMessageBean) RenderUtils.getViewState("createMessage").getMetaObject().getObject();
 
         try {
-            executeService("CreateConversationMessage", new Object[] { createConversationMessageBean });
+            ServiceManagerServiceFactory.executeService("CreateConversationMessage", new Object[] { createConversationMessageBean });
         } catch (DomainException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));

@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
@@ -355,8 +356,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             Thesis thesis =
-                    (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan, student,
-                            enrolment.getDissertationProposal(), previousThesis });
+                    (Thesis) ServiceManagerServiceFactory.executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan, student,
+                    enrolment.getDissertationProposal(), previousThesis });
             request.setAttribute("thesis", thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -375,8 +376,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             Thesis thesis =
-                    (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan, student,
-                            enrolment.getDissertationProposal(), enrolment.getPreviousYearThesis() });
+                    (Thesis) ServiceManagerServiceFactory.executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan, student,
+                    enrolment.getDissertationProposal(), enrolment.getPreviousYearThesis() });
             request.setAttribute("thesis", thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -765,7 +766,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         Thesis thesis = getThesis(request);
 
         if (thesis != null) {
-            executeService("ApproveThesisProposal", new Object[] { thesis });
+            ServiceManagerServiceFactory.executeService("ApproveThesisProposal", new Object[] { thesis });
             addActionMessage("mail", request, "thesis.approved.mail.sent");
             addActionMessage("nextAction", request, "thesis.approved.next.action");
         }

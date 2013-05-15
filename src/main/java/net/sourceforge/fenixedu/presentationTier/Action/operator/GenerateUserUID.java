@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAliasType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,7 +58,7 @@ public class GenerateUserUID extends FenixDispatchAction {
         if (login != null) {
             bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
             try {
-                executeService("CreateNewLoginAlias", new Object[] { bean });
+                ServiceManagerServiceFactory.executeService("CreateNewLoginAlias", new Object[] { bean });
 
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
@@ -88,7 +89,7 @@ public class GenerateUserUID extends FenixDispatchAction {
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
         CollectionPager<Person> persons =
-                (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
+                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
 
         request.setAttribute("resultPersons", persons.getCollection());
         request.setAttribute("personBean", personBean);

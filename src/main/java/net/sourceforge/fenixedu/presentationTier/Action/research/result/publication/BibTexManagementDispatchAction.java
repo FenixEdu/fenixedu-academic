@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -468,7 +469,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
             Object[] arguments =
                     new Object[] { getUserView(request).getPerson(), importBibtexBean.getCurrentPublicationBean(),
                             importBibtexBean.getCurrentBibtexPublication() };
-            ResearchResultPublication result = (ResearchResultPublication) executeService("ImportBibtexPublication", arguments);
+            ResearchResultPublication result = (ResearchResultPublication) ServiceManagerServiceFactory.executeService("ImportBibtexPublication", arguments);
             request.setAttribute("result", result);
             ResultDocumentFileSubmissionBean fileBean = new ResultDocumentFileSubmissionBean(result);
             request.setAttribute("fileBean", fileBean);

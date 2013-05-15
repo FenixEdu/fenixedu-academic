@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
@@ -79,11 +78,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected static IUserView getUserView(HttpServletRequest request) {
         return UserView.getUser();
-    }
-
-    protected Object executeService(final String serviceName, final Object[] serviceArgs) throws FenixFilterException,
-            FenixServiceException {
-        return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
     @SuppressWarnings({ "static-access", "unchecked" })

@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -77,7 +77,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         List infoOrientations = getInfoOrientationsFromForm(form);
         List infoPublicationsNumber = getInfoPublicationsNumberFromForm(form);
         Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations, infoPublicationsNumber };
-        ServiceUtils.executeService(getEditService(), args);
+        ServiceManagerServiceFactory.executeService(getEditService(), args);
         return read(mapping, form, request, response);
     }
 
@@ -445,7 +445,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = UserView.getUser();
         Object[] args = { userView.getUtilizador(), new String() };
-        SiteView siteView = (SiteView) ServiceUtils.executeService(getReadService(), args);
+        SiteView siteView = (SiteView) ServiceManagerServiceFactory.executeService(getReadService(), args);
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 

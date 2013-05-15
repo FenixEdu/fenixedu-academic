@@ -31,8 +31,8 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -491,7 +491,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
                     { getExecutionCourseID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()),
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()), getDescription(), getOnlineSubmissionsAllowed(),
                             getMaxSubmissionsToKeep(), getGroupingID(), null };
-            ServiceUtils.executeService("CreateProject", args);
+            ServiceManagerServiceFactory.executeService("CreateProject", args);
         } catch (final ParseException e) {
             setErrorMessage("error.invalidDate");
             return "viewCreationPage";
@@ -516,7 +516,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
                             DateFormatUtil.parse("HH:mm", getBeginTime()), DateFormatUtil.parse("HH:mm", getEndTime()),
                             executionCourseIDs, degreeModuleScopeIDs, null, null, null, getDescription() };
 
-            ServiceUtils.executeService("CreateWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", args);
 
         } catch (ParseException ex) {
             setErrorMessage("error.invalid.date");
@@ -540,7 +540,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
                             DateFormatUtil.parse("HH:mm", getBeginTime()), DateFormatUtil.parse("HH:mm", getEndTime()),
                             executionCourseIDs, degreeModuleScopeIDs, null, getEvaluationID(), null, getDescription(), null };
 
-            ServiceUtils.executeService("EditWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
 
         } catch (ParseException ex) {
             setErrorMessage("error.invalid.date");
@@ -559,7 +559,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
                     { getExecutionCourseID(), getEvaluationID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()),
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()), getDescription(), getOnlineSubmissionsAllowed(),
                             getMaxSubmissionsToKeep(), getGroupingID(), null };
-            ServiceUtils.executeService("EditProject", args);
+            ServiceManagerServiceFactory.executeService("EditProject", args);
         } catch (ParseException ex) {
             setErrorMessage("error.invalid.date");
             return "viewCreationPage";
@@ -635,7 +635,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final Object[] args = { getExecutionCourseID(), getEvaluationID() };
         if (evaluationType.equals(WrittenEvaluation.class.getName())) {
             try {
-                ServiceUtils.executeService("DeleteWrittenEvaluation", args);
+                ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
             } catch (NotAuthorizedFilterException ex) {
                 setErrorMessage(ex.getMessage());
                 return "viewDeletePage";
@@ -645,7 +645,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
             }
         } else {
             try {
-                ServiceUtils.executeService("DeleteEvaluation", args);
+                ServiceManagerServiceFactory.executeService("DeleteEvaluation", args);
             } catch (DomainException ex) {
                 setErrorMessage(ex.getKey());
                 return "viewDeletePage";

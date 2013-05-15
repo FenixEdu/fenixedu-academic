@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -73,8 +74,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
                 { executionDegreeBean.getDegreeCurricularPlan().getIdInternal(), executionDegreeBean.getAcademicInterval() };
 
         final SortedSet<DegreeModuleScope> degreeModuleScopes =
-                (SortedSet<DegreeModuleScope>) executeService(
-                        "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
+                (SortedSet<DegreeModuleScope>) ServiceManagerServiceFactory.executeService("ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
 
         final ActionErrors errors = new ActionErrors();
         if (degreeModuleScopes.isEmpty()) {

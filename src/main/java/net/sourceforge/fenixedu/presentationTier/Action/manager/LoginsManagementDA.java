@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.LoginAliasType;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,7 +49,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
         CollectionPager<Person> persons =
-                (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
+                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
 
         request.setAttribute("resultPersons", persons.getCollection());
         request.setAttribute("personBean", personBean);
@@ -92,7 +93,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
         Login login = (bean != null) ? bean.getLogin() : null;
 
         try {
-            executeService("CreateNewLoginAlias", new Object[] { bean });
+            ServiceManagerServiceFactory.executeService("CreateNewLoginAlias", new Object[] { bean });
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             request.setAttribute("aliasType", bean.getLoginAliasType());
@@ -169,7 +170,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
         LoginAliasBean bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
 
         try {
-            executeService("CreateNewLoginAlias", new Object[] { bean });
+            ServiceManagerServiceFactory.executeService("CreateNewLoginAlias", new Object[] { bean });
 
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());

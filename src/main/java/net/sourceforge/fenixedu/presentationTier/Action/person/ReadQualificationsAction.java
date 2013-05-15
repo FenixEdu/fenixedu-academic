@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoSiteQualifications;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -45,7 +45,7 @@ public class ReadQualificationsAction extends FenixAction {
         Object[] args = { userView.getUtilizador() };
 
         InfoSiteQualifications infoSiteQualifications =
-                (InfoSiteQualifications) ServiceUtils.executeService("ReadQualifications", args);
+                (InfoSiteQualifications) ServiceManagerServiceFactory.executeService("ReadQualifications", args);
 
         request.setAttribute("infoSiteQualifications", infoSiteQualifications);
 

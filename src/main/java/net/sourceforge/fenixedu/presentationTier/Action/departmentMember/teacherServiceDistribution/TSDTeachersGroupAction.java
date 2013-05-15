@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -126,8 +126,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TSDTeacher selectedTSDTeacher = getSelectedTSDTeacher(dynaForm);
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
-        ServiceUtils.executeService("RemoveTeacherFromTeacherServiceDistributions", new Object[] {
-                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal() });
+        ServiceManagerServiceFactory.executeService("RemoveTeacherFromTeacherServiceDistributions", new Object[] {
+        selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal() });
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -140,8 +140,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TSDCourse selectedCourse = getSelectedTSDCourse(dynaForm);
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
-        ServiceUtils.executeService("RemoveCourseFromTeacherServiceDistribution", new Object[] {
-                selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal() });
+        ServiceManagerServiceFactory.executeService("RemoveCourseFromTeacherServiceDistribution", new Object[] {
+        selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal() });
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -155,8 +155,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         Teacher selectedTeacher = getSelectedTeacher(dynaForm);
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
-        ServiceUtils.executeService("AddTeacherToTeacherServiceDistribution",
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTeacher.getIdInternal() });
+        ServiceManagerServiceFactory.executeService("AddTeacherToTeacherServiceDistribution", new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTeacher.getIdInternal() });
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -170,8 +169,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
         CompetenceCourse selectedCourse = getSelectedCompetenceCourse(dynaForm);
 
-        ServiceUtils.executeService("AddCourseToTeacherServiceDistribution",
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal() });
+        ServiceManagerServiceFactory.executeService("AddCourseToTeacherServiceDistribution", new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal() });
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -248,7 +246,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
                 new Object[] { teacherName, selectedCategory.getIdInternal(), requiredHours,
                         selectedTeacherServiceDistribution.getIdInternal() };
 
-        Boolean teacherSuccessfullyCreated = (Boolean) ServiceUtils.executeService("CreateTSDTeacher", parameters);
+        Boolean teacherSuccessfullyCreated = (Boolean) ServiceManagerServiceFactory.executeService("CreateTSDTeacher", parameters);
 
         if (!teacherSuccessfullyCreated) {
             request.setAttribute("creationFailure", true);
@@ -274,7 +272,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
                 new Object[] { courseName, selectedTeacherServiceDistribution.getIdInternal(), executionPeriodId,
                         shiftTypesArray, degreeCurricularPlansIdArray };
 
-        TSDCourse course = (TSDCourse) executeService("CreateTSDVirtualGroup", parameters);
+        TSDCourse course = (TSDCourse) ServiceManagerServiceFactory.executeService("CreateTSDVirtualGroup", parameters);
 
         dynaForm.set("tsdCourse", course.getIdInternal());
 

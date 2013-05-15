@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInterminatedCurricularCourseScopes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -65,8 +65,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
         try {
             infoCurricularCourse =
-                    (InfoCurricularCourse) ServiceUtils.executeService("ReadCurricularCourse",
-                            new Object[] { curricularCourseId });
+                    (InfoCurricularCourse) ServiceManagerServiceFactory.executeService("ReadCurricularCourse", new Object[] { curricularCourseId });
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);

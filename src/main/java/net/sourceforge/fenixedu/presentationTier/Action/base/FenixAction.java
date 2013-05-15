@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -77,7 +77,7 @@ public abstract class FenixAction extends Action {
 
     protected Object executeService(final String serviceName, final Object[] serviceArgs) throws FenixFilterException,
             FenixServiceException {
-        return ServiceUtils.executeService(serviceName, serviceArgs);
+        return ServiceManagerServiceFactory.executeService(serviceName, serviceArgs);
     }
 
     protected void addErrorMessage(HttpServletRequest request, String property, String key, String... args) {

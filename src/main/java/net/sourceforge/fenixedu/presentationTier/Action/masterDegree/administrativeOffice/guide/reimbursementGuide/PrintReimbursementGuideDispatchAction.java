@@ -22,10 +22,10 @@ import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.Info
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -56,7 +56,7 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
             Object args2[] = { infoReimbursementGuide.getInfoGuide().getInfoPerson() };
 
-            infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
+            infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
 
             Iterator it = infoStudents.iterator();
             while (it.hasNext()) {

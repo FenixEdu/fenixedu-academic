@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.search.StudentSearchBean;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -126,7 +127,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
         getStudent(request);
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
         final Object[] args = { equivalencePlanEntry };
-        executeService("DeleteEquivalencePlanEntry", args);
+        ServiceManagerServiceFactory.executeService("DeleteEquivalencePlanEntry", args);
         return showTable(mapping, actionForm, request, response);
     }
 
@@ -147,7 +148,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
                 getStudentCurricularPlanEquivalencePlan(request, student);
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
         final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
-        executeService(service, args);
+        ServiceManagerServiceFactory.executeService(service, args);
         return showTable(mapping, actionForm, request, response);
     }
 

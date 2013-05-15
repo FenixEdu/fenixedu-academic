@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntry
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -86,7 +87,7 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
         final Object[] args = { equivalencePlanEntry };
-        executeService("DeleteEquivalencePlanEntry", args);
+        ServiceManagerServiceFactory.executeService("DeleteEquivalencePlanEntry", args);
         return mapping.findForward("showPlan");
     }
 

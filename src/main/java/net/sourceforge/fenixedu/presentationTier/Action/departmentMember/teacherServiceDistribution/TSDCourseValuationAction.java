@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularC
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
@@ -184,7 +184,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         Map<String, Object> tsdCourseParameters = obtainStudentsParametersFromForm(dynaForm);
 
         Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-        ServiceUtils.executeService("SetTSDCourse", parameters);
+        ServiceManagerServiceFactory.executeService("SetTSDCourse", parameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationStudents");
     }
@@ -240,7 +240,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         Map<String, Object> tsdCourseParameters = obtainWeightsParametersFromForm(dynaForm);
 
         Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-        ServiceUtils.executeService("SetTSDCourse", parameters);
+        ServiceManagerServiceFactory.executeService("SetTSDCourse", parameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
@@ -270,7 +270,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         Map<String, Object> tsdCourseParameters = obtainHoursParametersFromForm(dynaForm);
 
         Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-        ServiceUtils.executeService("SetTSDCourse", parameters);
+        ServiceManagerServiceFactory.executeService("SetTSDCourse", parameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }

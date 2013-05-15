@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,7 +29,7 @@ public class ReadTeacherInformationAction extends FenixAction {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
 
         Object[] args = { request.getParameter("username"), request.getParameter("executionYear") };
-        SiteView siteView = (SiteView) ServiceUtils.executeService("ReadTeacherInformation", args);
+        SiteView siteView = (SiteView) ServiceManagerServiceFactory.executeService("ReadTeacherInformation", args);
         InfoSiteTeacherInformation infoSiteTeacherInformation = (InfoSiteTeacherInformation) siteView.getComponent();
         request.setAttribute("infoSiteTeacherInformation", infoSiteTeacherInformation);
 

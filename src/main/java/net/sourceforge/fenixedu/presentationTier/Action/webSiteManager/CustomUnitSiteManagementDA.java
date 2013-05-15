@@ -31,8 +31,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -153,7 +153,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         }
 
         UnitSiteLayoutType layout = UnitSiteLayoutType.valueOf(layoutParamenter);
-        executeService("ChangeUnitSiteLayout", new Object[] { site, layout });
+        ServiceManagerServiceFactory.executeService("ChangeUnitSiteLayout", new Object[] { site, layout });
 
         return mapping.findForward("editConfiguration");
     }
@@ -183,7 +183,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         RenderUtils.invalidateViewState("logoUpload");
         File file = FileUtils.copyToTemporaryFile(bean.getFile());
         try {
-            executeService("UploadUnitSiteLogo", new Object[] { site, file, bean.getName() });
+            ServiceManagerServiceFactory.executeService("UploadUnitSiteLogo", new Object[] { site, file, bean.getName() });
         } finally {
             file.delete();
         }
@@ -241,10 +241,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         File backgroundFile = back.getFile() == null ? null : FileUtils.copyToTemporaryFile(back.getFile());
 
         try {
-            executeService(
-                    "UpdateUnitSiteBanner",
-                    new Object[] { site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean.getRepeat(),
-                            bean.getColor(), bean.getLink(), bean.getWeight() });
+            ServiceManagerServiceFactory.executeService("UpdateUnitSiteBanner", new Object[] { site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean.getRepeat(),
+            bean.getColor(), bean.getLink(), bean.getWeight() });
         } finally {
             if (mainFile != null) {
                 mainFile.delete();
@@ -267,7 +265,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
         for (UnitSiteBanner banner : site.getBanners()) {
             if (banner.getIdInternal().equals(bannerId)) {
-                executeService("DeleteUnitSiteBanner", new Object[] { site, banner });
+                ServiceManagerServiceFactory.executeService("DeleteUnitSiteBanner", new Object[] { site, banner });
                 break;
             }
         }
@@ -291,10 +289,8 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         File mainFile = FileUtils.copyToTemporaryFile(main.getFile());
         File backgroundFile = background.getFile() == null ? null : FileUtils.copyToTemporaryFile(background.getFile());
         try {
-            executeService(
-                    "CreateUnitSiteBanner",
-                    new Object[] { site, mainFile, main.getName(), backgroundFile, background.getName(), bean.getRepeat(),
-                            bean.getColor(), bean.getLink(), bean.getWeight() });
+            ServiceManagerServiceFactory.executeService("CreateUnitSiteBanner", new Object[] { site, mainFile, main.getName(), backgroundFile, background.getName(), bean.getRepeat(),
+            bean.getColor(), bean.getLink(), bean.getWeight() });
         } finally {
             if (mainFile != null) {
                 mainFile.delete();
@@ -328,7 +324,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
         for (UnitSiteLink link : site.getTopLinks()) {
             if (link.getIdInternal().equals(linkId)) {
-                executeService("DeleteUnitSiteLink", new Object[] { site, link });
+                ServiceManagerServiceFactory.executeService("DeleteUnitSiteLink", new Object[] { site, link });
                 break;
             }
         }
@@ -363,7 +359,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
         for (UnitSiteLink link : site.getFooterLinks()) {
             if (link.getIdInternal().equals(linkId)) {
-                executeService("DeleteUnitSiteLink", new Object[] { site, link });
+                ServiceManagerServiceFactory.executeService("DeleteUnitSiteLink", new Object[] { site, link });
                 break;
             }
         }
@@ -423,7 +419,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             orderedLinks.add(initialLinks.get(itemIndex - 1));
         }
 
-        ServiceUtils.executeService("RearrangeUnitSiteLinks", new Object[] { site, top, orderedLinks });
+        ServiceManagerServiceFactory.executeService("RearrangeUnitSiteLinks", new Object[] { site, top, orderedLinks });
     }
 
     public ActionForward chooseIntroductionSections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -565,7 +561,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
         VariantBean bean = getRenderedObject("create");
         if (bean != null) {
-            executeService("CreateVirtualFunction", new Object[] { site, unit, bean.getMLString() });
+            ServiceManagerServiceFactory.executeService("CreateVirtualFunction", new Object[] { site, unit, bean.getMLString() });
         }
 
         return manageExistingFunctions(mapping, actionForm, request, response);
@@ -595,7 +591,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
         VariantBean bean = getRenderedObject("edit");
         if (bean != null) {
-            executeService("EditVirtualFunction", new Object[] { getSite(request), function, bean.getMLString() });
+            ServiceManagerServiceFactory.executeService("EditVirtualFunction", new Object[] { getSite(request), function, bean.getMLString() });
         }
 
         return manageExistingFunctions(mapping, actionForm, request, response);
@@ -612,7 +608,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward confirmDeleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         if (request.getParameter("cancel") == null) {
-            executeService("DeleteVirtualFunction", new Object[] { getSite(request), getTargetFunction(request) });
+            ServiceManagerServiceFactory.executeService("DeleteVirtualFunction", new Object[] { getSite(request), getTargetFunction(request) });
         }
 
         return manageExistingFunctions(mapping, actionForm, request, response);
@@ -653,7 +649,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             orderedFunctions.add(initialFunctions.get(functionIndex - 1));
         }
 
-        executeService("RearrangeUnitSiteFunctions", new Object[] { getSite(request), unit, orderedFunctions });
+        ServiceManagerServiceFactory.executeService("RearrangeUnitSiteFunctions", new Object[] { getSite(request), unit, orderedFunctions });
         return manageExistingFunctions(mapping, actionForm, request, response);
     }
 
@@ -684,7 +680,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         PersonFunction personFunction = getPersonFunction(request);
-        executeService("DeleteUnitSitePersonFunction", new Object[] { getSite(request), personFunction });
+        ServiceManagerServiceFactory.executeService("DeleteUnitSitePersonFunction", new Object[] { getSite(request), personFunction });
 
         return managePersonFunctions(mapping, actionForm, request, response);
     }
@@ -777,11 +773,11 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
-        executeService(getRemoveManagerServiceName(), new Object[] { site, person });
+        ServiceManagerServiceFactory.executeService(getRemoveManagerServiceName(), new Object[] { site, person });
     }
 
     protected void addUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
-        executeService(getAddManagerServiceName(), new Object[] { site, person });
+        ServiceManagerServiceFactory.executeService(getAddManagerServiceName(), new Object[] { site, person });
     }
 
     protected String getAddManagerServiceName() {

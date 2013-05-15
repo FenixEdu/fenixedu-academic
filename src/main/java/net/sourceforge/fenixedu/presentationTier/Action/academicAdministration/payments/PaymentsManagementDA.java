@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping.PaymentCode
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -119,7 +120,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
         final CollectionPager<Person> result =
-                (CollectionPager<Person>) executeService("SearchPerson", new Object[] { searchParameters, predicate });
+                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { searchParameters, predicate });
 
         return result.getCollection();
 

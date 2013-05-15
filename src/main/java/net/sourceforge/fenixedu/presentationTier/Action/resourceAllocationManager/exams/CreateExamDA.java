@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -155,7 +155,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
                 { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs,
                         curricularCourseScopeIDs, curricularCourseContextIDs, roomIDs, season, null };
         try {
-            ServiceUtils.executeService("CreateWrittenEvaluation", argsCreateExam);
+            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", argsCreateExam);
         } catch (FenixServiceException ex) {
             addErrorMessage(request, "errors", ex.getMessage());
             return prepare(mapping, form, request, response);
@@ -549,7 +549,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
                 { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs, scopeIDs,
                         contextIDs, roomIDs, infoExamID, season, null, null };
         try {
-            ServiceUtils.executeService("EditWrittenEvaluation", argsEditExam);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", argsEditExam);
         } catch (FenixServiceException ex) {
             addErrorMessage(request, "errors", ex.getMessage());
             return prepare(mapping, form, request, response);

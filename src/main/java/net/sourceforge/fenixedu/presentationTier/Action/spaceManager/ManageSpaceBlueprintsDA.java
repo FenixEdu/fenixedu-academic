@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.commons.lang.StringUtils;
@@ -78,8 +78,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         Blueprint newBlueprint = null;
         try {
             newBlueprint =
-                    (Blueprint) ServiceUtils
-                            .executeService("CreateNewBlueprintVersion", new Object[] { blueprintSubmissionBean });
+                    (Blueprint) ServiceManagerServiceFactory.executeService("CreateNewBlueprintVersion", new Object[] { blueprintSubmissionBean });
 
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
@@ -124,7 +123,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         Blueprint blueprint = getSpaceBlueprintFromParameter(request);
 
         try {
-            ServiceUtils.executeService("EditBlueprintVersion", new Object[] { blueprint, blueprintSubmissionBean });
+            ServiceManagerServiceFactory.executeService("EditBlueprintVersion", new Object[] { blueprint, blueprintSubmissionBean });
 
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());

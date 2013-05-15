@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipMa
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.struts.action.ActionForm;
@@ -39,7 +40,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
         Object[] args = new Object[] { bean.getExecutionDegreeID(), bean };
         try {
-            executeService("InsertTutorship", args);
+            ServiceManagerServiceFactory.executeService("InsertTutorship", args);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
         }
@@ -86,7 +87,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
             List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
+                tutorshipsNotRemoved = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("DeleteTutorship", args);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }
@@ -163,7 +164,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
         List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
         try {
-            tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("TransferTutorship", args);
+            tutorshipsNotRemoved = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("TransferTutorship", args);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
 

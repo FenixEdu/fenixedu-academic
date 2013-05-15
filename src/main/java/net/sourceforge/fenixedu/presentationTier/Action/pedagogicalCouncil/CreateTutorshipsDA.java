@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -116,7 +117,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
         List<TutorshipErrorBean> tutorshipsNotInserted = new ArrayList<TutorshipErrorBean>();
         try {
-            tutorshipsNotInserted = (List<TutorshipErrorBean>) executeService("InsertTutorship", args);
+            tutorshipsNotInserted = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("InsertTutorship", args);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
             errorEncountered = true;

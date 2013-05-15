@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDeg
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -46,7 +46,7 @@ public class ReadCourseInformationAction extends FenixAction {
 
         Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
         TeacherAdministrationSiteView teacherAdministrationSiteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService("ReadCourseInformation", args1);
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("ReadCourseInformation", args1);
         InfoSiteCourseInformation infoSiteCourseInformation =
                 (InfoSiteCourseInformation) teacherAdministrationSiteView.getComponent();
         request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExamExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -49,7 +49,7 @@ public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction 
                 { executionCourseCode, new InfoSiteCommon(), infoSiteExamExecutionCourses, null, evaluationCode, null };
 
         final TeacherAdministrationSiteView siteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService", args);
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
 
         final InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
         final List<InfoExecutionCourse> infoExecutionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
@@ -81,7 +81,7 @@ public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction 
 
         final Object[] args = { executionCourseCode, evaluationCode, rooms, Boolean.FALSE, distributeOnlyEnroledStudents };
         try {
-            ServiceUtils.executeService("WrittenEvaluationRoomDistribution", args);
+            ServiceManagerServiceFactory.executeService("WrittenEvaluationRoomDistribution", args);
             request.setAttribute("objectCode", executionCourseCode);
             request.setAttribute("evaluationCode", evaluationCode);
             return mapping.findForward("show-distribution");

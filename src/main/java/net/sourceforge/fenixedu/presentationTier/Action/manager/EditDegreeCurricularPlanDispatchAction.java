@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.struts.action.ActionForm;
@@ -84,7 +84,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         Object args[] = { degreeCurricularPlanId };
 
         try {
-            oldInfoDegreeCP = (InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan", args);
+            oldInfoDegreeCP = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService("ReadDegreeCurricularPlan", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));

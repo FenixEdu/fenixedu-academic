@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -197,7 +196,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         try {
             IUserView userView = UserView.getUser();
             Object argsProposal[] = { infoFinalWorkProposal };
-            ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
+            ServiceManagerServiceFactory.executeService("SubmitFinalWorkProposal", argsProposal);
         } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.Scheduleing.maximumNumberOfProposalsPerPerson", new ActionError(
@@ -547,7 +546,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
             Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService("ReadFinalDegreeWorkProposal", args);
+                InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
 
                 if (infoProposal != null) {
                     request.setAttribute("finalDegreeWorkProposal", infoProposal);
@@ -584,7 +583,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
             Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService("ReadFinalDegreeWorkProposal", args);
+                InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
 
                 if (infoProposal != null) {
                     DynaActionForm finalWorkForm = (DynaActionForm) form;

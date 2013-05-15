@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 
 import org.apache.struts.action.ActionForm;
@@ -187,7 +188,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                 }
             }
             final Object[] args = { bean };
-            publication = (ResearchResultPublication) executeService("CreateResultPublication", args);
+            publication = (ResearchResultPublication) ServiceManagerServiceFactory.executeService("CreateResultPublication", args);
             if (bean.getUnit() != null) {
                 request.setAttribute("unit", bean.getUnit());
             }
@@ -238,7 +239,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     articleBean.setJournalIssue(issue);
                     articleBean.setCreateJournal(false);
                     final Object[] args2 = { bean };
-                    publication = (ResearchResultPublication) executeService(service, args2);
+                    publication = (ResearchResultPublication) ServiceManagerServiceFactory.executeService(service, args2);
                     if (bean.getUnit() != null) {
                         request.setAttribute("unit", bean.getUnit());
                     }
@@ -360,7 +361,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
             try {
                 final Object[] args = { bean };
-                publicationChanged = (ResearchResultPublication) executeService("EditResultPublication", args);
+                publicationChanged = (ResearchResultPublication) ServiceManagerServiceFactory.executeService("EditResultPublication", args);
             } catch (DomainException ex) {
                 addActionMessage(request, ex.getMessage());
                 request.setAttribute("publicationBean", bean);
@@ -508,7 +509,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                             .getEventEdition());
             ((ConferenceArticlesBean) publicationBean).setEventEdition(eventEdition);
             final Object[] args2 = { publicationBean };
-            publication = (ResearchResultPublication) executeService(service, args2);
+            publication = (ResearchResultPublication) ServiceManagerServiceFactory.executeService(service, args2);
             if (publicationBean.getUnit() != null) {
                 request.setAttribute("unit", publicationBean.getUnit());
             }

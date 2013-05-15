@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -263,7 +264,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         final Object args[] = { bean };
         try {
-            executeService(service, args);
+            ServiceManagerServiceFactory.executeService(service, args);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
@@ -284,7 +285,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         final Object args[] = { bean };
         try {
-            executeService("CreateSummary", args);
+            ServiceManagerServiceFactory.executeService("CreateSummary", args);
 
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
@@ -307,7 +308,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         final Object args[] = { bean };
         try {
-            executeService("CreateSummary", args);
+            ServiceManagerServiceFactory.executeService("CreateSummary", args);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
@@ -371,7 +372,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         final Object args[] = { executionCourse, summary, professorshipLogged };
         try {
-            executeService("DeleteSummary", args);
+            ServiceManagerServiceFactory.executeService("DeleteSummary", args);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return prepareShowSummaries(mapping, form, request, response);
@@ -574,7 +575,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
             final Object args[] = { summaryBean };
             try {
-                executeService("CreateSummary", args);
+                ServiceManagerServiceFactory.executeService("CreateSummary", args);
 
             } catch (DomainException e) {
                 return returnToCreateComplexSummary(mapping, form, request, summaryBean, e);

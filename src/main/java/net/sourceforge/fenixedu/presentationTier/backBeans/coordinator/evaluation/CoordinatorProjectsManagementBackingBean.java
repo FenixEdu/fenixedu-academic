@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CoordinatorProjectsManagementBackingBean extends CoordinatorProjectsInformationBackingBean {
@@ -34,7 +34,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
             final Object[] args =
                     { getExecutionCourseID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null };
-            ServiceUtils.executeService("CreateProject", args);
+            ServiceManagerServiceFactory.executeService("CreateProject", args);
         } catch (final FenixFilterException e) {
             return "";
         } catch (final FenixServiceException e) {
@@ -53,7 +53,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
                     { getExecutionCourseID(), getEvaluationID(), getName(),
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null };
-            ServiceUtils.executeService("EditProject", args);
+            ServiceManagerServiceFactory.executeService("EditProject", args);
         } catch (final FenixFilterException e) {
         } catch (final FenixServiceException e) {
             setErrorMessage(e.getMessage());
@@ -68,7 +68,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     public String deleteProject() {
         try {
             final Object[] args = { getExecutionCourseID(), getEvaluationID() };
-            ServiceUtils.executeService("DeleteEvaluation", args);
+            ServiceManagerServiceFactory.executeService("DeleteEvaluation", args);
         } catch (FenixFilterException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());

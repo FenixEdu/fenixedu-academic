@@ -32,8 +32,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -66,8 +66,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
         Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
         List<InfoDegreeCurricularPlan> degreeCurricularPlans =
-                (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService("ReadActiveDegreeCurricularPlansByExecutionYear",
-                        argsExecutionYearId);
+                (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", argsExecutionYearId);
 
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
@@ -104,8 +103,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
                     rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
             Set<Student> studentsList =
-                    (Set<Student>) executeService("student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod",
-                            new Object[] { degreeCurricularPlan, executionSemester });
+                    (Set<Student>) ServiceManagerServiceFactory.executeService("student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod", new Object[] { degreeCurricularPlan, executionSemester });
 
             InfoInquiriesEmailReminderReport report = new InfoInquiriesEmailReminderReport();
 

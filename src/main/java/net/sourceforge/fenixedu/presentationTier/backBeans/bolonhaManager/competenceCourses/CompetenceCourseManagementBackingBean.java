@@ -44,9 +44,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -735,7 +735,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
                 final Object args[] =
                         { getCompetenceCourseID(), getName(), getNameEn(), getBasic(), getEnumCompetenceCourseLevel(),
                                 getEnumCompetenceCourseType(), CurricularStage.valueOf(getStage()) };
-                ServiceUtils.executeService("EditCompetenceCourse", args);
+                ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
                 return "editCompetenceCourseMainPage";
 
             } else {
@@ -787,7 +787,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         final Object args[] =
                 { getCompetenceCourseID(), getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(),
                         getProgramEn(), getEvaluationMethodEn() };
-        ServiceUtils.executeService("EditCompetenceCourse", args);
+        ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
     }
 
     public String deleteCompetenceCourse() {
@@ -809,7 +809,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             final Object[] args =
                     { getCompetenceCourseID(), getYear(), getTitle(), getAuthor(), getReference(),
                             BibliographicReferenceType.valueOf(getType()), getUrl() };
-            ServiceUtils.executeService("EditCompetenceCourse", args);
+            ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.creatingBibliographicReference"));
         } catch (FenixServiceException e) {
@@ -826,7 +826,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             final Object[] args =
                     { getCompetenceCourseID(), getBibliographicReferenceID(), getYear(), getTitle(), getAuthor(), getReference(),
                             BibliographicReferenceType.valueOf(getType()), getUrl() };
-            ServiceUtils.executeService("EditCompetenceCourse", args);
+            ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.editingBibliographicReference"));
         } catch (FenixServiceException e) {
@@ -845,7 +845,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String deleteBibliographicReference() {
         try {
             final Object[] args = { getCompetenceCourseID(), getBibliographicReferenceIDToDelete() };
-            ServiceUtils.executeService("EditCompetenceCourse", args);
+            ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.deletingBibliographicReference"));
         } catch (FenixServiceException e) {
@@ -868,7 +868,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String switchBibliographicReferencePosition() {
         try {
             final Object[] args = { getCompetenceCourseID(), getOldPosition(), getNewPosition() };
-            ServiceUtils.executeService("EditCompetenceCourse", args);
+            ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.switchBibliographicReferencePositions"));
         } catch (FenixServiceException e) {
@@ -890,7 +890,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             CurricularStage changed =
                     (getCompetenceCourse().getCurricularStage().equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage.PUBLISHED);
             final Object args[] = { getCompetenceCourseID(), changed };
-            ServiceUtils.executeService("EditCompetenceCourse", args);
+            ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
             return "";
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
@@ -1193,7 +1193,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String editAcronym() {
         try {
             final Object args[] = { getCompetenceCourseID(), getAcronym() };
-            ServiceUtils.executeService("EditCompetenceCourse", args);
+            ServiceManagerServiceFactory.executeService("EditCompetenceCourse", args);
             return "editCompetenceCourseMainPage";
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));

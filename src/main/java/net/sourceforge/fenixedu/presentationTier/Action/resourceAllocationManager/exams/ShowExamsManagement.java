@@ -24,10 +24,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionError;
@@ -91,7 +91,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         Object[] args = { infoExecutionDegree, curricularYearsList, infoExecutionPeriod };
         InfoExamsMap infoExamsMap;
 
-        infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
+        infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
 
         return infoExamsMap;
     }
@@ -164,7 +164,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         Object[] args = { null, examID };
 
         try {
-            ServiceUtils.executeService("DeleteWrittenEvaluation", args);
+            ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
         } catch (FenixServiceException exception) {
             actionErrors.add(exception.getMessage(), new ActionError(exception.getMessage()));
             saveErrors(request, actionErrors);

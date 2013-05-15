@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -58,8 +58,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -103,8 +102,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -174,7 +172,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
                         endTime };
 
         try {
-            ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
+            ServiceManagerServiceFactory.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
         } catch (DomainException e) {
             setErrorMessage(request, e.getKey());
             return mapping.getInputForward();

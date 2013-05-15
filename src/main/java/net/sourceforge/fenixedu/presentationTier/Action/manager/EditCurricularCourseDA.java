@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -80,7 +80,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         Object args[] = { curricularCourseId };
 
         try {
-            oldInfoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService("ReadCurricularCourse", args);
+            oldInfoCurricularCourse = (InfoCurricularCourse) ServiceManagerServiceFactory.executeService("ReadCurricularCourse", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
         } catch (FenixServiceException fenixServiceException) {

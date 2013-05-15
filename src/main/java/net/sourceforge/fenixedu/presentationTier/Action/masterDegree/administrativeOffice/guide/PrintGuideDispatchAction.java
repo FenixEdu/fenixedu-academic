@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -81,7 +80,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
         Object args2[] = { infoGuide.getInfoPerson() };
 
         try {
-            infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
+            infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
 
             Iterator it = infoStudents.iterator();
             while (it.hasNext()) {

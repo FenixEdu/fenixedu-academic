@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -75,7 +75,7 @@ public class ReadTeachersInformationAction extends FenixAction {
         }
 
         Object[] args = { executionDegreeID, Boolean.FALSE, yearString };
-        infoSiteTeachersInformation = (List) ServiceUtils.executeService("ReadTeachersInformation", args);
+        infoSiteTeachersInformation = (List) ServiceManagerServiceFactory.executeService("ReadTeachersInformation", args);
 
         request.setAttribute("infoSiteTeachersInformation", infoSiteTeachersInformation);
 

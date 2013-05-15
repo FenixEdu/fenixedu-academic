@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -46,7 +46,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
 
         Object[] argsDCPs = { executionYear.getIdInternal() };
         List degreeCurricularPlans =
-                (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", argsDCPs);
+                (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", argsDCPs);
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
         comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
@@ -77,7 +77,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
 
         Object[] args = { entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits, degreeCurricularPlanID };
         ByteArrayOutputStream resultStream =
-                (ByteArrayOutputStream) ServiceUtils.executeService("CreateClassificationsForStudents", args);
+                (ByteArrayOutputStream) ServiceManagerServiceFactory.executeService("CreateClassificationsForStudents", args);
 
         String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
         response.setHeader("Content-disposition", "attachment;filename=" + degreeCurricularPlanID + "_" + currentDate + ".zip");

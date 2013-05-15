@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -217,7 +217,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void enable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, true });
+        ServiceManagerServiceFactory.executeService("ChangeEnableInFunctionality", new Object[] { functionality, true });
     }
 
     /**
@@ -230,7 +230,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void disable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, false });
+        ServiceManagerServiceFactory.executeService("ChangeEnableInFunctionality", new Object[] { functionality, false });
     }
 
     /**
@@ -278,6 +278,6 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            the stream containing the XML funcitonalities structure
      */
     public static void importStartupFunctionalities(InputStream stream) throws Exception {
-        ServiceUtils.executeService("ImportStartupFunctionalities", new Object[] { stream });
+        ServiceManagerServiceFactory.executeService("ImportStartupFunctionalities", new Object[] { stream });
     }
 }

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -54,8 +54,8 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
             throws FenixServiceException, FenixFilterException {
 
         List detailedInfoProfessorshipList =
-                (List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
-                        actionForm.get("executionYearId") });
+                (List) ServiceManagerServiceFactory.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
+                actionForm.get("executionYearId") });
         request.setAttribute("args", new TreeMap());
         return detailedInfoProfessorshipList;
     }

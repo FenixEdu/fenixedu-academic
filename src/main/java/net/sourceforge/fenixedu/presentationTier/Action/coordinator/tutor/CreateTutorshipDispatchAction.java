@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -180,7 +181,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 
         List<TutorshipErrorBean> tutorshipsNotInserted = new ArrayList<TutorshipErrorBean>();
         try {
-            tutorshipsNotInserted = (List<TutorshipErrorBean>) executeService("InsertTutorship", args);
+            tutorshipsNotInserted = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("InsertTutorship", args);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
         }

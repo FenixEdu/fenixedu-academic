@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -153,7 +153,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             }
 
             Object[] args = { finalDegreeWorkProposalOID };
-            InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService("ReadFinalDegreeWorkProposal", args);
+            InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
             infoProposal.getExecutionDegree().setGetNextExecutionYear(true);
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
         }

@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -188,7 +189,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = (List<TutorshipErrorBean>) executeService("ChangeTutorship", args);
+                tutorshipsNotChanged = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("ChangeTutorship", args);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             } catch (FenixFilterException fenixFilterExceptione) {
@@ -235,7 +236,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         List<Tutorship> tutorshipToDelete = new ArrayList<Tutorship>();
         tutorshipToDelete.add(tutorship);
         Object[] args = new Object[] { executionDegree.getIdInternal(), new Integer(1), tutorshipToDelete };
-        return (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
+        return (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("DeleteTutorship", args);
 
     }
 
@@ -259,7 +260,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         BeanInitializer.initializeBean(selectedStudentsAndTutorBean, teacher, executionDegree, student, endDate);
         Object[] args = new Object[] { executionDegree.getIdInternal(), selectedStudentsAndTutorBean };
 
-        return (List<TutorshipErrorBean>) executeService("InsertTutorship", args);
+        return (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("InsertTutorship", args);
     }
 
     private ExecutionDegree getExecutionDegree(Tutorship tutorship) {

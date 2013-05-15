@@ -25,11 +25,11 @@ import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTrans
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -174,7 +174,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         InfoContributor infoContributor = null;
         Object argsContributor[] = { contributorNumber };
         try {
-            infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor", argsContributor);
+            infoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService("ReadContributor", argsContributor);
 
         } catch (ExcepcaoInexistente e) {
             throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",

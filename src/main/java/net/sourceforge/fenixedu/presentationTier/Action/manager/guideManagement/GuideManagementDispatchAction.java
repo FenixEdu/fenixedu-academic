@@ -34,8 +34,8 @@ import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTrans
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -89,11 +89,11 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
             if (version.intValue() == 0) {
                 Object[] args = { number, year };
-                List guidesList = (List) ServiceUtils.executeService("ChooseGuide", args);
+                List guidesList = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
                 guide = (InfoGuide) guidesList.get(0);
             } else {
                 Object[] args = { number, year, version };
-                guide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+                guide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
             }
 
         } catch (NonExistingServiceException e) {

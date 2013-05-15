@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
@@ -272,10 +273,8 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
             try {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                executeService(
-                        service,
-                        new Object[] { thesis, temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(),
-                                bean.getLanguage() });
+                ServiceManagerServiceFactory.executeService(service, new Object[] { thesis, temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(),
+                bean.getLanguage() });
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();
@@ -290,7 +289,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         try {
-            executeService("ApproveThesisDiscussion", new Object[] { thesis });
+            ServiceManagerServiceFactory.executeService("ApproveThesisDiscussion", new Object[] { thesis });
             addActionMessage("mail", request, "thesis.evaluated.mail.sent");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -302,7 +301,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         try {
-            executeService("ApproveThesisProposal", new Object[] { thesis });
+            ServiceManagerServiceFactory.executeService("ApproveThesisProposal", new Object[] { thesis });
             addActionMessage("mail", request, "thesis.approved.mail.sent");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());

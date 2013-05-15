@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -62,8 +62,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 
         try {
             infoDegreeCurricularPlan =
-                    (InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan",
-                            new Object[] { degreeCurricularPlanId });
+                    (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService("ReadDegreeCurricularPlan", new Object[] { degreeCurricularPlanId });
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
@@ -85,7 +84,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
         try {
             // executionDegrees =
             // ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlanId);
-            executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+            executionDegrees = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

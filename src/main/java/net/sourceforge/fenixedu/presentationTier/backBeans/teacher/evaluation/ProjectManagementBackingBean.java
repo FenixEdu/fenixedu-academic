@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -83,7 +83,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(),
                             getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(),
                             getSelectDepartments() };
-            ServiceUtils.executeService("CreateProject", args);
+            ServiceManagerServiceFactory.executeService("CreateProject", args);
         } catch (final FenixFilterException e) {
             return "";
         } catch (final FenixServiceException e) {
@@ -107,7 +107,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
                             DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(),
                             getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(),
                             getSelectDepartments() };
-            ServiceUtils.executeService("EditProject", args);
+            ServiceManagerServiceFactory.executeService("EditProject", args);
             setAssociatedProjects(null);
         } catch (final FenixFilterException e) {
         } catch (final FenixServiceException e) {
@@ -126,7 +126,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     public String deleteProject() {
         try {
             final Object[] args = { getExecutionCourseID(), getProjectID() };
-            ServiceUtils.executeService("DeleteEvaluation", args);
+            ServiceManagerServiceFactory.executeService("DeleteEvaluation", args);
             setAssociatedProjects(null);
         } catch (FenixFilterException e) {
         } catch (FenixServiceException e) {

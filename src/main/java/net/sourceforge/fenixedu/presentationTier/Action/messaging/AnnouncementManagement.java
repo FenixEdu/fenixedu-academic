@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
@@ -361,9 +362,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            executeService("CreateFileContentForBoard",
-                    new Object[] { (AnnouncementBoard) bean.getFileHolder(), file, bean.getFileName(), bean.getDisplayName(),
-                            bean.getPermittedGroup(), getLoggedPerson(request) });
+            ServiceManagerServiceFactory.executeService("CreateFileContentForBoard", new Object[] { (AnnouncementBoard) bean.getFileHolder(), file, bean.getFileName(), bean.getDisplayName(),
+            bean.getPermittedGroup(), getLoggedPerson(request) });
         } catch (FileManagerException e) {
             addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
         } catch (DomainException e) {
@@ -385,7 +385,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
         FileContent fileContent = getFileContent(request);
 
-        executeService("DeleteFileContent", new Object[] { fileContent });
+        ServiceManagerServiceFactory.executeService("DeleteFileContent", new Object[] { fileContent });
         return prepareAddFile(mapping, form, request, response);
     }
 

@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -90,7 +90,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
         Boolean error = false;
 
         try {
-            ServiceUtils.executeService("MergeExecutionCourses", args);
+            ServiceManagerServiceFactory.executeService("MergeExecutionCourses", args);
         } catch (FenixServiceException fse) {
             error = true;
             addActionMessageLiteral("errorFenixException", request, fse.getMessage());

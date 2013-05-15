@@ -42,10 +42,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -203,8 +203,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration,
-                            distributedTest, new Boolean(true), getServlet().getServletContext().getRealPath("/") });
+                    (List<StudentTestQuestion>) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration,
+                    distributedTest, new Boolean(true), getServlet().getServletContext().getRealPath("/") });
         } catch (NotAuthorizedFilterException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -341,8 +341,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList;
         try {
             studentTestQuestionList =
-                    (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
-                            new Boolean(false), path });
+                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
+                    new Boolean(false), path });
         } catch (NotAuthorizedFilterException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -395,8 +395,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         try {
             infoSiteStudentTestFeedback = InsertStudentTestResponses.run(registration, studentCode, testCode, userResponse, path);
             infoStudentTestQuestionList =
-                    (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
-                            new Boolean(false), path });
+                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
+                    new Boolean(false), path });
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -597,8 +597,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceUtils.executeService("ReadStudentTestForCorrection", new Object[] {
-                            registration, distributedTest, new Boolean(false), path });
+                    (List<StudentTestQuestion>) ServiceManagerServiceFactory.executeService("ReadStudentTestForCorrection", new Object[] {
+                    registration, distributedTest, new Boolean(false), path });
         } catch (InvalidArgumentsServiceException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");

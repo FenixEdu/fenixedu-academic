@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.Globals;
@@ -61,7 +61,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
         Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport, infoCourseReport.getReport() };
-        ServiceUtils.executeService(getEditService(), args);
+        ServiceManagerServiceFactory.executeService(getEditService(), args);
         return read(mapping, form, request, response);
     }
 
@@ -139,7 +139,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         String executionCourseId = request.getParameter("executionCourseId");
 
         Object[] args = { new Integer(executionCourseId) };
-        return (List) ServiceUtils.executeService(getReadHistoricService(), args);
+        return (List) ServiceManagerServiceFactory.executeService(getReadHistoricService(), args);
     }
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
@@ -148,7 +148,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         String executionCourseId = request.getParameter("executionCourseId");
 
         Object[] args = { new Integer(executionCourseId) };
-        return (SiteView) ServiceUtils.executeService(getReadService(), args);
+        return (SiteView) ServiceManagerServiceFactory.executeService(getReadService(), args);
     }
 
     private void setSiteViewToRequest(HttpServletRequest request, SiteView siteView, ActionMapping mapping) {

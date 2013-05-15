@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -29,7 +29,7 @@ public class UpdateGratuitySituations extends FenixBackingBean {
 
         Object[] args = { this.executionYear };
         try {
-            ServiceUtils.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
+            ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
 
         } catch (FenixFilterException e) {
         } catch (FenixServiceException e1) {

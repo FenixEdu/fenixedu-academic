@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -47,7 +47,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
         final Object[] args = { executionCourseCode, writtenEvaluationCode };
         SiteView siteView = null;
         try {
-            siteView = (SiteView) ServiceUtils.executeService("ReadStudentsEnrolledInWrittenEvaluation", args);
+            siteView = (SiteView) ServiceManagerServiceFactory.executeService("ReadStudentsEnrolledInWrittenEvaluation", args);
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));

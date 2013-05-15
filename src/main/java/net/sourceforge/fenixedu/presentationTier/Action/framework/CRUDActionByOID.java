@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -34,7 +34,7 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Object[] args = { getOIDProperty(form) };
-        ServiceUtils.executeService(getDeleteService(), args);
+        ServiceManagerServiceFactory.executeService(getDeleteService(), args);
         return mapping.findForward("successfull-delete");
     }
 
@@ -42,7 +42,7 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
             throws Exception {
         InfoObject infoObject = populateInfoObjectFromForm(form);
         Object[] args = getEditServiceArguments(form, infoObject, request);
-        ServiceUtils.executeService(getEditService(), args);
+        ServiceManagerServiceFactory.executeService(getEditService(), args);
         return mapping.findForward("successfull-edit");
     }
 
@@ -157,7 +157,7 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
         InfoObject infoObject = null;
         if (oid != null) {
             Object[] args = { getOIDProperty(form) };
-            infoObject = (InfoObject) ServiceUtils.executeService(getReadService(), args);
+            infoObject = (InfoObject) ServiceManagerServiceFactory.executeService(getReadService(), args);
         }
         return infoObject;
     }

@@ -21,13 +21,11 @@ public class ServiceManagerServiceFactory {
 
     public static Object executeService(String serviceName, Object[] serviceArgs) throws FenixServiceException,
             FenixFilterException {
-        final IUserView userView = UserView.getUser();
-        return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
-    }
-
-    public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
-            throws FenixServiceException, FenixFilterException {
         try {
+            if (serviceArgs == null) {
+                serviceArgs = new Object[0];
+            }
+            final IUserView userView = UserView.getUser();
             return service.execute(userView, serviceName, serviceArgs);
         } catch (ServiceManagerDefaultImpl.ExceptionWrapper e) {
             if (e != null && e.getCause() != null && e.getCause() instanceof FenixServiceException) {

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -164,8 +165,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
                 ExecutionDegree executionDegree = getExecutionDegree(request);
 
                 try {
-                    executeService("AddScientificCommission",
-                            new Object[] { executionDegree.getIdInternal(), employee.getPerson() });
+                    ServiceManagerServiceFactory.executeService("AddScientificCommission", new Object[] { executionDegree.getIdInternal(), employee.getPerson() });
                     RenderUtils.invalidateViewState("usernameChoice");
                 } catch (DomainException e) {
                     addActionMessage("addError", request, e.getKey(), e.getArgs());
@@ -186,7 +186,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             for (ScientificCommission commission : executionDegree.getScientificCommissionMembers()) {
                 if (commission.getIdInternal().equals(memberId)) {
                     try {
-                        executeService("DeleteScientificCommission", new Object[] { executionDegree.getIdInternal(), commission });
+                        ServiceManagerServiceFactory.executeService("DeleteScientificCommission", new Object[] { executionDegree.getIdInternal(), commission });
                     } catch (DomainException e) {
                         addActionMessage("addError", request, e.getKey(), e.getArgs());
                     }
