@@ -2734,13 +2734,6 @@
     </service>
 
     <service>
-        <name>SearchActiveInternalUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchActiveInternalUnits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>SearchExecutionCourses</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SearchExecutionCourses</implementationClass>
         <isTransactional>true</isTransactional>

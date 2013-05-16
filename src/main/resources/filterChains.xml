@@ -14,20 +14,6 @@
     </filterChain>
 
     <filterChain>
-        <name>BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerAuthorization</name>
-        <expression>BolonhaManagerAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || ManagerAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-	
-	<filterChain>
-        <name>BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization</name>
-        <expression>BolonhaManagerAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || ManagerAuthorization || OperatorAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    
-    <filterChain>
         <name>BolonhaOrScientificCouncilAuthorization</name>
         <expression>BolonhaManagerAuthorization || ScientificCouncilAuthorization</expression>
         <invocationTiming>1</invocationTiming>
@@ -385,13 +371,6 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-
-    <filterChain>
-        <name>ManagerOrCoordinatorOrGEPAuthorization</name>
-        <expression>ManagerAuthorization || CoordinatorAuthorization || GEPAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
     
     <filterChain>
         <name>ManagerOrCoordinatorOrGEPOrOperatorAuthorization</name>
@@ -412,13 +391,6 @@
         <expression>DegreeAdministrativeOfficeAuthorization || ManagerAuthorization || OperatorAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
-        <name>ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOffice</name>
-        <expression>ManagerAuthorization || AcademicAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
     
     <filterChain>
@@ -445,13 +417,6 @@
     <filterChain>
         <name>ManagerOrMasterDegreeAdministrativeOfficeAuthorization</name>
         <expression>ManagerAuthorization || MasterDegreeAdministrativeOfficeAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
-        <name>ManagerOrSeminariesCoordinator</name>
-        <expression>ManagerOrSeminariesCoordinator</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
@@ -732,13 +697,6 @@
     </filterChain>
 
     <filterChain>
-        <name>SubmitMarksAuthorization</name>
-        <expression>ExecutionCourseResponsibleForTeacherAuthorization &amp;&amp; SubmitMarksPeriod</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
         <name>SummaryManagementAuthorization</name>
         <expression>SummaryManagementToTeacherAuthorization || SummaryManagementToDepartmentAdmOfficeAuthorization</expression>
         <invocationTiming>1</invocationTiming>
@@ -748,13 +706,6 @@
     <filterChain>
         <name>TeacherAuthorization</name>
         <expression>TeacherAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
-        <name>TeacherTimeTableManagerOrTeacherAuthorization</name>
-        <expression>TeacherAuthorization || ResourceAllocationManagerAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>

@@ -5,12 +5,6 @@
         <description></description>
         <isTransactional>false</isTransactional>
     </filter>
-     <filter>
-        <name>InternationalRelationOfficeAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.InternationalRelationOfficeAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
 
     <filter>
         <name>AccessFinalDegreeWorkProposalAuthorizationFilter</name>
@@ -167,13 +161,6 @@
     </filter>
 
     <filter>
-        <name>DepartmentCreditsManagerAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.credits.DepartmentCreditsManagerAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>DepartmentInsertProfessorshipAuthorizationFilter</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.credits.DepartmentInsertProfessorshipAuthorization</implementationClass>
         <description></description>
@@ -321,13 +308,6 @@
     </filter>
 
     <filter>
-        <name>ExecutionDegreeCoordinatorAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter</implementationClass>
         <description></description>
@@ -351,13 +331,6 @@
     <filter>
         <name>ManageUnitPersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManageUnitPersistentGroup</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>ManagementAssiduousnessAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManagementAssiduousnessAuthorizationFilter</implementationClass>
         <description></description>
         <isTransactional>false</isTransactional>
     </filter>
@@ -587,13 +560,6 @@
     </filter>
 
     <filter>
-        <name>AlumniAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AlumniAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseAuthorizationFilter</implementationClass>
         <description></description>
@@ -626,13 +592,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.SubmitFinalWorkProposalAuthorization</implementationClass>
         <description></description>
         <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>SubmitMarksPeriod</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.teacher.SubmitMarksPeriodFilter</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
     </filter>
 
     <filter>
