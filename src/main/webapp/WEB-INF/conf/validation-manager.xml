@@ -273,14 +273,14 @@
 
  <!--validation to the form to insert a execution course-->
     <form name="insertExecutionCourseForm">
-      <field property="executionPeriodId" depends="required" page="1" >
-        <arg0 key="label.manager.executionCourseManagement.executionPeriod" resource="true"/>
+      <field property="executionPeriodId" depends="required" page="1">
+        <arg0 key="label.manager.executionCourseManagement.executionPeriod" resource="true" bundle="MANAGER_RESOURCES"/>
       </field>      
       <field property="name" depends="required" page="1" >
-        <arg0 key="message.manager.execution.course.name" resource="true"/>
+        <arg0 key="message.manager.execution.course.name" resource="true" bundle="MANAGER_RESOURCES"/>
       </field>
       <field property="code" depends="required" page="1" >
-        <arg0 key="message.manager.execution.course.code" resource="true"/>
+        <arg0 key="message.manager.execution.course.code" resource="true" bundle="MANAGER_RESOURCES"/>
       </field>
     </form>
     

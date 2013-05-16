@@ -182,6 +182,15 @@
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
             </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertExecutionCourseForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="code"></form-property>
+                  <form-property type="java.lang.String" name="semester"></form-property>
+                  <form-property type="java.lang.String" name="comment"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="entryPhase"></form-property>
+            </form-bean>
             <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
             <!-- Dynamic-FormBean para Day And Shift Context -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createExecutionPeriodForm">
@@ -581,10 +590,8 @@
             <!-- Action for saving modifications at teachers body -->
             <!-- Action for deleting a curricular course scope -->
             <!--FALTA EXCEPCES PARA AS QUE SE SEGUEM-->
-            <!--insertExecutionCourseAtExecutionPeriod
-    insertExecutionCourse -->
-            <!--
-    -->
+            <!-- insertExecutionCourseAtExecutionPeriod-->
+            <!-- insertExecutionCourse -->
             <!-- Action for deleting execution courses -->
             <!--Input actions-->
             <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" scope="request" path="/readDegreesInput">
