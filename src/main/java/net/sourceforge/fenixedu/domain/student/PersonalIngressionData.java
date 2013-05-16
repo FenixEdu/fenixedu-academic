@@ -170,9 +170,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
         return hasStudent();
     }
 
-    //@ConsistencyPredicate
-    //There is a bug in the framework that causes false positives for this predicate
-    //In some cases, this predicate would return false, even if the count is > 0
+    @ConsistencyPredicate
     public boolean checkMultiplicityOfPrecedentDegreesInformations() {
         return getPrecedentDegreesInformationsCount() > 0;
     }
