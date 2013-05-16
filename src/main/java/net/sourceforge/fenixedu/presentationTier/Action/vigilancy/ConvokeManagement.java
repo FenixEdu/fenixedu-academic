@@ -228,16 +228,17 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward confirmConvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-    	Boolean havingVigilantsThatAreTeachers = false;
-    	
+        Boolean havingVigilantsThatAreTeachers = false;
+
         ConvokeBean beanWithTeachers = null;
-        
-         if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
-        	 beanWithTeachers = (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreTeachers").getMetaObject().getObject();
-         }
-    	
+
+        if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
+            beanWithTeachers =
+                    (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreTeachers").getMetaObject().getObject();
+        }
+
         ConvokeBean beanWithVigilants = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
-        
+
         ConvokeBean beanWithUnavailables =
                 (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreUnavailable").getMetaObject().getObject();
 
@@ -245,9 +246,9 @@ public class ConvokeManagement extends FenixDispatchAction {
         List<VigilantWrapper> vigilants, unavailables;
 
         if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
-        	teachers = beanWithTeachers.getSelectedTeachers();
+            teachers = beanWithTeachers.getSelectedTeachers();
         }
-        
+
         vigilants = beanWithVigilants.getVigilants();
         unavailables = beanWithUnavailables.getSelectedUnavailableVigilants();
 
@@ -255,10 +256,12 @@ public class ConvokeManagement extends FenixDispatchAction {
         String teachersVigilancies = null;
 
         if (RenderUtils.getViewState("selectVigilantsThatAreTeachers") != null) {
-        	teachersVigilancies = beanWithTeachers.getVigilantsAsString();
-        	vigilants.addAll(teachers);
+            teachersVigilancies = beanWithTeachers.getVigilantsAsString();
+            vigilants.addAll(teachers);
+        } else {
+            teachersVigilancies = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.noone");
         }
-        
+
         vigilants.addAll(unavailables);
         beanWithVigilants.setVigilants(vigilants);
 
