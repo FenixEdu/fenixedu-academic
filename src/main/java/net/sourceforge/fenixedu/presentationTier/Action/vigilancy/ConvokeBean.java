@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -200,5 +201,18 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
                             + room.getCapacidadeExame() + "\n";
         }
         return rooms;
+    }
+
+    public List<VigilantWrapper> getTeachersInAGivenConvokeProvider() {
+        List<VigilantWrapper> teachersForAGivenCourse = this.getTeachersForAGivenCourse();
+        WrittenEvaluation writtenEvaluation = this.getWrittenEvaluation();
+
+        if (writtenEvaluation != null && writtenEvaluation.getVigilancies().size() > 0) {
+            for (Vigilancy convoke : writtenEvaluation.getVigilancies()) {
+                teachersForAGivenCourse.remove(convoke.getVigilantWrapper());
+            }
+
+        }
+        return teachersForAGivenCourse;
     }
 }

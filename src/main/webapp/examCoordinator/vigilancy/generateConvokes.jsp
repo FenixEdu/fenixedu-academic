@@ -87,13 +87,10 @@
 		<fr:property name="classes" value="mtop0" />
 	</fr:layout>
 </fr:edit>
-<%--ist150958:	when no teachers that teach course are available, there is no indication (provider gives empty list)
-	ist150958:	"selectedTeachers" which is the slot on schema "selectVigilantsThatAreTeachers" applies only for selected
-				checkboxes, not for list from provider!  
-<logic:empty name="bean" property="selectedTeachers">
+<logic:empty name="bean" property="teachersInAGivenConvokeProvider">
 	<bean:message key="label.vigilancy.noVigilantsThatTeachCourse" bundle="VIGILANCY_RESOURCES"/>
 </logic:empty>
- --%>
+ 
 
 <a name="vigilantTable"></a>
 <logic:notEmpty name="incompatiblePersons">
@@ -125,11 +122,9 @@
 	</fr:layout>
 <fr:destination name="cancel" path="/vigilancy/convokeManagement.do?method=prepareConvoke"/>
 </fr:edit>
-<%--ist150958: same issue as "selectVigilantsThatAreTeachers"
-<logic:empty name="bean" property="selectedUnavailableVigilants">
+<logic:empty name="bean" property="unavailableVigilants">
 	<bean:message key="label.vigilancy.noVigilantsUnavailable" bundle="VIGILANCY_RESOURCES"/>
 </logic:empty>
---%>
 
 <p class="mtop05">
 	<span class="switchInline"><a href="javascript:checkall('addVigilantsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/></a>, </span>
