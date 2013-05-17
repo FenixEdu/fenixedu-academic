@@ -25,7 +25,6 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registrationNumber" isForPrompting="false" class="java.lang.Integer"/>
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
@@ -45,7 +44,7 @@
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/higher-education-diagram-" + $P{langSuffix} + ".jpg"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["images/higher-education-diagram-" + $P{langSuffix} + ".jpg"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

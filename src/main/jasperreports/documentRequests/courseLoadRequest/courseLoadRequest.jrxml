@@ -48,7 +48,6 @@
 	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinatorName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="bolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="preBolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="dissertationsList" isForPrompting="false" class="java.util.List"/>
@@ -295,7 +294,7 @@
 						key="subreport-1"
 						isPrintRepeatedValues="false"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{bolonhaList})]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/courseLoadRequest/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -307,7 +306,7 @@
 						positionType="Float"
 						isPrintRepeatedValues="false"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{preBolonhaList})]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/courseLoadRequest/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -321,7 +320,7 @@
 							<printWhenExpression><![CDATA[!$P{dissertationsList}.isEmpty()]]></printWhenExpression>
 						</reportElement>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{dissertationsList})]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadDissertationsList.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/courseLoadRequest/courseLoadDissertationsList.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>

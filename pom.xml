@@ -32,6 +32,11 @@
 					<include>build.version</include>
 				</includes>
 			</resource>
+			<resource>
+				<directory>src/main/webapp/images</directory>
+				<targetPath>${project.build.outputDirectory}/images</targetPath>
+				<filtering>false</filtering>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -69,7 +74,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -184,6 +188,7 @@
 					<scanTargets>
 						<scanTarget>src/main/webapp</scanTarget>
 					</scanTargets>
+					<war>${project.build.directory}/${project.build.finalName}</war>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -581,6 +586,32 @@
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.6</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+						</configuration>
+						<executions>
+							<execution>
+							<id>copy-images</id>
+							<phase>validate</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${basedir}/target/classes/images</outputDirectory>
+								<resources>          
+									<resource>
+										<directory>src/main/webapp/images</directory>
+										<filtering>false</filtering>
+									</resource>
+								</resources>              
+							</configuration>  
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
 						<version>2.4</version>
 						<executions>
@@ -622,6 +653,7 @@
 								<include>pt/**/*.class</include>
 								<include>reports/**/*.*</include>
 								<include>**/*.properties</include>
+								<include>images/**/*.*</include>
 							</includes>
 						</configuration>
 					</plugin>

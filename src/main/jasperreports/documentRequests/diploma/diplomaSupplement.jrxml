@@ -54,7 +54,6 @@
 	<parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
 	<parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="accessToHigherLevelOfEducation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="professionalStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="aditionalInfoSources" isForPrompting="false" class="java.lang.String"/>
@@ -238,9 +237,6 @@
 					<subreportParameter  name="graduateTitle">
 						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter  name="registrationNumber">
 						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -340,9 +336,6 @@
 					</subreportParameter>
 					<subreportParameter  name="graduateTitle">
 						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="registrationNumber">
 						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
@@ -457,9 +450,6 @@
 					<subreportParameter  name="graduateTitle">
 						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter  name="registrationNumber">
 						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -567,9 +557,6 @@
 					<subreportParameter  name="graduateTitle">
 						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter  name="registrationNumber">
 						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -673,9 +660,6 @@
 					</subreportParameter>
 					<subreportParameter  name="graduateTitle">
 						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="registrationNumber">
 						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
@@ -785,9 +769,6 @@
 					</subreportParameter>
 					<subreportParameter  name="graduateTitle">
 						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="registrationNumber">
 						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>

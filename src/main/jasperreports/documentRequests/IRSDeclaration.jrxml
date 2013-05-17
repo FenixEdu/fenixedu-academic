@@ -32,7 +32,6 @@
 	<parameter name="payedAmounts" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="totalPayedAmount" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="civilYear" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentTitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="firstParagraph" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="secondParagraph" isForPrompting="false" class="java.lang.String"/>
@@ -234,7 +233,7 @@
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoTecnicoLisboa.png"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["images/LogoTecnicoLisboa.png"]]></imageExpression>
 				</image>
 			</band>
 		</title>

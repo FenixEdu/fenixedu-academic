@@ -32,7 +32,6 @@
 	<parameter name="date" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="grade" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="studentDegreeName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="path" class="java.lang.String" isForPrompting="false"/>
 	<detail>
 		<band height="772" isSplitAllowed="true">
 			<textField isBlankWhenNull="false">
@@ -52,7 +51,7 @@
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="238" height="102"/>
-				<imageExpression><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
+				<imageExpression><![CDATA["images/LogoIST.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="121" width="247" height="20"/>

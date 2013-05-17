@@ -44,7 +44,6 @@
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdType" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="unitPhone" isForPrompting="false" class="java.lang.String"/>
 
@@ -103,7 +102,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["images/LogoIST.gif"]]></imageExpression>
 				</image>
 				<line direction="TopDown">
 					<reportElement

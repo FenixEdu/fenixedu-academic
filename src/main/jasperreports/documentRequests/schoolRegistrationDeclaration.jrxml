@@ -23,7 +23,6 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinator" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
 	<parameter name="administrativeOfficeName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
@@ -144,7 +143,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoTecnicoLisboa.png"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["images/LogoTecnicoLisboa.png"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

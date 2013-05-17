@@ -41,7 +41,6 @@
 	</style>
 
 	<parameter name="personName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="emissionDate" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="birthDate" isForPrompting="false" class="java.lang.String"/>
@@ -92,7 +91,7 @@
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/blazon01.gif"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["images/blazon01.gif"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement

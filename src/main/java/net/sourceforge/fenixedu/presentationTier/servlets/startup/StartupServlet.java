@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +104,7 @@ public class StartupServlet extends HttpServlet {
                 System.out.println("Check is alive is not working. Caught excpetion.");
                 ex.printStackTrace();
             }
-            FenixReport.setRealPath(getServletContext().getRealPath("/"));
+            //FenixReport.setRealPath(getServletContext().getRealPath("/"));
 
             loadLogins();
             loadPersonNames();

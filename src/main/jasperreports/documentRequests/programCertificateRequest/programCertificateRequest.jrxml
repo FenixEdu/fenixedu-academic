@@ -31,7 +31,6 @@
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinatorName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="bolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="programSubReportName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
@@ -181,11 +180,8 @@
 						width="595"
 						height="44"
 						key="subreport-1"/>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
-					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{bolonhaList}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/programCertificateRequest/programBolonhaSubReport.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/programCertificateRequest/programBolonhaSubReport.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -196,11 +192,8 @@
 						height="44"
 						key="subreport-2"
 						positionType="Float"/>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
-					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{preBolonhaList}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/programCertificateRequest/programPreBolonhaSubReport.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/programCertificateRequest/programPreBolonhaSubReport.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>

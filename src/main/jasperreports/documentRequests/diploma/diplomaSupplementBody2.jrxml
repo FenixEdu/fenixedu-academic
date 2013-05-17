@@ -53,7 +53,6 @@
 	<parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
 	<parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
@@ -1220,9 +1219,6 @@
 						stretchType="RelativeToTallestObject"/>
 					<subreportParameter  name="bundle">
 						<subreportParameterExpression><![CDATA[$P{bundle}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{academicUnitIdentifiers}))]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA["reports/documentRequests/diploma/diplomaSupplementBody2_1.jasper"]]></subreportExpression>

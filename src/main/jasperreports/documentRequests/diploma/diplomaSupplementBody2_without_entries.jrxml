@@ -53,7 +53,6 @@
 	<parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
 	<parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["./"]]></defaultValueExpression>
 	</parameter>

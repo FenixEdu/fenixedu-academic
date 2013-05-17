@@ -48,7 +48,6 @@
 	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinatorName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="bolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="preBolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="numberOfPrograms" isForPrompting="false" class="java.lang.String"/>

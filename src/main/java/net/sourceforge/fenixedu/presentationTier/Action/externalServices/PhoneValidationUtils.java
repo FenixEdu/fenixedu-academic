@@ -70,6 +70,7 @@ public class PhoneValidationUtils {
         if (!StringUtils.isEmpty(appContext)) {
             HOST += appContext;
         }
+        HOST = StringUtils.removeEnd(HOST, "/");
     }
 
     private void initTwilio() {

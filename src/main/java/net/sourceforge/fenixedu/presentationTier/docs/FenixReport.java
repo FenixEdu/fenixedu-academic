@@ -18,8 +18,6 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
 
-    private static String realPath = null;
-
     @SuppressWarnings("rawtypes")
     final private Collection dataSource;
 
@@ -48,10 +46,6 @@ abstract public class FenixReport implements Serializable {
     static final protected String YYYYMMMDD = "yyyyMMdd";
 
     static final protected String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
-
-    {
-        addParameter("path", realPath);
-    }
 
     protected FenixReport() {
         this(null, Language.getLocale());
@@ -126,10 +120,6 @@ abstract public class FenixReport implements Serializable {
     abstract public String getReportFileName();
 
     abstract protected void fillReport();
-
-    public synchronized static void setRealPath(String realPath) {
-        FenixReport.realPath = realPath;
-    }
 
     protected void printParameters() {
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
