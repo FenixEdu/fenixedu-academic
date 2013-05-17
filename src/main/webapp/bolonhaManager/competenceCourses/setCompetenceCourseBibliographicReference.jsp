@@ -57,7 +57,7 @@
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['url']}:</label>" escape="false"/>
-			<h:inputText alt="#{htmlAltBundle['inputText.url']}" id="url" size="50" maxlength="100" value="#{CompetenceCourseManagement.url}"/>			
+			<h:inputText alt="#{htmlAltBundle['inputText.url']}" id="url" size="50" value="#{CompetenceCourseManagement.url}"/>			
 			<h:outputText value=" <span>(#{bolonhaBundle['optional']})</span></p>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>	
