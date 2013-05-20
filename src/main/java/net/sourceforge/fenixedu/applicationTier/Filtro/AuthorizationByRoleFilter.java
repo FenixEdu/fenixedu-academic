@@ -20,7 +20,7 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
      */
     abstract protected RoleType getRoleType();
 
-    public void execute(Object[] parameters) throws Exception {
+    protected void execute() throws Exception {
         IUserView userView = AccessControl.getUserView();
         if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType()))) || (userView == null)
                 || (userView.getRoleTypes() == null)) {

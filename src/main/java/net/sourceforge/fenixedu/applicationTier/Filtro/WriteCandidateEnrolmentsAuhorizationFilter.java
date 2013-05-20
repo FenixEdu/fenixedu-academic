@@ -21,13 +21,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
-    public void execute(Object[] parameters) throws Exception {
+    public static final WriteCandidateEnrolmentsAuhorizationFilter instance = new WriteCandidateEnrolmentsAuhorizationFilter();
+
+    public void execute(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+            throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
 
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
-                || (id.getRoleTypes() == null)) {
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, selectedCurricularCoursesIDs, candidateID))
+                || (id == null) || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -40,14 +42,12 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+    private boolean hasPrivilege(IUserView id, Set<Integer> selectedCurricularCoursesIDs, Integer candidateID) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Set<Integer> selection = (Set<Integer>) arguments[0];
-            Integer candidateID = (Integer) arguments[1];
             final Person person = id.getPerson();
 
             MasterDegreeCandidate masterDegreeCandidate =
@@ -64,7 +64,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                 return false;
             }
 
-            for (Integer selectedCurricularCourse : selection) {
+            for (Integer selectedCurricularCourse : selectedCurricularCoursesIDs) {
 
                 // Modified by Fernanda Quitério
 

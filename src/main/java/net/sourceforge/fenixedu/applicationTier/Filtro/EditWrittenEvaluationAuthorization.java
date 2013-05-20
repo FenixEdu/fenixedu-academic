@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class EditWrittenEvaluationAuthorization extends Filtro {
 
+    public static final EditWrittenEvaluationAuthorization instance = new EditWrittenEvaluationAuthorization();
+
     public void execute(Object[] parameters) throws Exception {
         final IUserView userView = AccessControl.getUserView();
 

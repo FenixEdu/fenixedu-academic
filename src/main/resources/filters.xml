@@ -238,13 +238,6 @@
     </filter>
 
     <filter>
-        <name>EmployeeBelongsToTeacherDepartment</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.departmentAdmOffice.EmployeeBelongsToTeacherDepartment</implementationClass>
-        <description>Verifies whether a given employee belongs to the same department the teacher does</description>
-        <isTransactional>true</isTransactional>
-    </filter>
-
-    <filter>
         <name>EnrollmentAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentAuthorizationFilter</implementationClass>
         <description></description>

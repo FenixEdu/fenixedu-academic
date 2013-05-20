@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
-public class StudentCurriculumViewAuthorizationFilter extends Filtro {
+public class StudentCurriculumViewAuthorizationFilter {
 
     public final static StudentCurriculumViewAuthorizationFilter instance = new StudentCurriculumViewAuthorizationFilter();
 
-    final public void execute(Object[] parameters) throws FilterException, Exception {
+    final public void execute(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FilterException, Exception {
         if (!AcademicPredicates.VIEW_FULL_STUDENT_CURRICULUM.evaluate(AccessControl.getUserView().getPerson())) {
             throw new NotAuthorizedFilterException();
         }

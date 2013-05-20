@@ -18,22 +18,15 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  * 
  */
 public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(Object[] parameters) throws FilterException, Exception {
+
+    public void execute(Object dummy, InfoObject infoObject) throws FilterException, Exception {
         try {
             IUserView id = AccessControl.getUserView();
-            Integer idInternal = ((InfoObject) parameters[1]).getIdInternal();
+            Integer idInternal = infoObject.getIdInternal();
             boolean isNew = (idInternal == null) || idInternal.equals(Integer.valueOf(0));
 
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, (InfoObject) parameters[1])))) {
+                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, infoObject)))) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {

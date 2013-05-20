@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class CandidateApprovalAuthorizationFilter extends Filtro {
 
+    public static final CandidateApprovalAuthorizationFilter instance = new CandidateApprovalAuthorizationFilter();
+
     /**
      * @return The Needed Roles to Execute The Service
      */
@@ -35,13 +37,12 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+    private boolean hasPrivilege(IUserView id, String[] ids) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            String ids[] = (String[]) arguments[1];
 
             final Person person = id.getPerson();
 
@@ -63,11 +64,11 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
         return true;
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(String[] situations, String[] ids, String[] remarks, String[] substitutes) throws Exception {
         IUserView userView = AccessControl.getUserView();
         if ((userView != null && userView.getRoleTypes() != null && !containsRoleType(userView.getRoleTypes()))
-                || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView, parameters))
-                || (userView == null) || (userView.getRoleTypes() == null)) {
+                || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView, ids)) || (userView == null)
+                || (userView.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

@@ -17,12 +17,14 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  *         Created at 8/Set/2003, 14:55:43
  * 
  */
-public class SeminaryCoordinatorOrStudentFilter extends Filtro {
+public class SeminaryCoordinatorOrStudentFilter {
+
+    public static final SeminaryCoordinatorOrStudentFilter instance = new SeminaryCoordinatorOrStudentFilter();
 
     public SeminaryCoordinatorOrStudentFilter() {
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer equivalencyID) throws Exception {
         IUserView id = AccessControl.getUserView();
 
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType1()) && !id.hasRoleType(getRoleType2())))

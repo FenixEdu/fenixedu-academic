@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
+    public static final EnrollmentAuthorizationFilter instance = new EnrollmentAuthorizationFilter();
+
     private static final int LEIC_OLD_DCP = 10;
 
     @Override

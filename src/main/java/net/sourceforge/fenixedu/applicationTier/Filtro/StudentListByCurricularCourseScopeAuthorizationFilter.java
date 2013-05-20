@@ -21,14 +21,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtro {
 
+    public static final StudentListByCurricularCourseScopeAuthorizationFilter instance = new StudentListByCurricularCourseScopeAuthorizationFilter();
+
     public StudentListByCurricularCourseScopeAuthorizationFilter() {
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(IUserView userView, Integer curricularCourseScopeID) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, curricularCourseScopeID)) || (id == null)
                 || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
@@ -50,8 +51,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        Integer curricularCourseScopeID = (Integer) arguments[1];
+    private boolean hasPrivilege(IUserView id, Integer curricularCourseScopeID) {
 
         CurricularCourseScope curricularCourseScope =
                 RootDomainObject.getInstance().readCurricularCourseScopeByOID(curricularCourseScopeID);

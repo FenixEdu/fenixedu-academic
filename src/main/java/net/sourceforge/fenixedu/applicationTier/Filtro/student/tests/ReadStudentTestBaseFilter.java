@@ -18,11 +18,9 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
-    @Override
-    final public void execute(Object[] parameters) throws FilterException, Exception {
-        super.execute(parameters);
+    final public void execute(Object object) throws FilterException, Exception {
+        super.execute();
 
-        Object object = parameters[1];
         DistributedTest distributedTest = null;
         if (object instanceof Integer) {
             final Integer testId = (Integer) object;

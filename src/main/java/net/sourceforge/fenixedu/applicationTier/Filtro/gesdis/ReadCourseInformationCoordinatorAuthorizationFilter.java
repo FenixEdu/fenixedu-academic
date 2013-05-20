@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class ReadCourseInformationCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
+    public static final ReadCourseInformationCoordinatorAuthorizationFilter instance = new ReadCourseInformationCoordinatorAuthorizationFilter();
+
     @Override
     protected ExecutionYear getSpecificExecutionYear(Object[] parameters) {
         Integer id = (Integer) parameters[0];

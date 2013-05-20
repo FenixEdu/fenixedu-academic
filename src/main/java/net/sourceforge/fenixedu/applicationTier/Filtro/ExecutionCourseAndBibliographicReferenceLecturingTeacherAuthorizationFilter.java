@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
  * 
  */
 public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter instance = new ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter() {
 
@@ -34,23 +34,21 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference,
+            String newYear, Boolean optional) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = parameters;
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
+                || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
             throw new NotAuthorizedFilterException();
         }
     }
 
-    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Object[] args) {
-        if (args == null) {
+    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Integer bibliographicReferenceID) {
+        if (bibliographicReferenceID == null) {
             return false;
         }
 
         boolean result = false;
-        final Integer bibliographicReferenceID = getBibliographicReference(args);
         final BibliographicReference bibliographicReference =
                 RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceID);
         final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
@@ -71,7 +69,4 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         return result;
     }
 
-    private Integer getBibliographicReference(Object[] args) {
-        return (Integer) args[0];
-    }
 }

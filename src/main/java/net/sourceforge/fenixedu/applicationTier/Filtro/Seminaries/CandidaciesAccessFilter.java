@@ -18,11 +18,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  *         Created at 5/Set/2003, 16:22:14
  * 
  */
-public class CandidaciesAccessFilter extends Filtro {
+public class CandidaciesAccessFilter {
+
+    public static final CandidaciesAccessFilter instance = new CandidaciesAccessFilter();
     public CandidaciesAccessFilter() {
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute() throws Exception {
         IUserView id = AccessControl.getUserView();
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
                 || (id.getRoleTypes() == null)) {

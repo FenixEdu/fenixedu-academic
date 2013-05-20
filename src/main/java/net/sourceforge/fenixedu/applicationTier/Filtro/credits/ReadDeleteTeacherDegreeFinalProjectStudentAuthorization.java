@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
  * @author jpvl
  */
 public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends AbstractTeacherDepartmentAuthorization {
+
+    public static final ReadDeleteTeacherDegreeFinalProjectStudentAuthorization instance = new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
     public final static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization filter =
             new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
 

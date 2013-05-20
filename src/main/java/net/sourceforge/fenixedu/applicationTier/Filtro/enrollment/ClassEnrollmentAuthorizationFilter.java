@@ -8,12 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -26,16 +27,16 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
  * @author Luis Cruz
  * 
  */
-public class ClassEnrollmentAuthorizationFilter extends Filtro {
+public class ClassEnrollmentAuthorizationFilter {
+
+    public static final ClassEnrollmentAuthorizationFilter instance = new ClassEnrollmentAuthorizationFilter();
 
     private static SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Registration registration, SchoolClass schoolClass, ExecutionCourse executionCourse) throws Exception {
         Person person = AccessControl.getUserView().getPerson();
-
-        final Registration registration = (Registration) parameters[0];
 
         if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
                 registration.getDegree())) {

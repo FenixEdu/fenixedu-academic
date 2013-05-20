@@ -6,24 +6,23 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ScientificComissionMemberAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ScientificComissionMemberAuthorizationFilter instance = new ScientificComissionMemberAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
-        super.execute(parameters);
+    public void execute(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, Integer mark) throws Exception {
+        super.execute();
 
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
-
-        // first argument must be a degree curricularPlan
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) parameters[0];
 
         if (!degreeCurricularPlan.getDegree().isMemberOfCurrentScientificCommission(person)) {
             throw new NotAuthorizedFilterException("degree.scientificCommission.notMember");

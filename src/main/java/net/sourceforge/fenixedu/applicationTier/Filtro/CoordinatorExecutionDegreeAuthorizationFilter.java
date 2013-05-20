@@ -6,7 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -21,11 +23,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
 
-    public void execute(Object[] parameters) throws Exception {
+    public static final CoordinatorExecutionDegreeAuthorizationFilter instance = new CoordinatorExecutionDegreeAuthorizationFilter();
+
+    public void execute(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
+            InfoCurricularYear infoCurricularYear, String executionCourseName) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, infoExecutionDegree)) || (id == null)
                 || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
@@ -39,18 +43,13 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+    private boolean hasPrivilege(IUserView id, InfoExecutionDegree infoExecutionDegree) {
         if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Integer executionDegreeID = null;
-            if (arguments[1] instanceof InfoExecutionDegree) {
-                executionDegreeID = ((InfoExecutionDegree) arguments[1]).getIdInternal();
-            } else if (arguments[0] instanceof Integer) {
-                executionDegreeID = (Integer) arguments[0];
-            }
+            Integer executionDegreeID = infoExecutionDegree.getIdInternal();
 
             if (executionDegreeID == null) {
                 return false;

@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -22,16 +21,9 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
     @Override
     abstract protected RoleType getRoleType();
 
-    @Override
-    public void execute(Object[] parameters) throws FilterException, Exception {
+    public void execute(Integer idInternal) throws FilterException, Exception {
         try {
             IUserView id = AccessControl.getUserView();
-            Integer idInternal;
-            if (parameters[0] instanceof Integer) {
-                idInternal = (Integer) parameters[0];
-            } else {
-                idInternal = ((InfoObject) parameters[0]).getIdInternal();
-            }
 
             /*
              * note: if it is neither an Integer nor an InfoObject representing

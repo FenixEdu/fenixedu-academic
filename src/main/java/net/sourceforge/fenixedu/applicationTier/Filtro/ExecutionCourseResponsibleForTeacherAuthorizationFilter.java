@@ -7,21 +7,21 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
  * 
  */
 public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseResponsibleForTeacherAuthorizationFilter instance = new ExecutionCourseResponsibleForTeacherAuthorizationFilter();
 
     public ExecutionCourseResponsibleForTeacherAuthorizationFilter() {
 
@@ -32,14 +32,13 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
+            throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = parameters;
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !isResponsibleForExecutionCourse(id, arguments)) {
+                    || !isResponsibleForExecutionCourse(id, executionCourseOID)) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
@@ -52,21 +51,14 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
      * @param argumentos
      * @return
      */
-    private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos) {
-
-        InfoExecutionCourse infoExecutionCourse = null;
-        ExecutionCourse executionCourse = null;
+    private boolean isResponsibleForExecutionCourse(IUserView id, Integer executionCourseOID) {
         Professorship responsibleFor = null;
-        if (argumentos == null) {
+        if (executionCourseOID == null) {
             return false;
         }
         try {
-            if (argumentos[0] instanceof InfoExecutionCourse) {
-                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-            } else {
-                executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID((Integer) argumentos[0]);
-            }
+            ExecutionCourse executionCourse =
+                    executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             responsibleFor = teacher.isResponsibleFor(executionCourse);

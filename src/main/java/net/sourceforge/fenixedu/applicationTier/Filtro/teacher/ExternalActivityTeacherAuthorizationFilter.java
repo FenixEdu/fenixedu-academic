@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  */
 public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
+    public static final ExternalActivityTeacherAuthorizationFilter instance = new ExternalActivityTeacherAuthorizationFilter();
+
     @Override
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         final Person person = id.getPerson();

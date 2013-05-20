@@ -10,11 +10,13 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class SeminariesCoordinatorFilter extends Filtro {
+public class SeminariesCoordinatorFilter {
 
-    public void execute(Object[] parameters) throws Exception {
+    public static final SeminariesCoordinatorFilter instance = new SeminariesCoordinatorFilter();
+
+    public void execute(Integer executionDegreeCode, Integer studentCurricularPlanID) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Integer SCPIDINternal = (Integer) parameters[1];
+        Integer SCPIDINternal = (Integer)  studentCurricularPlanID;
 
         boolean seminaryCandidate = false;
         if (SCPIDINternal != null) {

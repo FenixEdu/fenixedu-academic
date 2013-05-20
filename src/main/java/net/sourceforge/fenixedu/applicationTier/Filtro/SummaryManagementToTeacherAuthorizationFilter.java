@@ -5,18 +5,18 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
  */
 public class SummaryManagementToTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final SummaryManagementToTeacherAuthorizationFilter instance = new SummaryManagementToTeacherAuthorizationFilter();
 
     public SummaryManagementToTeacherAuthorizationFilter() {
     }
@@ -26,15 +26,10 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(ExecutionCourse executionCourse, Summary summary, Professorship professorshipLogged) throws Exception {
 
         try {
             IUserView userViewLogged = AccessControl.getUserView();
-
-            Object[] arguments = parameters;
-            Professorship professorshipLogged = getProfessorshipLogged(arguments);
-            Summary summary = getSummary(arguments);
 
             boolean executionCourseResponsibleLogged = professorshipLogged.isResponsibleFor();
 
@@ -55,21 +50,4 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
         }
     }
 
-    private Professorship getProfessorshipLogged(Object[] arguments) {
-        if (arguments[0] instanceof SummariesManagementBean) {
-            return ((SummariesManagementBean) arguments[0]).getProfessorshipLogged();
-        } else if (arguments[2] instanceof Professorship) {
-            return ((Professorship) arguments[2]);
-        }
-        return null;
-    }
-
-    private Summary getSummary(Object[] arguments) {
-        if (arguments[0] instanceof SummariesManagementBean) {
-            return ((SummariesManagementBean) arguments[0]).getSummary();
-        } else if (arguments[1] instanceof Summary) {
-            return (Summary) arguments[1];
-        }
-        return null;
-    }
 }

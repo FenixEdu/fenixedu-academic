@@ -19,14 +19,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro {
 
+    public static final ReadExecutionDegreeByCandidateIDAuthorizationFilter instance = new ReadExecutionDegreeByCandidateIDAuthorizationFilter();
+
     public ReadExecutionDegreeByCandidateIDAuthorizationFilter() {
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer candidateID) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, candidateID)) || (id == null)
                 || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
@@ -48,14 +49,13 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+    private boolean hasPrivilege(IUserView id, Integer candidateID) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
             // Read The ExecutionDegree
-            Integer candidateID = (Integer) arguments[0];
 
             final Person person = id.getPerson();
 

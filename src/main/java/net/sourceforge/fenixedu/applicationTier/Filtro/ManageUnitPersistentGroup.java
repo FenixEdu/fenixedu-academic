@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ManageUnitPersistentGroup extends Filtro {
 
+    public static final ManageUnitPersistentGroup instance = new ManageUnitPersistentGroup();
+
     public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();

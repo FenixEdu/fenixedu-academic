@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -23,15 +21,16 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class StudentListByDegreeAuthorizationFilter extends Filtro {
 
+    public static final StudentListByDegreeAuthorizationFilter instance = new StudentListByDegreeAuthorizationFilter();
+
     public StudentListByDegreeAuthorizationFilter() {
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer degreeCurricularPlanID, DegreeType degreeType) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
-                || (id.getRoleTypes() == null)) {
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, degreeCurricularPlanID, degreeType))
+                || (id == null) || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -52,11 +51,10 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        Integer degreeCurricularPlanID = (Integer) arguments[0];
-        DegreeType degreeType = (DegreeType) arguments[1];
+    private boolean hasPrivilege(IUserView id, Integer degreeCurricularPlanID, DegreeType degreeType) {
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan =
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getDegreeType().equals(degreeType))) {
             return false;

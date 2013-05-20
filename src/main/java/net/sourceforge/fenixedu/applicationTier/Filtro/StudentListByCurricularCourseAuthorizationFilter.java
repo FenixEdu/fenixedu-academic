@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
+    public static final StudentListByCurricularCourseAuthorizationFilter instance = new StudentListByCurricularCourseAuthorizationFilter();
+
     /**
      * 
      */
@@ -28,10 +30,10 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
         super();
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(IUserView userView, Integer curricularCourseID, String executionYear) throws Exception {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, parameters)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, curricularCourseID)) || (id == null)
                 || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
@@ -53,8 +55,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        Integer curricularCourseID = (Integer) arguments[1];
+    private boolean hasPrivilege(IUserView id, Integer curricularCourseID) {
 
         CurricularCourse curricularCourse = null;
 

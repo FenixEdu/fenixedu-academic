@@ -7,24 +7,22 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter instance = new ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(SummariesManagementBean bean) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = parameters;
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !lecturesExecutionCourse(id, arguments)) {
+                    || !lecturesExecutionCourse(id, bean)) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
@@ -32,9 +30,9 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
         }
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
-        final ExecutionCourse executionCourse = ((SummariesManagementBean) arguments[0]).getExecutionCourse();
-        final Person person = ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getPerson();
+    private boolean lecturesExecutionCourse(IUserView id, SummariesManagementBean bean) {
+        final ExecutionCourse executionCourse = bean.getExecutionCourse();
+        final Person person = bean.getProfessorshipLogged().getPerson();
         return person.getProfessorshipByExecutionCourse(executionCourse) != null;
     }
 }

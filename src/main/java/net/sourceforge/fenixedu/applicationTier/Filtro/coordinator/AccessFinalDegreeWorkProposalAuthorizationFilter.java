@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
+    public static final AccessFinalDegreeWorkProposalAuthorizationFilter instance = new AccessFinalDegreeWorkProposalAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;

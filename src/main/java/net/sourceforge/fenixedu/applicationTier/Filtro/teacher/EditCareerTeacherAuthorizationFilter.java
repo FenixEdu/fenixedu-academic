@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
  */
 public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
 
+    public static final EditCareerTeacherAuthorizationFilter instance = new EditCareerTeacherAuthorizationFilter();
+
     @Override
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
         final Person person = id.getPerson();

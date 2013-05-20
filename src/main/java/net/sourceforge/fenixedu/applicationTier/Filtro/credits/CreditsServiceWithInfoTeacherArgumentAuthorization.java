@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
  * @author jpvl
  */
 public class CreditsServiceWithInfoTeacherArgumentAuthorization extends AbstractTeacherDepartmentAuthorization {
+
+    public static final CreditsServiceWithInfoTeacherArgumentAuthorization instance = new CreditsServiceWithInfoTeacherArgumentAuthorization();
     public final static CreditsServiceWithInfoTeacherArgumentAuthorization filter =
             new CreditsServiceWithInfoTeacherArgumentAuthorization();
 

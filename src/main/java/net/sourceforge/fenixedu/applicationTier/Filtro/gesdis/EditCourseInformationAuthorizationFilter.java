@@ -25,18 +25,19 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    public static final EditCourseInformationAuthorizationFilter instance = new EditCourseInformationAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws Exception {
         IUserView id = AccessControl.getUserView();
 
         try {
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || (!isResponsibleFor(id, (InfoCourseReport) parameters[1]))) {
+                    || (id.getRoleTypes() == null) || (!isResponsibleFor(id, infoCourseReport))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {

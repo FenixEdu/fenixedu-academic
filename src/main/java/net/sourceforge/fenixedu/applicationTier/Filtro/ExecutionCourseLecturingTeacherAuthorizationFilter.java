@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
  * 
  */
 public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseLecturingTeacherAuthorizationFilter instance = new ExecutionCourseLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseLecturingTeacherAuthorizationFilter() {
 
@@ -33,13 +33,12 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+            throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = parameters;
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, arguments)) {
+            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, executionCourseCode)) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
@@ -47,8 +46,8 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         }
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
-        final ExecutionCourse executionCourse = getExecutionCourse(arguments[0]);
+    private boolean lecturesExecutionCourse(IUserView id, Integer executionCourseCode) {
+        final ExecutionCourse executionCourse = getExecutionCourse(executionCourseCode);
         if (executionCourse == null) {
             return false;
         }

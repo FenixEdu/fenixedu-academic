@@ -10,6 +10,8 @@ import java.util.Calendar;
  * @author jpvl
  */
 public class ReadStudentTestForCorrectionFilter extends ReadStudentTestBaseFilter {
+
+    public static final ReadStudentTestForCorrectionFilter instance = new ReadStudentTestForCorrectionFilter();
     public ReadStudentTestForCorrectionFilter() {
     }
 

@@ -16,11 +16,13 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class SubmitFinalWorkProposalAuthorization extends Filtro {
+public class SubmitFinalWorkProposalAuthorization {
 
-    public void execute(Object[] parameters) throws Exception {
+    public static final SubmitFinalWorkProposalAuthorization instance = new SubmitFinalWorkProposalAuthorization();
+
+    public void execute(InfoProposalEditor infoProposal) throws Exception {
         final IUserView userView = AccessControl.getUserView();
-        final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) parameters[0];
+        final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) infoProposal;
         if (infoProposalEditor.getIdInternal() != null) {
             final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getIdInternal());
             if (!authorized(userView.getPerson(), proposal)) {

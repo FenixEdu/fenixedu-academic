@@ -6,10 +6,11 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
-public class DeleteFileContentFilter extends Filtro {
+public class DeleteFileContentFilter {
 
-    public void execute(Object[] parameters) throws Exception {
-        FileContent fileContent = getFileContent(parameters);
+    public static final DeleteFileContentFilter instance = new DeleteFileContentFilter();
+
+    public void execute(FileContent fileContent) throws Exception {
         Site site = fileContent.getSite();
 
         if (site != null) {
@@ -26,7 +27,4 @@ public class DeleteFileContentFilter extends Filtro {
 
     }
 
-    protected FileContent getFileContent(Object[] parameters) {
-        return (FileContent) parameters[0];
-    }
 }

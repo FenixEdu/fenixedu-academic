@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
  * @author jpvl
  */
 public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartmentAuthorization {
+
+    public static final ReadDeleteSupportLessonAuthorization instance = new ReadDeleteSupportLessonAuthorization();
     public final static ReadDeleteSupportLessonAuthorization filter = new ReadDeleteSupportLessonAuthorization();
 
     public static ReadDeleteSupportLessonAuthorization getInstance() {

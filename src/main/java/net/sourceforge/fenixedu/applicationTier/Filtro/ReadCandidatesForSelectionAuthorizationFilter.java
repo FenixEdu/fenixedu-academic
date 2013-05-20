@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.SituationName;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -20,16 +21,17 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
+    public static final ReadCandidatesForSelectionAuthorizationFilter instance = new ReadCandidatesForSelectionAuthorizationFilter();
+
     public ReadCandidatesForSelectionAuthorizationFilter() {
 
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer executionDegreeID, List<SituationName> situationNames) throws Exception {
 
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionDegreeID)) || (id == null)
                 || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
@@ -51,8 +53,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        Integer executionDegreeID = (Integer) arguments[0];
+    private boolean hasPrivilege(IUserView id, Integer executionDegreeID) {
 
         ExecutionDegree executionDegree = null;
 

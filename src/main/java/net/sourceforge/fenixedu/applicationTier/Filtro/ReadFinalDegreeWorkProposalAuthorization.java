@@ -14,11 +14,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  * @author Luis Cruz
  * 
  */
-public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
+public class ReadFinalDegreeWorkProposalAuthorization {
 
-    public void execute(Object[] parameters) throws Exception {
+    public static final ReadFinalDegreeWorkProposalAuthorization instance = new ReadFinalDegreeWorkProposalAuthorization();
+
+    public void execute(Integer DegreeWorkProposalOID) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Integer finalDegreeWorkProposalOID = (Integer) parameters[0];
+        Integer finalDegreeWorkProposalOID = (Integer) DegreeWorkProposalOID;
         if (finalDegreeWorkProposalOID != null) {
             Proposal proposal = RootDomainObject.getInstance().readProposalByOID(finalDegreeWorkProposalOID);
             if (proposal != null) {

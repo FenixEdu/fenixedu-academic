@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -22,20 +21,22 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  *         Created at 26/Ago/2003, 13:35:57
  * 
  */
-public class CandidacyAccessFilter extends Filtro {
+public class CandidacyAccessFilter {
+
+    public static final CandidacyAccessFilter instance = new CandidacyAccessFilter();
     public CandidacyAccessFilter() {
     }
 
-    public void execute(Object[] parameters) throws FilterException, Exception {
+    public void execute(Integer candidacyID) throws FilterException, Exception {
         IUserView id = AccessControl.getUserView();
 
-        if ((!this.checkCandidacyOwnership(id, parameters)) && (!this.checkCoordinatorRole(id, parameters))) {
+        if ((!this.checkCandidacyOwnership(id, candidacyID)) && (!this.checkCoordinatorRole(id, candidacyID))) {
             throw new NotAuthorizedException();
         }
 
     }
 
-    boolean checkCoordinatorRole(IUserView id, Object[] arguments) throws Exception {
+    boolean checkCoordinatorRole(IUserView id, Integer candidacyID) throws Exception {
         boolean result = true;
         // Collection roles = id.getRoles();
         // Iterator iter = roles.iterator();
@@ -50,9 +51,8 @@ public class CandidacyAccessFilter extends Filtro {
         return result;
     }
 
-    boolean checkCandidacyOwnership(IUserView id, Object[] arguments) throws Exception {
+    boolean checkCandidacyOwnership(IUserView id, Integer candidacyID) throws Exception {
         boolean result = true;
-        Integer candidacyID = (Integer) arguments[0];
 
         Registration registration = Registration.readByUsername(id.getUtilizador());
         if (registration != null) {

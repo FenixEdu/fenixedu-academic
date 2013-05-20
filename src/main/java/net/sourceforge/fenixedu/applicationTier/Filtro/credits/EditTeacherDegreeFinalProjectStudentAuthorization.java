@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
  * @author jpvl
  */
 public class EditTeacherDegreeFinalProjectStudentAuthorization extends AbstractTeacherDepartmentAuthorization {
+
+    public static final EditTeacherDegreeFinalProjectStudentAuthorization instance = new EditTeacherDegreeFinalProjectStudentAuthorization();
     public final static EditTeacherDegreeFinalProjectStudentAuthorization filter =
             new EditTeacherDegreeFinalProjectStudentAuthorization();
 

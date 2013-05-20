@@ -26,16 +26,17 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    public static final ReadTeacherInformationCoordinatorAuthorizationFilter instance = new ReadTeacherInformationCoordinatorAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws FilterException, Exception {
+    public void execute(String user, String argExecutionYear) throws FilterException, Exception {
         IUserView id = AccessControl.getUserView();
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                || (id.getRoleTypes() == null) || !verifyCondition(id, (String) parameters[0])) {
+                || (id.getRoleTypes() == null) || !verifyCondition(id, user)) {
             throw new NotAuthorizedFilterException();
         }
     }

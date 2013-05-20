@@ -16,6 +16,8 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
+    public static final ExecutionCourseCoordinatorAuthorizationFilter instance = new ExecutionCourseCoordinatorAuthorizationFilter();
+
     @Override
     protected ExecutionYear getSpecificExecutionYear(Object[] parameters) {
         Object argument = parameters[0];

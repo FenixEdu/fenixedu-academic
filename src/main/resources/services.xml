@@ -1425,15 +1425,6 @@
     </service>
 
     <service>
-        <name>FindTeachersServiceForDepartmentOffice</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.FindTeachersService</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="EmployeeBelongsToTeacherDepartment"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>GenetareStudentTestForSimulation</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.GenetareStudentTestForSimulation</implementationClass>
         <isTransactional>true</isTransactional>

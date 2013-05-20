@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -31,14 +30,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  * @author Sergio Montelobo
  * 
  */
-public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter extends Filtro {
+public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter {
 
-    public void execute(Object[] parameters) throws Exception {
+    public static final ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter instance = new ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter();
+
+    public void execute(ExecutionDegree executionDegree, Boolean basic, String executionYearString) throws Exception {
         final IUserView userView = AccessControl.getUserView();
-        if (parameters == null || parameters.length < 1 || parameters[0] == null) {
+        if (executionDegree == null) {
             throw new NotAuthorizedFilterException();
         }
-        final ExecutionDegree executionDegree = (ExecutionDegree) parameters[0];
 
         if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
             throw new NotAuthorizedFilterException();

@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
  * @author jpvl
  */
 public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends AbstractTeacherDepartmentAuthorization {
+
+    public static final CreditsServiceWithTeacherIdInSecondArgumentAuthorization instance = new CreditsServiceWithTeacherIdInSecondArgumentAuthorization();
     /*
      * (non-Javadoc)
      * 

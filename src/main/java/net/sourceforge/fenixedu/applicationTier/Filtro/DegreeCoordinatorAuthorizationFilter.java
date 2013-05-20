@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
  * 
  */
 public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final DegreeCoordinatorAuthorizationFilter instance = new DegreeCoordinatorAuthorizationFilter();
 
     public DegreeCoordinatorAuthorizationFilter() {
     }
@@ -30,14 +30,11 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         return RoleType.COORDINATOR;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer executionDegreeId) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] argumentos = parameters;
-
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !isCoordinatorOfExecutionDegree(id, argumentos)) {
+                    || !isCoordinatorOfExecutionDegree(id, executionDegreeId)) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
@@ -45,17 +42,14 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         }
     }
 
-    private boolean isCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
+    private boolean isCoordinatorOfExecutionDegree(IUserView id, Integer executionDegreeId) {
         boolean result = false;
-        if (argumentos == null) {
-            return result;
-        }
-        if (argumentos[0] == null) {
+        if (executionDegreeId == null) {
             return result;
         }
         try {
             final Person person = id.getPerson();
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) argumentos[0]);
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
             if (executionDegree == null) {
                 return false;
             }

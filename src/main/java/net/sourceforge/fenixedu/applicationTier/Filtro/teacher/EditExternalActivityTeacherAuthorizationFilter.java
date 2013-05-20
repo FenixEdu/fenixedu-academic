@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  */
 public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
 
+    public static final EditExternalActivityTeacherAuthorizationFilter instance = new EditExternalActivityTeacherAuthorizationFilter();
+
     @Override
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
         InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoOject;

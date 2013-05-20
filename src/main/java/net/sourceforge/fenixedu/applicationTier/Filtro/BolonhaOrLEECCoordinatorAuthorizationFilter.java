@@ -13,20 +13,19 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    public static final BolonhaOrLEECCoordinatorAuthorizationFilter instance = new BolonhaOrLEECCoordinatorAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer executionDegreeID) throws Exception {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
             throw new NotAuthorizedFilterException();
         }
-
-        Integer executionDegreeID = (Integer) parameters[0];
 
         if (!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID))) {
             throw new NotAuthorizedFilterException();

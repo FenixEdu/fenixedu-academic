@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class DepartmentInsertProfessorshipAuthorization extends AbstractTeacherDepartmentAuthorization {
 
+    public static final DepartmentInsertProfessorshipAuthorization instance = new DepartmentInsertProfessorshipAuthorization();
+
     @Override
     protected Integer getTeacherId(Object[] arguments) {
         Teacher teacher = Teacher.readByIstId((String) arguments[1]);

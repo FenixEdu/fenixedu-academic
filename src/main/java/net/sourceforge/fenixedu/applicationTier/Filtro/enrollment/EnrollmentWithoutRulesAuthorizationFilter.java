@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
+    public static final EnrollmentWithoutRulesAuthorizationFilter instance = new EnrollmentWithoutRulesAuthorizationFilter();
+
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
     private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;

@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class ReadQualificationAuthorizationFilter extends Filtro {
+public class ReadQualificationAuthorizationFilter {
+
+    public static final ReadQualificationAuthorizationFilter instance = new ReadQualificationAuthorizationFilter();
 
     public ReadQualificationAuthorizationFilter() {
     }
@@ -21,17 +22,15 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         return RoleType.ALUMNI;
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer objectId) throws Exception {
         IUserView id = AccessControl.getUserView();
         try {
-            boolean isNew = ((parameters[0] == null) || ((Integer) parameters[0]).equals(Integer.valueOf(0)));
+            boolean isNew = (objectId == null) || objectId.equals(Integer.valueOf(0));
 
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {
                 throw new NotAuthorizedException();
             }
-
-            Integer objectId = (Integer) parameters[0];
 
             // Verify if:
             // 1: The user is a Grant Owner Manager and the qualification

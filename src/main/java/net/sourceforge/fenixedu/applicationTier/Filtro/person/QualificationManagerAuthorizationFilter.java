@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -13,7 +12,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class QualificationManagerAuthorizationFilter extends Filtro {
+public class QualificationManagerAuthorizationFilter {
+
+    public static final QualificationManagerAuthorizationFilter instance = new QualificationManagerAuthorizationFilter();
 
     public QualificationManagerAuthorizationFilter() {
     }
@@ -22,7 +23,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         return RoleType.TEACHER;
     }
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer qualificationId, InfoQualification infoQualification) throws Exception {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -31,10 +32,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
                 throw new NotAuthorizedException();
             }
 
-            InfoQualification infoQualification = null;
-
-            // New Qualification, second argument is a qualification
-            infoQualification = (InfoQualification) parameters[1];
             if (infoQualification == null) {
                 throw new NotAuthorizedException();
             }

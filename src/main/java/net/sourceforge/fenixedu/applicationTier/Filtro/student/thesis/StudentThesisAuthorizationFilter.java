@@ -1,22 +1,22 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class StudentThesisAuthorizationFilter extends Filtro {
+public class StudentThesisAuthorizationFilter {
 
-    public void execute(Object[] parameters) throws Exception {
-        Student student = getStudent(parameters);
+    public static final StudentThesisAuthorizationFilter instance = new StudentThesisAuthorizationFilter();
+
+    public void execute(Thesis thesis) throws Exception {
+        Student student = getStudent();
 
         if (student == null) {
             abort();
         }
 
-        Thesis thesis = (Thesis) parameters[0];
         if (thesis.getStudent() != student) {
             abort();
         }
@@ -26,7 +26,7 @@ public class StudentThesisAuthorizationFilter extends Filtro {
         throw new NotAuthorizedFilterException();
     }
 
-    private Student getStudent(Object[] parameters) {
+    private Student getStudent() {
         IUserView userView = AccessControl.getUserView();
         return userView.getPerson().getStudent();
     }

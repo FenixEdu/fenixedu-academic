@@ -9,26 +9,21 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final DeleteProfessorshipAuthorizationFilter instance = new DeleteProfessorshipAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer executionCourseID, Integer selectedTeacherID) throws Exception {
         IUserView id = AccessControl.getUserView();
-        Object[] arguments = parameters;
 
         try {
-
             final Person loggedPerson = id.getPerson();
-            final Integer executionCourseID = (Integer) arguments[0];
-            final Integer selectedTeacherID = (Integer) arguments[1];
 
             Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(selectedTeacherID);
             ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);

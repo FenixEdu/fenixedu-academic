@@ -30,18 +30,10 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
         return RoleType.DEGREE_ADMINISTRATIVE_OFFICE;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(Object[] parameters) throws FilterException, Exception {
+    public void execute(Integer notNeedToEnrollInCurricularCourseID) throws FilterException, Exception {
         IUserView userView = AccessControl.getUserView();
         if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-            super.execute(parameters);
+            super.execute();
         }
 
     }
