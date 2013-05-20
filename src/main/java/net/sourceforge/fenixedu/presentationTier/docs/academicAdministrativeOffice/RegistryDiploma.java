@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
@@ -40,7 +41,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
         addParameter("institution", RootDomainObject.getInstance().getInstitutionUnit().getName());
         addParameter("university", university.getName());
-        addParameter("principal", university.getInstitutionsUniversityPrincipal());
+        addParameter("principal", university.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL));
 
         addParameter("studentName", person.getValidatedName());
         addParameter("idHolder", person.getGender() == Gender.MALE ? "portador" : "portadora");

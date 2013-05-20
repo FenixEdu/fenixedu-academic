@@ -102,7 +102,15 @@ public class UniversityUnit extends UniversityUnit_Base {
         return parentUniversityUnits.iterator().next();
     }
 
+    /**
+     * @deprecated Use {@link #getInstitutionsUniversityResponsible(FunctionType)} instead.
+     */
+    @Deprecated
     final public Person getInstitutionsUniversityPrincipal() {
+        return getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+    }
+
+    final public Person getInstitutionsUniversityResponsible(FunctionType functionType) {
         final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
         if (!getChildParties(Unit.class).contains(institutionUnit)) {
             throw new DomainException("UniversityUnit.not.parent.of.institution.unit");
@@ -115,7 +123,7 @@ public class UniversityUnit extends UniversityUnit_Base {
                 continue;
             }
 
-            if (((Function) accountability.getAccountabilityType()).getFunctionType() == FunctionType.PRINCIPAL) {
+            if (((Function) accountability.getAccountabilityType()).getFunctionType() == functionType) {
                 return ((PersonFunction) accountability).getPerson();
             }
         }

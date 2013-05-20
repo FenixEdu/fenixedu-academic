@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -53,7 +54,8 @@ public class Diploma extends AdministrativeOfficeDocument {
     @Override
     protected void addIntroParameters() {
         super.addIntroParameters();
-        Person principal = UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityPrincipal();
+        Person principal =
+                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
         addParameter("universityPrincipal", principal);
         addParameter("universityPrincipalName", principal.getValidatedName());
     }

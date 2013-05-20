@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -24,8 +25,8 @@ abstract public class DiplomaReport extends FenixReport {
     protected void fillReport() {
         final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
         addParameter("universityName", institutionsUniversityUnit.getName());
-        addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
-                .getValidatedName());
+        addParameter("universityPrincipalName",
+                institutionsUniversityUnit.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL).getValidatedName());
 
         addParameter("name", StringFormatter.prettyPrint(this.studentDiplomaInformation.getName()));
         addParameter("nameOfFather", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfFather()));

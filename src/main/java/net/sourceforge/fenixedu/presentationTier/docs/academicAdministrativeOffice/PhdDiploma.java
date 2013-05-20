@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -64,7 +65,8 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     private void addInstitutionParameters() {
         final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
         addParameter("universityName", institutionsUniversityUnit.getName());
-        addParameter("universityPrincipal", institutionsUniversityUnit.getInstitutionsUniversityPrincipal());
+        addParameter("universityPrincipal",
+                institutionsUniversityUnit.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL));
     }
 
 }

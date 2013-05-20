@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
@@ -96,7 +97,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     protected void fillGroup7() {
         final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
         addParameter("day", new YearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-        addParameter("universityPrincipal", institutionsUniversityUnit.getInstitutionsUniversityPrincipal());
+        addParameter("universityPrincipal",
+                institutionsUniversityUnit.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL));
     }
 
     protected void fillGroup6() {
