@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -24,14 +22,6 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
     public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         Object[] argumentos = parameters;
@@ -68,7 +58,8 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
             // Read The ExecutionDegree
             Integer candidateID = (Integer) arguments[0];
 
-            MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate =
+                    RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

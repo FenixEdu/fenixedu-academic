@@ -6,12 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class SpaceAdministratorAuthorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         if (userView != null) {

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class EditPrizeFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();

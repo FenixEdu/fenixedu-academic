@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView requester = AccessControl.getUserView();
         if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {

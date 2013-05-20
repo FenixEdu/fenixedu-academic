@@ -21,7 +21,6 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         return RoleType.ALUMNI;
     }
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         try {

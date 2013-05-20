@@ -18,7 +18,6 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class EmployeeBelongsToTeacherDepartment extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws FilterException, Exception {
 
         final IUserView userView = AccessControl.getUserView();

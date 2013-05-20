@@ -20,14 +20,6 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
      */
     abstract protected RoleType getRoleType();
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView userView = AccessControl.getUserView();
         if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType()))) || (userView == null)

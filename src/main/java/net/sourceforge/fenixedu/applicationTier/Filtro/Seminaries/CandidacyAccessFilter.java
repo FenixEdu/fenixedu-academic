@@ -26,14 +26,6 @@ public class CandidacyAccessFilter extends Filtro {
     public CandidacyAccessFilter() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
     public void execute(Object[] parameters) throws FilterException, Exception {
         IUserView id = AccessControl.getUserView();
 

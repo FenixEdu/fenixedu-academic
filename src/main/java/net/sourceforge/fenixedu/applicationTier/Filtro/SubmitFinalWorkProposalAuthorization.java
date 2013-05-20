@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class SubmitFinalWorkProposalAuthorization extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         final IUserView userView = AccessControl.getUserView();
         final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) parameters[0];

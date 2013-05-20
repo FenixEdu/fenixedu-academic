@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -23,7 +21,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         Object[] argumentos = parameters;
@@ -53,7 +50,8 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
             Integer candidateID = (Integer) arguments[1];
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate =
+                    RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

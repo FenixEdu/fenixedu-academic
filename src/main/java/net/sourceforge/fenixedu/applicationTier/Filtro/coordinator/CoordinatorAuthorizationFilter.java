@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public abstract class CoordinatorAuthorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         Person person = AccessControl.getUserView().getPerson();
 

@@ -22,7 +22,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         return RoleType.TEACHER;
     }
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
 

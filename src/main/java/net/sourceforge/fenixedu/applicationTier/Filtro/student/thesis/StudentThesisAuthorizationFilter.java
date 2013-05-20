@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class StudentThesisAuthorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         Student student = getStudent(parameters);
 

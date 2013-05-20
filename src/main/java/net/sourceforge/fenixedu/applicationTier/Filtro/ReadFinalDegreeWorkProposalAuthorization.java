@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Luis Cruz
@@ -18,7 +16,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         Integer finalDegreeWorkProposalOID = (Integer) parameters[0];

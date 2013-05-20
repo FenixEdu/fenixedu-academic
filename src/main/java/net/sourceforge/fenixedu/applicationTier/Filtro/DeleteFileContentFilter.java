@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class DeleteFileContentFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         FileContent fileContent = getFileContent(parameters);
         Site site = fileContent.getSite();

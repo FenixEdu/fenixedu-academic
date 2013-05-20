@@ -26,14 +26,6 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
     public StudentListByDegreeAuthorizationFilter() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         Object[] argumentos = parameters;

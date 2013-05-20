@@ -32,7 +32,6 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         Person person = AccessControl.getUserView().getPerson();
 

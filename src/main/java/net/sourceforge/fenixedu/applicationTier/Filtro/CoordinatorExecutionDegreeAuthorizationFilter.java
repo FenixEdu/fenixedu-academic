@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * 
@@ -23,7 +21,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         Object[] argumentos = parameters;

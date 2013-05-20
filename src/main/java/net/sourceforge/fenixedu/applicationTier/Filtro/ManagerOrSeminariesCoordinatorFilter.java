@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         Integer SCPIDINternal = (Integer) parameters[1];

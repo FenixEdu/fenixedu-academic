@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class SiteManagerAuthorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         Site site = getSite(parameters);
 

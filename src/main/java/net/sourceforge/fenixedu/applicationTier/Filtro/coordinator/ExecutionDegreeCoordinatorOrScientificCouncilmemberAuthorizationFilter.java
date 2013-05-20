@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         final IUserView userView = AccessControl.getUserView();
         if (parameters == null || parameters.length < 1 || parameters[0] == null) {

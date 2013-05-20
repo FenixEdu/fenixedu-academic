@@ -6,12 +6,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 public class EditWrittenEvaluationAuthorization extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         final IUserView userView = AccessControl.getUserView();
 

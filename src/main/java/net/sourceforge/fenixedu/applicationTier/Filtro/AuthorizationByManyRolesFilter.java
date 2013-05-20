@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public abstract class AuthorizationByManyRolesFilter extends Filtro {
 
-    @Override
     public void execute(Object[] parameters) throws Exception {
         IUserView id = AccessControl.getUserView();
         String messageException = hasPrevilege(id, parameters);
