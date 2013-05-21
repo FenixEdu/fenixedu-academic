@@ -607,7 +607,7 @@ public class Teacher extends Teacher_Base {
                 }
             }
         }
-        return result;
+        return result.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public double getManagementFunctionsCredits(ExecutionSemester executionSemester) {

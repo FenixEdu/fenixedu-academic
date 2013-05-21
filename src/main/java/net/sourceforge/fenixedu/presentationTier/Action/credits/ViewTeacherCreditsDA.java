@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits;
 
-import java.io.OutputStream;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
-import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument;
 import net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean;
 import net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -59,21 +56,22 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
                     request.setAttribute("teacherBean", teacherBean);
                     return mapping.findForward("showPastTeacherCredits");
                 } else {
-                    if (annualTeachingCredits.isClosed()) {
-                        AnnualTeachingCreditsDocument lastTeacherCreditsDocument =
-                                annualTeachingCredits
-                                        .getLastTeacherCreditsDocument(roleType == RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE ? false : true);
-                        if (lastTeacherCreditsDocument != null) {
-                            response.setContentType("application/pdf");
-                            response.setHeader("Content-disposition",
-                                    "attachment; filename=" + lastTeacherCreditsDocument.getFilename());
-                            final OutputStream outputStream = response.getOutputStream();
-                            outputStream.write(lastTeacherCreditsDocument.getContents());
-                            outputStream.close();
-                            return null;
-                        }
-                    }
+//                    if (annualTeachingCredits.isClosed()) {
+//                        AnnualTeachingCreditsDocument lastTeacherCreditsDocument =
+//                                annualTeachingCredits
+//                                        .getLastTeacherCreditsDocument(roleType == RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE ? false : true);
+//                        if (lastTeacherCreditsDocument != null) {
+//                            response.setContentType("application/pdf");
+//                            response.setHeader("Content-disposition",
+//                                    "attachment; filename=" + lastTeacherCreditsDocument.getFilename());
+//                            final OutputStream outputStream = response.getOutputStream();
+//                            outputStream.write(lastTeacherCreditsDocument.getContents());
+//                            outputStream.close();
+//                            return null;
+//                        }
+//                    }
                     annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, roleType);
+                    annualTeachingCreditsBean.calculateCredits();
                     break;
                 }
             }

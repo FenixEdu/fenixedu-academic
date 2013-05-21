@@ -76,8 +76,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
         for (final Teacher teacher : getRootDomainObject().getTeachers()) {
             PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
             if (personProfessionalData != null) {
-                GiafProfessionalData giafProfessionalData =
-                        personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
+                GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();
                 if (personProfessionalData != null && giafProfessionalData != null) {
                     PersonContractSituation personContractSituation =
                             personProfessionalData.getCurrentOrLastPersonContractSituationByCategoryType(CategoryType.TEACHER,

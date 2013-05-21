@@ -90,8 +90,15 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     }
 
     public Set<PersonContractSituation> getPersonContractSituationsByCategoryType(CategoryType categoryType) {
-        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
-        return giafProfessionalDataByCategoryType != null ? giafProfessionalDataByCategoryType.getValidPersonContractSituations() : new HashSet<PersonContractSituation>();
+        GiafProfessionalData giafProfessionalData = getGiafProfessionalData();
+        Set<PersonContractSituation> result = new HashSet<PersonContractSituation>();
+        for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
+            if (situation.getProfessionalCategory() != null
+                    && situation.getProfessionalCategory().getCategoryType().equals(categoryType)) {
+                result.add(situation);
+            }
+        }
+        return result;
     }
 
     public Set<PersonContractSituation> getValidPersonProfessionalExemptionByCategoryType(CategoryType categoryType,
@@ -113,21 +120,12 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     }
 
     public PersonContractSituation getLastPersonContractSituationByCategoryType(CategoryType categoryType) {
-        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
-        return getLastPersonContractSituationByCategoryType(giafProfessionalDataByCategoryType, null, null);
-    }
-
-    public PersonContractSituation getLastPersonContractSituationByCategoryType(GiafProfessionalData giafProfessionalData,
-            LocalDate beginDate, LocalDate endDate) {
-        Interval dateInterval = null;
-        if (beginDate != null && endDate != null) {
-            dateInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
-        }
+        GiafProfessionalData giafProfessionalData = getGiafProfessionalData();
         PersonContractSituation lastPersonContractSituation = null;
-
         if (giafProfessionalData != null) {
             for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
-                if ((dateInterval == null || situation.overlaps(dateInterval))
+                if (situation.getProfessionalCategory() != null
+                        && situation.getProfessionalCategory().getCategoryType().equals(categoryType)
                         && (lastPersonContractSituation == null || situation.isAfter(lastPersonContractSituation))) {
                     lastPersonContractSituation = situation;
                 }
@@ -139,10 +137,12 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     public PersonContractSituation getCurrentPersonContractSituationByCategoryType(CategoryType categoryType) {
         LocalDate today = new LocalDate();
         PersonContractSituation currentPersonContractSituation = null;
-        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
+        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalData();
         if (giafProfessionalDataByCategoryType != null) {
             for (final PersonContractSituation situation : giafProfessionalDataByCategoryType.getValidPersonContractSituations()) {
                 if (situation.isActive(today)
+                        && (situation.getProfessionalCategory() != null && situation.getProfessionalCategory().getCategoryType()
+                                .equals(categoryType))
                         && (currentPersonContractSituation == null || situation.isAfter(currentPersonContractSituation))) {
                     currentPersonContractSituation = situation;
                 }
@@ -186,10 +186,12 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
             Interval dateInterval) {
         PersonContractSituation dominantContractSituation = null;
         int dominantContractSituationDays = 0;
-        GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
-        if (giafProfessionalDataByCategoryType != null) {
-            for (final PersonContractSituation situation : giafProfessionalDataByCategoryType.getValidPersonContractSituations()) {
-                if (situation.overlaps(dateInterval)) {
+        GiafProfessionalData giafProfessionalData = getGiafProfessionalData();
+        if (giafProfessionalData != null) {
+            for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
+                if (situation.overlaps(dateInterval)
+                        && (situation.getProfessionalCategory() != null && situation.getProfessionalCategory().getCategoryType()
+                                .equals(categoryType))) {
                     int thisSituationDays = situation.getDaysInInterval(dateInterval);
                     if (dominantContractSituationDays < thisSituationDays
                             || (dominantContractSituationDays == thisSituationDays && (dominantContractSituation == null || situation
