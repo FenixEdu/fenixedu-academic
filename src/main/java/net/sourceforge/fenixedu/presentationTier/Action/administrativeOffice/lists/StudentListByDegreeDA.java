@@ -88,9 +88,12 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
         SearchStudentsByDegreeParametersBean bean = getRenderedObject("searchParametersBean");
         if (bean == null) {
+            Set<DegreeType> degreeTypesForOperation =
+                    AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
+                            AcademicOperationType.STUDENT_LISTINGS);
+            degreeTypesForOperation.remove(DegreeType.EMPTY);
             bean =
-                    new SearchStudentsByDegreeParametersBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(
-                            AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS),
+                    new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
                             AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
                                     AcademicOperationType.STUDENT_LISTINGS));
         }
