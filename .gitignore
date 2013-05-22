@@ -1,5 +1,6 @@
 target/
 .settings/
 jetty/
+deploy/
 configuration.properties
 
