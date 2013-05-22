@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -37,16 +37,16 @@ public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFil
     public void execute(ExecutionDegree executionDegree, Boolean basic, String executionYearString) throws Exception {
         final IUserView userView = AccessControl.getUserView();
         if (executionDegree == null) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
         if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
         if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, executionDegree)))
                 || (userView == null) || (userView.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
     }

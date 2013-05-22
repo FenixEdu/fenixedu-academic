@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
@@ -21,7 +21,7 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro {
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
                 || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException(messageException);
+            throw new NotAuthorizedException(messageException);
         }
     }
 

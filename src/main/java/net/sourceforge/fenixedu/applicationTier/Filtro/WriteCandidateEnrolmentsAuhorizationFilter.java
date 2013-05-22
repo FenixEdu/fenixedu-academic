@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -30,7 +30,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, selectedCurricularCoursesIDs, candidateID))
                 || (id == null) || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

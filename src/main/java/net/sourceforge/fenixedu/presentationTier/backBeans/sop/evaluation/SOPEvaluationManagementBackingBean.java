@@ -21,7 +21,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
@@ -1149,7 +1149,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);
@@ -1213,7 +1213,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             if (e instanceof DomainException) {

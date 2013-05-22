@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod;
@@ -203,7 +203,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
                     "error.Scheduleing.maximumNumberOfProposalsPerPerson"));
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
-        } catch (NotAuthorizedFilterException nafe) {
+        } catch (NotAuthorizedException nafe) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
                     "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));

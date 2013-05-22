@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -22,8 +22,8 @@ public class StudentThesisAuthorizationFilter {
         }
     }
 
-    private void abort() throws NotAuthorizedFilterException {
-        throw new NotAuthorizedFilterException();
+    private void abort() throws NotAuthorizedException {
+        throw new NotAuthorizedException();
     }
 
     private Student getStudent() {

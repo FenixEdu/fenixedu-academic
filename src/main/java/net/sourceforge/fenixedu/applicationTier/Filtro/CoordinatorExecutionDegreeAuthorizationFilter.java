@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -31,7 +31,7 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, infoExecutionDegree)) || (id == null)
                 || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

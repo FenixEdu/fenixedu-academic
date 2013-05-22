@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -203,9 +202,10 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration,
-                    distributedTest, new Boolean(true), getServlet().getServletContext().getRealPath("/") });
-        } catch (NotAuthorizedFilterException e) {
+                    (List<StudentTestQuestion>) ServiceManagerServiceFactory
+                            .executeService("ReadStudentTestToDo", new Object[] { registration, distributedTest,
+                                    new Boolean(true), getServlet().getServletContext().getRealPath("/") });
+        } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
         } catch (InvalidArgumentsServiceException e) {
@@ -341,11 +341,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList;
         try {
             studentTestQuestionList =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
-                    new Boolean(false), path });
-        } catch (NotAuthorizedFilterException e) {
-            request.setAttribute("cantDoTest", new Boolean(true));
-            return mapping.findForward("testError");
+                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration,
+                            testCode, new Boolean(false), path });
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -395,8 +392,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         try {
             infoSiteStudentTestFeedback = InsertStudentTestResponses.run(registration, studentCode, testCode, userResponse, path);
             infoStudentTestQuestionList =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
-                    new Boolean(false), path });
+                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration,
+                            testCode, new Boolean(false), path });
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -597,12 +594,12 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceManagerServiceFactory.executeService("ReadStudentTestForCorrection", new Object[] {
-                    registration, distributedTest, new Boolean(false), path });
+                    (List<StudentTestQuestion>) ServiceManagerServiceFactory.executeService("ReadStudentTestForCorrection",
+                            new Object[] { registration, distributedTest, new Boolean(false), path });
         } catch (InvalidArgumentsServiceException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             request.setAttribute("cantShowTestCorrection", new Boolean(true));
             return mapping.findForward("testError");
         } catch (FenixServiceException e) {

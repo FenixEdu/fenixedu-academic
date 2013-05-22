@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizeException.class,
                 key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
                 path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0", scope = "request"),
-        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException.class,
+        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
                 key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
                 path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0", scope = "request") })
 public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractReadProfessorshipsAction {

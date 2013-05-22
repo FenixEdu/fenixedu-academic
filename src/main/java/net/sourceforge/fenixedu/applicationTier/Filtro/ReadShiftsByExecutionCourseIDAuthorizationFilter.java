@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -37,7 +37,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         if ((((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionCourseID)) || (id == null) || (id
                 .getRoleTypes() == null))) && (!lecturesExecutionCourse(id, executionCourseID))) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

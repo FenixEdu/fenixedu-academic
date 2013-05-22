@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
@@ -13,7 +13,7 @@ public class AcademicCurriculumsViewAuthorization {
     final public void execute(Integer degreeCurricularPlanID, AcademicInterval academicInterval) throws FilterException,
             Exception {
         if (!AcademicPredicates.MANAGE_MARKSHEETS.evaluate(AccessControl.getUserView().getPerson())) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

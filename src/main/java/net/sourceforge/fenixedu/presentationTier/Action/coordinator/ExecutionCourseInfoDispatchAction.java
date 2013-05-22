@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
@@ -175,7 +175,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         List infoExecutionCourses = null;
         try {
             infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SearchExecutionCourses", args);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             return mapping.findForward("notAuthorized");
         }
 

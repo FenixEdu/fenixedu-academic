@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -37,7 +37,7 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
         IUserView id = AccessControl.getUserView();
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
                 || (id.getRoleTypes() == null) || !verifyCondition(id, user)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

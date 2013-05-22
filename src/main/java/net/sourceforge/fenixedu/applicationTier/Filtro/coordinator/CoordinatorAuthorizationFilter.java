@@ -5,7 +5,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -50,8 +50,8 @@ public abstract class CoordinatorAuthorizationFilter extends Filtro {
      */
     protected abstract ExecutionYear getSpecificExecutionYear(Object[] parameters);
 
-    public void deny() throws NotAuthorizedFilterException {
-        throw new NotAuthorizedFilterException();
+    public void deny() throws NotAuthorizedException {
+        throw new NotAuthorizedException();
     }
 
     /**

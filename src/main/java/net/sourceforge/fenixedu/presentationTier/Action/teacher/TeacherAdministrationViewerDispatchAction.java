@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -200,7 +200,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         ActionErrors errors = new ActionErrors();
         try {
             ServiceManagerServiceFactory.executeService("EditCustomizationOptions", args);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);
 

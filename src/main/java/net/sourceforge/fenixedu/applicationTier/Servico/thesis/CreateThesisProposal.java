@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -14,7 +14,7 @@ public class CreateThesisProposal extends FenixService {
 
     @Service
     public static Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, MultiLanguageString title, String comment)
-            throws NotAuthorizedFilterException {
+            throws NotAuthorizedException {
         final Degree degree = degreeCurricularPlan.getDegree();
         final Enrolment enrolment = student.getDissertationEnrolment(degreeCurricularPlan);
 

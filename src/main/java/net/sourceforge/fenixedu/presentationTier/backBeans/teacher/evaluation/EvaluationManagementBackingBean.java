@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
@@ -572,7 +572,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         } catch (Exception e) {
             addErrorMessage(e.getMessage());
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);
@@ -650,7 +650,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             if (e instanceof IllegalDataAccessException) {
@@ -789,7 +789,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             if (e instanceof IllegalDataAccessException) {
@@ -849,7 +849,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);

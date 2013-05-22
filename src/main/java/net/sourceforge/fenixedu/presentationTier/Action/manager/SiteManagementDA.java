@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFile;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer;
@@ -306,7 +306,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             } catch (DomainException e) {
                 addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
                 return reportUploadError(mapping, request, bean, errors);
-            } catch (NotAuthorizedFilterException e) {
+            } catch (NotAuthorizedException e) {
                 addErrorMessage(request, "section", "error.not.authorized", new String[0]);
                 return reportUploadError(mapping, request, bean, errors);
             }

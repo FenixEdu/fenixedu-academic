@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,10 +23,10 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !lecturesExecutionCourse(id, bean)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -20,7 +20,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
             final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
 
             if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {
-                throw new NotAuthorizedFilterException("written.evaluation.has.alocated.rooms");
+                throw new NotAuthorizedException("written.evaluation.has.alocated.rooms");
             }
         }
     }

@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -29,7 +29,7 @@ public class ReadFinalDegreeWorkProposalAuthorization {
                 }
             }
         }
-        throw new NotAuthorizedFilterException();
+        throw new NotAuthorizedException();
     }
 
 }

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -36,10 +36,10 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
             if ((id == null) || (selectedProfessorship == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
                     || selectedProfessorship.getResponsibleFor()) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
@@ -111,16 +111,16 @@ public class ClassEnrollmentAuthorizationFilter {
         return null;
     }
 
-    public class NoActiveStudentCurricularPlanOfCorrectTypeException extends NotAuthorizedFilterException {
+    public class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {
     }
 
-    public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends NotAuthorizedFilterException {
+    public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
     }
 
-    public class InquiriesNotAnswered extends NotAuthorizedFilterException {
+    public class InquiriesNotAnswered extends FenixServiceException {
     }
 
-    public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends NotAuthorizedFilterException {
+    public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {
         public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan() {
             super();
         }

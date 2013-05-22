@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -29,7 +29,7 @@ public class SeminaryCoordinatorOrStudentFilter {
 
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType1()) && !id.hasRoleType(getRoleType2())))
                 || (id == null) || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

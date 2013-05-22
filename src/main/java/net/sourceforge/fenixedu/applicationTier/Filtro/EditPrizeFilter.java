@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.Prize;
@@ -17,10 +17,10 @@ public class EditPrizeFilter {
 
         if (prize != null) {
             if (!prize.isEditableByUser(person)) {
-                throw new NotAuthorizedFilterException("error.not.authorized");
+                throw new NotAuthorizedException("error.not.authorized");
             }
         } else {
-            throw new NotAuthorizedFilterException("error.not.authorized");
+            throw new NotAuthorizedException("error.not.authorized");
         }
 
     }

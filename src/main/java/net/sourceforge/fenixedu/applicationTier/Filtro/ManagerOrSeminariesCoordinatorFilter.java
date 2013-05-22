@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -24,7 +24,7 @@ public class ManagerOrSeminariesCoordinatorFilter {
 
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType1()) && !(id.hasRoleType(getRoleType2()) && seminaryCandidate)))
                 || (id == null) || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

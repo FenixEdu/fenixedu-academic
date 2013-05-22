@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -23,7 +23,7 @@ public class ManageUnitPersistentGroup extends Filtro {
         Unit unit = (group == null) ? (Unit) parameters[0] : group.getUnit();
 
         if (!(unit.getSite() != null && unit.getSite().hasManagers(person))) {
-            throw new NotAuthorizedFilterException("error.person.not.manager.of.site");
+            throw new NotAuthorizedException("error.person.not.manager.of.site");
         }
 
     }

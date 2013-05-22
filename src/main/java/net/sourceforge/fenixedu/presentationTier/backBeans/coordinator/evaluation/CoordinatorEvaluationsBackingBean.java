@@ -14,7 +14,7 @@ import java.util.TreeSet;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -545,7 +545,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         } catch (ParseException ex) {
             setErrorMessage("error.invalid.date");
             return "viewEditPage";
-        } catch (NotAuthorizedFilterException ex) {
+        } catch (NotAuthorizedException ex) {
             setErrorMessage(ex.getMessage());
             return "viewEditPage";
         }
@@ -636,7 +636,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         if (evaluationType.equals(WrittenEvaluation.class.getName())) {
             try {
                 ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
-            } catch (NotAuthorizedFilterException ex) {
+            } catch (NotAuthorizedException ex) {
                 setErrorMessage(ex.getMessage());
                 return "viewDeletePage";
             } catch (DomainException ex) {

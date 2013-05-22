@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -17,11 +17,11 @@ public class DeleteFileContentFilter {
             IGroup owner = site.getOwner();
 
             if (owner == null) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
 
             if (!owner.allows(AccessControl.getUserView())) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         }
 

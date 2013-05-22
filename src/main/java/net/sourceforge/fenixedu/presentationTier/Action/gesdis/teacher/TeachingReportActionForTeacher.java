@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                 key = "error.exception.notAuthorized",
                 handler = net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler.class,
                 scope = "request"),
-        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException.class,
+        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
                 key = "error.exception.notAuthorized",
                 handler = net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler.class,
                 scope = "request") })

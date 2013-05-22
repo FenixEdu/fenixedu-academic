@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -34,19 +34,19 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
             boolean executionCourseResponsibleLogged = professorshipLogged.isResponsibleFor();
 
             if (userViewLogged == null || userViewLogged.getRoleTypes() == null || professorshipLogged == null) {
-                throw new NotAuthorizedFilterException("error.summary.not.authorized");
+                throw new NotAuthorizedException("error.summary.not.authorized");
             }
             if (executionCourseResponsibleLogged
                     && (summary.getProfessorship() != null && (!summary.getProfessorship().equals(professorshipLogged)))) {
-                throw new NotAuthorizedFilterException("error.summary.not.authorized");
+                throw new NotAuthorizedException("error.summary.not.authorized");
 
             } else if (!executionCourseResponsibleLogged
                     && (summary.getProfessorship() == null || (!summary.getProfessorship().equals(professorshipLogged)))) {
-                throw new NotAuthorizedFilterException("error.summary.not.authorized");
+                throw new NotAuthorizedException("error.summary.not.authorized");
             }
 
         } catch (RuntimeException ex) {
-            throw new NotAuthorizedFilterException("error.summary.not.authorized");
+            throw new NotAuthorizedException("error.summary.not.authorized");
         }
     }
 

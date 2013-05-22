@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.gesdis;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -51,7 +51,7 @@ public class ViewCourseInformationAction extends FenixAction {
         Object[] args = { new Integer(executionCourseId) };
         try {
             siteView = (SiteView) ServiceManagerServiceFactory.executeService("ReadCourseInformation", args);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);
 

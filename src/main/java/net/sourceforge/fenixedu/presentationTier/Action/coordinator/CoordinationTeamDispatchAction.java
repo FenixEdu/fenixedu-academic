@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -80,7 +80,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         List coordinators = new ArrayList();
         try {
             coordinators = (List) ServiceManagerServiceFactory.executeService("ReadCoordinationTeam", args);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             actionErrors.add("error", new ActionError("noAuthorization"));
             saveErrors(request, actionErrors);
             return mapping.findForward("noAuthorization");

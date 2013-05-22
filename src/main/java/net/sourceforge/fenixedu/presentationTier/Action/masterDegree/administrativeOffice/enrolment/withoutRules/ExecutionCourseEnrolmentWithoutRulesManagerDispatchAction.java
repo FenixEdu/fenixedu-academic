@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -162,7 +162,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                     (StudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                             "ReadStudentCurricularPlanForEnrollmentsWithoutRules", args);
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
@@ -227,7 +227,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             final Object[] args = { getStudent(form), getDegreeType(form), unenrollmentsList };
             ServiceManagerServiceFactory.executeService("DeleteEnrollmentsList", args);
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
@@ -261,7 +261,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                     (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService("PrepareDegreesListByStudentNumber",
                             new Object[] { registration, getDegreeType(form), executionSemester });
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
@@ -370,7 +370,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                                         executionSemester, executionDegreeID, curricularYearsList, curricularSemesters });
             }
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
@@ -438,7 +438,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                                 getExecutionPeriod(form), curricularCourses, optionalEnrollments, getUserView(request) });
             }
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
@@ -544,7 +544,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             final Object[] args = { studentCurricularPlan.getRegistration(), getDegreeType(form), unenrollmentsList };
             ServiceManagerServiceFactory.executeService("DeleteEnrollmentsList", args);
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
@@ -577,7 +577,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                     (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService("PrepareDegreesListByStudentNumber",
                             new Object[] { studentCurricularPlan.getRegistration(), getDegreeType(form), executionSemester });
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
@@ -629,7 +629,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                                         curricularSemesters });
             }
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
@@ -681,7 +681,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                         getUserView(request) });
             }
 
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             e.printStackTrace();
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();

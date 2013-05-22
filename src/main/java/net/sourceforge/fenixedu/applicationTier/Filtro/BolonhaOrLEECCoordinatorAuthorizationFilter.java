@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -24,11 +24,11 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
         if (!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID))) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

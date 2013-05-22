@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
@@ -268,7 +268,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
         }
@@ -290,7 +290,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
         }
@@ -312,7 +312,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
         }
@@ -376,7 +376,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return prepareShowSummaries(mapping, form, request, response);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return prepareShowSummaries(mapping, form, request, response);
         }
@@ -580,7 +580,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
             } catch (DomainException e) {
                 return returnToCreateComplexSummary(mapping, form, request, summaryBean, e);
 
-            } catch (NotAuthorizedFilterException e) {
+            } catch (NotAuthorizedException e) {
                 return returnToCreateComplexSummary(mapping, form, request, summaryBean, e);
             }
         }

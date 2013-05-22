@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.student.tests;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -41,7 +41,7 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
             getFullCalendar(endDate, endHour);
 
             if (!canReadTest(now, beginDate, endDate)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
 
         }

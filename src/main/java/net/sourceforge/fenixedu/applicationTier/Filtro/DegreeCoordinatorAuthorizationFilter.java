@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -35,10 +35,10 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !isCoordinatorOfExecutionDegree(id, executionDegreeId)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

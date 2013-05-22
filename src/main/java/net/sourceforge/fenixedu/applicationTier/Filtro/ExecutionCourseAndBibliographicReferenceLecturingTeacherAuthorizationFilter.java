@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -39,7 +39,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         IUserView id = AccessControl.getUserView();
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

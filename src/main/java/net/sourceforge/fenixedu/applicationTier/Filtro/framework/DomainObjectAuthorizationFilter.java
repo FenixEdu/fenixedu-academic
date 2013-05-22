@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -29,18 +29,18 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
              * note: if it is neither an Integer nor an InfoObject representing
              * the object to be modified, it is supposed to throw a
              * RuntimeException to be caught and encapsulated in a
-             * NotAuthorizedFilterException
+             * NotAuthorizedException
              */
 
             boolean isNew = ((idInternal == null) || idInternal.equals(Integer.valueOf(0)));
 
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
                     || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, idInternal)))) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
             e.printStackTrace();
-            throw new NotAuthorizedFilterException(e.getMessage());
+            throw new NotAuthorizedException(e.getMessage());
         }
     }
 

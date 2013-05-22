@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -43,7 +43,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);
@@ -72,7 +72,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);
@@ -87,7 +87,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
             ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);

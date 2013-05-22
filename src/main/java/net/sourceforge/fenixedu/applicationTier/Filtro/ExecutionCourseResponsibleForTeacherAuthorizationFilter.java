@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -39,10 +39,10 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !isResponsibleForExecutionCourse(id, executionCourseOID)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 

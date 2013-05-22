@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -26,14 +26,14 @@ public class SubmitFinalWorkProposalAuthorization {
         if (infoProposalEditor.getIdInternal() != null) {
             final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getIdInternal());
             if (!authorized(userView.getPerson(), proposal)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } else {
             final Integer executionDegreeId = infoProposalEditor.getExecutionDegree().getIdInternal();
             final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
             final Scheduleing scheduleing = executionDegree.getScheduling();
             if (!authorized(userView.getPerson(), scheduleing)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         }
     }

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -27,10 +27,10 @@ public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationB
 
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
                     || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, infoObject)))) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException(e.getMessage());
+            throw new NotAuthorizedException(e.getMessage());
         }
     }
 

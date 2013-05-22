@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -40,10 +40,10 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !lecturesExecutionCourse(id, executionCourseID)
                     || !examBelongsExecutionCourse(id, executionCourseID, evaluationID)) {
-                throw new NotAuthorizedFilterException();
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
     }

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
@@ -69,7 +69,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
         if ((userView != null && userView.getRoleTypes() != null && !containsRoleType(userView.getRoleTypes()))
                 || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView, ids)) || (userView == null)
                 || (userView.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
     }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
@@ -429,7 +429,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             InfoSiteTeacherInformation infoSiteTeacherInformation = readInfoSiteTeacherInformation(mapping, form, request);
             setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
             return mapping.findForward("successfull-read");
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             return mapping.findForward("unsuccessfull-read");
         }
     }
