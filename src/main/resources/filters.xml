@@ -356,13 +356,6 @@
     </filter>
 
     <filter>
-        <name>GrantOwnerManagerAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.grant.GrantOwnerManagerAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>ManageUnitPersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManageUnitPersistentGroup</implementationClass>
         <description></description>

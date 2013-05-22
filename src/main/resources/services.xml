@@ -1,13 +1,6 @@
 <serviceDefinitions>
 
     <service>
-        <name>SearchGrantOwner</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-
-    <service>
         <name>AcceptNewProjectProposal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.AcceptNewProjectProposal</implementationClass>
         <isTransactional>true</isTransactional>
@@ -733,33 +726,6 @@
     </service>
 
     <service>
-        <name>DeleteGrantContract</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.DeleteGrantContract</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteGrantContractMovement</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.DeleteGrantContractMovement</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteGrantPart</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.DeleteGrantPart</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeleteGrouping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteGrouping</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1196,33 +1162,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditFormation</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>
-
-    <service>
-        <name>EditGrantContractMovement</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantContractMovement</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditGrantContractRegime</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantContractRegime</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditGrantSubsidy</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantSubsidy</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
     </service>
 
     <service>
@@ -2344,69 +2283,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="DepartmentMemberOrTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantContract</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantContract</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantContractMovement</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantContractMovement</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantContractRegime</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantContractRegime</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantInsurance</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantInsurance</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantOwner</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.ReadGrantOwner</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantPart</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantPart</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantPaymentEntity</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantPaymentEntity</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
 

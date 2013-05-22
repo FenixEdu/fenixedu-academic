@@ -452,7 +452,7 @@ public class Person extends Person_Base {
         setIdentification(documentIDNumber, documentType);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public Person edit(final PersonBean personBean) {
         setProperties(personBean);
         setDefaultPhysicalAddressData(personBean.getPhysicalAddressData(), true);
@@ -1428,7 +1428,7 @@ public class Person extends Person_Base {
                 && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-                && !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasGrantOwner()
+                && !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher()
                 && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
                 && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
                 && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyCardGenerationEntries()
@@ -1563,7 +1563,6 @@ public class Person extends Person_Base {
             case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
             case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
             case DEPARTMENT_CREDITS_MANAGER:
-            case GRANT_OWNER_MANAGER:
             case TREASURY:
             case CREDITS_MANAGER:
             case EXAM_COORDINATOR:
@@ -1615,7 +1614,6 @@ public class Person extends Person_Base {
                 if (!person.hasAnyParticipations()) {
                     removeRoleIfPresent(person, RoleType.RESEARCHER);
                 }
-                removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
                 removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
                 removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
                 removeRoleIfPresent(person, RoleType.COORDINATOR);

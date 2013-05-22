@@ -125,15 +125,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantContract readGrantContractByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantContract domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantContract) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantContract.class.getName(),
-                                idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.EquivalencePlanEntry readEquivalencePlanEntryByOID(Integer idInternal) {
         final net.sourceforge.fenixedu.domain.EquivalencePlanEntry domainObject =
                 (net.sourceforge.fenixedu.domain.EquivalencePlanEntry) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
@@ -239,15 +230,6 @@ public class RootDomainObject extends RootDomainObject_Base {
         final net.sourceforge.fenixedu.domain.transactions.Transaction domainObject =
                 (net.sourceforge.fenixedu.domain.transactions.Transaction) pt.ist.fenixframework.pstm.Transaction
                         .readDomainObject(net.sourceforge.fenixedu.domain.transactions.Transaction.class.getName(), idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity readGrantPaymentEntityByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity.class.getName(),
-                                idInternal);
         return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1221,14 +1203,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantType readGrantTypeByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantType domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantType) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantType.class.getName(), idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.Seminaries.Theme readThemeByOID(Integer idInternal) {
         final net.sourceforge.fenixedu.domain.Seminaries.Theme domainObject =
                 (net.sourceforge.fenixedu.domain.Seminaries.Theme) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
@@ -1275,14 +1249,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 (net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers) pt.ist.fenixframework.pstm.Transaction
                         .readDomainObject(net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers.class.getName(),
                                 idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantPart readGrantPartByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantPart domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantPart) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantPart.class.getName(), idInternal);
         return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1394,15 +1360,6 @@ public class RootDomainObject extends RootDomainObject_Base {
         final net.sourceforge.fenixedu.domain.system.CronScriptInvocation domainObject =
                 (net.sourceforge.fenixedu.domain.system.CronScriptInvocation) pt.ist.fenixframework.pstm.Transaction
                         .readDomainObject(net.sourceforge.fenixedu.domain.system.CronScriptInvocation.class.getName(), idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime readGrantContractRegimeByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime.class.getName(),
-                                idInternal);
         return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1573,27 +1530,10 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement readGrantContractMovementByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement.class.getName(),
-                                idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.space.Blueprint readBlueprintByOID(Integer idInternal) {
         final net.sourceforge.fenixedu.domain.space.Blueprint domainObject =
                 (net.sourceforge.fenixedu.domain.space.Blueprint) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
                         net.sourceforge.fenixedu.domain.space.Blueprint.class.getName(), idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.owner.GrantOwner readGrantOwnerByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.owner.GrantOwner domainObject =
-                (net.sourceforge.fenixedu.domain.grant.owner.GrantOwner) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
-                        net.sourceforge.fenixedu.domain.grant.owner.GrantOwner.class.getName(), idInternal);
         return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1610,15 +1550,6 @@ public class RootDomainObject extends RootDomainObject_Base {
         final net.sourceforge.fenixedu.domain.MasterDegreeCandidate domainObject =
                 (net.sourceforge.fenixedu.domain.MasterDegreeCandidate) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
                         net.sourceforge.fenixedu.domain.MasterDegreeCandidate.class.getName(), idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance readGrantInsuranceByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance.class.getName(),
-                                idInternal);
         return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1688,16 +1619,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher readGrantOrientationTeacherByOID(
-            Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher.class.getName(),
-                                idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.Qualification readQualificationByOID(Integer idInternal) {
         final net.sourceforge.fenixedu.domain.Qualification domainObject =
                 (net.sourceforge.fenixedu.domain.Qualification) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
@@ -1745,14 +1666,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                         .readDomainObject(
                                 net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.class.getName(),
                                 idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy readGrantSubsidyByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy domainObject =
-                (net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy) pt.ist.fenixframework.pstm.Transaction
-                        .readDomainObject(net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy.class.getName(), idInternal);
         return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1808,18 +1721,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 return getLessonsSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantContract.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantContractByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantContractsSet();
-                    }
-                });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.EquivalencePlanEntry.class.getName(), new DomainObjectReader() {
             @Override
             public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -1966,18 +1867,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 return getTransactionsSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantPaymentEntityByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantPaymentEntitysSet();
-                    }
-                });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.util.email.Message.class.getName(), new DomainObjectReader() {
             @Override
             public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -3300,17 +3189,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 return getDegreeCurricularPlansSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantType.class.getName(), new DomainObjectReader() {
-            @Override
-            public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                return readGrantTypeByOID(idInternal);
-            }
-
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return getGrantTypesSet();
-            }
-        });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.Seminaries.Theme.class.getName(), new DomainObjectReader() {
             @Override
             public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -3390,17 +3268,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                         return getPersistentGroupMembersSet();
                     }
                 });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantPart.class.getName(), new DomainObjectReader() {
-            @Override
-            public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                return readGrantPartByOID(idInternal);
-            }
-
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return getGrantPartsSet();
-            }
-        });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.class.getName(),
                 new DomainObjectReader() {
                     @Override
@@ -3541,18 +3408,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                     @Override
                     public java.util.Set readAllDomainObjects() {
                         return getCronScriptInvocationsSet();
-                    }
-                });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantContractRegimeByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantContractRegimesSet();
                     }
                 });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.class.getName(),
@@ -3779,18 +3634,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 return getCaseStudysSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantContractMovementByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantContractMovementsSet();
-                    }
-                });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.space.Blueprint.class.getName(), new DomainObjectReader() {
             @Override
             public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -3800,17 +3643,6 @@ public class RootDomainObject extends RootDomainObject_Base {
             @Override
             public java.util.Set readAllDomainObjects() {
                 return getBlueprintsSet();
-            }
-        });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.owner.GrantOwner.class.getName(), new DomainObjectReader() {
-            @Override
-            public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                return readGrantOwnerByOID(idInternal);
-            }
-
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return getGrantOwnersSet();
             }
         });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.thesis.Thesis.class.getName(), new DomainObjectReader() {
@@ -3835,18 +3667,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 return getMasterDegreeCandidatesSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantInsuranceByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantInsurancesSet();
-                    }
-                });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.GratuitySituation.class.getName(), new DomainObjectReader() {
             @Override
             public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -3948,18 +3768,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                 return getRegistrationsSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantOrientationTeacherByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantOrientationTeachersSet();
-                    }
-                });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.Qualification.class.getName(), new DomainObjectReader() {
             @Override
             public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -4025,18 +3833,6 @@ public class RootDomainObject extends RootDomainObject_Base {
                     @Override
                     public java.util.Set readAllDomainObjects() {
                         return getProjectEventAssociationsSet();
-                    }
-                });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy.class.getName(),
-                new DomainObjectReader() {
-                    @Override
-                    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                        return readGrantSubsidyByOID(idInternal);
-                    }
-
-                    @Override
-                    public java.util.Set readAllDomainObjects() {
-                        return getGrantSubsidysSet();
                     }
                 });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.Tutorship.class.getName(), new DomainObjectReader() {

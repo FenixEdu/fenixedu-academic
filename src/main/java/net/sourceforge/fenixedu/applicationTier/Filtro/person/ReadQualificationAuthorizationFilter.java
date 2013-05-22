@@ -17,10 +17,6 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         return RoleType.TEACHER;
     }
 
-    protected RoleType getRoleTypeGrantOwnerManager() {
-        return RoleType.GRANT_OWNER_MANAGER;
-    }
-
     protected RoleType getRoleTypeAlumni() {
         return RoleType.ALUMNI;
     }
@@ -47,10 +43,6 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
             if (!isNew) {
                 boolean valid = false;
 
-                if (id.hasRoleType(getRoleTypeGrantOwnerManager()) && isGrantOwner(objectId)) {
-                    valid = true;
-                }
-
                 if (isOwnQualification(id, objectId)) {
 
                     if (id.hasRoleType(getRoleTypeTeacher()) || id.hasRoleType(getRoleTypeAlumni())) {
@@ -61,19 +53,10 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
                 if (!valid) {
                     throw new NotAuthorizedException();
                 }
-            } else {
-                if (!id.hasRoleType(getRoleTypeGrantOwnerManager()) && !id.hasRoleType(getRoleTypeTeacher())) {
-                    throw new NotAuthorizedException();
-                }
             }
         } catch (RuntimeException e) {
             throw new NotAuthorizedException();
         }
-    }
-
-    private boolean isGrantOwner(Integer objectId) {
-        Qualification qualification = rootDomainObject.readQualificationByOID(objectId);
-        return qualification.getPerson().hasGrantOwner();
     }
 
     private boolean isOwnQualification(IUserView userView, Integer objectId) {

@@ -104,7 +104,6 @@ public class DataInitializer {
         new Role(RoleType.EXTERNAL_SUPERVISOR, "/externalSupervisor", "/welcome.do", "portal.externalSupervisor");
         new Role(RoleType.GEP, "/gep", "/index.do", "portal.gep");
         new Role(RoleType.GRANT_OWNER, "/grantOwner", "/index.do", "portal.grantOwner");
-        new Role(RoleType.GRANT_OWNER_MANAGER, "/facultyAdmOffice", "/index.do", "portal.facultyAdmOffice");
         new Role(RoleType.HTML_CAPABLE_SENDER, "/messaging", "/index.do", "portal.messaging");
         new Role(RoleType.IDENTIFICATION_CARD_MANAGER, "/identificationCardManager", "/index.do",
                 "portal.identificationCardManager");

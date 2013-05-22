@@ -1,7 +1,3 @@
-<schema name="EditGrantContractDomainObject" type="net.sourceforge.fenixedu.domain.grant.contract.GrantContract" bundle="MANAGER_RESOURCES">
-	<slot name="contractNumber" />
-</schema>
-
 <schema name="EditPersonDomainObject" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
 	<slot name="documentIdNumber" />
 	<slot name="idDocumentType">

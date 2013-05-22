@@ -71,8 +71,6 @@ public enum RoleType implements IPresentableEnum {
 
     GRANT_OWNER("Grant Owner"),
 
-    GRANT_OWNER_MANAGER("Grant Owner Management"),
-
     DEPARTMENT_ADMINISTRATIVE_OFFICE("Department Administrative Office"),
 
     GEP("Planning and Studies Office"),

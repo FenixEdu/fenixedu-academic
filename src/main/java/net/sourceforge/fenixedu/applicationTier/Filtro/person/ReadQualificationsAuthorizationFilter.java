@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -15,10 +14,6 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
 
     protected RoleType getRoleTypeTeacher() {
         return RoleType.TEACHER;
-    }
-
-    protected RoleType getRoleTypeGrantOwnerManager() {
-        return RoleType.GRANT_OWNER_MANAGER;
     }
 
     @Override
@@ -37,10 +32,6 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
             // 2: The user ir a Teacher and the qualification is his own
             boolean valid = false;
 
-            if ((id.hasRoleType(getRoleTypeGrantOwnerManager())) && isGrantOwner((String) arguments[0])) {
-                valid = true;
-            }
-
             if (id.hasRoleType(getRoleTypeTeacher())) {
                 valid = true;
             }
@@ -51,10 +42,6 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
         } catch (RuntimeException e) {
             throw new NotAuthorizedException();
         }
-    }
-
-    private boolean isGrantOwner(String user) {
-        return Person.readPersonByUsername(user).hasGrantOwner();
     }
 
 }

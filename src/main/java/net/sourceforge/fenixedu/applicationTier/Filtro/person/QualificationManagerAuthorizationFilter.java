@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -23,10 +22,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         return RoleType.TEACHER;
     }
 
-    protected RoleType getRoleTypeGrantOwnerManager() {
-        return RoleType.GRANT_OWNER_MANAGER;
-    }
-
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
@@ -35,10 +30,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         try {
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {
-                throw new NotAuthorizedException();
-            }
-
-            if (!id.hasRoleType(getRoleTypeGrantOwnerManager()) && !id.hasRoleType(getRoleTypeTeacher())) {
                 throw new NotAuthorizedException();
             }
 
@@ -52,13 +43,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
 
             boolean valid = false;
             // Verify if:
-            // 1: The user ir a Grant Owner Manager and the qualification
-            // belongs to a Grant Owner
             // 2: The user ir a Teacher and the qualification is his own
-            if (id.hasRoleType(getRoleTypeGrantOwnerManager()) && isGrantOwner(infoQualification)) {
-                valid = true;
-            }
-
             if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id, infoQualification)) {
                 valid = true;
             }
@@ -69,15 +54,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
 
         } catch (RuntimeException e) {
             throw new NotAuthorizedException();
-        }
-    }
-
-    private boolean isGrantOwner(InfoQualification infoQualification) {
-        try {
-            Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
-            return person.hasGrantOwner();
-        } catch (Exception e) {
-            return false;
         }
     }
 

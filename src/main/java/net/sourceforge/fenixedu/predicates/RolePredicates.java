@@ -160,29 +160,12 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> GRANT_OWNER_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.GRANT_OWNER_MANAGER);
-        };
-    };
-
     public static final AccessControlPredicate<Object> LIBRARY_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.LIBRARY);
         };
     };
-
-    public static final AccessControlPredicate<Object> MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE =
-            new AccessControlPredicate<Object>() {
-                @Override
-                public boolean evaluate(Object domainObject) {
-                    return MANAGER_PREDICATE.evaluate(domainObject)
-                            || ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE.evaluate(domainObject)
-                            || GRANT_OWNER_MANAGER_PREDICATE.evaluate(domainObject);
-                };
-            };
 
     public static final AccessControlPredicate<Object> MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE =
             new AccessControlPredicate<Object>() {

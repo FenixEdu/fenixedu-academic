@@ -123,8 +123,8 @@
 	 			<%= RoleType.GRANT_OWNER.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasGrantOwner()) { %>
-	 					<%= person.getGrantOwner().getNumber() %>
+	 			<% if (person.hasEmployee() && person.hasRole(RoleType.GRANT_OWNER)) { %>
+	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
 	 					<br/>
