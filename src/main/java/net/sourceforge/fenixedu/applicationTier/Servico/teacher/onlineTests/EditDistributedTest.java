@@ -5,8 +5,10 @@ import java.util.Calendar;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -19,12 +21,13 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditDistributedTest extends FenixService {
 
-    public void run(Integer executionCourseId, final Integer distributedTestId, String testInformation, String evaluationTitle,
-            Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
-            CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
+    protected void run(Integer executionCourseId, final Integer distributedTestId, String testInformation,
+            String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
+            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -102,6 +105,20 @@ public class EditDistributedTest extends FenixService {
         EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
                 "log.executionCourse.evaluation.tests.distribution.edited", distributedTest.getEvaluationTitle(),
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditDistributedTest serviceInstance = new EditDistributedTest();
+
+    @Service
+    public static void runEditDistributedTest(Integer executionCourseId, Integer distributedTestId, String testInformation,
+            String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
+            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, distributedTestId, testInformation, evaluationTitle, beginDate, beginHour,
+                endDate, endHour, testType, correctionAvailability, imsFeedback);
     }
 
 }

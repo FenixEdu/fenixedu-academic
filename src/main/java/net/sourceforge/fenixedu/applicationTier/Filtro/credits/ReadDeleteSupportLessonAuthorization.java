@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 /**
  * @author jpvl
  */
-public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartmentAuthorization {
+public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartmentAuthorization<Integer> {
 
     public static final ReadDeleteSupportLessonAuthorization instance = new ReadDeleteSupportLessonAuthorization();
     public final static ReadDeleteSupportLessonAuthorization filter = new ReadDeleteSupportLessonAuthorization();
@@ -20,9 +20,7 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
     }
 
     @Override
-    protected Integer getTeacherId(Object[] arguments) {
-        Integer supportLessonId = (Integer) arguments[0];
-
+    protected Integer getTeacherId(Integer supportLessonId) {
         SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonId);
         return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal() : null;
     }

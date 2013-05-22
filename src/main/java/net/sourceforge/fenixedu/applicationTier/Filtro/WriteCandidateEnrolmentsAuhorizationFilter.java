@@ -24,7 +24,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
     public static final WriteCandidateEnrolmentsAuhorizationFilter instance = new WriteCandidateEnrolmentsAuhorizationFilter();
 
     public void execute(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
-            throws Exception {
+            throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))

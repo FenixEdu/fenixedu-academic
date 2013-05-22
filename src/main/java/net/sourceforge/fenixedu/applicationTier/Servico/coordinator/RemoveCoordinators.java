@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CoordinationTeamLog;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
@@ -29,6 +31,17 @@ public class RemoveCoordinators extends FenixService {
                 }
             }
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final RemoveCoordinators serviceInstance = new RemoveCoordinators();
+
+    @Service
+    public static void runRemoveCoordinators(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs)
+            throws NotAuthorizedException {
+        ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
+        serviceInstance.run(executionDegreeID, coordinatorsToRemoveIDs);
     }
 
 }

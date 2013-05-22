@@ -10,6 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProjectStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
@@ -18,6 +21,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -28,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetProjectsGroupsByExecutionCourseID extends FenixService {
 
-    public List run(Integer executionCourseID) throws BDException {
+    protected List run(Integer executionCourseID) throws BDException {
 
         final List infosGroupProjectStudents = new LinkedList();
 
@@ -52,4 +56,25 @@ public class GetProjectsGroupsByExecutionCourseID extends FenixService {
         }
         return infosGroupProjectStudents;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GetProjectsGroupsByExecutionCourseID serviceInstance = new GetProjectsGroupsByExecutionCourseID();
+
+    @Service
+    public static List runGetProjectsGroupsByExecutionCourseID(Integer executionCourseID) throws BDException,
+            NotAuthorizedException {
+        try {
+            ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+            return serviceInstance.run(executionCourseID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseID);
+                return serviceInstance.run(executionCourseID);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

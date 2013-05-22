@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -21,7 +24,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class PrepareEditStudentGroupMembers extends FenixService {
 
-    public List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException {
+    protected List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException {
         final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
@@ -41,6 +44,17 @@ public class PrepareEditStudentGroupMembers extends FenixService {
             infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
         }
         return infoStudents;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final PrepareEditStudentGroupMembers serviceInstance = new PrepareEditStudentGroupMembers();
+
+    @Service
+    public static List runPrepareEditStudentGroupMembers(Integer executionCourseID, Integer studentGroupID)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID, studentGroupID);
     }
 
 }

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author naat
@@ -53,6 +57,28 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
         }
 
         return masterDegreeExecutionCourses;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType serviceInstance =
+            new ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType();
+
+    @Service
+    public static List<ExecutionCourse> runReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType(
+            Integer teacherID, Integer executionYearID, DegreeType degreeType) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            DepartmentMemberAuthorizationFilter.instance.execute();
+            return serviceInstance.run(teacherID, executionYearID, degreeType);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                return serviceInstance.run(teacherID, executionYearID, degreeType);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

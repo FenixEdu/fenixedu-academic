@@ -35,7 +35,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
         final String password = (String) authenticationForm.get("password");
         final String requestURL = request.getRequestURL().toString();
 
-        return new Authenticate().run(username, password, requestURL, remoteHostName);
+        return Authenticate.runAuthenticate(username, password, requestURL, remoteHostName);
     }
 
     @Override

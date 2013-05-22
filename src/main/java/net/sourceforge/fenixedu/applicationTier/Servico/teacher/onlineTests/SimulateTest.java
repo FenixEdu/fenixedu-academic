@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
@@ -21,11 +23,13 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class SimulateTest extends FenixService {
 
-    private String path = new String();
+    private final String path = new String();
 
-    public InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses,
+    protected InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException {
 
@@ -187,6 +191,19 @@ public class SimulateTest extends FenixService {
             infoStudentTestQuestionList.add(infoStudentTestQuestion);
         }
         return infoStudentTestQuestionList;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SimulateTest serviceInstance = new SimulateTest();
+
+    @Service
+    public static InfoSiteStudentTestFeedback runSimulateTest(Integer executionCourseId, Integer testId, Response[] responses,
+            String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
+            Boolean imsfeedback, String testInformation, String path) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, testId, responses, questionCodes, optionShuffle, testType,
+                correctionAvailability, imsfeedback, testInformation, path);
     }
 
 }

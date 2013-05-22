@@ -5,19 +5,22 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ReadCandidatesForSelectionAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.util.SituationName;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadCandidatesForSelection extends FenixService {
 
-    public List run(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
+    protected List run(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
 
         // Read the candidates
 
@@ -38,6 +41,16 @@ public class ReadCandidatesForSelection extends FenixService {
 
         return result;
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCandidatesForSelection serviceInstance = new ReadCandidatesForSelection();
+
+    @Service
+    public static List runReadCandidatesForSelection(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException  , NotAuthorizedException {
+        ReadCandidatesForSelectionAuthorizationFilter.instance.execute(executionDegreeID, situationNames);
+        return serviceInstance.run(executionDegreeID, situationNames);
     }
 
 }

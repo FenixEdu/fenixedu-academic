@@ -5,16 +5,22 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class AssociateNewFunctionToPerson extends FenixService {
 
-    public void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
+    protected void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
             throws FenixServiceException, DomainException {
 
         Person person = (Person) rootDomainObject.readPartyByOID(personID);
@@ -29,4 +35,30 @@ public class AssociateNewFunctionToPerson extends FenixService {
 
         person.addPersonFunction(function, begin, end, credits);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AssociateNewFunctionToPerson serviceInstance = new AssociateNewFunctionToPerson();
+
+    @Service
+    public static void runAssociateNewFunctionToPerson(Integer functionID, Integer personID, Double credits, YearMonthDay begin,
+            YearMonthDay end) throws FenixServiceException, DomainException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(functionID, personID, credits, begin, end);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                OperatorAuthorizationFilter.instance.execute();
+                serviceInstance.run(functionID, personID, credits, begin, end);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    ScientificCouncilAuthorizationFilter.instance.execute();
+                    serviceInstance.run(functionID, personID, credits, begin, end);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

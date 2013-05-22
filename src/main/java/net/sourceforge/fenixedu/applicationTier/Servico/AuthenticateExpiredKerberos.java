@@ -8,10 +8,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
 
-    public IUserView run(final String username, final String password, final String newPassword, final String requestURL,
+    protected IUserView run(final String username, final String password, final String newPassword, final String requestURL,
             String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -58,4 +59,15 @@ public class AuthenticateExpiredKerberos extends Authenticate {
             throw new FenixServiceException("error.empty.istUsername");
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AuthenticateExpiredKerberos serviceInstance = new AuthenticateExpiredKerberos();
+
+    @Service
+    public static IUserView runAuthenticationExpired(String username, String password, String newPassword, String requestURL,
+            String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, newPassword, requestURL, remoteHostName);
+    }
+
 }

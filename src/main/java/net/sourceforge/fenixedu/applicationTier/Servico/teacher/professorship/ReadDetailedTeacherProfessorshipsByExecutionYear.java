@@ -12,13 +12,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
     public class NotFoundExecutionYear extends FenixServiceException {
     }
 
-    public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
+    protected List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
 
         final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         if (teacher == null) {
@@ -40,4 +41,13 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
         }
         return getDetailedProfessorships(teacher.getProfessorships(executionYear), responsibleFors);
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDetailedTeacherProfessorshipsByExecutionYear serviceInstance = new ReadDetailedTeacherProfessorshipsByExecutionYear();
+
+    @Service
+    public static List runReadDetailedTeacherProfessorshipsByExecutionYear(Integer teacherID, Integer executionYearID) throws FenixServiceException  {
+        return serviceInstance.run(teacherID, executionYearID);
+    }
+
 }

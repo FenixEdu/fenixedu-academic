@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -16,7 +15,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class SummaryManagementToTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final SummaryManagementToTeacherAuthorizationFilter instance = new SummaryManagementToTeacherAuthorizationFilter();
+    public static final SummaryManagementToTeacherAuthorizationFilter instance =
+            new SummaryManagementToTeacherAuthorizationFilter();
 
     public SummaryManagementToTeacherAuthorizationFilter() {
     }
@@ -26,7 +26,7 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
         return RoleType.TEACHER;
     }
 
-    public void execute(ExecutionCourse executionCourse, Summary summary, Professorship professorshipLogged) throws Exception {
+    public void execute(Summary summary, Professorship professorshipLogged) throws NotAuthorizedException {
 
         try {
             IUserView userViewLogged = AccessControl.getUserView();

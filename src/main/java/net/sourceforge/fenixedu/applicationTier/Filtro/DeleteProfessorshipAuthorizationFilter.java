@@ -19,7 +19,7 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseID, Integer selectedTeacherID) throws Exception {
+    public void execute(Integer executionCourseID, Integer selectedTeacherID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {

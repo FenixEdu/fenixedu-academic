@@ -10,11 +10,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,7 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCaseStudiesByEquivalencyID extends FenixService {
 
-    public List run(Integer equivalencyID) throws BDException {
+    protected List run(Integer equivalencyID) throws BDException {
         List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
         CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
@@ -43,6 +46,16 @@ public class GetCaseStudiesByEquivalencyID extends FenixService {
         }
 
         return infoCases;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GetCaseStudiesByEquivalencyID serviceInstance = new GetCaseStudiesByEquivalencyID();
+
+    @Service
+    public static List runGetCaseStudiesByEquivalencyID(Integer equivalencyID) throws BDException, NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run(equivalencyID);
     }
 
 }

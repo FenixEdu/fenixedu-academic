@@ -7,12 +7,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.util.ProposalState;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -20,7 +23,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
  */
 public class ExecutionCourseWaitingAnswer extends FenixService {
 
-    public Boolean run(Integer executionCourseID) throws FenixServiceException {
+    protected Boolean run(Integer executionCourseID) throws FenixServiceException {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -37,4 +40,14 @@ public class ExecutionCourseWaitingAnswer extends FenixService {
         }
         return false;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ExecutionCourseWaitingAnswer serviceInstance = new ExecutionCourseWaitingAnswer();
+
+    @Service
+    public static Boolean runExecutionCourseWaitingAnswer(Integer executionCourseID) throws FenixServiceException  , NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID);
+    }
+
 }

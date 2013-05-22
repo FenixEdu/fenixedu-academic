@@ -8,12 +8,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -26,7 +30,7 @@ public class ReadExecutionCourseTeachers extends FenixService {
      * @throws ExcepcaoPersistencia
      */
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
+    protected List run(Integer executionCourseId) throws FenixServiceException {
 
         List professorShips = null;
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
@@ -47,4 +51,25 @@ public class ReadExecutionCourseTeachers extends FenixService {
 
         return infoTeachers;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadExecutionCourseTeachers serviceInstance = new ReadExecutionCourseTeachers();
+
+    @Service
+    public static List runReadExecutionCourseTeachers(Integer executionCourseId) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionCourseId);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                return serviceInstance.run(executionCourseId);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

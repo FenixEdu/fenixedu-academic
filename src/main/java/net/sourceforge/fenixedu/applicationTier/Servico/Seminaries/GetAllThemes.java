@@ -10,9 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -23,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetAllThemes extends FenixService {
 
-    public List run() throws BDException {
+    protected List run() throws BDException {
         List seminariesInfo = new LinkedList();
 
         List themes = Theme.getAllThemes();
@@ -35,6 +38,16 @@ public class GetAllThemes extends FenixService {
         }
 
         return seminariesInfo;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GetAllThemes serviceInstance = new GetAllThemes();
+
+    @Service
+    public static List runGetAllThemes() throws BDException  , NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run();
     }
 
 }

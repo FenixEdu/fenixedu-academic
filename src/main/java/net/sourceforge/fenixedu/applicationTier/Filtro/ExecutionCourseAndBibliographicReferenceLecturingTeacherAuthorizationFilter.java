@@ -23,7 +23,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter instance = new ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter();
+    public static final ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter instance =
+            new ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter() {
 
@@ -34,8 +35,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference,
-            String newYear, Boolean optional) throws Exception {
+    public void execute(Integer bibliographicReferenceID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {

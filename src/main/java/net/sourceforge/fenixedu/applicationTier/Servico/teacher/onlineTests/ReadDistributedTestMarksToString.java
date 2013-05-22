@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -26,13 +28,15 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Susana Fernandes
  * 
  */
 public class ReadDistributedTestMarksToString extends FenixService {
 
-    public String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    protected String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
@@ -81,7 +85,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
         return result.toString();
     }
 
-    public String run(Integer executionCourseId, String[] distributedTestCodes) throws FenixServiceException {
+    protected String run(Integer executionCourseId, String[] distributedTestCodes) throws FenixServiceException {
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
 
@@ -176,4 +180,16 @@ public class ReadDistributedTestMarksToString extends FenixService {
         Collections.sort(sortedStudents, new BeanComparator("number"));
         return sortedStudents;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDistributedTestMarksToString serviceInstance = new ReadDistributedTestMarksToString();
+
+    @Service
+    public static String runReadDistributedTestMarksToString(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId);
+    }
+
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.WriteCandidateEnrolmentsAuhorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -17,9 +19,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class WriteCandidateEnrolments extends FenixService {
 
-    public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+    protected void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
@@ -89,6 +93,18 @@ public class WriteCandidateEnrolments extends FenixService {
             masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
             candidateEnrolment.setCurricularCourse(curricularCourse);
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WriteCandidateEnrolments serviceInstance = new WriteCandidateEnrolments();
+
+    @Service
+    public static void runWriteCandidateEnrolments(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID,
+            Double credits, String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
+        WriteCandidateEnrolmentsAuhorizationFilter.instance.execute(selectedCurricularCoursesIDs, candidateID, credits,
+                givenCreditsRemarks);
+        serviceInstance.run(selectedCurricularCoursesIDs, candidateID, credits, givenCreditsRemarks);
     }
 
 }

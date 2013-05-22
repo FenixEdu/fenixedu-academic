@@ -7,11 +7,14 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.UUID;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.exceptions.InvalidStructureException;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 import org.jdom.Element;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ImportStartupFunctionalities extends ImportFunctionalities {
@@ -29,7 +32,7 @@ public class ImportStartupFunctionalities extends ImportFunctionalities {
      * @throws IOException
      *             when it's not possible to read from the stream
      */
-    public void run(InputStream stream) throws IOException {
+    protected void run(InputStream stream) throws IOException {
         Element root = getRootElement(stream);
 
         Module parent;
@@ -58,11 +61,22 @@ public class ImportStartupFunctionalities extends ImportFunctionalities {
         importFunctionalities(parent, root.getChildren("functionality"), true, true);
     }
 
-    public void run(FileInputStream stream) throws IOException {
+    protected void run(FileInputStream stream) throws IOException {
         run((InputStream) stream);
     }
 
-    public void run(ByteArrayInputStream stream) throws IOException {
+    protected void run(ByteArrayInputStream stream) throws IOException {
         run((InputStream) stream);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ImportStartupFunctionalities serviceInstance = new ImportStartupFunctionalities();
+
+    @Service
+    public static void runImportStartupFunctionalities(InputStream stream) throws IOException, NotAuthorizedException {
+        ManagerAuthorizationFilter.instance.execute();
+        serviceInstance.run(stream);
+    }
+
 }

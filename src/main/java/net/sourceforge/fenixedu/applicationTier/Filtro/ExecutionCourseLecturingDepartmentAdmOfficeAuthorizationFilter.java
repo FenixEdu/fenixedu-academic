@@ -10,14 +10,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter instance = new ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter();
+    public static final ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter instance =
+            new ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE;
     }
 
-    public void execute(SummariesManagementBean bean) throws Exception {
+    public void execute(SummariesManagementBean bean) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {

@@ -10,13 +10,16 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
@@ -44,4 +47,16 @@ public class ReadShiftsByDistributedTest extends FenixService {
         }
         return result;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadShiftsByDistributedTest serviceInstance = new ReadShiftsByDistributedTest();
+
+    @Service
+    public static List<InfoShift> runReadShiftsByDistributedTest(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId);
+    }
+
 }

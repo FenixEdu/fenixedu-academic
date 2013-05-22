@@ -5,15 +5,20 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateTSDCurricularCourses extends FenixService {
-    public void run(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId, Integer executionPeriodId,
+    protected void run(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId, Integer executionPeriodId,
             Boolean activateCourses) {
 
         TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
@@ -37,4 +42,30 @@ public class CreateTSDCurricularCourses extends FenixService {
             }
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateTSDCurricularCourses serviceInstance = new CreateTSDCurricularCourses();
+
+    @Service
+    public static void runCreateTSDCurricularCourses(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId,
+            Integer executionPeriodId, Boolean activateCourses) throws NotAuthorizedException {
+        try {
+            DepartmentMemberAuthorizationFilter.instance.execute();
+            serviceInstance.run(tsdId, competenceCourseId, tsdProcessPhaseId, executionPeriodId, activateCourses);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                serviceInstance.run(tsdId, competenceCourseId, tsdProcessPhaseId, executionPeriodId, activateCourses);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    EmployeeAuthorizationFilter.instance.execute();
+                    serviceInstance.run(tsdId, competenceCourseId, tsdProcessPhaseId, executionPeriodId, activateCourses);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

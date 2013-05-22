@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -17,7 +16,7 @@ public class ReadQualificationsAuthorizationFilter {
         return RoleType.TEACHER;
     }
 
-    public void execute(String user) throws Exception {
+    public void execute(String user) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             // Verify if needed fields are null

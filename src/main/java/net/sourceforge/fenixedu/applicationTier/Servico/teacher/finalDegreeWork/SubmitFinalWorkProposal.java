@@ -5,7 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SubmitFinalWorkProposalAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Correia
@@ -21,7 +24,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
  */
 public class SubmitFinalWorkProposal extends FenixService {
 
-    public void run(InfoProposalEditor infoProposal) throws FenixServiceException {
+    protected void run(InfoProposalEditor infoProposal) throws FenixServiceException {
         Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
@@ -93,4 +96,16 @@ public class SubmitFinalWorkProposal extends FenixService {
 
         proposal.setStatus(infoProposal.getStatus());
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SubmitFinalWorkProposal serviceInstance = new SubmitFinalWorkProposal();
+
+    @Service
+    public static void runSubmitFinalWorkProposal(InfoProposalEditor infoProposal) throws FenixServiceException,
+            NotAuthorizedException {
+        SubmitFinalWorkProposalAuthorization.instance.execute(infoProposal);
+        serviceInstance.run(infoProposal);
+    }
+
 }

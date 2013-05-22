@@ -10,9 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -29,8 +32,8 @@ import net.sourceforge.fenixedu.util.ProposalState;
  */
 public class NewProjectProposal extends FenixService {
 
-    public Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId, String senderPersonUsername)
-            throws FenixServiceException {
+    protected Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
+            String senderPersonUsername) throws FenixServiceException {
 
         Boolean result = Boolean.FALSE;
 
@@ -145,6 +148,17 @@ public class NewProjectProposal extends FenixService {
                     goalExecutionCourse.getName(), goalExecutionCourse.getDegreePresentationString());
         }
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final NewProjectProposal serviceInstance = new NewProjectProposal();
+
+    @Service
+    public static Boolean runNewProjectProposal(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
+            String senderPersonUsername) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
+        return serviceInstance.run(objectCode, goalExecutionCourseId, groupPropertiesId, senderPersonUsername);
     }
 
 }

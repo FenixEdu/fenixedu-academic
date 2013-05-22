@@ -6,7 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DirectiveCouncilAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -202,4 +206,29 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
             infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static Object runReadGratuitySituationListByExecutionDegreeAndSpecialization(Integer executionDegreeId,
+            String executionYearName, String persistentSupportecializationName, String gratuitySituationTypeName)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+            return run(executionDegreeId, executionYearName, persistentSupportecializationName, gratuitySituationTypeName);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                DirectiveCouncilAuthorizationFilter.instance.execute();
+                return run(executionDegreeId, executionYearName, persistentSupportecializationName, gratuitySituationTypeName);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    CoordinatorAuthorizationFilter.instance.execute();
+                    return run(executionDegreeId, executionYearName, persistentSupportecializationName, gratuitySituationTypeName);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

@@ -3,11 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 import java.io.File;
 import java.io.IOException;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateThesisAbstractFile extends CreateThesisFile {
@@ -30,4 +32,14 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
         thesis.setExtendedAbstract(file);
     }
 
+    // Service Invokers migrated from Berserk
+
+    private static final CreateThesisAbstractFile serviceInstance = new CreateThesisAbstractFile();
+
+    @Service
+    public static ThesisFile runCreateThesisAbstractFile(Thesis thesis, File fileToUpload, String fileName, String title,
+            String subTitle, Language language) throws FenixServiceException, IOException {
+        ScientificCouncilOrStudentThesisAuthorizationFilter.instance.execute(thesis);
+        return serviceInstance.run(thesis, fileToUpload, fileName, title, subTitle, language);
+    }
 }

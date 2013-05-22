@@ -9,17 +9,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author jpvl
  */
 public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public List run(IUserView userView, Integer executionPeriodCode) {
+    protected List run(IUserView userView, Integer executionPeriodCode) {
 
         ExecutionSemester executionSemester = null;
         if (executionPeriodCode != null) {
@@ -55,4 +58,15 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         List detailedProfessorshipList = getDetailedProfessorships(professorshipsList, responsibleForsList);
         return detailedProfessorshipList;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadProfessorships serviceInstance = new ReadProfessorships();
+
+    @Service
+    public static List runReadProfessorships(IUserView userView, Integer executionPeriodCode) throws NotAuthorizedException {
+        TeacherAuthorizationFilter.instance.execute();
+        return serviceInstance.run(userView, executionPeriodCode);
+    }
+
 }

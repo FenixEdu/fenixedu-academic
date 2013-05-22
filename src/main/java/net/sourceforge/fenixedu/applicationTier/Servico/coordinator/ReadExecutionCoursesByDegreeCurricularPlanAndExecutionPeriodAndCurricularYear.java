@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.DegreeCurricularPlanAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear extends FenixService {
 
@@ -57,6 +61,28 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
             }
         }
         return false;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear serviceInstance =
+            new ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear();
+
+    @Service
+    public static List<ExecutionCourse> runReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear(
+            Integer degreeCurricularPlanID, Integer executionPeriodID, Integer curricularYearID) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            DegreeCurricularPlanAuthorizationFilter.instance.execute(degreeCurricularPlanID);
+            return serviceInstance.run(degreeCurricularPlanID, executionPeriodID, curricularYearID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ResourceAllocationManagerAuthorizationFilter.instance.execute();
+                return serviceInstance.run(degreeCurricularPlanID, executionPeriodID, curricularYearID);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

@@ -6,11 +6,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Leonor Almeida
@@ -19,7 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ReadCourseInformation extends FenixService {
 
-    public TeacherAdministrationSiteView run(final Integer executionCourseOID) throws FenixServiceException {
+    protected TeacherAdministrationSiteView run(final Integer executionCourseOID) throws FenixServiceException {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
         final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
 
@@ -29,6 +34,31 @@ public class ReadCourseInformation extends FenixService {
         result.setComponent(resultComponent);
 
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCourseInformation serviceInstance = new ReadCourseInformation();
+
+    @Service
+    public static TeacherAdministrationSiteView runReadCourseInformation(Integer executionCourseOID)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseOID);
+            return serviceInstance.run(executionCourseOID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ReadCourseInformationCoordinatorAuthorizationFilter.instance.execute(executionCourseOID);
+                return serviceInstance.run(executionCourseOID);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    GEPAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(executionCourseOID);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
     }
 
 }

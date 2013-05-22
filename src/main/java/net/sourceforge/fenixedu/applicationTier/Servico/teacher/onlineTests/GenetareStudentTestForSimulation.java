@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
@@ -23,8 +25,10 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class GenetareStudentTestForSimulation extends FenixService {
-    public List run(Integer executionCourseId, Integer testId, String path, TestType testType,
+    protected List run(Integer executionCourseId, Integer testId, String path, TestType testType,
             CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
@@ -98,6 +102,19 @@ public class GenetareStudentTestForSimulation extends FenixService {
             question = questions.get(questionIndex);
         }
         return question;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GenetareStudentTestForSimulation serviceInstance = new GenetareStudentTestForSimulation();
+
+    @Service
+    public static List runGenetareStudentTestForSimulation(Integer executionCourseId, Integer testId, String path,
+            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, testId, path, testType, correctionAvailability, imsfeedback,
+                testInformation);
     }
 
 }

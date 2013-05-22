@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditTeacherInformationAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
@@ -12,10 +14,11 @@ import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditTeacherInformation extends FenixService {
 
-    public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
+    protected Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
             List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
@@ -87,6 +90,19 @@ public class EditTeacherInformation extends FenixService {
 
         }
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditTeacherInformation serviceInstance = new EditTeacherInformation();
+
+    @Service
+    public static Boolean runEditTeacherInformation(InfoServiceProviderRegime infoServiceProviderRegime,
+            InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
+            List<InfoPublicationsNumber> infoPublicationsNumbers) throws NotAuthorizedException {
+        EditTeacherInformationAuthorizationFilter.instance.execute(infoServiceProviderRegime, infoWeeklyOcupation,
+                infoOrientations, infoPublicationsNumbers);
+        return serviceInstance.run(infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations, infoPublicationsNumbers);
     }
 
 }

@@ -10,8 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear;
@@ -24,12 +27,14 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ChooseGuide extends FenixService {
 
-    public List run(Integer guideNumber, Integer guideYear) throws FenixServiceException {
+    protected List run(Integer guideNumber, Integer guideYear) throws FenixServiceException {
         List guides = null;
 
         guides = Guide.readByNumberAndYear(guideNumber, guideYear);
@@ -61,7 +66,7 @@ public class ChooseGuide extends FenixService {
         return result;
     }
 
-    public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
+    protected InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
 
         Guide guide = null;
 
@@ -87,7 +92,7 @@ public class ChooseGuide extends FenixService {
         return infoGuide;
     }
 
-    public List run(Integer guideYear) throws Exception {
+    protected List run(Integer guideYear) throws Exception {
 
         List guides = Guide.readByYear(guideYear);
         if (guides.isEmpty()) {
@@ -150,7 +155,7 @@ public class ChooseGuide extends FenixService {
         return result;
     }
 
-    public List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
+    protected List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
 
         // Check if person exists
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
@@ -172,6 +177,26 @@ public class ChooseGuide extends FenixService {
         Collections.sort(guides, chainComparator);
 
         return getLatestVersions(guides);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ChooseGuide serviceInstance = new ChooseGuide();
+
+    @Service
+    public static List runChooseGuide(Integer guideNumber, Integer guideYear) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(guideNumber, guideYear);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return serviceInstance.run(guideNumber, guideYear);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

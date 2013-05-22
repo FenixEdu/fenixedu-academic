@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.student.tests.ReadStudentTestForCorrectionFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.student.tests.ReadStudentTestToDoFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -66,6 +69,26 @@ public class ReadStudentTest extends FenixService {
             throw new InvalidArgumentsServiceException();
         }
         return studentTestQuestions;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentTest serviceInstance = new ReadStudentTest();
+
+    @Service
+    public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration, Integer distributedTestId,
+            Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
+        ReadStudentTestForCorrectionFilter.instance.execute(distributedTestId);
+        return serviceInstance.run(registration, distributedTestId, log, path);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, Integer distributedTestId,
+            Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
+        ReadStudentTestToDoFilter.instance.execute(distributedTestId);
+        return serviceInstance.run(registration, distributedTestId, log, path);
     }
 
 }

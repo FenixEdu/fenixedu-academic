@@ -32,9 +32,10 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter {
 
-    public static final ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter instance = new ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter();
+    public static final ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter instance =
+            new ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter();
 
-    public void execute(ExecutionDegree executionDegree, Boolean basic, String executionYearString) throws Exception {
+    public void execute(ExecutionDegree executionDegree) throws NotAuthorizedException {
         final IUserView userView = AccessControl.getUserView();
         if (executionDegree == null) {
             throw new NotAuthorizedException();

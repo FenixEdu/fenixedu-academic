@@ -5,6 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -36,6 +39,24 @@ public class InsertNonAffiliatedTeacher extends FenixService {
         nonAffiliatedTeacher.setInstitutionUnit(institution);
 
         return nonAffiliatedTeacher;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static NonAffiliatedTeacher runInsertNonAffiliatedTeacher(String nonAffiliatedTeacherName, Integer institutionID)
+            throws NotExistingServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return run(nonAffiliatedTeacherName, institutionID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                GEPAuthorizationFilter.instance.execute();
+                return run(nonAffiliatedTeacherName, institutionID);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

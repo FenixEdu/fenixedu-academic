@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.credits.EditTeacherDegreeFinalProjectStudentAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
@@ -13,10 +15,11 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditTeacherDegreeFinalProjectStudentByOID extends FenixService {
 
-    public void run(Integer objectID, InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
+    protected void run(Integer objectID, InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
             throws FenixServiceException {
 
         final Registration registration =
@@ -88,7 +91,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends FenixService {
     }
 
     public class StudentPercentageExceed extends FenixServiceException {
-        private List infoTeacherDegreeFinalProjectStudentList;
+        private final List infoTeacherDegreeFinalProjectStudentList;
 
         public StudentPercentageExceed(List infoTeacherDegreeFinalProjectStudentList) {
             this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
@@ -98,4 +101,18 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends FenixService {
             return this.infoTeacherDegreeFinalProjectStudentList;
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditTeacherDegreeFinalProjectStudentByOID serviceInstance =
+            new EditTeacherDegreeFinalProjectStudentByOID();
+
+    @Service
+    public static void runEditTeacherDegreeFinalProjectStudentByOID(Integer objectID,
+            InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent) throws FenixServiceException,
+            NotAuthorizedException {
+        EditTeacherDegreeFinalProjectStudentAuthorization.instance.execute(infoTeacherDegreeFinalProjectStudent);
+        serviceInstance.run(objectID, infoTeacherDegreeFinalProjectStudent);
+    }
+
 }

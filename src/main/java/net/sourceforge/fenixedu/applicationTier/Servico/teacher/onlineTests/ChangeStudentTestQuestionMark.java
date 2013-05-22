@@ -9,7 +9,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -28,11 +30,12 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionMark extends FenixService {
-    public void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId, Integer studentId,
-            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
+    protected void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
+            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
         path = path.replace('\\', '/');
 
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
@@ -115,6 +118,18 @@ public class ChangeStudentTestQuestionMark extends FenixService {
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(decimalFormatSymbols);
         return (df.format(Math.max(0, totalMark)));
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ChangeStudentTestQuestionMark serviceInstance = new ChangeStudentTestQuestionMark();
+
+    @Service
+    public static void runChangeStudentTestQuestionMark(Integer executionCourseId, Integer distributedTestId, Double newMark,
+            Integer questionId, Integer studentId, TestQuestionStudentsChangesType studentsType, String path)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType, path);
     }
 
 }

@@ -6,7 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
@@ -15,10 +19,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCourseHistoric extends FenixService {
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
+    protected List run(Integer executionCourseId) throws FenixServiceException {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
         List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -68,6 +73,30 @@ public class ReadCourseHistoric extends FenixService {
 
         infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
         return infoSiteCourseHistoric;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCourseHistoric serviceInstance = new ReadCourseHistoric();
+
+    @Service
+    public static List runReadCourseHistoric(Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+        try {
+            ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseId);
+            return serviceInstance.run(executionCourseId);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ReadCourseInformationCoordinatorAuthorizationFilter.instance.execute(executionCourseId);
+                return serviceInstance.run(executionCourseId);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    GEPAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(executionCourseId);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
     }
 
 }

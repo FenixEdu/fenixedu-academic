@@ -7,8 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -25,7 +28,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class DeleteStudentGroupMembers extends FenixService {
 
-    public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
+    protected Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
             throws FenixServiceException {
 
         final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
@@ -68,4 +71,16 @@ public class DeleteStudentGroupMembers extends FenixService {
         }
         return true;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteStudentGroupMembers serviceInstance = new DeleteStudentGroupMembers();
+
+    @Service
+    public static Boolean runDeleteStudentGroupMembers(Integer executionCourseID, Integer studentGroupID,
+            Integer groupPropertiesID, List studentUsernames) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID, studentGroupID, groupPropertiesID, studentUsernames);
+    }
+
 }

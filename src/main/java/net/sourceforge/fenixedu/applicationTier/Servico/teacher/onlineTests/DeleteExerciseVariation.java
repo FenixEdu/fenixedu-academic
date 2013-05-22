@@ -9,7 +9,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -18,6 +20,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
@@ -97,4 +101,16 @@ public class DeleteExerciseVariation extends FenixService {
         }
         return null;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteExerciseVariation serviceInstance = new DeleteExerciseVariation();
+
+    @Service
+    public static List<LabelValueBean> runDeleteExerciseVariation(Integer executionCourseId, Integer questionCode)
+            throws InvalidArgumentsServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, questionCode);
+    }
+
 }

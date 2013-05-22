@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -34,6 +39,34 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID extends FenixService {
         }
 
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static List<InfoExecutionDegree> runReadExecutionDegreesByDegreeCurricularPlanID(Integer degreeCurricularPlanID)
+            throws NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return run(degreeCurricularPlanID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return run(degreeCurricularPlanID);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    CoordinatorAuthorizationFilter.instance.execute();
+                    return run(degreeCurricularPlanID);
+                } catch (NotAuthorizedException ex3) {
+                    try {
+                        OperatorAuthorizationFilter.instance.execute();
+                        return run(degreeCurricularPlanID);
+                    } catch (NotAuthorizedException ex4) {
+                        throw ex4;
+                    }
+                }
+            }
+        }
     }
 
 }

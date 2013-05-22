@@ -13,8 +13,10 @@ import java.util.Random;
 import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -35,11 +37,12 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class InsertDistributedTest extends FenixService {
 
-    public void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
+    protected void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
             CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
             String contextPath) throws FenixServiceException {
@@ -372,6 +375,20 @@ public class InsertDistributedTest extends FenixService {
             // TODO
             distributeForStudentThread.join();
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertDistributedTest serviceInstance = new InsertDistributedTest();
+
+    @Service
+    public static void runInsertDistributedTest(Integer executionCourseId, Integer testId, String testInformation,
+            String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
+            TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
+            List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, testId, testInformation, evaluationTitle, beginDate, beginHour, endDate, endHour,
+                testType, correctionAvaiability, imsFeedback, infoStudentList, contextPath);
     }
 
 }

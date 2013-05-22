@@ -5,8 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -15,10 +19,11 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.Season;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateWrittenEvaluation extends FenixService {
 
-    public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+    protected void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
             List<String> roomIDs, GradeScale gradeScale, Season examSeason, String writtenTestDescription)
             throws FenixServiceException {
@@ -92,4 +97,37 @@ public class CreateWrittenEvaluation extends FenixService {
         }
         return result;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateWrittenEvaluation serviceInstance = new CreateWrittenEvaluation();
+
+    @Service
+    public static void runCreateWrittenEvaluation(Integer executionCourseID, Date writtenEvaluationDate,
+            Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
+            List<String> degreeModuleScopeIDs, List<String> roomIDs, GradeScale gradeScale, Season examSeason,
+            String writtenTestDescription) throws FenixServiceException, NotAuthorizedException {
+        try {
+            ResourceAllocationManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+                    executionCourseIDs, degreeModuleScopeIDs, roomIDs, gradeScale, examSeason, writtenTestDescription);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute();
+                serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime,
+                        writtenEvaluationEndTime, executionCourseIDs, degreeModuleScopeIDs, roomIDs, gradeScale, examSeason,
+                        writtenTestDescription);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseID);
+                    serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime,
+                            writtenEvaluationEndTime, executionCourseIDs, degreeModuleScopeIDs, roomIDs, gradeScale, examSeason,
+                            writtenTestDescription);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

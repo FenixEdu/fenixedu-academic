@@ -3,12 +3,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteTutorship extends TutorshipManagement {
 
@@ -35,6 +40,23 @@ public class DeleteTutorship extends TutorshipManagement {
         }
 
         return studentsWithErrors;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteTutorship serviceInstance = new DeleteTutorship();
+
+    @Service
+    public static List<TutorshipErrorBean> runDeleteTutorship(Integer executionDegreeID, String tutorId,
+            List<Tutorship> tutorsToDelete) throws FenixServiceException, NotAuthorizedException {
+        try {
+            TutorshipAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionDegreeID, tutorId, tutorsToDelete);
+        } catch (NotAuthorizedException ex1) {
+            CoordinatorAuthorizationFilter.instance.execute();
+            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
+            return serviceInstance.run(executionDegreeID, tutorId, tutorsToDelete);
+        }
     }
 
 }

@@ -16,7 +16,7 @@ import pt.ist.fenixframework.DomainObject;
  */
 public abstract class ReadDomainObjectService extends FenixService {
 
-    public InfoObject run(Integer objectId) throws FenixServiceException {
+    protected InfoObject run(Integer objectId) {
         DomainObject domainObject = readDomainObject(objectId);
         InfoObject infoObject = null;
 

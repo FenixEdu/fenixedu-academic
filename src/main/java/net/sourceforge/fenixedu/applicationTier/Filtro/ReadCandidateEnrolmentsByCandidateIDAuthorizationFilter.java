@@ -19,12 +19,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Filtro {
 
-    public static final ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter instance = new ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter();
+    public static final ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter instance =
+            new ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter();
 
     public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter() {
     }
 
-    public void execute(Integer candidateID) throws Exception {
+    public void execute(Integer candidateID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, candidateID)) || (id == null)

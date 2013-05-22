@@ -6,8 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -35,9 +40,11 @@ import net.sourceforge.fenixedu.util.Season;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class EditWrittenEvaluation extends FenixService {
 
-    public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+    protected void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
             List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription,
             GradeScale gradeScale) throws FenixServiceException {
@@ -202,4 +209,39 @@ public class EditWrittenEvaluation extends FenixService {
                     new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditWrittenEvaluation serviceInstance = new EditWrittenEvaluation();
+
+    @Service
+    public static void runEditWrittenEvaluation(Integer executionCourseID, Date writtenEvaluationDate,
+            Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
+            List<String> degreeModuleScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason,
+            String writtenTestDescription, GradeScale gradeScale) throws FenixServiceException, NotAuthorizedException {
+        EditWrittenEvaluationAuthorization.instance.execute(writtenEvaluationOID);
+        try {
+            ResourceAllocationManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+                    executionCourseIDs, degreeModuleScopeIDs, roomIDs, writtenEvaluationOID, examSeason, writtenTestDescription,
+                    gradeScale);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+                serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime,
+                        writtenEvaluationEndTime, executionCourseIDs, degreeModuleScopeIDs, roomIDs, writtenEvaluationOID,
+                        examSeason, writtenTestDescription, gradeScale);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseID);
+                    serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime,
+                            writtenEvaluationEndTime, executionCourseIDs, degreeModuleScopeIDs, roomIDs, writtenEvaluationOID,
+                            examSeason, writtenTestDescription, gradeScale);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

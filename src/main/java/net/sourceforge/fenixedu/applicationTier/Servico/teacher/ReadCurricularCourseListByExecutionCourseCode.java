@@ -6,8 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -22,6 +24,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Tânia Pousão
  * @author Ângela
@@ -29,7 +33,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {
 
-    public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    protected Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
@@ -76,4 +80,14 @@ public class ReadCurricularCourseListByExecutionCourseCode extends FenixService 
                 new TeacherAdministrationSiteView(commonComponent, infoSiteAssociatedCurricularCourses);
         return siteView;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCurricularCourseListByExecutionCourseCode serviceInstance = new ReadCurricularCourseListByExecutionCourseCode();
+
+    @Service
+    public static Object runReadCurricularCourseListByExecutionCourseCode(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException  , NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode);
+    }
+
 }

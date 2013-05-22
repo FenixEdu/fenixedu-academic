@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final ExecutionCourseAndExamLecturingTeacherAuthorizationFilter instance = new ExecutionCourseAndExamLecturingTeacherAuthorizationFilter();
+    public static final ExecutionCourseAndExamLecturingTeacherAuthorizationFilter instance =
+            new ExecutionCourseAndExamLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseAndExamLecturingTeacherAuthorizationFilter() {
     }
@@ -33,7 +34,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
     }
 
     public void execute(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
-            Boolean distributeOnlyEnroledStudents) throws Exception {
+            Boolean distributeOnlyEnroledStudents) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
@@ -11,6 +13,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -18,7 +21,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class WriteEnrollment extends FenixService {
 
     // some of these arguments may be null. they are only needed for filter
-    public Integer run(Integer executionDegreeId, Registration registration, Integer curricularCourseID,
+    protected Integer run(Integer executionDegreeId, Registration registration, Integer curricularCourseID,
             Integer executionPeriodID, CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView) {
 
         final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
@@ -72,6 +75,19 @@ public class WriteEnrollment extends FenixService {
         default:
             return null;
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WriteEnrollment serviceInstance = new WriteEnrollment();
+
+    @Service
+    public static Integer runWriteEnrollment(Integer executionDegreeId, Registration registration, Integer curricularCourseID,
+            Integer executionPeriodID, CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
+            throws NotAuthorizedException {
+        EnrollmentAuthorizationFilter.instance.execute(executionDegreeId, registration);
+        return serviceInstance.run(executionDegreeId, registration, curricularCourseID, executionPeriodID, enrollmentType,
+                enrollmentClass, userView);
     }
 
 }

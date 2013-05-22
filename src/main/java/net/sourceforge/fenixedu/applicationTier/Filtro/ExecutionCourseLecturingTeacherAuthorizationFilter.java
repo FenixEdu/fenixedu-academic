@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final ExecutionCourseLecturingTeacherAuthorizationFilter instance = new ExecutionCourseLecturingTeacherAuthorizationFilter();
+    public static final ExecutionCourseLecturingTeacherAuthorizationFilter instance =
+            new ExecutionCourseLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseLecturingTeacherAuthorizationFilter() {
 
@@ -33,12 +34,19 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
-            throws Exception {
+    public void execute(Integer executionCourseCode) throws NotAuthorizedException {
+        execute(getExecutionCourse(executionCourseCode));
+    }
+
+    public void execute(SummariesManagementBean executionCourseCode) throws NotAuthorizedException {
+        execute(getExecutionCourse(executionCourseCode));
+    }
+
+    public void execute(ExecutionCourse executionCourse) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, executionCourseCode)) {
+            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, executionCourse)) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
@@ -46,8 +54,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         }
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Integer executionCourseCode) {
-        final ExecutionCourse executionCourse = getExecutionCourse(executionCourseCode);
+    private boolean lecturesExecutionCourse(IUserView id, ExecutionCourse executionCourse) {
         if (executionCourse == null) {
             return false;
         }

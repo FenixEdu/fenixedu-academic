@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -24,10 +23,11 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public class CandidacyAccessFilter {
 
     public static final CandidacyAccessFilter instance = new CandidacyAccessFilter();
+
     public CandidacyAccessFilter() {
     }
 
-    public void execute(Integer candidacyID) throws FilterException, Exception {
+    public void execute(Integer candidacyID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         if ((!this.checkCandidacyOwnership(id, candidacyID)) && (!this.checkCoordinatorRole(id, candidacyID))) {
@@ -36,7 +36,7 @@ public class CandidacyAccessFilter {
 
     }
 
-    boolean checkCoordinatorRole(IUserView id, Integer candidacyID) throws Exception {
+    boolean checkCoordinatorRole(IUserView id, Integer candidacyID) {
         boolean result = true;
         // Collection roles = id.getRoles();
         // Iterator iter = roles.iterator();
@@ -51,7 +51,7 @@ public class CandidacyAccessFilter {
         return result;
     }
 
-    boolean checkCandidacyOwnership(IUserView id, Integer candidacyID) throws Exception {
+    boolean checkCandidacyOwnership(IUserView id, Integer candidacyID) {
         boolean result = true;
 
         Registration registration = Registration.readByUsername(id.getUtilizador());

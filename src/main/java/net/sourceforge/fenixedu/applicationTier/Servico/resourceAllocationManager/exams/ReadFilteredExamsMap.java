@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadFilteredExamsMap extends FenixService {
 
@@ -32,7 +33,7 @@ public class ReadFilteredExamsMap extends FenixService {
         private static final long serialVersionUID = 1L;
     }
 
-    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
+    protected InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
         InfoExamsMap result = new InfoExamsMap();
@@ -142,4 +143,13 @@ public class ReadFilteredExamsMap extends FenixService {
         }
         return result;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ReadFilteredExamsMap serviceInstance = new ReadFilteredExamsMap();
+
+    @Service
+    public static InfoExamsMap runReadFilteredExamsMap(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException  {
+        return serviceInstance.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
+    }
+
 }

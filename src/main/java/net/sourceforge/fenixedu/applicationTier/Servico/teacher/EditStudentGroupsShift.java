@@ -4,19 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditStudentGroupsShift extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
+    protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
             List<Integer> studentGroupsCodes) throws FenixServiceException {
 
         Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -63,6 +66,17 @@ public class EditStudentGroupsShift extends FenixService {
         }
 
         return studentGroups;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditStudentGroupsShift serviceInstance = new EditStudentGroupsShift();
+
+    @Service
+    public static Boolean runEditStudentGroupsShift(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
+            List<Integer> studentGroupsCodes) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, groupPropertiesCode, shiftCode, studentGroupsCodes);
     }
 
 }

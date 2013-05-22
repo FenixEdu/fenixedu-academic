@@ -182,4 +182,13 @@ public class RegisterAlumniData extends AlumniNotificationService {
         }
     }
 
+    // Service Invokers migrated from Berserk
+
+    private static final RegisterAlumniData serviceInstance = new RegisterAlumniData();
+
+    @Service
+    public static Alumni runRegisterAlumniData(Alumni alumni, UUID urlRequestToken) throws FenixServiceException  {
+        return serviceInstance.run(alumni, urlRequestToken);
+    }
+
 }

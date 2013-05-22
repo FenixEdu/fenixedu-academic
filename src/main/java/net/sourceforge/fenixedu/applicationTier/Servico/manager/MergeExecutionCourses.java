@@ -15,8 +15,12 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -59,6 +63,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -75,7 +80,7 @@ public class MergeExecutionCourses extends FenixService {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
-    public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
+    protected void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
 
         if (executionCourseDestinationId.equals(executionCourseSourceId)) {
             throw new SourceAndDestinationAreTheSameException();
@@ -539,6 +544,31 @@ public class MergeExecutionCourses extends FenixService {
             executionCourseLog.setExecutionCourse(executionCourseTo);
         }
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final MergeExecutionCourses serviceInstance = new MergeExecutionCourses();
+
+    @Service
+    public static void runMergeExecutionCourses(Integer executionCourseDestinationId, Integer executionCourseSourceId)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ResourceAllocationManagerAuthorizationFilter.instance.execute();
+                serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    OperatorAuthorizationFilter.instance.execute();
+                    serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
     }
 
 }

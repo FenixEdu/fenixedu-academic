@@ -22,7 +22,7 @@ public class ReadQualificationAuthorizationFilter {
         return RoleType.ALUMNI;
     }
 
-    public void execute(Integer objectId) throws Exception {
+    public void execute(Integer objectId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             boolean isNew = (objectId == null) || objectId.equals(Integer.valueOf(0));

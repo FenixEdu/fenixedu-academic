@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ReadShiftsByExecutionCourseIDAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadShiftsByExecutionCourseID extends FenixService {
 
-    public InfoExecutionCourseOccupancy run(Integer executionCourseID) {
+    protected InfoExecutionCourseOccupancy run(Integer executionCourseID) {
 
         final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
@@ -34,6 +37,16 @@ public class ReadShiftsByExecutionCourseID extends FenixService {
         }
 
         return infoExecutionCourseOccupancy;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadShiftsByExecutionCourseID serviceInstance = new ReadShiftsByExecutionCourseID();
+
+    @Service
+    public static InfoExecutionCourseOccupancy runReadShiftsByExecutionCourseID(Integer executionCourseID) throws NotAuthorizedException {
+        ReadShiftsByExecutionCourseIDAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID);
     }
 
 }

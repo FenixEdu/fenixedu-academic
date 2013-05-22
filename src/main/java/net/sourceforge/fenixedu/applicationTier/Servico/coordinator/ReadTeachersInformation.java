@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -94,6 +97,26 @@ public class ReadTeachersInformation extends FenixService {
             result.add(executionDegree.getDegreeCurricularPlan());
         }
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadTeachersInformation serviceInstance = new ReadTeachersInformation();
+
+    @Service
+    public static List runReadTeachersInformation(Integer executionDegreeId, Boolean basic, String executionYearString)
+            throws NotAuthorizedException {
+        try {
+            CoordinatorAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionDegreeId, basic, executionYearString);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                GEPAuthorizationFilter.instance.execute();
+                return serviceInstance.run(executionDegreeId, basic, executionYearString);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

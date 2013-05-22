@@ -7,17 +7,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithTeacherIdArgumentAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author jpvl
  */
 public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException {
+    protected List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
         if (executionPeriodOID == null) {
@@ -35,4 +38,17 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDeta
         }
         return getDetailedProfessorships(teacher.getProfessorships(executionSemester), responsibleFors);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDetailedTeacherProfessorshipsByExecutionPeriod serviceInstance =
+            new ReadDetailedTeacherProfessorshipsByExecutionPeriod();
+
+    @Service
+    public static List runReadDetailedTeacherProfessorshipsByExecutionPeriod(Integer teacherOID, Integer executionPeriodOID)
+            throws FenixServiceException, NotAuthorizedException {
+        CreditsServiceWithTeacherIdArgumentAuthorization.instance.execute(teacherOID);
+        return serviceInstance.run(teacherOID, executionPeriodOID);
+    }
+
 }

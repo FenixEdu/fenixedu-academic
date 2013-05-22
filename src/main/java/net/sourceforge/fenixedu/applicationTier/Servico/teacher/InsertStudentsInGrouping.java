@@ -7,13 +7,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -22,7 +25,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InsertStudentsInGrouping extends FenixService {
 
-    public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final String[] selected)
+    protected Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final String[] selected)
             throws FenixServiceException {
 
         if (selected == null) {
@@ -89,6 +92,17 @@ public class InsertStudentsInGrouping extends FenixService {
             }
         }
         return null;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertStudentsInGrouping serviceInstance = new InsertStudentsInGrouping();
+
+    @Service
+    public static Boolean runInsertStudentsInGrouping(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, groupPropertiesCode, selected);
     }
 
 }

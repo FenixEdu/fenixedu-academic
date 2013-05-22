@@ -9,7 +9,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.IQuestionCorrectionStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.QuestionCorrectionStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
@@ -26,11 +28,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionValue extends FenixService {
-    public void run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId, Integer studentId,
-            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
+    protected void run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId,
+            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
 
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
@@ -117,6 +120,18 @@ public class ChangeStudentTestQuestionValue extends FenixService {
 
         }
         return newMark;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ChangeStudentTestQuestionValue serviceInstance = new ChangeStudentTestQuestionValue();
+
+    @Service
+    public static void runChangeStudentTestQuestionValue(Integer executionCourseId, Integer distributedTestId, Double newValue,
+            Integer questionId, Integer studentId, TestQuestionStudentsChangesType studentsType, String path)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, distributedTestId, newValue, questionId, studentId, studentsType, path);
     }
 
 }

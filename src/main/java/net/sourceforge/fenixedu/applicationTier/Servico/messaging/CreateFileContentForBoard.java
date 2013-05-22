@@ -17,13 +17,14 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateFileContentForBoard extends FileContentService {
 
-    public void run(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup,
+    protected void run(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup,
             Person person) throws FenixServiceException, DomainException, IOException {
 
         if (!board.hasWriter(person)) {
@@ -58,4 +59,13 @@ public class CreateFileContentForBoard extends FileContentService {
         filePath.addNode(0, new VirtualPathNode("Announcements", "Announcements"));
         return filePath;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final CreateFileContentForBoard serviceInstance = new CreateFileContentForBoard();
+
+    @Service
+    public static void runCreateFileContentForBoard(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup, Person person) throws FenixServiceException, DomainException, IOException  {
+        serviceInstance.run(board, file, originalFilename, displayName, permittedGroup, person);
+    }
+
 }

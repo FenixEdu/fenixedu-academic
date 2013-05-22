@@ -14,7 +14,7 @@ public class ManagerOrSeminariesCoordinatorFilter {
 
     public static final ManagerOrSeminariesCoordinatorFilter instance = new ManagerOrSeminariesCoordinatorFilter();
 
-    public void execute(Integer SCPIDINternal) throws Exception {
+    public void execute(Integer SCPIDINternal) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         boolean seminaryCandidate = false;

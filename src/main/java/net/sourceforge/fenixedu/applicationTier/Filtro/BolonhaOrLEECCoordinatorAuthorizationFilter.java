@@ -20,7 +20,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         return RoleType.COORDINATOR;
     }
 
-    public void execute(Integer executionDegreeID) throws Exception {
+    public void execute(Integer executionDegreeID) throws NotAuthorizedException {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {

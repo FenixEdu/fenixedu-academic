@@ -7,13 +7,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -22,7 +25,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InsertGroupingMembers extends FenixService {
 
-    public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
+    protected Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
             throws FenixServiceException {
 
         final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -70,4 +73,16 @@ public class InsertGroupingMembers extends FenixService {
     private static Attends findAttends(final Registration registration, final List<ExecutionCourse> executionCourses) {
         return InsertStudentsInGrouping.findAttends(registration, executionCourses);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertGroupingMembers serviceInstance = new InsertGroupingMembers();
+
+    @Service
+    public static Boolean runInsertGroupingMembers(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, groupPropertiesCode, studentCodes);
+    }
+
 }

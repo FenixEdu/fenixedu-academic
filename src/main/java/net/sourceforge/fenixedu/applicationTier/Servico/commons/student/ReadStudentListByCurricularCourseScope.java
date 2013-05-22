@@ -13,17 +13,21 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseScopeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadStudentListByCurricularCourseScope extends FenixService {
 
-    public List run(IUserView userView, Integer curricularCourseScopeID) throws FenixServiceException {
+    protected List run(IUserView userView, Integer curricularCourseScopeID) throws FenixServiceException {
         CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
 
         final List<Enrolment> enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
@@ -52,6 +56,17 @@ public class ReadStudentListByCurricularCourseScope extends FenixService {
         }
         Collections.sort(result, new BeanComparator("infoStudentCurricularPlan.infoStudent.number"));
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentListByCurricularCourseScope serviceInstance = new ReadStudentListByCurricularCourseScope();
+
+    @Service
+    public static List runReadStudentListByCurricularCourseScope(IUserView userView, Integer curricularCourseScopeID)
+            throws FenixServiceException, NotAuthorizedException {
+        StudentListByCurricularCourseScopeAuthorizationFilter.instance.execute(userView, curricularCourseScopeID);
+        return serviceInstance.run(userView, curricularCourseScopeID);
     }
 
 }

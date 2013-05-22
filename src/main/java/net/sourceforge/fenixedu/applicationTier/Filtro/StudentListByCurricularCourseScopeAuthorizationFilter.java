@@ -21,12 +21,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtro {
 
-    public static final StudentListByCurricularCourseScopeAuthorizationFilter instance = new StudentListByCurricularCourseScopeAuthorizationFilter();
+    public static final StudentListByCurricularCourseScopeAuthorizationFilter instance =
+            new StudentListByCurricularCourseScopeAuthorizationFilter();
 
     public StudentListByCurricularCourseScopeAuthorizationFilter() {
     }
 
-    public void execute(IUserView userView, Integer curricularCourseScopeID) throws Exception {
+    public void execute(IUserView userView, Integer curricularCourseScopeID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, curricularCourseScopeID)) || (id == null)

@@ -7,9 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 /**
  * @author jpvl
  */
-public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends AbstractTeacherDepartmentAuthorization {
+public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends AbstractTeacherDepartmentAuthorization<Integer> {
 
-    public static final CreditsServiceWithTeacherIdInSecondArgumentAuthorization instance = new CreditsServiceWithTeacherIdInSecondArgumentAuthorization();
+    public static final CreditsServiceWithTeacherIdInSecondArgumentAuthorization instance =
+            new CreditsServiceWithTeacherIdInSecondArgumentAuthorization();
+
     /*
      * (non-Javadoc)
      * 
@@ -18,8 +20,7 @@ public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends Ab
      * #getTeacherId(java.lang.Object[])
      */
     @Override
-    protected Integer getTeacherId(Object[] arguments) {
-        Integer teacherId = (Integer) arguments[1];
+    protected Integer getTeacherId(Integer teacherId) {
         return teacherId;
     }
 

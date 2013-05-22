@@ -7,14 +7,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -23,7 +26,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class EditStudentGroupShift extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+    protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
             throws FenixServiceException {
 
         Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -53,4 +56,16 @@ public class EditStudentGroupShift extends FenixService {
 
         return Boolean.TRUE;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditStudentGroupShift serviceInstance = new EditStudentGroupShift();
+
+    @Service
+    public static Boolean runEditStudentGroupShift(Integer executionCourseCode, Integer studentGroupCode,
+            Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode, newShiftCode);
+    }
+
 }

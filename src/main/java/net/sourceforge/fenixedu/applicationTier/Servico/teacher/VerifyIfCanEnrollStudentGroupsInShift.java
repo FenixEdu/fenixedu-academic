@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -20,7 +23,8 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
  */
 public class VerifyIfCanEnrollStudentGroupsInShift extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
+    protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
+            throws FenixServiceException {
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
         if (grouping == null) {
@@ -52,6 +56,17 @@ public class VerifyIfCanEnrollStudentGroupsInShift extends FenixService {
             }
         }
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final VerifyIfCanEnrollStudentGroupsInShift serviceInstance = new VerifyIfCanEnrollStudentGroupsInShift();
+
+    @Service
+    public static Boolean runVerifyIfCanEnrollStudentGroupsInShift(Integer executionCourseCode, Integer groupPropertiesCode,
+            Integer shiftCode) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, groupPropertiesCode, shiftCode);
     }
 
 }

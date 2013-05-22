@@ -20,9 +20,9 @@ public class SubmitFinalWorkProposalAuthorization {
 
     public static final SubmitFinalWorkProposalAuthorization instance = new SubmitFinalWorkProposalAuthorization();
 
-    public void execute(InfoProposalEditor infoProposal) throws Exception {
+    public void execute(InfoProposalEditor infoProposal) throws NotAuthorizedException {
         final IUserView userView = AccessControl.getUserView();
-        final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) infoProposal;
+        final InfoProposalEditor infoProposalEditor = infoProposal;
         if (infoProposalEditor.getIdInternal() != null) {
             final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getIdInternal());
             if (!authorized(userView.getPerson(), proposal)) {

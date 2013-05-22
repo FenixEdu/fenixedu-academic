@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
@@ -11,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -26,7 +29,7 @@ public class PublishMarks extends FenixService {
 
     private final static String OPTIMUS_NETWORK_PREFIX = "93";
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage, Boolean sendSMS,
+    protected Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage, Boolean sendSMS,
             String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
@@ -73,6 +76,17 @@ public class PublishMarks extends FenixService {
         }
 
         return Boolean.TRUE;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final PublishMarks serviceInstance = new PublishMarks();
+
+    @Service
+    public static Object runPublishMarks(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
+            Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle);
     }
 
 }

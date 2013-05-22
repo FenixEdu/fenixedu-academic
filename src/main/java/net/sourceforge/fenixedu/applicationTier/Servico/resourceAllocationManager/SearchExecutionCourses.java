@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorExecutionDegreeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -33,6 +35,8 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class SearchExecutionCourses extends FenixService {
 
@@ -235,4 +239,16 @@ public class SearchExecutionCourses extends FenixService {
 
         return result;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SearchExecutionCourses serviceInstance = new SearchExecutionCourses();
+
+    @Service
+    public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
+            ExecutionDegree executionDegree, String courseName) throws NotAuthorizedException {
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getIdInternal());
+        return serviceInstance.run(academicInterval, executionDegree, courseName);
+    }
+
 }

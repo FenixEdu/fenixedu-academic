@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditCareerTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
@@ -8,10 +10,11 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCareer extends FenixService {
 
-    public void run(Integer careerId, InfoCareer infoCareer) {
+    protected void run(Integer careerId, InfoCareer infoCareer) {
         if (infoCareer instanceof InfoTeachingCareer) {
             editCareer(careerId, (InfoTeachingCareer) infoCareer);
         } else if (infoCareer instanceof InfoProfessionalCareer) {
@@ -43,6 +46,16 @@ public class EditCareer extends FenixService {
         } else {
             professionalCareer.edit(infoProfessionalCareer);
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditCareer serviceInstance = new EditCareer();
+
+    @Service
+    public static void runEditCareer(Integer careerId, InfoCareer infoCareer) throws NotAuthorizedException {
+        EditCareerTeacherAuthorizationFilter.instance.execute(careerId, infoCareer);
+        serviceInstance.run(careerId, infoCareer);
     }
 
 }

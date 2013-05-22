@@ -5,7 +5,10 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
@@ -15,10 +18,11 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class WriteEnrollmentsList extends FenixService {
 
-    public void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
+    protected void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
             ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
             throws FenixServiceException {
 
@@ -89,4 +93,28 @@ public class WriteEnrollmentsList extends FenixService {
             return null;
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WriteEnrollmentsList serviceInstance = new WriteEnrollmentsList();
+
+    @Service
+    public static void runWriteEnrollmentsList(StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
+            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            EnrollmentWithoutRulesAuthorizationFilter.instance.execute(studentCurricularPlan, degreeType);
+            serviceInstance.run(studentCurricularPlan, degreeType, executionSemester, curricularCourses, optionalEnrollments,
+                    userView);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeEnrollmentWithoutRulesAuthorizationFilter.instance.execute(studentCurricularPlan, degreeType);
+                serviceInstance.run(studentCurricularPlan, degreeType, executionSemester, curricularCourses, optionalEnrollments,
+                        userView);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

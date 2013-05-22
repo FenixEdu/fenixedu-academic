@@ -3,11 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class PrepareDegreesListByStudentNumber extends FenixService {
 
@@ -29,4 +33,25 @@ public class PrepareDegreesListByStudentNumber extends FenixService {
         }
         return executionDegrees;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final PrepareDegreesListByStudentNumber serviceInstance = new PrepareDegreesListByStudentNumber();
+
+    @Service
+    public static List<ExecutionDegree> runPrepareDegreesListByStudentNumber(Registration registration, DegreeType degreeType,
+            ExecutionSemester executionSemester) throws FenixServiceException, NotAuthorizedException {
+        try {
+            EnrollmentWithoutRulesAuthorizationFilter.instance.execute(registration, degreeType);
+            return serviceInstance.run(registration, degreeType, executionSemester);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeEnrollmentWithoutRulesAuthorizationFilter.instance.execute(registration, degreeType);
+                return serviceInstance.run(registration, degreeType, executionSemester);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -17,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 
 public class ReadExecutionCourseResponsiblesIds extends FenixService {
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
+    protected List run(Integer executionCourseId) throws FenixServiceException {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         List<Professorship> responsibles = executionCourse.responsibleFors();
@@ -30,4 +34,25 @@ public class ReadExecutionCourseResponsiblesIds extends FenixService {
         }
         return responsibleIDs;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadExecutionCourseResponsiblesIds serviceInstance = new ReadExecutionCourseResponsiblesIds();
+
+    @Service
+    public static List runReadExecutionCourseResponsiblesIds(Integer executionCourseId) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionCourseId);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                return serviceInstance.run(executionCourseId);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

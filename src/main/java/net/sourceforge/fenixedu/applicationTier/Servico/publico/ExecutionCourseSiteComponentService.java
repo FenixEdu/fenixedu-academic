@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Jo�o Mota
@@ -25,7 +26,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ExecutionCourseSiteComponentService extends FenixService {
 
-    public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
+    protected Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
             Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException {
         final ExecutionCourseSite site;
@@ -52,4 +53,14 @@ public class ExecutionCourseSiteComponentService extends FenixService {
 
         return executionCourseSiteView;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ExecutionCourseSiteComponentService serviceInstance = new ExecutionCourseSiteComponentService();
+
+    @Service
+    public static Object runExecutionCourseSiteComponentService(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
+            NonExistingAssociatedCurricularCoursesServiceException  {
+        return serviceInstance.run(commonComponent, bodyComponent, infoSiteCode, infoExecutionCourseCode, sectionIndex, curricularCourseId);
+    }
+
 }

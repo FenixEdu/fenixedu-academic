@@ -6,10 +6,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditExternalActivityTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -17,7 +20,7 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  */
 public class EditExternalActivity extends FenixService {
 
-    public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException {
+    protected void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException {
         ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
         // If it doesn't exist in the database, a new one has to be created
         if (externalActivity == null) {
@@ -28,4 +31,14 @@ public class EditExternalActivity extends FenixService {
             externalActivity.edit(infoExternalActivity);
         }
     }
+    // Service Invokers migrated from Berserk
+
+    private static final EditExternalActivity serviceInstance = new EditExternalActivity();
+
+    @Service
+    public static void runEditExternalActivity(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException  , NotAuthorizedException {
+        EditExternalActivityTeacherAuthorizationFilter.instance.execute(externalActivityId, infoExternalActivity);
+        serviceInstance.run(externalActivityId, infoExternalActivity);
+    }
+
 }

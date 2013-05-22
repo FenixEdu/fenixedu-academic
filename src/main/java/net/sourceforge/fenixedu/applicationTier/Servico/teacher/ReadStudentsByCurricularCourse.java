@@ -5,7 +5,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -22,9 +25,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadStudentsByCurricularCourse extends FenixService {
 
-    public Object run(Integer executionCourseCode, Integer courseCode) throws FenixServiceException {
+    protected Object run(Integer executionCourseCode, Integer courseCode) throws FenixServiceException {
 
         CurricularCourse curricularCourse = null;
 
@@ -74,4 +79,25 @@ public class ReadStudentsByCurricularCourse extends FenixService {
 
         return new TeacherAdministrationSiteView(commonComponent, infoSiteStudents);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentsByCurricularCourse serviceInstance = new ReadStudentsByCurricularCourse();
+
+    @Service
+    public static Object runReadStudentsByCurricularCourse(Integer executionCourseCode, Integer courseCode)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+            return serviceInstance.run(executionCourseCode, courseCode);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseCode);
+                return serviceInstance.run(executionCourseCode, courseCode);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

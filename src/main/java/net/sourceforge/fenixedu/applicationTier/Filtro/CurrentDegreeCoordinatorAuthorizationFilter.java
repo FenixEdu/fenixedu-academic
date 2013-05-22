@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -39,7 +38,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
     }
 
     public void execute(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
-            InfoCurriculum newInfoCurriculum, String username, String language) throws Exception {
+            InfoCurriculum newInfoCurriculum, String username, String language) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())

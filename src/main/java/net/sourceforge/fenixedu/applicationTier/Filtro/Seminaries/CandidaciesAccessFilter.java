@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -21,10 +20,11 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 public class CandidaciesAccessFilter {
 
     public static final CandidaciesAccessFilter instance = new CandidaciesAccessFilter();
+
     public CandidaciesAccessFilter() {
     }
 
-    public void execute() throws Exception {
+    public void execute() throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
                 || (id.getRoleTypes() == null)) {

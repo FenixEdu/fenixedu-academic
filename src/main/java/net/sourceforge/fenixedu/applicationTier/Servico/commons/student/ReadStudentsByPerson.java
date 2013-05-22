@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.StudentAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentsByPerson extends FenixService {
 
-    public List run(InfoPerson infoPerson) {
+    protected List run(InfoPerson infoPerson) {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
         Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
@@ -20,6 +24,25 @@ public class ReadStudentsByPerson extends FenixService {
         }
 
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentsByPerson serviceInstance = new ReadStudentsByPerson();
+
+    @Service
+    public static List runReadStudentsByPerson(InfoPerson infoPerson) throws NotAuthorizedException {
+        try {
+            StudentAuthorizationFilter.instance.execute();
+            return serviceInstance.run(infoPerson);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return serviceInstance.run(infoPerson);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

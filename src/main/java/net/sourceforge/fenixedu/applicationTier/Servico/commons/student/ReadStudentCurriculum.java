@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminariesCoordinatorFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.StudentCurriculumViewAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentCurriculum extends FenixService {
 
-    public List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
+    protected List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
 
         final StudentCurricularPlan studentCurricularPlan =
                 rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
@@ -26,4 +32,35 @@ public class ReadStudentCurriculum extends FenixService {
         }
         return result;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentCurriculum serviceInstance = new ReadStudentCurriculum();
+
+    @Service
+    public static List runReadStudentCurriculum(Integer executionDegreeCode, Integer studentCurricularPlanID)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            SeminariesCoordinatorFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
+            return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                StudentCurriculumViewAuthorizationFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
+                return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    CoordinatorAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
+                } catch (NotAuthorizedException ex3) {
+                    try {
+                        MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                        return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
+                    } catch (NotAuthorizedException ex4) {
+                        throw ex4;
+                    }
+                }
+            }
+        }
+    }
+
 }

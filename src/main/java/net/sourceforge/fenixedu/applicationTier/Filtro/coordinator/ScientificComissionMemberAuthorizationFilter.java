@@ -11,14 +11,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ScientificComissionMemberAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final ScientificComissionMemberAuthorizationFilter instance = new ScientificComissionMemberAuthorizationFilter();
+    public static final ScientificComissionMemberAuthorizationFilter instance =
+            new ScientificComissionMemberAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    public void execute(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, Integer mark) throws Exception {
+    public void execute(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis, Integer mark) throws NotAuthorizedException {
         super.execute();
 
         IUserView userView = AccessControl.getUserView();

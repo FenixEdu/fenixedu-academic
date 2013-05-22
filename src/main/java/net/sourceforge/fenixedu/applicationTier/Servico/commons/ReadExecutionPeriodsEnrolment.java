@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriodsEnrolment extends FenixService {
 
@@ -22,7 +23,7 @@ public class ReadExecutionPeriodsEnrolment extends FenixService {
 
     private final Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
 
-    public List run(DegreeType degreeType) {
+    protected List run(DegreeType degreeType) {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
         for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
             result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
@@ -44,6 +45,15 @@ public class ReadExecutionPeriodsEnrolment extends FenixService {
         }
 
         return newRes;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadExecutionPeriodsEnrolment serviceInstance = new ReadExecutionPeriodsEnrolment();
+
+    @Service
+    public static List runReadExecutionPeriodsEnrollmentFenix(DegreeType degreeType) {
+        return serviceInstance.run(degreeType);
     }
 
 }

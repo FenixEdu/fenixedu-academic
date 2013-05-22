@@ -64,7 +64,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
         return true;
     }
 
-    public void execute(String[] situations, String[] ids, String[] remarks, String[] substitutes) throws Exception {
+    public void execute(String[] situations, String[] ids, String[] remarks, String[] substitutes) throws NotAuthorizedException {
         IUserView userView = AccessControl.getUserView();
         if ((userView != null && userView.getRoleTypes() != null && !containsRoleType(userView.getRoleTypes()))
                 || (userView != null && userView.getRoleTypes() != null && !hasPrivilege(userView, ids)) || (userView == null)

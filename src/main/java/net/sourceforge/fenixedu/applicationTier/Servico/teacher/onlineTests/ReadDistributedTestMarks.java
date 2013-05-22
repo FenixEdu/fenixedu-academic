@@ -10,8 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
@@ -24,13 +26,15 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Susana Fernandes
  * 
  */
 public class ReadDistributedTestMarks extends FenixService {
 
-    public InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
+    protected InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
             throws FenixServiceException {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
@@ -81,4 +85,16 @@ public class ReadDistributedTestMarks extends FenixService {
 
         return infoSiteStudentsTestMarks;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDistributedTestMarks serviceInstance = new ReadDistributedTestMarks();
+
+    @Service
+    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(Integer executionCourseId, Integer distributedTestId,
+            String path) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId, path);
+    }
+
 }

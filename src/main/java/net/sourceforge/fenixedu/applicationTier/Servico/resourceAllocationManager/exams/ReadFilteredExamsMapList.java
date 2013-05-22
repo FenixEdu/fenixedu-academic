@@ -31,10 +31,11 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadFilteredExamsMapList extends FenixService {
 
-    public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears, InfoExecutionPeriod infoExecutionPeriod) {
+    protected InfoExamsMap run(List infoExecutionDegreeList, List curricularYears, InfoExecutionPeriod infoExecutionPeriod) {
         // Object to be returned
         InfoExamsMap infoExamsMap = new InfoExamsMap();
 
@@ -155,6 +156,15 @@ public class ReadFilteredExamsMapList extends FenixService {
         }
 
         return infoExamsMap;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadFilteredExamsMapList serviceInstance = new ReadFilteredExamsMapList();
+
+    @Service
+    public static InfoExamsMap runReadFilteredExamsMapList(List infoExecutionDegreeList, List curricularYears, InfoExecutionPeriod infoExecutionPeriod) {
+        return serviceInstance.run(infoExecutionDegreeList, curricularYears, infoExecutionPeriod);
     }
 
 }

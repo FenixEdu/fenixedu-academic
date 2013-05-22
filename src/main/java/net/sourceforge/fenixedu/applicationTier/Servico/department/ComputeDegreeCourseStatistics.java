@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
@@ -39,6 +40,15 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
         }
 
         return results;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ComputeDegreeCourseStatistics serviceInstance = new ComputeDegreeCourseStatistics();
+
+    @Service
+    public static List<DegreeCourseStatisticsDTO> runComputeDegreeCourseStatistics(Integer competenceCourseId, Integer executionPeriodId) throws FenixServiceException  {
+        return serviceInstance.run(competenceCourseId, executionPeriodId);
     }
 
 }

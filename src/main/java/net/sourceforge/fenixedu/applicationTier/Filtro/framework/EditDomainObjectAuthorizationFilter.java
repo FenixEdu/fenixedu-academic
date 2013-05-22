@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author Leonor Almeida
@@ -19,7 +18,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public void execute(Object dummy, InfoObject infoObject) throws FilterException, Exception {
+    public void execute(Object dummy, InfoObject infoObject) throws NotAuthorizedException {
         try {
             IUserView id = AccessControl.getUserView();
             Integer idInternal = infoObject.getIdInternal();

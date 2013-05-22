@@ -24,7 +24,7 @@ public class SeminaryCoordinatorOrStudentFilter {
     public SeminaryCoordinatorOrStudentFilter() {
     }
 
-    public void execute(Integer equivalencyID) throws Exception {
+    public void execute() throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType1()) && !id.hasRoleType(getRoleType2())))

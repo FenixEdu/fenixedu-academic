@@ -9,8 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -18,6 +20,7 @@ import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
@@ -26,7 +29,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class DeleteProjectProposal extends FenixService {
 
-    public Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    protected Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException {
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
@@ -108,4 +111,16 @@ public class DeleteProjectProposal extends FenixService {
 
         return true;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteProjectProposal serviceInstance = new DeleteProjectProposal();
+
+    @Service
+    public static Boolean runDeleteProjectProposal(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+            String withdrawalPersonUsername) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
+        return serviceInstance.run(objectCode, groupPropertiesCode, executionCourseCode, withdrawalPersonUsername);
+    }
+
 }

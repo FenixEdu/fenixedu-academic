@@ -9,19 +9,22 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadStudentsWithoutDistributedTest extends FenixService {
 
-    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    protected List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         final List<Attends> attendList = executionCourse.getAttends();
@@ -34,4 +37,16 @@ public class ReadStudentsWithoutDistributedTest extends FenixService {
         }
         return infoStudentList;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentsWithoutDistributedTest serviceInstance = new ReadStudentsWithoutDistributedTest();
+
+    @Service
+    public static List runReadStudentsWithoutDistributedTest(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId);
+    }
+
 }

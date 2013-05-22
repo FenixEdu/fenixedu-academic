@@ -7,7 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
@@ -23,9 +25,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class SelectCandidaciesService extends FenixService {
 
-    public SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID) throws FenixServiceException {
+    protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID) throws FenixServiceException {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
         List<Seminary> seminaries = rootDomainObject.getSeminarys();
@@ -120,6 +124,17 @@ public class SelectCandidaciesService extends FenixService {
             }
         }
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SelectCandidaciesService serviceInstance = new SelectCandidaciesService();
+
+    @Service
+    public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, Integer seminaryID)
+            throws FenixServiceException, NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run(inEnrollmentPeriod, seminaryID);
     }
 
 }

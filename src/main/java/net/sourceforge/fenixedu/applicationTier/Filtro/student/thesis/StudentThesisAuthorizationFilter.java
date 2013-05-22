@@ -10,7 +10,7 @@ public class StudentThesisAuthorizationFilter {
 
     public static final StudentThesisAuthorizationFilter instance = new StudentThesisAuthorizationFilter();
 
-    public void execute(Thesis thesis) throws Exception {
+    public void execute(Thesis thesis) throws NotAuthorizedException {
         Student student = getStudent();
 
         if (student == null) {

@@ -7,6 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ReadTeacherInformationCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -45,6 +49,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadTeacherInformation extends FenixService {
 
@@ -311,4 +317,29 @@ public class ReadTeacherInformation extends FenixService {
     private List getInfoPublications(Teacher teacher, Integer typePublication) {
         return Collections.emptyList();
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadTeacherInformation serviceInstance = new ReadTeacherInformation();
+
+    @Service
+    public static SiteView runReadTeacherInformation(String user, String argExecutionYear) throws NotAuthorizedException {
+        try {
+            TeacherAuthorizationFilter.instance.execute();
+            return serviceInstance.run(user, argExecutionYear);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ReadTeacherInformationCoordinatorAuthorizationFilter.instance.execute(user, argExecutionYear);
+                return serviceInstance.run(user, argExecutionYear);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    GEPAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(user, argExecutionYear);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

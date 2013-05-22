@@ -7,11 +7,12 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateThesisProposalWithAssignment extends FenixService {
 
-    public Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, Proposal proposal, Thesis previousThesis) {
+    protected Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, Proposal proposal, Thesis previousThesis) {
 
         Integer orientatorsCreditsPercentage;
         Person coorientator;
@@ -42,6 +43,15 @@ public class CreateThesisProposalWithAssignment extends FenixService {
         thesis.setOrientatorCreditsDistribution(orientatorsCreditsPercentage);
 
         return thesis;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateThesisProposalWithAssignment serviceInstance = new CreateThesisProposalWithAssignment();
+
+    @Service
+    public static Thesis runCreateThesisProposalWithAssignment(DegreeCurricularPlan degreeCurricularPlan, Student student, Proposal proposal, Thesis previousThesis) {
+        return serviceInstance.run(degreeCurricularPlan, student, proposal, previousThesis);
     }
 
 }

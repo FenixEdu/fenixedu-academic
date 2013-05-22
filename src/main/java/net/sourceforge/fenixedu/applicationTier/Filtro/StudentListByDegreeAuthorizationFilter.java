@@ -26,7 +26,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
     public StudentListByDegreeAuthorizationFilter() {
     }
 
-    public void execute(Integer degreeCurricularPlanID, DegreeType degreeType) throws Exception {
+    public void execute(Integer degreeCurricularPlanID, DegreeType degreeType) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, degreeCurricularPlanID, degreeType))

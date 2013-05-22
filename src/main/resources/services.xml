@@ -1416,13 +1416,6 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
-    
-    <service>
-        <name>FindPersonService</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.FindPersonService</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
 
     <service>
         <name>GenetareStudentTestForSimulation</name>

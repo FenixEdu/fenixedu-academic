@@ -5,11 +5,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -18,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 
 public class CreateGrouping extends FenixService {
 
-    public Boolean run(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
+    protected Boolean run(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {
@@ -37,4 +40,16 @@ public class CreateGrouping extends FenixService {
         }
         return true;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateGrouping serviceInstance = new CreateGrouping();
+
+    @Service
+    public static Boolean runCreateGrouping(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID, infoGrouping);
+    }
+
 }

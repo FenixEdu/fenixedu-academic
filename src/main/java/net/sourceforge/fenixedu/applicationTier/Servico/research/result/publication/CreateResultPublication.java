@@ -22,17 +22,18 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResultPublication extends ResultPublicationService {
 
-    public Book run(BookBean bean) {
+    protected Book run(BookBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
         return (Book) associateUnitIfNeeded(bean, ResearchResultMetaDataManager.addDefaultDocument(createBookFromBean(bean)));
     }
 
-    public BookPart run(BookPartBean bean) {
+    protected BookPart run(BookPartBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -40,7 +41,7 @@ public class CreateResultPublication extends ResultPublicationService {
                 ResearchResultMetaDataManager.addDefaultDocument(createBookPartFromBean(bean)));
     }
 
-    public Article run(ArticleBean bean) {
+    protected Article run(ArticleBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -48,7 +49,7 @@ public class CreateResultPublication extends ResultPublicationService {
                 ResearchResultMetaDataManager.addDefaultDocument(createArticleFromBean(bean)));
     }
 
-    public Inproceedings run(InproceedingsBean bean) {
+    protected Inproceedings run(InproceedingsBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -56,7 +57,7 @@ public class CreateResultPublication extends ResultPublicationService {
                 ResearchResultMetaDataManager.addDefaultDocument(createInproceedingsFromBean(bean)));
     }
 
-    public Proceedings run(ProceedingsBean bean) {
+    protected Proceedings run(ProceedingsBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -64,21 +65,21 @@ public class CreateResultPublication extends ResultPublicationService {
                 ResearchResultMetaDataManager.addDefaultDocument(createProceedingsFromBean(bean)));
     }
 
-    public Thesis run(ThesisBean bean) {
+    protected Thesis run(ThesisBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
         return (Thesis) associateUnitIfNeeded(bean, ResearchResultMetaDataManager.addDefaultDocument(createThesisFromBean(bean)));
     }
 
-    public Manual run(ManualBean bean) {
+    protected Manual run(ManualBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
         return (Manual) associateUnitIfNeeded(bean, ResearchResultMetaDataManager.addDefaultDocument(createManualFromBean(bean)));
     }
 
-    public TechnicalReport run(TechnicalReportBean bean) {
+    protected TechnicalReport run(TechnicalReportBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -86,7 +87,7 @@ public class CreateResultPublication extends ResultPublicationService {
                 ResearchResultMetaDataManager.addDefaultDocument(createTechnicalReportFromBean(bean)));
     }
 
-    public OtherPublication run(OtherPublicationBean bean) {
+    protected OtherPublication run(OtherPublicationBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -99,6 +100,15 @@ public class CreateResultPublication extends ResultPublicationService {
             publication.addUnitAssociation(bean.getUnit(), ResultUnitAssociationRole.Participant);
         }
         return publication;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateResultPublication serviceInstance = new CreateResultPublication();
+
+    @Service
+    public static Book runCreateResultPublication(BookBean bean) {
+        return serviceInstance.run(bean);
     }
 
 }

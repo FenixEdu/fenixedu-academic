@@ -8,8 +8,10 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério
@@ -35,7 +38,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class InsertEvaluationMarks extends FenixService {
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks) throws ExcepcaoInexistente,
+    protected Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks) throws ExcepcaoInexistente,
             FenixServiceException {
 
         ExecutionCourseSite site = null;
@@ -144,4 +147,16 @@ public class InsertEvaluationMarks extends FenixService {
         return degreeCurricularPlanStrategy.checkMark(mark, InfoEvaluation.newInfoFromDomain(evaluation).getEvaluationType());
 
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
+
+    @Service
+    public static Object runInsertEvaluationMarks(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
+            throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, evaluationCode, hashMarks);
+    }
+
 }

@@ -7,9 +7,11 @@ import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateNewRoomsReserveComment extends FenixService {
 
-    public void run(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
+    protected void run(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
 
         if (bean != null && bean.getReserveRequest() != null) {
 
@@ -28,4 +30,13 @@ public class CreateNewRoomsReserveComment extends FenixService {
             }
         }
     }
+    // Service Invokers migrated from Berserk
+
+    private static final CreateNewRoomsReserveComment serviceInstance = new CreateNewRoomsReserveComment();
+
+    @Service
+    public static void runCreateNewRoomsReserveComment(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
+        serviceInstance.run(bean, reOpenRequest, resolveRequest);
+    }
+
 }

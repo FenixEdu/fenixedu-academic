@@ -4,10 +4,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -15,7 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 public class ReadExecutionDegree extends FenixService {
 
-    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
+    protected InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(idInternal);
 
         if (executionDegree == null) {
@@ -23,6 +27,26 @@ public class ReadExecutionDegree extends FenixService {
         }
 
         return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadExecutionDegree serviceInstance = new ReadExecutionDegree();
+
+    @Service
+    public static InfoExecutionDegree runReadExecutionDegree(Integer idInternal) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(idInternal);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                CoordinatorAuthorizationFilter.instance.execute();
+                return serviceInstance.run(idInternal);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

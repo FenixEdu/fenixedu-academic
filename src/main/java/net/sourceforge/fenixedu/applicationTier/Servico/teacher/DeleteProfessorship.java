@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DeleteProfessorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -12,13 +14,15 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Fernanda Quitério
  * 
  */
 public class DeleteProfessorship extends FenixService {
 
-    public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException {
+    protected Boolean run(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherCode);
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
@@ -62,4 +66,14 @@ public class DeleteProfessorship extends FenixService {
             super(key);
         }
     }
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteProfessorship serviceInstance = new DeleteProfessorship();
+
+    @Service
+    public static Boolean runDeleteProfessorship(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException  , NotAuthorizedException {
+        DeleteProfessorshipAuthorizationFilter.instance.execute(infoExecutionCourseCode, teacherCode);
+        return serviceInstance.run(infoExecutionCourseCode, teacherCode);
+    }
+
 }

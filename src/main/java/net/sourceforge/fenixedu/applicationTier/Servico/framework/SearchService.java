@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 import java.util.HashMap;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,7 +17,7 @@ import pt.ist.fenixframework.DomainObject;
  * 
  * @author jpvl
  */
-public abstract class SearchService extends FenixService {
+public abstract class SearchService {
 
     /**
      * @param searchParameters

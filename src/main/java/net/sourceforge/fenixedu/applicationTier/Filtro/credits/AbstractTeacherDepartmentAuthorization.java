@@ -23,15 +23,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  * 
  * @author jpvl
  */
-public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
+public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(T object) throws FenixServiceException {
         IUserView requester = AccessControl.getUserView();
         if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             throw new NotAuthorizedException();
         }
 
-        Integer teacherId = getTeacherId(parameters);
+        Integer teacherId = getTeacherId(object);
         if (teacherId != null) {
 
             final Person requesterPerson = requester.getPerson();
@@ -49,5 +49,5 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
     }
 
-    protected abstract Integer getTeacherId(Object[] arguments) throws FenixServiceException;
+    protected abstract Integer getTeacherId(T object) throws FenixServiceException;
 }

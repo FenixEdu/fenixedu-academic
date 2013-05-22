@@ -9,9 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 /**
  * @author jpvl
  */
-public class CreditsServiceWithInfoTeacherArgumentAuthorization extends AbstractTeacherDepartmentAuthorization {
+public class CreditsServiceWithInfoTeacherArgumentAuthorization extends AbstractTeacherDepartmentAuthorization<InfoTeacher> {
 
-    public static final CreditsServiceWithInfoTeacherArgumentAuthorization instance = new CreditsServiceWithInfoTeacherArgumentAuthorization();
+    public static final CreditsServiceWithInfoTeacherArgumentAuthorization instance =
+            new CreditsServiceWithInfoTeacherArgumentAuthorization();
     public final static CreditsServiceWithInfoTeacherArgumentAuthorization filter =
             new CreditsServiceWithInfoTeacherArgumentAuthorization();
 
@@ -27,9 +28,7 @@ public class CreditsServiceWithInfoTeacherArgumentAuthorization extends Abstract
      * #getTeacherId(java.lang.Object[])
      */
     @Override
-    protected Integer getTeacherId(Object[] arguments) {
-        InfoTeacher infoTeacher = (InfoTeacher) arguments[0];
-
+    protected Integer getTeacherId(InfoTeacher infoTeacher) {
         return infoTeacher != null ? infoTeacher.getIdInternal() : null;
     }
 

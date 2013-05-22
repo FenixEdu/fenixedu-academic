@@ -6,10 +6,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -20,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetSeminary extends FenixService {
 
-    public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
+    protected InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
         InfoSeminaryWithEquivalencies infoSeminary = null;
 
         Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
@@ -31,4 +34,15 @@ public class GetSeminary extends FenixService {
 
         return infoSeminary;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GetSeminary serviceInstance = new GetSeminary();
+
+    @Service
+    public static InfoSeminaryWithEquivalencies runGetSeminary(Integer seminaryID) throws BDException, NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run(seminaryID);
+    }
+
 }

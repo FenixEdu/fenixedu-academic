@@ -14,9 +14,9 @@ public class SeminariesCoordinatorFilter {
 
     public static final SeminariesCoordinatorFilter instance = new SeminariesCoordinatorFilter();
 
-    public void execute(Integer executionDegreeCode, Integer studentCurricularPlanID) throws Exception {
+    public void execute(Integer executionDegreeCode, Integer studentCurricularPlanID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
-        Integer SCPIDINternal = (Integer)  studentCurricularPlanID;
+        Integer SCPIDINternal = studentCurricularPlanID;
 
         boolean seminaryCandidate = false;
         if (SCPIDINternal != null) {

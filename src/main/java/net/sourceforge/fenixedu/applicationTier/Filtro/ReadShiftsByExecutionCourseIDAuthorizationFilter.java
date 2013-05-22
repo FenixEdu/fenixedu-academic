@@ -27,12 +27,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
-    public static final ReadShiftsByExecutionCourseIDAuthorizationFilter instance = new ReadShiftsByExecutionCourseIDAuthorizationFilter();
+    public static final ReadShiftsByExecutionCourseIDAuthorizationFilter instance =
+            new ReadShiftsByExecutionCourseIDAuthorizationFilter();
 
     public ReadShiftsByExecutionCourseIDAuthorizationFilter() {
     }
 
-    public void execute(Integer executionCourseID) throws Exception {
+    public void execute(Integer executionCourseID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionCourseID)) || (id == null) || (id

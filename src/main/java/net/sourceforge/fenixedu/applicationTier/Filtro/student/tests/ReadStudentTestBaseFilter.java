@@ -11,23 +11,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author jpvl
  */
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
-    final public void execute(Object object) throws FilterException, Exception {
+    final public void execute(Integer testId) throws NotAuthorizedException {
         super.execute();
 
-        DistributedTest distributedTest = null;
-        if (object instanceof Integer) {
-            final Integer testId = (Integer) object;
-            distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(testId);
-        } else if (object instanceof DistributedTest) {
-            distributedTest = (DistributedTest) object;
-        }
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(testId);
 
         if (distributedTest != null) {
             Calendar now = Calendar.getInstance();

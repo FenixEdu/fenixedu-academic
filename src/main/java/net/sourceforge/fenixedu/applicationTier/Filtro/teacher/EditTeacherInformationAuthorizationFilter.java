@@ -33,7 +33,8 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
     }
 
     public void execute(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
-            List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) throws Exception {
+            List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers)
+            throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)

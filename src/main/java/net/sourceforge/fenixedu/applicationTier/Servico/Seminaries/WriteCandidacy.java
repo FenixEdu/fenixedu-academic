@@ -5,6 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -15,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
@@ -22,7 +25,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class WriteCandidacy extends FenixService {
 
-    public void run(InfoCandidacy infoCandidacy) {
+    protected void run(InfoCandidacy infoCandidacy) {
         SeminaryCandidacy candidacy = new SeminaryCandidacy();
         candidacy.setApproved(infoCandidacy.getApproved());
         candidacy.setMotivation(infoCandidacy.getMotivation());
@@ -67,6 +70,16 @@ public class WriteCandidacy extends FenixService {
             caseStudyChoice.setCandidacy(candidacy);
             candidacy.addCaseStudyChoices(caseStudyChoice);
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WriteCandidacy serviceInstance = new WriteCandidacy();
+
+    @Service
+    public static void runWriteCandidacy(InfoCandidacy infoCandidacy) throws NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        serviceInstance.run(infoCandidacy);
     }
 
 }

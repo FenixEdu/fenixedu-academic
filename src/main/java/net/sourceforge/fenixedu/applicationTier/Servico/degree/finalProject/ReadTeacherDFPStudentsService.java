@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithInfoTeacherArgumentAuthorization;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
@@ -17,13 +19,14 @@ import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.TeacherDe
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author jpvl
  */
 public class ReadTeacherDFPStudentsService extends FenixService {
 
-    public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId) {
+    protected TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId) {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
         ExecutionSemester executionSemester = getExecutionPeriod(executionPeriodId);
@@ -59,4 +62,16 @@ public class ReadTeacherDFPStudentsService extends FenixService {
         }
         return executionSemester;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadTeacherDFPStudentsService serviceInstance = new ReadTeacherDFPStudentsService();
+
+    @Service
+    public static TeacherDegreeFinalProjectStudentsDTO runReadTeacherDFPStudents(InfoTeacher infoTeacher,
+            Integer executionPeriodId) throws FenixServiceException {
+        CreditsServiceWithInfoTeacherArgumentAuthorization.instance.execute(infoTeacher);
+        return serviceInstance.run(infoTeacher, executionPeriodId);
+    }
+
 }

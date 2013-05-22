@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -15,6 +18,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurricularCoursesToEnroll extends FenixService {
 
@@ -181,6 +185,30 @@ public class ReadCurricularCoursesToEnroll extends FenixService {
             result.add(Integer.valueOf(i));
         }
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCurricularCoursesToEnroll serviceInstance = new ReadCurricularCoursesToEnroll();
+
+    @Service
+    public static List<CurricularCourse2Enroll> runReadCurricularCoursesToEnroll(StudentCurricularPlan studentCurricularPlan,
+            DegreeType degreeType, ExecutionSemester executionSemester, Integer executionDegreeID,
+            List<Integer> curricularYearsList, List<Integer> curricularSemestersList) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            EnrollmentWithoutRulesAuthorizationFilter.instance.execute(studentCurricularPlan, degreeType);
+            return serviceInstance.run(studentCurricularPlan, degreeType, executionSemester, executionDegreeID,
+                    curricularYearsList, curricularSemestersList);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeEnrollmentWithoutRulesAuthorizationFilter.instance.execute(studentCurricularPlan, degreeType);
+                return serviceInstance.run(studentCurricularPlan, degreeType, executionSemester, executionDegreeID,
+                        curricularYearsList, curricularSemestersList);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

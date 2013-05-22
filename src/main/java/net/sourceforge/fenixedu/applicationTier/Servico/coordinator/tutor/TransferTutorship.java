@@ -3,7 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean;
@@ -17,6 +20,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class TransferTutorship extends TutorshipManagement {
 
@@ -68,4 +73,17 @@ public class TransferTutorship extends TutorshipManagement {
 
         return studentsWithErrors;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final TransferTutorship serviceInstance = new TransferTutorship();
+
+    @Service
+    public static List<TutorshipErrorBean> runTransferTutorship(Integer executionDegreeID, TutorshipManagementBean bean,
+            List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException, NotAuthorizedException {
+        CoordinatorAuthorizationFilter.instance.execute();
+        BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
+        return serviceInstance.run(executionDegreeID, bean, tutorshipsToTransfer);
+    }
+
 }

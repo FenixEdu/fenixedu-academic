@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
-    public static final ReadCandidatesForSelectionAuthorizationFilter instance = new ReadCandidatesForSelectionAuthorizationFilter();
+    public static final ReadCandidatesForSelectionAuthorizationFilter instance =
+            new ReadCandidatesForSelectionAuthorizationFilter();
 
     public ReadCandidatesForSelectionAuthorizationFilter() {
 
     }
 
-    public void execute(Integer executionDegreeID, List<SituationName> situationNames) throws Exception {
+    public void execute(Integer executionDegreeID, List<SituationName> situationNames) throws NotAuthorizedException {
 
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))

@@ -10,9 +10,10 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
 /**
  * @author jpvl
  */
-public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends AbstractTeacherDepartmentAuthorization {
+public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends AbstractTeacherDepartmentAuthorization<Integer> {
 
-    public static final ReadDeleteTeacherDegreeFinalProjectStudentAuthorization instance = new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
+    public static final ReadDeleteTeacherDegreeFinalProjectStudentAuthorization instance =
+            new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
     public final static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization filter =
             new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
 
@@ -28,9 +29,7 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends Abs
      * #getTeacherId(java.lang.Object[])
      */
     @Override
-    protected Integer getTeacherId(Object[] arguments) {
-        Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
-
+    protected Integer getTeacherId(Integer teacherDegreeFinalProjectStudentId) {
         TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
                 RootDomainObject.getInstance().readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
         return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher().getIdInternal() : null;

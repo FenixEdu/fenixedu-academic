@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class WriteStudentAttendingCourse extends FenixService {
 
-    public void run(Registration registration, Integer executionCourseId) throws FenixServiceException {
+    protected void run(Registration registration, Integer executionCourseId) throws FenixServiceException {
         if (registration == null) {
             throw new FenixServiceException("error.invalid.student");
         }
@@ -21,4 +24,16 @@ public class WriteStudentAttendingCourse extends FenixService {
         }
         return executionCourse;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WriteStudentAttendingCourse serviceInstance = new WriteStudentAttendingCourse();
+
+    @Service
+    public static void runWriteStudentAttendingCourse(Registration registration, Integer executionCourseId)
+            throws FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+        serviceInstance.run(registration, executionCourseId);
+    }
+
 }

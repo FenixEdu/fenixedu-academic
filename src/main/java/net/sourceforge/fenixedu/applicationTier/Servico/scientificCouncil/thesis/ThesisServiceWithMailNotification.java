@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class ThesisServiceWithMailNotification extends FenixService {
 
-    public void run(Thesis thesis) throws FenixServiceException {
+    public void run(Thesis thesis) {
         process(thesis);
         sendEmail(thesis);
     }

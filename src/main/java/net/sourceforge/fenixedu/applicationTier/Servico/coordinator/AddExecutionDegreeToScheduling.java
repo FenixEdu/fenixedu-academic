@@ -1,16 +1,20 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AddExecutionDegreeToScheduling extends FenixService {
 
     public class SchedulingContainsProposalsException extends FenixServiceException {
     }
 
-    public void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree)
+    protected void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree)
             throws SchedulingContainsProposalsException {
         if (!scheduleing.getProposalsSet().isEmpty()
                 || (executionDegree.getScheduling() != null && executionDegree.getScheduling().getProposalsSet().isEmpty())) {
@@ -18,6 +22,26 @@ public class AddExecutionDegreeToScheduling extends FenixService {
         }
         if (!scheduleing.getExecutionDegrees().contains(executionDegree)) {
             scheduleing.getExecutionDegrees().add(executionDegree);
+        }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AddExecutionDegreeToScheduling serviceInstance = new AddExecutionDegreeToScheduling();
+
+    @Service
+    public static void runAddExecutionDegreeToScheduling(Scheduleing scheduleing, ExecutionDegree executionDegree)
+            throws SchedulingContainsProposalsException, NotAuthorizedException {
+        try {
+            DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
+            serviceInstance.run(scheduleing, executionDegree);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                CoordinatorAuthorizationFilter.instance.execute();
+                serviceInstance.run(scheduleing, executionDegree);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
         }
     }
 

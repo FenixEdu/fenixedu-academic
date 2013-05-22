@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.File;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -27,7 +29,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class UploadUnitSiteLogo extends FenixService {
 
-    public File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
+    protected File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 
         if (site.hasLogo()) {
             UnitSiteFile logo = site.getLogo();
@@ -93,5 +95,16 @@ public class UploadUnitSiteLogo extends FenixService {
             }
         }
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final UploadUnitSiteLogo serviceInstance = new UploadUnitSiteLogo();
+
+    @Service
+    public static File runUploadUnitSiteLogo(UnitSite site, java.io.File fileToUpload, String name) throws IOException,
+            FenixServiceException {
+        ResearchSiteManagerAuthorizationFilter.instance.execute(site);
+        return serviceInstance.run(site, fileToUpload, name);
     }
 }

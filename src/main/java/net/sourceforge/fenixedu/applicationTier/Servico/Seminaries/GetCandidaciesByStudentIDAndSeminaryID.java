@@ -9,11 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -24,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidaciesByStudentIDAndSeminaryID extends FenixService {
 
-    public List run(Integer studentID, Integer seminaryID) throws BDException {
+    protected List run(Integer studentID, Integer seminaryID) throws BDException {
         List candidaciesInfo = new LinkedList();
 
         Registration registration = rootDomainObject.readRegistrationByOID(studentID);
@@ -41,4 +44,14 @@ public class GetCandidaciesByStudentIDAndSeminaryID extends FenixService {
 
         return candidaciesInfo;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final GetCandidaciesByStudentIDAndSeminaryID serviceInstance = new GetCandidaciesByStudentIDAndSeminaryID();
+
+    @Service
+    public static List runGetCandidaciesByStudentIDAndSeminaryID(Integer studentID, Integer seminaryID) throws BDException  , NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run(studentID, seminaryID);
+    }
+
 }

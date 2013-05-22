@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
@@ -49,4 +52,16 @@ public class ReadStudentDistributedTest extends FenixService {
 
         return studentTestQuestionList;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadStudentDistributedTest serviceInstance = new ReadStudentDistributedTest();
+
+    @Service
+    public static List<StudentTestQuestion> runReadStudentDistributedTest(Integer executionCourseId, Integer distributedTestId,
+            Integer studentId, String path) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId, studentId, path);
+    }
+
 }

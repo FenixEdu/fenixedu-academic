@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class SaveTeachersBody extends FenixService {
 
-    public Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
+    protected Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
             final Integer executionCourseId) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
@@ -43,6 +47,26 @@ public class SaveTeachersBody extends FenixService {
         }
 
         return Boolean.TRUE;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SaveTeachersBody serviceInstance = new SaveTeachersBody();
+
+    @Service
+    public static Boolean runSaveTeachersBody(List responsibleTeachersIds, List<Integer> professorShipTeachersIds,
+            Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(responsibleTeachersIds, professorShipTeachersIds, executionCourseId);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                return serviceInstance.run(responsibleTeachersIds, professorShipTeachersIds, executionCourseId);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

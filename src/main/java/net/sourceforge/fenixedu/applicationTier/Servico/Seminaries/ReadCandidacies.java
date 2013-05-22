@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidaciesAccessFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
@@ -32,6 +34,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -42,9 +45,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class ReadCandidacies extends FenixService {
 
-    public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id, Integer case2Id, Integer case3Id,
-            Integer case4Id, Integer case5Id, Integer curricularCourseID, Integer degreeCurricularPlanID, Boolean approved)
-            throws BDException {
+    protected List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id, Integer case2Id,
+            Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID, Integer degreeCurricularPlanID,
+            Boolean approved) throws BDException {
         // IDs == -1 => not selected
         // approved == nulll => not selected
         //
@@ -176,6 +179,19 @@ public class ReadCandidacies extends FenixService {
         }
         infoClassification.setCompletedCourses(Integer.valueOf(auxInt).toString());
         return infoClassification;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCandidacies serviceInstance = new ReadCandidacies();
+
+    @Service
+    public static List runReadCandidacies(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
+            Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID,
+            Integer degreeCurricularPlanID, Boolean approved) throws NotAuthorizedException, BDException {
+        CandidaciesAccessFilter.instance.execute();
+        return serviceInstance.run(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
+                curricularCourseID, degreeCurricularPlanID, approved);
     }
 
 }

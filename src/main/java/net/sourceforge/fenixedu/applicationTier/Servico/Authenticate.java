@@ -39,6 +39,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -215,7 +216,7 @@ public class Authenticate extends FenixService implements Serializable {
         return userView instanceof UserView;
     }
 
-    public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
+    protected IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -244,8 +245,8 @@ public class Authenticate extends FenixService implements Serializable {
         }
     }
 
-    public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao,
-            ExcepcaoPersistencia {
+    protected IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost)
+            throws ExcepcaoAutenticacao, ExcepcaoPersistencia {
         final String username = receipt.getUserName();
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -344,6 +345,24 @@ public class Authenticate extends FenixService implements Serializable {
 
     public IUserView mock(final Person person, final String requestURL) {
         return getUserView(person, requestURL);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final Authenticate serviceInstance = new Authenticate();
+
+    @Service
+    public static IUserView runAuthenticate(String username, String password, String requestURL, String remoteHost)
+            throws ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, requestURL, remoteHost);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static IUserView runLocalAuthenticate(String username, String password, String requestURL, String remoteHost)
+            throws ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, requestURL, remoteHost);
     }
 
 }

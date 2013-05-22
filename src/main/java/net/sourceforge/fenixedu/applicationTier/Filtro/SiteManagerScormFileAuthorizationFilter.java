@@ -9,7 +9,7 @@ public class SiteManagerScormFileAuthorizationFilter {
 
     public static final SiteManagerScormFileAuthorizationFilter instance = new SiteManagerScormFileAuthorizationFilter();
 
-    protected void execute(CreateScormFileItemForItemArgs args) throws NotAuthorizedException {
+    public void execute(CreateScormFileItemForItemArgs args) throws NotAuthorizedException {
         IGroup owner = args.getSite().getOwner();
 
         if (owner == null) {

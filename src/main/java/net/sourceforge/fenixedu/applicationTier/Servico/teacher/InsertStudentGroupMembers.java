@@ -3,10 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -15,11 +17,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertStudentGroupMembers extends FenixService {
 
-    public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List<String> studentUsernames)
-            throws FenixServiceException {
+    protected Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
+            List<String> studentUsernames) throws FenixServiceException {
 
         final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
@@ -61,6 +64,17 @@ public class InsertStudentGroupMembers extends FenixService {
             }
         }
         return Boolean.TRUE;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertStudentGroupMembers serviceInstance = new InsertStudentGroupMembers();
+
+    @Service
+    public static Boolean runInsertStudentGroupMembers(Integer executionCourseID, Integer studentGroupID,
+            Integer groupPropertiesID, List<String> studentUsernames) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID, studentGroupID, groupPropertiesID, studentUsernames);
     }
 
 }

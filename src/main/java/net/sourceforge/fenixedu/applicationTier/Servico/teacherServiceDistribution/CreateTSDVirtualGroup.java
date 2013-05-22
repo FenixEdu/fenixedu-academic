@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateTSDVirtualGroup extends FenixService {
-    public TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
+    protected TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
             String[] degreeCurricularPlansIdArray) {
 
         TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
@@ -30,4 +35,30 @@ public class CreateTSDVirtualGroup extends FenixService {
 
         return new TSDVirtualCourseGroup(tsd, courseName, executionSemester, lecturedShiftTypes, degreeCurricularPlansList);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateTSDVirtualGroup serviceInstance = new CreateTSDVirtualGroup();
+
+    @Service
+    public static TSDCourse runCreateTSDVirtualGroup(String courseName, Integer tsdId, Integer periodId,
+            String[] shiftTypesArray, String[] degreeCurricularPlansIdArray) throws NotAuthorizedException {
+        try {
+            DepartmentMemberAuthorizationFilter.instance.execute();
+            return serviceInstance.run(courseName, tsdId, periodId, shiftTypesArray, degreeCurricularPlansIdArray);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                return serviceInstance.run(courseName, tsdId, periodId, shiftTypesArray, degreeCurricularPlansIdArray);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    EmployeeAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(courseName, tsdId, periodId, shiftTypesArray, degreeCurricularPlansIdArray);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

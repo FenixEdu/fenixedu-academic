@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -34,6 +36,17 @@ public class AddCoordinator extends FenixService {
         }
 
         return Boolean.TRUE;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AddCoordinator serviceInstance = new AddCoordinator();
+
+    @Service
+    public static Boolean runAddCoordinator(Integer executionDegreeId, String istUsername) throws FenixServiceException,
+            NotAuthorizedException {
+        ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);
+        return serviceInstance.run(executionDegreeId, istUsername);
     }
 
 }

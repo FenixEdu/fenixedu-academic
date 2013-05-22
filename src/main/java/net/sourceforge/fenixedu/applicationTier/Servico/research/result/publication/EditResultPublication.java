@@ -23,10 +23,11 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditResultPublication extends ResultPublicationService {
 
-    public ResearchResultPublication run(BookBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(BookBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -46,7 +47,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(BookPartBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(BookPartBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -67,7 +68,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(ArticleBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(ArticleBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -85,7 +86,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(InproceedingsBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(InproceedingsBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -106,7 +107,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(ProceedingsBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(ProceedingsBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -126,7 +127,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(ThesisBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(ThesisBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -146,7 +147,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(ManualBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(ManualBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -165,7 +166,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(TechnicalReportBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(TechnicalReportBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
 
@@ -184,7 +185,7 @@ public class EditResultPublication extends ResultPublicationService {
         return finalPublication;
     }
 
-    public ResearchResultPublication run(OtherPublicationBean bean) throws FenixServiceException {
+    protected ResearchResultPublication run(OtherPublicationBean bean) throws FenixServiceException {
         final ResearchResultPublication publication = getResultPublication(bean);
         final ResearchResultPublication finalPublication;
         if (publication instanceof OtherPublication) {
@@ -213,6 +214,15 @@ public class EditResultPublication extends ResultPublicationService {
             throw new FenixServiceException();
         }
         return publication;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditResultPublication serviceInstance = new EditResultPublication();
+
+    @Service
+    public static ResearchResultPublication runEditResultPublication(BookBean bean) throws FenixServiceException  {
+        return serviceInstance.run(bean);
     }
 
 }

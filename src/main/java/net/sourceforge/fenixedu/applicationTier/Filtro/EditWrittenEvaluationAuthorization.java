@@ -11,13 +11,12 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
 
     public static final EditWrittenEvaluationAuthorization instance = new EditWrittenEvaluationAuthorization();
 
-    public void execute(Object[] parameters) throws Exception {
+    public void execute(Integer writtenEvaluationId) throws NotAuthorizedException {
         final IUserView userView = AccessControl.getUserView();
 
         if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 
-            final Object[] arguments = parameters;
-            final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
+            final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(writtenEvaluationId);
 
             if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {
                 throw new NotAuthorizedException("written.evaluation.has.alocated.rooms");
@@ -25,12 +24,8 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
         }
     }
 
-    private WrittenEvaluation readWrittenEvaluation(final Object[] arguments) {
-        final Integer writtenEvaluationID = getWrittenEvaluationID(arguments);
-        return (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationID);
+    private WrittenEvaluation readWrittenEvaluation(Integer writtenEvaluationId) {
+        return (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationId);
     }
 
-    private Integer getWrittenEvaluationID(final Object[] arguments) {
-        return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[7]);
-    }
 }

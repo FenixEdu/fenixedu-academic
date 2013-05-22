@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -65,6 +67,17 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
             publication.setThesis(thesis);
 
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateThesisDissertationFile serviceInstance = new CreateThesisDissertationFile();
+
+    @Service
+    public static ThesisFile runCreateThesisDissertationFile(Thesis thesis, File fileToUpload, String fileName, String title,
+            String subTitle, Language language) throws FenixServiceException, IOException {
+        ScientificCouncilOrStudentThesisAuthorizationFilter.instance.execute(thesis);
+        return serviceInstance.run(thesis, fileToUpload, fileName, title, subTitle, language);
     }
 
 }

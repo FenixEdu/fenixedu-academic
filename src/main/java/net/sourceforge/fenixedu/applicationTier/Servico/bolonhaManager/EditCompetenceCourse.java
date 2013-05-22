@@ -4,24 +4,28 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.util.StringFormatter;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCompetenceCourse extends FenixService {
 
-    public void run(Integer competenceCourseID, String objectives, String program, String evaluationMethod, String objectivesEn,
-            String programEn, String evaluationMethodEn) throws FenixServiceException {
+    protected void run(Integer competenceCourseID, String objectives, String program, String evaluationMethod,
+            String objectivesEn, String programEn, String evaluationMethodEn) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);
     }
 
-    public void run(Integer competenceCourseID, String name, String nameEn, Boolean basic,
+    protected void run(Integer competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage)
             throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
@@ -29,23 +33,23 @@ public class EditCompetenceCourse extends FenixService {
         competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, type, curricularStage);
     }
 
-    public void run(Integer competenceCourseID, String acronym) throws FenixServiceException {
+    protected void run(Integer competenceCourseID, String acronym) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.editAcronym(acronym);
     }
 
-    public void run(Integer competenceCourseID, CurricularStage curricularStage) throws FenixServiceException {
+    protected void run(Integer competenceCourseID, CurricularStage curricularStage) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.changeCurricularStage(curricularStage);
     }
 
-    public void run(Integer competenceCourseID, String year, String title, String authors, String reference,
+    protected void run(Integer competenceCourseID, String year, String title, String authors, String reference,
             BibliographicReferenceType bibliographicReferenceType, String url) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.createBibliographicReference(year, title, authors, reference, buildUrl(url), bibliographicReferenceType);
     }
 
-    public void run(Integer competenceCourseID, Integer bibliographicReferenceID, String year, String title, String authors,
+    protected void run(Integer competenceCourseID, Integer bibliographicReferenceID, String year, String title, String authors,
             String reference, BibliographicReferenceType bibliographicReferenceType, String url) throws FenixServiceException {
 
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
@@ -53,12 +57,12 @@ public class EditCompetenceCourse extends FenixService {
                 bibliographicReferenceType);
     }
 
-    public void run(Integer competenceCourseID, Integer bibliographicReferenceID) throws FenixServiceException {
+    protected void run(Integer competenceCourseID, Integer bibliographicReferenceID) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.deleteBibliographicReference(bibliographicReferenceID);
     }
 
-    public void run(Integer competenceCourseID, Integer oldPosition, Integer newPosition) throws FenixServiceException {
+    protected void run(Integer competenceCourseID, Integer oldPosition, Integer newPosition) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.switchBibliographicReferencePosition(oldPosition, newPosition);
     }
@@ -98,4 +102,28 @@ public class EditCompetenceCourse extends FenixService {
             }
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditCompetenceCourse serviceInstance = new EditCompetenceCourse();
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, String objectives, String program,
+            String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, objectivesEn, programEn,
+                    evaluationMethodEn);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, objectivesEn, programEn,
+                        evaluationMethodEn);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
 }

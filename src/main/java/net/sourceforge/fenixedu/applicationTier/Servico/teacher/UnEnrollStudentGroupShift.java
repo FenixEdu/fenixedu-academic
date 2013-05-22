@@ -5,13 +5,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa and rmalo
@@ -20,7 +23,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class UnEnrollStudentGroupShift extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
+    protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
             throws FenixServiceException {
 
         Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -44,4 +47,14 @@ public class UnEnrollStudentGroupShift extends FenixService {
 
         return new Boolean(true);
     }
+    // Service Invokers migrated from Berserk
+
+    private static final UnEnrollStudentGroupShift serviceInstance = new UnEnrollStudentGroupShift();
+
+    @Service
+    public static Boolean runUnEnrollStudentGroupShift(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode) throws FenixServiceException  , NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode);
+    }
+
 }

@@ -23,7 +23,7 @@ public class QualificationManagerAuthorizationFilter {
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer qualificationId, InfoQualification infoQualification) throws Exception {
+    public void execute(Integer qualificationId, InfoQualification infoQualification) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {

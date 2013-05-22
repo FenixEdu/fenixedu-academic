@@ -32,7 +32,8 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws Exception {
+    public void execute(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport)
+            throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {

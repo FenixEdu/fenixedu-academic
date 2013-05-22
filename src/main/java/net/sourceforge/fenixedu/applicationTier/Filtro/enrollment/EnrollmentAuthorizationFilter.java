@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,8 +16,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
+public class EnrollmentAuthorizationFilter extends Filtro {
 
     public static final EnrollmentAuthorizationFilter instance = new EnrollmentAuthorizationFilter();
 
@@ -33,29 +35,26 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         return roles;
     }
 
-    @Override
-    protected String hasPrevilege(IUserView userView, Object[] arguments) {
+    protected String hasPrevilege(IUserView userView, Integer executionDegreeId, Registration registration) {
         if (userView.hasRoleType(RoleType.STUDENT)) {
 
-            for (Object object : arguments) {
-                if (object instanceof Registration) {
-                    return checkStudentInformation(userView, (Registration) object);
-                }
+            if (registration != null) {
+                return checkStudentInformation(userView, registration);
             }
 
             return checkStudentInformation(userView);
 
         } else {
-            if (userView.hasRoleType(RoleType.COORDINATOR) && arguments[0] != null) {
-                return checkCoordinatorInformation(userView, arguments);
+            if (userView.hasRoleType(RoleType.COORDINATOR) && executionDegreeId != null) {
+                return checkCoordinatorInformation(userView, executionDegreeId, registration);
 
             } else if (userView.hasRoleType(RoleType.TEACHER)) {
-                return checkTeacherInformation(userView, arguments);
+                return checkTeacherInformation(userView, executionDegreeId, registration);
 
             } else if (userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                     || userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 
-                return checkDegreeAdministrativeOfficeInformation(arguments);
+                return checkDegreeAdministrativeOfficeInformation(registration);
 
             } else {
                 return "noAuthorization";
@@ -63,9 +62,9 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         }
     }
 
-    protected String checkDegreeAdministrativeOfficeInformation(Object[] args) {
+    protected String checkDegreeAdministrativeOfficeInformation(Registration registration) {
 
-        final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
+        final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         if (studentCurricularPlan == null) {
             return "noAuthorization";
         }
@@ -79,14 +78,13 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         return null;
     }
 
-    protected String checkTeacherInformation(IUserView userView, Object[] arguments) {
+    protected String checkTeacherInformation(IUserView userView, Integer executionDegreeId, Registration registration) {
 
         final Teacher teacher = readTeacher(userView);
         if (teacher == null) {
             return "noAuthorization";
         }
 
-        final Registration registration = readStudent(arguments);
         if (registration == null) {
             return "noAuthorization";
         }
@@ -98,8 +96,8 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         return null;
     }
 
-    private String checkCoordinatorInformation(IUserView userView, Object[] arguments) {
-        if (!verifyCoordinator(userView.getPerson(), arguments)) {
+    private String checkCoordinatorInformation(IUserView userView, Integer executionDegreeId, Registration registration) {
+        if (!verifyCoordinator(userView.getPerson(), executionDegreeId, registration)) {
             return "noAuthorization";
         }
 
@@ -151,17 +149,13 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         return registration;
     }
 
-    protected Registration readStudent(Object[] arguments) {
-        return (arguments[1] != null) ? (Registration) arguments[1] : null;
-    }
-
     protected Teacher readTeacher(IUserView id) {
         return id.getPerson().getTeacher();
     }
 
-    protected boolean verifyCoordinator(Person person, Object[] args) {
+    protected boolean verifyCoordinator(Person person, Integer executionDegreeId, Registration registration) {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) args[0]);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
             return false;
         }
@@ -176,10 +170,21 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
             return false;
         }
 
-        final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
+        final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         if (studentCurricularPlan == null) {
             return false;
         }
         return studentCurricularPlan.getDegreeCurricularPlan().equals(coordinator.getExecutionDegree().getDegreeCurricularPlan());
+    }
+
+    public void execute(Integer executionDegreeId, Registration registration) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
+        String messageException = hasPrevilege(id, executionDegreeId, registration);
+
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
+                || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedException(messageException);
+        }
     }
 }

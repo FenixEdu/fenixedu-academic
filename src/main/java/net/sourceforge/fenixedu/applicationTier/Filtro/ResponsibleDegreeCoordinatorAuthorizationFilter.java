@@ -20,7 +20,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class ResponsibleDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public static final ResponsibleDegreeCoordinatorAuthorizationFilter instance = new ResponsibleDegreeCoordinatorAuthorizationFilter();
+    public static final ResponsibleDegreeCoordinatorAuthorizationFilter instance =
+            new ResponsibleDegreeCoordinatorAuthorizationFilter();
 
     public ResponsibleDegreeCoordinatorAuthorizationFilter() {
 
@@ -36,7 +37,7 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
         return RoleType.COORDINATOR;
     }
 
-    public void execute(Integer executionDegreeId, String istUsername) throws Exception {
+    public void execute(Integer executionDegreeId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())

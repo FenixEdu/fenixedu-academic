@@ -12,9 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -35,7 +33,7 @@ public class ClassEnrollmentAuthorizationFilter {
 
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
-    public void execute(Registration registration, SchoolClass schoolClass, ExecutionCourse executionCourse) throws Exception {
+    public void execute(Registration registration) throws FenixServiceException {
         Person person = AccessControl.getUserView().getPerson();
 
         if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
@@ -59,9 +57,9 @@ public class ClassEnrollmentAuthorizationFilter {
         }
 
         boolean hasOneOpen = false;
-        Exception toThrow = null;
+        FenixServiceException toThrow = null;
         for (final StudentCurricularPlan studentCurricularPlan : activeStudentCurricularPlans) {
-            final Exception exception = verify(studentCurricularPlan);
+            final FenixServiceException exception = verify(studentCurricularPlan);
             hasOneOpen = hasOneOpen || exception == null;
             toThrow = exception == null ? toThrow : exception;
         }
@@ -70,9 +68,9 @@ public class ClassEnrollmentAuthorizationFilter {
         }
     }
 
-    private Exception verify(StudentCurricularPlan studentCurricularPlan) {
+    private FenixServiceException verify(StudentCurricularPlan studentCurricularPlan) {
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-        Exception result = verify(degreeCurricularPlan);
+        FenixServiceException result = verify(degreeCurricularPlan);
         if (result == null) {
             return null;
         }
@@ -86,7 +84,7 @@ public class ClassEnrollmentAuthorizationFilter {
         return result;
     }
 
-    private Exception verify(DegreeCurricularPlan degreeCurricularPlan) {
+    private FenixServiceException verify(DegreeCurricularPlan degreeCurricularPlan) {
         final EnrolmentPeriodInClasses enrolmentPeriodInClasses = degreeCurricularPlan.getCurrentClassesEnrollmentPeriod();
         if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDateDateTime() == null
                 || enrolmentPeriodInClasses.getEndDateDateTime() == null) {

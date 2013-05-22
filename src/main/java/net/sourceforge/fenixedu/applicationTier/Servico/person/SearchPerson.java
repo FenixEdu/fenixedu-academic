@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -453,4 +454,13 @@ public class SearchPerson extends FenixService implements Serializable {
             return searchParameters;
         }
     }
+    // Service Invokers migrated from Berserk
+
+    private static final SearchPerson serviceInstance = new SearchPerson();
+
+    @Service
+    public static CollectionPager<Person> runSearchPerson(SearchParameters searchParameters, Predicate predicate) {
+        return serviceInstance.run(searchParameters, predicate);
+    }
+
 }

@@ -10,8 +10,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
 /**
@@ -31,7 +34,7 @@ public class InsertExerciseVariation extends FenixService {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List run(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile, String path)
+    protected List run(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile, String path)
             throws FenixServiceException, NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
@@ -100,4 +103,16 @@ public class InsertExerciseVariation extends FenixService {
         }
         return xmlFilesList;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertExerciseVariation serviceInstance = new InsertExerciseVariation();
+
+    @Service
+    public static List runInsertExerciseVariation(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile,
+            String path) throws FenixServiceException, NotExecuteException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, metadataId, xmlZipFile, path);
+    }
+
 }

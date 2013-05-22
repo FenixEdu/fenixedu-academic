@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateConversationMessage extends ForumService {
 
@@ -9,13 +10,22 @@ public class CreateConversationMessage extends ForumService {
         super();
     }
 
-    public void run(CreateConversationMessageBean createConversationMessageBean) {
+    protected void run(CreateConversationMessageBean createConversationMessageBean) {
 
         ConversationMessage conversationMessage =
                 createConversationMessageBean.getConversationThread().createConversationMessage(
                         createConversationMessageBean.getCreator(), createConversationMessageBean.getBody());
         super.sendNotifications(conversationMessage);
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateConversationMessage serviceInstance = new CreateConversationMessage();
+
+    @Service
+    public static void runCreateConversationMessage(CreateConversationMessageBean createConversationMessageBean) {
+        serviceInstance.run(createConversationMessageBean);
     }
 
 }

@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EnrollStudentInShifts extends FenixService {
 
@@ -54,6 +57,17 @@ public class EnrollStudentInShifts extends FenixService {
             }
         }
         return null;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EnrollStudentInShifts serviceInstance = new EnrollStudentInShifts();
+
+    @Service
+    public static ShiftEnrollmentErrorReport runEnrollStudentInShifts(Registration registration, Integer shiftId)
+            throws FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+        return serviceInstance.run(registration, shiftId);
     }
 
 }

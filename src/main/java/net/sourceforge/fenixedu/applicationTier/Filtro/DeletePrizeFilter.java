@@ -10,7 +10,7 @@ public class DeletePrizeFilter {
 
     public static final DeletePrizeFilter instance = new DeletePrizeFilter();
 
-    public void execute(Prize prize) throws Exception {
+    public void execute(Prize prize) throws NotAuthorizedException {
         IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 

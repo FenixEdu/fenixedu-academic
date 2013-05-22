@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -28,7 +29,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends FenixServic
 
     private Set<GratuitySituation> gratuitySituationsToDelete;
 
-    public void run(String year) {
+    protected void run(String year) {
 
         gratuitySituationsToDelete = new HashSet<GratuitySituation>();
 
@@ -145,6 +146,15 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends FenixServic
         }
 
         new GratuitySituation(gratuityValues, studentCurricularPlan);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateGratuitySituationsForCurrentExecutionYear serviceInstance = new CreateGratuitySituationsForCurrentExecutionYear();
+
+    @Service
+    public static void runCreateGratuitySituationsForCurrentExecutionYear(String year) {
+        serviceInstance.run(year);
     }
 
 }
