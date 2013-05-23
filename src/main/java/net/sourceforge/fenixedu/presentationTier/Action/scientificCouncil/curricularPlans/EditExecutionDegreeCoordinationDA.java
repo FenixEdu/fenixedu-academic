@@ -56,14 +56,16 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward editCoordination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
+        
+		ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        
         String backTo = String.valueOf(request.getParameter("from"));
         String backPath;
         if (backTo.equals("byYears")) {
             backPath =
                     "/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears&executionYearId="
-                            + executionDegree.getExecutionYear().getExternalId().toString();
+                            + executionDegree.getExecutionYear().getIdInternal().toString();
         } else {
             backPath =
                     "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId="
@@ -210,22 +212,16 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
     public List<CoordinatorLog> getCoordinatorLogsByExecDegree(ExecutionDegree executionDegree) {
         List<CoordinatorLog> finalCoordinatorLogs = new ArrayList<CoordinatorLog>();
-        final List<CoordinatorLog> coordinatorLogs = RootDomainObject.getInstance().getCoordinatorLog();
-        for (CoordinatorLog coordinatorLog : coordinatorLogs) {
-            ExecutionDegree coordExecDeg = coordinatorLog.getExecutionDegree();
-            if (coordExecDeg.getExecutionYear().compareTo(executionDegree.getExecutionYear()) == 0
-                    && coordExecDeg.getDegree().compareTo(executionDegree.getDegree()) == 0) {
-                finalCoordinatorLogs.add(coordinatorLog);
-            }
-        }
+        
+        finalCoordinatorLogs.addAll(executionDegree.getCoordinatorLog());
         return finalCoordinatorLogs;
     }
 
     public ActionForward prepareCoordinatorLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer execDegId = Integer.parseInt(request.getParameter("executionYearId"));
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(execDegId);
+        Integer execDegId = Integer.valueOf(request.getParameter("executionYearId"));
+        ExecutionDegree executionDegree = rootDomainObject.getInstance().readExecutionDegreeByOID(execDegId);
         List<CoordinatorLog> coordinatorLogs = getCoordinatorLogsByExecDegree(executionDegree);
         request.setAttribute("coordinatorLogs", coordinatorLogs);
 
