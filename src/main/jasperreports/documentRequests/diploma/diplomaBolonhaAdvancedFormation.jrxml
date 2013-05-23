@@ -99,24 +99,6 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{degreeFilteredName}]]></textFieldExpression>
 				</textField>
-				<elementGroup><!--  Start: 1 !-->
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="179"
-						y="365"
-						width="484"
-						height="17"
-						key="textField-31"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Quadraat-BoldItalic" size="22" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{degreeFilteredName}]]></textFieldExpression>
-			</textField>
 			<elementGroup>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement key="textField-31" x="179" y="365" width="484" height="17"/>
