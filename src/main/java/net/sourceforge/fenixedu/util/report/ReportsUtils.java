@@ -287,13 +287,13 @@ public class ReportsUtils extends PropertiesManager {
     static private Map<FontKey, PdfFont> createFontMap() {
         final Map<FontKey, PdfFont> result = new HashMap<FontKey, PdfFont>(4);
 
-        addFont(result, "Quadraat-Regular", "FritzRegular.ttf", BaseFont.CP1252);
+        addFont(result, "Quadraat-Regular", "QUAD____.ttf", BaseFont.CP1252);
 
-        addFont(result, "Quadraat-Bold", "FritzBold.ttf", BaseFont.CP1252);
+        addFont(result, "Quadraat-Bold", "QUADBD__.ttf", BaseFont.CP1252);
 
-        addFont(result, "Quadraat-Italic", "Fritz-Quad.ttf", BaseFont.CP1252);
+        addFont(result, "Quadraat-Italic", "QUADI___.ttf", BaseFont.CP1252);
 
-        addFont(result, "Quadraat-BoldItalic", "FritzBold.ttf", BaseFont.CP1252);
+        addFont(result, "Quadraat-BoldItalic", "QUADBDI_.ttf", BaseFont.CP1252);
 
         addFont(result, "Arial", "Arial.ttf", BaseFont.CP1252);
 

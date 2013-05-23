@@ -40,10 +40,10 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[faz saber que]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -53,62 +53,78 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Quadraat-BoldItalic" size="21" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-22" x="59" y="332" width="468" height="17"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUADBDI_.ttf" size="21" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="332"
+						width="468"
+						height="17"
+						key="textField-22"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Regular" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{nameOfFather}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-23" x="59" y="356" width="468" height="16"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfFather}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="356"
+						width="468"
+						height="16"
+						key="textField-23"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Regular" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{nameOfMother}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-25" x="59" y="259" width="468" height="15"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfMother}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="259"
+						width="468"
+						height="15"
+						key="textField-25"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="10" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{universityPrincipal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{universityName} + ($P{universityPrincipal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{universityPrincipal}.getValidatedName()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-11" x="59" y="318" width="468" height="14"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="10" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{universityPrincipal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{universityName} + ($P{universityPrincipal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{universityPrincipal}.getValidatedName()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="318"
+						width="468"
+						height="14"
+						key="staticText-11"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[filho de]]></text>
 			</staticText>
 			<staticText>
@@ -118,10 +134,10 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[e de]]></text>
 			</staticText>
 			<staticText>
@@ -131,10 +147,10 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[natural de]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -144,23 +160,27 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Regular" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-14" x="59" y="440" width="468" height="16"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="440"
+						width="468"
+						height="16"
+						key="staticText-14"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[e submeteu para discussão uma dissertação com o título]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -170,16 +190,20 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Bold" size="11" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{conclusionDate}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-28" x="122" y="458" width="341" height="48"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUADBD__.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conclusionDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="122"
+						y="458"
+						width="341"
+						height="48"
+						key="textField-28"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -196,23 +220,28 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Bold" size="15" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-15" positionType="Float" x="59" y="508" width="468" height="15"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUADBD__.ttf" size="15" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="508"
+						width="468"
+						height="15"
+						key="staticText-15"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[Tendo certificado de que, após a conclusão das provas em]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -222,23 +251,28 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Quadraat-BoldItalic" size="20" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-16" positionType="Float" x="59" y="570" width="468" height="16"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUADBDI_.ttf" size="20" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="570"
+						width="468"
+						height="16"
+						key="staticText-16"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[Tendo ainda verificado que foram cumpridos no processo todos os preceitos das leis vigentes da República Portuguesa,]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -248,23 +282,27 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Bold" size="12" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{classificationResult}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-17" x="59" y="623" width="468" height="16"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUADBD__.ttf" size="12" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{classificationResult}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="623"
+						width="468"
+						height="16"
+						key="staticText-17"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="11" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -274,23 +312,28 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Regular" size="10" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{universityName} + ", em " + $P{day}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-19" positionType="Float" x="59" y="538" width="468" height="15"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="10" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityName} + ", em " + $P{day}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="538"
+						width="468"
+						height="15"
+						key="staticText-19"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[O júri considerou o candidato]]></text>
 			</staticText>
 			<staticText>
@@ -300,10 +343,10 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					</textElement>
 				<text><![CDATA[Apresentou o seu pedido de admissão às provas de doutoramento no]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -313,11 +356,11 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["pela " + $P{universityName} + ", pelo que, em conformidade com as disposições legais em vigor,"
+</box>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["pela " + $P{universityName} + ", pelo que, em conformidade com as disposições legais em vigor,"
 + "\nlhe manda passar a presente Carta Doutoral."]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -327,10 +370,10 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUADI___.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[decido outorgar-lhe todos os direitos académicos inerentes ao grau de]]></text>
 			</staticText>
 			<line>
@@ -352,10 +395,10 @@
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-					<font fontName="Quadraat-Regular" size="8" isBold="false" isItalic="false" pdfFontName="Fritz-Quad.ttf" isPdfEmbedded="true"/>
-				</textElement>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
 				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
 			</staticText>
 			<break>
