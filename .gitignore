@@ -3,4 +3,6 @@ target/
 jetty/
 deploy/
 configuration.properties
+output/
+.classpath
 
