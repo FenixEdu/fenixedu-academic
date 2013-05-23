@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with iReport - A designer for JasperReports -->
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-<jasperReport	
-	name="juryReport" 
-	columnCount="1"
-	printOrder="Vertical"
-	orientation="Portrait"
-	pageWidth="595" 
-	pageHeight="842" 
-	whenNoDataType="NoPages" 
-	columnWidth="469" leftMargin="70" 
-	rightMargin="56" topMargin="56" 
-	bottomMargin="14" 
-	isTitleNewPage="false"
-	isSummaryNewPage="false" >
-	
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="juryReport" pageWidth="595" pageHeight="842" columnWidth="469" leftMargin="70" rightMargin="56" topMargin="56" bottomMargin="14">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	
 	<parameter name="studentNumber" class="java.lang.Number" isForPrompting="false"/>
 	<parameter name="studentName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="orientatorName" class="java.lang.String" isForPrompting="false"/>
@@ -33,7 +17,7 @@
 	<parameter name="grade" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="studentDegreeName" class="java.lang.String" isForPrompting="false"/>
 	<detail>
-		<band height="772" isSplitAllowed="true">
+		<band height="772" splitType="Stretch">
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-1" x="94" y="0" width="362" height="94"/>
 				<box>
@@ -45,13 +29,13 @@
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="14" isBold="true" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ACTA DO JÚRI" +
+				<textFieldExpression class="java.lang.String"><![CDATA["ACTA DO JÚRI" +
  "\nDA DISSERTAÇÃO DE MESTRADO EM\n" +
  $P{studentDegreeName}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="238" height="102"/>
-				<imageExpression><![CDATA["images/LogoIST.gif"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["images/LogoIST.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="121" width="247" height="20"/>
@@ -107,7 +91,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="217" y="321" width="251" height="20"/>
@@ -124,7 +108,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{juryPresidentName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{juryPresidentName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="120" y="165" width="326" height="1"/>
@@ -134,7 +118,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{orientatorName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{orientatorName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="120" y="200" width="326" height="1"/>
@@ -144,7 +128,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{coorientatorName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{coorientatorName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="120" y="232" width="326" height="1"/>
@@ -154,7 +138,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{vowel1Name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{vowel1Name}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="120" y="266" width="326" height="1"/>
@@ -164,7 +148,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{vowel2Name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{vowel2Name}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="120" y="300" width="326" height="1"/>
@@ -183,20 +167,19 @@
 				</textElement>
 				<text><![CDATA[bem como da dissertação escrita e da respectiva apresentação e discussão pública]]></text>
 			</staticText>
-			<!-- There is a bug in this field, overflow is not being handled correctly -->
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="337" width="467" height="20"/>
 				<textElement lineSpacing="Double">
 					<font fontName="Arial Unicode MS" size="12" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{thesisTitle}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{thesisTitle}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="41" y="467" width="320" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{studentName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="41" y="480" width="320" height="1"/>
@@ -213,7 +196,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["" + $P{studentNumber}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $P{studentNumber}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="387" y="481" width="78" height="1"/>
@@ -286,7 +269,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{grade}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{grade}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="271" y="511" width="196" height="1"/>

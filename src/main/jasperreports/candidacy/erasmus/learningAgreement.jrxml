@@ -1,612 +1,275 @@
-<?xml version="1.0" encoding="UTF-8"  ?>
-<!-- Created with iReport - A designer for JasperReports -->
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-<jasperReport
-		 name="learningAgreement"
-		 columnCount="1"
-		 printOrder="Vertical"
-		 orientation="Portrait"
-		 pageWidth="595"
-		 pageHeight="842"
-		 columnWidth="535"
-		 columnSpacing="0"
-		 leftMargin="30"
-		 rightMargin="30"
-		 topMargin="20"
-		 bottomMargin="20"
-		 whenNoDataType="NoPages"
-		 isTitleNewPage="false"
-		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="UTF-8" />
-	<import value="java.util.*" />
-	<import value="net.sf.jasperreports.engine.*" />
-	<import value="net.sf.jasperreports.engine.data.*" />
-
-	<parameter name="academicYear" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="sendingInstitution" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="desiredEnrollments" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="mobilityProgram" isForPrompting="false" class="java.lang.String"/>
-
-		<background>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</background>
-		<title>
-			<band height="34"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="0"
-						y="0"
-						width="535"
-						height="18"
-						key="staticText-1"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica" size="14"/>
-					</textElement>
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="learningAgreement" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="academicYear" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="studentName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="sendingInstitution" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="desiredEnrollments" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="mobilityProgram" class="java.lang.String" isForPrompting="false"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="0" y="0" width="535" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14" pdfFontName="Helvetica"/>
+				</textElement>
 				<text><![CDATA[MOBILITY PROGRAMME]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="0"
-						y="18"
-						width="535"
-						height="16"
-						key="staticText-2"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font size="12"/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="18" width="535" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
 				<text><![CDATA[Learning Agreement]]></text>
-				</staticText>
-			</band>
-		</title>
-		<pageHeader>
-			<band height="2"  isSplitAllowed="true" >
-			</band>
-		</pageHeader>
-		<columnHeader>
-			<band height="2"  isSplitAllowed="true" >
-			</band>
-		</columnHeader>
-		<detail>
-			<band height="605"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="0"
-						y="18"
-						width="128"
-						height="17"
-						key="staticText-9"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="2" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="2" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="605" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-9" x="0" y="18" width="128" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Academic Year:]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="128"
-						y="18"
-						width="119"
-						height="17"
-						key="textField-1"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{academicYear}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement
-						x="0"
-						y="35"
-						width="128"
-						height="17"
-						key="staticText-10"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="128" y="18" width="119" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{academicYear}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-10" x="0" y="35" width="128" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Name of student:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="0"
-						y="52"
-						width="128"
-						height="17"
-						key="staticText-11"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" x="0" y="52" width="128" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Sending Institution:]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="128"
-						y="35"
-						width="233"
-						height="17"
-						key="textField-2"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="128"
-						y="52"
-						width="233"
-						height="17"
-						key="textField-3"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{sendingInstitution}]]></textFieldExpression>
-				</textField>
-				<rectangle>
-					<reportElement
-						x="0"
-						y="70"
-						width="535"
-						height="20"
-						backcolor="#000000"
-						key="rectangle-1"/>
-					<graphicElement stretchType="NoStretch"/>
-				</rectangle>
-				<staticText>
-					<reportElement
-						x="0"
-						y="72"
-						width="535"
-						height="20"
-						forecolor="#FFFFFF"
-						key="staticText-12"/>
-					<box></box>
-					<textElement verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="128" y="35" width="233" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="128" y="52" width="233" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{sendingInstitution}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="70" width="535" height="20" backcolor="#000000"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-12" x="0" y="72" width="535" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[PROPOSED STUDY PROGRAMME / LEARNING AGREEMENT]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="0"
-						y="92"
-						width="161"
-						height="16"
-						key="staticText-13"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="0" y="92" width="161" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Courses you wish to enroll in:]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="20"
-						y="130"
-						width="488"
-						height="161"
-						key="textField-4"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Courier" isBold="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{desiredEnrollments}]]></textFieldExpression>
-				</textField>
-				<rectangle>
-					<reportElement
-						x="20"
-						y="300"
-						width="488"
-						height="78"
-						key="rectangle-2"/>
-					<graphicElement stretchType="NoStretch"/>
-				</rectangle>
-				<staticText>
-					<reportElement
-						x="20"
-						y="300"
-						width="66"
-						height="15"
-						key="staticText-14"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="20" y="130" width="488" height="161"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Courier"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{desiredEnrollments}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement key="rectangle-2" x="20" y="300" width="488" height="78"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-14" x="20" y="300" width="66" height="15"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Statement]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="28"
-						y="320"
-						width="299"
-						height="14"
-						key="staticText-15"/>
-					<box></box>
-					<textElement verticalAlignment="Middle">
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" x="28" y="320" width="299" height="14"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[I declare that all information given above is true and correct.]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="28"
-						y="339"
-						width="92"
-						height="15"
-						key="staticText-16"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="28" y="339" width="92" height="15"/>
+				<textElement/>
 				<text><![CDATA[Student Signature:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="28"
-						y="367"
-						width="207"
-						height="0"
-						key="line-1"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="327"
-						y="339"
-						width="30"
-						height="15"
-						key="staticText-17"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="28" y="367" width="207" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-17" x="327" y="339" width="30" height="15"/>
+				<textElement/>
 				<text><![CDATA[Date:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="327"
-						y="367"
-						width="126"
-						height="0"
-						key="line-2"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<rectangle>
-					<reportElement
-						x="20"
-						y="386"
-						width="488"
-						height="102"
-						key="rectangle-3"/>
-					<graphicElement stretchType="NoStretch"/>
-				</rectangle>
-				<rectangle>
-					<reportElement
-						x="20"
-						y="497"
-						width="488"
-						height="96"
-						key="rectangle-4"/>
-					<graphicElement stretchType="NoStretch"/>
-				</rectangle>
-				<staticText>
-					<reportElement
-						x="20"
-						y="386"
-						width="114"
-						height="13"
-						key="staticText-18"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-2" x="327" y="367" width="126" height="1"/>
+			</line>
+			<rectangle>
+				<reportElement key="rectangle-3" x="20" y="386" width="488" height="102"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle-4" x="20" y="497" width="488" height="96"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-18" x="20" y="386" width="114" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Sending Institution]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="28"
-						y="405"
-						width="471"
-						height="27"
-						key="staticText-19"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-19" x="28" y="405" width="471" height="27"/>
+				<textElement/>
 				<text><![CDATA[We confirm that this proposed programme of study / learning agreement is approved and that the student is accepted as an exchange student at the institution.]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="28"
-						y="432"
-						width="194"
-						height="13"
-						key="staticText-20"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" x="28" y="432" width="194" height="13"/>
+				<textElement/>
 				<text><![CDATA[Departmental Coordinator's signature:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="28"
-						y="461"
-						width="195"
-						height="0"
-						key="line-3"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="28"
-						y="468"
-						width="30"
-						height="14"
-						key="staticText-21"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-3" x="28" y="461" width="195" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-21" x="28" y="468" width="30" height="14"/>
+				<textElement/>
 				<text><![CDATA[Date:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="66"
-						y="479"
-						width="156"
-						height="0"
-						key="line-4"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="262"
-						y="432"
-						width="181"
-						height="13"
-						key="staticText-22"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-4" x="66" y="479" width="156" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-22" x="262" y="432" width="181" height="13"/>
+				<textElement/>
 				<text><![CDATA[Institutional Coordinator's signature:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="262"
-						y="461"
-						width="208"
-						height="0"
-						key="line-5"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="262"
-						y="468"
-						width="32"
-						height="14"
-						key="staticText-23"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-5" x="262" y="461" width="208" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-23" x="262" y="468" width="32" height="14"/>
+				<textElement/>
 				<text><![CDATA[Date:]]></text>
-				</staticText>
-				<line direction="BottomUp">
-					<reportElement
-						x="304"
-						y="479"
-						width="166"
-						height="0"
-						key="line-6"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="20"
-						y="497"
-						width="119"
-						height="14"
-						key="staticText-24"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement key="line-6" x="304" y="479" width="166" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-24" x="20" y="497" width="119" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Receiving Institution]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="28"
-						y="517"
-						width="471"
-						height="27"
-						key="staticText-25"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-25" x="28" y="517" width="471" height="27"/>
+				<textElement/>
 				<text><![CDATA[We confirm that this proposed programme of study / learning agreement is approved and that the student is accepted as an exchange student at the institution.]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="28"
-						y="544"
-						width="194"
-						height="13"
-						key="staticText-26"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="28" y="544" width="194" height="13"/>
+				<textElement/>
 				<text><![CDATA[Departmental Coordinator's signature:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="262"
-						y="544"
-						width="181"
-						height="13"
-						key="staticText-27"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-27" x="262" y="544" width="181" height="13"/>
+				<textElement/>
 				<text><![CDATA[Institutional Coordinator's signature:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="28"
-						y="570"
-						width="195"
-						height="0"
-						key="line-7"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="28"
-						y="576"
-						width="30"
-						height="14"
-						key="staticText-28"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-7" x="28" y="570" width="195" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-28" x="28" y="576" width="30" height="14"/>
+				<textElement/>
 				<text><![CDATA[Date:]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="66"
-						y="585"
-						width="156"
-						height="0"
-						key="line-8"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="262"
-						y="576"
-						width="32"
-						height="14"
-						key="staticText-29"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-8" x="66" y="585" width="156" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-29" x="262" y="576" width="32" height="14"/>
+				<textElement/>
 				<text><![CDATA[Date:]]></text>
-				</staticText>
-				<line direction="BottomUp">
-					<reportElement
-						x="304"
-						y="585"
-						width="166"
-						height="0"
-						key="line-9"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="20"
-						y="113"
-						width="95"
-						height="14"
-						key="staticText-30"/>
-					<box></box>
-					<textElement textAlignment="Left">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement key="line-9" x="304" y="585" width="166" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-30" x="20" y="113" width="95" height="14"/>
+				<textElement textAlignment="Left">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Title]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="396"
-						y="113"
-						width="98"
-						height="14"
-						key="staticText-31"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-31" x="396" y="113" width="98" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Nr. of ECTS credits]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="262"
-						y="570"
-						width="195"
-						height="0"
-						key="line-10"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="128"
-						y="1"
-						width="119"
-						height="17"
-						key="textField-5"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{mobilityProgram}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement
-						x="0"
-						y="1"
-						width="128"
-						height="17"
-						key="staticText-32"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
+			</staticText>
+			<line>
+				<reportElement key="line-10" x="262" y="570" width="195" height="1"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="128" y="1" width="119" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{mobilityProgram}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-32" x="0" y="1" width="128" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Mobility Program:]]></text>
-				</staticText>
-			</band>
-		</detail>
-		<columnFooter>
-			<band height="13"  isSplitAllowed="true" >
-			</band>
-		</columnFooter>
-		<pageFooter>
-			<band height="9"  isSplitAllowed="true" >
-			</band>
-		</pageFooter>
-		<lastPageFooter>
-			<band height="7"  isSplitAllowed="true" >
-			</band>
-		</lastPageFooter>
-		<summary>
-			<band height="24"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="50"
-						y="0"
-						width="485"
-						height="23"
-						key="staticText-8"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica" isBold="false"/>
-					</textElement>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="9" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="7" splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-8" x="50" y="0" width="485" height="23"/>
+				<textElement>
+					<font isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
 				<text><![CDATA[ GRI - IST, Av. Rovisco Pais,  1049-001 Lisboa, Phone 351218417362, Fax 351218419280]]></text>
-				</staticText>
-			</band>
-		</summary>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>
