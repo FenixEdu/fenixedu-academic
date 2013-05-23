@@ -91,7 +91,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             Set<DegreeType> degreeTypesForOperation =
                     AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
                             AcademicOperationType.STUDENT_LISTINGS);
-            degreeTypesForOperation.remove(DegreeType.EMPTY);
             bean =
                     new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
                             AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
@@ -122,7 +121,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         final ExecutionYear executionYear = searchbean.getExecutionYear();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            if ((chosenDegreeType != null && degreeCurricularPlan.getDegreeType() != chosenDegreeType)) {
+            if (chosenDegreeType != null && degreeCurricularPlan.getDegreeType() != chosenDegreeType) {
                 continue;
             }
             if (chosenDegree != null && degreeCurricularPlan.getDegree() != chosenDegree) {
@@ -137,6 +136,10 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 }
             }
             degreeCurricularPlan.getRegistrations(executionYear, registrations);
+        }
+        DegreeCurricularPlan emptyDegreeCurricularPlan = DegreeCurricularPlan.readEmptyDegreeCurricularPlan();
+        if (chosenDegreeType == null || emptyDegreeCurricularPlan.getDegreeType() == chosenDegreeType) {
+            emptyDegreeCurricularPlan.getRegistrations(executionYear, registrations);
         }
         return filterResults(searchbean, registrations, executionYear);
     }
