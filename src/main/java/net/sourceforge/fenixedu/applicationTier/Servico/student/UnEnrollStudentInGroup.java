@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -45,6 +46,8 @@ public class UnEnrollStudentInGroup extends FenixService {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
+
+        ServiceMonitoring.logService(UnEnrollStudentInGroup.class, userName, studentGroupCode);
 
         StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {

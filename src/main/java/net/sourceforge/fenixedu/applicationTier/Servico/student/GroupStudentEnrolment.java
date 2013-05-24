@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -37,6 +38,8 @@ public class GroupStudentEnrolment extends FenixService {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
+
+        ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);
 
         final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {

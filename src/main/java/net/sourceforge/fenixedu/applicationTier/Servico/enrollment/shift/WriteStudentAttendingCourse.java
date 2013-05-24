@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -11,6 +12,9 @@ import pt.ist.fenixWebFramework.services.Service;
 public class WriteStudentAttendingCourse extends FenixService {
 
     protected void run(Registration registration, Integer executionCourseId) throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), registration, executionCourseId);
+
         if (registration == null) {
             throw new FenixServiceException("error.invalid.student");
         }

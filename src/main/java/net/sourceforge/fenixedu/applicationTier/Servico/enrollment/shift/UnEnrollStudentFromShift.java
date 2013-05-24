@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -12,6 +13,8 @@ public class UnEnrollStudentFromShift extends FenixService {
 
     protected void run(final Registration registration, final Integer shiftId) throws StudentNotFoundServiceException,
             ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException, FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), registration, shiftId);
 
         if (registration == null) {
             throw new StudentNotFoundServiceException();

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
@@ -50,6 +51,9 @@ public class InsertStudentTestResponses extends FenixService {
     @Service
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
             final Integer distributedTestId, Response[] response, String path) throws FenixServiceException {
+
+        ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
+                path);
 
         String logIdString =
                 StringAppender.append("student num", studentNumber.toString(), " testId ", distributedTestId.toString());

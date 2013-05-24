@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExamStudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -18,6 +19,8 @@ import pt.ist.fenixWebFramework.services.Service;
 public class EnrolStudentInWrittenEvaluation extends FenixService {
 
     protected void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), username, writtenEvaluationOID);
 
         final WrittenEvaluation writtenEvaluation =
                 (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
@@ -48,12 +51,14 @@ public class EnrolStudentInWrittenEvaluation extends FenixService {
     public void enrolmentAction(final WrittenEvaluation writtenEvaluation, final Registration registration) {
         writtenEvaluation.enrolStudent(registration);
     }
+
     // Service Invokers migrated from Berserk
 
     private static final EnrolStudentInWrittenEvaluation serviceInstance = new EnrolStudentInWrittenEvaluation();
 
     @Service
-    public static void runEnrolStudentInWrittenEvaluation(String username, Integer writtenEvaluationOID) throws FenixServiceException  , NotAuthorizedException {
+    public static void runEnrolStudentInWrittenEvaluation(String username, Integer writtenEvaluationOID)
+            throws FenixServiceException, NotAuthorizedException {
         ExamStudentAuthorizationFilter.instance.execute(username, writtenEvaluationOID);
         serviceInstance.run(username, writtenEvaluationOID);
     }

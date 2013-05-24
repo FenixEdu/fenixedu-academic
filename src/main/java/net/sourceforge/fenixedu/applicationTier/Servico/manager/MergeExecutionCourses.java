@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
@@ -81,6 +82,8 @@ public class MergeExecutionCourses extends FenixService {
     }
 
     protected void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), executionCourseDestinationId, executionCourseSourceId);
 
         if (executionCourseDestinationId.equals(executionCourseSourceId)) {
             throw new SourceAndDestinationAreTheSameException();

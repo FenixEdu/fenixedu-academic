@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -52,6 +53,8 @@ public class EditGroupShift extends FenixService {
     @Service
     public static Boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
             throws FenixServiceException {
+
+        ServiceMonitoring.logService(EditGroupShift.class, studentGroupID, groupingID, newShiftID, username);
 
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         if (grouping == null) {

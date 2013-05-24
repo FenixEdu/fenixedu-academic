@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -35,6 +36,10 @@ public class CreateUnit extends FenixService {
             String acronym, YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, Integer departmentID, Integer degreeID,
             Integer administrativeOfficeID, AccountabilityType accountabilityType, String webAddress,
             UnitClassification classification, Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException {
+
+        ServiceMonitoring.logService(CreateUnit.class, parentUnit, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
+                type, departmentID, degreeID, administrativeOfficeID, accountabilityType, webAddress, classification,
+                canBeResponsibleOfSpaces, campusID);
 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
         Campus campus = (Campus) rootDomainObject.readResourceByOID(campusID);

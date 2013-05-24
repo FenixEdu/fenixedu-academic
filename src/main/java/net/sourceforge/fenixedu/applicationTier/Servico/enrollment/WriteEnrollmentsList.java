@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -25,6 +26,9 @@ public class WriteEnrollmentsList extends FenixService {
     protected void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
             ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
             throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), studentCurricularPlan, degreeType, executionSemester, curricularCourses,
+                optionalEnrollments, userView);
 
         if (studentCurricularPlan == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");

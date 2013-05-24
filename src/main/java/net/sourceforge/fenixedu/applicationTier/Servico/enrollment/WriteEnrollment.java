@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -23,6 +24,9 @@ public class WriteEnrollment extends FenixService {
     // some of these arguments may be null. they are only needed for filter
     protected Integer run(Integer executionDegreeId, Registration registration, Integer curricularCourseID,
             Integer executionPeriodID, CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView) {
+
+        ServiceMonitoring.logService(this.getClass(), executionDegreeId, registration, curricularCourseID, executionPeriodID,
+                enrollmentType, enrollmentClass, userView);
 
         final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 

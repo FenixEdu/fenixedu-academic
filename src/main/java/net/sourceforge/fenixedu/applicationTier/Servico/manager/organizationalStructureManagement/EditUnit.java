@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -26,6 +27,9 @@ public class EditUnit extends FenixService {
             Integer administrativeOfficeID, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException, DomainException,
             FenixFilterException {
+
+        ServiceMonitoring.logService(EditUnit.class, unitID, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
+                departmentID, degreeID, administrativeOfficeID, webAddress, classification, canBeResponsibleOfSpaces, campusID);
 
         Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
         if (unit == null) {

@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -27,6 +28,8 @@ public class DeleteSummary extends FenixService {
 
     protected Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
             throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), executionCourse, summary, professorship);
 
         if (summary == null) {
             throw new InvalidArgumentsServiceException();
