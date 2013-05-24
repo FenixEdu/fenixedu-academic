@@ -24,7 +24,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.EntryPhase;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -37,8 +42,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -114,7 +117,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
         request.setAttribute("executionPeriodId", executionPeriodId);
 
-        List executionDegreeList = null;
+        List<InfoExecutionDegree> executionDegreeList = null;
         try {
             executionDegreeList = ReadExecutionDegreesByExecutionPeriodId.run(executionPeriodId);
         } catch (FenixServiceException e) {
@@ -136,11 +139,16 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+            String name =
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
+                            .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
+            /*
+            TODO: DUPLICATE check really needed?
             name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
             name +=
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+            */
             courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getIdInternal().toString()));
         }
     }
@@ -199,26 +207,33 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         return mapping.findForward("prepareEditExecutionCourse");
     }
 
-    public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-        IUserView userView = UserView.getUser();
-
-        String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
+    private DynaActionForm prepareReturnAttributes(ActionForm form, HttpServletRequest request) {
         separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
-        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
+        Boolean chooseNotLinked = null;
         if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
                 || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
 
             separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-            String curYear = getAndSetStringToRequest(request, "curYear");
+            separateLabel(form, request, "curYear", "curYearId", "curYearName");
+            //String curYear = getAndSetStringToRequest(request, "curYear");
+            String curYear = (String) request.getAttribute("curYear");
             executionCourseForm.set("curYear", curYear);
-
+            chooseNotLinked = new Boolean(false);
         } else {
-            executionCourseForm.set("executionCoursesNotLinked", new Boolean(executionCoursesNotLinked));
+            chooseNotLinked = new Boolean(executionCoursesNotLinked);
+            executionCourseForm.set("executionCoursesNotLinked", chooseNotLinked);
         }
+        return executionCourseForm;
+    }
+
+    public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        DynaActionForm executionCourseForm = prepareReturnAttributes(form, request);
 
         InfoExecutionCourse infoExecutionCourse;
         try {
@@ -242,27 +257,46 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         }
         request.setAttribute("entryPhases", entryPhases);
 
+        prepareReturnSessionBean(request, (Boolean) executionCourseForm.get("executionCoursesNotLinked"), executionCourseId);
+
         return mapping.findForward("editExecutionCourse");
+    }
+
+    private void prepareReturnSessionBean(HttpServletRequest request, Boolean chooseNotLinked, String executionCourseId) {
+        // Preparing sessionBean for the EditExecutionCourseDA.list...Actions...
+        Integer executionPeriodId = (Integer) request.getAttribute("executionPeriodId");
+
+        ExecutionCourse executionCourse = null;
+        if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(executionCourseId)) {
+            executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        }
+        ExecutionSemester executionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+
+        ExecutionCourseBean sessionBean = new ExecutionCourseBean();
+
+        sessionBean.setSourceExecutionCourse(executionCourse);
+        sessionBean.setExecutionSemester(executionPeriod);
+        sessionBean.setChooseNotLinked(chooseNotLinked);
+
+        if (!chooseNotLinked) {
+            Integer executionDegreeId = (Integer) request.getAttribute("executionDegreeId");
+            Integer curricularYearId = (Integer) request.getAttribute("curYearId");
+
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearId);
+
+            sessionBean.setExecutionDegree(executionDegree);
+            sessionBean.setCurricularYear(curYear);
+        }
+
+        request.setAttribute("sessionBean", sessionBean);
     }
 
     public ActionForward updateExecutionCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
-
-        getAndSetStringToRequest(request, "executionCourseId");
-        separateLabel(actionForm, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
-
-        DynaActionForm executionCourseForm = (DynaValidatorForm) actionForm;
-
-        Boolean executionCoursesNotLinked = (Boolean) executionCourseForm.get("executionCoursesNotLinked");
-        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals(Boolean.FALSE)) {
-            separateLabel(actionForm, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-            String curYear = getAndSetStringToRequest(request, "curYear");
-            executionCourseForm.set("curYear", curYear);
-        } else {
-            executionCourseForm.set("executionCoursesNotLinked", executionCoursesNotLinked);
-        }
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        DynaActionForm executionCourseForm = prepareReturnAttributes(actionForm, request);
 
         final InfoExecutionCourseEditor infoExecutionCourseEditor = fillInfoExecutionCourseFromForm(actionForm, request);
         InfoExecutionCourse infoExecutionCourse = null;
@@ -281,33 +315,27 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 
+        prepareReturnSessionBean(request, (Boolean) executionCourseForm.get("executionCoursesNotLinked"), executionCourseId);
+
         return mapping.findForward("viewExecutionCourse");
     }
 
     public ActionForward deleteExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
 
-        String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
-        separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
+        DynaActionForm executionCourseForm = prepareReturnAttributes(form, request);
 
-        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-        DynaActionForm executionCourseForm = (DynaValidatorForm) form;
-        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
-            separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-
-            String curYear = getAndSetStringToRequest(request, "curYear");
-            executionCourseForm.set("curYear", curYear);
-        } else {
-            executionCourseForm.set("executionCoursesNotLinked", new Boolean(executionCoursesNotLinked));
-        }
-
-        List internalIds = new ArrayList();
+        List<Integer> internalIds = new ArrayList<Integer>();
         internalIds.add(new Integer(executionCourseId));
 
-        List errorCodes = new ArrayList();
+        List<String> errorCodes = new ArrayList<String>();
+
+        ExecutionCourse executionCourseToBeDeleted =
+                RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        String executionCourseName = executionCourseToBeDeleted.getNome();
+        String executionCourseSigla = executionCourseToBeDeleted.getSigla();
 
         try {
             errorCodes = DeleteExecutionCourses.run(internalIds);
@@ -315,18 +343,17 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
         if (!errorCodes.isEmpty()) {
-            ActionErrors actionErrors = new ActionErrors();
-            Iterator codesIter = errorCodes.iterator();
-            ActionError error = null;
-
-            while (codesIter.hasNext()) {
-                error = new ActionError("errors.invalid.delete.not.empty.execution.course", codesIter.next());
-                actionErrors.add("errors.invalid.delete.not.empty.execution.course", error);
+            for (String errorCode : errorCodes) {
+                addActionMessage("error", request, "errors.invalid.delete.not.empty.execution.course", errorCode);
             }
-            saveErrors(request, actionErrors);
+        } else {
+            addActionMessage("success", request, "message.manager.executionCourseManagement.deleteExecutionCourse.success",
+                    executionCourseName, executionCourseSigla);
         }
 
-        return prepareEditExecutionCourse(mapping, form, request, response);
+        prepareReturnSessionBean(request, (Boolean) executionCourseForm.get("executionCoursesNotLinked"), null);
+
+        return mapping.findForward("listExecutionCourseActions");
     }
 
     private Integer separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name) {
@@ -356,16 +383,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         }
 
         return objectId;
-    }
-
-    private String getAndSetStringToRequest(HttpServletRequest request, String name) {
-
-        String parameter = request.getParameter(name);
-        if (parameter == null) {
-            parameter = (String) request.getAttribute(name);
-        }
-        request.setAttribute(name, parameter);
-        return parameter;
     }
 
     private InfoExecutionCourseEditor fillInfoExecutionCourseFromForm(ActionForm actionForm, HttpServletRequest request) {

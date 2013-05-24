@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.util.StringUtils"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -66,7 +67,7 @@
 	<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseManagementBean" />
 	
 	<bean:define id="curricularCourseName">
-		<%= bean.getCurricularCourseList().get(0).getNameI18N().getContent() %>
+		<%= StringUtils.isEmpty(bean.getCurricularCourseList().get(0).getNameI18N().getContent()) ? bean.getCurricularCourseList().get(0).getName() : bean.getCurricularCourseList().get(0).getNameI18N().getContent() %>
 	</bean:define> 
 
 	<p><bean:message key="message.execution.course.management.for.curricular.course" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= curricularCourseName %>" /></p>

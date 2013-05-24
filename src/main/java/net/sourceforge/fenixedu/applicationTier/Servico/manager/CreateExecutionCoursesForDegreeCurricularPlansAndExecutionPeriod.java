@@ -7,12 +7,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -20,16 +21,23 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends FenixService {
+public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+        if (executionSemester == null) {
+            throw new DomainException("error.selection.noPeriod");
+        }
         final Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionSemester);
+
+        if (degreeCurricularPlansIDs.length == 0) {
+            throw new DomainException("error.selection.noDegree");
+        }
         for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
             final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
             final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 

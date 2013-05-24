@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -93,6 +94,9 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
         } catch (FenixServiceException fse) {
             error = true;
             addActionMessageLiteral("errorFenixException", request, fse.getMessage());
+        } catch (DomainException ex) {
+            error = true;
+            addActionMessage("error", request, ex.getMessage());
         }
 
         if (!error) {

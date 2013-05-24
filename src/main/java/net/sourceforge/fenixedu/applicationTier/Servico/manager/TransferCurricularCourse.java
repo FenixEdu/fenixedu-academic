@@ -4,14 +4,16 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -19,15 +21,33 @@ import org.apache.commons.collections.Predicate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class TransferCurricularCourse extends FenixService {
+public class TransferCurricularCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer sourceExecutionCourseId, final Integer curricularCourseId, Integer destinationExecutionCourseId) {
+    public static void run(String sourceExecutionCourseIdString, final String curricularCourseIdString,
+            String destinationExecutionCourseIdString) {
 
-        final ExecutionCourse sourceExecutionCourse = rootDomainObject.readExecutionCourseByOID(sourceExecutionCourseId);
+        if (StringUtils.isEmpty(destinationExecutionCourseIdString) || !StringUtils.isNumeric(destinationExecutionCourseIdString)) {
+            throw new DomainException("error.selection.noDestinationExecutionCourse");
+        }
+
+        Integer sourceExecutionCourseId = Integer.valueOf(sourceExecutionCourseIdString);
+        Integer destinationExecutionCourseId = Integer.valueOf(destinationExecutionCourseIdString);
+        Integer curricularCourseId = Integer.valueOf(curricularCourseIdString);
+
+        if (destinationExecutionCourseId.equals(sourceExecutionCourseId)) {
+            throw new DomainException("error.selection.sameSourceDestinationCourse");
+        }
+
+        final ExecutionCourse sourceExecutionCourse =
+                RootDomainObject.getInstance().readExecutionCourseByOID(sourceExecutionCourseId);
         final ExecutionCourse destinationExecutionCourse =
-                rootDomainObject.readExecutionCourseByOID(destinationExecutionCourseId);
+                RootDomainObject.getInstance().readExecutionCourseByOID(destinationExecutionCourseId);
+
+        if (destinationExecutionCourse == null) {
+            throw new DomainException("error.selection.noDestinationExecutionCourse");
+        }
 
         CurricularCourse curricularCourse = null;
         for (final CurricularCourse curricularCourseOther : sourceExecutionCourse.getAssociatedCurricularCoursesSet()) {
@@ -35,6 +55,26 @@ public class TransferCurricularCourse extends FenixService {
                 curricularCourse = curricularCourseOther;
                 break;
             }
+        }
+
+        if (curricularCourse == null) {
+            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+
+            StringBuilder curricularCourseNameSB = new StringBuilder();
+            if (StringUtils.isEmpty(curricularCourse.getNameI18N().getContent())) {
+                curricularCourseNameSB.append(curricularCourse.getName());
+            } else {
+                curricularCourseNameSB.append(curricularCourse.getNameI18N().getContent());
+            }
+            curricularCourseNameSB.append(" [" + curricularCourse.getDegree().getSigla() + "]");
+
+            String sourceExecutionCourseName = sourceExecutionCourse.getNameI18N().getContent();
+            if (StringUtils.isEmpty(sourceExecutionCourseName)) {
+                sourceExecutionCourseName = sourceExecutionCourse.getName();
+            }
+
+            throw new DomainException("error.manager.executionCourseManagement.transferCurricularCourse.gone",
+                    curricularCourseNameSB.toString(), sourceExecutionCourseName);
         }
 
         deleteShiftStudents(sourceExecutionCourse, curricularCourse);

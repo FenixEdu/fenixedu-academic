@@ -43,4 +43,10 @@ public class ExecutionCourseLog extends ExecutionCourseLog_Base {
         return null;
     }
 
+    @Override
+    public void delete() {
+        removeExecutionCourse();
+        super.delete();
+    }
+
 }

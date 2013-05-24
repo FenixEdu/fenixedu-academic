@@ -176,11 +176,11 @@
 			<br/>
 		</logic:empty>
 
-		<bean:define id="transferConfirm">
+		<bean:define id="splitConfirm">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.separate.confirm"/>')
 		</bean:define>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="<%= transferConfirm %>">
-			<bean:message bundle="MANAGER_RESOURCES" key="button.transfer"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="<%= splitConfirm %>">
+			<bean:message bundle="MANAGER_RESOURCES" key="label.split"/>
 		</html:submit>
 
 	</html:form>

@@ -3,8 +3,28 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.insert.executionCourse"/></h2>
+<logic:messagesPresent message="true" property="success">
+	<p>
+		<span class="success0">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="success">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true" property="error">
+	<p>
+		<span class="error0">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="error">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
 <logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/insertExecutionCourse" focus="name">  
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

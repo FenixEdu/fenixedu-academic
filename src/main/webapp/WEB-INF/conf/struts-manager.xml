@@ -686,6 +686,7 @@
                   <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
                   <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
                   <forward path="df.executionCourseManagement.viewExecutionCourse" name="viewExecutionCourse"></forward>
+                  <forward path="df.executionCourseManagement.listExecutionCourseActions" name="listExecutionCourseActions"></forward>
             </action>
             <!-- ========== PERSON MANAGEMENT ========== -->
             <action input="findPerson" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/personManagement">

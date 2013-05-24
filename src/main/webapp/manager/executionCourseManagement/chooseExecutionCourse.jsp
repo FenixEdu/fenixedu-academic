@@ -5,11 +5,37 @@
 
 <html:xhtml/>
 
-<h2>Mover Anúncios</h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionDegreeManagement.announcements.swap"/></h2>
 
 <bean:define id="sourceExecutionCourseId" name="bean" property="sourceExecutionCourse.idInternal"/>
+<bean:define id="degreeName" name="bean" property="sourceExecutionCourse.degreePresentationString"/>
 
-<p class="mvert05"><strong><fr:view name="sourceExecutionCourseId"/> - <fr:view name="bean" property="sourceExecutionCourse.nome"/> (<fr:view name="bean" property="sourceExecutionCourse.sigla"/>)</strong></p>
+<logic:messagesPresent message="true" property="success">
+	<p>
+		<span class="success0">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="success">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
+
+<logic:messagesPresent message="true" property="error">
+	<p>
+		<span class="error0">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="error">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
+
+<p class="mvert05">
+	<strong>
+		<logic:present name="degreeName"><fr:view name="degreeName"/> - </logic:present>
+		<fr:view name="bean" property="sourceExecutionCourse.nome"/> (<fr:view name="bean" property="sourceExecutionCourse.sigla"/>)
+	</strong>
+</p>
 
 <bean:define id="periodId" name="bean" property="sourceExecutionCourse.executionPeriod.idInternal"/>
 <bean:define id="periodName" name="bean" property="sourceExecutionCourse.executionPeriod.name"/>

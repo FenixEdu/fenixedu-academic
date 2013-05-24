@@ -13,7 +13,7 @@
 
 <logic:messagesPresent message="true" property="error">
 	<br />
-	<html:messages id="messages" message="true" bundle="SOP_RESOURCES" property="error">
+	<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
 		<div class="error2"><bean:write name="messages" /></div>
 	</html:messages>
 	<br />

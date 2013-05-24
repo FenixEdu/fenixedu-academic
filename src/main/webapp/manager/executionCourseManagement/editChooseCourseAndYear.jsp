@@ -7,52 +7,41 @@
 <fr:view name="sessionBean" property="executionPeriod.qualifiedName" />
 
 
-<p class="infoop"><bean:message bundle="MANAGER_RESOURCES"
-	key="message.manager.executionCourseManagement.chooseLinkedCourses" /></p>
+<p class="infoop">
+	<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseLinkedCourses" />
+</p>
 
-
-<div class="dinline forminline"><fr:form
-	action="/editExecutionCourseChooseExPeriod.do?method=listExecutionCourseActions">
+<div class="dinline forminline">
+	<fr:form action="/editExecutionCourseChooseExPeriod.do?method=listExecutionCourseActions">
 	<!-- fr:edit para permitir a escolha do curso e do ano curricular -->
 	<fr:edit id="sessionBeanJSP" name="sessionBean">
-		<fr:schema
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseBean"
-			bundle="MANAGER_RESOURCES">
-			<fr:slot name="executionDegree" layout="menu-select-postback"
-				key="label.manager.executionDegrees">
-				<fr:property name="format" value="${degreeType} - ${degreeName}" />
-				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider" />
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
+			<fr:slot name="executionDegree" layout="menu-select-postback" key="label.manager.executionDegrees">
+				<fr:property name="format" value="${presentationName}" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider" />
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>
-			<fr:slot name="curricularYear" layout="menu-select-postback"
-				key="label.manager.executionCourseManagement.curricularYear">
+			<fr:slot name="curricularYear" layout="menu-select-postback" key="label.manager.executionCourseManagement.curricularYear">
 				<fr:property name="format" value="${year}" />
-				<fr:property name="providerClass"
-					value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider" />
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>
 		</fr:schema>
-		<fr:destination name="postBack"
-			path="/editExecutionCourseChooseExPeriod.do?method=secondPrepareEditExecutionCourse" />
+		<fr:destination name="postBack" path="/editExecutionCourseChooseExPeriod.do?method=secondPrepareEditExecutionCourse" />
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight" />
 			<fr:property name="columnClasses" value=",, tdclear tderror1" />
 		</fr:layout>
 	</fr:edit>
 
-	<p class="infoop"><bean:message bundle="MANAGER_RESOURCES"
-		key="message.manager.executionCourseManagement.chooseNotLinked" /></p>
+	<p class="infoop"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseNotLinked" /></p>
 	<fr:edit id="sessionBeanJSPAux" name="sessionBean">
-		<fr:schema
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseBean"
-			bundle="MANAGER_RESOURCES">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseBean" bundle="MANAGER_RESOURCES">
 			<fr:slot name="chooseNotLinked" layout="option-select-postback" key="label.manager.chooseNotLinked">
 				<fr:property name="saveOptions" value="true" />
 			</fr:slot>
 		</fr:schema>
-		<fr:destination name="postBack"
-			path="/editExecutionCourseChooseExPeriod.do?method=secondPrepareEditExecutionCourse" />
+		<fr:destination name="postBack" path="/editExecutionCourseChooseExPeriod.do?method=secondPrepareEditExecutionCourse" />
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight" />
 			<fr:property name="columnClasses" value=",, tdclear tderror1" />
@@ -117,8 +106,8 @@
 	</logic:notEqual>
 	
 
-</fr:form> <fr:form
-	action="/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse">
+</fr:form>
+<fr:form action="/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse">
 	<html:submit>
 		<bean:message bundle="MANAGER_RESOURCES" key="button.cancel" />
 	</html:submit>

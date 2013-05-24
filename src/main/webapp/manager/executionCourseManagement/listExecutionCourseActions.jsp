@@ -9,13 +9,6 @@
 <bean:define id="executionPeriodId" name="sessionBean" property="executionPeriod.idInternal" />
 <bean:define id="executionPeriodQName" name="sessionBean" property="executionPeriod.qualifiedName" />
 
-<logic:equal name="transferSucess" value="true">
-    <p>
-        <span class="success0">
-            <bean:message key="message.sucess" bundle="MANAGER_RESOURCES"/>
-        </span>
-    </p>
-</logic:equal>
 <logic:messagesPresent message="true" property="success">
 	<p>
 		<span class="success0">
@@ -41,11 +34,8 @@
 <bean:define id="executionDegreeId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="curricularYearId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="notLinked" name="sessionBean" property="chooseNotLinked"/>
+
 <logic:equal name="sessionBean" property="chooseNotLinked" value="false">
-<%--
-	<bean:define id="executionDegreeType" name="sessionBean" property="executionDegree.degreeType" />
-	<bean:define id="executionDegreeName" name="sessionBean" property="executionDegree.degreeName" />
---%>
 	<bean:define id="executionDegreeId" name="sessionBean" property="executionDegree.idInternal" />
 	<bean:define id="executionDegreePName" name="sessionBean" property="executionDegree.presentationName" />
 	<bean:define id="curricularYear" name="sessionBean" property="curricularYear.year" />
@@ -62,7 +52,6 @@
 
 	<bean:define id="linkGetRequestBigMessage"
 		value="<%= "&executionPeriod=" + executionPeriodQName.toString() + "~" + executionPeriodId.toString()
-			//+ "&executionDegree=" + ((DegreeType) executionDegreeType).getLocalizedName() + labelInSpaces.toString() + executionDegreeName.toString() + "~" + executionDegreeId.toString()
 			+ "&executionDegree=" + executionDegreePName.toString() + "~" + executionDegreeId.toString()
 			+ "&curYear=" + curricularYear.toString() + "~" + curricularYearId.toString() + notLinkedHardCoded.toString() %>" />
 
@@ -70,16 +59,12 @@
 		value="<%= "&executionPeriodId=" + executionPeriodId.toString() +
 	"&executionDegreeId=" + executionDegreeId + "&curYearId=" + curricularYearId.toString() + notLinkedHardCoded.toString()%>" />
 </logic:equal>
-
-
-
 <logic:equal name="sessionBean" property="chooseNotLinked" value="true">
 
 	<p>
 		<fr:view name="sessionBean" property="executionPeriod.qualifiedName" />&nbsp;&gt;&nbsp;
 		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.chooseNotLinked" />
 	</p>
-
 
 	<bean:define id="linkGetRequestBigMessage"
 		value="<%= "&executionPeriod=" + executionPeriodQName.toString() + "~" + executionPeriodId.toString() +
@@ -109,6 +94,7 @@
 		<logic:equal name="notLinked" value="false">
 		<fr:property name="linkFormat(splitCourses)" value="<%="/seperateExecutionCourse.do?method=prepareTransfer&executionCourseId=${idInternal}&originExecutionDegreeID="  + executionDegreeId.toString() + "&curricularYearId=" + curricularYearId.toString() %>"/> 
 		<fr:property name="order(splitCourses)" value="3" />
+		<fr:property name="visibleIf(splitCourses)" value="splittable" />
 		<fr:property name="key(splitCourses)" value="link.manager.seperate.execution_course" />
 		<fr:property name="bundle(splitCourses)" value="MANAGER_RESOURCES" />
 		</logic:equal>

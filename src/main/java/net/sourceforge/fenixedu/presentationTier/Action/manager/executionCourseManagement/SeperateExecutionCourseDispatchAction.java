@@ -14,9 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseM
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.SeperateExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -50,7 +53,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-        List executionDegrees =
+        List<InfoExecutionDegree> executionDegrees =
                 ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
         transformExecutionDegreesIntoLabelValueBean(executionDegrees);
         request.setAttribute("executionDegrees", executionDegrees);
@@ -107,10 +110,11 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute("infoExecutionCourse");
 
-            List executionCourses =
-                    (List) ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
+            List<InfoExecutionCourse> executionCourses =
+                    ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
                             destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(),
                             new Integer(destinationCurricularYear));
+            executionCourses.remove(infoExecutionCourse);
             Collections.sort(executionCourses, new BeanComparator("nome"));
             request.setAttribute("executionCourses", executionCourses);
         }
@@ -137,12 +141,36 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         if (!StringUtils.isEmpty(destinationExecutionCourseIDString) && StringUtils.isNumeric(destinationExecutionCourseIDString)) {
             destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
         }
+
         try {
 
-            SeperateExecutionCourse.run(executionCourseId, destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
-                    makeIntegerArray(curricularCourseIdsToTransfer));
-            Boolean transferSucess = true;
-            request.setAttribute("transferSucess", transferSucess);
+            ExecutionCourse destinationExecutionCourse =
+                    SeperateExecutionCourse.run(executionCourseId, destinationExecutionCourseID,
+                            makeIntegerArray(shiftIdsToTransfer), makeIntegerArray(curricularCourseIdsToTransfer));
+
+            String destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
+            if (StringUtils.isEmpty(destinationExecutionCourseName)) {
+                destinationExecutionCourseName = destinationExecutionCourse.getName();
+            }
+            String destinationExexcutionCourseCode = destinationExecutionCourse.getSigla();
+            String destinationDegreeName = destinationExecutionCourse.getDegreePresentationString();
+            String transferedCurricularCourses = makeObjectStringFromArray(curricularCourseIdsToTransfer, CurricularCourse.class);
+            String transferedShifts = makeObjectStringFromArray(shiftIdsToTransfer, Shift.class);
+
+            if (destinationExecutionCourseID == null && destinationExecutionCourse != null) {
+                // newly created execution course
+                addActionMessage("success", request, "message.manager.executionCourseManagement.separate.success.create",
+                        destinationExecutionCourseName, destinationDegreeName, destinationExexcutionCourseCode,
+                        transferedCurricularCourses, transferedShifts);
+            } else if (destinationExecutionCourseID != null && destinationExecutionCourse != null) {
+                // existing execution course
+                addActionMessage("success", request, "message.manager.executionCourseManagement.separate.success.transfer",
+                        transferedCurricularCourses, transferedShifts, destinationExecutionCourseName, destinationDegreeName,
+                        destinationExexcutionCourseCode);
+            } else {
+                // This should never happen
+                addActionMessage("error", request, "Transfer ocurred but something went wrong");
+            }
 
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
@@ -177,6 +205,44 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
     private boolean isSet(String parameter) {
         return parameter != null && parameter.length() > 0 && StringUtils.isNumeric(parameter);
+    }
+
+    private String makeObjectStringFromArray(String[] ids, Class objectType) {
+
+        StringBuilder sb = new StringBuilder();
+
+        if (objectType.equals(CurricularCourse.class)) {
+            for (String id : ids) {
+                sb.append(curricularCourseToString(id));
+                sb.append(", ");
+            }
+        } else if (objectType.equals(Shift.class)) {
+            for (String id : ids) {
+                sb.append(shiftToString(id));
+                sb.append(", ");
+            }
+        }
+        if (sb.length() > 1) {
+            sb.setLength(sb.length() - 2); // trim ", "
+        } else {
+            sb.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"));
+        }
+        return sb.toString();
+    }
+
+    private String curricularCourseToString(String id) {
+        CurricularCourse curricularCourse =
+                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(Integer.valueOf(id));
+        String name = curricularCourse.getNameI18N().getContent();
+        if (StringUtils.isEmpty(name)) {
+            name = curricularCourse.getName();
+        }
+        return name + " [" + curricularCourse.getDegree().getSigla() + "]";
+    }
+
+    private String shiftToString(String id) {
+        Shift shift = RootDomainObject.getInstance().readShiftByOID(Integer.valueOf(id));
+        return shift.getPresentationName();
     }
 
 }

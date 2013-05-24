@@ -201,6 +201,10 @@ public class InfoExecutionCourse extends InfoObject {
         }
     }
 
+    public boolean getCanRemoveCurricularCourses() {
+        return getAssociatedInfoCurricularCourses().size() > 1;
+    }
+
     private List<InfoCurricularCourseScope> getInfoScopes(final Collection<CurricularCourseScope> curricularCourseScopes) {
         final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
 
