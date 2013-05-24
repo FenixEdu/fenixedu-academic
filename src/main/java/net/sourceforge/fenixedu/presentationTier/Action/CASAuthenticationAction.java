@@ -4,14 +4,13 @@ import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate.NonExistingUserException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -56,15 +55,14 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
             } catch (CASAuthenticationException e) {
                 throw new ExcepcaoAutenticacao(e);
             }
-            final Object authenticationArgs[] = { receipt, requestURL, remoteHostName };
 
             try {
-                userView =
-                        (IUserView) ServiceManagerServiceFactory.executeService(
-                                PropertiesManager.getProperty("authenticationService"), authenticationArgs);
+                userView = Authenticate.runAuthenticate(receipt, requestURL, remoteHostName);
             } catch (NonExistingUserException ex) {
                 request.setAttribute(USER_DOES_NOT_EXIST_ATTRIBUTE, Boolean.TRUE);
                 throw ex;
+            } catch (ExcepcaoPersistencia e) {
+                e.printStackTrace();
             }
 
         }

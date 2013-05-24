@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddForumEmailSubscriber;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationMessage;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationThreadAndMessage;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveForumEmailSubscriber;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean;
@@ -24,7 +26,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
@@ -73,7 +74,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
                         .getObject();
 
         try {
-            ServiceManagerServiceFactory.executeService("CreateConversationThreadAndMessage", new Object[] { createConversationThreadAndMessageBean });
+            CreateConversationThreadAndMessage.runCreateConversationThreadAndMessage( createConversationThreadAndMessageBean );
         } catch (DomainException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));
@@ -135,7 +136,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
                 (CreateConversationMessageBean) RenderUtils.getViewState("createMessage").getMetaObject().getObject();
 
         try {
-            ServiceManagerServiceFactory.executeService("CreateConversationMessage", new Object[] { createConversationMessageBean });
+            CreateConversationMessage.runCreateConversationMessage( createConversationMessageBean );
         } catch (DomainException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));

@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -44,12 +44,12 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
         evaluationCode = new Integer(evaluationCodeString);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, null, null, null, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

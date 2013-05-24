@@ -14,7 +14,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentByUsername extends FenixService {
 
-    protected Object run(String username) {
+    protected InfoStudent run(String username) {
         final Registration registration = Registration.readByUsername(username);
         return registration == null ? null : InfoStudent.newInfoFromDomain(registration);
     }
@@ -24,7 +24,7 @@ public class ReadStudentByUsername extends FenixService {
     private static final ReadStudentByUsername serviceInstance = new ReadStudentByUsername();
 
     @Service
-    public static Object runReadStudentByUsername(String username) throws NotAuthorizedException {
+    public static InfoStudent runReadStudentByUsername(String username) throws NotAuthorizedException {
         try {
             StudentAuthorizationFilter.instance.execute();
             return serviceInstance.run(username);

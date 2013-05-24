@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.ChangeTutorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean.ChangeTutorshipBean;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -72,11 +72,10 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
         changeTutorshipBeans.addAll(getChangeTutorshipBeans("changePastTutorshipBean"));
 
         if (request.getParameter("cancel") == null) {
-            Object[] args = new Object[] { tutorshipManagementBean.getExecutionDegreeID(), changeTutorshipBeans };
-
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("ChangeTutorship", args);
+                tutorshipsNotChanged =
+                        ChangeTutorship.runChangeTutorship(tutorshipManagementBean.getExecutionDegreeID(), changeTutorshipBeans);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }
@@ -118,11 +117,10 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
                 changeTutorshipBeans.addAll(changeTutorshipByEntryYearBean.getChangeTutorshipsBeans());
             }
 
-            Object[] args = new Object[] { tutorshipManagementBean.getExecutionDegreeID(), changeTutorshipBeans };
-
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("ChangeTutorship", args);
+                tutorshipsNotChanged =
+                        ChangeTutorship.runChangeTutorship(tutorshipManagementBean.getExecutionDegreeID(), changeTutorshipBeans);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }

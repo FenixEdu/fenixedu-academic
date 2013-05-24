@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsEnrolledInWrittenEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -44,10 +44,11 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
         final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));
         final Integer writtenEvaluationCode = Integer.valueOf(request.getParameter("evaluationCode"));
 
-        final Object[] args = { executionCourseCode, writtenEvaluationCode };
         SiteView siteView = null;
         try {
-            siteView = (SiteView) ServiceManagerServiceFactory.executeService("ReadStudentsEnrolledInWrittenEvaluation", args);
+            siteView =
+                    ReadStudentsEnrolledInWrittenEvaluation.runReadStudentsEnrolledInWrittenEvaluation(executionCourseCode,
+                            writtenEvaluationCode);
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));

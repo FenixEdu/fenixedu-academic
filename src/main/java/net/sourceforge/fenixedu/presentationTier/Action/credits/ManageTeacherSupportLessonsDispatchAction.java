@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.DeleteSupportLesson;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -92,7 +93,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
             throw new InvalidPeriodException();
         }
         try {
-            ServiceManagerServiceFactory.executeService("EditSupportLesson", new Object[] { supportLessonDTO, roleType });
+            EditSupportLesson.runEditSupportLesson( supportLessonDTO, roleType );
         } catch (DomainException e) {
             saveMessages(request, e);
         }
@@ -104,7 +105,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer supportLessonID = (Integer) supportLessonForm.get("supportLessonID");
         try {
-            ServiceManagerServiceFactory.executeService("DeleteSupportLesson", new Object[] { supportLessonID, roleType });
+            DeleteSupportLesson.runDeleteSupportLesson( supportLessonID, roleType );
         } catch (DomainException e) {
             saveMessages(request, e);
         }

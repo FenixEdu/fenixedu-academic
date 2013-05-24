@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseInformation;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -48,9 +48,8 @@ public class ViewCourseInformationAction extends FenixAction {
         }
 
         SiteView siteView = null;
-        Object[] args = { new Integer(executionCourseId) };
         try {
-            siteView = (SiteView) ServiceManagerServiceFactory.executeService("ReadCourseInformation", args);
+            siteView = ReadCourseInformation.runReadCourseInformation(new Integer(executionCourseId));
         } catch (NotAuthorizedException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);

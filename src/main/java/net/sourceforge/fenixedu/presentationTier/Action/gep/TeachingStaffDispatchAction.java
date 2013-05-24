@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveDegreeCurricularPlansByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -77,7 +77,8 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         Integer executionYearID = executionYear.getIdInternal();
         Object[] args = { executionYearID };
 
-        List degreeCurricularPlans = (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", args);
+        List degreeCurricularPlans =
+                ReadActiveDegreeCurricularPlansByExecutionYear.runReadActiveDegreeCurricularPlansByExecutionYear(executionYearID);
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
         comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));

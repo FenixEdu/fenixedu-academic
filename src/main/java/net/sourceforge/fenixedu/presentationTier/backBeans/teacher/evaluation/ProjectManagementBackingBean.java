@@ -13,6 +13,10 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateProject;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditProject;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -20,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -78,14 +81,10 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     public String createProject() {
         try {
-            final Object[] args =
-                    { getExecutionCourseID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-                            DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(),
-                            getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(),
-                            getSelectDepartments() };
-            ServiceManagerServiceFactory.executeService("CreateProject", args);
-        } catch (final FenixFilterException e) {
-            return "";
+            CreateProject.runCreateProject(getExecutionCourseID(), getName(),
+                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
+                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
+                    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(), getSelectDepartments());
         } catch (final FenixServiceException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -101,15 +100,12 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     public String editProject() {
         try {
-            final Object[] args =
-                    { getExecutionCourseID(), getProjectID(), getName(),
-                            DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-                            DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(),
-                            getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(),
-                            getSelectDepartments() };
-            ServiceManagerServiceFactory.executeService("EditProject", args);
+            EditProject.runEditProject(getExecutionCourseID(), getProjectID(), getName(),
+                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
+                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
+                    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(), getSelectDepartments());
             setAssociatedProjects(null);
-        } catch (final FenixFilterException e) {
+        } catch (final NotAuthorizedException e) {
         } catch (final FenixServiceException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -125,10 +121,9 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     public String deleteProject() {
         try {
-            final Object[] args = { getExecutionCourseID(), getProjectID() };
-            ServiceManagerServiceFactory.executeService("DeleteEvaluation", args);
+            DeleteEvaluation.runDeleteEvaluation(getExecutionCourseID(), getProjectID());
             setAssociatedProjects(null);
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
         } catch (DomainException e) {

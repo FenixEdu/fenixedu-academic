@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.CreateNewBlueprintVersion;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteBlueprintVersion;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.EditBlueprintVersion;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
@@ -67,7 +68,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward createBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("spaceBlueprintVersion");
         final CreateBlueprintSubmissionBean blueprintSubmissionBean =
@@ -77,8 +78,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
         Blueprint newBlueprint = null;
         try {
-            newBlueprint =
-                    (Blueprint) ServiceManagerServiceFactory.executeService("CreateNewBlueprintVersion", new Object[] { blueprintSubmissionBean });
+            newBlueprint = CreateNewBlueprintVersion.runCreateNewBlueprintVersion(blueprintSubmissionBean);
 
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
@@ -113,7 +113,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward editBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("spaceBlueprintVersion");
         final CreateBlueprintSubmissionBean blueprintSubmissionBean =
@@ -123,7 +123,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         Blueprint blueprint = getSpaceBlueprintFromParameter(request);
 
         try {
-            ServiceManagerServiceFactory.executeService("EditBlueprintVersion", new Object[] { blueprint, blueprintSubmissionBean });
+            EditBlueprintVersion.runEditBlueprintVersion(blueprint, blueprintSubmissionBean);
 
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());

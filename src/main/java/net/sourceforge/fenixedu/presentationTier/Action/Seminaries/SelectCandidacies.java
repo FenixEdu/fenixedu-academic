@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ChangeCandidacyApprovanceStatus;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.SelectCandidaciesService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -57,8 +57,7 @@ public class SelectCandidacies extends FenixDispatchAction {
 
         Object[] args = { new Boolean(false), seminaryID };
         try {
-            SelectCandidaciesDTO serviceResult =
-                    (SelectCandidaciesDTO) ServiceManagerServiceFactory.executeService("SelectCandidaciesService", args);
+            SelectCandidaciesDTO serviceResult = SelectCandidaciesService.runSelectCandidaciesService(false, seminaryID);
             request.setAttribute("seminaries", serviceResult.getSeminaries());
             request.setAttribute("candidacies", serviceResult.getCandidacies());
         } catch (FenixServiceException e) {

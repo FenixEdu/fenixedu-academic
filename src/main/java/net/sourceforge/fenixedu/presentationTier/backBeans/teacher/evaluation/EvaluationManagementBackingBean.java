@@ -33,9 +33,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditWrittenEvaluationEnrolmentPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.PublishMarks;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherEditWrittenTestRooms;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.AttendsMark;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.StudentMark;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WrittenEvaluationRoomDistribution;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -56,7 +63,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -563,12 +569,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         Calendar enrolmentEndDay = getEnrolmentEnd();
         Calendar enrolmentEndTime = getEnrolmentEnd();
 
-        final Object[] args =
-                { getExecutionCourseID(), getEvaluationID(), enrolmentBeginDay.getTime(), enrolmentEndDay.getTime(),
-                        enrolmentBeginTime.getTime(), enrolmentEndTime.getTime() };
-
         try {
-            ServiceManagerServiceFactory.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
+            EditWrittenEvaluationEnrolmentPeriod.runEditWrittenEvaluationEnrolmentPeriod(getExecutionCourseID(),
+                    getEvaluationID(), enrolmentBeginDay.getTime(), enrolmentEndDay.getTime(), enrolmentBeginTime.getTime(),
+                    enrolmentEndTime.getTime());
         } catch (Exception e) {
             addErrorMessage(e.getMessage());
             String errorMessage = e.getMessage();
@@ -642,11 +646,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args =
-                { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
-                        executionCourseIDs, degreeModuleScopesIDs, null, this.getGradeScale(), season, this.getDescription() };
         try {
-            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", args);
+            CreateWrittenEvaluation.runCreateWrittenEvaluation(this.getExecutionCourseID(), this.getBegin().getTime(), this
+                    .getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, this
+                    .getGradeScale(), season, this.getDescription());
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -781,12 +784,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
 
-        final Object[] args =
-                { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
-                        executionCourseIDs, degreeModuleScopesIDs, null, this.evaluationID, season, this.getDescription(),
-                        this.getGradeScale() };
         try {
-            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
+            EditWrittenEvaluation.runEditWrittenEvaluation(this.getExecutionCourseID(), this.getBegin().getTime(), this
+                    .getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null,
+                    this.evaluationID, season, this.getDescription(), this.getGradeScale());
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedException) {
@@ -844,9 +845,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String deleteWrittenTest() throws FenixFilterException, FenixServiceException {
-        final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
         try {
-            ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
+            DeleteWrittenEvaluation.runDeleteWrittenEvaluation(this.getExecutionCourseID(), this.getEvaluationID());
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedException) {
@@ -944,9 +944,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String distributeStudentsByRooms() throws FenixFilterException, FenixServiceException {
         try {
             final Boolean distributeOnlyEnroledStudents = Boolean.valueOf(this.getDistributeEnroledStudentsOption());
-            final Object[] args =
-                    { getExecutionCourseID(), getEvaluationID(), getRoomIDs(), Boolean.FALSE, distributeOnlyEnroledStudents };
-            ServiceManagerServiceFactory.executeService("WrittenEvaluationRoomDistribution", args);
+            WrittenEvaluationRoomDistribution.runWrittenEvaluationRoomDistribution(getExecutionCourseID(), getEvaluationID(),
+                    getRoomIDs(), Boolean.FALSE, distributeOnlyEnroledStudents);
             return "enterShowStudentsEnroled";
         } catch (Exception e) {
             setErrorMessage(e.getMessage());
@@ -1058,10 +1057,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                         .getMessage("message.publishment") : null;
 
         try {
-            final Object[] args =
-                    { this.getExecutionCourseID(), this.getEvaluationID(), this.getPublishMarksMessage(), this.getSendSMS(),
-                            announcementTitle };
-            ServiceManagerServiceFactory.executeService("PublishMarks", args);
+            PublishMarks.runPublishMarks(this.getExecutionCourseID(), this.getEvaluationID(), this.getPublishMarksMessage(),
+                    this.getSendSMS(), announcementTitle);
         } catch (Exception e) {
             this.setErrorMessage(e.getMessage());
             return "";
@@ -1228,8 +1225,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public String editEvaluationRooms() throws FenixFilterException, FenixServiceException {
 
-        ServiceManagerServiceFactory.executeService("TeacherEditWrittenTestRooms", new Object[] { getExecutionCourse(),
-        AccessControl.getPerson().getTeacher(), (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()) });
+        TeacherEditWrittenTestRooms.runTeacherEditWrittenTestRooms(getExecutionCourse(), AccessControl.getPerson().getTeacher(),
+                (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()));
         setRoomsToAssociate(null);
 
         return "";

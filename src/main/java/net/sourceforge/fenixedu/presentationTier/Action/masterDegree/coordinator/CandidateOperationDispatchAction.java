@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidateEnrolmentsByCandidateID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadDegreeCandidates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -84,10 +84,8 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
      * @return
      */
     private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
-        Object[] args = { candidateID };
-
         try {
-            return (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
+            return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {
             return null;
         }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard.UnitAnnouncementBoardParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.DeleteAnnouncementBoard;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoard;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoardApprovers;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm;
 
@@ -254,7 +254,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
             params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
             params.unitId = form.getKeyUnit();
 
-            ServiceManagerServiceFactory.executeService("EditUnitAnnouncementBoard", new Object[] { board, params });
+            EditUnitAnnouncementBoard.runEditUnitAnnouncementBoard((UnitAnnouncementBoard) board, params);
 
             if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
                 ActionForward destination = new ActionForward();

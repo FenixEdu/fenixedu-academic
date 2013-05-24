@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -48,7 +50,6 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
@@ -1141,11 +1142,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args =
-                { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-                        degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription() };
         try {
-            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", args);
+            CreateWrittenEvaluation.runCreateWrittenEvaluation(null, this.getBegin().getTime(), this.getBegin().getTime(), this
+                    .getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription());
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -1205,11 +1204,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args =
-                { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-                        degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription(), null };
         try {
-            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", args);
+            EditWrittenEvaluation.runEditWrittenEvaluation(null, this.getBegin().getTime(), this.getBegin().getTime(), this
+                    .getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this
+                    .getDescription(), null);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();

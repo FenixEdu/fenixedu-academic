@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCourseByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCourseResponsiblesIds;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCourseTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -39,11 +41,9 @@ public class ReadTeacherInChargeAction extends FenixAction {
         IUserView userView = UserView.getUser();
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-        Object args[] = { executionCourseId };
-
         InfoExecutionCourse infoExecutionCourse = null;
         try {
-            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService("ReadExecutionCourseManagerByID", args);
+            infoExecutionCourse = ReadExecutionCourseByID.runReadExecutionCourseManagerByID(executionCourseId);
 
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
@@ -52,7 +52,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
         List infoTeachersList = null;
 
         try {
-            infoTeachersList = (List) ServiceManagerServiceFactory.executeService("ReadExecutionCourseTeachers", args);
+            infoTeachersList = ReadExecutionCourseTeachers.runReadExecutionCourseTeachers(executionCourseId);
 
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
@@ -88,7 +88,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
 
             List<Integer> responsiblesIds = null;
             try {
-                responsiblesIds = (List<Integer>) ServiceManagerServiceFactory.executeService("ReadExecutionCourseResponsiblesIds", args);
+                responsiblesIds = ReadExecutionCourseResponsiblesIds.runReadExecutionCourseResponsiblesIds(executionCourseId);
 
             } catch (FenixServiceException fenixServiceException) {
                 throw new FenixActionException(fenixServiceException.getMessage());

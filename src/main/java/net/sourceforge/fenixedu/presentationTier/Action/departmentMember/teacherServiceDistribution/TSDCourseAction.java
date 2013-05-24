@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDCurricularCourseGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDCurricularCourses;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDCurricularCourseGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourseType;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -23,7 +27,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -102,10 +105,8 @@ public class TSDCourseAction extends FenixDispatchAction {
         ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution(dynaForm);
 
-        Object[] parameters =
-                new Object[] { selectedCompetenceCourse.getIdInternal(), tsd.getIdInternal(),
-                        selectedExecutionPeriod.getIdInternal(), selectedTSDCourseType.toString() };
-        ServiceManagerServiceFactory.executeService("SetTSDCourseType", parameters);
+        SetTSDCourseType.runSetTSDCourseType(selectedCompetenceCourse.getIdInternal(), tsd.getIdInternal(),
+                selectedExecutionPeriod.getIdInternal(), selectedTSDCourseType.toString());
 
         dynaForm.set("tsdCurricularCourse", null);
         dynaForm.set("tsdCurricularCourseGroup", null);
@@ -146,7 +147,8 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         if (tsdCurricularCourseToGroupArray.length > 0) {
             TSDCurricularCourseGroup tsdCurricularCourseGroup =
-                    (TSDCurricularCourseGroup) ServiceManagerServiceFactory.executeService("CreateTSDCurricularCourseGroup", new Object[] { tsd.getIdInternal(), tsdCurricularCourseToGroupArray });
+                    CreateTSDCurricularCourseGroup.runCreateTSDCurricularCourseGroup(tsd.getIdInternal(),
+                            tsdCurricularCourseToGroupArray);
 
             dynaForm.set("tsdCurricularCourseGroup", tsdCurricularCourseGroup.getIdInternal());
         }
@@ -171,9 +173,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         TSDCurricularCourseGroup selectedTSDCurricularCourseGroup = getSelectedTSDCurricularCourseGroup(dynaForm, null);
 
-        Object[] parameters = new Object[] { selectedTSDCurricularCourseGroup.getIdInternal() };
-
-        ServiceManagerServiceFactory.executeService("DeleteTSDCurricularCourseGroup", parameters);
+        DeleteTSDCurricularCourseGroup.runDeleteTSDCurricularCourseGroup(selectedTSDCurricularCourseGroup.getIdInternal());
 
         dynaForm.set("tsdCourseType", TSDCourseType.NOT_DETERMINED.toString());
         dynaForm.set("tsdCurricularCourseGroup", null);
@@ -251,11 +251,8 @@ public class TSDCourseAction extends FenixDispatchAction {
     private void createDefaultTSDCurricularCourses(IUserView userView, TeacherServiceDistribution tsd,
             CompetenceCourse competenceCourse, TSDProcessPhase currentTSDProcessPhase, ExecutionSemester selectedExecutionPeriod,
             Boolean activateCourses) throws FenixServiceException, FenixFilterException {
-        Object[] parameters =
-                new Object[] { tsd.getIdInternal(), competenceCourse.getIdInternal(), currentTSDProcessPhase.getIdInternal(),
-                        selectedExecutionPeriod.getIdInternal(), activateCourses };
-
-        ServiceManagerServiceFactory.executeService("CreateTSDCurricularCourses", parameters);
+        CreateTSDCurricularCourses.runCreateTSDCurricularCourses(tsd.getIdInternal(), competenceCourse.getIdInternal(),
+                currentTSDProcessPhase.getIdInternal(), selectedExecutionPeriod.getIdInternal(), activateCourses);
     }
 
     private List<ExecutionSemester> getOrderedExecutionPeriods(IUserView userView, DynaActionForm dynaForm)

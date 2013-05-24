@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.CreateNewLoginAlias;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAliasType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -58,8 +58,7 @@ public class GenerateUserUID extends FenixDispatchAction {
         if (login != null) {
             bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
             try {
-                ServiceManagerServiceFactory.executeService("CreateNewLoginAlias", new Object[] { bean });
-
+                CreateNewLoginAlias.runCreateNewLoginAlias(bean);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }
@@ -88,8 +87,7 @@ public class GenerateUserUID extends FenixDispatchAction {
                         null, null, null, null, null, null, null, null, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-        CollectionPager<Person> persons =
-                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
+        CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
 
         request.setAttribute("resultPersons", persons.getCollection());
         request.setAttribute("personBean", personBean);

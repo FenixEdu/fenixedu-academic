@@ -22,6 +22,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestion;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CreateExercise;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteExercise;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteExerciseVariation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditExercise;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertExercise;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertExerciseVariation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadExercise;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -29,7 +37,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
@@ -234,12 +242,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             metadataId = new Integer(metadataIdString);
         }
         try {
-            Object[] args =
-                    { executionCourseId, metadataId, author, description, questionDifficultyType, mainSubject, secondarySubject,
-                            learningTime, level, subQuestion, questionText, secondQuestionText, options, correctOptions, shuffle,
-                            correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox,
-                            getServlet().getServletContext().getRealPath("/") };
-            ServiceManagerServiceFactory.executeService("CreateExercise", args);
+            CreateExercise.runCreateExercise(executionCourseId, metadataId, author, description, questionDifficultyType,
+                    mainSubject, secondarySubject, learningTime, level, subQuestion, questionText, secondQuestionText, options,
+                    correctOptions, shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                    breakLineAfterResponseBox, getServlet().getServletContext().getRealPath("/"));
         } catch (FenixServiceException e) {
             error(request, "createExercise", "error.exerciseCreationError");
             return prepareCreateExercise(mapping, form, request, response);
@@ -638,9 +644,9 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         }
 
         try {
-            Object[] args = { executionCourseId, metadataId, xmlZipFile, getServlet().getServletContext().getRealPath("/") };
-
-            List badXmls = (List) ServiceManagerServiceFactory.executeService("InsertExerciseVariation", args);
+            List badXmls =
+                    InsertExerciseVariation.runInsertExerciseVariation(executionCourseId, metadataId, xmlZipFile, getServlet()
+                            .getServletContext().getRealPath("/"));
             request.setAttribute("badXmls", badXmls);
         } catch (InvalidXMLFilesException e) {
             error(request, "FileNotExist", "error.badXmlFiles");
@@ -698,8 +704,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         final String path = getServlet().getServletContext().getRealPath("/");
         List badXmls = null;
         try {
-            Object[] args = { executionCourseId, xmlZipFile, path };
-            badXmls = (List) ServiceManagerServiceFactory.executeService("InsertExercise", args);
+            badXmls = InsertExercise.runInsertExercise(executionCourseId, xmlZipFile, path);
         } catch (InvalidMetadataException e) {
             error(request, "FileNotExist", "error.badMetadataFile");
             return mapping.findForward("insertNewExercise");
@@ -731,8 +736,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
         try {
-            ServiceManagerServiceFactory.executeService("DeleteExercise", new Object[] { executionCourseId, metadataId });
+            DeleteExercise.runDeleteExercise(executionCourseId, metadataId);
         } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixActionException(e);
         }
         request.setAttribute("successfulDeletion", "true");
@@ -749,7 +756,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         Integer variationCode = getCodeFromRequest(request, "variationCode");
         Metadata metadata = null;
         try {
-            metadata = (Metadata) ServiceManagerServiceFactory.executeService("ReadExercise", new Object[] { executionCourseId, exerciseId });
+            metadata = ReadExercise.runReadExercise(executionCourseId, exerciseId);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -801,10 +808,9 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         }
         Boolean result = null;
         try {
-            Object[] args =
-                    { executionCourseId, exerciseId, author, description, difficulty, string2Hour(learningTime), level,
-                            mainSubject, secondarySubject };
-            result = (Boolean) ServiceManagerServiceFactory.executeService("EditExercise", args);
+            result =
+                    EditExercise.runEditExercise(executionCourseId, exerciseId, author, description, difficulty,
+                            string2Hour(learningTime), level, mainSubject, secondarySubject);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -825,16 +831,15 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("asc", request.getParameter("asc"));
         Integer metadataCode = getCodeFromRequest(request, "metadataCode");
         try {
-            List<LabelValueBean> result =
-                    (List<LabelValueBean>) ServiceManagerServiceFactory.executeService("DeleteExerciseVariation", new Object[] {
-                    executionCourseId, variationCode });
+            List<LabelValueBean> result = DeleteExerciseVariation.runDeleteExerciseVariation(executionCourseId, variationCode);
             if (result == null || result.size() == 0) {
                 return prepareEditExercise(mapping, form, request, response);
             }
             request.setAttribute("studentsList", result);
-            InfoQuestion infoQuestion =
-                    (InfoQuestion) ServiceManagerServiceFactory.executeService("ReadQuestion", new Object[] { executionCourseId, null,
-                    variationCode, getServlet().getServletContext().getRealPath("/") });
+            InfoQuestion infoQuestion = null;
+            // FIXME Service "ReadQuestion" no longer exists
+            //        (InfoQuestion) ServiceUtils.executeService("ReadQuestion", new Object[] { executionCourseId, null,
+            //                variationCode, getServlet().getServletContext().getRealPath("/") });
             request.setAttribute("infoQuestion", infoQuestion);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -854,11 +859,9 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("exerciseCode", exerciseId);
 
         try {
-            ServiceManagerServiceFactory.executeService("ChangeStudentTestQuestion", new Object[] { executionCourseId, null, variationCode, null, null,
-            new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
-            new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS),
-            request.getContextPath() });
-
+            ChangeStudentTestQuestion.runChangeStudentTestQuestion(executionCourseId, null, variationCode, null, null,
+                    new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
+                    new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS), request.getContextPath());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

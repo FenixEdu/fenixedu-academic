@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -354,11 +354,10 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
-
         try {
             TeacherAdministrationSiteView siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
+                            infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2);
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
                     .getIdInternal());

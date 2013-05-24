@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
@@ -151,17 +149,18 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
         // Create an exam with season, examDateAndTime and executionCourse
-        Object argsCreateExam[] =
-                { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs,
-                        curricularCourseScopeIDs, curricularCourseContextIDs, roomIDs, season, null };
-        try {
-            ServiceManagerServiceFactory.executeService("CreateWrittenEvaluation", argsCreateExam);
-        } catch (FenixServiceException ex) {
-            addErrorMessage(request, "errors", ex.getMessage());
-            return prepare(mapping, form, request, response);
-        }
-
-        return mapping.findForward("Sucess");
+//        Object argsCreateExam[] =
+//                { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs,
+//                        curricularCourseScopeIDs, curricularCourseContextIDs, roomIDs, season, null };
+//        try {
+//            ServiceUtils.executeService("CreateWrittenEvaluation", argsCreateExam);
+//        } catch (FenixServiceException ex) {
+//            addErrorMessage(request, "errors", ex.getMessage());
+//            return prepare(mapping, form, request, response);
+//        }
+//
+//        return mapping.findForward("Sucess");
+        throw new UnsupportedOperationException();
     }
 
     public ActionForward associateExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -545,25 +544,25 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         List<String> contextIDs = new ArrayList<String>();
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
-        Object argsEditExam[] =
-                { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs, scopeIDs,
-                        contextIDs, roomIDs, infoExamID, season, null, null };
-        try {
-            ServiceManagerServiceFactory.executeService("EditWrittenEvaluation", argsEditExam);
-        } catch (FenixServiceException ex) {
-            addErrorMessage(request, "errors", ex.getMessage());
-            return prepare(mapping, form, request, response);
-        }
-
-        String date = (String) request.getAttribute(PresentationConstants.DATE);
-        if (date == null) {
-            date = request.getParameter(PresentationConstants.DATE);
-        }
-        if (date == null) {
-            return mapping.findForward("Sucess");
-        }
-        return mapping.findForward("sucessSearchByDate");
-
+//        Object argsEditExam[] =
+//                { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs, scopeIDs,
+//                        contextIDs, roomIDs, infoExamID, season, null, null };
+//        try {
+//            ServiceUtils.executeService("EditWrittenEvaluation", argsEditExam);
+//        } catch (FenixServiceException ex) {
+//            addErrorMessage(request, "errors", ex.getMessage());
+//            return prepare(mapping, form, request, response);
+//        }
+//
+//        String date = (String) request.getAttribute(PresentationConstants.DATE);
+//        if (date == null) {
+//            date = request.getParameter(PresentationConstants.DATE);
+//        }
+//        if (date == null) {
+//            return mapping.findForward("Sucess");
+//        }
+//        return mapping.findForward("sucessSearchByDate");
+        throw new UnsupportedOperationException();
     }
 
     public ActionForward dissociateExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,

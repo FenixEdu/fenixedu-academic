@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.Clea
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.GiveUpQuestion;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadExecutionCoursesByStudentTests;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
@@ -41,7 +42,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -202,9 +202,8 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceManagerServiceFactory
-                            .executeService("ReadStudentTestToDo", new Object[] { registration, distributedTest,
-                                    new Boolean(true), getServlet().getServletContext().getRealPath("/") });
+                    ReadStudentTest.runReadStudentTestToDo(registration, distributedTest, new Boolean(true), getServlet()
+                            .getServletContext().getRealPath("/"));
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -340,9 +339,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         List<StudentTestQuestion> studentTestQuestionList;
         try {
-            studentTestQuestionList =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration,
-                            testCode, new Boolean(false), path });
+            studentTestQuestionList = ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false), path);
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -392,8 +389,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         try {
             infoSiteStudentTestFeedback = InsertStudentTestResponses.run(registration, studentCode, testCode, userResponse, path);
             infoStudentTestQuestionList =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentTestToDo", new Object[] { registration,
-                            testCode, new Boolean(false), path });
+                    ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false), path);
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -594,8 +590,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceManagerServiceFactory.executeService("ReadStudentTestForCorrection",
-                            new Object[] { registration, distributedTest, new Boolean(false), path });
+                    ReadStudentTest.runReadStudentTestForCorrection(registration, distributedTest, new Boolean(false), path);
         } catch (InvalidArgumentsServiceException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");

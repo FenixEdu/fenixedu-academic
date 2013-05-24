@@ -12,12 +12,13 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateExpiredKerberos;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionError;
@@ -152,7 +153,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
     }
 
     private IUserView changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException, FenixFilterException, ExcepcaoPersistencia {
         DynaActionForm authenticationForm = (DynaActionForm) form;
         final String username = (String) authenticationForm.get("username");
         final String password = (String) authenticationForm.get("password");
@@ -160,9 +161,8 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
         final String requestURL = request.getRequestURL().toString();
 
         String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-        Object argsAutenticacao[] = { username, password, newPassword, requestURL, remoteHostName };
 
-        return (IUserView) ServiceManagerServiceFactory.executeService("AuthenticationExpired", argsAutenticacao);
+        return AuthenticateExpiredKerberos.runAuthenticationExpired(username, password, newPassword, requestURL, remoteHostName);
     }
 
     protected ActionForward authenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,

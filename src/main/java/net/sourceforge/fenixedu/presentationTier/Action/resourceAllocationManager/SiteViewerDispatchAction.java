@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -56,11 +56,11 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
-        Object[] args = { commonComponent, firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex };
         boolean result = true;
         try {
             ExecutionCourseSiteView siteView =
-                    (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService("ExecutionCourseSiteComponentService", args);
+                    ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
+                            firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, null);
             request.setAttribute("objectCode", objectCode);
             if (siteView == null) {
                 result = false;

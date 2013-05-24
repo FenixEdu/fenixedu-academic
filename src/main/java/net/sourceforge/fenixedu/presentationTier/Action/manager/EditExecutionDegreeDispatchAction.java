@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegree;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegreePeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAllExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegree;
 import net.sourceforge.fenixedu.applicationTier.Servico.places.campus.ReadAllCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -72,10 +72,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
         InfoExecutionDegree oldInfoExecutionDegree = null;
-        Object args[] = { executionDegreeId };
-
         try {
-            oldInfoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
+            oldInfoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingExecutionDegree",
                     mapping.findForward("readDegreeCurricularPlan"));

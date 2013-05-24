@@ -5,14 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.AddPartyToPrize;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.CreatePrize;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.RemovePartyFromPrize;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.Prize;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -47,7 +49,7 @@ public class PrizeManagement extends FenixDispatchAction {
         Prize prize = getPrize(request);
         if (prize.isDeletableByUser((getLoggedPerson(request)))) {
             try {
-                ServiceManagerServiceFactory.executeService("DeletePrize", new Object[] { prize });
+                DeletePrize.runDeletePrize(prize);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }
@@ -127,7 +129,7 @@ public class PrizeManagement extends FenixDispatchAction {
                 request.setAttribute("prompt-creation", "true");
             } else {
                 try {
-                    ServiceManagerServiceFactory.executeService("AddPartyToPrize", new Object[] { bean, prize });
+                    AddPartyToPrize.runAddPartyToPrize(bean, prize);
                     RenderUtils.invalidateViewState("createAssociation");
                 } catch (DomainException e) {
                     addActionMessage(request, e.getMessage());
@@ -147,7 +149,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
         if (person != null && prize != null && !prize.isLastParticipation()) {
             try {
-                ServiceManagerServiceFactory.executeService("RemovePartyFromPrize", new Object[] { person, prize });
+                RemovePartyFromPrize.runRemovePartyFromPrize(person, prize);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }
@@ -189,7 +191,7 @@ public class PrizeManagement extends FenixDispatchAction {
                 request.setAttribute("prompt-creation", "true");
             } else {
                 try {
-                    ServiceManagerServiceFactory.executeService("AddPartyToPrize", new Object[] { bean, prize });
+                    AddPartyToPrize.runAddPartyToPrize(bean, prize);
                     RenderUtils.invalidateViewState("createAssociation");
                 } catch (DomainException e) {
                     addActionMessage(request, e.getMessage());
@@ -209,7 +211,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
         if (unit != null && prize != null) {
             try {
-                ServiceManagerServiceFactory.executeService("RemovePartyFromPrize", new Object[] { unit, prize });
+                RemovePartyFromPrize.runRemovePartyFromPrize(unit, prize);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }

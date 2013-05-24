@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadTeachersInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -74,8 +74,8 @@ public class ReadTeachersInformationAction extends FenixAction {
                     ((InfoExecutionYear) executionYearList.get(executionYearList.size() - 1)).getYear());
         }
 
-        Object[] args = { executionDegreeID, Boolean.FALSE, yearString };
-        infoSiteTeachersInformation = (List) ServiceManagerServiceFactory.executeService("ReadTeachersInformation", args);
+        infoSiteTeachersInformation =
+                ReadTeachersInformation.runReadTeachersInformation(executionDegreeID, Boolean.FALSE, yearString);
 
         request.setAttribute("infoSiteTeachersInformation", infoSiteTeachersInformation);
 

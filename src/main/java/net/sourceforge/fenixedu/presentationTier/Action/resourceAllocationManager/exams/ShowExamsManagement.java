@@ -17,14 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -88,10 +89,10 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         List curricularYearsList = new ArrayList();
         curricularYearsList.add(curricularYear);
 
-        Object[] args = { infoExecutionDegree, curricularYearsList, infoExecutionPeriod };
         InfoExamsMap infoExamsMap;
 
-        infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
+        infoExamsMap =
+                ReadFilteredExamsMap.runReadFilteredExamsMap(infoExecutionDegree, curricularYearsList, infoExecutionPeriod);
 
         return infoExamsMap;
     }
@@ -161,10 +162,9 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setExecutionPeriodContext(request);
 
         Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
-        Object[] args = { null, examID };
 
         try {
-            ServiceManagerServiceFactory.executeService("DeleteWrittenEvaluation", args);
+            DeleteWrittenEvaluation.runDeleteWrittenEvaluation(null, examID);
         } catch (FenixServiceException exception) {
             actionErrors.add(exception.getMessage(), new ActionError(exception.getMessage()));
             saveErrors(request, actionErrors);

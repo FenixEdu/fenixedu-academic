@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -67,7 +67,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         if (infoTeacher == null) {
             final IUserView userView = UserView.getUser();
             infoTeacher =
-                    (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByOID", new Object[] { Integer.valueOf(dynaForm.get("idInternal").toString()) });
+                    (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(Integer.valueOf(dynaForm.get("idInternal").toString()));
             request.setAttribute("infoTeacher", infoTeacher);
 
         }

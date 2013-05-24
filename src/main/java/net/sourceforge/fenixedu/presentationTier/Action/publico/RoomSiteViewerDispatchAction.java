@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentServiceByExecutionPeriodID;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -75,12 +75,10 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
-        Object[] args =
-                { commonComponent, firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId };
-
         try {
             ExecutionCourseSiteView siteView =
-                    (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService("ExecutionCourseSiteComponentService", args);
+                    ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
+                            firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId);
 
             List curricularCoursesByDegree = ((InfoSiteCommon) siteView.getCommonComponent()).getAssociatedDegreesByDegree();
             Collections.sort(curricularCoursesByDegree, new BeanComparator("infoDegreeCurricularPlan.infoDegree.sigla"));

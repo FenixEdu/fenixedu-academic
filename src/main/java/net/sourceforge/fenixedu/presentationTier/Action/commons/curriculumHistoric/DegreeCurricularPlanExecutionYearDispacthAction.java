@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -70,11 +70,10 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 
         final ExecutionDegreeListBean executionDegreeBean = getRenderedObject("academicInterval");
 
-        final Object[] args =
-                { executionDegreeBean.getDegreeCurricularPlan().getIdInternal(), executionDegreeBean.getAcademicInterval() };
-
         final SortedSet<DegreeModuleScope> degreeModuleScopes =
-                (SortedSet<DegreeModuleScope>) ServiceManagerServiceFactory.executeService("ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
+                ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
+                        .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(executionDegreeBean
+                                .getDegreeCurricularPlan().getIdInternal(), executionDegreeBean.getAcademicInterval());
 
         final ActionErrors errors = new ActionErrors();
         if (degreeModuleScopes.isEmpty()) {

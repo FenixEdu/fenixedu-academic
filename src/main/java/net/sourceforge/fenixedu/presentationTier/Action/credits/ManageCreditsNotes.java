@@ -4,13 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.EditTeacherServiceNotes;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -73,12 +73,9 @@ public class ManageCreditsNotes extends FenixDispatchAction {
                 (!StringUtils.isEmpty(dynaActionForm.getString("thesisNote"))) ? dynaActionForm.getString("thesisNote") : (noteType
                         .equals("thesisNote")) ? "" : null;
 
-        Object[] args =
-                { teacher, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
-                        functionsAccumulation, thesisNote, roleType };
-
         try {
-            ServiceManagerServiceFactory.executeService("EditTeacherServiceNotes", args);
+            EditTeacherServiceNotes.runEditTeacherServiceNotes(teacher, executionPeriodId, managementFunctionNote,
+                    serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote, roleType);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));

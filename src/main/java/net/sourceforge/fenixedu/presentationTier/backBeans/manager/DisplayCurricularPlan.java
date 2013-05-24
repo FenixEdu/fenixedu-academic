@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveDegreeCurricularPlansByDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularCourseScopesForPrintDTO;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -81,11 +81,10 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
 
         for (Integer degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
-            Object[] args = { degreeCurricularPlanID, this.choosenExecutionYearID };
-
             Collection<DegreeModuleScope> degreeModuleScopes =
-                    (Collection<DegreeModuleScope>) ServiceManagerServiceFactory.executeService(
-                            "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
+                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear
+                            .runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlanID,
+                                    this.choosenExecutionYearID);
 
             for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {

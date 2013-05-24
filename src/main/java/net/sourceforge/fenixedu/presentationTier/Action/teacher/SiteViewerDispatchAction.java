@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -25,7 +26,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -191,12 +191,10 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
-        Object[] args =
-                { commonComponent, firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId };
-
         try {
             ExecutionCourseSiteView siteView =
-                    (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService("ExecutionCourseSiteComponentService", args);
+                    ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
+                            firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId);
 
             if (siteView != null) {
                 if (infoExecutionCourseCode != null) {

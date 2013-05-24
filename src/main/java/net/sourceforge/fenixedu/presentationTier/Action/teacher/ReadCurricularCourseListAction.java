@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadCurricularCourseListByExecutionCourseCode;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -33,13 +33,9 @@ public class ReadCurricularCourseListAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Object args[] = { objectCode };
-
         TeacherAdministrationSiteView siteView = null;
         try {
-            siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-                            "ReadCurricularCourseListByExecutionCourseCode", args);
+            siteView = ReadCurricularCourseListByExecutionCourseCode.runReadCurricularCourseListByExecutionCourseCode(objectCode);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

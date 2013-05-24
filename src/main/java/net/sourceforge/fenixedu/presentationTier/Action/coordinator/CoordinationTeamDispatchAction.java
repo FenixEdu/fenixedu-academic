@@ -9,12 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationResponsibility;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationTeam;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -53,8 +58,9 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        Object[] args = { degreeCurricularPlanID };
-        List executionDegrees = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+        List<InfoExecutionDegree> executionDegrees =
+                ReadExecutionDegreesByDegreeCurricularPlanID
+                        .runReadExecutionDegreesByDegreeCurricularPlanID(degreeCurricularPlanID);
 
         request.setAttribute("executionDegrees", executionDegrees);
 
@@ -79,7 +85,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Object[] args = { executionDegreeID };
         List coordinators = new ArrayList();
         try {
-            coordinators = (List) ServiceManagerServiceFactory.executeService("ReadCoordinationTeam", args);
+            coordinators = ReadCoordinationTeam.runReadCoordinationTeam(executionDegreeID);
         } catch (NotAuthorizedException e) {
             actionErrors.add("error", new ActionError("noAuthorization"));
             saveErrors(request, actionErrors);
@@ -90,9 +96,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             return mapping.findForward("noAuthorization");
         }
         Boolean result = Boolean.FALSE;
-        Object[] args1 = { executionDegreeID, userView };
         try {
-            result = (Boolean) ServiceManagerServiceFactory.executeService("ReadCoordinationResponsibility", args1);
+            result = ReadCoordinationResponsibility.runReadCoordinationResponsibility(executionDegreeID, userView);
         } catch (FenixServiceException e) {
             actionErrors.add("error", new ActionError(e.getMessage()));
             saveErrors(request, actionErrors);
@@ -115,10 +120,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Boolean result = new Boolean(false);
-        Object[] args1 = { infoExecutionDegreeId, userView };
         try {
-            result = (Boolean) ServiceManagerServiceFactory.executeService("ReadCoordinationResponsibility", args1);
-
+            result = ReadCoordinationResponsibility.runReadCoordinationResponsibility(infoExecutionDegreeId, userView);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -137,9 +140,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-        Object[] args = { infoExecutionDegreeId, istUsername };
         try {
-            ServiceManagerServiceFactory.executeService("AddCoordinator", args);
+            AddCoordinator.runAddCoordinator(infoExecutionDegreeId, istUsername);
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
@@ -171,15 +173,13 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
-        List coordinators = Arrays.asList(coordinatorsIds);
+        List<Integer> coordinators = Arrays.asList(coordinatorsIds);
 
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-        Object[] args = { infoExecutionDegreeId, coordinators };
         try {
-            ServiceManagerServiceFactory.executeService("RemoveCoordinators", args);
-
+            RemoveCoordinators.runRemoveCoordinators(infoExecutionDegreeId, coordinators);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

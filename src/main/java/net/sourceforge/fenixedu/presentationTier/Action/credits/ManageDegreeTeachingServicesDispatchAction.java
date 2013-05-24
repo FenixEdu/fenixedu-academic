@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -100,8 +100,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         }
 
         try {
-            Object[] args = { professorshipID, shiftIDPercentages, roleType };
-            ServiceManagerServiceFactory.executeService("UpdateDegreeTeachingServices", args);
+            UpdateDegreeTeachingServices.runUpdateDegreeTeachingServices(professorshipID, shiftIDPercentages, roleType);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));

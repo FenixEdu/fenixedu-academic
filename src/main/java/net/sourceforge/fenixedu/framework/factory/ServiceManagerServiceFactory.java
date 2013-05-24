@@ -19,7 +19,7 @@ public class ServiceManagerServiceFactory {
 
     private static final IServiceManagerWrapper service = new ServiceManagerDefaultImpl();
 
-    public static Object executeService(String serviceName, Object[] serviceArgs) throws FenixServiceException,
+    public static Object executeSehrvice(String serviceName, Object[] serviceArgs) throws FenixServiceException,
             FenixFilterException {
         try {
             if (serviceArgs == null) {

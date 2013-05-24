@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpace;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpaceInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.MergeRooms;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.MoveSpace;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.SpaceAccessGroupsManagement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -51,7 +52,6 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
@@ -395,7 +395,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         Space fromRoom = bean.getSpace();
         Space destinationRoom = bean.getSelectedParentSpace();
 
-        ServiceManagerServiceFactory.executeService("MergeRooms", new Object[] { fromRoom, destinationRoom });
+        MergeRooms.runMergeRooms((AllocatableSpace) fromRoom, (AllocatableSpace) destinationRoom);
 
         return returnToManageSpacePage(mapping, request, destinationRoom.getSpaceInformation());
     }

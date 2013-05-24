@@ -12,6 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateTSDCourseWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateTSDTeacherWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateTSDCourseWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateTSDTeacherWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.MergeTeacherServiceDistributions;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCoursesAndTeachersValuationPermission;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPersonPermissionsOnTSDProcess;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.PersonPermissionsDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
@@ -22,7 +31,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -131,7 +139,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         IUserView userView = UserView.getUser();
 
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution((DynaActionForm) form, null);
-        ServiceManagerServiceFactory.executeService("DeleteTeacherServiceDistribution", new Object[] { tsd.getIdInternal() });
+        DeleteTeacherServiceDistribution.runDeleteTeacherServiceDistribution(tsd.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -145,10 +153,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         TSDTeacher selectedTSDTeacher = getSelectedTSDTeacher(dynaForm);
 
-        Object[] parameters =
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal() };
-
-        ServiceManagerServiceFactory.executeService("AssociateTSDTeacherWithTeacherServiceDistribution", parameters);
+        AssociateTSDTeacherWithTeacherServiceDistribution.runAssociateTSDTeacherWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -162,10 +168,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         TSDTeacher selectedTSDTeacher = rootDomainObject.readTSDTeacherByOID((Integer) dynaForm.get("tsdTeacherDissociation"));
 
-        Object[] parameters =
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal() };
-
-        ServiceManagerServiceFactory.executeService("DissociateTSDTeacherWithTeacherServiceDistribution", parameters);
+        DissociateTSDTeacherWithTeacherServiceDistribution.runDissociateTSDTeacherWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -179,10 +183,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         TSDCourse selectedTSDCourse = getSelectedTSDCourse(dynaForm);
 
-        Object[] parameters =
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDCourse.getIdInternal() };
-
-        ServiceManagerServiceFactory.executeService("AssociateTSDCourseWithTeacherServiceDistribution", parameters);
+        AssociateTSDCourseWithTeacherServiceDistribution.runAssociateTSDCourseWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDCourse.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -196,9 +198,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         Integer tsdCourseId = (Integer) dynaForm.get("tsdCourseDissociation");
 
-        Object[] parameters = new Object[] { selectedTeacherServiceDistribution.getIdInternal(), tsdCourseId };
-
-        ServiceManagerServiceFactory.executeService("DissociateTSDCourseWithTeacherServiceDistribution", parameters);
+        DissociateTSDCourseWithTeacherServiceDistribution.runDissociateTSDCourseWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), tsdCourseId);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -357,13 +358,11 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDProcess tsdProcess = getTSDProcess(dynaForm);
         TeacherServiceDistribution rootTeacherServiceDistribution = tsdProcess.getCurrentTSDProcessPhase().getRootTSD();
 
-        Object[] parameters =
-                new Object[] { getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
-                        getSelectedPerson(dynaForm, null).getIdInternal(), getSelectedCourseValuationManagers(dynaForm),
-                        getSelectedTeachersValuationManagers(dynaForm), getSelectedCourseManagementPermission(dynaForm),
-                        getSelectedTeachersManagementPersmission(dynaForm) };
-
-        ServiceManagerServiceFactory.executeService("SetCoursesAndTeachersValuationPermission", parameters);
+        SetCoursesAndTeachersValuationPermission.runSetCoursesAndTeachersValuationPermission(
+                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
+                getSelectedPerson(dynaForm, null).getIdInternal(), getSelectedCourseValuationManagers(dynaForm),
+                getSelectedTeachersValuationManagers(dynaForm), getSelectedCourseManagementPermission(dynaForm),
+                getSelectedTeachersManagementPersmission(dynaForm));
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
@@ -397,11 +396,9 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution rootTeacherServiceDistribution =
                 getTSDProcess(dynaForm).getCurrentTSDProcessPhase().getRootTSD();
 
-        Object[] parameters =
-                new Object[] { getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
-                        getSelectedPerson(dynaForm, null).getIdInternal(), false };
-
-        ServiceManagerServiceFactory.executeService("SetCoursesAndTeachersValuationPermission", parameters);
+        SetCoursesAndTeachersValuationPermission.runSetCoursesAndTeachersValuationPermission(
+                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
+                getSelectedPerson(dynaForm, null).getIdInternal(), false, false, false, false);
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
@@ -414,13 +411,10 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDProcess tsdProcess = getTSDProcess(dynaForm);
         Person selectedPerson = getSelectedPerson(dynaForm, null);
 
-        Object[] parameters =
-                new Object[] { tsdProcess.getIdInternal(), selectedPerson.getIdInternal(),
-                        getSelectedPhaseManagementPermission(dynaForm), getSelectedAutomaticValuationPermission(dynaForm),
-                        getSelectedOmissionConfigurationPermission(dynaForm),
-                        getSelectedCompetenceCoursesAndTeachersManagementPermission(dynaForm) };
-
-        ServiceManagerServiceFactory.executeService("SetPersonPermissionsOnTSDProcess", parameters);
+        SetPersonPermissionsOnTSDProcess.runSetPersonPermissionsOnTSDProcess(tsdProcess.getIdInternal(),
+                selectedPerson.getIdInternal(), getSelectedPhaseManagementPermission(dynaForm),
+                getSelectedAutomaticValuationPermission(dynaForm), getSelectedOmissionConfigurationPermission(dynaForm),
+                getSelectedCompetenceCoursesAndTeachersManagementPermission(dynaForm));
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
@@ -507,11 +501,9 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
             DynaActionForm dynaForm) throws FenixFilterException, FenixServiceException {
         TSDProcessPhase currentValuation = tsdProcess.getCurrentTSDProcessPhase();
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        Object[] parameters =
-                new Object[] { currentValuation.getIdInternal(), selectedTeacherServiceDistribution.getIdInternal(),
-                        (String) dynaForm.get("name") };
 
-        return (TeacherServiceDistribution) ServiceManagerServiceFactory.executeService("CreateTeacherServiceDistribution", parameters);
+        return CreateTeacherServiceDistribution.runCreateTeacherServiceDistribution(currentValuation.getIdInternal(),
+                selectedTeacherServiceDistribution.getIdInternal(), (String) dynaForm.get("name"));
     }
 
     private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
@@ -552,9 +544,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         Integer selectedGroupingId = (Integer) dynaForm.get("tsd");
         Integer otherGroupingId = (Integer) dynaForm.get("otherGrouping");
 
-        Object[] parameters = new Object[] { selectedGroupingId, otherGroupingId };
-
-        ServiceManagerServiceFactory.executeService("MergeTeacherServiceDistributions", parameters);
+        MergeTeacherServiceDistributions.runMergeTeacherServiceDistributions(selectedGroupingId, otherGroupingId);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -566,9 +556,9 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        Object[] parameters = new Object[] { selectedTeacherServiceDistribution.getIdInternal(), null };
 
-        ServiceManagerServiceFactory.executeService("AssociateTSDTeacherWithTeacherServiceDistribution", parameters);
+        AssociateTSDTeacherWithTeacherServiceDistribution.runAssociateTSDTeacherWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), null);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -580,9 +570,9 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        Object[] parameters = new Object[] { selectedTeacherServiceDistribution.getIdInternal(), null };
 
-        ServiceManagerServiceFactory.executeService("AssociateTSDCourseWithTeacherServiceDistribution", parameters);
+        AssociateTSDCourseWithTeacherServiceDistribution.runAssociateTSDCourseWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), null);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }

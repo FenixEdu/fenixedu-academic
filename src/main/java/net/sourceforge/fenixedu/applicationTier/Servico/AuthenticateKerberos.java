@@ -142,9 +142,9 @@ public class AuthenticateKerberos extends Authenticate {
     private static final AuthenticateKerberos serviceInstance = new AuthenticateKerberos();
 
     @Service
-    public static void runKerberosExternalAuthentication(final String username, final String password, final String requestURL,
-            final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
-        serviceInstance.run(username, password, requestURL, remoteHost);
+    public static IUserView runKerberosExternalAuthentication(final String username, final String password,
+            final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, requestURL, remoteHost);
     }
 
     // Service Invokers migrated from Berserk

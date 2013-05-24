@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.PendingRequest;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -174,18 +174,14 @@ public class StartupServlet extends HttpServlet {
             public void run() {
                 try {
                     try {
-                        Object[] args = { "" };
-                        ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
-
+                        CreateGratuitySituationsForCurrentExecutionYear.runCreateGratuitySituationsForCurrentExecutionYear("");
                     } catch (Exception e) {
                     }
 
                     // temporary
                     try {
-                        Object[] args2003_2004 = { "2003/2004" };
-                        ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear",
-                                args2003_2004);
-
+                        CreateGratuitySituationsForCurrentExecutionYear
+                                .runCreateGratuitySituationsForCurrentExecutionYear("2003/2004");
                     } catch (Exception e) {
                     }
                 } finally {

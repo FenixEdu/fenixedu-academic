@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -33,22 +33,15 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Object[] args = { getOIDProperty(form) };
-        ServiceManagerServiceFactory.executeService(getDeleteService(), args);
+        deleteIt(getOIDProperty(form));
         return mapping.findForward("successfull-delete");
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         InfoObject infoObject = populateInfoObjectFromForm(form);
-        Object[] args = getEditServiceArguments(form, infoObject, request);
-        ServiceManagerServiceFactory.executeService(getEditService(), args);
+        editIt(getOIDProperty(form), infoObject);
         return mapping.findForward("successfull-edit");
-    }
-
-    protected Object[] getEditServiceArguments(ActionForm form, InfoObject infoObject, HttpServletRequest request) {
-        Object[] args = { getOIDProperty(form), infoObject };
-        return args;
     }
 
     protected InfoObject populateInfoObjectFromForm(ActionForm form) throws FenixActionException {
@@ -156,8 +149,7 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
         Integer oid = getOIDProperty(form);
         InfoObject infoObject = null;
         if (oid != null) {
-            Object[] args = { getOIDProperty(form) };
-            infoObject = (InfoObject) ServiceManagerServiceFactory.executeService(getReadService(), args);
+            infoObject = readIt(getOIDProperty(form));
         }
         return infoObject;
     }
@@ -168,13 +160,13 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
         }
     }
 
-    protected abstract String getReadService();
+    protected abstract InfoObject readIt(Integer idInternal) throws NotAuthorizedException;
 
     protected abstract String getRequestAttribute();
 
-    protected abstract String getDeleteService();
+    protected abstract void deleteIt(Integer idInternal) throws NotAuthorizedException;
 
-    protected abstract String getEditService();
+    protected abstract void editIt(Integer idInternal, InfoObject bean) throws NotAuthorizedException, FenixServiceException;
 
     protected abstract String getInfoObjectClassName();
 }

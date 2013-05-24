@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveDegreeCurricularPlansByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.CreateClassificationsForStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -44,9 +45,9 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
 
         InfoExecutionYear executionYear = ReadCurrentExecutionYear.run();
 
-        Object[] argsDCPs = { executionYear.getIdInternal() };
         List degreeCurricularPlans =
-                (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", argsDCPs);
+                ReadActiveDegreeCurricularPlansByExecutionYear.runReadActiveDegreeCurricularPlansByExecutionYear(executionYear
+                        .getIdInternal());
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
         comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
@@ -75,9 +76,9 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
         Integer[] approvationRatioLimits = (Integer[]) dynaActionForm.get("approvationRatioLimits");
         Integer[] arithmeticMeanLimits = (Integer[]) dynaActionForm.get("arithmeticMeanLimits");
 
-        Object[] args = { entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits, degreeCurricularPlanID };
         ByteArrayOutputStream resultStream =
-                (ByteArrayOutputStream) ServiceManagerServiceFactory.executeService("CreateClassificationsForStudents", args);
+                CreateClassificationsForStudents.runCreateClassificationsForStudents(entryGradeLimits, approvationRatioLimits,
+                        arithmeticMeanLimits, degreeCurricularPlanID);
 
         String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
         response.setHeader("Content-disposition", "attachment;filename=" + degreeCurricularPlanID + "_" + currentDate + ".zip");

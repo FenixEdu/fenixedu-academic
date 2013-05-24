@@ -357,6 +357,12 @@ public class Authenticate extends FenixService implements Serializable {
         return serviceInstance.run(username, password, requestURL, remoteHost);
     }
 
+    @Service
+    public static IUserView runAuthenticate(final CASReceipt receipt, final String requestURL, final String remoteHost)
+            throws ExcepcaoAutenticacao, FenixServiceException, ExcepcaoPersistencia {
+        return serviceInstance.run(receipt, requestURL, remoteHost);
+    }
+
     // Service Invokers migrated from Berserk
 
     @Service

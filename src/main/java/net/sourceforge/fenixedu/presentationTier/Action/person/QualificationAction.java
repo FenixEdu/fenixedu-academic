@@ -9,6 +9,11 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.EditQualification;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.ReadQualification;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
@@ -96,8 +101,8 @@ public class QualificationAction extends CRUDActionByOID {
     }
 
     @Override
-    protected String getReadService() {
-        return "ReadQualification";
+    protected InfoObject readIt(Integer idInternal) throws NotAuthorizedException {
+        return ReadQualification.runReadQualification(idInternal);
     }
 
     @Override
@@ -106,13 +111,13 @@ public class QualificationAction extends CRUDActionByOID {
     }
 
     @Override
-    protected String getDeleteService() {
-        return "DeleteQualification";
+    protected void deleteIt(Integer idInternal) throws NotAuthorizedException {
+        DeleteQualification.runDeleteQualification(idInternal);
     }
 
     @Override
-    protected String getEditService() {
-        return "EditQualification";
+    protected void editIt(Integer idInternal, InfoObject object) throws NotAuthorizedException, FenixServiceException {
+        EditQualification.runEditQualification(idInternal, (InfoQualification) object);
     }
 
     @Override

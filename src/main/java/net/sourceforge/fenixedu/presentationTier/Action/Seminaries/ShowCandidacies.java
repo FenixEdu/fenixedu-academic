@@ -16,12 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllCasesStudy;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllEquivalencies;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllModalities;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllSeminaries;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllThemes;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ReadCandidacies;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -48,7 +55,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         navLocal = "/teacher/showSeminariesIndex_bd.jsp", title = "private.seminars.viewapplications")) })
 public class ShowCandidacies extends FenixAction {
 
-    Object[] getReadCandidaciesArgs(HttpServletRequest request) {
+    List doReadCandidacies(HttpServletRequest request) throws NotAuthorizedException, BDException {
         Integer modalityID;
         Integer themeID;
         Integer case1Id;
@@ -118,10 +125,9 @@ public class ShowCandidacies extends FenixAction {
         } catch (NumberFormatException ex) {
             degreeID = new Integer(-1);
         }
-        Object[] arguments =
-                { modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID,
-                        approved };
-        return arguments;
+        return ReadCandidacies.runReadCandidacies(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
+                curricularCourseID, degreeID, approved);
+
     }
 
     @Override
@@ -133,8 +139,7 @@ public class ShowCandidacies extends FenixAction {
         ActionForward destiny = null;
         List candidaciesExtendedInfo = new LinkedList();
         try {
-            Object[] argsReadCandidacies = getReadCandidaciesArgs(request);
-            candidacies = (List) ServiceManagerServiceFactory.executeService("Seminaries.ReadCandidacies", argsReadCandidacies);
+            candidacies = doReadCandidacies(request);
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
                 List casesChoices = null;
                 List cases = new LinkedList();
@@ -170,18 +175,12 @@ public class ShowCandidacies extends FenixAction {
         List curricularCoursesWithEquivalency = new LinkedList();
         List avaliableCurricularPlans = new LinkedList();
         try {
-            Object[] argsReadSeminaries = { new Boolean(false) };
-            Object[] argsReadCasesStudy = {};
-            Object[] argsReadModalities = {};
-            Object[] argsReadThemes = {};
-            Object[] argsReadEquivalencies = {};
 
-            seminaries = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllSeminaries", argsReadSeminaries);
-            cases = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllCasesStudy", argsReadCasesStudy);
-            modalities = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllModalities", argsReadModalities);
-            themes = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllThemes", argsReadThemes);
-            equivalencies =
-                    (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllEquivalencies", argsReadEquivalencies);
+            seminaries = GetAllSeminaries.runGetAllSeminaries(false);
+            cases = GetAllCasesStudy.runGetAllCasesStudy();
+            modalities = GetAllModalities.runGetAllModalities();
+            themes = GetAllThemes.runGetAllThemes();
+            equivalencies = GetAllEquivalencies.runGetAllEquivalencies();
             //
             //
             final Set<String> addedNames = new HashSet<String>();

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourse;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularC
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.Transformer;
@@ -183,8 +183,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainStudentsParametersFromForm(dynaForm);
 
-        Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-        ServiceManagerServiceFactory.executeService("SetTSDCourse", parameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationStudents");
     }
@@ -239,8 +238,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainWeightsParametersFromForm(dynaForm);
 
-        Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-        ServiceManagerServiceFactory.executeService("SetTSDCourse", parameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
@@ -269,8 +267,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainHoursParametersFromForm(dynaForm);
 
-        Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-        ServiceManagerServiceFactory.executeService("SetTSDCourse", parameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }

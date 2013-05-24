@@ -192,4 +192,11 @@ public class ReadDistributedTestMarksToString extends FenixService {
         return serviceInstance.run(executionCourseId, distributedTestId);
     }
 
+    @Service
+    public static String runReadDistributedTestMarksToString(Integer executionCourseId, String[] distributedTestCodes)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestCodes);
+    }
+
 }

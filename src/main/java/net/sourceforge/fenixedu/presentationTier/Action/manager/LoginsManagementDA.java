@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.CreateNewLoginAlias;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginAlias;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.domain.LoginAliasType;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,8 +48,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
                         null, null, null, null, null, null, null, null, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-        CollectionPager<Person> persons =
-                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
+        CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
 
         request.setAttribute("resultPersons", persons.getCollection());
         request.setAttribute("personBean", personBean);
@@ -93,7 +92,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
         Login login = (bean != null) ? bean.getLogin() : null;
 
         try {
-            ServiceManagerServiceFactory.executeService("CreateNewLoginAlias", new Object[] { bean });
+            CreateNewLoginAlias.runCreateNewLoginAlias(bean);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             request.setAttribute("aliasType", bean.getLoginAliasType());
@@ -170,8 +169,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
         LoginAliasBean bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
 
         try {
-            ServiceManagerServiceFactory.executeService("CreateNewLoginAlias", new Object[] { bean });
-
+            CreateNewLoginAlias.runCreateNewLoginAlias(bean);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
         }

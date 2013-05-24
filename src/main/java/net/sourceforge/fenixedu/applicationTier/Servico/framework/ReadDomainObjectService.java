@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import pt.ist.fenixframework.DomainObject;
 

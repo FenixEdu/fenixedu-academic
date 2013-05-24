@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadPaymentTransactionByGuideEntryID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGratuityTransaction;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideEntry;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideSituation;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTrans
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -88,12 +88,10 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         try {
 
             if (version.intValue() == 0) {
-                Object[] args = { number, year };
-                List guidesList = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+                List guidesList = ChooseGuide.runChooseGuide(number, year);
                 guide = (InfoGuide) guidesList.get(0);
             } else {
-                Object[] args = { number, year, version };
-                guide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+                guide = ChooseGuide.runChooseGuide(number, year, version);
             }
 
         } catch (NonExistingServiceException e) {

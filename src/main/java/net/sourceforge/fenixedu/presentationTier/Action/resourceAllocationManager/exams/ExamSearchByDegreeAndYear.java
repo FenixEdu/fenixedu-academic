@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -174,8 +174,8 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         IUserView userView = getUserView(request);
         InfoExamsMap infoRoomExamsMaps = null;
 
-        Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-        infoRoomExamsMaps = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
+        infoRoomExamsMaps =
+                ReadFilteredExamsMap.runReadFilteredExamsMap(infoExecutionDegree, curricularYears, infoExecutionPeriod);
 
         return infoRoomExamsMaps;
     }
@@ -190,9 +190,8 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executionDegreeList.get(i);
             InfoExamsMap infoRoomExamsMap = null;
 
-            Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-
-            infoRoomExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
+            infoRoomExamsMap =
+                    ReadFilteredExamsMap.runReadFilteredExamsMap(infoExecutionDegree, curricularYears, infoExecutionPeriod);
             infoExamsMaps.add(infoRoomExamsMap);
         }
         return infoExamsMaps;

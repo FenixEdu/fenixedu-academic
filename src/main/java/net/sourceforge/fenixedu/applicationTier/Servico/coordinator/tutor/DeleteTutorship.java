@@ -17,8 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, String tutorId, List<Tutorship> tutorsToDelete)
-            throws FenixServiceException {
+    public List<TutorshipErrorBean> run(Integer executionDegreeID, List<Tutorship> tutorsToDelete) {
 
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -47,15 +46,15 @@ public class DeleteTutorship extends TutorshipManagement {
     private static final DeleteTutorship serviceInstance = new DeleteTutorship();
 
     @Service
-    public static List<TutorshipErrorBean> runDeleteTutorship(Integer executionDegreeID, String tutorId,
-            List<Tutorship> tutorsToDelete) throws FenixServiceException, NotAuthorizedException {
+    public static List<TutorshipErrorBean> runDeleteTutorship(Integer executionDegreeID, List<Tutorship> tutorsToDelete)
+            throws NotAuthorizedException {
         try {
             TutorshipAuthorizationFilter.instance.execute();
-            return serviceInstance.run(executionDegreeID, tutorId, tutorsToDelete);
+            return serviceInstance.run(executionDegreeID, tutorsToDelete);
         } catch (NotAuthorizedException ex1) {
             CoordinatorAuthorizationFilter.instance.execute();
             BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
-            return serviceInstance.run(executionDegreeID, tutorId, tutorsToDelete);
+            return serviceInstance.run(executionDegreeID, tutorsToDelete);
         }
     }
 

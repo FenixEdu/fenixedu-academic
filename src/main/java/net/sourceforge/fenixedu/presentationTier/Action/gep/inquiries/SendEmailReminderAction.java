@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveDegreeCurricularPlansByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.NewMessageService;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -32,7 +34,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
@@ -64,9 +65,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
         InfoExecutionYear currentExecutionYear = ReadCurrentExecutionYear.run();
 
-        Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
         List<InfoDegreeCurricularPlan> degreeCurricularPlans =
-                (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", argsExecutionYearId);
+                ReadActiveDegreeCurricularPlansByExecutionYear
+                        .runReadActiveDegreeCurricularPlansByExecutionYear(currentExecutionYear.getIdInternal());
 
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
@@ -103,7 +104,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
                     rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
             Set<Student> studentsList =
-                    (Set<Student>) ServiceManagerServiceFactory.executeService("student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod", new Object[] { degreeCurricularPlan, executionSemester });
+                    ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
+                            .runReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod(degreeCurricularPlan,
+                                    executionSemester);
 
             InfoInquiriesEmailReminderReport report = new InfoInquiriesEmailReminderReport();
 

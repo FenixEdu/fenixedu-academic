@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.InsertTutorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -177,11 +177,11 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
                 (StudentsByEntryYearBean) getViewState("selectedStudentsAndTutorBean");
         RenderUtils.invalidateViewState();
 
-        Object[] args = new Object[] { selectedStudentsAndTutorBean.getExecutionDegreeID(), selectedStudentsAndTutorBean };
-
         List<TutorshipErrorBean> tutorshipsNotInserted = new ArrayList<TutorshipErrorBean>();
         try {
-            tutorshipsNotInserted = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("InsertTutorship", args);
+            tutorshipsNotInserted =
+                    InsertTutorship.runInsertTutorship(selectedStudentsAndTutorBean.getExecutionDegreeID(),
+                            selectedStudentsAndTutorBean);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
         }

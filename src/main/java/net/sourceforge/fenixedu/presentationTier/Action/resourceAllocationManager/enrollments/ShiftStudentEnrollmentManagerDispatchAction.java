@@ -7,8 +7,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
@@ -191,9 +192,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             final Registration registration, final ExecutionSemester executionSemester) {
 
         try {
-            final List<ShiftToEnrol> shiftsToEnrol =
-                    (List<ShiftToEnrol>) ServiceManagerServiceFactory.executeService("ReadShiftsToEnroll",
-                            new Object[] { registration });
+            final List<ShiftToEnrol> shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
 
             request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
                     registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
@@ -208,12 +207,12 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
             return mapping.findForward("showShiftsEnrollment");
 
+        } catch (NotAuthorizedException ffe) {
+            addActionMessage(request, ffe.getMessage());
+            return mapping.findForward("chooseStudent");
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage());
             return mapping.getInputForward();
-        } catch (FenixFilterException ffe) {
-            addActionMessage(request, ffe.getMessage());
-            return mapping.findForward("chooseStudent");
         }
     }
 
@@ -297,7 +296,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         try {
-            ServiceManagerServiceFactory.executeService("UnEnrollStudentFromShift", new Object[] { registration, shiftId });
+            UnEnrollStudentFromShift.runUnEnrollStudentFromShift(registration, shiftId);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

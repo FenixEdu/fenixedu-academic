@@ -5,6 +5,8 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddScientificCommission;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteScientificCommission;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -15,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -165,7 +166,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
                 ExecutionDegree executionDegree = getExecutionDegree(request);
 
                 try {
-                    ServiceManagerServiceFactory.executeService("AddScientificCommission", new Object[] { executionDegree.getIdInternal(), employee.getPerson() });
+                    AddScientificCommission.runAddScientificCommission( executionDegree.getIdInternal(), employee.getPerson() );
                     RenderUtils.invalidateViewState("usernameChoice");
                 } catch (DomainException e) {
                     addActionMessage("addError", request, e.getKey(), e.getArgs());
@@ -186,7 +187,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             for (ScientificCommission commission : executionDegree.getScientificCommissionMembers()) {
                 if (commission.getIdInternal().equals(memberId)) {
                     try {
-                        ServiceManagerServiceFactory.executeService("DeleteScientificCommission", new Object[] { executionDegree.getIdInternal(), commission });
+                        DeleteScientificCommission.runDeleteScientificCommission( executionDegree.getIdInternal(), commission );
                     } catch (DomainException e) {
                         addActionMessage("addError", request, e.getKey(), e.getArgs());
                     }

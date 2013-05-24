@@ -221,8 +221,35 @@ public class EditResultPublication extends ResultPublicationService {
     private static final EditResultPublication serviceInstance = new EditResultPublication();
 
     @Service
-    public static ResearchResultPublication runEditResultPublication(BookBean bean) throws FenixServiceException  {
+    public static ResearchResultPublication runEditResultPublication(BookBean bean) throws FenixServiceException {
         return serviceInstance.run(bean);
+    }
+
+    @Service
+    public static ResearchResultPublication runEditResultPublication(ResultPublicationBean currentPublicationBean)
+            throws FenixServiceException {
+        if (currentPublicationBean instanceof BookBean) {
+            return serviceInstance.run((BookBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof BookPartBean) {
+            return serviceInstance.run((BookPartBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof ArticleBean) {
+            return serviceInstance.run((ArticleBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof InproceedingsBean) {
+            return serviceInstance.run((InproceedingsBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof ProceedingsBean) {
+            return serviceInstance.run((ProceedingsBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof ThesisBean) {
+            return serviceInstance.run((ThesisBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof ManualBean) {
+            return serviceInstance.run((ManualBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof TechnicalReportBean) {
+            return serviceInstance.run((TechnicalReportBean) currentPublicationBean);
+        } else if (currentPublicationBean instanceof OtherPublicationBean) {
+            return serviceInstance.run((OtherPublicationBean) currentPublicationBean);
+        } else {
+            throw new UnsupportedOperationException("Sorry, I don't know how to handle "
+                    + currentPublicationBean.getClass().getSimpleName());
+        }
     }
 
 }

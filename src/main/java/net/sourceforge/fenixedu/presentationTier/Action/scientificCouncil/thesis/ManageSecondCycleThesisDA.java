@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisDiscussion;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisAbstractFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -19,7 +23,6 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
@@ -254,16 +257,16 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
     public ActionForward substituteDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return substituteDocumant(mapping, request, "CreateThesisDissertationFile");
+        return substituteDocumant(mapping, request, true);
     }
 
     public ActionForward substituteExtendedAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return substituteDocumant(mapping, request, "CreateThesisAbstractFile");
+        return substituteDocumant(mapping, request, false);
     }
 
-    public ActionForward substituteDocumant(final ActionMapping mapping, final HttpServletRequest request, final String service)
-            throws Exception {
+    public ActionForward substituteDocumant(final ActionMapping mapping, final HttpServletRequest request,
+            final boolean dissertationFile) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         ThesisFileBean bean = getRenderedObject();
         RenderUtils.invalidateViewState();
@@ -273,8 +276,13 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
             try {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                ServiceManagerServiceFactory.executeService(service, new Object[] { thesis, temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(),
-                bean.getLanguage() });
+                if (dissertationFile) {
+                    CreateThesisDissertationFile.runCreateThesisDissertationFile(thesis, temporaryFile, bean.getSimpleFileName(),
+                            bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+                } else {
+                    CreateThesisAbstractFile.runCreateThesisAbstractFile(thesis, temporaryFile, bean.getSimpleFileName(),
+                            bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+                }
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();
@@ -289,7 +297,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         try {
-            ServiceManagerServiceFactory.executeService("ApproveThesisDiscussion", new Object[] { thesis });
+            ApproveThesisDiscussion.runApproveThesisDiscussion(thesis);
             addActionMessage("mail", request, "thesis.evaluated.mail.sent");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -301,7 +309,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final Thesis thesis = getDomainObject(request, "thesisOid");
         try {
-            ServiceManagerServiceFactory.executeService("ApproveThesisProposal", new Object[] { thesis });
+            ApproveThesisProposal.runApproveThesisProposal(thesis);
             addActionMessage("mail", request, "thesis.approved.mail.sent");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());

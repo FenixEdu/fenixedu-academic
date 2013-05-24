@@ -8,12 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -63,14 +61,8 @@ public class FindPersonAction extends FenixDispatchAction {
 
         Object[] args = { searchParameters, predicate };
 
-        CollectionPager<Person> result = null;
-        try {
-            result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
+        CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-        }
         if (result == null) {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }

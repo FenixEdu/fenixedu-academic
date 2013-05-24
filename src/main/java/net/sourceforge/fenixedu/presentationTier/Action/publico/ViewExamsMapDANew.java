@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -111,8 +111,8 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
         request.removeAttribute(PresentationConstants.INFO_EXAMS_MAP);
         try {
             final IUserView userView = getUserView(request);
-            final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-            final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService("ReadFilteredExamsMap", args);
+            final InfoExamsMap infoExamsMap =
+                    ReadFilteredExamsMap.runReadFilteredExamsMap(infoExecutionDegree, curricularYears, infoExecutionPeriod);
             request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
         } catch (NonExistingServiceException e) {
             return mapping.findForward("viewExamsMap");

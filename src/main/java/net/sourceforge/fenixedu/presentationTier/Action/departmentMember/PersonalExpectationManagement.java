@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.InsertTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
 import net.sourceforge.fenixedu.domain.Department;
@@ -13,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -121,7 +121,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 
         try {
             teacherPersonalExpectation =
-                    (TeacherPersonalExpectation) ServiceManagerServiceFactory.executeService("InsertTeacherPersonalExpectation", new Object[] { bean });
+                    (TeacherPersonalExpectation) InsertTeacherPersonalExpectation.runInsertTeacherPersonalExpectation( bean );
 
         } catch (DomainException exception) {
             saveMessages(request, exception);

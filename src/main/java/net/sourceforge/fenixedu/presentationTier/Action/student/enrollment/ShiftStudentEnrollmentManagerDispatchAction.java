@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
@@ -194,8 +195,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         try {
 
             final List<ShiftToEnrol> shiftsToEnrol =
-                    (List<ShiftToEnrol>) ServiceManagerServiceFactory.executeService("ReadShiftsToEnroll",
-                            new Object[] { registration });
+                    (List<ShiftToEnrol>) ReadShiftsToEnroll.runReadShiftsToEnroll( registration );
 
             request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
                     registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
@@ -296,7 +296,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         try {
-            ServiceManagerServiceFactory.executeService("UnEnrollStudentFromShift", new Object[] { registration, shiftId });
+            UnEnrollStudentFromShift.runUnEnrollStudentFromShift( registration, shiftId );
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

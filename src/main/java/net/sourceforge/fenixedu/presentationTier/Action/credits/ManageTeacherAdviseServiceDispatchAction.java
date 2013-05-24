@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteTeacherAdviseServiceByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherAdviseService;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.domain.teacher.Advise.AdvisePercentageException;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -66,9 +67,9 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
         Teacher teacher = AbstractDomainObject.fromExternalId((String) adviseServiceForm.get("teacherId"));
         Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
-        Object[] args = { teacher, executionPeriodID, studentNumber, percentage, AdviseType.FINAL_WORK_DEGREE, roleType };
         try {
-            ServiceManagerServiceFactory.executeService("EditTeacherAdviseService", args);
+            EditTeacherAdviseService.runEditTeacherAdviseService(teacher, executionPeriodID, studentNumber, percentage,
+                    AdviseType.FINAL_WORK_DEGREE, roleType);
 
         } catch (AdvisePercentageException ape) {
             ActionMessages actionMessages = new ActionMessages();
@@ -88,7 +89,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 
         Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
         try {
-            ServiceManagerServiceFactory.executeService("DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID, roleType });
+            DeleteTeacherAdviseServiceByOID.runDeleteTeacherAdviseServiceByOID(adviseServiceID, roleType);
         } catch (DomainException e) {
             saveMessages(request, e);
         }

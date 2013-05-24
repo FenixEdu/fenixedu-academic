@@ -17,8 +17,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class TeacherAdministrationSiteComponentService extends FenixService {
 
-    protected Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent, ISiteComponent bodyComponent,
-            Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {
+    protected TeacherAdministrationSiteView run(Integer infoExecutionCourseCode, ISiteComponent commonComponent,
+            ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
@@ -37,7 +37,7 @@ public class TeacherAdministrationSiteComponentService extends FenixService {
             new TeacherAdministrationSiteComponentService();
 
     @Service
-    public static Object runTeacherAdministrationSiteComponentService(Integer infoExecutionCourseCode,
+    public static TeacherAdministrationSiteView runTeacherAdministrationSiteComponentService(Integer infoExecutionCourseCode,
             ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)
             throws FenixServiceException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute();

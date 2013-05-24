@@ -13,10 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertNonAffiliatedTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertProfessorShipNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInstitutions;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadNonAffiliatedTeachersByName;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -102,10 +103,8 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             return mapping.getInputForward();
         }
 
-        Object[] args = { nonAffiliatedTeacherNameToInsert, institutionID };
-
         try {
-            ServiceManagerServiceFactory.executeService("InsertNonAffiliatedTeacher", args);
+            InsertNonAffiliatedTeacher.runInsertNonAffiliatedTeacher(nonAffiliatedTeacherNameToInsert, institutionID);
         } catch (NotExistingServiceException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage(e.getMessage()));
@@ -129,7 +128,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherName");
 
         List nonAffiliatedTeachers =
-                (List) ServiceManagerServiceFactory.executeService("ReadNonAffiliatedTeachersByName", new Object[] { nonAffiliatedTeacherNameToInsert });
+                ReadNonAffiliatedTeachersByName.runReadNonAffiliatedTeachersByName(nonAffiliatedTeacherNameToInsert);
 
         request.setAttribute("nonAffiliatedTeachers", nonAffiliatedTeachers);
 
@@ -155,13 +154,11 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 
     private void insertProfessorshipOperation(ActionMapping mapping, IUserView userView, Integer executionCourseID,
             Integer nonAffiliatedTeacherID) throws FenixFilterException, NonExistingActionException, FenixActionException {
-        Object args[] = { nonAffiliatedTeacherID, executionCourseID };
 
         try {
-            ServiceManagerServiceFactory.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
+            InsertProfessorShipNonAffiliatedTeacher.runInsertProfessorShipNonAffiliatedTeacher(nonAffiliatedTeacherID,
+                    executionCourseID);
 
-        } catch (NonExistingServiceException ex) {
-            throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
         } catch (FenixServiceException e) {
             throw new FenixActionException(e.getMessage());
         }

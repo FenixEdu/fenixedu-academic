@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -45,8 +45,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
         try {
             ShiftEnrollmentErrorReport errorReport =
-                    (ShiftEnrollmentErrorReport) ServiceManagerServiceFactory.executeService("EnrollStudentInShifts", new Object[] {
-                    getRegistration(request), shiftId });
+                    EnrollStudentInShifts.runEnrollStudentInShifts(getRegistration(request), shiftId);
 
             if (errorReport.getUnAvailableShifts().size() > 0) {
                 for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {

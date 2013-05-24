@@ -126,4 +126,119 @@ public class EditCompetenceCourse extends FenixService {
         }
     }
 
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, CurricularStage curricularStage)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, curricularStage);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, curricularStage);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, String acronym) throws FenixServiceException,
+            NotAuthorizedException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, acronym);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, acronym);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, String year, String title, String author,
+            String reference, BibliographicReferenceType valueOf, String url) throws FenixServiceException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, year, title, author, reference, valueOf, url);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, year, title, author, reference, valueOf, url);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, Integer bibliographicReferenceID, String year,
+            String title, String author, String reference, BibliographicReferenceType valueOf, String url)
+            throws FenixServiceException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, bibliographicReferenceID, year, title, author, reference, valueOf, url);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, bibliographicReferenceID, year, title, author, reference, valueOf, url);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, Integer bibliographicReferenceIDToDelete)
+            throws FenixServiceException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, bibliographicReferenceIDToDelete);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, bibliographicReferenceIDToDelete);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, Integer oldPosition, Integer newPosition)
+            throws FenixServiceException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, oldPosition, newPosition);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, oldPosition, newPosition);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static void runEditCompetenceCourse(Integer competenceCourseID, String name, String nameEn, Boolean basic,
+            CompetenceCourseLevel enumCompetenceCourseLevel, CompetenceCourseType enumCompetenceCourseType,
+            CurricularStage valueOf) throws FenixServiceException {
+        try {
+            BolonhaManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(competenceCourseID, name, nameEn, basic, enumCompetenceCourseLevel, enumCompetenceCourseType,
+                    valueOf);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ScientificCouncilAuthorizationFilter.instance.execute();
+                serviceInstance.run(competenceCourseID, name, nameEn, basic, enumCompetenceCourseLevel, enumCompetenceCourseType,
+                        valueOf);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
 }

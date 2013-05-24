@@ -98,4 +98,17 @@ public class InsertTutorship extends TutorshipManagement {
         }
     }
 
+    @Service
+    public static List<TutorshipErrorBean> runInsertTutorship(Integer executionDegreeID, StudentsByEntryYearBean bean)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            TutorshipAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionDegreeID, bean);
+        } catch (NotAuthorizedException ex1) {
+            CoordinatorAuthorizationFilter.instance.execute();
+            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
+            return serviceInstance.run(executionDegreeID, bean);
+        }
+    }
+
 }

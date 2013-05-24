@@ -10,13 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcess;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -87,10 +89,9 @@ public class TSDProcessAction extends FenixDispatchAction {
         Integer selectedDepartmentId = userView.getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal();
         String name = (String) dynaForm.get("name");
 
-        Object[] parameters =
-                new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId, userView.getPerson().getIdInternal(), name };
-
-        TSDProcess tsdProcess = (TSDProcess) ServiceManagerServiceFactory.executeService("CreateTSDProcess", parameters);
+        TSDProcess tsdProcess =
+                CreateTSDProcess.runCreateTSDProcess(selectedExecutionPeriodIdList, selectedDepartmentId, userView.getPerson()
+                        .getIdInternal(), name);
 
         return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
     }
@@ -281,11 +282,9 @@ public class TSDProcessAction extends FenixDispatchAction {
             }
         }
 
-        Object[] parameters =
-                new Object[] { selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
-                        userView.getPerson().getIdInternal(), name };
-
-        TSDProcess tsdProcess = (TSDProcess) ServiceManagerServiceFactory.executeService("CopyTSDProcess", parameters);
+        TSDProcess tsdProcess =
+                CopyTSDProcess.runCopyTSDProcess(selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
+                        userView.getPerson().getIdInternal(), name);
 
         request.setAttribute("tsdProcess", tsdProcess);
         return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
@@ -296,7 +295,7 @@ public class TSDProcessAction extends FenixDispatchAction {
         Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
         IUserView userView = UserView.getUser();
 
-        ServiceManagerServiceFactory.executeService("DeleteTSDProcess", new Object[] { tsdProcessId });
+        DeleteTSDProcess.runDeleteTSDProcess(tsdProcessId);
 
         return prepareForTSDProcessEdition(mapping, form, request, response);
     }

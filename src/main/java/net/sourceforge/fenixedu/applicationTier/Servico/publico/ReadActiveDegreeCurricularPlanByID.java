@@ -128,8 +128,15 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     private static final ReadActiveDegreeCurricularPlanByID serviceInstance = new ReadActiveDegreeCurricularPlanByID();
 
     @Service
-    public static List runReadActiveDegreeCurricularPlanByID(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale, String arg) throws FenixServiceException  {
+    public static List runReadActiveDegreeCurricularPlanByID(Integer degreeCurricularPlanId, Integer executionPeriodId,
+            Locale locale, String arg) throws FenixServiceException {
         return serviceInstance.run(degreeCurricularPlanId, executionPeriodId, locale, arg);
+    }
+
+    @Service
+    public static List runReadActiveDegreeCurricularPlanByID(InfoExecutionDegree infoExecutionDegree,
+            InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear, Locale locale) throws FenixServiceException {
+        return serviceInstance.run(infoExecutionDegree, infoExecutionPeriod, curricularYear, locale);
     }
 
 }

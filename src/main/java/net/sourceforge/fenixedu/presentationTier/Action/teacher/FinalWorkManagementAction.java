@@ -20,6 +20,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentsByPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -29,6 +32,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.SubmitFinalWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalAlreadyTransposed;
@@ -56,7 +60,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -195,8 +198,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         try {
             IUserView userView = UserView.getUser();
-            Object argsProposal[] = { infoFinalWorkProposal };
-            ServiceManagerServiceFactory.executeService("SubmitFinalWorkProposal", argsProposal);
+            SubmitFinalWorkProposal.runSubmitFinalWorkProposal(infoFinalWorkProposal);
         } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.Scheduleing.maximumNumberOfProposalsPerPerson", new ActionError(
@@ -544,9 +546,10 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
             IUserView userView = UserView.getUser();
 
-            Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
+                InfoProposal infoProposal =
+                        ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(Integer
+                                .valueOf(finalDegreeWorkProposalOIDString));
 
                 if (infoProposal != null) {
                     request.setAttribute("finalDegreeWorkProposal", infoProposal);
@@ -581,9 +584,10 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
             IUserView userView = UserView.getUser();
 
-            Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
+                InfoProposal infoProposal =
+                        ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(Integer
+                                .valueOf(finalDegreeWorkProposalOIDString));
 
                 if (infoProposal != null) {
                     DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -763,8 +767,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         Integer executionDegreeId = getExecutionDegree(request);
         List result = null;
 
-        Object args1[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
-        result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args1);
+        result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeId, Integer.valueOf(studentCurricularPlanID));
 
         BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
         BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
@@ -801,8 +804,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
                 InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
 
-                Object args2[] = { infoPerson };
-                infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
+                infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoPerson);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }

@@ -66,7 +66,7 @@ public class ChooseGuide extends FenixService {
         return result;
     }
 
-    protected InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
+    protected InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws FenixServiceException {
 
         Guide guide = null;
 
@@ -92,7 +92,7 @@ public class ChooseGuide extends FenixService {
         return infoGuide;
     }
 
-    protected List run(Integer guideYear) throws Exception {
+    protected List run(Integer guideYear) throws FenixServiceException {
 
         List guides = Guide.readByYear(guideYear);
         if (guides.isEmpty()) {
@@ -155,7 +155,8 @@ public class ChooseGuide extends FenixService {
         return result;
     }
 
-    protected List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
+    protected List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
+            throws FenixServiceException {
 
         // Check if person exists
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
@@ -193,6 +194,53 @@ public class ChooseGuide extends FenixService {
             try {
                 MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
                 return serviceInstance.run(guideNumber, guideYear);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static List runChooseGuide(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(identificationDocumentNumber, identificationDocumentType);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return serviceInstance.run(identificationDocumentNumber, identificationDocumentType);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static List runChooseGuide(Integer guideYear) throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(guideYear);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return serviceInstance.run(guideYear);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
+    }
+
+    @Service
+    public static InfoGuide runChooseGuide(Integer guideNumber, Integer guideYear, Integer guideVersion)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(guideNumber, guideYear, guideVersion);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return serviceInstance.run(guideNumber, guideYear, guideVersion);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

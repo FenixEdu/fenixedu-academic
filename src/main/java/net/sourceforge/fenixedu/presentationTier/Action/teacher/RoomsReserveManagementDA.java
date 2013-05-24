@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.MarkPunctualRoomsOccupationCommentsAsRead;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserve;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserveComment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -212,7 +212,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
         RoomsReserveBean bean = (RoomsReserveBean) viewState.getMetaObject().getObject();
 
         try {
-            ServiceManagerServiceFactory.executeService("CreateNewRoomsReserveComment", new Object[] { bean, reOpen, resolveRequest });
+            CreateNewRoomsReserveComment.runCreateNewRoomsReserveComment( bean, reOpen, resolveRequest );
         } catch (DomainException e) {
             saveMessages(request, e);
         }

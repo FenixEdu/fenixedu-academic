@@ -18,7 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFileContent;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormPackage;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileContent;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteItem;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteSection;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditFilePermissions;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer;
@@ -35,7 +41,6 @@ import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
@@ -120,8 +125,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             final Section section = item.getSection();
 
             try {
-                final Object[] args = { section.getSite(), item };
-                ServiceManagerServiceFactory.executeService("DeleteItem", args);
+                DeleteItem.runDeleteItem(section.getSite(), item);
             } catch (DomainException e) {
                 addErrorMessage(request, "items", e.getKey(), (Object[]) e.getArgs());
             }
@@ -220,7 +224,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
                 Section superiorSection = section.getSuperiorSection();
 
                 Site site = section.getSite();
-                ServiceManagerServiceFactory.executeService("DeleteSection", new Object[] { site, section });
+                DeleteSection.runDeleteSection(site, section);
 
                 section = superiorSection;
             } catch (DomainException e) {
@@ -302,7 +306,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         List<String> errors = validationErrors(bean);
         if (errors.isEmpty()) {
             try {
-                return fileUpload(mapping, form, request, response, "CreateFileContent");
+                return fileUpload(mapping, form, request, response, false);
             } catch (DomainException e) {
                 addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
                 return reportUploadError(mapping, request, bean, errors);
@@ -342,7 +346,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         List<String> errors = validationErrors(bean);
         if (errors.isEmpty()) {
             try {
-                return fileUpload(mapping, form, request, response, "CreateScormPackage");
+                return fileUpload(mapping, form, request, response, true);
             } catch (DomainException e) {
                 addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
                 return reportScormUploadError(mapping, form, request, response, bean, errors);
@@ -389,7 +393,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
 
     private ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String service) throws Exception {
+            HttpServletResponse response, boolean scormFileUpload) throws Exception {
 
         IViewState viewState = RenderUtils.getViewState("creator");
         if (viewState == null) {
@@ -412,25 +416,33 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             if (formFileInputStream == null) {
                 addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
-                return service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(
-                        mapping, form, request, response);
+                return scormFileUpload ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form,
+                        request, response);
             }
 
             if (bean.getFileSize() > MAX_FILE_SIZE) {
                 addErrorMessage(request, "fileMaxSizeExceeded", "errors.file.max.size.exceeded", MAX_FILE_SIZE);
-                return service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(
-                        mapping, form, request, response);
+                return scormFileUpload ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form,
+                        request, response);
             }
 
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            ServiceManagerServiceFactory.executeService(service, new Object[] { bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
-            bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
+            if (scormFileUpload) {
+                CreateScormPackage.runCreateScormPackage(bean.getSite(), container, file, bean.getFileName(),
+                        bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
+                        bean.getEducationalLearningResourceType());
+            } else {
+                CreateFileContent.runCreateFileContent(bean.getSite(), container, file, bean.getFileName(),
+                        bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
+                        bean.getEducationalLearningResourceType());
+            }
+
         } catch (FileManagerException e) {
             addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
-            return service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(
-                    mapping, form, request, response);
+            return scormFileUpload ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form,
+                    request, response);
 
         } finally {
             if (formFileInputStream != null) {
@@ -531,12 +543,10 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            final Object[] args =
-                    { new CreateScormFile.CreateScormFileItemForItemArgs(site, container, file, bean.getFileName(), displayName,
-                            bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request),
-                            bean.getEducationalLearningResourceType()) };
+            CreateScormFile.runCreateScormFile(new CreateScormFile.CreateScormFileItemForItemArgs(site, container, file, bean
+                    .getFileName(), displayName, bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request),
+                    bean.getEducationalLearningResourceType()));
 
-            ServiceManagerServiceFactory.executeService("CreateScormFile", args);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
             RenderUtils.invalidateViewState("scormPackage");
@@ -605,7 +615,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         }
 
         try {
-            ServiceManagerServiceFactory.executeService("DeleteFileContent", new Object[] { fileContent });
+            DeleteFileContent.runDeleteFileContent(fileContent);
         } catch (FileManagerException e1) {
             addErrorMessage(request, "items", "errors.unableToDeleteFile");
         }
@@ -677,7 +687,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
         try {
             Site site = fileItem.getSite();
-            ServiceManagerServiceFactory.executeService("EditFilePermissions", new Object[] { site, fileItem, bean.getPermittedGroup() });
+            EditFilePermissions.runEditFilePermissions(site, fileItem, bean.getPermittedGroup());
             return mapping.findForward("section");
         } catch (FileManagerException ex) {
             addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");

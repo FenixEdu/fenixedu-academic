@@ -12,8 +12,10 @@ import java.util.Map;
 
 import javax.faces.component.html.HtmlInputHidden;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -21,7 +23,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -103,12 +104,11 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 
     public String enrolStudent() {
         try {
-            final Object args[] = { getUserView().getUtilizador(), getEvaluationID() };
-            ServiceManagerServiceFactory.executeService("EnrolStudentInWrittenEvaluation", args);
+            EnrolStudentInWrittenEvaluation.runEnrolStudentInWrittenEvaluation(getUserView().getUtilizador(), getEvaluationID());
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             setErrorMessage("errors.impossible.operation");
         } catch (FenixServiceException e) {
             setErrorMessage("errors.impossible.operation");
@@ -118,12 +118,12 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 
     public String unenrolStudent() {
         try {
-            final Object args[] = { getUserView().getUtilizador(), getEvaluationID() };
-            ServiceManagerServiceFactory.executeService("UnEnrollStudentInWrittenEvaluation", args);
+            UnEnrollStudentInWrittenEvaluation.runUnEnrollStudentInWrittenEvaluation(getUserView().getUtilizador(),
+                    getEvaluationID());
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             setErrorMessage("errors.impossible.operation");
         } catch (FenixServiceException e) {
             setErrorMessage("errors.impossible.operation");

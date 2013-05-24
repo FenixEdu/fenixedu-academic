@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -136,16 +135,8 @@ public class PersonManagementAction extends FenixDispatchAction {
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        Object[] args = { searchParameters, predicate };
+        CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
-        CollectionPager<Person> result = null;
-        try {
-            result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-        }
         if (result == null) {
             errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
         }
@@ -195,16 +186,7 @@ public class PersonManagementAction extends FenixDispatchAction {
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
         IUserView userView = UserView.getUser();
-        CollectionPager<Person> result = null;
-        Object[] args = { searchParameters, predicate };
-
-        try {
-            result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-
-        } catch (FenixServiceException e) {
-            request.setAttribute("anyPersonSearchBean", bean);
-            return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
-        }
+        CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         request.setAttribute("resultPersons", result.getCollection());
         request.setAttribute("anyPersonSearchBean", bean);
@@ -454,8 +436,7 @@ public class PersonManagementAction extends FenixDispatchAction {
                         null, null, null, null, null, null, null, null, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-        CollectionPager<Person> persons =
-                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
+        CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
         request.setAttribute("resultPersons", persons.getCollection());
         request.setAttribute("personBean", personBean);
     }

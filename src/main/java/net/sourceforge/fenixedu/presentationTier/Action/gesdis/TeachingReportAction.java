@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.EditCourseInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseHistoric;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -45,23 +47,11 @@ public class TeachingReportAction extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    private String getReadService() {
-        return "ReadCourseInformation";
-    }
-
-    private String getReadHistoricService() {
-        return "ReadCourseHistoric";
-    }
-
-    private String getEditService() {
-        return "EditCourseInformation";
-    }
-
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
-        Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport, infoCourseReport.getReport() };
-        ServiceManagerServiceFactory.executeService(getEditService(), args);
+        EditCourseInformation.runEditCourseInformation(infoCourseReport.getIdInternal(), infoCourseReport,
+                infoCourseReport.getReport());
         return read(mapping, form, request, response);
     }
 
@@ -138,8 +128,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
-        Object[] args = { new Integer(executionCourseId) };
-        return (List) ServiceManagerServiceFactory.executeService(getReadHistoricService(), args);
+        return ReadCourseHistoric.runReadCourseHistoric(new Integer(executionCourseId));
     }
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
@@ -147,8 +136,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
-        Object[] args = { new Integer(executionCourseId) };
-        return (SiteView) ServiceManagerServiceFactory.executeService(getReadService(), args);
+        return ReadCourseInformation.runReadCourseInformation(new Integer(executionCourseId));
     }
 
     private void setSiteViewToRequest(HttpServletRequest request, SiteView siteView, ActionMapping mapping) {

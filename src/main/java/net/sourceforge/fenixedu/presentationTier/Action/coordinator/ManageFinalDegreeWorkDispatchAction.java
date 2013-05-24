@@ -21,16 +21,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddExecutionDegreeToScheduling;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AttributeFinalDegreeWork;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ChangeStatusOfFinalDegreeWorkProposals;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.PublishAprovedFinalDegreeWorkProposals;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposal;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveExecutionDegreeToScheduling;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteFinalDegreeWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposalAttribution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegreesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.SubmitFinalWorkProposal;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -68,7 +74,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.AttributionFilter;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.StatusCountPair;
@@ -444,7 +449,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         List finalDegreeWorkProposalHeaders = null;
         try {
             finalDegreeWorkProposalHeaders =
-                    (List) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", new Object[] { executionDegree });
+                    ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan
+                            .runReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan(executionDegree);
 
             if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty()) {
                 Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
@@ -460,7 +466,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 request.setAttribute("pageNumber", page);
                 request.setAttribute("resultPage", collectionPager.getPage(page));
             }
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("notAuthorized", new ActionError("error.exception.notAuthorized"));
             saveErrors(request, actionErrors);
@@ -469,8 +475,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
             return mapping.findForward("error");
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
         }
 
         // Load proposal submission period
@@ -614,9 +618,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
             IUserView userView = UserView.getUser();
 
-            Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceManagerServiceFactory.executeService("ReadFinalDegreeWorkProposal", args);
+                InfoProposal infoProposal =
+                        ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(Integer
+                                .valueOf(finalDegreeWorkProposalOIDString));
 
                 if (infoProposal != null) {
                     DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -895,8 +900,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         try {
-            Object argsProposal[] = { infoFinalWorkProposal };
-            ServiceManagerServiceFactory.executeService("SubmitFinalWorkProposal", argsProposal);
+            SubmitFinalWorkProposal.runSubmitFinalWorkProposal(infoFinalWorkProposal);
             request.setAttribute("proposalOID", infoFinalWorkProposal.getProposalOID());
         } catch (Exception e) {
             if (e instanceof OutOfPeriodException) {
@@ -1170,8 +1174,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             final ExecutionDegree otherExecutionDegree =
                     (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
                             Integer.valueOf(otherExecutionDegreeIDString));
-            final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-            ServiceManagerServiceFactory.executeService("AddExecutionDegreeToScheduling", args);
+            AddExecutionDegreeToScheduling.runAddExecutionDegreeToScheduling(executionDegree.getScheduling(),
+                    otherExecutionDegree);
         }
         dynaActionForm.set("otherExecutionDegreeID", null);
         return prepare(mapping, form, request, response);
@@ -1187,8 +1191,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final ExecutionDegree otherExecutionDegree =
                 (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, Integer.valueOf(otherExecutionDegreeIDString));
 
-        final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
-        ServiceManagerServiceFactory.executeService("RemoveExecutionDegreeToScheduling", args);
+        RemoveExecutionDegreeToScheduling.runRemoveExecutionDegreeToScheduling(executionDegree.getScheduling(),
+                otherExecutionDegree);
 
         dynaActionForm.set("otherExecutionDegreeID", null);
 

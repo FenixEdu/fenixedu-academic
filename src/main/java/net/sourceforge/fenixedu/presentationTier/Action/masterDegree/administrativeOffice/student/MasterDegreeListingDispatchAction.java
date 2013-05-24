@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveExecutionDegreebyDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentsFromDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -15,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -103,8 +103,9 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
         List result = null;
 
         try {
-            Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
-            result = (List) ServiceManagerServiceFactory.executeService("ReadStudentsFromDegreeCurricularPlan", args);
+            result =
+                    ReadStudentsFromDegreeCurricularPlan.runReadStudentsFromDegreeCurricularPlan(degreeCurricularPlanID,
+                            DegreeType.MASTER_DEGREE);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {

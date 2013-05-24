@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteEquivalencePlanEntry;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.search.StudentSearchBean;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -126,8 +126,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         getStudent(request);
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
-        final Object[] args = { equivalencePlanEntry };
-        ServiceManagerServiceFactory.executeService("DeleteEquivalencePlanEntry", args);
+        DeleteEquivalencePlanEntry.runDeleteEquivalencePlanEntry(equivalencePlanEntry);
         return showTable(mapping, actionForm, request, response);
     }
 
@@ -148,8 +147,9 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
                 getStudentCurricularPlanEquivalencePlan(request, student);
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
         final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
-        ServiceManagerServiceFactory.executeService(service, args);
-        return showTable(mapping, actionForm, request, response);
+//        ServiceManagerServiceFactory.executeService(service, args);
+//        return showTable(mapping, actionForm, request, response);
+        throw new UnsupportedOperationException("Service " + service + " no longer exists");
     }
 
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {

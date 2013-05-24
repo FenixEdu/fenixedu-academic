@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.ChangeTutorship;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.DeleteTutorship;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.InsertTutorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean.ChangeTutorshipBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean;
@@ -25,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -189,13 +192,13 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("ChangeTutorship", args);
-            } catch (FenixServiceException e) {
-                addActionMessage(request, e.getMessage(), e.getArgs());
-            } catch (FenixFilterException fenixFilterExceptione) {
+                tutorshipsNotChanged = ChangeTutorship.runChangeTutorship(executionDegree.getIdInternal(), changeTutorshipBeans);
+            } catch (NotAuthorizedException fenixFilterExceptione) {
                 // TODO Auto-generated catch block
                 addActionMessage(request, fenixFilterExceptione.getMessage());
                 fenixFilterExceptione.printStackTrace();
+            } catch (FenixServiceException e) {
+                addActionMessage(request, e.getMessage(), e.getArgs());
             }
 
             if (!tutorshipsNotChanged.isEmpty()) {
@@ -235,8 +238,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         List<Tutorship> tutorshipToDelete = new ArrayList<Tutorship>();
         tutorshipToDelete.add(tutorship);
-        Object[] args = new Object[] { executionDegree.getIdInternal(), new Integer(1), tutorshipToDelete };
-        return (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("DeleteTutorship", args);
+        return DeleteTutorship.runDeleteTutorship(executionDegree.getIdInternal(), tutorshipToDelete);
 
     }
 
@@ -258,9 +260,8 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         StudentsByEntryYearBean selectedStudentsAndTutorBean = new StudentsByEntryYearBean(executionYear);
         // Initialize Tutorship creation bean to use in InsertTutorship Service
         BeanInitializer.initializeBean(selectedStudentsAndTutorBean, teacher, executionDegree, student, endDate);
-        Object[] args = new Object[] { executionDegree.getIdInternal(), selectedStudentsAndTutorBean };
 
-        return (List<TutorshipErrorBean>) ServiceManagerServiceFactory.executeService("InsertTutorship", args);
+        return InsertTutorship.runInsertTutorship(executionDegree.getIdInternal(), selectedStudentsAndTutorBean);
     }
 
     private ExecutionDegree getExecutionDegree(Tutorship tutorship) {

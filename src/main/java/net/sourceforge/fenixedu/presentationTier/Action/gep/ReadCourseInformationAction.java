@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.struts.action.ActionForm;
@@ -44,9 +44,8 @@ public class ReadCourseInformationAction extends FenixAction {
             HttpServletResponse response) throws Exception {
         IUserView userView = UserView.getUser();
 
-        Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
         TeacherAdministrationSiteView teacherAdministrationSiteView =
-                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("ReadCourseInformation", args1);
+                ReadCourseInformation.runReadCourseInformation(new Integer(request.getParameter("executionCourseId")));
         InfoSiteCourseInformation infoSiteCourseInformation =
                 (InfoSiteCourseInformation) teacherAdministrationSiteView.getComponent();
         request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.MarkPunctualRoomsOccupationCommentsAsRead;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserveComment;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RequestState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -264,7 +264,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
         try {
             bean.setRequestor(getLoggedPerson(request));
-            ServiceManagerServiceFactory.executeService("CreateNewRoomsReserveComment", new Object[] { bean, reOpen, resolveRequest });
+            CreateNewRoomsReserveComment.runCreateNewRoomsReserveComment( bean, reOpen, resolveRequest );
         } catch (DomainException e) {
             saveMessages(request, e);
         }

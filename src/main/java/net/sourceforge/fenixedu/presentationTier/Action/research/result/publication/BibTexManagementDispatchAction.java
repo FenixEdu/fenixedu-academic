@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.ImportBibtexPublication;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
@@ -44,7 +45,6 @@ import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -466,10 +466,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
                 (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 
         try {
-            Object[] arguments =
-                    new Object[] { getUserView(request).getPerson(), importBibtexBean.getCurrentPublicationBean(),
-                            importBibtexBean.getCurrentBibtexPublication() };
-            ResearchResultPublication result = (ResearchResultPublication) ServiceManagerServiceFactory.executeService("ImportBibtexPublication", arguments);
+
+            ResearchResultPublication result =
+                    ImportBibtexPublication.runImportBibtexPublication(getUserView(request).getPerson(),
+                            importBibtexBean.getCurrentPublicationBean(), importBibtexBean.getCurrentBibtexPublication());
             request.setAttribute("result", result);
             ResultDocumentFileSubmissionBean fileBean = new ResultDocumentFileSubmissionBean(result);
             request.setAttribute("fileBean", fileBean);

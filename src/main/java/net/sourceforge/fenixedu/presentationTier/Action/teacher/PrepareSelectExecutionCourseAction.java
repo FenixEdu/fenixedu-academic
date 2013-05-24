@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.SelectExportExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -75,11 +75,11 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
 
         try {
             TeacherAdministrationSiteView siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
+                            infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2);
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
                     .getIdInternal());

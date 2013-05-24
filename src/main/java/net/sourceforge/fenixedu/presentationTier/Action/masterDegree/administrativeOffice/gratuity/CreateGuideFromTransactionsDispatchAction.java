@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.ReadContributor;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideFromTransactions;
@@ -25,7 +26,6 @@ import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTrans
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -172,9 +172,8 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
             throws NonExistingActionException, FenixActionException, FenixFilterException {
 
         InfoContributor infoContributor = null;
-        Object argsContributor[] = { contributorNumber };
         try {
-            infoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService("ReadContributor", argsContributor);
+            infoContributor = ReadContributor.runReadContributor(contributorNumber);
 
         } catch (ExcepcaoInexistente e) {
             throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",

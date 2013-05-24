@@ -120,4 +120,25 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends FenixService {
         }
     }
 
+    @Service
+    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(Integer degreeCurricularPlanID,
+            final String executionYear) throws NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(degreeCurricularPlanID, executionYear);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
+                return serviceInstance.run(degreeCurricularPlanID, executionYear);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    CoordinatorAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(degreeCurricularPlanID, executionYear);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

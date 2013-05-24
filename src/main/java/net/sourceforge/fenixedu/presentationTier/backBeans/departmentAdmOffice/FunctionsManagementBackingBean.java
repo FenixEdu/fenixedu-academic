@@ -21,6 +21,9 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeletePersonFunction;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditPersonFunction;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
@@ -37,7 +40,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -134,10 +136,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                     return "";
                 }
 
-                final Object[] argsToRead =
-                        { this.getFunctionID(), this.getPersonID(), credits, YearMonthDay.fromDateFields(beginDate_),
-                                YearMonthDay.fromDateFields(endDate_) };
-                ServiceManagerServiceFactory.executeService("AssociateNewFunctionToPerson", argsToRead);
+                AssociateNewFunctionToPerson.runAssociateNewFunctionToPerson(this.getFunctionID(), this.getPersonID(), credits,
+                        YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_));
                 setErrorMessage("message.success");
                 return "success";
 
@@ -172,10 +172,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 return "";
             }
 
-            final Object[] argsToRead =
-                    { this.getPersonFunctionID(), this.getFunctionID(), YearMonthDay.fromDateFields(beginDate_),
-                            YearMonthDay.fromDateFields(endDate_), credits };
-            ServiceManagerServiceFactory.executeService("EditPersonFunction", argsToRead);
+            EditPersonFunction.runEditPersonFunction(this.getPersonFunctionID(), this.getFunctionID(),
+                    YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_), credits);
             setErrorMessage("message.success");
             return "alterFunction";
 
@@ -190,8 +188,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
-        final Object[] argsToRead = { this.getPersonFunctionID() };
-        ServiceManagerServiceFactory.executeService("DeletePersonFunction", argsToRead);
+        DeletePersonFunction.runDeletePersonFunction(this.getPersonFunctionID());
         setErrorMessage("message.success");
         return "success";
     }
@@ -296,8 +293,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                         Boolean.FALSE, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        CollectionPager<Person> allPersons =
-                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { searchParameters, predicate });
+        CollectionPager<Person> allPersons = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         return allPersons.getCollection();
     }

@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProfessorship;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetExtraCreditsToTSDTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDProfessorship;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
@@ -29,7 +32,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorsh
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -101,10 +103,8 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
             tsdCourse = selectedTSDCompetenceCourse;
         }
 
-        Object[] parameters =
-                new Object[] { tsdCourse.getIdInternal(), selectedTSDTeacher.getIdInternal(), tsdProfessorshipParameters };
-
-        ServiceManagerServiceFactory.executeService("SetTSDProfessorship", parameters);
+        SetTSDProfessorship.runSetTSDProfessorship(tsdCourse.getIdInternal(), selectedTSDTeacher.getIdInternal(),
+                tsdProfessorshipParameters);
 
         return loadTSDProfessorships(mapping, form, request, response);
     }
@@ -116,7 +116,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         TSDProfessorship selectedTSDProfessorship = getSelectedTSDProfessorship(userView, dynaForm);
 
-        ServiceManagerServiceFactory.executeService("DeleteTSDProfessorship", new Object[] { selectedTSDProfessorship.getIdInternal() });
+        DeleteTSDProfessorship.runDeleteTSDProfessorship(selectedTSDProfessorship.getIdInternal());
 
         return loadTSDProfessorships(mapping, form, request, response);
     }
@@ -144,10 +144,8 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         Boolean usingExtraCredits =
                 dynaForm.get("usingExtraCredits") == null ? false : (Boolean) dynaForm.get("usingExtraCredits");
 
-        Object[] arguments =
-                new Object[] { selectedTSDTeacher.getIdInternal(), extraCreditsName, extraCreditsValue, usingExtraCredits };
-
-        ServiceManagerServiceFactory.executeService("SetExtraCreditsToTSDTeacher", arguments);
+        SetExtraCreditsToTSDTeacher.runSetExtraCreditsToTSDTeacher(selectedTSDTeacher.getIdInternal(), extraCreditsName,
+                extraCreditsValue, usingExtraCredits);
 
         return loadTSDProfessorships(mapping, form, request, response);
     }

@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ExecutionCourseSiteComponentService extends FenixService {
 
-    protected Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
+    protected ExecutionCourseSiteView run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
             Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException {
         final ExecutionCourseSite site;
@@ -53,14 +53,17 @@ public class ExecutionCourseSiteComponentService extends FenixService {
 
         return executionCourseSiteView;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ExecutionCourseSiteComponentService serviceInstance = new ExecutionCourseSiteComponentService();
 
     @Service
-    public static Object runExecutionCourseSiteComponentService(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
-            NonExistingAssociatedCurricularCoursesServiceException  {
-        return serviceInstance.run(commonComponent, bodyComponent, infoSiteCode, infoExecutionCourseCode, sectionIndex, curricularCourseId);
+    public static ExecutionCourseSiteView runExecutionCourseSiteComponentService(ISiteComponent commonComponent,
+            ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
+            Integer curricularCourseId) throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {
+        return serviceInstance.run(commonComponent, bodyComponent, infoSiteCode, infoExecutionCourseCode, sectionIndex,
+                curricularCourseId);
     }
 
 }

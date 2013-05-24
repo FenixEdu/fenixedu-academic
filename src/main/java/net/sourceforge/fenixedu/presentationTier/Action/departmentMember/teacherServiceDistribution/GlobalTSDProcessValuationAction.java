@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDCoursesFromTSDProcesses;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDTeachersFromTSDProcesses;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
@@ -23,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -211,7 +212,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDTeacherDTOEntry>) ServiceManagerServiceFactory.executeService("ReadTSDTeachersFromTSDProcesses", new Object[] { tsdProcessIdMap });
+        return (List<TSDTeacherDTOEntry>) ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses( tsdProcessIdMap );
     }
 
     @SuppressWarnings("unchecked")
@@ -223,7 +224,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDCourseDTOEntry>) ServiceManagerServiceFactory.executeService("ReadTSDCoursesFromTSDProcesses", new Object[] { tsdProcessIdMap });
+        return (List<TSDCourseDTOEntry>) ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses( tsdProcessIdMap );
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm)

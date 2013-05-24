@@ -8,13 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentListByCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadCurricularCoursesByDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentMarksListByCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -84,12 +85,12 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 
         IUserView userView = getUserView(request);
-        Object args[] = { userView, courseID, executionYear };
 
         List listEnrolmentEvaluation = null;
         try {
             listEnrolmentEvaluation =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentMarksListByCurricularCourse", args);
+                    ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView, courseID,
+                            executionYear);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {
@@ -123,8 +124,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
         List studentList = null;
         try {
-            Object args[] = { userView, courseID, null };
-            studentList = (List) ServiceManagerServiceFactory.executeService("ReadStudentListByCurricularCourse", args);
+            studentList = ReadStudentListByCurricularCourse.runReadStudentListByCurricularCourse(userView, courseID, null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {

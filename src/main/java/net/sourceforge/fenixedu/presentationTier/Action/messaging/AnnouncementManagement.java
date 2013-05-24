@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileContent;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AproveActionAnnouncement;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateFileContentForBoard;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnouncement;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveAnnouncementBoardBookmark;
 import net.sourceforge.fenixedu.domain.FileContent;
@@ -27,7 +29,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
@@ -362,8 +363,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            ServiceManagerServiceFactory.executeService("CreateFileContentForBoard", new Object[] { (AnnouncementBoard) bean.getFileHolder(), file, bean.getFileName(), bean.getDisplayName(),
-            bean.getPermittedGroup(), getLoggedPerson(request) });
+            CreateFileContentForBoard.runCreateFileContentForBoard((AnnouncementBoard) bean.getFileHolder(), file,
+                    bean.getFileName(), bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request));
         } catch (FileManagerException e) {
             addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
         } catch (DomainException e) {
@@ -385,7 +386,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
         FileContent fileContent = getFileContent(request);
 
-        ServiceManagerServiceFactory.executeService("DeleteFileContent", new Object[] { fileContent });
+        DeleteFileContent.runDeleteFileContent(fileContent);
         return prepareAddFile(mapping, form, request, response);
     }
 

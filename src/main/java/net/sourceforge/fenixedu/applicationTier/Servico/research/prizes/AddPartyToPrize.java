@@ -48,4 +48,10 @@ public class AddPartyToPrize extends FenixService {
         serviceInstance.run(bean, prize);
     }
 
+    @Service
+    public static void runAddPartyToPrize(UnitNameBean bean, Prize prize) throws NotAuthorizedException {
+        EditPrizeFilter.instance.execute(prize);
+        serviceInstance.run(bean, prize);
+    }
+
 }

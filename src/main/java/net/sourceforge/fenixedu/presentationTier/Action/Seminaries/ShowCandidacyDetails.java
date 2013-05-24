@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCandidacyById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoic
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -63,9 +63,7 @@ public class ShowCandidacyDetails extends FenixAction {
 
         ActionForward destiny = null;
         try {
-            Object[] argsReadCandidacy = { candidacyID };
-            candidacy =
-                    (InfoCandidacy) ServiceManagerServiceFactory.executeService("Seminaries.GetCandidacyById", argsReadCandidacy);
+            candidacy = GetCandidacyById.runGetCandidacyById(candidacyID);
 
             student = candidacy.getInfoStudent();
             curricularCourse = candidacy.getCurricularCourse();

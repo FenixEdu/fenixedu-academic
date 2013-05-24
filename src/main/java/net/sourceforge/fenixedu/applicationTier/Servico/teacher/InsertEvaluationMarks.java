@@ -38,8 +38,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertEvaluationMarks extends FenixService {
 
-    protected Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks) throws ExcepcaoInexistente,
-            FenixServiceException {
+    protected TeacherAdministrationSiteView run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
+            throws ExcepcaoInexistente, FenixServiceException {
 
         ExecutionCourseSite site = null;
         Evaluation evaluation = null;
@@ -102,7 +102,7 @@ public class InsertEvaluationMarks extends FenixService {
         return createSiteView(site, evaluation, newHashMarks, marksErrorsInvalidMark, attendList, hashMarks);
     }
 
-    private Object createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
+    private TeacherAdministrationSiteView createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents) throws FenixServiceException {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
 
@@ -153,8 +153,8 @@ public class InsertEvaluationMarks extends FenixService {
     private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
 
     @Service
-    public static Object runInsertEvaluationMarks(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
-            throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+    public static TeacherAdministrationSiteView runInsertEvaluationMarks(Integer executionCourseCode, Integer evaluationCode,
+            HashMap hashMarks) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, evaluationCode, hashMarks);
     }

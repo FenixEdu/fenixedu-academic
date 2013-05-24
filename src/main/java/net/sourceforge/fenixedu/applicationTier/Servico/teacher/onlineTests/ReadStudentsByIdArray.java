@@ -143,4 +143,11 @@ public class ReadStudentsByIdArray extends FenixService {
         return serviceInstance.run(executionCourseId, selected, insertByShifts);
     }
 
+    @Service
+    public static List<InfoStudent> runReadStudentsByIdArray(Integer executionCourseId, Integer distributedTestId,
+            String[] selected, Boolean insertByShifts) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId, selected, insertByShifts);
+    }
+
 }

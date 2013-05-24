@@ -251,4 +251,18 @@ public class SearchExecutionCourses extends FenixService {
         return serviceInstance.run(academicInterval, executionDegree, courseName);
     }
 
+    @Service
+    public static List<InfoExecutionCourse> runSearchExecutionCourses(InfoExecutionPeriod infoExecutionPeriod,
+            InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear, String executionCourseName)
+            throws NotAuthorizedException {
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(infoExecutionDegree.getIdInternal());
+        return serviceInstance.run(infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName);
+    }
+
+    @Service
+    public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
+            ExecutionDegree executionDegree, CurricularYear curricularYear, String courseName) throws NotAuthorizedException {
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getIdInternal());
+        return serviceInstance.run(academicInterval, executionDegree, curricularYear, courseName);
+    }
 }

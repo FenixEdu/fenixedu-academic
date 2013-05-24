@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.registration.DeleteRegistrationRegime;
 import net.sourceforge.fenixedu.dataTransferObject.AddAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 
@@ -297,7 +297,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
         final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-        ServiceManagerServiceFactory.executeService("WriteStudentAttendingCourse", new Object[] { registration, executionCourse.getIdInternal() });
+        WriteStudentAttendingCourse.runWriteStudentAttendingCourse( registration, executionCourse.getIdInternal() );
 
         return viewAttends(mapping, actionForm, request, response);
     }

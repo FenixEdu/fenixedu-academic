@@ -73,13 +73,18 @@ public class ReadStudentTest extends FenixService {
 
     // Service Invokers migrated from Berserk
 
-    private static final ReadStudentTest serviceInstance = new ReadStudentTest();
-
     @Service
     public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration, Integer distributedTestId,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestForCorrectionFilter.instance.execute(distributedTestId);
-        return serviceInstance.run(registration, distributedTestId, log, path);
+        return run(registration, distributedTestId, log, path);
+    }
+
+    @Service
+    public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration,
+            DistributedTest distributedTest, Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
+        ReadStudentTestForCorrectionFilter.instance.execute(distributedTest.getIdInternal());
+        return run(registration, distributedTest, log, path);
     }
 
     // Service Invokers migrated from Berserk
@@ -88,7 +93,14 @@ public class ReadStudentTest extends FenixService {
     public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, Integer distributedTestId,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestToDoFilter.instance.execute(distributedTestId);
-        return serviceInstance.run(registration, distributedTestId, log, path);
+        return run(registration, distributedTestId, log, path);
+    }
+
+    @Service
+    public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, DistributedTest distributedTest,
+            Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
+        ReadStudentTestToDoFilter.instance.execute(distributedTest.getIdInternal());
+        return run(registration, distributedTest, log, path);
     }
 
 }

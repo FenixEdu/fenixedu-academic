@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {
 
-    protected Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    protected TeacherAdministrationSiteView run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
@@ -80,12 +80,15 @@ public class ReadCurricularCourseListByExecutionCourseCode extends FenixService 
                 new TeacherAdministrationSiteView(commonComponent, infoSiteAssociatedCurricularCourses);
         return siteView;
     }
+
     // Service Invokers migrated from Berserk
 
-    private static final ReadCurricularCourseListByExecutionCourseCode serviceInstance = new ReadCurricularCourseListByExecutionCourseCode();
+    private static final ReadCurricularCourseListByExecutionCourseCode serviceInstance =
+            new ReadCurricularCourseListByExecutionCourseCode();
 
     @Service
-    public static Object runReadCurricularCourseListByExecutionCourseCode(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException  , NotAuthorizedException {
+    public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(Integer executionCourseCode)
+            throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode);
     }

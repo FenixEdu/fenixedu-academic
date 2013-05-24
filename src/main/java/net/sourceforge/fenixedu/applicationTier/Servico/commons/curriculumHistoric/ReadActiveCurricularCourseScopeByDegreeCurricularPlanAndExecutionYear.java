@@ -123,4 +123,46 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
             }
         }
     }
+
+    @Service
+    public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
+            Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    AcademicCurriculumsViewAuthorization.instance.execute();
+                    return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+                } catch (NotAuthorizedException ex3) {
+                    try {
+                        ResourceAllocationManagerAuthorizationFilter.instance.execute();
+                        return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+                    } catch (NotAuthorizedException ex4) {
+                        try {
+                            GEPAuthorizationFilter.instance.execute();
+                            return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+                        } catch (NotAuthorizedException ex5) {
+                            try {
+                                DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
+                                EmployeeAuthorizationFilter.instance.execute();
+                                return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+                            } catch (NotAuthorizedException ex6) {
+                                try {
+                                    OperatorAuthorizationFilter.instance.execute();
+                                    return serviceInstance.run(degreeCurricularPlanID, executioYearID);
+                                } catch (NotAuthorizedException ex7) {
+                                    throw ex7;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -27,7 +25,6 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
@@ -350,26 +347,18 @@ public class LibraryAttendance implements Serializable {
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        Object[] args = { searchParameters, predicate };
+        CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
-        CollectionPager<Person> result = null;
-        try {
-            result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-            Collection<Person> matches = result.getCollection();
-            numberOfPages = result.getNumberOfPages();
-            if (matches.size() == 1) {
-                setPerson(matches.iterator().next());
-                this.matches = null;
-            } else {
-                setPerson(null);
-                this.matches = result.getPage(pageNumber);
-            }
-            return;
-        } catch (FenixServiceException e) {
-        } catch (FenixFilterException e) {
+        Collection<Person> matches = result.getCollection();
+        numberOfPages = result.getNumberOfPages();
+        if (matches.size() == 1) {
+            setPerson(matches.iterator().next());
+            this.matches = null;
+        } else {
+            setPerson(null);
+            this.matches = result.getPage(pageNumber);
         }
-        this.matches = null;
-        setPerson(null);
+
     }
 
     @Service

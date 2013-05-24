@@ -4,11 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -73,11 +70,6 @@ public abstract class FenixAction extends Action {
 
     protected void addActionMessage(HttpServletRequest request, String key, String... args) {
         this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
-    }
-
-    protected Object executeService(final String serviceName, final Object[] serviceArgs) throws FenixFilterException,
-            FenixServiceException {
-        return ServiceManagerServiceFactory.executeService(serviceName, serviceArgs);
     }
 
     protected void addErrorMessage(HttpServletRequest request, String property, String key, String... args) {

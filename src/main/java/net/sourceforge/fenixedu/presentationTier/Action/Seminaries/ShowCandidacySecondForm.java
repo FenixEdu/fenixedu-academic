@@ -12,11 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCaseStudiesByEquivalencyID;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCaseStudiesByThemeID;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetEquivalency;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetThemeById;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.WriteCandidacy;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -36,8 +41,7 @@ public class ShowCandidacySecondForm extends FenixAction {
     public InfoStudent readStudentByUserView(IUserView userView) throws FenixActionException {
         InfoStudent student = null;
         try {
-            Object[] argsReadStudent = { userView.getUtilizador() };
-            student = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByUsername", argsReadStudent);
+            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUtilizador());
         } catch (Exception e) {
             throw new FenixActionException();
         }
@@ -68,23 +72,16 @@ public class ShowCandidacySecondForm extends FenixAction {
         List cases = null;
         ActionForward destiny = null;
         try {
-            Object[] argsReadEquivalency = { equivalencyID };
-            equivalency =
-                    (InfoEquivalency) ServiceManagerServiceFactory.executeService("Seminaries.GetEquivalency",
-                            argsReadEquivalency);
+            equivalency = GetEquivalency.runGetEquivalency(equivalencyID);
 
             //
             if (themeID != null) // we want the cases of ONE theme
             {
-                Object[] argsReadCases = { themeID };
-                cases = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCaseStudiesByThemeID", argsReadCases);
+                cases = GetCaseStudiesByThemeID.runGetCaseStudiesByThemeID(themeID);
             } else // we want ALL the cases of the equivalency (its a "Completa"
             // modality)
             {
-                Object[] argsReadCases = { equivalencyID };
-                cases =
-                        (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCaseStudiesByEquivalencyID",
-                                argsReadCases);
+                cases = GetCaseStudiesByEquivalencyID.runGetCaseStudiesByEquivalencyID(equivalencyID);
             }
         } catch (Exception e) {
             throw new FenixActionException();
@@ -109,10 +106,8 @@ public class ShowCandidacySecondForm extends FenixAction {
             infoCandidacy.setMotivation(motivation);
             infoCandidacy.setCaseStudyChoices(new LinkedList());
             try {
-                Object[] argsWriteCandidacy = { infoCandidacy };
-                ServiceManagerServiceFactory.executeService("Seminaries.WriteCandidacy", argsWriteCandidacy);
-                Object[] argsReadTheme = { themeID };
-                theme = (InfoTheme) ServiceManagerServiceFactory.executeService("Seminaries.GetThemeById", argsReadTheme);
+                WriteCandidacy.runWriteCandidacy(infoCandidacy);
+                theme = GetThemeById.runGetThemeById(themeID);
             } catch (Exception e) {
                 throw new FenixActionException();
             }

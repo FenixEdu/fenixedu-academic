@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeacherByUsername;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.AlterStudentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentMarksByCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentMarksListByCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -58,10 +58,10 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
         List listEnrolmentEvaluation = null;
         IUserView userView = UserView.getUser();
-        Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
         try {
             listEnrolmentEvaluation =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentMarksListByCurricularCourse", args);
+                    ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
+                            Integer.valueOf(curricularCourseId), null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {

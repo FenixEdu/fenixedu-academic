@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -315,8 +315,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         List result = null;
         try {
             // TODO check
-            Object args[] = { executionDegreeID, Integer.valueOf(studentCurricularPlanID) };
-            result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
+            result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeID, Integer.valueOf(studentCurricularPlanID));
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         }

@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditWrittenEvaluationEnrolmentPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -53,12 +54,12 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
         InfoEvaluation evaluationComponent = new InfoEvaluation();
-        Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null, evaluationCode, null };
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, evaluationComponent, null, evaluationCode, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -97,12 +98,12 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
         InfoEvaluation evaluationComponent = new InfoEvaluation();
-        Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null, evaluationCode, null };
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, evaluationComponent, null, evaluationCode, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -167,12 +168,9 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
         endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
-        Object args[] =
-                { disciplinaExecucaoIdInternal, examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(),
-                        endTime };
-
         try {
-            ServiceManagerServiceFactory.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
+            EditWrittenEvaluationEnrolmentPeriod.runEditWrittenEvaluationEnrolmentPeriod(disciplinaExecucaoIdInternal,
+                    examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(), endTime.getTime());
         } catch (DomainException e) {
             setErrorMessage(request, e.getKey());
             return mapping.getInputForward();

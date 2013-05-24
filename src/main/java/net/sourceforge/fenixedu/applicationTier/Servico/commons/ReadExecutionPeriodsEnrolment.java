@@ -23,7 +23,7 @@ public class ReadExecutionPeriodsEnrolment extends FenixService {
 
     private final Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
 
-    protected List run(DegreeType degreeType) {
+    protected List<InfoExecutionPeriod> run(DegreeType degreeType) {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
         for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
             result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
@@ -52,7 +52,7 @@ public class ReadExecutionPeriodsEnrolment extends FenixService {
     private static final ReadExecutionPeriodsEnrolment serviceInstance = new ReadExecutionPeriodsEnrolment();
 
     @Service
-    public static List runReadExecutionPeriodsEnrollmentFenix(DegreeType degreeType) {
+    public static List<InfoExecutionPeriod> runReadExecutionPeriodsEnrollmentFenix(DegreeType degreeType) {
         return serviceInstance.run(degreeType);
     }
 

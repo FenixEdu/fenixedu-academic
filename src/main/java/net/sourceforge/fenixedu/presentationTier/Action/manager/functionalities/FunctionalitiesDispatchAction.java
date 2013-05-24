@@ -11,12 +11,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionality;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportFunctionalities;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportStartupFunctionalities;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -208,32 +207,6 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
     }
 
     /**
-     * Auxiliary method that invokes the service to enable the given
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to enable
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void enable(Functionality functionality) throws Exception {
-        ServiceManagerServiceFactory.executeService("ChangeEnableInFunctionality", new Object[] { functionality, true });
-    }
-
-    /**
-     * Auxiliary method that invokes the service to disable the given
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to disable
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void disable(Functionality functionality) throws Exception {
-        ServiceManagerServiceFactory.executeService("ChangeEnableInFunctionality", new Object[] { functionality, false });
-    }
-
-    /**
      * Auxiliary method that invokes a service to create a {@link GroupAvailability} for the given functinolity
      * 
      * @param functionality
@@ -278,6 +251,6 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            the stream containing the XML funcitonalities structure
      */
     public static void importStartupFunctionalities(InputStream stream) throws Exception {
-        ServiceManagerServiceFactory.executeService("ImportStartupFunctionalities", new Object[] { stream });
+        ImportStartupFunctionalities.runImportStartupFunctionalities(stream);
     }
 }

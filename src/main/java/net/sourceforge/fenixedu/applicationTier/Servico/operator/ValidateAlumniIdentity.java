@@ -25,4 +25,9 @@ public class ValidateAlumniIdentity extends AlumniNotificationService {
         serviceInstance.run(identityRequest, approval, operator);
     }
 
+    @Service
+    public static void runValidateAlumniIdentity(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
+        serviceInstance.run(identityRequest, alumniPerson);
+    }
+
 }

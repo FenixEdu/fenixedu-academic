@@ -16,8 +16,13 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentTeachersByDepartmentIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.advise.ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -29,7 +34,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -115,8 +119,10 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<Teacher> result =
-                new ArrayList<Teacher>((List<Teacher>) ServiceManagerServiceFactory.executeService("ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] { getDepartment().getIdInternal(),
-                executionYearID }));
+                new ArrayList<Teacher>(
+                        ReadDepartmentTeachersByDepartmentIDAndExecutionYearID
+                                .runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(getDepartment().getIdInternal(),
+                                        executionYearID));
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("teacherId"));
@@ -141,8 +147,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {
 
         if (this.selectedTeacher == null) {
-            this.selectedTeacher =
-                    (InfoTeacher) ServiceManagerServiceFactory.executeService("ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
+            this.selectedTeacher = (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(getSelectedTeacherID());
         }
 
         return this.selectedTeacher;
@@ -210,8 +215,9 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<ExecutionCourse> lecturedExecutionCourses =
-                (List<ExecutionCourse>) ServiceManagerServiceFactory.executeService("ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType", new Object[] {
-                getSelectedTeacherID(), executionYearID, degreeType });
+                ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType
+                        .runReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType(getSelectedTeacherID(),
+                                executionYearID, degreeType);
 
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
@@ -274,8 +280,10 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             List<Advise> result =
-                    new ArrayList<Advise>((List<Advise>) ServiceManagerServiceFactory.executeService("ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] {
-                    AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID }));
+                    new ArrayList<Advise>(
+                            ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID
+                                    .runReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID(
+                                            AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID));
 
             ComparatorChain comparatorChain = new ComparatorChain();
             BeanComparator executionYearComparator = new BeanComparator("student.number");
@@ -300,8 +308,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             this.guidedMasterDegreeThesisList =
-                    (List<MasterDegreeThesisDataVersion>) ServiceManagerServiceFactory.executeService("ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] { getSelectedTeacherID(),
-                    executionYearID });
+                    ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID
+                            .runReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID(getSelectedTeacherID(), executionYearID);
         }
 
         return this.guidedMasterDegreeThesisList;

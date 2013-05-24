@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -85,12 +85,10 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
         Integer destinationExecutionCourseId = destinationExecutionCourse.getIdInternal();
 
-        Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
-
         Boolean error = false;
 
         try {
-            ServiceManagerServiceFactory.executeService("MergeExecutionCourses", args);
+            MergeExecutionCourses.runMergeExecutionCourses(destinationExecutionCourseId, sourceExecutionCourseId);
         } catch (FenixServiceException fse) {
             error = true;
             addActionMessageLiteral("errorFenixException", request, fse.getMessage());

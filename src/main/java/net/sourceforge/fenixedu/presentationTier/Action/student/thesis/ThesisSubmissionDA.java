@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.AcceptThesisDeclaration;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisAbstractFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisDissertationFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.RejectThesisDeclaration;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
@@ -186,14 +189,14 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
         boolean confirmation = request.getParameter("confirmReject") != null;
         if (confirmation) {
-            ServiceManagerServiceFactory.executeService("RejectThesisDeclaration", new Object[] { thesis });
+            RejectThesisDeclaration.runRejectThesisDeclaration(thesis);
         } else {
             DeclarationBean bean = getRenderedObject("declarationBean");
 
             boolean accepted = request.getParameter("accept") != null;
             if (accepted) {
                 if (bean.getVisibility() != null) {
-                    ServiceManagerServiceFactory.executeService("AcceptThesisDeclaration", new Object[] { thesis, bean.getVisibility(), bean.getAvailableAfter() });
+                    AcceptThesisDeclaration.runAcceptThesisDeclaration(thesis, bean.getVisibility(), bean.getAvailableAfter());
                 } else {
                     if (bean.getVisibility() == null) {
                         addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
@@ -206,7 +209,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
                     request.setAttribute("confirmRejectWithFiles", true);
                     return mapping.findForward("thesis-declaration");
                 } else {
-                    ServiceManagerServiceFactory.executeService("RejectThesisDeclaration", new Object[] { thesis });
+                    RejectThesisDeclaration.runRejectThesisDeclaration(thesis);
                 }
             }
         }
@@ -237,8 +240,8 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
             try {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                ServiceManagerServiceFactory.executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
-                bean.getSubTitle(), bean.getLanguage() });
+                CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), temporaryFile,
+                        bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
 
             } catch (DomainException e) {
                 addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -265,7 +268,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public ActionForward removeDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ServiceManagerServiceFactory.executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), null, null, null, null, null });
+        CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), null, null, null, null, null);
 
         return prepareThesisSubmission(mapping, actionForm, request, response);
     }
@@ -286,7 +289,8 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
             try {
                 temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                ServiceManagerServiceFactory.executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), null, null, null });
+                CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), temporaryFile, bean.getSimpleFileName(),
+                        null, null, null);
             } finally {
                 if (temporaryFile != null) {
                     temporaryFile.delete();
@@ -299,7 +303,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public ActionForward removeAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ServiceManagerServiceFactory.executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), null, null, null, null, null });
+        CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), null, null, null, null, null);
 
         return prepareThesisSubmission(mapping, actionForm, request, response);
     }

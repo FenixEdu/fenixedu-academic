@@ -5,10 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -95,10 +94,10 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeResearchActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MergeResearchActivityPageContainerBean researchActivityPageContainerBean = getRenderedObject("researchActivity");
 
-        ServiceManagerServiceFactory.executeService(getServiceName(), new Object[] { researchActivityPageContainerBean });
+        executeService(researchActivityPageContainerBean);
 
         researchActivityPageContainerBean.reset();
         return setObjects(mapping, form, request, response, researchActivityPageContainerBean);
@@ -114,6 +113,6 @@ public abstract class MergeResearchActivityDA extends FenixDispatchAction {
 
     protected abstract MergeResearchActivityPageContainerBean getNewBean();
 
-    protected abstract String getServiceName();
+    protected abstract void executeService(MergeResearchActivityPageContainerBean bean) throws NotAuthorizedException;
 
 }

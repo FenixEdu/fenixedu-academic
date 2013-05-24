@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.EditSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -54,9 +54,8 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
         String initialStatement = (String) alternativeSiteForm.get("initialStatement");
         String introduction = (String) alternativeSiteForm.get("introduction");
 
-        Object args[] = { infoSite, alternativeSite, mail, initialStatement, introduction };
         try {
-            ServiceManagerServiceFactory.executeService("EditSite", args);
+            EditSite.runEditSite(infoSite, alternativeSite, mail, initialStatement, introduction);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

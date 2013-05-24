@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.CreateResultPublication;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.EditResultPublication;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
@@ -41,7 +43,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 
 import org.apache.struts.action.ActionForm;
@@ -96,8 +97,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward createJournalToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        return createJournalWorkFlow(mapping, form, request, response, "editJournal", "ViewEditPublication", "editJournal",
-                "EditResultPublication");
+        return createJournalWorkFlow(mapping, form, request, response, "editJournal", "ViewEditPublication", "editJournal", false);
     }
 
     public ActionForward selectJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -187,8 +187,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     return mapping.findForward("PreparedToCreate");
                 }
             }
-            final Object[] args = { bean };
-            publication = (ResearchResultPublication) ServiceManagerServiceFactory.executeService("CreateResultPublication", args);
+            publication = CreateResultPublication.runCreateResultPublication(bean);
             if (bean.getUnit() != null) {
                 request.setAttribute("unit", bean.getUnit());
             }
@@ -213,7 +212,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     private ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardOnNextStep, String forwardOnFinish, String forwardOnError, String service)
+            HttpServletResponse response, String forwardOnNextStep, String forwardOnFinish, String forwardOnError, boolean create)
             throws FenixFilterException, FenixServiceException {
 
         final ArticleBean bean = getRenderedObject("publicationBean");
@@ -239,7 +238,11 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     articleBean.setJournalIssue(issue);
                     articleBean.setCreateJournal(false);
                     final Object[] args2 = { bean };
-                    publication = (ResearchResultPublication) ServiceManagerServiceFactory.executeService(service, args2);
+                    if (create) {
+                        publication = CreateResultPublication.runCreateResultPublication(bean);
+                    } else {
+                        publication = EditResultPublication.runEditResultPublication(bean);
+                    }
                     if (bean.getUnit() != null) {
                         request.setAttribute("unit", bean.getUnit());
                     }
@@ -289,7 +292,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward createJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         return createJournalWorkFlow(mapping, form, request, response, "PreparedToCreate", "ViewEditPublication",
-                "PreparedToCreate", "CreateResultPublication");
+                "PreparedToCreate", true);
     }
 
     public ActionForward showAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -360,8 +363,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         if (getFromRequest(request, "confirm") != null) {
 
             try {
-                final Object[] args = { bean };
-                publicationChanged = (ResearchResultPublication) ServiceManagerServiceFactory.executeService("EditResultPublication", args);
+                publicationChanged = EditResultPublication.runEditResultPublication(bean);
             } catch (DomainException ex) {
                 addActionMessage(request, ex.getMessage());
                 request.setAttribute("publicationBean", bean);
@@ -509,7 +511,13 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                             .getEventEdition());
             ((ConferenceArticlesBean) publicationBean).setEventEdition(eventEdition);
             final Object[] args2 = { publicationBean };
-            publication = (ResearchResultPublication) ServiceManagerServiceFactory.executeService(service, args2);
+
+            if ("CreateResultPublication".equals(service)) {
+                CreateResultPublication.runCreateResultPublication(publicationBean);
+            } else if ("EditResultPublication".equals(service)) {
+                EditResultPublication.runEditResultPublication(publicationBean);
+            }
+
             if (publicationBean.getUnit() != null) {
                 request.setAttribute("unit", publicationBean.getUnit());
             }

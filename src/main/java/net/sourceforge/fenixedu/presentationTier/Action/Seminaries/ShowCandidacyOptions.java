@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCandidaciesByStudentIDAndSeminaryID;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetSeminary;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadCurricularCoursesByUsername;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -52,16 +55,9 @@ public class ShowCandidacyOptions extends FenixAction {
         List disciplines = null;
         ActionForward destiny = null;
         try {
-            Object[] argsReadSeminary = { seminaryID };
-            Object[] argsReadStudent = { userView.getUtilizador() };
-            seminary =
-                    (InfoSeminaryWithEquivalencies) ServiceManagerServiceFactory.executeService("Seminaries.GetSeminary",
-                            argsReadSeminary);
-            student = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByUsername", argsReadStudent);
-            Object[] ReadCurricularCoursesByUsername = { userView.getUtilizador() };
-            disciplines =
-                    (List) ServiceManagerServiceFactory.executeService("student.ReadCurricularCoursesByUsername",
-                            ReadCurricularCoursesByUsername);
+            seminary = GetSeminary.runGetSeminary(seminaryID);
+            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUtilizador());
+            disciplines = ReadCurricularCoursesByUsername.runReadCurricularCoursesByUsername(userView.getUtilizador());
             List avaliableEquivalencies = new LinkedList();
             for (Iterator iterator = disciplines.iterator(); iterator.hasNext();) {
                 InfoCurricularCourse curricularCourse = (InfoCurricularCourse) iterator.next();
@@ -74,10 +70,9 @@ public class ShowCandidacyOptions extends FenixAction {
                 }
             }
             seminary.setEquivalencies(avaliableEquivalencies);
-            Object[] argsReadCandidacies = { student.getIdInternal(), seminaryID };
             List candidacies =
-                    (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCandidaciesByStudentIDAndSeminaryID",
-                            argsReadCandidacies);
+                    GetCandidaciesByStudentIDAndSeminaryID.runGetCandidaciesByStudentIDAndSeminaryID(student.getIdInternal(),
+                            seminaryID);
             if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue()) {
                 addErrorMessage(request, "error.seminaries.candidaciesLimitReached", "error.seminaries.candidaciesLimitReached",
                         String.valueOf(seminary.getAllowedCandidaciesPerStudent()));

@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -52,10 +52,8 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 return "";
             }
 
-            final Object[] argsToRead =
-                    { this.getFunctionID(), this.getPersonID(), credits, YearMonthDay.fromDateFields(beginDate_),
-                            YearMonthDay.fromDateFields(endDate_) };
-            ServiceManagerServiceFactory.executeService("AssociateNewFunctionToPerson", argsToRead);
+            AssociateNewFunctionToPerson.runAssociateNewFunctionToPerson(this.getFunctionID(), this.getPersonID(), credits,
+                    YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_));
             setErrorMessage("message.success");
             return "success";
 

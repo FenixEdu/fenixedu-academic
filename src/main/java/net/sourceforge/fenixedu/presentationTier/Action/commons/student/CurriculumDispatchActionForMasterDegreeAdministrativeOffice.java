@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentsByPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -21,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -53,8 +54,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
         Integer executionDegreeId = getExecutionDegree(request);
         List result = null;
         try {
-            Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
-            result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
+            result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeId, Integer.valueOf(studentCurricularPlanID));
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         }
@@ -95,8 +95,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 
                 infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
 
-                Object args2[] = { infoPerson };
-                infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
+                infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoPerson);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }

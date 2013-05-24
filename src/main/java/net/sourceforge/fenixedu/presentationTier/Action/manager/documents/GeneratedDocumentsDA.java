@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,8 +56,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
                             searchBean.getAddressee().getDocumentIdNumber(), null, null, null, null, null, null, null, null,
                             (String) null);
             SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
-            CollectionPager<Person> persons =
-                    (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
+            CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
             Set<GeneratedDocument> personDocuments = new HashSet<GeneratedDocument>();
             for (Person person : persons.getCollection()) {
                 personDocuments.addAll(person.getAddressedDocumentSet());
@@ -71,8 +69,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
                             searchBean.getOperator().getDocumentIdNumber(), null, null, null, null, null, null, null, null,
                             (String) null);
             SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
-            CollectionPager<Person> operators =
-                    (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
+            CollectionPager<Person> operators = SearchPerson.runSearchPerson(parameters, predicate);
             Set<GeneratedDocument> operatorDocuments = new HashSet<GeneratedDocument>();
             for (Person person : operators.getCollection()) {
                 operatorDocuments.addAll(person.getProcessedDocumentSet());
@@ -110,8 +107,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
                 new SearchParameters(personBean.getName(), null, personBean.getUsername(), personBean.getDocumentIdNumber(),
                         null, null, null, null, null, null, null, null, (String) null);
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
-        CollectionPager<Person> persons =
-                (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", new Object[] { parameters, predicate });
+        CollectionPager<Person> persons = SearchPerson.runSearchPerson(parameters, predicate);
         request.setAttribute("resultPersons", persons.getCollection());
         request.setAttribute("personBean", personBean);
         return mapping.findForward("search");

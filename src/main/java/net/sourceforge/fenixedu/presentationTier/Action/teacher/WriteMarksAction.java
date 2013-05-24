@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertEvaluationMarks;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -125,7 +126,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         TeacherAdministrationSiteView siteView = null;
 
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("InsertEvaluationMarks", args);
+            siteView = InsertEvaluationMarks.runInsertEvaluationMarks(objectCode, evaluationCode, hashMarks);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e);
@@ -173,7 +174,8 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         try {
             TeacherAdministrationSiteView siteView =
-                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(objectCode,
+                            commonComponent, new InfoEvaluation(), null, evaluationCode, null);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
@@ -204,7 +206,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         TeacherAdministrationSiteView siteView = null;
 
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService("InsertEvaluationMarks", args);
+            siteView = InsertEvaluationMarks.runInsertEvaluationMarks(objectCode, evaluationCode, hashMarks);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

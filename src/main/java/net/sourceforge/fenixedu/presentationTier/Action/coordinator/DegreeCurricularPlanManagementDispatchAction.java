@@ -13,6 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.LoggedCoordinatorCanEdit;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCurrentExecutionDegreeByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.EditCurriculumForCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanScopes;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurrentCurriculumByCurricularCourseCode;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID;
@@ -25,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -80,12 +82,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         final Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
         List activeCurricularCourseScopes = null;
-        final Object[] args = { degreeCurricularPlanID };
         try {
-            activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlanScopes", args);
-
-        } catch (NonExistingServiceException e) {
-            addErrorMessage(request, "chosenDegree", "error.coordinator.noExecutionDegree");
+            activeCurricularCourseScopes =
+                    ReadActiveDegreeCurricularPlanScopes.runReadActiveDegreeCurricularPlanScopes(degreeCurricularPlanID);
 
         } catch (FenixServiceException e) {
             if (e.getMessage().equals("nullDegree")) {
@@ -234,10 +233,10 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
 
         Integer infoExecutionDegreeCode = null;
-        Object[] infoArgs = { degreeCurricularPlanID };
 
         InfoExecutionDegree infoExecutionDegree =
-                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadCurrentExecutionDegreeByDegreeCurricularPlanID", infoArgs);
+                ReadCurrentExecutionDegreeByDegreeCurricularPlanID
+                        .runReadCurrentExecutionDegreeByDegreeCurricularPlanID(degreeCurricularPlanID);
 
         infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
 
@@ -475,11 +474,11 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         InfoCurriculum infoCurriculum = getDataFromForm(form, language);
 
         Boolean result = Boolean.FALSE;
-        Object[] args =
-                { infoExecutionDegreeCode, infoCurriculumCode, infoCurricularCourseCode, infoCurriculum,
-                        userView.getUtilizador(), language };
+
         try {
-            result = (Boolean) ServiceManagerServiceFactory.executeService("EditCurriculumForCurricularCourse", args);
+            result =
+                    EditCurriculumForCurricularCourse.runEditCurriculumForCurricularCourse(infoExecutionDegreeCode,
+                            infoCurriculumCode, infoCurricularCourseCode, infoCurriculum, userView.getUtilizador(), language);
         } catch (NonExistingServiceException e) {
             if (e.getMessage().equals("noCurricularCourse")) {
                 addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

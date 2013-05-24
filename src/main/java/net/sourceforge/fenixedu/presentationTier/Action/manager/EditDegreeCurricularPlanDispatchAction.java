@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -81,10 +81,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
         InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
-        Object args[] = { degreeCurricularPlanId };
-
         try {
-            oldInfoDegreeCP = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService("ReadDegreeCurricularPlan", args);
+            oldInfoDegreeCP = ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(degreeCurricularPlanId);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));

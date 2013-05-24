@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
@@ -69,9 +69,8 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
         InfoGuide infoGuide = null;
 
-        Object args[] = { guideNumber, guideYear, guideVersion };
         try {
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
 
             request.setAttribute(PresentationConstants.GUIDE, infoGuide);
         } catch (FenixServiceException e) {
@@ -99,8 +98,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
         Integer year = (Integer) createReimbursementGuideForm.get("year");
 
         try {
-            Object args[] = { number, year, version };
-            InfoGuide infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            InfoGuide infoGuide = ChooseGuide.runChooseGuide(number, year, version);
 
             if (infoGuide.getInfoGuideEntries().size() != valuesList.length) {
                 throw new FenixActionException("Incoerent guide entries number", mapping.findForward("start"));

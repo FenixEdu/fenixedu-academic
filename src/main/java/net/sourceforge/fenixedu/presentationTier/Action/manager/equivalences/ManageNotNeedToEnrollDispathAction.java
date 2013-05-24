@@ -7,15 +7,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.DeleteNotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.InsertNotNeedToEnrollInCurricularCourses;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.student.ChooseStudentCurricularPlanBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -147,8 +147,8 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
         Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
         Integer studentCurricularPlanID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
 
-        Object[] args = { studentCurricularPlanID, curricularCoursesID };
-        ServiceManagerServiceFactory.executeService("InsertNotNeedToEnrollInCurricularCourses", args);
+        InsertNotNeedToEnrollInCurricularCourses.runInsertNotNeedToEnrollInCurricularCourses(studentCurricularPlanID,
+                curricularCoursesID);
 
         request.setAttribute("insert", "insert");
         request.setAttribute("scpID", studentCurricularPlanID);
@@ -159,10 +159,8 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward deleteNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
-
-        final Object[] args = { Integer.valueOf(request.getParameter("notNeedToEnrollID")) };
-        ServiceManagerServiceFactory.executeService("DeleteNotNeedToEnrollInCurricularCourse", args);
+        DeleteNotNeedToEnrollInCurricularCourse.runDeleteNotNeedToEnrollInCurricularCourse(Integer.valueOf(request
+                .getParameter("notNeedToEnrollID")));
 
         return prepareNotNeedToEnroll(mapping, form, request, response);
     }

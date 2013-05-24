@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionPeriod;
 
 import org.apache.struts.action.DynaActionForm;
 
@@ -50,8 +50,8 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
         Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
         executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
         List detailedInfoProfessorshipList =
-                (List) ServiceManagerServiceFactory.executeService("ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] {
-                teacherId, executionPeriodId });
+                ReadDetailedTeacherProfessorshipsByExecutionPeriod.runReadDetailedTeacherProfessorshipsByExecutionPeriod(
+                        teacherId, executionPeriodId);
         return detailedInfoProfessorshipList;
     }
 

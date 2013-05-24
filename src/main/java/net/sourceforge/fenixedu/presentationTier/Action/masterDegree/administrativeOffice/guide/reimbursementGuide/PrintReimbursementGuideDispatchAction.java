@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentsByPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.Info
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -54,9 +54,7 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
         try {
             infoReimbursementGuide = ViewReimbursementGuide.run(reimbursementGuideId);
 
-            Object args2[] = { infoReimbursementGuide.getInfoGuide().getInfoPerson() };
-
-            infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
+            infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoReimbursementGuide.getInfoGuide().getInfoPerson());
 
             Iterator it = infoStudents.iterator();
             while (it.hasNext()) {

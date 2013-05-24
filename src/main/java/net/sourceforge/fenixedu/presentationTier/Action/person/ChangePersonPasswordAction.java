@@ -7,11 +7,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException;
 
@@ -37,10 +36,9 @@ public class ChangePersonPasswordAction extends FenixAction {
         String newPassword = (String) changePasswordForm.get("newPassword");
 
         // Check the old Password
-        Object args[] = { userView, oldPassword, newPassword };
 
         try {
-            ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("changePassService"), args);
+            ChangePassword.run(userView, oldPassword, newPassword);
         } catch (InvalidPasswordServiceException e) {
             throw new InvalidPasswordActionException(e);
         } catch (FenixServiceException e) {
