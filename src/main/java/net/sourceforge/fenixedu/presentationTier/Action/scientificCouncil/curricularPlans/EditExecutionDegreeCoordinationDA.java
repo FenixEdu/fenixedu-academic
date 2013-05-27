@@ -27,7 +27,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/curricularPlans/editExecutionDegreeCoordination", module = "scientificCouncil")
 @Forwards({
@@ -57,9 +56,9 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
-        
-		ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-        
+
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+
         String backTo = String.valueOf(request.getParameter("from"));
         String backPath;
         if (backTo.equals("byYears")) {
@@ -175,7 +174,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             sessionBean = new ExecutionDegreeCoordinatorsBean();
             final String executionYearId = String.valueOf(request.getParameter("executionYearId"));
             if (!executionYearId.equals("null")) {
-                ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+                ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(new Integer(executionYearId));
                 sessionBean.setExecutionYear(executionYear);
             } else {
                 request.setAttribute("sessionBean", sessionBean);
@@ -212,7 +211,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
     public List<CoordinatorLog> getCoordinatorLogsByExecDegree(ExecutionDegree executionDegree) {
         List<CoordinatorLog> finalCoordinatorLogs = new ArrayList<CoordinatorLog>();
-        
+
         finalCoordinatorLogs.addAll(executionDegree.getCoordinatorLog());
         return finalCoordinatorLogs;
     }
