@@ -2620,6 +2620,20 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return ects;
     }
 
+    public Set<OccupationPeriod> getLessonPeriods() {
+        final Set<OccupationPeriod> result = new TreeSet<OccupationPeriod>(new Comparator<OccupationPeriod>() {
+            @Override
+            public int compare(final OccupationPeriod op1, final OccupationPeriod op2) {
+                final int i = op1.getPeriodInterval().getStart().compareTo(op2.getPeriodInterval().getStart());
+                return i == 0 ? op1.getExternalId().compareTo(op2.getExternalId()) : i;
+            }
+        });
+        for (final ExecutionDegree executionDegree : getExecutionDegrees()) {
+            result.add(executionDegree.getPeriodLessons(getExecutionPeriod()));
+        }
+        return result;
+    }
+
 //  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 
 //  will be corrected and should be uncommented   
 //  @ConsistencyPredicate

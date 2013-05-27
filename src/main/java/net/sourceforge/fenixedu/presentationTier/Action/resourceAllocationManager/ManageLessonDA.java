@@ -82,6 +82,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         }
 
         request.setAttribute("lessonDates", lessonDatesBean);
+        request.setAttribute("lesson", lesson);
         return mapping.findForward("ViewAllLessonDates");
     }
 

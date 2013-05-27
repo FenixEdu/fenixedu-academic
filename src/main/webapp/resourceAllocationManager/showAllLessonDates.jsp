@@ -1,3 +1,16 @@
+<%@page import="org.joda.time.Weeks"%>
+<%@page import="org.joda.time.Days"%>
+<%@page import="org.joda.time.Period"%>
+<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriodReference"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
+<%@page import="org.joda.time.Interval"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
+<%@page import="java.util.Set"%>
+<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriod"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="org.joda.time.YearMonthDay"%>
+<%@page import="net.sourceforge.fenixedu.domain.Lesson"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -15,7 +28,7 @@
 		<html:errors/>
 	</span>
 	</p>
-			
+
 	<bean:define id="parameters"><%=PresentationConstants.LESSON_OID%>=<bean:write name="lesson_" property="idInternal"/>&amp;<%=PresentationConstants.SHIFT_OID%>=<bean:write name="shift" property="idInternal"/>&amp;<%=PresentationConstants.EXECUTION_COURSE_OID%>=<bean:write name="execution_course" property="idInternal"/>&amp;<%=PresentationConstants.ACADEMIC_INTERVAL%>=<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString()%>&amp;<%=PresentationConstants.CURRICULAR_YEAR_OID%>=<bean:write name="curricular_year" property="idInternal"/>&amp;<%=PresentationConstants.EXECUTION_DEGREE_OID%>=<bean:write name="execution_degree" property="idInternal"/></bean:define>	
 	<bean:define id="linkToReturn">/manageShift.do?method=prepareEditShift&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
 	<bean:define id="linkToCreateNewLessonInstance">/manageLesson.do?method=prepareCreateNewLessonInstance&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
@@ -29,6 +42,44 @@
 			</li>			
 		</ul>	
 	</p>
+
+	<%
+		final Lesson lesson = ((InfoLesson) request.getAttribute("lesson")).getLesson();
+		final ExecutionCourse executionCourse = lesson.getExecutionCourse();
+		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
+		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
+	%>
+		<h4>
+			<bean:message key="label.lesson.period" bundle="SOP_RESOURCES"/>:
+		</h4>
+		<ul>
+	<%
+		for (final OccupationPeriod occupationPeriod : executionCourse.getLessonPeriods()) {
+	%>
+			<li>
+				<% for (final Interval interval : occupationPeriod.getIntervals()) { %>
+					<% if (!interval.getStart().equals(occupationPeriod.getIntervals().iterator().next().getStart())) { %>
+						;
+					<% } %>
+					<%= interval.getStart().toString("yyyy-MM-dd") %>
+					-
+					<%= interval.getEnd().toString("yyyy-MM-dd") %>
+				<% } %>
+				<span style="color: gray;">
+				(
+				<% for (final ExecutionDegree executionDegree : executionDegrees) {
+				    for (final OccupationPeriodReference ref : occupationPeriod.getExecutionDegreesSet()) {
+				        if (ref.getExecutionDegree() == executionDegree) {
+				%>
+							<%= executionDegree.getDegree().getSigla() %>
+				<%  } } } %>
+				)
+				</span>
+			</li>
+	<%
+		}
+	%>
+		</ul>
 				
 	<%-- Delete Lesson Instances --%>		
 	<bean:define id="linkToDelete">/manageLesson.do?method=deleteLessonInstance&amp;<bean:write name="parameters" filter="false"/></bean:define>
@@ -37,6 +88,7 @@
 		<table class="tstyle1 mtop025 mbottom0 tdcenter">
 			<tr>
 				<th></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.week"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.day"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.month"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.year"/></th>
@@ -47,13 +99,16 @@
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.instance"/></th>
 				<th></th>
 			</tr>
-			<logic:iterate id="lessonDate" name="lessonDates">
+			<logic:iterate id="lessonDate" name="lessonDates" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">
 				<bean:define id="selectableValue" name="lessonDate" property="checkBoxValue"/>
 				<tr>
 					<td>
 						<logic:equal name="lessonDate" property="isPossibleDeleteLessonInstance" value="true">
 							<input type="checkbox" name="lessonDatesToDelete" value="<%= selectableValue %>"/>
 						</logic:equal>
+					</td>
+					<td>
+						<%= Weeks.weeksBetween(firstPossibleLessonDay, lessonDate.getDate()).getWeeks() + 1 %>
 					</td>
 					<td><bean:write name="lessonDate" property="date.dayOfMonth"/></td>
 					<td><bean:write name="lessonDate" property="monthString"/></td>
