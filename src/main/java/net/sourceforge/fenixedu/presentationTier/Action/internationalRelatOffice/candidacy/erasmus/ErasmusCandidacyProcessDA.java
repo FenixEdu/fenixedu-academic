@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -160,7 +159,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeInsertMobilityQuota(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         MobilityApplicationProcess process = getProcess(request);
         ErasmusVacancyBean bean = getErasmusVacancyBean();
 
@@ -186,7 +185,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeRemoveVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         MobilityQuota quota = getDomainObject(request, "vacancyExternalId");
 
         if (quota.hasAnyApplications()) {
@@ -213,7 +212,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeAssignCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ErasmusCoordinatorBean bean = getErasmusCoordinatorBean();
 
         try {
@@ -233,7 +232,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeRemoveTeacherFromCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         MobilityCoordinator coordinator = getErasmusCoordinator(request);
 
         executeActivity(getProcess(request), "RemoveTeacherFromCoordinators", new ErasmusCoordinatorBean(coordinator));
@@ -258,7 +257,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward executeSendEmailToMissingRequiredDocumentsProcesses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         executeActivity(getProcess(request), "SendEmailToMissingRequiredDocumentsProcesses", null);
 
@@ -317,7 +316,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward editReceptionEmailMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         executeActivity(getProcess(request), "EditReceptionEmailMessage", getRenderedSendReceptionEmailBean());
 
         return prepareExecuteSendReceptionEmail(mapping, form, request, response);
@@ -340,7 +339,7 @@ public class ErasmusCandidacyProcessDA extends
     }
 
     public ActionForward sendReceptionEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
         executeActivity(getProcess(request), "SendReceptionEmail", bean);
 

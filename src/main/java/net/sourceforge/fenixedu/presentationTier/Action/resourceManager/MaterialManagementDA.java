@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateMaterial;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteMaterial;
@@ -88,7 +87,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         MaterialBean bean = getRenderedObject("createMaterialBeanID");
 
@@ -105,7 +104,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         Material material = getMaterialFromParameter(request);
         Class<? extends Material> materialClass = material.getClass();

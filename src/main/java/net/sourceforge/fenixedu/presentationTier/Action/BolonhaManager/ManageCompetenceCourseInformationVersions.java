@@ -8,7 +8,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -168,7 +167,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward revokeVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest == null || !changeRequest.isLoggedPersonAllowedToEdit()) {
@@ -185,7 +184,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward editBibliography(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String index = request.getParameter("index");
         request.setAttribute("edit", index);
@@ -194,7 +193,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationRequestBean bean =
                 (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
@@ -207,7 +206,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward viewBibliography(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationRequestBean bean =
                 (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
@@ -228,7 +227,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward removeBibliography(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationRequestBean bean =
                 (CompetenceCourseInformationRequestBean) RenderUtils.getViewState("editVersion").getMetaObject().getObject();
@@ -237,7 +236,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward createVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("editVersion");
         if (viewState == null) {
@@ -295,7 +294,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward showVersions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourse course = getCompetenceCourse(request);
         return forwardToViewVersions(mapping, request, course);
@@ -310,7 +309,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward viewVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getCompetenceCourseInformationRequest(request);
         if (changeRequest == null || !changeRequest.getCompetenceCourse().isLoggedPersonAllowedToViewChangeRequests()) {
@@ -331,7 +330,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward showCompetenceCourseInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourse course = getCompetenceCourse(request);
         Integer idInternal = Integer.valueOf(request.getParameter("oid"));
@@ -376,7 +375,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public ActionForward exportCompetenceCourseExecutionToExcel(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         final List<CompetenceCourse> competenceCourses = getDepartmentCompetenceCourses();
 
         try {

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import jvstm.cps.ConsistencyException;
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DocumentRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
@@ -99,7 +98,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
         try {
             byte[] data = documentRequest.generateDocument();
@@ -328,7 +327,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
         final Registration registration = documentRequestCreateBean.getRegistration();

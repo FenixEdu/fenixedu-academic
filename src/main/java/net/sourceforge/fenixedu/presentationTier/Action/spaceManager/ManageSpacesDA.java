@@ -15,7 +15,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpace;
@@ -110,7 +109,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         return mapping.findForward("ShowSpaces");
     }
 
-    protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request) throws FenixFilterException,
+    protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request) throws 
             FenixServiceException, DomainException {
         Object serviceResult = executeFactoryMethod();
         if (serviceResult instanceof Space) {
@@ -213,7 +212,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         if (spaceInformation == null) {
@@ -233,7 +232,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward manageAccessGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final Space space = spaceInformation.getSpace();
@@ -243,7 +242,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final Space space = spaceInformation.getSpace();
@@ -275,7 +274,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final Space space = spaceInformation.getSpace();
@@ -291,7 +290,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward exportSpaceInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Space space = getSpaceFromParameter(request);
 
@@ -337,7 +336,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward moveSpace(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState();
         MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
@@ -350,7 +349,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareMergeRoom(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         SpaceInformation spaceInformationFromParameter = getSpaceInformationFromParameter(request);
         Space space = spaceInformationFromParameter.getSpace();
@@ -359,7 +358,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward findDestinationRoomForProcessMerge(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
             IOException {
 
         final IViewState viewState = RenderUtils.getViewState("findMergeDestinationRoomBean");
@@ -374,7 +373,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward compareDestinationRoomWithFromRoom(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
             IOException {
 
         AllocatableSpace fromRoom = getFromRoomFromParameter(request);
@@ -387,7 +386,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeRooms(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("mergeRoomsBean");
         MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
@@ -401,7 +400,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward viewEventSpaceOccupations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         Space space = null;
         YearMonthDay day = null;

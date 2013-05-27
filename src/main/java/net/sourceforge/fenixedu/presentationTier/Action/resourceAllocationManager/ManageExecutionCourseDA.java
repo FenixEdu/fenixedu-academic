@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteCourseLoad;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse;
@@ -116,7 +115,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     }
 
     private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         List<InfoClass> infoClasses =
                 (List<InfoClass>) ReadClassesByExecutionCourse.runReadClassesByExecutionCourse( executionCourse );

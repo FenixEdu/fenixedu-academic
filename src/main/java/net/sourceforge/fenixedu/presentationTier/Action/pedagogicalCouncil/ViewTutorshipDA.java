@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.ChangeTutorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.DeleteTutorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.InsertTutorship;
@@ -252,11 +251,11 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      * @param teacher
      * @return
      * @throws FenixServiceException
-     * @throws FenixFilterException
+     * @
      * @throws Exception
      */
     private List<TutorshipErrorBean> createTutorship(ExecutionYear executionYear, ExecutionDegree executionDegree,
-            Person student, Partial endDate, Teacher teacher) throws FenixFilterException, FenixServiceException {
+            Person student, Partial endDate, Teacher teacher) throws  FenixServiceException {
         StudentsByEntryYearBean selectedStudentsAndTutorBean = new StudentsByEntryYearBean(executionYear);
         // Initialize Tutorship creation bean to use in InsertTutorship Service
         BeanInitializer.initializeBean(selectedStudentsAndTutorBean, teacher, executionDegree, student, endDate);

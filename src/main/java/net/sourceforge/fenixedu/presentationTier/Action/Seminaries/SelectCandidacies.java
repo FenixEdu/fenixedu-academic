@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ChangeCandidacyApprovanceStatus;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.SelectCandidaciesService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -43,7 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
                 navLocal = "/teacher/showSeminariesIndex_bd.jsp", title = "private.seminars.selectcandidate")) })
 public class SelectCandidacies extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         IUserView userView = UserView.getUser();
         ActionForward destiny = null;
         String seminaryIDString = request.getParameter("seminaryID");
@@ -100,7 +99,7 @@ public class SelectCandidacies extends FenixDispatchAction {
     }
 
     public ActionForward changeSelection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
         DynaActionForm selectCases = (DynaActionForm) form;
         Integer[] selectedStudents = null;

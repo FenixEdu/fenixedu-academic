@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.MergePrecedencesForDegreeCurricularPlan;
@@ -43,7 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDispatchAction {
 
     public ActionForward showFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -69,7 +68,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
     }
 
     public ActionForward showSecondPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
@@ -93,7 +92,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
     }
 
     public ActionForward merge(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         ActionErrors errors = new ActionErrors();
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree;
 import net.sourceforge.fenixedu.commons.collections.Table;
@@ -83,7 +82,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
     }
 
     private List<ExecutionCourseView> getExecutionCourseViews(HttpServletRequest request, Degree degree)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         List<ExecutionCourseView> result = new ArrayList(ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree.run(degree));
         Collections.sort(result, ExecutionCourseView.COMPARATOR_BY_NAME);

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -143,8 +142,7 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
         return mapping.findForward("sucessfull-read");
     }
 
-    private InfoObject readInfoObject(ActionForm form, HttpServletRequest request) throws FenixServiceException,
-            FenixFilterException {
+    private InfoObject readInfoObject(ActionForm form, HttpServletRequest request) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         Integer oid = getOIDProperty(form);
         InfoObject infoObject = null;

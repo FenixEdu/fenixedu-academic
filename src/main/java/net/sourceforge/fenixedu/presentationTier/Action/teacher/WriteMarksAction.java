@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertEvaluationMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
@@ -167,7 +166,7 @@ public class WriteMarksAction extends FenixDispatchAction {
     }
 
     private void prepareInputForward(HttpServletRequest request, Integer objectCode, Integer evaluationCode)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         IUserView userView = getUserView(request);
         ISiteComponent commonComponent = new InfoSiteCommon();
         Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };

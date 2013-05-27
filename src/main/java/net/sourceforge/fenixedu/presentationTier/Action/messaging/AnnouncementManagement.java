@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileContent;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark;
@@ -110,7 +109,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.start(mapping, form, request, response);
     }
 
-    protected void createBookmark(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+    protected void createBookmark(HttpServletRequest request) throws FenixServiceException {
         final IUserView userView = getUserView(request);
         final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
         AddAnnouncementBoardBookmark.run(board, userView.getPerson());
@@ -123,7 +122,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.start(mapping, form, request, response);
     }
 
-    protected void removeBookmark(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+    protected void removeBookmark(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = getUserView(request);
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
         RemoveAnnouncementBoardBookmark.run(board, userView.getPerson());
@@ -263,7 +262,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.viewAnnouncements(mapping, form, request, response);
     }
 
-    protected boolean deleteAnnouncement(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    protected boolean deleteAnnouncement(HttpServletRequest request) throws  FenixServiceException {
         IUserView userView = getUserView(request);
         final Announcement announcement = getRequestedAnnouncement(request);
         if (!announcement.getAnnouncementBoard().hasWriter(getLoggedPerson(request))) {
@@ -283,7 +282,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.viewAnnouncements(mapping, form, request, response);
     }
 
-    protected boolean aproveAction(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    protected boolean aproveAction(HttpServletRequest request) throws  FenixServiceException {
         IUserView userView = getUserView(request);
         final Announcement announcement = getRequestedAnnouncement(request);
         final Boolean action = Boolean.valueOf(request.getParameter("action"));

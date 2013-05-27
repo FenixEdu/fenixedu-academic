@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateProject;
@@ -139,7 +138,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return this.project;
     }
 
-    public List<Project> getAssociatedProjects() throws FenixFilterException, FenixServiceException {
+    public List<Project> getAssociatedProjects() throws  FenixServiceException {
         if (this.associatedProjects == null) {
             final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
@@ -263,7 +262,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         this.onlineSubmissionsAllowed = onlineSubmissionsAllowed;
     }
 
-    public List<SelectItem> getExecutionCourseGroupings() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionCourseGroupings() throws  FenixServiceException {
         if (this.executionCourseGroupings == null) {
             this.executionCourseGroupings = new ArrayList<SelectItem>();
 

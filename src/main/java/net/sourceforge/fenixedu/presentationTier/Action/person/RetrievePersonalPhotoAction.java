@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -32,7 +31,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Mapping(module = "person", path = "/retrievePersonalPhoto", scope = "session", parameter = "method")
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final String uuid = request.getParameter("uuid");
         final User user = User.readUserByUserUId(uuid);
         return user == null ? null : retrievePhotograph(request, response, user.getPerson());
@@ -51,14 +50,14 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     }
 
     public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final Integer personID = new Integer(request.getParameter("personCode"));
         final Person person = (Person) rootDomainObject.readPartyByOID(personID);
         return retrievePhotograph(request, response, person);
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final Integer photoID = new Integer(request.getParameter("photoCode"));
         Photograph photo = rootDomainObject.readPhotographByOID(photoID);
         if (photo != null) {

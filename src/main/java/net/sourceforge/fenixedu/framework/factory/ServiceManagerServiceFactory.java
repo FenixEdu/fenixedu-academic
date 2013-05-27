@@ -5,7 +5,6 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.IServiceManagerWrapper;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.ServiceManagerDefaultImpl;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixRemoteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -19,8 +18,7 @@ public class ServiceManagerServiceFactory {
 
     private static final IServiceManagerWrapper service = new ServiceManagerDefaultImpl();
 
-    public static Object executeSehrvice(String serviceName, Object[] serviceArgs) throws FenixServiceException,
-            FenixFilterException {
+    public static Object executeSehrvice(String serviceName, Object[] serviceArgs) throws FenixServiceException {
         try {
             if (serviceArgs == null) {
                 serviceArgs = new Object[0];
@@ -39,10 +37,6 @@ public class ServiceManagerServiceFactory {
             if (e != null && e.getCause() != null && e.getCause() instanceof FileManagerException) {
                 FileManagerException fileManagerException = (FileManagerException) e.getCause();
                 throw fileManagerException;
-            }
-            if (e != null && e.getCause() != null && e.getCause() instanceof FenixFilterException) {
-                FenixFilterException fenixFilterException = (FenixFilterException) e.getCause();
-                throw fenixFilterException;
             }
             if (e != null && e.getCause() != null && e.getCause() instanceof ServiceManagerException) {
                 ServiceManagerException serviceManagerException = (ServiceManagerException) e.getCause();

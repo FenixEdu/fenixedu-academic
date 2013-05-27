@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -299,7 +298,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws ExistingActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws ExistingActionException,  FenixServiceException {
 
         // get and set the degreeCurricularPlanID from the request and onto the
         // request

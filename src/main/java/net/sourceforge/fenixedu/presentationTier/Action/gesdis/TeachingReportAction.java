@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.EditCourseInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseHistoric;
@@ -132,7 +131,7 @@ public class TeachingReportAction extends FenixDispatchAction {
     }
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 

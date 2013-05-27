@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -26,8 +24,7 @@ public class EditUnit {
     public static void run(Integer unitID, MultiLanguageString unitName, String unitNameCard, String unitCostCenter,
             String acronym, YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID,
             Integer administrativeOfficeID, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException, DomainException,
-            FenixFilterException {
+            Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException, DomainException {
 
         ServiceMonitoring.logService(EditUnit.class, unitID, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
                 departmentID, degreeID, administrativeOfficeID, webAddress, classification, canBeResponsibleOfSpaces, campusID);
@@ -41,7 +38,8 @@ public class EditUnit {
 
         Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
         Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
-        AdministrativeOffice administrativeOffice = RootDomainObject.getInstance().readAdministrativeOfficeByOID(administrativeOfficeID);
+        AdministrativeOffice administrativeOffice =
+                RootDomainObject.getInstance().readAdministrativeOfficeByOID(administrativeOfficeID);
         Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(campusID);
 
         unit.edit(unitName, unitNameCard, costCenterCode, acronym, begin, end, webAddress, classification, department, degree,

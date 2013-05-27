@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus;
@@ -74,7 +73,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward changeConvokeStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String vigilancyID = request.getParameter("oid");
         Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
@@ -91,7 +90,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward changeActiveConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String vigilancyID = request.getParameter("oid");
         Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
@@ -109,7 +108,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward requestUnconvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("variantBean");
         WrittenEvaluation evaluation =

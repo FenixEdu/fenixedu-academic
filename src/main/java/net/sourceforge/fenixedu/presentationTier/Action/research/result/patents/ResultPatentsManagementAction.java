@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result.patents
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.AddDefaultDocumentToResearchResult;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.DeleteResultPatent;
@@ -38,7 +37,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         /*
          * for(Message message : RenderUtils.getViewState().getMessages()) {
@@ -51,7 +50,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward prepareDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
         if (patent == null) {
             return management(mapping, form, request, response);
@@ -61,7 +60,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward createPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
 
@@ -75,7 +74,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward showPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
         if (patent == null) {
@@ -132,7 +131,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final Integer resultId = getRequestParameterAsInteger(request, "resultId");
 
         if (getFromRequest(request, "cancel") != null) {

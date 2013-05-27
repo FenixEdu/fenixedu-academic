@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -35,7 +34,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     private Boolean previousOrEqualSemester = false;
 
     public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
         DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
         request.setAttribute("degreeBean", degreeBean);
         RenderUtils.invalidateViewState();
@@ -66,14 +65,14 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         DegreesMergeBean degreeBean = new DegreesMergeBean();
         request.setAttribute("degreeBean", degreeBean);
         return mapping.findForward("chooseDegreesAndExecutionPeriod");
     }
 
     public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
         RenderUtils.invalidateViewState();

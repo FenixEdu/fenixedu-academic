@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager;
@@ -24,12 +23,12 @@ public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     @Override
-    protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
+    protected void removeUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
         RemoveUnitSiteManager.runRemoveDepartmentSiteManager(site, person);
     }
 
     @Override
-    protected void addUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
+    protected void addUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
         AddUnitSiteManager.runAddDepartmentSiteManager(site, person);
     }
 

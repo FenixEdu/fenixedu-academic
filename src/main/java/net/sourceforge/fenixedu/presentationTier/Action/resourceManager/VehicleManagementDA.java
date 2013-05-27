@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateVehicle;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteVehicle;
@@ -97,7 +96,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         VehicleBean bean = getRenderedObject("createVehicleBeanID");
 
@@ -115,7 +114,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         Vehicle vehicle = getVehicleFromParameter(request);
 

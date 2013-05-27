@@ -9,7 +9,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.CreateNewBlueprintVersion;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteBlueprintVersion;
@@ -68,7 +67,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward createBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("spaceBlueprintVersion");
         final CreateBlueprintSubmissionBean blueprintSubmissionBean =
@@ -113,7 +112,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward editBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("spaceBlueprintVersion");
         final CreateBlueprintSubmissionBean blueprintSubmissionBean =
@@ -137,7 +136,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteBlueprintVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         Blueprint blueprint = getSpaceBlueprintFromParameter(request);

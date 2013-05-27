@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteExamCoordinator;
@@ -147,7 +146,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         return mapping.findForward("prepareExamCoordinator");
     }
 
-    private void prepareManagementBean(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void prepareManagementBean(HttpServletRequest request) throws  FenixServiceException {
 
         VigilantGroupBean bean = new VigilantGroupBean();
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();

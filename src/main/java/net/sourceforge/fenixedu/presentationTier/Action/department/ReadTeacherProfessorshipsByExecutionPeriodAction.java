@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionPeriod;
 
@@ -46,7 +45,7 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
      */
     @Override
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
         executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
         List detailedInfoProfessorshipList =

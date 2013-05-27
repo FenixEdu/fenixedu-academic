@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTeacherInformation;
@@ -435,7 +434,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
      * @return
      */
     private InfoSiteTeacherInformation readInfoSiteTeacherInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+            HttpServletRequest request) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         SiteView siteView = ReadTeacherInformation.runReadTeacherInformation(userView.getUtilizador(), new String());
         return (InfoSiteTeacherInformation) siteView.getComponent();

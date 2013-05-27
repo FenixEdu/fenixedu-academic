@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
@@ -59,7 +58,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -69,7 +68,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -92,7 +91,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
@@ -114,7 +113,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTeachingStaff(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
 
@@ -135,7 +134,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createNewNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         String nonAffiliatedTeacherName = (String) dynaActionForm.get("nonAffiliatedTeacherName");
@@ -164,7 +163,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final ExecutionCourse executionCourse =
                 rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID"));

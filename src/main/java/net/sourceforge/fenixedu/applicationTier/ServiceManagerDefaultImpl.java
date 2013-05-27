@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
@@ -22,7 +19,6 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.IllegalWriteException;
 import pt.ist.fenixframework.pstm.ServiceInfo;
 import pt.ist.fenixframework.pstm.Transaction;
-import pt.utl.ist.berserk.logic.filterManager.FilterInvocationTimingType;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.ClassNotIFilterException;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterRetrieveException;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.IncompatibleFilterException;
@@ -76,17 +72,16 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
      * 
      * @param argumentos
      *            is a vector with the arguments of the service to execute.
-     * @throws FenixFilterException
+     * @
      * 
      */
     @Override
-    public Object execute(IUserView id, String service, Object args[]) throws FenixServiceException, FenixFilterException {
+    public Object execute(IUserView id, String service, Object args[]) throws FenixServiceException {
         return execute(id, service, "run", args);
     }
 
     @Override
-    public Object execute(IUserView id, String service, String method, Object[] args) throws FenixServiceException,
-            FenixFilterException {
+    public Object execute(IUserView id, String service, String method, Object[] args) throws FenixServiceException {
         Calendar serviceStartTime = null;
         Calendar serviceEndTime = null;
 
@@ -198,7 +193,7 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
         } catch (IncompatibleFilterException e) {
             throw new FenixServiceException(e);
         } catch (FilterChainFailedException e) {
-            FilterChainFailedException filterChainFailedException = e;
+/*            FilterChainFailedException filterChainFailedException = e;
             Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
             Map failedPostFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.POST);
             if (failedPreFilters != null && !failedPreFilters.isEmpty()) {
@@ -214,7 +209,7 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
                         throw (FenixFilterException) failledExceptions.get(0);
                     }
                 }
-            }
+            } */
             throw new FenixServiceException(e);
         } catch (ServiceManagerException e) {
             throw new ExceptionWrapper(e);

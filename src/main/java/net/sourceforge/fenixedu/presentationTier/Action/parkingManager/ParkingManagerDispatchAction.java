@@ -17,7 +17,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.parking.SearchPartyCarPlate;
@@ -495,7 +494,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber, Long parkingCardNumber)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         if (party.getParkingParty() != null) {
             request.setAttribute("parkingRequests", party.getParkingParty().getParkingRequests());
         }

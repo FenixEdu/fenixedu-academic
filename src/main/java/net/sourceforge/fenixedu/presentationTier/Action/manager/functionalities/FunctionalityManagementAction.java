@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionalityParameter;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
@@ -328,7 +327,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         return forwardTo(mapping.findForward("view"), request, functionality);
     }
 
-    private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws FenixFilterException,
+    private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws 
             FenixServiceException {
         DeleteFunctionalityParameter.run(functionalityParameter);
 

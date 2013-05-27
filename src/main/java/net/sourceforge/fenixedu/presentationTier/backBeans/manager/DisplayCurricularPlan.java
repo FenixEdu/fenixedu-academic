@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveDegreeCurricularPlansByDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
@@ -40,7 +39,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         return "success";
     }
 
-    public List getDegreeCurricularPlans() throws FenixFilterException, FenixServiceException {
+    public List getDegreeCurricularPlans() throws  FenixServiceException {
 
         List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.DEGREE);
 
@@ -53,7 +52,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         return result;
     }
 
-    public List getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List getExecutionYears() throws  FenixServiceException {
 
         List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
@@ -69,14 +68,14 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         return result;
     }
 
-    public String getChoosenExecutionYear() throws FenixFilterException, FenixServiceException {
+    public String getChoosenExecutionYear() throws  FenixServiceException {
 
         InfoExecutionYear executionYear = ReadExecutionYearByID.run(getChoosenExecutionYearID());
 
         return executionYear.getYear();
     }
 
-    public List getScopes() throws FenixFilterException, FenixServiceException {
+    public List getScopes() throws  FenixServiceException {
 
         List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
 

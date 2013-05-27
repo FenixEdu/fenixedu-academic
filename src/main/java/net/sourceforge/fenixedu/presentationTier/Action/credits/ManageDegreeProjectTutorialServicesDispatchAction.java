@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -24,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDispatchAction {
 
     public ActionForward showProjectTutorialServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         String professorshipID = (String) getFromRequest(request, "professorshipID");
         Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);

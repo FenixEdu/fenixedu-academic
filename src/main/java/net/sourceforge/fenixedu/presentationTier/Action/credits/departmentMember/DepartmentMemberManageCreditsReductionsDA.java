@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -40,7 +39,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsReductionsDispatchAction {
 
     public ActionForward showReductionServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         IUserView userView = UserView.getUser();
         Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
@@ -59,7 +58,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
     }
 
     public ActionForward aproveReductionService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         ReductionService reductionService =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "reductionServiceOID"));
         ReductionServiceBean reductionServiceBean = null;
@@ -92,7 +91,7 @@ public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsRedu
     }
 
     public ActionForward selectTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         request.setAttribute("reductionServiceBean", new ReductionServiceBean());
         return mapping.findForward("showReductionService");
     }

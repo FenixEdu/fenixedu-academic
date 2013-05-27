@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate.NonExistingUserException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
@@ -30,7 +29,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
 
     @Override
     protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final String serverName = request.getServerName();
         final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);

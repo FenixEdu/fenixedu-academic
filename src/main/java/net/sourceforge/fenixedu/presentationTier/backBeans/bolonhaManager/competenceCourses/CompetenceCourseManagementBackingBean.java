@@ -14,7 +14,6 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse;
@@ -710,7 +709,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             setCompetenceCourseLoad();
             return "setCompetenceCourseAdditionalInformation";
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -722,7 +721,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             setCompetenceCourseAdditionalInformation();
             return "competenceCoursesManagement";
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -756,7 +755,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             setCompetenceCourseLoad();
             return "editCompetenceCourseMainPage";
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -768,7 +767,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             setCompetenceCourseAdditionalInformation();
             return "editCompetenceCourseMainPage";
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -776,13 +775,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    private void setCompetenceCourseLoad() throws FenixFilterException, FenixServiceException {
+    private void setCompetenceCourseLoad() throws FenixServiceException {
 
         EditCompetenceCourseLoad.run(getCompetenceCourseID(), RegimeType.valueOf(getRegime()), getNumberOfPeriods(),
                 getCourseLoads());
     }
 
-    private void setCompetenceCourseAdditionalInformation() throws FenixFilterException, FenixServiceException {
+    private void setCompetenceCourseAdditionalInformation() throws FenixServiceException {
         EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getObjectives(), getProgram(),
                 getEvaluationMethod(), getObjectivesEn(), getProgramEn(), getEvaluationMethodEn());
     }

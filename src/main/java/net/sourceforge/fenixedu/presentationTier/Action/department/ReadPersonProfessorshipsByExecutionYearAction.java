@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByID;
@@ -144,7 +143,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     }
 
     List getDetailedProfessorships(IUserView userView, Integer personId, DynaActionForm actionForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         List<Professorship> professorshipList =
                 ((Person) RootDomainObject.getInstance().readPartyByOID(personId)).getProfessorships();
@@ -169,7 +168,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     }
 
     protected void extraPreparation(IUserView userView, InfoPerson infoPerson, HttpServletRequest request, DynaActionForm dynaForm)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         prepareConstants(userView, infoPerson, request);
         prepareForm(dynaForm, request);
@@ -209,7 +208,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     }
 
     private void prepareConstants(IUserView userView, InfoPerson infoPerson, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         List executionYears = ReadNotClosedExecutionYears.run();
 

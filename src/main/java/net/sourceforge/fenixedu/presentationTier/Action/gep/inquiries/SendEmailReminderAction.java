@@ -14,7 +14,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveDegreeCurricularPlansByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -128,7 +127,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     }
 
     private boolean sendEmailReminder(HttpServletRequest request, Student student, ExecutionSemester executionSemester,
-            InfoInquiriesEmailReminderReport report, DynaActionForm form) throws FenixFilterException, FenixServiceException {
+            InfoInquiriesEmailReminderReport report, DynaActionForm form) throws  FenixServiceException {
 
         if (student == null || student.getPerson() == null || student.getPerson().getDefaultEmailAddress() == null) {
             return false;

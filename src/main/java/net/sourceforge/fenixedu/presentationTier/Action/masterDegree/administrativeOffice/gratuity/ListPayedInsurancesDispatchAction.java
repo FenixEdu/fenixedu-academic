@@ -14,7 +14,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ListPayedInsurancesByDates;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -71,7 +70,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generateList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         DynaActionForm actionForm = (DynaActionForm) form;
 

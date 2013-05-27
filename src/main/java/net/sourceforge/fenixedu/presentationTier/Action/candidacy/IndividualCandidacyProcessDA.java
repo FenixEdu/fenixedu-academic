@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
@@ -434,7 +433,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             request.setAttribute("process", CreateNewProcess.run(getProcessType().getName(), getIndividualCandidacyProcessBean()));
         } catch (DomainException e) {
@@ -460,7 +459,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward executeCancelCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "CancelCandidacy", null);
         } catch (DomainException e) {
@@ -484,7 +483,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward uploadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
         try {
@@ -562,7 +561,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward bindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "BindPersonToCandidacy", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -580,7 +579,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward executeChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "ChangeProcessCheckedState", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -593,7 +592,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward executeChangePaymentCheckedState(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "ChangePaymentCheckedState", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -606,7 +605,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward prepareExecuteRevertApplicationToStandBy(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "RevertApplicationToStandBy", null);
         } catch (DomainException e) {
@@ -669,7 +668,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward revokeDocumentFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
         String documentExternalId = request.getParameter("documentFileOid");
@@ -682,14 +681,14 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward prepareExecuteRejectCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
         return mapping.findForward("reject-candidacy");
     }
 
     public ActionForward executeRejectCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "RejectCandidacy", null);
         } catch (DomainException e) {

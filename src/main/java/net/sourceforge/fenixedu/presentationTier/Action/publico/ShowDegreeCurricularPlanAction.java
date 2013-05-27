@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadActiveDegreeCurricularPlanByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublicExecutionDegreeByDCPID;
@@ -48,7 +47,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
     }
 
     private ActionForward showOldDegreeCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            Integer degreeCurricularPlanId) throws FenixFilterException, FenixActionException {
+            Integer degreeCurricularPlanId) throws  FenixActionException {
         final ActionErrors errors = new ActionErrors();
 
         InfoExecutionDegree infoExecutionDegreeForPeriod = null;

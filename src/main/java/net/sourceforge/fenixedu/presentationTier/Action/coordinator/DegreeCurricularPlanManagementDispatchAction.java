@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.LoggedCoordinatorCanEdit;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCurrentExecutionDegreeByDegreeCurricularPlanID;
@@ -78,7 +77,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward showActiveCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         final Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
         List activeCurricularCourseScopes = null;
@@ -119,7 +118,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward showCurricularCoursesHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
 
@@ -224,8 +223,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     // ===================================== Curricular Course Management
 
     public ActionForward viewActiveCurricularCourseInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException,
-            FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
@@ -309,7 +307,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward prepareViewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         List infoExecutionYears = null;
 
         infoExecutionYears = ReadNotClosedExecutionYears.run();
@@ -331,7 +329,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward viewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
         String executionYear = getAndSetStringToRequest("executionYear", request);
@@ -382,7 +380,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
@@ -463,7 +461,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = getUserView(request);
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);

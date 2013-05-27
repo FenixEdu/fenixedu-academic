@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemovePersistentGroupMember;
@@ -26,19 +25,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class AccessControlPersistentGroupsManagementDA extends FenixDispatchAction {
 
     public ActionForward listAllGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         request.setAttribute("persistentGroups", rootDomainObject.getPersistentGroupMembers());
         return mapping.findForward("seeAllPersistentGroups");
     }
 
     public ActionForward prepareCreateNewGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return mapping.findForward("prepareCreateNewPersistentGroup");
     }
 
     public ActionForward prepareEditPersistentGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
         request.setAttribute("persistentGroup", persistentGroup);
@@ -46,7 +45,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
     }
 
     public ActionForward deletePersistentGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
         DeletePersistentGroup.run(persistentGroup);
@@ -54,7 +53,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
     }
 
     public ActionForward removePersistentGroupMember(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
         Person person = getPersonFromParameter(request);

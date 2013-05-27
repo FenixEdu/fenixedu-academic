@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
@@ -47,7 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DepartmentMemberManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
@@ -85,7 +84,7 @@ public class DepartmentMemberManageTeacherSupportLessonsDispatchAction extends M
     }
 
     public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
             InvalidPeriodException {
 
         editSupportLesson(form, request, RoleType.DEPARTMENT_MEMBER);
@@ -93,7 +92,7 @@ public class DepartmentMemberManageTeacherSupportLessonsDispatchAction extends M
     }
 
     public ActionForward deleteSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         deleteSupportLesson(request, form, RoleType.DEPARTMENT_MEMBER);
         return mapping.findForward("successfull-delete");

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.SelectExportExecutionCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
@@ -36,7 +35,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e1) {
@@ -64,7 +63,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
-            Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
+            Object obj1, Object obj2) throws FenixActionException {
 
         IUserView userView = getUserView(request);
 

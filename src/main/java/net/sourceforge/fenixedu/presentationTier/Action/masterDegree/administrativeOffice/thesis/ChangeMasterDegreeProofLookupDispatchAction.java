@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -209,7 +208,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     }
 
     public ActionForward changeMasterDegreeProof(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -272,7 +271,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     private void executeChangeMasterDegreeProofService(ActionMapping mapping, IUserView userView,
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate, Date thesisDeliveryDate,
             Integer scpID, List<String> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
-            ScholarshipNotFinishedActionException, ExistingActionException, FenixFilterException {
+            ScholarshipNotFinishedActionException, ExistingActionException {
 
         try {
             ChangeMasterDegreeProof.run(userView, scpID, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber,

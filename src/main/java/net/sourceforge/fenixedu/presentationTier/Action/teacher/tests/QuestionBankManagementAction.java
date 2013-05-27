@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.AssociateParent;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.ChooseCorrector;
@@ -99,7 +98,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward manageQuestionBank(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer questionBankId = getCodeFromRequest(request, "oid");
 
         NewQuestionBank questionBank;
@@ -125,7 +124,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
         return mapping.findForward(questionBankViewModes.get(request.getParameter("view")));
     }
 
-    private NewQuestionBank getOwnedQuestionBank(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private NewQuestionBank getOwnedQuestionBank(HttpServletRequest request) throws  FenixServiceException {
         IUserView userView = getUserView(request);
 
         Person person = userView.getPerson();
@@ -140,7 +139,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editTestElement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testElementId = getCodeFromRequest(request, "oid");
 
         NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
@@ -155,7 +154,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward selectForModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return this.editTestElement(mapping, form, request, response);
     }
 
@@ -186,7 +185,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward associateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("associateParent");
 
         AssociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
@@ -197,7 +196,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward disassociateParent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("disassociateParent");
 
         DisassociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
@@ -294,7 +293,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createGrade(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         NewQuestion question = (NewQuestion) getMetaObject("create-grade");
 
         request.setAttribute("oid", question.getIdInternal());
@@ -303,7 +302,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward managePredicates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         PredicateBean bean = (PredicateBean) getMetaObject("predicateList");
 
         Action action = bean.getAction();
@@ -327,7 +326,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
         ChooseCorrector.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate(), bean.getPercentage());
@@ -342,7 +341,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
         ChooseValidator.run((NewAtomicQuestion) bean.getQuestion(), bean.getChoosenPredicate());
@@ -357,7 +356,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward choosePreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
         ChoosePreCondition.run(bean.getQuestion(), bean.getChoosenPredicate());
@@ -382,7 +381,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward composePredicates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         PredicateBean bean = (PredicateBean) getMetaObject("predicateList");
 
         CompositePredicate compositePredicate;
@@ -430,7 +429,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createQuestionGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         NewQuestionGroup questionGroup = (NewQuestionGroup) getMetaObject("createQuestionGroup");
 
         request.setAttribute("oid", questionGroup.getIdInternal());
@@ -439,7 +438,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreateAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer questionGroupId = getCodeFromRequest(request, "oid");
 
         NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
@@ -451,7 +450,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         AtomicQuestionBean atomicQuestionTypeBean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
 
         NewQuestion atomicQuestion =
@@ -464,7 +463,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidCreateAtomicQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         AtomicQuestionBean bean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
 
         request.setAttribute("questionGroup", bean.getParentQuestionGroup());
@@ -474,7 +473,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer multipleChoiceQuestionId = getCodeFromRequest(request, "oid");
 
         NewMultipleChoiceQuestion multipleChoiceQuestion =
@@ -488,7 +487,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer correctorId = getCodeFromRequest(request, "oid");
 
         NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
@@ -503,7 +502,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteCorrectors(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         String[] correctorOids = request.getParameterValues("correctorOids");
 
         if (correctorOids != null) {
@@ -525,7 +524,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteValidator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
         NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
@@ -538,7 +537,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePreCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer questionId = getCodeFromRequest(request, "oid");
 
         NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
@@ -551,7 +550,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePermissionUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer permissionUnitId = getCodeFromRequest(request, "oid");
 
         NewPermissionUnit permissionUnit = rootDomainObject.readNewPermissionUnitByOID(permissionUnitId);
@@ -564,7 +563,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer choiceId = getCodeFromRequest(request, "oid");
 
         NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
@@ -577,7 +576,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteGrade(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
         NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
@@ -590,7 +589,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareDeleteQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer questionId = getCodeFromRequest(request, "oid");
         request.setAttribute("questionGroupId", questionId);
         request.setAttribute("parentQuestionGroupId", getCodeFromRequest(request, "parentQuestionGroupOid"));
@@ -602,7 +601,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer questionId = getCodeFromRequest(request, "oid");
 
         NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
@@ -628,7 +627,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward switchChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer choiceId = getCodeFromRequest(request, "oid");
         NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
 
@@ -641,7 +640,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward switchCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer correctorId = getCodeFromRequest(request, "oid");
         NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
 

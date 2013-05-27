@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
@@ -56,7 +55,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException, NonExistingActionException {
+            throws  FenixServiceException, NonExistingActionException {
 
         List institutions = ReadInstitutions.run();
 
@@ -69,7 +68,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
     }
 
     public ActionForward insertInstitution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, NonExistingActionException {
+            HttpServletResponse response) throws  FenixServiceException, NonExistingActionException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         String institutionName = (String) dynaForm.get("institutionName");
@@ -90,7 +89,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
     }
 
     public ActionForward insertNonAffiliatedTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, NonExistingActionException {
+            HttpServletResponse response) throws  FenixServiceException, NonExistingActionException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer institutionID = (Integer) dynaForm.get("institutionID");
@@ -122,7 +121,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException, NonExistingActionException {
+            throws  FenixServiceException, NonExistingActionException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherName");
@@ -141,7 +140,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
     }
 
     public ActionForward insertProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
+            HttpServletResponse response) throws  FenixServiceException, FenixActionException {
 
         IUserView userView = UserView.getUser();
         Integer executionCourseID = new Integer(request.getParameter("executionCourseId"));
@@ -153,7 +152,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
     }
 
     private void insertProfessorshipOperation(ActionMapping mapping, IUserView userView, Integer executionCourseID,
-            Integer nonAffiliatedTeacherID) throws FenixFilterException, NonExistingActionException, FenixActionException {
+            Integer nonAffiliatedTeacherID) throws  NonExistingActionException, FenixActionException {
 
         try {
             InsertProfessorShipNonAffiliatedTeacher.runInsertProfessorShipNonAffiliatedTeacher(nonAffiliatedTeacherID,

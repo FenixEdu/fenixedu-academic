@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CorrectTestGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteTestGroup;
@@ -57,7 +56,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward manageTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer executionCourseId = getCodeFromRequest(request, "oid");
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
@@ -79,7 +78,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -91,7 +90,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         Integer testId = getCodeFromRequest(request, "oid");
 
         NewTest test = (NewTest) rootDomainObject.readNewTestElementByOID(testId);
@@ -103,7 +102,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward publishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -116,7 +115,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward unpublishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -129,7 +128,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareDeleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -141,7 +140,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -154,7 +153,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward finishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -167,7 +166,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward publishGrades(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -180,7 +179,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward correctTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
@@ -209,7 +208,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward correctByPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer personId = getCodeFromRequest(request, "personId");
         Integer testGroupId = getCodeFromRequest(request, "testGroupId");
 

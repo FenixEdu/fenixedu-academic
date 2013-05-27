@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateAdHocEvaluation;
@@ -75,7 +74,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
         return "adHocEvaluationsIndex";
     }
 
-    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() throws FenixFilterException, FenixServiceException {
+    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() throws  FenixServiceException {
         List<AdHocEvaluation> associatedAdHocEvaluations = getExecutionCourse().getAssociatedAdHocEvaluations();
         Collections.sort(associatedAdHocEvaluations, new BeanComparator("creationDateTime"));
         return associatedAdHocEvaluations;

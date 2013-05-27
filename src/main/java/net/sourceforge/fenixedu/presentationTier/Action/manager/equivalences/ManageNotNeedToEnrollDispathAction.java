@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.DeleteNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.InsertNotNeedToEnrollInCurricularCourses;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -121,7 +120,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     }
 
     private InfoStudentCurricularPlan readStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
 

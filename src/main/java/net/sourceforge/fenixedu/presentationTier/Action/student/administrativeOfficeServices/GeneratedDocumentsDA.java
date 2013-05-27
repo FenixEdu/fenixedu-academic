@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.administrativeO
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -26,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         request.setAttribute("person", AccessControl.getPerson());
 

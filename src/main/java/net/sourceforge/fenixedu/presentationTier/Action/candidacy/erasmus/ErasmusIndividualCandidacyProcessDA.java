@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -235,7 +234,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
@@ -255,7 +254,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -284,7 +283,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEditDegreeAndCoursesInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditDegreeAndCoursesInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -363,7 +362,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         ApprovedLearningAgreementDocumentUploadBean learningAgreementUploadBean =
                 (ApprovedLearningAgreementDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
@@ -403,7 +402,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = getProcess(request);
         executeActivity(erasmusIndividualCandidacyProcess, "CreateRegistration");
 
@@ -416,7 +415,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEnrolOnFirstSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = getProcess(request);
         executeActivity(erasmusIndividualCandidacyProcess, "EnrolOnModules");
 

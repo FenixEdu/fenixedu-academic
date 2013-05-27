@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -27,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 public class CommonServiceRequests {
 
     public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         List branches = null;
         try {
@@ -54,15 +53,14 @@ public class CommonServiceRequests {
      * @param degreeOID
      * @return
      */
-    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) throws FenixActionException,
-            FenixFilterException {
+    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) {
         InfoExecutionDegree infoExecutionDegree = null;
 
         infoExecutionDegree = ReadExecutionDegreeByOID.run(degreeOID);
         return infoExecutionDegree;
     }
 
-    public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
+    public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixServiceException {
         return ReadExecutionYearsService.run();
     }
 

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteAnswer;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GetStudentTest;
@@ -56,7 +55,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         List<NewTestGroup> publishedTestGroups = new ArrayList<NewTestGroup>();
         List<NewTestGroup> finishedTestGroups = new ArrayList<NewTestGroup>();
 

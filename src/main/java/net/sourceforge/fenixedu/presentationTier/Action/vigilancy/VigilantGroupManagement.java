@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinatorsToVigilantGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddIncompatiblePerson;
@@ -119,7 +118,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
     }
 
-    private void putIncompatibilitiesInRequest(HttpServletRequest request, VigilantGroup group) throws FenixFilterException,
+    private void putIncompatibilitiesInRequest(HttpServletRequest request, VigilantGroup group) throws 
             FenixServiceException {
 
         List<VigilantWrapper> incompatibilities = new ArrayList<VigilantWrapper>();
@@ -763,7 +762,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         return null;
     }
 
-    private void prepareManagementBean(HttpServletRequest request, ExecutionYear selectedYear) throws FenixFilterException,
+    private void prepareManagementBean(HttpServletRequest request, ExecutionYear selectedYear) throws 
             FenixServiceException {
 
         VigilantGroupBean bean = new VigilantGroupBean();

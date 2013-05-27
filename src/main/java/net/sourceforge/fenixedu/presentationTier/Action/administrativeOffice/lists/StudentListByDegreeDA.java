@@ -15,7 +15,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByDegreeParametersBean;
@@ -100,7 +99,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     public ActionForward searchByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SearchStudentsByDegreeParametersBean searchBean = getOrCreateSearchParametersBean();
 
@@ -230,7 +229,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SearchStudentsByDegreeParametersBean searchBean = getOrCreateSearchParametersBean();
         if (searchBean == null) {

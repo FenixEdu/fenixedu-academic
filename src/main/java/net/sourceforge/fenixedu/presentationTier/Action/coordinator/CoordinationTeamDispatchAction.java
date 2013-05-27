@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationResponsibility;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationTeam;
@@ -48,7 +47,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -68,7 +67,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixServiceException, FenixFilterException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
@@ -110,7 +109,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
@@ -133,7 +132,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
@@ -169,7 +168,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");

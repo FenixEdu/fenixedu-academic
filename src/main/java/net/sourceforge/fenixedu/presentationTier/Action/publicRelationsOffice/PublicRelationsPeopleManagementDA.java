@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -30,7 +29,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
      * 
      */
     public ActionForward managePeople(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final Role role = Role.getRoleByRoleType(RoleType.PUBLIC_RELATIONS_OFFICE);
         request.setAttribute("persons", role.getAssociatedPersons());
         request.setAttribute("bean", new PersonBean());
@@ -42,7 +41,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
      * 
      */
     public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         String id = request.getParameter("managerID");
         Person person = AbstractDomainObject.fromExternalId(id);
         person.removeRoleByTypeService(RoleType.PUBLIC_RELATIONS_OFFICE);
@@ -54,7 +53,7 @@ public class PublicRelationsPeopleManagementDA extends FenixDispatchAction {
      * 
      */
     public ActionForward addPersonManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         PersonBean bean = (PersonBean) RenderUtils.getViewState("addPerson").getMetaObject().getObject();
         String username = bean.getUsername();
         User user;

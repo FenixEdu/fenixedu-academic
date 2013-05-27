@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.domain.Person;
@@ -59,7 +58,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteObject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, ClassNotFoundException {
+            HttpServletResponse response) throws  FenixServiceException, ClassNotFoundException {
 
         Person person = checkUser();
 
@@ -100,7 +99,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditObject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, ClassNotFoundException {
+            HttpServletResponse response) throws  FenixServiceException, ClassNotFoundException {
 
         Person person = checkUser();
 

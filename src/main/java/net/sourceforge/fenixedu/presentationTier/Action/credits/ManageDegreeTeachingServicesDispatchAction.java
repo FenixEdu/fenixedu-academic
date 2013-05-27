@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
@@ -52,7 +51,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             };
 
     protected void teachingServiceDetailsProcess(Professorship professorship, HttpServletRequest request, DynaActionForm dynaForm)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
 
         List<TeachingServicePercentage> teachingServicePercentages = new ArrayList<TeachingServicePercentage>();
         HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
@@ -78,7 +77,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     protected ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            RoleType roleType) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            RoleType roleType) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
@@ -114,7 +113,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
 
         return mapping.findForward("sucessfull-edit");
     }

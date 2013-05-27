@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourse;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
@@ -35,7 +34,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward prepareForTSDCourseValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -75,22 +74,22 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         }
     }
 
-    private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+    private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws FenixServiceException {
         return rootDomainObject.readTSDCourseByOID((Integer) dynaForm.get("tsdCourse"));
     }
 
-    private TeacherServiceDistribution getSelectedTSD(DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+    private TeacherServiceDistribution getSelectedTSD(DynaActionForm dynaForm) throws FenixServiceException {
         return rootDomainObject.readTeacherServiceDistributionByOID((Integer) dynaForm.get("tsd"));
     }
 
     public ActionForward loadTSDCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return loadTSDCourses(mapping, form, request, response, (String) ((DynaActionForm) form).get("forward"));
     }
 
     @SuppressWarnings("unchecked")
     private ActionForward loadTSDCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forward) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forward) throws  FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDCourse selectedTSDCourse = getSelectedTSDCourse(dynaForm);
@@ -176,7 +175,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward setTSDCourseStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -204,7 +203,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     /*
      * public ActionForward removeTSDCourseLoad( ActionMapping mapping,
      * ActionForm form, HttpServletRequest request, HttpServletResponse
-     * response) throws FenixFilterException, FenixServiceException { IUserView
+     * response) throws  FenixServiceException { IUserView
      * userView = UserView.getUser(); DynaActionForm dynaForm = (DynaActionForm)
      * form;
      * 
@@ -231,7 +230,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
      */
 
     public ActionForward setTSDCourseWeights(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -260,7 +259,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward setTSDCourseHours(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -288,25 +287,25 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward loadTSDCurricularLoadForShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationShifts");
     }
 
     public ActionForward loadTSDCurricularLoadForWeights(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
 
     public ActionForward loadTSDCurricularLoadForHours(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }
 
     public ActionForward defineSchoolClassCalculationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         TeacherServiceDistribution tsd =
                 rootDomainObject.readTeacherServiceDistributionByOID(Integer.valueOf(request.getParameter("tsd")));

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamByOID;
@@ -62,7 +61,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ShowExamsManagement extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixServiceException, FenixFilterException {
+            throws FenixActionException, FenixServiceException {
 
         InfoExamsMap infoExamsMap = getExamsMap(request);
         request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
@@ -73,7 +72,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         return mapping.findForward("viewExamsMap");
     }
 
-    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = getUserView(request);
 
         InfoExecutionDegree infoExecutionDegree =

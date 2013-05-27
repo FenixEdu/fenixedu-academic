@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
@@ -24,7 +23,7 @@ import org.apache.struts.action.ActionMapping;
 public class SiteViewerDispatchAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         ISiteComponent firstPageComponent = new InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses();
 
@@ -41,7 +40,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
     }
 
     private boolean readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
-            Integer sectionIndex) throws FenixActionException, FenixFilterException {
+            Integer sectionIndex) throws FenixActionException {
 
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {

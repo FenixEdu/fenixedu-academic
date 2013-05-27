@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.ReadContributor;
@@ -169,7 +168,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      */
     private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
-            throws NonExistingActionException, FenixActionException, FenixFilterException {
+            throws NonExistingActionException, FenixActionException {
 
         InfoContributor infoContributor = null;
         try {
@@ -192,7 +191,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      */
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {
@@ -215,7 +214,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws NonExistingActionException
      */
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
-            NonExistingActionException, FenixFilterException {
+            NonExistingActionException {
         InfoStudent infoStudent = null;
 
         try {

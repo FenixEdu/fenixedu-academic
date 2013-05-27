@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCourseEquivalency;
@@ -136,7 +135,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
-    private void setInfoDegreesToManage(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
+    private void setInfoDegreesToManage(final HttpServletRequest request, final IUserView userView) throws 
             FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
@@ -145,7 +144,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
         request.setAttribute("infoDegrees", degrees);
     }
 
-    private void setInfoDegreesToAdd(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
+    private void setInfoDegreesToAdd(final HttpServletRequest request, final IUserView userView) throws 
             FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
@@ -158,7 +157,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     }
 
     private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID,
-            final String attributeName) throws FenixFilterException, FenixServiceException {
+            final String attributeName) throws  FenixServiceException {
 
         final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeID);
         sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
@@ -166,7 +165,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     }
 
     private void setInfoCurricularCourses(final HttpServletRequest request, final IUserView userView,
-            final Integer degreeCurricularPlanID, final String attribute) throws FenixFilterException, FenixServiceException {
+            final Integer degreeCurricularPlanID, final String attribute) throws  FenixServiceException {
 
         final List<InfoCurricularCourse> infoCurricularCourses =
                 ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanID);

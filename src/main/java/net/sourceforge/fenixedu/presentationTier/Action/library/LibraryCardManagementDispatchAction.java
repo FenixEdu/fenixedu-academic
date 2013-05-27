@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.library.CreateLibraryCard;
@@ -200,7 +199,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         if (RenderUtils.getViewState().isCanceled()) {
             return showUsers(mapping, actionForm, request, response);
@@ -228,7 +227,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generatePdfCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         if (request.getParameter("back") != null) {
             return showUsers(mapping, actionForm, request, response);
@@ -287,7 +286,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         if (request.getParameter("cancel") != null) {
             return showUsers(mapping, actionForm, request, response);
@@ -330,14 +329,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareGenerateMissingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         generateMissingCardsDocuments(request);
         return mapping.findForward("generate-missing-cards");
     }
 
     public ActionForward generateMissingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
         List<LibraryCard> cardList = new ArrayList<LibraryCard>();
@@ -376,7 +375,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generatePdfLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
 
@@ -423,14 +422,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareGenerateMissingLetters(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS, request);
         return mapping.findForward("generate-missing-letters");
     }
 
     public ActionForward prepareGenerateMissingLettersForStudents(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException, FenixFilterException,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException, 
             FenixServiceException {
 
         generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS, request);
@@ -438,7 +437,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generateMissingLetters(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
 
         String result = request.getParameter("students");
         List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
@@ -500,7 +499,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         if (RenderUtils.getViewState().isCanceled()) {
             request.setAttribute("newUser", "newUser");
@@ -532,7 +531,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createUnitPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ExternalPersonBean externalPersonBean = getRenderedObject("createUnitPerson");
         RenderUtils.invalidateViewState();

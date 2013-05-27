@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDCoursesFromTSDProcesses;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDTeachersFromTSDProcesses;
@@ -52,7 +51,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     private static final Integer VIEW_TEACHER_SERVICE_DISTRIBUTION_PLANNING = 5;
 
     public ActionForward prepareForTSDProcessValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -63,7 +62,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward loadTSDProcessPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -75,7 +74,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         dynaForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_COURSES);
@@ -84,7 +83,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         dynaForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_TEACHERS);
@@ -93,7 +92,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewTeacherAndCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
         dynaForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_TEACHERS_AND_COURSES);
 
@@ -101,7 +100,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewCharts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
         dynaForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_CHARTS);
 
@@ -109,7 +108,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
         dynaForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_PLANNING);
 
@@ -118,7 +117,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     public ActionForward loadTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -213,7 +212,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward exportTeacherServiceDistributionPlanningToExcel(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -323,7 +322,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward exportTSDProcessValuationToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -376,8 +375,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private ActionForward generateTSDProcessValuationChart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, TeacherServiceDistributionChart tsdProcessChart) throws FenixFilterException,
-            FenixServiceException {
+            HttpServletResponse response, TeacherServiceDistributionChart tsdProcessChart) throws FenixServiceException {
 
         Integer tsdId = new Integer(request.getParameter("tsd"));
         TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
@@ -411,26 +409,26 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward generateValuatedHoursPerGrouping(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return generateTSDProcessValuationChart(mapping, form, request, response,
                 TeacherServiceDistributionChart.generateValuatedHoursPerGroupingChart());
     }
 
     public ActionForward generateValuatedNumberStudentsPerGrouping(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         return generateTSDProcessValuationChart(mapping, form, request, response,
                 TeacherServiceDistributionChart.generateValuatedNumberStudentsPerGroupingChart());
     }
 
     public ActionForward generateValuatedHoursPerGroupingPieChart(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         return generateTSDProcessValuationChart(mapping, form, request, response,
                 TeacherServiceDistributionChart.generateValuatedHoursPerGroupingPieChart());
     }
 
     public ActionForward generateValuatedNumberStudentsPerGroupingPieChart(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         return generateTSDProcessValuationChart(mapping, form, request, response,
                 TeacherServiceDistributionChart.generateValuatedNumberStudentsPerGroupingPieChart());
     }
@@ -445,7 +443,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(IUserView userView, DynaActionForm dynaForm,
-            TeacherServiceDistribution rootTeacherServiceDistribution) throws FenixFilterException, FenixServiceException {
+            TeacherServiceDistribution rootTeacherServiceDistribution) throws FenixServiceException {
         Integer selectedTeacherServiceDistributionId = (Integer) dynaForm.get("tsd");
         TeacherServiceDistribution selectedTeacherServiceDistribution =
                 rootDomainObject.readTeacherServiceDistributionByOID(selectedTeacherServiceDistributionId);
@@ -457,16 +455,14 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         return selectedTeacherServiceDistribution;
     }
 
-    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixFilterException,
-            FenixServiceException {
+    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException {
         Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
         TSDProcessPhase selectedTSDProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }
 
-    private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException,
-            FenixFilterException {
+    private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
         Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
         TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
 
@@ -508,25 +504,25 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     @SuppressWarnings("unchecked")
     private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
         tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDTeacherDTOEntry>) ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses( tsdProcessIdMap );
+        return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
 
     @SuppressWarnings("unchecked")
     private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
         tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDCourseDTOEntry>) ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses( tsdProcessIdMap );
+        return ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses(tsdProcessIdMap);
     }
 
     private void setInformationTableParameters(DynaActionForm dynaForm, HttpServletRequest request) {
@@ -542,7 +538,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
-            List<ExecutionSemester> executionPeriodList) throws FenixServiceException, FenixFilterException {
+            List<ExecutionSemester> executionPeriodList) throws FenixServiceException {
         Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
         ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
 
@@ -558,7 +554,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareForTSDProcessValuationByTeachers(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 

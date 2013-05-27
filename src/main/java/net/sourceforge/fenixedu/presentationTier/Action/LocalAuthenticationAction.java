@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,7 +21,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
     @Override
     protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final String serverName = request.getServerName();
         final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);

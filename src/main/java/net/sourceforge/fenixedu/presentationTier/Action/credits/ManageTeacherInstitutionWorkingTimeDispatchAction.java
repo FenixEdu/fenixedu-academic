@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,7 +32,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDispatchAction {
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
         Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherId"));
         ExecutionSemester executionPeriod =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodId"));
@@ -43,7 +42,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
         request.setAttribute("institutionWorkTime", institutionWorkTime);
@@ -51,7 +50,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
     }
 
     protected ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, RoleType roleType) throws NumberFormatException, FenixFilterException,
+            HttpServletResponse response, RoleType roleType) throws NumberFormatException, 
             FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));

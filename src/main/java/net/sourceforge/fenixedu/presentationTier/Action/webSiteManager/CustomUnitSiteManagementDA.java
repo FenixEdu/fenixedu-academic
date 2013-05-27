@@ -13,7 +13,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.CreateUnitSiteBanner;
 import net.sourceforge.fenixedu.applicationTier.Servico.DeleteUnitSiteBanner;
 import net.sourceforge.fenixedu.applicationTier.Servico.DeleteUnitSiteLink;
@@ -416,7 +415,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         return footerNavigation(mapping, actionForm, request, response);
     }
 
-    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixFilterException, FenixServiceException {
+    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws  FenixServiceException {
         UnitSite site = getSite(request);
         String orderString = request.getParameter("linksOrder");
 
@@ -785,11 +784,11 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         return chooseManagers(mapping, actionForm, request, response);
     }
 
-    protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
+    protected void removeUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
         RemoveUnitSiteManager.runRemoveUnitSiteManager(site, person);
     }
 
-    protected void addUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
+    protected void addUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
         AddUnitSiteManager.runAddUnitSiteManager(site, person);
     }
 

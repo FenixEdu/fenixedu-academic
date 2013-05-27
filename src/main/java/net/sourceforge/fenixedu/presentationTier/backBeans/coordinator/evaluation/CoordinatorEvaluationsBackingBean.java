@@ -13,7 +13,6 @@ import java.util.TreeSet;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
@@ -100,7 +99,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID") : degreeCurricularPlanID;
     }
 
-    public Integer getExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+    public Integer getExecutionPeriodID() throws  FenixServiceException {
         if (executionPeriodID == null) {
             executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
             if (executionPeriodID == null) {
@@ -128,7 +127,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
     }
 
-    private ExecutionSemester getCurrentExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    private ExecutionSemester getCurrentExecutionPeriod() throws  FenixServiceException {
         ExecutionSemester lastExecutionPeriod = null;
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
@@ -144,7 +143,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return lastExecutionPeriod;
     }
 
-    public List<SelectItem> getExecutionPeriodSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionPeriodSelectItems() throws  FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final TreeSet<ExecutionSemester> executionPeriods = new TreeSet<ExecutionSemester>();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
@@ -164,7 +163,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return selectItems;
     }
 
-    public List<SelectItem> getCurricularYearSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCurricularYearSelectItems() throws  FenixServiceException {
         final List<SelectItem> selectItems = new ArrayList<SelectItem>();
         selectItems.add(new SelectItem("", messages.getMessage(locale, "public.curricular.years.all")));
         for (int i = 1; i <= 5; i++) {
@@ -173,12 +172,12 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return selectItems;
     }
 
-    public ExecutionSemester getExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    public ExecutionSemester getExecutionPeriod() throws  FenixServiceException {
         final Integer executionPeriodID = getExecutionPeriodID();
         return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
     }
 
-    private ExecutionDegree getExecutionDegree() throws FenixFilterException, FenixServiceException {
+    private ExecutionDegree getExecutionDegree() throws  FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final ExecutionSemester executionSemester = getExecutionPeriod();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
@@ -189,7 +188,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public Date getCalendarBegin() throws FenixFilterException, FenixServiceException {
+    public Date getCalendarBegin() throws  FenixServiceException {
         final ExecutionDegree executionDegree = getExecutionDegree();
         final ExecutionSemester executionSemester = getExecutionPeriod();
         if (executionDegree != null) {
@@ -205,7 +204,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         }
     }
 
-    public Date getCalendarEnd() throws FenixFilterException, FenixServiceException {
+    public Date getCalendarEnd() throws  FenixServiceException {
         final ExecutionDegree executionDegree = getExecutionDegree();
         final ExecutionSemester executionSemester = getExecutionPeriod();
         if (executionDegree != null) {
@@ -247,7 +246,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         }
     };
 
-    public List<ExecutionCourse> getExecutionCourses() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourse> getExecutionCourses() throws  FenixServiceException {
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final ExecutionSemester executionSemester = getExecutionPeriod();
@@ -265,7 +264,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return executionCourses;
     }
 
-    public Map<ExecutionCourse, Set<Evaluation>> getExecutionCoursesMap() throws FenixFilterException, FenixServiceException {
+    public Map<ExecutionCourse, Set<Evaluation>> getExecutionCoursesMap() throws  FenixServiceException {
         final Map<ExecutionCourse, Set<Evaluation>> executionCourseEvaluationsMap =
                 new TreeMap<ExecutionCourse, Set<Evaluation>>(executionCourseComparator);
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
@@ -286,7 +285,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return executionCourseEvaluationsMap;
     }
 
-    public List<CalendarLink> getCalendarLinks() throws FenixFilterException, FenixServiceException {
+    public List<CalendarLink> getCalendarLinks() throws  FenixServiceException {
         final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
         final String evaluationType = getEvaluationType();
 
@@ -313,7 +312,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return calendarLinks;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesWithoutEvaluations() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourse> getExecutionCoursesWithoutEvaluations() throws  FenixServiceException {
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             if (!hasNonExamEvaluation(executionCourse)) {
@@ -323,7 +322,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return executionCourses;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesWithEvaluations() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourse> getExecutionCoursesWithEvaluations() throws  FenixServiceException {
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             if (hasNonExamEvaluation(executionCourse)) {
@@ -428,7 +427,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         this.evaluationType = evaluationType;
     }
 
-    public List<SelectItem> getExecutionCourseSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionCourseSelectItems() throws  FenixServiceException {
         final List<SelectItem> selectItems = new ArrayList<SelectItem>();
         selectItems.add(new SelectItem("", messages.getMessage(locale, "public.curricular.years.all")));
         final List<ExecutionCourse> executionCourses = getExecutionCourses();
@@ -488,7 +487,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         this.end = end;
     }
 
-    public String createWrittenTest() throws FenixFilterException, FenixServiceException {
+    public String createWrittenTest() throws  FenixServiceException {
         final ExecutionCourse executionCourse = getExecutionCourse();
 
         final List<String> executionCourseIDs = new ArrayList<String>(1);
@@ -594,7 +593,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         this.evaluationID = evaluationID;
     }
 
-    public String deleteEvaluation() throws FenixFilterException, FenixServiceException {
+    public String deleteEvaluation() throws  FenixServiceException {
         final String evaluationType = getEvaluationType();
         if (evaluationType.equals(WrittenEvaluation.class.getName())) {
             try {
@@ -617,7 +616,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return "viewCalendar";
     }
 
-    public List<SelectItem> getExecutionCourseGroupings() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionCourseGroupings() throws  FenixServiceException {
         if (this.executionCourseGroupings == null) {
             this.executionCourseGroupings = new ArrayList<SelectItem>();
 

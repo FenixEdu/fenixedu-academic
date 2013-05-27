@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateExpiredKerberos;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -153,7 +152,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
     }
 
     private IUserView changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException, ExcepcaoPersistencia {
+            throws FenixServiceException,  ExcepcaoPersistencia {
         DynaActionForm authenticationForm = (DynaActionForm) form;
         final String username = (String) authenticationForm.get("username");
         final String password = (String) authenticationForm.get("password");

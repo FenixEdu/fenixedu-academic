@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
@@ -148,7 +147,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final IUserView userView = getUserView(request);
         // METADATA
@@ -555,7 +554,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward exercisesFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
@@ -582,7 +581,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseNewExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final IUserView userView = getUserView(request);
 
@@ -731,7 +730,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward removeExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
@@ -749,7 +748,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
@@ -792,7 +791,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
@@ -822,7 +821,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareRemoveExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer variationCode = getCodeFromRequest(request, "variationCode");
@@ -848,7 +847,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward removeExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
@@ -870,7 +869,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward exportExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final Integer variationCode = getCodeFromRequest(request, "variationCode");
         Question question = rootDomainObject.readQuestionByOID(variationCode);
         response.setContentType("text/plain; charset=utf-8");

@@ -13,7 +13,6 @@ import java.util.List;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear;
@@ -126,7 +125,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return this.curricularYearsLabels;
     }
 
-    public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public ExecutionCourse getExecutionCourse() throws  FenixServiceException {
         return rootDomainObject.readExecutionCourseByOID(this.getExecutionCourseID());
     }
 

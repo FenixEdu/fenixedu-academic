@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -107,7 +106,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer objectCode = new Integer(request.getParameter("objectCode"));
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
@@ -178,7 +177,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareToDoTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         Integer testCode = null;
         request.setAttribute("date", getDate());
         try {
@@ -259,7 +258,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward showImage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final String testCode = request.getParameter("testCode");
         final Integer exerciseId = getRequestParameterAsInteger(request, "exerciseCode");
         final Integer imgCode = getRequestParameterAsInteger(request, "imgCode");
@@ -309,7 +308,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward doTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         final String objectCode = request.getParameter("objectCode");
         final Integer studentCode = new Integer(request.getParameter("studentCode"));
         final String path = getServlet().getServletContext().getRealPath("/");
@@ -473,7 +472,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareToGiveUp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         request.setAttribute("testCode", request.getParameter("testCode"));
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
@@ -482,7 +481,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward giveUp(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
         final IUserView userView = getUserView(request);
@@ -522,7 +521,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward cleanSubQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
 
@@ -566,7 +565,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward showTestCorrection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final String path = getServlet().getServletContext().getRealPath("/");
 
         Integer testCode = null;

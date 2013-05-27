@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.EditTeacherServiceNotes;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -43,8 +42,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
     }
 
     protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
-            Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException,
-            FenixFilterException {
+            Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException {
 
         ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
         String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;

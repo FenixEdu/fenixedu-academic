@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInvitedPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewPersonInvitation;
@@ -427,7 +426,7 @@ public class PersonManagementAction extends FenixDispatchAction {
         request.setAttribute("invitedPersonBean", invitedPersonBean);
     }
 
-    private void readAndSetValidPersons(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void readAndSetValidPersons(HttpServletRequest request) throws  FenixServiceException {
         final IViewState viewState = RenderUtils.getViewState("personBeanID");
         PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 

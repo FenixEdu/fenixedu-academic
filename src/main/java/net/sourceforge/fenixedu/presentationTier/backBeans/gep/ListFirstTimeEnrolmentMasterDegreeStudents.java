@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents;
@@ -28,7 +27,7 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
         super();
     }
 
-    public Collection getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
+    public Collection getStudentCurricularPlans() throws  FenixServiceException {
 
         if (getSelectedExecutionYear() == null || getSelectedExecutionYear().length() == 0) {
             return new ArrayList();
@@ -37,7 +36,7 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
         return ListMasterDegreeStudents.run(getSelectedExecutionYear());
     }
 
-    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws  FenixServiceException {
         List<SelectItem> result = new ArrayList<SelectItem>();
         List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -242,7 +241,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws FenixFilterException, FenixServiceException;
+            throws  FenixServiceException;
 
     protected abstract ActionForward getAuthenticationFailedForward(final ActionMapping mapping,
             final HttpServletRequest request, final String actionKey, final String messageKey);

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
@@ -35,7 +34,7 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 public class ManageDepartmentCreditsPool extends FenixDispatchAction {
 
     public ActionForward prepareManageUnitCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getDepartmentCreditsBean();
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         return mapping.findForward("manageUnitCredits");
@@ -50,7 +49,7 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
     }
 
     public ActionForward viewDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             return prepareManageUnitCredits(mapping, form, request, response);
@@ -63,7 +62,7 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
     }
 
     public ActionForward postBackUnitCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsPoolBean departmentCreditsPoolBean = getRenderedObject("departmentCreditsPoolBean");
         if (departmentCreditsPoolBean == null) {
             return prepareManageUnitCredits(mapping, form, request, response);
@@ -77,7 +76,7 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
     }
 
     public ActionForward editUnitCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsPoolBean departmentCreditsPoolBean = getRenderedObject("departmentCreditsPoolBean");
         RenderUtils.invalidateViewState();
         if (departmentCreditsPoolBean == null) {
@@ -97,7 +96,7 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
     }
 
     public ActionForward exportDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, IOException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         RenderUtils.invalidateViewState();
         if (departmentCreditsBean == null) {

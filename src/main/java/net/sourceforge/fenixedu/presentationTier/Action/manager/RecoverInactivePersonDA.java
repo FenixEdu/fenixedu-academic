@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.SetPersonRoles;
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,7 +27,7 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod();
         for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext();) {
             final Person person = personIterator.next();
@@ -41,7 +40,7 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
     }
 
     public ActionForward activate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final String personIDString = request.getParameter("personID");
         if (personIDString != null && StringUtils.isNumeric(personIDString)) {
             final Integer personID = Integer.valueOf(personIDString);

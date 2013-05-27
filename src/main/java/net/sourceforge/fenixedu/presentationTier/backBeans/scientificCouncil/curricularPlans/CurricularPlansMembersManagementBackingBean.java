@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.UpdateDegreeCurricularPlanMembersGroup;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -37,7 +36,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
     private String istIdToAdd;
 
-    public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void addMembers(ActionEvent event) throws  FenixServiceException {
         if (!StringUtils.isEmpty(this.istIdToAdd)) {
             Person person = Person.findByUsername(this.istIdToAdd);
 
@@ -52,7 +51,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         selectedPersonsIDsToRemove = null;
     }
 
-    public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void removeMembers(ActionEvent event) throws  FenixServiceException {
         if (selectedPersonsIDsToRemove != null) {
 
             UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove);

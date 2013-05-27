@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.InsertTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
@@ -113,7 +112,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward createTeacherPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("teacherPersonalExpectationWithMainFocusProfessionalActivities");
         TeacherPersonalExpectationBean bean = (TeacherPersonalExpectationBean) viewState.getMetaObject().getObject();
@@ -133,7 +132,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditEducationExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
+            HttpServletResponse response) throws  FenixServiceException, FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
         checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
@@ -142,13 +141,13 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editEducationExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithEducationMainFocus", mapping);
     }
 
     public ActionForward prepareEditResearchAndDevelopmentExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
             FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
@@ -158,13 +157,13 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editResearchAndDevelopmentExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithOrientationMainFocus", mapping);
     }
 
     public ActionForward prepareEditUniversityServicesExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
             FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
@@ -174,13 +173,13 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editUniversityServicesExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithMainFocusUniversityServices", mapping);
     }
 
     public ActionForward prepareEditProfessionalActivitiesExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException,
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
             FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
@@ -190,7 +189,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editProfessionalActivitiesExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithMainFocusProfessionalActivities", mapping);
     }

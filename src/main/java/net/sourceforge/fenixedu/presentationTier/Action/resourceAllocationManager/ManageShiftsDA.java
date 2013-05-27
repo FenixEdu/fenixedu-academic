@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurno;
@@ -176,7 +175,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         return mapping.findForward("ShowShiftList");
     }
 
-    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
+    private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, 
             Exception {
         ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
         logger.warn(String.format("ContextSelectionBean: academicInterval %s executionDegree %s curricularYear %s",

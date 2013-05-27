@@ -28,7 +28,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -261,7 +260,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.evaluationIdHidden = evaluationIdHidden;
     }
 
-    public Integer getDay() throws FenixFilterException, FenixServiceException {
+    public Integer getDay() throws FenixServiceException {
         if (this.day == null && this.getEvaluation() != null) {
             this.day = ((WrittenEvaluation) getEvaluation()).getDay().get(Calendar.DAY_OF_MONTH);
         } else if (this.getRequestParameter("day") != null && !this.getRequestParameter("day").equals("")) {
@@ -274,7 +273,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.day = day;
     }
 
-    public Integer getMonth() throws FenixFilterException, FenixServiceException {
+    public Integer getMonth() throws FenixServiceException {
         if (this.month == null && this.getEvaluation() != null) {
             this.month = ((WrittenEvaluation) getEvaluation()).getDay().get(Calendar.MONTH) + 1;
         } else if (this.getRequestParameter("month") != null && !this.getRequestParameter("month").equals("")) {
@@ -287,7 +286,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.month = month;
     }
 
-    public Integer getYear() throws FenixFilterException, FenixServiceException {
+    public Integer getYear() throws FenixServiceException {
         if (this.year == null && this.getEvaluation() != null) {
             this.year = ((WrittenEvaluation) getEvaluation()).getDay().get(Calendar.YEAR);
         } else if (this.getRequestParameter("year") != null && !this.getRequestParameter("year").equals("")) {
@@ -300,7 +299,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.year = year;
     }
 
-    public Integer getBeginHour() throws FenixFilterException, FenixServiceException {
+    public Integer getBeginHour() throws FenixServiceException {
         if (this.beginHour == null && this.getEvaluation() != null) {
             this.beginHour = ((WrittenEvaluation) getEvaluation()).getBeginning().get(Calendar.HOUR_OF_DAY);
         }
@@ -311,7 +310,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.beginHour = beginHour;
     }
 
-    public Integer getBeginMinute() throws FenixFilterException, FenixServiceException {
+    public Integer getBeginMinute() throws FenixServiceException {
         if (this.beginMinute == null && this.getEvaluation() != null) {
             this.beginMinute = ((WrittenEvaluation) getEvaluation()).getBeginning().get(Calendar.MINUTE);
         }
@@ -322,7 +321,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.beginMinute = beginMinute;
     }
 
-    public Integer getEndHour() throws FenixFilterException, FenixServiceException {
+    public Integer getEndHour() throws FenixServiceException {
         if (this.endHour == null && this.getEvaluation() != null && ((WrittenEvaluation) getEvaluation()).getEnd() != null) {
             this.endHour = ((WrittenEvaluation) getEvaluation()).getEnd().get(Calendar.HOUR_OF_DAY);
         }
@@ -333,7 +332,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.endHour = endHour;
     }
 
-    public Integer getEndMinute() throws FenixFilterException, FenixServiceException {
+    public Integer getEndMinute() throws FenixServiceException {
         if (this.endMinute == null && this.getEvaluation() != null && ((WrittenEvaluation) getEvaluation()).getEnd() != null) {
             this.endMinute = ((WrittenEvaluation) getEvaluation()).getEnd().get(Calendar.MINUTE);
         }
@@ -344,7 +343,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.endMinute = endMinute;
     }
 
-    public String getDescription() throws FenixFilterException, FenixServiceException {
+    public String getDescription() throws FenixServiceException {
         if (this.description == null && this.getEvaluation() != null) {
             final Evaluation writtenEvaluation = getEvaluation();
             if (writtenEvaluation instanceof WrittenTest) {
@@ -362,7 +361,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("description", description);
     }
 
-    public Integer getEnrolmentBeginDay() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentBeginDay() throws FenixServiceException {
         if (this.enrolmentBeginDay == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginDay() != null) {
             this.enrolmentBeginDay =
                     ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginDay().get(Calendar.DAY_OF_MONTH);
@@ -374,7 +373,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginDay = enrolmentBeginDay;
     }
 
-    public Integer getEnrolmentBeginHour() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentBeginHour() throws FenixServiceException {
         if (this.enrolmentBeginHour == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginTime() != null) {
             this.enrolmentBeginHour =
                     ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginTime().get(Calendar.HOUR_OF_DAY);
@@ -386,7 +385,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginHour = enrolmentBeginHour;
     }
 
-    public Integer getEnrolmentBeginMinute() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentBeginMinute() throws FenixServiceException {
         if (this.enrolmentBeginMinute == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginTime() != null) {
             this.enrolmentBeginMinute = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginTime().get(Calendar.MINUTE);
         }
@@ -397,7 +396,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginMinute = enrolmentBeginMinute;
     }
 
-    public Integer getEnrolmentBeginMonth() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentBeginMonth() throws FenixServiceException {
         if (this.enrolmentBeginMonth == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginDay() != null) {
             this.enrolmentBeginMonth = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginDay().get(Calendar.MONTH) + 1;
         }
@@ -408,7 +407,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginMonth = enrolmentBeginMonth;
     }
 
-    public Integer getEnrolmentBeginYear() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentBeginYear() throws FenixServiceException {
         if (this.enrolmentBeginYear == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginDay() != null) {
             this.enrolmentBeginYear = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentBeginDay().get(Calendar.YEAR);
         }
@@ -419,7 +418,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentBeginYear = enrolmentBeginYear;
     }
 
-    public Integer getEnrolmentEndDay() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentEndDay() throws FenixServiceException {
         if (this.enrolmentEndDay == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndDay() != null) {
             this.enrolmentEndDay = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH);
         }
@@ -430,7 +429,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndDay = enrolmentEndDay;
     }
 
-    public Integer getEnrolmentEndHour() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentEndHour() throws FenixServiceException {
         if (this.enrolmentEndHour == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndTime() != null) {
             this.enrolmentEndHour = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY);
         }
@@ -441,7 +440,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndHour = enrolmentEndHour;
     }
 
-    public Integer getEnrolmentEndMinute() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentEndMinute() throws FenixServiceException {
         if (this.enrolmentEndMinute == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndTime() != null) {
             this.enrolmentEndMinute = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndTime().get(Calendar.MINUTE);
         }
@@ -452,7 +451,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndMinute = enrolmentEndMinute;
     }
 
-    public Integer getEnrolmentEndMonth() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentEndMonth() throws FenixServiceException {
         if (this.enrolmentEndMonth == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndDay() != null) {
             this.enrolmentEndMonth = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndDay().get(Calendar.MONTH) + 1;
         }
@@ -463,7 +462,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.enrolmentEndMonth = enrolmentEndMonth;
     }
 
-    public Integer getEnrolmentEndYear() throws FenixFilterException, FenixServiceException {
+    public Integer getEnrolmentEndYear() throws FenixServiceException {
         if (this.enrolmentEndYear == null && ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndDay() != null) {
             this.enrolmentEndYear = ((WrittenEvaluation) this.getEvaluation()).getEnrollmentEndDay().get(Calendar.YEAR);
         }
@@ -482,7 +481,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.distributeEnroledStudentsOption = distributeEnroledStudentsOption;
     }
 
-    public Integer getRoomToChangeID() throws FenixFilterException, FenixServiceException {
+    public Integer getRoomToChangeID() throws FenixServiceException {
         if (getViewState().getAttribute("roomToChangeID") == null) {
             getViewState().setAttribute("roomToChangeID", getElementKeyFor(getEvaluationRoomsPositions(), 1));
         }
@@ -493,7 +492,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("roomToChangeID", roomToChangeID);
     }
 
-    public Integer getNewRoomPosition() throws FenixFilterException, FenixServiceException {
+    public Integer getNewRoomPosition() throws FenixServiceException {
         if (getViewState().getAttribute("newRoomPosition") == null || this.resetPosition) {
             getViewState().setAttribute("newRoomPosition", 0);
         }
@@ -504,7 +503,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("newRoomPosition", newRoomPosition);
     }
 
-    public List<Exam> getExamList() throws FenixFilterException, FenixServiceException {
+    public List<Exam> getExamList() throws FenixServiceException {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
 
         List<Exam> examsList = new ArrayList(executionCourse.getAssociatedExams());
@@ -512,7 +511,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return examsList;
     }
 
-    public List<OnlineTest> getOnlineTestList() throws FenixFilterException, FenixServiceException {
+    public List<OnlineTest> getOnlineTestList() throws FenixServiceException {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
 
         List<OnlineTest> onlineTestList = new ArrayList(executionCourse.getAssociatedOnlineTests());
@@ -520,7 +519,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return onlineTestList;
     }
 
-    public List<WrittenTest> getWrittenTestList() throws FenixFilterException, FenixServiceException {
+    public List<WrittenTest> getWrittenTestList() throws FenixServiceException {
         ExecutionCourse executionCourse = getExecutionCourse();
         Teacher teacher = AccessControl.getPerson().getTeacher();
 
@@ -545,7 +544,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.evaluation;
     }
 
-    private Calendar getEnrolmentBegin() throws FenixFilterException, FenixServiceException {
+    private Calendar getEnrolmentBegin() throws FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(getEnrolmentBeginYear(), getEnrolmentBeginMonth() - 1, getEnrolmentBeginDay(), getEnrolmentBeginHour(),
@@ -554,7 +553,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    private Calendar getEnrolmentEnd() throws FenixFilterException, FenixServiceException {
+    private Calendar getEnrolmentEnd() throws FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(getEnrolmentEndYear(), getEnrolmentEndMonth() - 1, getEnrolmentEndDay(), getEnrolmentEndHour(),
@@ -563,7 +562,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String editEvaluationEnrolmentPeriod() throws FenixFilterException, FenixServiceException {
+    public String editEvaluationEnrolmentPeriod() throws FenixServiceException {
         Calendar enrolmentBeginDay = getEnrolmentBegin();
         Calendar enrolmentBeginTime = getEnrolmentBegin();
         Calendar enrolmentEndDay = getEnrolmentEnd();
@@ -586,7 +585,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.getEvaluation().getClass().getSimpleName();
     }
 
-    public String editMarks() throws FenixFilterException, FenixServiceException {
+    public String editMarks() throws FenixServiceException {
         if (getEvaluationID() == null) {
             WriteMarks.writeByAttend(getExecutionCourseID(), getEvaluationID(), buildAttendsMark());
             return "";
@@ -611,7 +610,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public List<WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() throws FenixFilterException, FenixServiceException {
+    public List<WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() throws FenixServiceException {
 
         if (this.writtenEvaluationEnrolments == null) {
             this.writtenEvaluationEnrolments =
@@ -621,7 +620,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.writtenEvaluationEnrolments;
     }
 
-    public Calendar getBegin() throws FenixFilterException, FenixServiceException {
+    public Calendar getBegin() throws FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getBeginHour(), this.getBeginMinute());
@@ -629,7 +628,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Calendar getEnd() throws FenixFilterException, FenixServiceException {
+    public Calendar getEnd() throws FenixServiceException {
         Calendar result = Calendar.getInstance();
 
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getEndHour(), this.getEndMinute());
@@ -637,7 +636,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String createWrittenTest() throws FenixFilterException, FenixServiceException {
+    public String createWrittenTest() throws FenixServiceException {
         List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
@@ -670,7 +669,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
     }
 
-    public Map<Integer, String> getMarks() throws FenixFilterException, FenixServiceException {
+    public Map<Integer, String> getMarks() throws FenixServiceException {
         final Evaluation evaluation = getEvaluation();
         final ExecutionCourse executionCourse = getExecutionCourse();
         if (executionCourse != null) {
@@ -688,7 +687,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.marks = marks;
     }
 
-    public String loadMarks() throws FenixFilterException, FenixServiceException, FileUploadException {
+    public String loadMarks() throws FenixServiceException, FileUploadException {
         final HttpServletRequest httpServletRequest =
                 (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         final MultipartRequestWrapper multipartRequestWrapper =
@@ -844,7 +843,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 
-    public String deleteWrittenTest() throws FenixFilterException, FenixServiceException {
+    public String deleteWrittenTest() throws FenixServiceException {
         try {
             DeleteWrittenEvaluation.runDeleteWrittenEvaluation(this.getExecutionCourseID(), this.getEvaluationID());
         } catch (Exception e) {
@@ -858,7 +857,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return WrittenTest.class.getSimpleName();
     }
 
-    public List<AllocatableSpace> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
+    public List<AllocatableSpace> getEvaluationRooms() throws FenixServiceException {
         final AllocatableSpace[] result = new AllocatableSpace[getEvaluationRoomsPositions().size()];
         for (final Entry<Integer, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
             final AllocatableSpace room = getRoom(entry.getKey());
@@ -867,7 +866,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return Arrays.asList(result);
     }
 
-    private AllocatableSpace getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
+    private AllocatableSpace getRoom(final Integer roomID) throws FenixServiceException {
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
             if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
@@ -877,7 +876,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public Map<Integer, Integer> getEvaluationRoomsPositions() throws FenixFilterException, FenixServiceException {
+    public Map<Integer, Integer> getEvaluationRoomsPositions() throws FenixServiceException {
         if (getViewState().getAttribute("evaluationRooms") == null) {
             final Map<Integer, Integer> evaluationRooms = initializeEvaluationRoomsPositions();
             getViewState().setAttribute("evaluationRooms", evaluationRooms);
@@ -885,7 +884,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return (Map<Integer, Integer>) getViewState().getAttribute("evaluationRooms");
     }
 
-    private Map<Integer, Integer> initializeEvaluationRoomsPositions() throws FenixFilterException, FenixServiceException {
+    private Map<Integer, Integer> initializeEvaluationRoomsPositions() throws FenixServiceException {
         final Map<Integer, Integer> evaluationRooms = new TreeMap();
         final List<WrittenEvaluationSpaceOccupation> roomOccupations =
                 new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations());
@@ -901,7 +900,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.resetPosition = true;
     }
 
-    public void changePosition(ValueChangeEvent valueChangeEvent) throws FenixFilterException, FenixServiceException {
+    public void changePosition(ValueChangeEvent valueChangeEvent) throws FenixServiceException {
         final Integer roomToChangeNewPosition = (Integer) valueChangeEvent.getNewValue();
         if (roomToChangeNewPosition != 0) {
             final Integer roomToChangeOldPosition = getEvaluationRoomsPositions().get(getRoomToChangeID());
@@ -920,7 +919,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public List<SelectItem> getNames() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getNames() throws FenixServiceException {
         final List<SelectItem> result =
                 new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsCount());
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
@@ -930,7 +929,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public List<SelectItem> getPositions() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getPositions() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList(getEvaluationRoomsPositions().size());
         result.add(new SelectItem(0, ""));
         for (final Integer value : getEvaluationRoomsPositions().values()) {
@@ -941,7 +940,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String distributeStudentsByRooms() throws FenixFilterException, FenixServiceException {
+    public String distributeStudentsByRooms() throws FenixServiceException {
         try {
             final Boolean distributeOnlyEnroledStudents = Boolean.valueOf(this.getDistributeEnroledStudentsOption());
             WrittenEvaluationRoomDistribution.runWrittenEvaluationRoomDistribution(getExecutionCourseID(), getEvaluationID(),
@@ -953,7 +952,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private List<Integer> getRoomIDs() throws FenixFilterException, FenixServiceException {
+    private List<Integer> getRoomIDs() throws FenixServiceException {
         final List<AllocatableSpace> rooms = getEvaluationRooms();
         final List<Integer> result = new ArrayList(rooms.size());
         for (final AllocatableSpace room : rooms) {
@@ -962,7 +961,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String checkIfCanDistributeStudentsByRooms() throws FenixFilterException, FenixServiceException {
+    public String checkIfCanDistributeStudentsByRooms() throws FenixServiceException {
         try {
             final Evaluation writtenEvaluation = getEvaluation();
             ((WrittenEvaluation) writtenEvaluation).checkIfCanDistributeStudentsByRooms();
@@ -981,7 +980,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return false;
     }
 
-    public int getNumberOfAttendingStudents() throws FenixFilterException, FenixServiceException {
+    public int getNumberOfAttendingStudents() throws FenixServiceException {
         int numberOfAttendingStudents = 0;
         for (final ExecutionCourse executionCourse : getEvaluation().getAssociatedExecutionCourses()) {
             numberOfAttendingStudents += executionCourse.getAttendsCount();
@@ -1050,7 +1049,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.sendSMS = sendSMS;
     }
 
-    public String publishMarks() throws FenixFilterException, FenixServiceException {
+    public String publishMarks() throws FenixServiceException {
         final MessageResources messages = MessageResources.getMessageResources("resources/ApplicationResources");
         final String announcementTitle =
                 (getPublishMarksMessage() != null && getPublishMarksMessage().length() > 0) ? messages
@@ -1067,7 +1066,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.getEvaluation().getClass().getSimpleName();
     }
 
-    public String getEvaluationTypeClassname() throws FenixFilterException, FenixServiceException {
+    public String getEvaluationTypeClassname() throws FenixServiceException {
         String evaluationTypeClassname = (String) this.getViewState().getAttribute("evaluationTypeClassname");
         if (evaluationTypeClassname == null) {
             evaluationTypeClassname = this.getRequestParameter("evaluationTypeClassname");
@@ -1089,7 +1088,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("evaluationTypeClassname", evaluationTypeClassname);
     }
 
-    public String getSeason() throws FenixFilterException, FenixServiceException {
+    public String getSeason() throws FenixServiceException {
         if (season == null) {
             final Evaluation evaluation = getEvaluation();
             if (evaluation != null && evaluation instanceof Exam) {
@@ -1142,7 +1141,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     // Submit Marks
-    public List<FinalMark> getAlreadySubmitedMarks() throws FenixFilterException, FenixServiceException {
+    public List<FinalMark> getAlreadySubmitedMarks() throws FenixServiceException {
         if (this.alreadySubmitedMarks == null) {
             FinalEvaluation evaluation = (FinalEvaluation) getEvaluation();
             ExecutionCourse executionCourse = getExecutionCourse();
@@ -1152,7 +1151,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.alreadySubmitedMarks;
     }
 
-    public List<Attends> getNotSubmitedMarks() throws FenixFilterException, FenixServiceException {
+    public List<Attends> getNotSubmitedMarks() throws FenixServiceException {
         if (this.notSubmitedMarks == null) {
             FinalEvaluation evaluation = (FinalEvaluation) getEvaluation();
             ExecutionCourse executionCourse = getExecutionCourse();
@@ -1173,7 +1172,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "enterSubmitMarksList2";
     }
 
-    public String getSubmitEvaluationDateTextBoxValue() throws FenixFilterException, FenixServiceException {
+    public String getSubmitEvaluationDateTextBoxValue() throws FenixServiceException {
         if (submitEvaluationDateTextBoxValue == null) {
             List<Exam> exams = getExamList();
             if (exams != null && !exams.isEmpty()) {
@@ -1223,7 +1222,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.roomsToAssociate = roomsToAssociate;
     }
 
-    public String editEvaluationRooms() throws FenixFilterException, FenixServiceException {
+    public String editEvaluationRooms() throws FenixServiceException {
 
         TeacherEditWrittenTestRooms.runTeacherEditWrittenTestRooms(getExecutionCourse(), AccessControl.getPerson().getTeacher(),
                 (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()));
@@ -1282,11 +1281,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    public void exportStudentsEnroledToExcel() throws FenixFilterException, FenixServiceException {
+    public void exportStudentsEnroledToExcel() throws FenixServiceException {
         exportToExcel();
     }
 
-    private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
+    private String getFileName(Date date) throws FenixServiceException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -1297,7 +1296,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
     }
 
-    public void exportToExcel() throws FenixFilterException, FenixServiceException {
+    public void exportToExcel() throws FenixServiceException {
         String filename =
                 getResourceBundle("resources/ApplicationResources").getString("title.enrolments") + "-"
                         + getFileName(Calendar.getInstance().getTime());
@@ -1308,7 +1307,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private void exportToXls(String filename) throws IOException, FenixFilterException, FenixServiceException {
+    private void exportToXls(String filename) throws IOException, FenixServiceException {
         this.getResponse().setContentType("application/vnd.ms-excel");
         this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
         ServletOutputStream outputStream = this.getResponse().getOutputStream();
@@ -1335,11 +1334,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return headers;
     }
 
-    private void reportInfo(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+    private void reportInfo(Spreadsheet spreadsheet) throws FenixServiceException {
         fillStudentsEnroled(spreadsheet);
     }
 
-    private void fillStudentsEnroled(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+    private void fillStudentsEnroled(Spreadsheet spreadsheet) throws FenixServiceException {
 
         for (WrittenEvaluationEnrolment enrolment : getWrittenEvaluationEnrolments()) {
             final Row newRow = spreadsheet.addRow();
@@ -1364,8 +1363,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                     return true;
                 }
             }
-        } catch (FenixFilterException e) {
-            // nothing
         } catch (FenixServiceException e) {
             // nothing
         }

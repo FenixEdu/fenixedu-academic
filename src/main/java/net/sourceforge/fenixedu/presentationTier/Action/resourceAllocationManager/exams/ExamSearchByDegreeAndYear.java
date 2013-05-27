@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap;
@@ -169,7 +168,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request, List curricularYears, InfoExecutionDegree infoExecutionDegree,
-            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException, FenixFilterException {
+            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
         IUserView userView = getUserView(request);
         InfoExamsMap infoRoomExamsMaps = null;
@@ -181,7 +180,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
     }
 
     private List getExamsMap(HttpServletRequest request, List curricularYears, List executionDegreeList,
-            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException, FenixFilterException {
+            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
         IUserView userView = getUserView(request);
         List infoExamsMaps = new ArrayList();

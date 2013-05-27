@@ -20,7 +20,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
@@ -332,7 +331,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END curricularYear
 
     // BEGIN day, month, year, hour, minute
-    public HtmlInputHidden getDayHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getDayHidden() throws FenixServiceException {
         if (this.dayHidden == null) {
             this.dayHidden = new HtmlInputHidden();
             this.dayHidden.setValue(this.getDay());
@@ -350,7 +349,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.dayHidden = dayHidden;
     }
 
-    public HtmlInputHidden getMonthHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getMonthHidden() throws FenixServiceException {
         if (this.monthHidden == null) {
             this.monthHidden = new HtmlInputHidden();
             this.monthHidden.setValue(this.getMonth());
@@ -368,7 +367,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.monthHidden = monthHidden;
     }
 
-    public HtmlInputHidden getYearHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getYearHidden() throws FenixServiceException {
         if (this.yearHidden == null) {
             this.yearHidden = new HtmlInputHidden();
             this.yearHidden.setValue(this.getYear());
@@ -386,7 +385,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.yearHidden = yearHidden;
     }
 
-    public HtmlInputHidden getBeginHourHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getBeginHourHidden() throws FenixServiceException {
         if (this.beginHourHidden == null) {
             this.beginHourHidden = new HtmlInputHidden();
             this.beginHourHidden.setValue(this.getBeginHour());
@@ -401,7 +400,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.beginHourHidden = beginHourHidden;
     }
 
-    public HtmlInputHidden getBeginMinuteHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getBeginMinuteHidden() throws FenixServiceException {
         if (this.beginMinuteHidden == null) {
             this.beginMinuteHidden = new HtmlInputHidden();
             this.beginMinuteHidden.setValue(this.getBeginMinute());
@@ -416,7 +415,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.beginMinuteHidden = beginMinuteHidden;
     }
 
-    public HtmlInputHidden getEndHourHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getEndHourHidden() throws FenixServiceException {
         if (this.endHourHidden == null) {
             this.endHourHidden = new HtmlInputHidden();
             this.endHourHidden.setValue(this.getEndHour());
@@ -431,7 +430,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.endHourHidden = endHourHidden;
     }
 
-    public HtmlInputHidden getEndMinuteHidden() throws FenixFilterException, FenixServiceException {
+    public HtmlInputHidden getEndMinuteHidden() throws FenixServiceException {
         if (this.endMinuteHidden == null) {
             this.endMinuteHidden = new HtmlInputHidden();
             this.endMinuteHidden.setValue(this.getEndMinute());
@@ -449,7 +448,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END day, month, year, hour, minute
 
     // BEGIN Drop down menu logic
-    public List<SelectItem> getAcademicIntervals() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getAcademicIntervals() throws FenixServiceException {
         List<AcademicInterval> academicIntervals = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
         Collections.sort(academicIntervals, AcademicInterval.COMPARATOR_BY_BEGIN_DATE);
 
@@ -478,7 +477,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return;
     }
 
-    public List<SelectItem> getExecutionDegrees() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionDegrees() throws FenixServiceException {
         if (this.getDisableDropDown()) {
             return new ArrayList<SelectItem>();
         }
@@ -711,7 +710,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return result;
     }
 
-    public List<CalendarLink> getWrittenTestsCalendarLink() throws FenixFilterException, FenixServiceException {
+    public List<CalendarLink> getWrittenTestsCalendarLink() throws FenixServiceException {
 
         List<CalendarLink> result = new ArrayList<CalendarLink>();
         Integer[] curricularYearIDs = getCurricularYearIDs();
@@ -765,7 +764,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return stringBuilder.toString();
     }
 
-    private List<ExecutionCourse> getExecutionCourses() throws FenixFilterException, FenixServiceException {
+    private List<ExecutionCourse> getExecutionCourses() throws FenixServiceException {
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         Integer[] curricularYears = getCurricularYearIDs();
         if (curricularYears != null) {
@@ -792,7 +791,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public List<ExecutionCourseWrittenEvaluationAgregationBean> getExecutionCourseWrittenEvaluationAgregationBeans()
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
 
         final List<ExecutionCourseWrittenEvaluationAgregationBean> executionCourseWrittenEvaluationAgregationBean =
                 new ArrayList<ExecutionCourseWrittenEvaluationAgregationBean>();
@@ -839,7 +838,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return executionCourseWrittenEvaluationAgregationBean;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() throws FenixServiceException {
 
         writtenEvaluations.clear();
         writtenEvaluationsMissingPlaces.clear();
@@ -894,8 +893,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
     }
 
-    public List<ExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() throws FenixFilterException,
-            FenixServiceException {
+    public List<ExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() throws FenixServiceException {
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         Integer[] curricularYearIDs = getCurricularYearIDs();
 
@@ -922,7 +920,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     };
 
-    public List<SelectItem> getExecutionCoursesLabels() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionCoursesLabels() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
@@ -935,7 +933,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END Drop down menu logic
 
     // BEGIN Select Execution Course and Evaluation Type page logic
-    public String continueToCreateWrittenEvaluation() throws FenixFilterException, FenixServiceException {
+    public String continueToCreateWrittenEvaluation() throws FenixServiceException {
         if (this.getEvaluationTypeClassname() == null || this.getExecutionCourseID() == null
                 || this.getEvaluationTypeClassname().equals("noSelection") || this.getExecutionCourseID() == 0) {
             this.setErrorMessage("label.choose.request");
@@ -988,7 +986,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return orderByCriteriaItems;
     }
 
-    public String[] getChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
+    public String[] getChosenRoomsIDs() throws FenixServiceException {
         if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
             List<String> associatedRooms = new ArrayList<String>();
 
@@ -1007,7 +1005,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.getViewState().setAttribute("chosenRoomsIDs", chosenRoomsIDs);
     }
 
-    public List<SelectItem> getRoomsSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getRoomsSelectItems() throws FenixServiceException {
 
         Calendar examDate = Calendar.getInstance();
         examDate.set(Calendar.YEAR, getYear());
@@ -1098,7 +1096,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return room.getIdInternal() + "-" + room.getCapacidadeExame();
     }
 
-    public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
+    public String getAssociatedRooms() throws FenixServiceException {
         StringBuilder result = new StringBuilder();
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
@@ -1126,7 +1124,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END Associate OldRoom logic
 
     // BEGIN Create and Edit logic
-    public String createWrittenEvaluation() throws FenixFilterException, FenixServiceException {
+    public String createWrittenEvaluation() throws FenixServiceException {
 
         if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
             this.setErrorMessage("label.choose.request");
@@ -1159,7 +1157,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public boolean prepareArguments(List<String> executionCourseIDs, List<String> degreeModuleScopeIDs, List<String> roomsIDs)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
 
         for (Integer executionCourseID : this.associatedExecutionCourses) {
 
@@ -1189,7 +1187,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return true;
     }
 
-    public String editWrittenEvaluation() throws FenixFilterException, FenixServiceException, IOException {
+    public String editWrittenEvaluation() throws FenixServiceException, IOException {
         if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
             this.setErrorMessage("label.choose.request");
             return "";
@@ -1268,7 +1266,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.getViewState().setAttribute("associatedExecutionCourses", associatedExecutionCourses);
     }
 
-    public List<Integer> getAssociatedExecutionCourses() throws FenixFilterException, FenixServiceException {
+    public List<Integer> getAssociatedExecutionCourses() throws FenixServiceException {
 
         if (this.getViewState().getAttribute("associatedExecutionCourses") != null) {
             this.associatedExecutionCourses = (List<Integer>) this.getViewState().getAttribute("associatedExecutionCourses");
@@ -1309,7 +1307,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return this.associatedExecutionCourses;
     }
 
-    private void fillInAuxiliarMaps() throws FenixFilterException, FenixServiceException {
+    private void fillInAuxiliarMaps() throws FenixServiceException {
 
         for (Integer executionCourseID : this.associatedExecutionCourses) {
 
@@ -1404,7 +1402,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.getViewState().setAttribute("curricularCourseContextToAssociate", curricularCourseContextToAssociate);
     }
 
-    public String associateExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public String associateExecutionCourse() throws FenixServiceException {
         if (this.getSelectedExecutionDegreeID() == null || this.getSelectedCurricularYearID() == null
                 || this.getSelectedExecutionCourseID() == null || this.getSelectedExecutionDegreeID() == 0
                 || this.getSelectedCurricularYearID() == 0 || this.getSelectedExecutionCourseID() == 0) {
@@ -1433,7 +1431,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
     }
 
-    public void disassociateExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public void disassociateExecutionCourse() throws FenixServiceException {
         List<Integer> associatedExecutionCourses = this.getAssociatedExecutionCourses();
         Integer executionCourseToDisassociate = Integer.valueOf(this.getRequestParameter("executionCourseToDisassociate"));
 
@@ -1474,7 +1472,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END Associate Execution Course and Scopes logic
 
     // BEGIN Execution Course comment logic
-    public String getComment() throws FenixFilterException, FenixServiceException {
+    public String getComment() throws FenixServiceException {
         if (this.comment == null && this.getExecutionCourse() != null) {
             this.comment = getExecutionCourse().getComment();
         }
@@ -1485,14 +1483,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.comment = comment;
     }
 
-    public String commentExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public String commentExecutionCourse() throws FenixServiceException {
         try {
 
             DefineExamComment.run(this.getExecutionCourse().getSigla(), this.getExecutionCourse().getExecutionPeriod()
                     .getIdInternal(), this.getComment());
-        } catch (FenixFilterException e) {
-            this.setErrorMessage(e.getMessage());
-            return "";
         } catch (FenixServiceException e) {
             this.setErrorMessage(e.getMessage());
             return "";
@@ -1564,7 +1559,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         setSelectedExecutionCourseID((Integer) valueChangeEvent.getNewValue());
     }
 
-    private List<ExecutionCourse> readExecutionCourses() throws FenixFilterException, FenixServiceException {
+    private List<ExecutionCourse> readExecutionCourses() throws FenixServiceException {
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
@@ -1574,7 +1569,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return executionCourses;
     }
 
-    public List<SelectItem> getExecutionCoursesItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionCoursesItems() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionCourse executionCourse : readExecutionCourses()) {
             result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
@@ -1597,15 +1592,15 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return executionCoursesEnroledStudents;
     }
 
-    public String getSelectedDateString() throws FenixFilterException, FenixServiceException {
+    public String getSelectedDateString() throws FenixServiceException {
         return new LocalDate(getYear(), getMonth(), getDay()).toString("dd/MM/yyyy");
     }
 
-    public String getSelectedBeginHourString() throws FenixFilterException, FenixServiceException {
+    public String getSelectedBeginHourString() throws FenixServiceException {
         return new HourMinuteSecond(getBeginHour(), getBeginMinute(), 0).toString("HH:mm");
     }
 
-    public String getSelectedEndHourString() throws FenixFilterException, FenixServiceException {
+    public String getSelectedEndHourString() throws FenixServiceException {
         return new HourMinuteSecond(getEndHour(), getEndMinute(), 0).toString("HH:mm");
     }
 }

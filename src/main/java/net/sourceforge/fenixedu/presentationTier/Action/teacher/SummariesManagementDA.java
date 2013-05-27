@@ -8,7 +8,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary;
@@ -248,7 +247,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -276,7 +275,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndNew(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -298,7 +297,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndSame(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -332,7 +331,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Professorship teacherLogged = ((Professorship) request.getAttribute("loggedTeacherProfessorship"));
         DynaActionForm dynaActionForm = (DynaActionForm) form;
@@ -361,7 +360,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Summary summary = getSummaryFromParameter(request);
         Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
@@ -552,7 +551,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SummariesManagementBean summaryBean = getSummariesManagementBean();
         readAndSaveTeacher(summaryBean, (DynaActionForm) form, request, mapping);

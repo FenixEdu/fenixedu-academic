@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateOldCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditOldCurricularCourse;
@@ -225,7 +224,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
         return "buildCurricularPlan";
     }
 
-    public String editOldCurricularCourse() throws FenixFilterException {
+    public String editOldCurricularCourse()  {
         try {
             EditOldCurricularCourse.run(getCurricularCourseID(), getName(), getNameEn(), getCode(), getAcronym(),
                     getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(), getWeight(),

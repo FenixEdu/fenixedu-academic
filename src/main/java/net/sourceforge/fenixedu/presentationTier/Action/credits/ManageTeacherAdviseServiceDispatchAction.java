@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteTeacherAdviseServiceByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherAdviseService;
@@ -59,7 +58,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected ActionForward editAdviseService(ActionForm form, HttpServletRequest request, ActionMapping mapping,
-            RoleType roleType) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            RoleType roleType) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm adviseServiceForm = (DynaActionForm) form;
 
@@ -85,7 +84,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected void deleteAdviseService(HttpServletRequest request, RoleType roleType) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+             FenixServiceException {
 
         Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
         try {

@@ -7,7 +7,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ConfirmThesisDocumentSubmission;
 import net.sourceforge.fenixedu.domain.Person;
@@ -147,7 +146,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
     }
 
     public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
         final String thesisIdString = request.getParameter("thesisID");
         final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 

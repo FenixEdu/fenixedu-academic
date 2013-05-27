@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
@@ -29,10 +28,9 @@ public interface IServiceManagerWrapper {
      * @throws FenixServiceException
      * @throws NotAuthorizedException
      */
-    public Object execute(IUserView id, String service, Object argumentos[]) throws FenixServiceException, FenixFilterException;
+    public Object execute(IUserView id, String service, Object argumentos[]) throws FenixServiceException;
 
-    public Object execute(IUserView id, String service, String methods, Object argumentos[]) throws FenixServiceException,
-            FenixFilterException;
+    public Object execute(IUserView id, String service, String methods, Object argumentos[]) throws FenixServiceException;
 
     public HashMap getMapServicesToWatch(IUserView id);
 

@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelResidenceEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidencePaymentCodes;
@@ -95,7 +94,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward cancelResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResidenceEvent residenceEvent =
                 (ResidenceEvent) AbstractDomainObject.fromOID(Long.parseLong(request.getParameter("event")));
 
@@ -109,7 +108,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward preparePayResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ResidenceEvent residenceEvent =
                 (ResidenceEvent) AbstractDomainObject.fromOID(Long.parseLong(request.getParameter("event")));
@@ -125,7 +124,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward payResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ResidenceEvent residenceEvent =
                 (ResidenceEvent) AbstractDomainObject.fromOID(Long.parseLong(request.getParameter("event")));

@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -180,7 +179,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         getViewState().setAttribute("executionYearID", executionYearID);
     }
 
-    public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYearItems() throws  FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
         final InfoExecutionYear currentInfoExecutionYear = ReadCurrentExecutionYear.run();
