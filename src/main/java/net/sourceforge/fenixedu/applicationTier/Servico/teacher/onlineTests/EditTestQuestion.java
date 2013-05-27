@@ -3,11 +3,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,11 +16,11 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Susana Fernandes
  */
-public class EditTestQuestion extends FenixService {
+public class EditTestQuestion {
 
     protected void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue,
             CorrectionFormula formula) throws FenixServiceException {
-        TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testQuestionId);
+        TestQuestion testQuestion = RootDomainObject.getInstance().readTestQuestionByOID(testQuestionId);
         if (testQuestion == null) {
             throw new InvalidArgumentsServiceException();
         }

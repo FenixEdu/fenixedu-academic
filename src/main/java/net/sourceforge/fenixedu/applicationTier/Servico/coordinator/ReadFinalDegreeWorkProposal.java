@@ -4,22 +4,23 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ReadFinalDegreeWorkProposalAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.AccessFinalDegreeWorkProposalAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ReadFinalDegreeWorkProposal extends FenixService {
+public class ReadFinalDegreeWorkProposal {
 
     protected InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
-        return InfoProposal.newInfoFromDomain(rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID));
+        return InfoProposal.newInfoFromDomain(RootDomainObject.getInstance().readProposalByOID(finalDegreeWorkProposalOID));
     }
 
     // Service Invokers migrated from Berserk

@@ -3,12 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -17,11 +18,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class DeleteNotNeedToEnrollInCurricularCourse extends FenixService {
+public class DeleteNotNeedToEnrollInCurricularCourse {
 
     protected void run(Integer notNeedToEnrollInCurricularCourseID) {
         NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse =
-                rootDomainObject.readNotNeedToEnrollInCurricularCourseByOID(notNeedToEnrollInCurricularCourseID);
+                RootDomainObject.getInstance().readNotNeedToEnrollInCurricularCourseByOID(notNeedToEnrollInCurricularCourseID);
         notNeedToEnrollInCurricularCourse.delete();
     }
 

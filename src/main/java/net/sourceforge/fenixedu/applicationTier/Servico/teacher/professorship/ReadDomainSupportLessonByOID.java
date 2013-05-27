@@ -3,7 +3,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -12,10 +13,10 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadDomainSupportLessonByOID extends FenixService {
+public class ReadDomainSupportLessonByOID {
 
     @Service
     public static SupportLesson run(Integer supportLessonID) {
-        return rootDomainObject.readSupportLessonByOID(supportLessonID);
+        return RootDomainObject.getInstance().readSupportLessonByOID(supportLessonID);
     }
 }

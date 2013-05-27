@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -22,7 +21,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateConvokes extends FenixService {
+public class CreateConvokes {
 
     @Service
     public static void run(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,

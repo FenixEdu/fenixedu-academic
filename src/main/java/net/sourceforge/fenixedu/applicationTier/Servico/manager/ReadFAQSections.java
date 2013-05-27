@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -12,11 +12,11 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadFAQSections extends FenixService {
+public class ReadFAQSections {
 
     @Service
     public static Collection run() {
-        List<FAQSection> faqSections = rootDomainObject.getFAQSections();
+        List<FAQSection> faqSections = RootDomainObject.getInstance().getFAQSections();
         return CollectionUtils.collect(faqSections, new Transformer() {
             @Override
             public Object transform(Object arg0) {

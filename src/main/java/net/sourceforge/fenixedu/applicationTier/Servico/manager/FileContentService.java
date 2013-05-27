@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -22,7 +21,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
  * @author naat
  * 
  */
-public abstract class FileContentService extends FenixService {
+public abstract class FileContentService {
 
     protected boolean isPublic(Group permittedGroup) {
         if (permittedGroup == null) {

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -26,7 +25,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteWrittenEvaluation extends FenixService {
+public class DeleteWrittenEvaluation {
 
     /**
      * @param Integer
@@ -35,7 +34,7 @@ public class DeleteWrittenEvaluation extends FenixService {
      */
     protected void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException {
         final WrittenEvaluation writtenEvaluationToDelete =
-                (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

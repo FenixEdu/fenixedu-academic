@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidaciesAccessFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 1/Set/2003, 14:47:35
  * 
  */
-public class ReadCandidacies extends FenixService {
+public class ReadCandidacies {
 
     protected List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id, Integer case2Id,
             Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID, Integer degreeCurricularPlanID,
@@ -53,22 +53,22 @@ public class ReadCandidacies extends FenixService {
         //
         // case[1-5]Id => case study ids in the desired order
 
-        Modality modality = modalityID.intValue() == -1 ? null : rootDomainObject.readModalityByOID(modalityID);
-        Seminary seminary = seminaryID.intValue() == -1 ? null : rootDomainObject.readSeminaryByOID(seminaryID);
-        Theme theme = themeID.intValue() == -1 ? null : rootDomainObject.readThemeByOID(themeID);
+        Modality modality = modalityID.intValue() == -1 ? null : RootDomainObject.getInstance().readModalityByOID(modalityID);
+        Seminary seminary = seminaryID.intValue() == -1 ? null : RootDomainObject.getInstance().readSeminaryByOID(seminaryID);
+        Theme theme = themeID.intValue() == -1 ? null : RootDomainObject.getInstance().readThemeByOID(themeID);
 
         DegreeCurricularPlan degreeCurricularPlan =
-                degreeCurricularPlanID.intValue() == -1 ? null : rootDomainObject
+                degreeCurricularPlanID.intValue() == -1 ? null : RootDomainObject.getInstance()
                         .readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         CurricularCourse curricularCourse =
-                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) rootDomainObject
+                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) RootDomainObject.getInstance()
                         .readDegreeModuleByOID(curricularCourseID);
 
-        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case1Id);
-        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case2Id);
-        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case3Id);
-        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case4Id);
-        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case5Id);
+        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case1Id);
+        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case2Id);
+        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case3Id);
+        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case4Id);
+        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case5Id);
 
         List<SeminaryCandidacy> filteredCandidacies = new ArrayList<SeminaryCandidacy>();
 

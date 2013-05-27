@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Fernanda Quit�rio 10/Nov/2003
  * 
  */
-public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends FenixService {
+public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode {
 
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
@@ -28,7 +28,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends FenixS
             throw new FenixServiceException("nullDegree");
         }
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeCode);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();

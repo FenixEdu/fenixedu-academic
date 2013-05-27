@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -17,7 +17,7 @@ import pt.ist.fenixframework.DomainObject;
  * @author jpvl
  * @author Barbosa
  */
-public abstract class EditDomainObjectService extends FenixService {
+public abstract class EditDomainObjectService {
 
     /**
      * Checks if the objectToEdit can be created or update

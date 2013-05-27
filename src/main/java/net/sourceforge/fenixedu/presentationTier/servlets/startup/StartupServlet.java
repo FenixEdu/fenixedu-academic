@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
@@ -70,7 +69,7 @@ public class StartupServlet extends HttpServlet {
             throw new ServletException("Unable to load build version file");
         }
 
-        FenixService.init(RootDomainObject.getInstance());
+        RootDomainObject.init();
 
         try {
             try {

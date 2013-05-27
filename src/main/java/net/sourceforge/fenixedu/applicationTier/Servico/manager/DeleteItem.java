@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Item;
@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Fernanda Quitério
  * 
  */
-public class DeleteItem extends FenixService {
+public class DeleteItem {
 
     protected Boolean run(Site site, final Item item) {
         if (item != null) {

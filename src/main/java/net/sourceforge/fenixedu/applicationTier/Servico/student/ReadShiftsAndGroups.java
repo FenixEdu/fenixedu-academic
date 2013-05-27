@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
 import net.sourceforge.fenixedu.domain.StudentGroup;
@@ -34,12 +34,12 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadShiftsAndGroups extends FenixService {
+public class ReadShiftsAndGroups {
 
     @Service
     public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }

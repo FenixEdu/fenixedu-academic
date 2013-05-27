@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionDegreesByExecutionYearId extends FenixService {
+public class ReadExecutionDegreesByExecutionYearId {
 
     @Service
     public static List run(Integer executionYearId) {
@@ -21,7 +21,7 @@ public class ReadExecutionDegreesByExecutionYearId extends FenixService {
         if (executionYearId == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
         }
 
         List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());

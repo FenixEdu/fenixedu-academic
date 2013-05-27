@@ -17,7 +17,6 @@ import java.util.ListIterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateClassificationsForStudents extends FenixService {
+public class CreateClassificationsForStudents {
 
     private static Transformer getEntryGradeTransformer = new Transformer() {
         @Override
@@ -98,7 +98,7 @@ public class CreateClassificationsForStudents extends FenixService {
         List<Registration> otherYearsStudents = new ArrayList<Registration>();
         List<Registration> firstYearStudents = new ArrayList<Registration>();
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         for (Registration registration : degreeCurricularPlan.getRegistrations()) {
             if (registration.isInRegisteredState() && registration.getRegistrationAgreement().isNormal()) {
                 if (registration.getRegistrationYear() == currentExecutionYear) {

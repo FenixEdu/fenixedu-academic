@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadPosGradStudentCurricularPlans extends FenixService {
+public class ReadPosGradStudentCurricularPlans {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException {
         List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
         if (registration == null) {
             throw new InvalidArgumentsServiceException("invalidStudentId");
         }

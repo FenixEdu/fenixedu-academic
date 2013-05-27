@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
@@ -15,13 +14,14 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.Season;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateWrittenEvaluation extends FenixService {
+public class CreateWrittenEvaluation {
 
     protected void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
@@ -59,7 +59,7 @@ public class CreateWrittenEvaluation extends FenixService {
 
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
             }
@@ -89,7 +89,7 @@ public class CreateWrittenEvaluation extends FenixService {
     private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
         final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         for (final String roomID : roomIDs) {
-            final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(Integer.valueOf(roomID));
+            final AllocatableSpace room = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }

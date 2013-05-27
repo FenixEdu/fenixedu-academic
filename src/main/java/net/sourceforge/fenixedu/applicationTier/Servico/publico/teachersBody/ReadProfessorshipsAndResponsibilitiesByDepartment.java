@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  * 
  */
-public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixService {
+public class ReadProfessorshipsAndResponsibilitiesByDepartment {
 
     @Service
     public static List run(Integer departmentId, Integer executionYearId) throws FenixServiceException {
@@ -39,10 +39,10 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixServ
         // Execution Year
         ExecutionYear executionYear = null;
         if (executionYearId != null) {
-            executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
         }
         // Departement
-        Department department = rootDomainObject.readDepartmentByOID(departmentId);
+        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
         List teachers = department.getAllCurrentTeachers();
         Iterator iter = teachers.iterator();
 

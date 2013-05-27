@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -21,11 +21,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa & rmalo
  */
 
-public class PrepareEditGroupingMembers extends FenixService {
+public class PrepareEditGroupingMembers {
 
     @Service
     public static List run(Integer executionCourseCode, Integer groupingID) throws FenixServiceException {
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -33,13 +33,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * executionDegree persistentSupportecified in executionDegreeIndex
  */
 
-public class ReadExecutionDegreeByDegreeCurricularPlanID extends FenixService {
+public class ReadExecutionDegreeByDegreeCurricularPlanID {
 
     protected InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex) {
         List infoExecutionDegreeList = null;
         List executionDegrees = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
@@ -72,7 +72,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends FenixService {
      * @throws ExcepcaoPersistencia
      */
     protected InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear) {
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
             return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().get(0));

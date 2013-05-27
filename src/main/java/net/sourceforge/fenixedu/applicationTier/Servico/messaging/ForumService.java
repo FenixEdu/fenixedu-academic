@@ -9,8 +9,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
  *         Created on May 23, 2006, 3:48:23 PM
  * 
  */
-public abstract class ForumService extends FenixService {
+public abstract class ForumService {
 
     protected static final Locale DEFAULT_LOCALE = new Locale("pt");
 
@@ -98,7 +98,7 @@ public abstract class ForumService extends FenixService {
     private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
         if (!persons.isEmpty()) {
             final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
-            SystemSender systemSender = rootDomainObject.getSystemSender();
+            SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
         }
     }

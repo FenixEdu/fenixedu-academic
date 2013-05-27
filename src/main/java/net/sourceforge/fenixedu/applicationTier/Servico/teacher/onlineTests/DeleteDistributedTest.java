@@ -1,18 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteDistributedTest extends FenixService {
+public class DeleteDistributedTest {
 
     protected void run(Integer executionCourseId, final Integer distributedTestId) {
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
 
-        for (Metadata metadata : rootDomainObject.getMetadatasSet()) {
+        for (Metadata metadata : RootDomainObject.getInstance().getMetadatasSet()) {
             if (metadata.getVisibility() != null && !metadata.getVisibility().booleanValue()
                     && metadata.getQuestionsSet().size() == 0) {
                 metadata.delete();

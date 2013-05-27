@@ -4,19 +4,20 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeletePersonFunction extends FenixService {
+public class DeletePersonFunction {
 
     protected void run(Integer personFunctionID) throws FenixServiceException {
-        PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionID);
+        PersonFunction personFunction = (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(personFunctionID);
         if (personFunction == null) {
             throw new FenixServiceException("error.delete.personFunction.no.personFunction");
         }

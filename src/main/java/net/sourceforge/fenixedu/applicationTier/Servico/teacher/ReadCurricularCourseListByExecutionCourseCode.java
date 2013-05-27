@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -31,13 +31,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Ângela
  * 
  */
-public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {
+public class ReadCurricularCourseListByExecutionCourseCode {
 
     protected TeacherAdministrationSiteView run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {

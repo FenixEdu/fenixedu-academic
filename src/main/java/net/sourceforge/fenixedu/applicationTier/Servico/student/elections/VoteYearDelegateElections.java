@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class VoteYearDelegateElections extends FenixService {
+public class VoteYearDelegateElections {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
@@ -39,7 +39,7 @@ public class VoteYearDelegateElections extends FenixService {
                 DelegateElectionVote vote = createDelegateElectionVote(votingPeriod, votedStudent);
                 votingPeriod.addVotingStudents(student);
                 votingPeriod.addVotes(vote);
-                new Message(rootDomainObject.getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
+                new Message(RootDomainObject.getInstance().getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
                         new PersonGroup(person)).asCollection(), subject, msg, "");
             } else {
                 throw new FenixServiceException("error.student.elections.voting.studentAlreadyVoted");

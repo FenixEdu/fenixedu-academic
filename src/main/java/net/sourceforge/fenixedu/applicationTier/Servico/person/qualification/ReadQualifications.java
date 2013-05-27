@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationsAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -19,7 +18,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadQualifications extends FenixService {
+public class ReadQualifications {
 
     protected InfoSiteQualifications run(String user) {
 

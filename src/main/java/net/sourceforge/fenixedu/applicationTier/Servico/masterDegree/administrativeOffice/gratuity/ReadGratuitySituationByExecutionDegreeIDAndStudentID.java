@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends FenixService {
+public class ReadGratuitySituationByExecutionDegreeIDAndStudentID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -23,8 +24,8 @@ public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends FenixS
 
         InfoGratuitySituation infoGratuitySituation = null;
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentID);
 
         if ((executionDegree == null) || (registration == null)) {
             return null;

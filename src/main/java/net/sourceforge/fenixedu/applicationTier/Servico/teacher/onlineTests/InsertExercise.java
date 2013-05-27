@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -41,7 +41,7 @@ import com.sun.faces.el.impl.parser.ParseException;
 /**
  * @author Susana Fernandes
  */
-public class InsertExercise extends FenixService {
+public class InsertExercise {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
@@ -50,7 +50,7 @@ public class InsertExercise extends FenixService {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

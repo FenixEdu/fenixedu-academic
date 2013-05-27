@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,13 +15,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
-public class CreateGuideSituation extends FenixService {
+public class CreateGuideSituation {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(Integer guideID, String remarks, GuideState situation, Date date) {
 
-        Guide guide = rootDomainObject.readGuideByOID(guideID);
+        Guide guide = RootDomainObject.getInstance().readGuideByOID(guideID);
 
         for (GuideSituation guideSituation : guide.getGuideSituations()) {
             guideSituation.setState(new State(State.INACTIVE));

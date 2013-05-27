@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -23,12 +23,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class InsertGroupingMembers extends FenixService {
+public class InsertGroupingMembers {
 
     protected Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
             throws FenixServiceException {
 
-        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
@@ -40,7 +40,7 @@ public class InsertGroupingMembers extends FenixService {
         int totalStudentsProcessed = 0;
 
         for (final Integer studentCode : (List<Integer>) studentCodes) {
-            final Registration registration = rootDomainObject.readRegistrationByOID(studentCode);
+            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentCode);
             if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
                 final Attends attends = findAttends(registration, executionCourses);
                 if (attends != null) {

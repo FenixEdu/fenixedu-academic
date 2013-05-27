@@ -4,20 +4,20 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class InsertTestAsNewTest extends FenixService {
+public class InsertTestAsNewTest {
 
     protected Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException {
-        Test oldTest = rootDomainObject.readTestByOID(oldTestId);
+        Test oldTest = RootDomainObject.getInstance().readTestByOID(oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
         }

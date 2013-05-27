@@ -5,22 +5,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends FenixService {
+public class ReadCurricularCourseScopeListByDegreeCurricularPlan {
 
     @Service
     public static List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 
         List allCurricularCourseScope = new ArrayList();
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
         List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         if (allCurricularCourses == null || allCurricularCourses.isEmpty()) {

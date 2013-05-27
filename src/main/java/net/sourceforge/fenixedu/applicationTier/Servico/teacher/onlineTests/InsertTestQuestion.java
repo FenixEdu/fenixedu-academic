@@ -5,12 +5,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -23,7 +23,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertTestQuestion extends FenixService {
+public class InsertTestQuestion {
 
     private String path = new String();
 
@@ -32,7 +32,7 @@ public class InsertTestQuestion extends FenixService {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = rootDomainObject.readMetadataByOID(new Integer(element));
+            Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(new Integer(element));
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -45,7 +45,7 @@ public class InsertTestQuestion extends FenixService {
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Test test = rootDomainObject.readTestByOID(testId);
+            Test test = RootDomainObject.getInstance().readTestByOID(testId);
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -21,7 +20,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public abstract class TutorshipManagement extends FenixService {
+public abstract class TutorshipManagement {
 
     private boolean verifyIfBelongsToDegree(Registration registration, Degree degree) {
         if (registration == null) {

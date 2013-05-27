@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EnrollStudentInShifts extends FenixService {
+public class EnrollStudentInShifts {
 
     public class StudentNotFoundServiceException extends FenixServiceException {
     }
@@ -21,7 +22,7 @@ public class EnrollStudentInShifts extends FenixService {
 
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
+        final Shift selectedShift = RootDomainObject.getInstance().readShiftByOID(shiftId);
 
         if (selectedShift == null) {
             errorReport.getUnExistingShifts().add(shiftId);

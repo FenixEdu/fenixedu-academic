@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
@@ -16,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SelectCandidacies extends FenixService {
+public class SelectCandidacies {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service

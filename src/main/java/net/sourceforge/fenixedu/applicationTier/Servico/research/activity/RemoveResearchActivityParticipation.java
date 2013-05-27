@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalPartic
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RemoveResearchActivityParticipation extends FenixService {
+public class RemoveResearchActivityParticipation {
 
     @Checked("ResultPredicates.author")
     @Service

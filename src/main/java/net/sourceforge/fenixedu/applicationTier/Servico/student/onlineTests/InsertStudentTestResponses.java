@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTe
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
@@ -42,7 +42,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
-public class InsertStudentTestResponses extends FenixService {
+public class InsertStudentTestResponses {
     private static final Logger logger = Logger.getLogger(InsertStudentTestResponses.class);
 
     private static String path;
@@ -66,7 +66,7 @@ public class InsertStudentTestResponses extends FenixService {
             throw new NotAuthorizedStudentToDoTestException();
         }
 
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }

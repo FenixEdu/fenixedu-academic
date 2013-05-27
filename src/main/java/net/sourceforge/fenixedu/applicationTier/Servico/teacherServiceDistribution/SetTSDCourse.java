@@ -2,21 +2,21 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SetTSDCourse extends FenixService {
+public class SetTSDCourse {
     protected void run(Integer tsdCourseId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(tsdCourseId);
+        TSDCourse tsdCourse = RootDomainObject.getInstance().readTSDCourseByOID(tsdCourseId);
 
         String firstTimeEnrolledStudentsTypeStr = (String) tsdCourseParameters.get("firstTimeEnrolledStudentsType");
         // Object removeTSDLoad = tsdCourseParameters.get("removeTSDLoad");

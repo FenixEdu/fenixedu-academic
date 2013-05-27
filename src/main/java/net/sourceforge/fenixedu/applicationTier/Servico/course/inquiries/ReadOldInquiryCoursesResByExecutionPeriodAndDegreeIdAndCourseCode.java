@@ -6,11 +6,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.course.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends FenixService {
+public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service
@@ -28,8 +28,8 @@ public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode e
             IllegalAccessException {
         InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;
 
-        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
 
         if (executionSemester == null) {
             throw new FenixServiceException("nullExecutionPeriodId");

@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.BusinessArea;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateBusinessArea extends FenixService {
+public class CreateBusinessArea {
 
     @Service
     public static BusinessArea run(final Integer level, final String code, final String description) throws FenixServiceException {

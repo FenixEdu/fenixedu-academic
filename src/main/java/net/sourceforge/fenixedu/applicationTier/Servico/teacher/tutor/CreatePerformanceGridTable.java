@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.PedagogicalCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
@@ -22,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreatePerformanceGridTable extends FenixService {
+public class CreatePerformanceGridTable {
 
     protected PerformanceGridTableDTO run(List<Tutorship> tutorships, ExecutionYear studentEntryYear, ExecutionYear monitoringYear) {
         PerformanceGridTableDTO performanceGrid = new PerformanceGridTableDTO(studentEntryYear, monitoringYear);

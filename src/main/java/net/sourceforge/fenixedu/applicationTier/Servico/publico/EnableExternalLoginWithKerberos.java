@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestBean;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EnableExternalLoginWithKerberos extends FenixService {
+public class EnableExternalLoginWithKerberos {
 
     @Service
     public static void run(LoginRequestBean bean) throws FenixServiceException {

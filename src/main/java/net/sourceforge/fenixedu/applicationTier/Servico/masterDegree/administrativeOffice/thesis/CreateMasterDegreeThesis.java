@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlready
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class CreateMasterDegreeThesis extends FenixService {
+public class CreateMasterDegreeThesis {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -46,7 +46,7 @@ public class CreateMasterDegreeThesis extends FenixService {
             throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis != null) {
             throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");

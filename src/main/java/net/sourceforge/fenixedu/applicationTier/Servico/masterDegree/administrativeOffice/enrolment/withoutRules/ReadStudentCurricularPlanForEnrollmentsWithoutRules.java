@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentCurricularPlanForEnrollmentsWithoutRules extends FenixService {
+public class ReadStudentCurricularPlanForEnrollmentsWithoutRules {
 
     protected StudentCurricularPlan run(Registration registration, DegreeType degreeType, ExecutionSemester executionSemester)
             throws FenixServiceException {

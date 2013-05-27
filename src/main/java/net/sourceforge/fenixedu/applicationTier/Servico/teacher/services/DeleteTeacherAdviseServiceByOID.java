@@ -3,11 +3,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import pt.ist.fenixWebFramework.services.Service;
@@ -17,11 +18,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class DeleteTeacherAdviseServiceByOID extends FenixService {
+public class DeleteTeacherAdviseServiceByOID {
 
     protected void run(Integer teacherAdviseServiceID, RoleType roleType) {
         TeacherAdviseService teacherAdviseService =
-                (TeacherAdviseService) rootDomainObject.readTeacherServiceItemByOID(teacherAdviseServiceID);
+                (TeacherAdviseService) RootDomainObject.getInstance().readTeacherServiceItemByOID(teacherAdviseServiceID);
         teacherAdviseService.delete(roleType);
     }
 

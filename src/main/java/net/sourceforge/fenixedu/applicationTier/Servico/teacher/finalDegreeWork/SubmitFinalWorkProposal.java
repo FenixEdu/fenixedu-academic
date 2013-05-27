@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.SubmitFinalWorkProposalAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalE
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.services.Service;
@@ -22,11 +23,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class SubmitFinalWorkProposal extends FenixService {
+public class SubmitFinalWorkProposal {
 
     protected void run(InfoProposalEditor infoProposal) throws FenixServiceException {
         Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
 
         Scheduleing scheduleing = executionDegree.getScheduling();
         if (scheduleing == null) {
@@ -35,7 +36,7 @@ public class SubmitFinalWorkProposal extends FenixService {
 
         Proposal proposal = null;
         if (infoProposal.getIdInternal() != null) {
-            proposal = rootDomainObject.readProposalByOID(infoProposal.getIdInternal());
+            proposal = RootDomainObject.getInstance().readProposalByOID(infoProposal.getIdInternal());
         }
         if (proposal == null) {
             proposal = new Proposal();
@@ -86,7 +87,7 @@ public class SubmitFinalWorkProposal extends FenixService {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
                 if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                    Branch branch = rootDomainObject.readBranchByOID(infoBranch.getIdInternal());
+                    Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getIdInternal());
                     if (branch != null) {
                         proposal.getBranches().add(branch);
                     }

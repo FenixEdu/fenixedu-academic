@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.credits.EditTeacherDegreeFinalProjectStudentAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -11,13 +10,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditTeacherDegreeFinalProjectStudentByOID extends FenixService {
+public class EditTeacherDegreeFinalProjectStudentByOID {
 
     protected void run(Integer objectID, InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
             throws FenixServiceException {
@@ -30,14 +30,14 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends FenixService {
         }
 
         final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
                         .getIdInternal());
         if (executionSemester == null) {
             throw new FenixServiceException("message.execution-period-not-found");
         }
 
         final InfoTeacher infoTeacher = infoTeacherDegreeFinalProjectStudent.getInfoTeacher();
-        final Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoTeacher.getIdInternal());
         if (teacher == null) {
             throw new FenixServiceException("message.teacher-not-found");
         }

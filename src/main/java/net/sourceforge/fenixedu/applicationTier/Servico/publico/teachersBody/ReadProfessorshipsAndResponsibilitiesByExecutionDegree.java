@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -30,12 +30,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  * 
  */
-public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends FenixService {
+public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree {
 
     @Service
     public static List run(Integer executionDegreeId) throws FenixServiceException {
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
 
         List professorships =
                 Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree.getDegreeCurricularPlan(),

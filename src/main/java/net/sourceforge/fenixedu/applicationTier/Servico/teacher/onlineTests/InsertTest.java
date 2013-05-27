@@ -1,18 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertTest extends FenixService {
+public class InsertTest {
 
     protected Integer run(Integer executionCourseId, String title, String information) throws InvalidArgumentsServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

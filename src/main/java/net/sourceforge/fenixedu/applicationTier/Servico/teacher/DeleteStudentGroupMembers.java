@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -26,12 +26,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa and rmalo 31/Ago/2004
  */
 
-public class DeleteStudentGroupMembers extends FenixService {
+public class DeleteStudentGroupMembers {
 
     protected Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
             throws FenixServiceException {
 
-        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

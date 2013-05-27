@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-public class ReadTSDCoursesFromTSDProcesses extends FenixService {
+public class ReadTSDCoursesFromTSDProcesses {
     public List<TSDCourseDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
         List<TSDCourseDTOEntry> tsdCourseDTOEntryList = new ArrayList<TSDCourseDTOEntry>();
 
         for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
             TeacherServiceDistribution tsd = null;
 
-            tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
+            tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
 
             List<ExecutionSemester> executionPeriodList =
                     getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
@@ -42,7 +42,7 @@ public class ReadTSDCoursesFromTSDProcesses extends FenixService {
     private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
 
         if (executionSemester != null) {
             executionPeriodList.add(executionSemester);

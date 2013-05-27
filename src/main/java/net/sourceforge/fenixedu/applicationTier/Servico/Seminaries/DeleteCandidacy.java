@@ -5,9 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,10 +20,10 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 25/Ago/2003, 15:09:58
  * 
  */
-public class DeleteCandidacy extends FenixService {
+public class DeleteCandidacy {
 
     protected void run(Integer id) throws BDException {
-        SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
+        SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(id);
         candidacy.delete();
     }
 

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPersonEditor;
@@ -18,7 +17,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertExternalPersons extends FenixService {
+public class InsertExternalPersons {
 
     @Service
     public static List<ExternalContract> run(final List<InfoExternalPersonEditor> infoExternalPersons)

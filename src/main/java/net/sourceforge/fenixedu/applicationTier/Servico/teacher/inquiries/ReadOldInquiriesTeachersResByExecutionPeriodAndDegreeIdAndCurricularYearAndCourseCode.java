@@ -6,11 +6,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -23,15 +23,15 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode extends FenixService {
+public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service
     public static List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode)
             throws FenixServiceException {
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
 
-        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
 
         if (executionSemester == null) {
             throw new FenixServiceException("nullExecutionPeriodId");

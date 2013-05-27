@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -26,7 +27,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
 
         ExecutionSemester executionSemester = null;
         if (executionPeriodCode != null) {
-            executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodCode);
+            executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodCode);
         }
 
         Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());

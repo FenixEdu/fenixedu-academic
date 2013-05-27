@@ -1,20 +1,21 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorExecutionDegreeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Tânia Pousão Create on 04/Fev/2003
  */
-public class UserCoordinatorByExecutionDegree extends FenixService {
+public class UserCoordinatorByExecutionDegree {
 
     protected Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare) throws FenixServiceException {
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeCode);
         final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
         if (coordinator == null) {

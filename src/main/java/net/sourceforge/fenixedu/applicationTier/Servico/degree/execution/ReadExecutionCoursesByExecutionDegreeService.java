@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionCoursesByExecutionDegreeService extends FenixService {
+public class ReadExecutionCoursesByExecutionDegreeService {
 
     public static class NonExistingExecutionDegree extends FenixServiceException {
         public NonExistingExecutionDegree() {
@@ -30,10 +30,10 @@ public class ReadExecutionCoursesByExecutionDegreeService extends FenixService {
         if (executionPeriodId == null) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
-            executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+            executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
         }
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
             throw new NonExistingExecutionDegree();
         }

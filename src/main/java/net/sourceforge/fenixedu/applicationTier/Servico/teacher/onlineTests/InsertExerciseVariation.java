@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 /**
  * @author Susana Fernandes
  */
-public class InsertExerciseVariation extends FenixService {
+public class InsertExerciseVariation {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
@@ -38,12 +38,12 @@ public class InsertExerciseVariation extends FenixService {
             throws FenixServiceException, NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
+        Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }

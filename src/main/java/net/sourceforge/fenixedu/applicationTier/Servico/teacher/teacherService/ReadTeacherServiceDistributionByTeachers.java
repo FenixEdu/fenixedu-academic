@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -39,13 +39,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author jpmsit, amak
  */
-public class ReadTeacherServiceDistributionByTeachers extends FenixService {
+public class ReadTeacherServiceDistributionByTeachers {
 
     protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ParseException {
 
         final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(rootDomainObject.readExecutionSemesterByOID(executionPeriodID));
+            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID));
         }
 
         final ExecutionSemester startPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
@@ -54,7 +54,7 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 
         DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-        Department department = rootDomainObject.readDepartmentByOID(departmentId);
+        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
 
         for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 

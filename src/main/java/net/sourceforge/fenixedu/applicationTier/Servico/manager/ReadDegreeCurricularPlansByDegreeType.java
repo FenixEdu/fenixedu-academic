@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -18,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class ReadDegreeCurricularPlansByDegreeType extends FenixService {
+public class ReadDegreeCurricularPlansByDegreeType {
 
     @Service
     public static List<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {

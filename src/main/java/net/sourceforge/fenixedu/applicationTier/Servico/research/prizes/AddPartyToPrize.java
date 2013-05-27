@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.prizes;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.EditPrizeFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.presentationTier.Action.research.UnitNameBean;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AddPartyToPrize extends FenixService {
+public class AddPartyToPrize {
 
     protected void run(PersonNameBean bean, Prize prize) {
         Person person = (bean.getPersonName() == null) ? getNewExternalPerson(bean.getName()) : bean.getPersonName().getPerson();

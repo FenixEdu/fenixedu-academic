@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -29,7 +29,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentsByIdArray extends FenixService {
+public class ReadStudentsByIdArray {
 
     public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts)
             throws FenixServiceException {
@@ -49,7 +49,7 @@ public class ReadStudentsByIdArray extends FenixService {
             throws FenixServiceException {
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -84,7 +84,7 @@ public class ReadStudentsByIdArray extends FenixService {
             if (shift2.equals(bundle.getString("label.allShifts"))) {
                 continue;
             }
-            Shift shift = rootDomainObject.readShiftByOID(new Integer(shift2));
+            Shift shift = RootDomainObject.getInstance().readShiftByOID(new Integer(shift2));
             List<Registration> studentList = shift.getStudents();
             for (Registration registration : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
@@ -103,7 +103,7 @@ public class ReadStudentsByIdArray extends FenixService {
             Integer executionCourseId) throws FenixServiceException {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
 
         for (String student : students) {
             if (student.equals(bundle.getString("label.allStudents"))) {
@@ -118,7 +118,7 @@ public class ReadStudentsByIdArray extends FenixService {
                 }
                 break;
             }
-            Registration registration = rootDomainObject.readRegistrationByOID(new Integer(student));
+            Registration registration = RootDomainObject.getInstance().readRegistrationByOID(new Integer(student));
             InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
             if (!studentsList.contains(infoStudent)) {
                 if (!studentsList.contains(infoStudent)

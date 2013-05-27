@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.degree;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -13,7 +12,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadAllDegreesByType extends FenixService {
+public class ReadAllDegreesByType {
 
     @Service
     public static List<InfoDegree> run(String degreeType) throws FenixServiceException {

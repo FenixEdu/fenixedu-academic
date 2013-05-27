@@ -6,14 +6,14 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudent extends FenixService {
+public class ReadStudent {
 
     // FIXME: We have to read the student by type also !!
 

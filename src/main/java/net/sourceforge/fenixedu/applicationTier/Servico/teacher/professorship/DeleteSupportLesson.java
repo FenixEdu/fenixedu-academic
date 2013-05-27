@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -25,10 +26,10 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class DeleteSupportLesson extends FenixService {
+public class DeleteSupportLesson {
 
     protected void run(Integer supportLessonID, RoleType roleType) {
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonID);
+        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonID);
         log(supportLesson);
         supportLesson.delete(roleType);
     }

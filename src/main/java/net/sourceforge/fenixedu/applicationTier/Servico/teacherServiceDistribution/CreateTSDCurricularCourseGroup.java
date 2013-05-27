@@ -3,26 +3,26 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateTSDCurricularCourseGroup extends FenixService {
+public class CreateTSDCurricularCourseGroup {
     protected TSDCurricularCourseGroup run(Integer tsdId, Integer[] tsdCurricularCourseToGroupArray) {
 
-        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
         List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
         TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
 
         for (Integer tsdCurricularCourseId : tsdCurricularCourseToGroupArray) {
             TSDCurricularCourse tsdCurricularCourse =
-                    (TSDCurricularCourse) rootDomainObject.readTSDCourseByOID(tsdCurricularCourseId);
+                    (TSDCurricularCourse) RootDomainObject.getInstance().readTSDCourseByOID(tsdCurricularCourseId);
 
             if (tsdCurricularCourse != null) {
                 tsdCurricularCourseList.add(tsdCurricularCourse);

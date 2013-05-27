@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AssociateParentUnit extends FenixService {
+public class AssociateParentUnit {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
@@ -15,7 +16,7 @@ public class AssociateParentUnit extends FenixService {
             throws FenixServiceException {
 
         Unit parentUnit = getParentUnit(parentUnitID);
-        Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
+        Unit unit = (Unit) RootDomainObject.getInstance().readPartyByOID(unitID);
 
         if (unit == null) {
             throw new FenixServiceException("error.inexistent.unit");
@@ -26,7 +27,7 @@ public class AssociateParentUnit extends FenixService {
     private static Unit getParentUnit(Integer parentUnitID) {
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) rootDomainObject.readPartyByOID(parentUnitID);
+            parentUnit = (Unit) RootDomainObject.getInstance().readPartyByOID(parentUnitID);
         }
         return parentUnit;
     }

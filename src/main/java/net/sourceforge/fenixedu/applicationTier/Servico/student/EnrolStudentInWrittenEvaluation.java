@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExamStudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -11,19 +10,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EnrolStudentInWrittenEvaluation extends FenixService {
+public class EnrolStudentInWrittenEvaluation {
 
     protected void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), username, writtenEvaluationOID);
 
         final WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
         final Person person = Person.readPersonByUsername(username);
         final Student student = person.getStudent();
         final Registration registration = findCorrectRegistration(student, writtenEvaluation.getAssociatedExecutionCoursesSet());

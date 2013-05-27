@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipEr
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -25,7 +26,7 @@ public class InsertTutorship extends TutorshipManagement {
 
         final Integer studentNumber = bean.getStudentNumber();
         final Teacher teacher = bean.getTeacher();
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         validateTeacher(teacher, executionDegree);
@@ -45,7 +46,7 @@ public class InsertTutorship extends TutorshipManagement {
     public List<TutorshipErrorBean> run(Integer executionDegreeID, StudentsByEntryYearBean bean) throws FenixServiceException {
 
         final List<StudentCurricularPlan> students = bean.getStudentsToCreateTutorshipList();
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         final Teacher teacher = bean.getTeacher();
 

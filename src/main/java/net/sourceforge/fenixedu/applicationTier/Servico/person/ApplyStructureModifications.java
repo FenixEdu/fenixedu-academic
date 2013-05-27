@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
@@ -11,7 +10,7 @@ import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ApplyStructureModifications extends FenixService {
+public class ApplyStructureModifications {
 
     @Service
     public static void run(List<ModifiedContentBean> modifications) {

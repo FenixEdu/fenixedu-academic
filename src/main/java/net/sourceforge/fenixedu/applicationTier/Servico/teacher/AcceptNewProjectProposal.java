@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa & rmalo
  * 
  */
-public class AcceptNewProjectProposal extends FenixService {
+public class AcceptNewProjectProposal {
 
     protected Boolean run(Integer executionCourseId, Integer groupPropertiesId, String acceptancePersonUserName)
             throws FenixServiceException {
@@ -38,12 +38,12 @@ public class AcceptNewProjectProposal extends FenixService {
             return Boolean.FALSE;
         }
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
         if (grouping == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(grouping);
 
         if (groupPropertiesExecutionCourse == null) {

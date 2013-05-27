@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteScientificCommission extends FenixService {
+public class DeleteScientificCommission {
 
     protected void run(Integer executionDegreeId, ScientificCommission commission) {
         ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);

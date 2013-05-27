@@ -3,14 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.annou
 import java.util.Collection;
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditUnitAnnouncementBoardApprovers extends FenixService {
+public class EditUnitAnnouncementBoardApprovers {
 
     @Service
     public static void run(final AnnouncementBoard announcementBoard, final Collection<AnnouncementBoardApproversBean> approvers) {

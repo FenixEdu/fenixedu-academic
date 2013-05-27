@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.StudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -16,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author LuisCruz & Sara Ribeiro
  */
-public class ReadClassesByExecutionCourse extends FenixService {
+public class ReadClassesByExecutionCourse {
 
     public List<InfoClass> run(ExecutionCourse executionCourse) {
 

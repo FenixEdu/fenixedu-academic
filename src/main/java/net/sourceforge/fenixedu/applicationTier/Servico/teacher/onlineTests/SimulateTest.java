@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -25,7 +25,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SimulateTest extends FenixService {
+public class SimulateTest {
 
     private final String path = new String();
 
@@ -157,7 +157,7 @@ public class SimulateTest extends FenixService {
             throws InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        Test test = rootDomainObject.readTestByOID(testId);
+        Test test = RootDomainObject.getInstance().readTestByOID(testId);
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
@@ -170,7 +170,7 @@ public class SimulateTest extends FenixService {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = rootDomainObject.readQuestionByOID(Integer.valueOf(questionCodes[i]));
+            Question question = RootDomainObject.getInstance().readQuestionByOID(Integer.valueOf(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

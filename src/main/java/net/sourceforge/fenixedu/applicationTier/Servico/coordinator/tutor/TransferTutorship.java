@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipMa
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -29,7 +30,7 @@ public class TransferTutorship extends TutorshipManagement {
             List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException {
 
         final Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         validateTeacher(teacher, executionDegree);

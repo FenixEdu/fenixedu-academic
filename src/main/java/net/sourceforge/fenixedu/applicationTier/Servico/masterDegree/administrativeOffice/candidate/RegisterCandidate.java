@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -28,6 +27,7 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -41,13 +41,13 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RegisterCandidate extends FenixService {
+public class RegisterCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
-        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
         Person person = masterDegreeCandidate.getPerson();
 
@@ -155,7 +155,7 @@ public class RegisterCandidate extends FenixService {
 
     private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
             MasterDegreeCandidate masterDegreeCandidate) {
-        Branch branch = rootDomainObject.readBranchByOID(branchID);
+        Branch branch = RootDomainObject.getInstance().readBranchByOID(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
 
         StudentCurricularPlan studentCurricularPlan =

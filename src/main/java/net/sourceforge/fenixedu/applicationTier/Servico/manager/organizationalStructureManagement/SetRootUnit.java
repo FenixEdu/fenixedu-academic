@@ -1,24 +1,25 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SetRootUnit extends FenixService {
+public class SetRootUnit {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(final Unit unit, final Boolean institutionUnit) {
 
         if (unit.isPlanetUnit()) {
-            rootDomainObject.setEarthUnit(unit);
+            RootDomainObject.getInstance().setEarthUnit(unit);
 
         } else if (institutionUnit) {
-            rootDomainObject.setInstitutionUnit(unit);
+            RootDomainObject.getInstance().setInstitutionUnit(unit);
 
         } else if (!institutionUnit) {
-            rootDomainObject.setExternalInstitutionUnit(unit);
+            RootDomainObject.getInstance().setExternalInstitutionUnit(unit);
         }
     }
 }

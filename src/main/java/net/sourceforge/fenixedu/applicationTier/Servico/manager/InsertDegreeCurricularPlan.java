@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertDegreeCurricularPlan extends FenixService {
+public class InsertDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -19,7 +20,7 @@ public class InsertDegreeCurricularPlan extends FenixService {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degree = rootDomainObject.readDegreeByOID(infoDcp.getInfoDegree().getIdInternal());
+        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(infoDcp.getInfoDegree().getIdInternal());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

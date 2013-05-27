@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -18,13 +18,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class ReadPublishedFinalDegreeWorkProposalHeaders extends FenixService {
+public class ReadPublishedFinalDegreeWorkProposalHeaders {
 
     @Service
     public static List<FinalDegreeWorkProposalHeader> run(Integer executionDegreeOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeOID);
         if (executionDegree != null && executionDegree.hasScheduling()) {
             final Set<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().findPublishedProposals();
 

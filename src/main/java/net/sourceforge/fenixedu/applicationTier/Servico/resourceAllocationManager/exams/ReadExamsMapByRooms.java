@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -23,13 +22,14 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExamsMapByRooms extends FenixService {
+public class ReadExamsMapByRooms {
 
     @Service
     public static List<InfoRoomExamsMap> run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
@@ -49,7 +49,7 @@ public class ReadExamsMapByRooms extends FenixService {
         }
 
         final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 
         for (final InfoRoom infoRoom : infoRooms) {
             final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
@@ -76,7 +76,7 @@ public class ReadExamsMapByRooms extends FenixService {
 
     private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final AllocatableSpace oldRoom = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
+        final AllocatableSpace oldRoom = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(infoRoom.getIdInternal());
         for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
             if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
                 List<WrittenEvaluation> writtenEvaluations =

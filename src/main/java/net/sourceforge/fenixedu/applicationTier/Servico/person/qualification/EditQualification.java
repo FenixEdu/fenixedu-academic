@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.person.QualificationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -13,20 +13,21 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class EditQualification extends FenixService {
+public class EditQualification {
 
     protected void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
-        Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
+        Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(qualificationId);
         // If it doesn't exist in the database, a new one has to be created
-        Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
+        Country country = RootDomainObject.getInstance().readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
         if (qualification == null) {
-            Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
+            Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
             qualification = new Qualification(person, country, infoQualification);
 
         } else {

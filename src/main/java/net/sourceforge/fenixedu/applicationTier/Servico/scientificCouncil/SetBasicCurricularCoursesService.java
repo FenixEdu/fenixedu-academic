@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -21,13 +21,13 @@ import pt.ist.fenixWebFramework.services.Service;
  *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class SetBasicCurricularCoursesService extends FenixService {
+public class SetBasicCurricularCoursesService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
     public static Boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
         List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 
@@ -45,7 +45,7 @@ public class SetBasicCurricularCoursesService extends FenixService {
         while (itId.hasNext()) {
 
             CurricularCourse curricularCourseBasic =
-                    (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) itId.next());
+                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID((Integer) itId.next());
             curricularCourseBasic.setBasic(new Boolean(true));
 
         }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithInfoTeacherArgumentAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeach
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.TeacherDegreeFinalProjectStudentsDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import pt.ist.fenixWebFramework.services.Service;
@@ -24,14 +24,14 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author jpvl
  */
-public class ReadTeacherDFPStudentsService extends FenixService {
+public class ReadTeacherDFPStudentsService {
 
     protected TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId) {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
         ExecutionSemester executionSemester = getExecutionPeriod(executionPeriodId);
 
-        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
         final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents =
@@ -58,7 +58,7 @@ public class ReadTeacherDFPStudentsService extends FenixService {
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
-            executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+            executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
         }
         return executionSemester;
     }

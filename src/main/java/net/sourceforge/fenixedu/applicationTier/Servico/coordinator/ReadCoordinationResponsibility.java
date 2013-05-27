@@ -4,23 +4,24 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Mota 17/Set/2003
  * 
  */
-public class ReadCoordinationResponsibility extends FenixService {
+public class ReadCoordinationResponsibility {
 
     protected Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException {
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
         Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
 
         if (coordinator == null || !coordinator.getResponsible().booleanValue()) {

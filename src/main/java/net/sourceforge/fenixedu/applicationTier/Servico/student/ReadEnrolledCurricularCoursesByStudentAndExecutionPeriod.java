@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -20,13 +20,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends FenixService {
+public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId) {
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
         List<Enrolment> enrollments = studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester);
 
         List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();

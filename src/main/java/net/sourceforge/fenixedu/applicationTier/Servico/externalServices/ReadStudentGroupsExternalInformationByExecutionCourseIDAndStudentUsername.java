@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalDegreeCurricularPlanInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalExecutionCourseInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalGroupInfo;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -27,11 +27,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  *         Created at 11:23, February the 28th, 2005
  */
-public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends FenixService {
+public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername {
     @Service
     public static Collection run(Integer executionCourseID, String username) {
         Collection result = new ArrayList();
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
         List groupProperties = executionCourse.getGroupings();
 

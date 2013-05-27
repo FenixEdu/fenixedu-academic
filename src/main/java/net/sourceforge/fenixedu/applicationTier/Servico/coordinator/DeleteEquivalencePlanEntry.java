@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteEquivalencePlanEntry extends FenixService {
+public class DeleteEquivalencePlanEntry {
 
     protected void run(final EquivalencePlanEntry EquivalencePlanEntry) {
         if (EquivalencePlanEntry != null) {

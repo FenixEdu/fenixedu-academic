@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
@@ -17,12 +17,12 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author naat
  */
-public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType extends FenixService {
+public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType {
 
     public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
             throws FenixServiceException {
 
-        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
 
         List<ExecutionCourse> lecturedExecutionCourses;
 
@@ -30,7 +30,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
             lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
         } else {
-            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+            ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
             lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
         }
 

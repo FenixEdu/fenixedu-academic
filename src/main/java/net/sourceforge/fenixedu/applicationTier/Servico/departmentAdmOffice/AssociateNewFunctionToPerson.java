@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
@@ -18,17 +19,17 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AssociateNewFunctionToPerson extends FenixService {
+public class AssociateNewFunctionToPerson {
 
     protected void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
             throws FenixServiceException, DomainException {
 
-        Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
         if (person == null) {
             throw new FenixServiceException("error.noPerson");
         }
 
-        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+        Function function = (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(functionID);
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }

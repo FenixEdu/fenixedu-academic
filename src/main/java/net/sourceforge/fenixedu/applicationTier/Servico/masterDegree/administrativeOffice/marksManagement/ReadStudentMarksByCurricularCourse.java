@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Fernanda Quitério 01/07/2003
  * 
  */
-public class ReadStudentMarksByCurricularCourse extends FenixService {
+public class ReadStudentMarksByCurricularCourse {
 
     @Service
     public static List run(Integer curricularCourseID, Integer studentNumber, String executionYear, Integer enrolmentId)
@@ -43,7 +43,7 @@ public class ReadStudentMarksByCurricularCourse extends FenixService {
         List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
         Enrolment enrolment =
-                enrolmentId != null ? (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentId) : getEnrolment(
+                enrolmentId != null ? (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentId) : getEnrolment(
                         curricularCourseID, studentNumber, executionYear);
 
         if (enrolment != null) {
@@ -89,7 +89,7 @@ public class ReadStudentMarksByCurricularCourse extends FenixService {
 
     private static Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear)
             throws ExistingServiceException {
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
 
         final CurricularCourse curricularCourseTemp = curricularCourse;
 

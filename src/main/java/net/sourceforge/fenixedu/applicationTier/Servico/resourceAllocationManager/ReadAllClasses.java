@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClassesComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -26,14 +26,14 @@ import pt.ist.fenixWebFramework.services.Service;
  *         30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
-public class ReadAllClasses extends FenixService {
+public class ReadAllClasses {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
         List<InfoClass> infoClasses = null;
 
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(keyExecutionPeriod);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(keyExecutionPeriod);
 
         List classes = executionSemester.getSchoolClasses();
 

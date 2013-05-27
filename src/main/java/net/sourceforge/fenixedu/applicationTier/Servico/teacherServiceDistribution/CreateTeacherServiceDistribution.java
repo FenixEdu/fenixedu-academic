@@ -2,22 +2,22 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateTeacherServiceDistribution extends FenixService {
+public class CreateTeacherServiceDistribution {
     protected TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {
-        TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+        TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
         TeacherServiceDistribution fatherTeacherServiceDistribution =
-                rootDomainObject.readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
+                RootDomainObject.getInstance().readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
 
         TeacherServiceDistribution tsd =
                 new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution,

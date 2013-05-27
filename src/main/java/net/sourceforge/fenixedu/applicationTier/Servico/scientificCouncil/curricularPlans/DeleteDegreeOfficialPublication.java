@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteDegreeOfficialPublication extends FenixService {
+public class DeleteDegreeOfficialPublication {
 
     /**
      * Must ensure "REQUIRED" slots are filled

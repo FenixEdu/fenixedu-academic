@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -16,13 +17,13 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditTeacherServiceNotes extends FenixService {
+public class EditTeacherServiceNotes {
 
     protected Boolean run(Teacher teacher, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
             String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
             throws FenixServiceException {
 
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
         if (teacherService == null) {

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
@@ -21,18 +22,18 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class UnEnrollStudentGroupShift extends FenixService {
+public class UnEnrollStudentGroupShift {
 
     protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
             throws FenixServiceException {
 
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();

@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
@@ -24,7 +23,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 3/Set/2003, 16:21:47
  * 
  */
-public class GetAllThemes extends FenixService {
+public class GetAllThemes {
 
     protected List run() throws BDException {
         List seminariesInfo = new LinkedList();

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -12,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadNonMasterExecutionDegreesByExecutionYear extends FenixService {
+public class ReadNonMasterExecutionDegreesByExecutionYear {
 
     @Service
     public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {

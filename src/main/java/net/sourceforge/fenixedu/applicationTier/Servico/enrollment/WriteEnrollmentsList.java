@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class WriteEnrollmentsList extends FenixService {
+public class WriteEnrollmentsList {
 
     protected void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
             ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
@@ -46,7 +46,7 @@ public class WriteEnrollmentsList extends FenixService {
     }
 
     private CurricularCourse readCurricularCourse(final Integer curricularCourseId) {
-        return (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+        return (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
     }
 
     protected void createEnrollment(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,

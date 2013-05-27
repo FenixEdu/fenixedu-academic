@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SubmitStudentSpentTimeInPeriod extends FenixService {
+public class SubmitStudentSpentTimeInPeriod {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

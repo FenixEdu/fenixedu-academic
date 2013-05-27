@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RegisterStudentInquiryResponseIntention extends FenixService {
+public class RegisterStudentInquiryResponseIntention {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

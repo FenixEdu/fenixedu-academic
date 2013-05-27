@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -13,21 +12,22 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditStudentGroupsShift extends FenixService {
+public class EditStudentGroupsShift {
 
     protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
             List<Integer> studentGroupsCodes) throws FenixServiceException {
 
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        Shift shift = rootDomainObject.readShiftByOID(shiftCode);
+        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
         if (shift == null) {
             throw new InvalidChangeServiceException();
         }
@@ -56,7 +56,7 @@ public class EditStudentGroupsShift extends FenixService {
         List<StudentGroup> studentGroups = new ArrayList<StudentGroup>();
 
         for (Integer studentGroupCode : studentGroupsCodes) {
-            StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+            StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException("error.studentGroupNotInList");

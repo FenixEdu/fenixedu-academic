@@ -5,13 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,14 +30,14 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class EditTeacherAdviseService extends FenixService {
+public class EditTeacherAdviseService {
 
     protected void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
             AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
 
-        List<Registration> students = rootDomainObject.getRegistrations();
+        List<Registration> students = RootDomainObject.getInstance().getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {

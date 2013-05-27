@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithTeacherIdArgumentAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSup
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
@@ -23,14 +23,14 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author jpvl
  */
-public class ReadProfessorshipSupportLessons extends FenixService {
+public class ReadProfessorshipSupportLessons {
 
     protected ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId) throws FenixServiceException {
 
         final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         final Professorship professorship = (teacher != null) ? teacher.getProfessorshipByExecutionCourse(executionCourse) : null;
 
         professorshipSupportLessonsDTO.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));

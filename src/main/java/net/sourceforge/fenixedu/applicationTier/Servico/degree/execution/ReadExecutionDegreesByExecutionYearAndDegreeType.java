@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -16,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author jpvl
  */
-public class ReadExecutionDegreesByExecutionYearAndDegreeType extends FenixService {
+public class ReadExecutionDegreesByExecutionYearAndDegreeType {
 
     @Service
     public static List run(String executionYear, DegreeType... degreeType) {

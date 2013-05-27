@@ -20,13 +20,13 @@ import java.util.TreeSet;
 import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -51,7 +51,7 @@ import edu.yale.its.tp.cas.client.ProxyTicketValidator;
  * @author Luis Cruz
  * 
  */
-public class Authenticate extends FenixService implements Serializable {
+public class Authenticate implements Serializable {
 
     private static final String URL_ENCODING = CharEncoding.UTF_8;
 
@@ -286,7 +286,7 @@ public class Authenticate extends FenixService implements Serializable {
 
         @Override
         public void doIt() {
-            final User user = rootDomainObject.readUserByOID(userID);
+            final User user = RootDomainObject.getInstance().readUserByOID(userID);
             user.setLastLoginHost(user.getCurrentLoginHost());
             user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
             user.setCurrentLoginDateTimeDateTime(new DateTime());

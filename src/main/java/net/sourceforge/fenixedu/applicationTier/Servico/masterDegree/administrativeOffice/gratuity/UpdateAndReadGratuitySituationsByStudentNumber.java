@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -19,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class UpdateAndReadGratuitySituationsByStudentNumber extends FenixService {
+public class UpdateAndReadGratuitySituationsByStudentNumber {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service

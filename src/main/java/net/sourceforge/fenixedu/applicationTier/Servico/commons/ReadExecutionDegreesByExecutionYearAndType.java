@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -20,11 +20,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class ReadExecutionDegreesByExecutionYearAndType extends FenixService {
+public class ReadExecutionDegreesByExecutionYearAndType {
 
     @Service
     public static List run(Integer executionYearOID, Set<DegreeType> degreeTypes) {
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearOID);
+        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearOID);
 
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
         for (final DegreeType degreeType : degreeTypes) {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.UnitSite;
@@ -12,7 +12,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author cfgi
  */
-public class ChangeUnitSiteLayout extends FenixService {
+public class ChangeUnitSiteLayout {
 
     protected void run(UnitSite site, UnitSiteLayoutType layout) {
         site.setLayout(layout);

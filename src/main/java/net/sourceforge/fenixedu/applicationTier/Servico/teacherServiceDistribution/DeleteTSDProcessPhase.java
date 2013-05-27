@@ -1,17 +1,18 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhaseStatus;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteTSDProcessPhase extends FenixService {
+public class DeleteTSDProcessPhase {
     protected void run(Integer tsdProcessPhaseId) {
-        TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+        TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
 
         if (tsdProcessPhase.getStatus() == TSDProcessPhaseStatus.CLOSED) {
             if (tsdProcessPhase.getPreviousTSDProcessPhase() != null) {

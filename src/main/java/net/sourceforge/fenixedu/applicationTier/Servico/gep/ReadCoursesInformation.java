@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -25,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class ReadCoursesInformation extends FenixService {
+public class ReadCoursesInformation {
 
     @Service
     public static List<InfoSiteCourseInformation> run(final ExecutionDegree executionDegree, final Boolean basic,

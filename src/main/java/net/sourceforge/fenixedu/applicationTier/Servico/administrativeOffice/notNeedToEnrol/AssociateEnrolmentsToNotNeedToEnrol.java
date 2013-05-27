@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.no
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
@@ -10,7 +9,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AssociateEnrolmentsToNotNeedToEnrol extends FenixService {
+public class AssociateEnrolmentsToNotNeedToEnrol {
 
     @Service
     public static void run(Student student, NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,

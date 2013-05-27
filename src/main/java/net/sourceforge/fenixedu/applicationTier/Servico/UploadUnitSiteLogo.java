@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
@@ -27,7 +26,7 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
-public class UploadUnitSiteLogo extends FenixService {
+public class UploadUnitSiteLogo {
 
     protected File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 

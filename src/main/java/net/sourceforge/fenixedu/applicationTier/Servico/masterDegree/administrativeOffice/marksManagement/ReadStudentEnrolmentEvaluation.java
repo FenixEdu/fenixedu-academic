@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
@@ -11,14 +10,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentEnrolmentEvaluation extends FenixService {
+public class ReadStudentEnrolmentEvaluation {
 
     @Service
     public static InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) {
 
-        final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
+        final EnrolmentEvaluation enrolmentEvaluation = RootDomainObject.getInstance().readEnrolmentEvaluationByOID(studentEvaluationCode);
         final InfoTeacher infoTeacher =
                 InfoTeacher.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade().getTeacher());
 

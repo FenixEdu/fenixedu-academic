@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
@@ -28,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Fernanda Quitério
  * 
  */
-public class InsertEvaluationMarks extends FenixService {
+public class InsertEvaluationMarks {
 
     protected TeacherAdministrationSiteView run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
             throws ExcepcaoInexistente, FenixServiceException {
@@ -48,11 +48,11 @@ public class InsertEvaluationMarks extends FenixService {
         HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
         // Site
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
         site = executionCourse.getSite();
 
         // Evaluation
-        evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
+        evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
 
         // Attend List
         attendList = executionCourse.getAttends();

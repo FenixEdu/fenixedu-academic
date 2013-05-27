@@ -4,16 +4,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditTeacherMasterDegreeCredits extends FenixService {
+public class EditTeacherMasterDegreeCredits {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
@@ -28,7 +28,7 @@ public class EditTeacherMasterDegreeCredits extends FenixService {
             if (hoursString.equals("") && creditsString.equals("")) {
                 continue;
             }
-            Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+            Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipID);
             Teacher teacher = professorship.getTeacher();
             ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
 

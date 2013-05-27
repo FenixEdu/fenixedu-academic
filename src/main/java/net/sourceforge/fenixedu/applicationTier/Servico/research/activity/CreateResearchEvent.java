@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateResearchEvent extends FenixService {
+public class CreateResearchEvent {
 
     @Checked("ResultPredicates.author")
     @Service

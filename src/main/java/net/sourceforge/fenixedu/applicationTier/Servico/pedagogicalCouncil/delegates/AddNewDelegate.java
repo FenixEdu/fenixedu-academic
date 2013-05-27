@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AddNewDelegate extends FenixService {
+public class AddNewDelegate {
 
     /* Year Delegates */
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")

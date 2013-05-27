@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipati
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
 
-public class MergeJournalIssues extends FenixService {
+public class MergeJournalIssues {
 
     protected void run(MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean) {
         JournalIssue journalIssue = new JournalIssue(mergeJournalIssuePageContainerBean.getScientificJournal());

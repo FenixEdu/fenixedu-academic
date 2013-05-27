@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeac
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class UpdateDegreeTeachingServices extends FenixService {
+public class UpdateDegreeTeachingServices {
 
     protected void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+        Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipID);
         Teacher teacher = professorship.getTeacher();
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -36,7 +36,7 @@ public class UpdateDegreeTeachingServices extends FenixService {
                 "label.teacher.schedule.change"));
 
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
+            Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService =
                     teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
             if (degreeTeachingService != null) {

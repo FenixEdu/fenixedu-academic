@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SetTSDProfessorship extends FenixService {
+public class SetTSDProfessorship {
     protected TSDProfessorship run(Integer tsdCourseId, Integer tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(tsdCourseId);
-        TSDTeacher tsdTeacher = rootDomainObject.readTSDTeacherByOID(tsdTeacherId);
+        TSDCourse tsdCourse = RootDomainObject.getInstance().readTSDCourseByOID(tsdCourseId);
+        TSDTeacher tsdTeacher = RootDomainObject.getInstance().readTSDTeacherByOID(tsdTeacherId);
         ShiftType type = ShiftType.valueOf((String) tsdCourseParameters.get("shiftType"));
 
         TSDProfessorship tsdProfessorship = tsdCourse.getTSDProfessorshipByTSDTeacherAndShiftType(tsdTeacher, type);

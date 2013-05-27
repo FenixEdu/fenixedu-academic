@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.LoginAliasType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateNewLoginAlias extends FenixService {
+public class CreateNewLoginAlias {
 
     protected void run(LoginAliasBean bean) {
         if (bean != null) {

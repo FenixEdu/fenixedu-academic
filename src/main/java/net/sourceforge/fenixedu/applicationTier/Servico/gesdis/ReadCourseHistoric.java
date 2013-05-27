@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationCoordinatorAuthorizationFilter;
@@ -18,13 +17,14 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadCourseHistoric extends FenixService {
+public class ReadCourseHistoric {
 
     protected List run(Integer executionCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
         List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);

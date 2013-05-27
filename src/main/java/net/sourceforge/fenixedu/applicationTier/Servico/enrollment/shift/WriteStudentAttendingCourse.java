@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class WriteStudentAttendingCourse extends FenixService {
+public class WriteStudentAttendingCourse {
 
     protected void run(Registration registration, Integer executionCourseId) throws FenixServiceException {
 
@@ -22,7 +23,7 @@ public class WriteStudentAttendingCourse extends FenixService {
     }
 
     private ExecutionCourse readExecutionCourse(Integer executionCourseId) throws FenixServiceException {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("noExecutionCourse");
         }

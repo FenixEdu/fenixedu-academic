@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -23,17 +23,17 @@ import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditDistributedTest extends FenixService {
+public class EditDistributedTest {
 
     protected void run(Integer executionCourseId, final Integer distributedTestId, String testInformation,
             String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }

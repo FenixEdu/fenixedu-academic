@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter;
@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author cfgi
  */
-public class RemoveUnitSiteManager extends FenixService {
+public class RemoveUnitSiteManager {
 
     protected void run(UnitSite site, Person person) {
         site.removeManagers(person);

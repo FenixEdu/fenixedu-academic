@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz
  */
-public class ReadFinalDegreeWorkProposalSubmisionPeriod extends FenixService {
+public class ReadFinalDegreeWorkProposalSubmisionPeriod {
 
     @Service
     public static InfoScheduleing run(final ExecutionDegree executionDegree) throws FenixServiceException {

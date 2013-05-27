@@ -4,14 +4,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
  * 
  * @author lmac1
  */
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteSection extends FenixService {
+public class DeleteSection {
 
     protected Boolean run(Site site, final Section section) {
         if (section != null) {

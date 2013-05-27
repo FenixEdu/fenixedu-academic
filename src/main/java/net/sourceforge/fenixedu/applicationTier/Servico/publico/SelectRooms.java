@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SelectRooms extends FenixService {
+public class SelectRooms {
 
     @Service
     public static Object run(InfoRoomEditor infoRoom) {

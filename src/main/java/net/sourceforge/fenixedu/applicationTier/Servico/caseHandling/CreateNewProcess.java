@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.caseHandling;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-public class CreateNewProcess extends FenixService {
+public class CreateNewProcess {
 
     @Service
     public static Process run(String processName, Object object) {

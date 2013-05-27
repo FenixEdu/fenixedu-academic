@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 24/Set/2003, 11:26:29
  * 
  */
-public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends FenixService {
+public class ReadActiveStudentCurricularPlanByNumberAndDegreeType {
 
     @Service
     public static InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {

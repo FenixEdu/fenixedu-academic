@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
@@ -24,7 +25,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * 
  */
-public class ExecutionCourseSiteComponentService extends FenixService {
+public class ExecutionCourseSiteComponentService {
 
     protected ExecutionCourseSiteView run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
             Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
@@ -33,7 +34,7 @@ public class ExecutionCourseSiteComponentService extends FenixService {
         if (infoSiteCode != null) {
             site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
         } else {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
+            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourseCode);
             site = executionCourse.getSite();
         }
 

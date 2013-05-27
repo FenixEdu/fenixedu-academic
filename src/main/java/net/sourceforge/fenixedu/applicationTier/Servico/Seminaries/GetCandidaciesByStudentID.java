@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
@@ -27,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 5/Ago/2003, 19:44:39
  * 
  */
-public class GetCandidaciesByStudentID extends FenixService {
+public class GetCandidaciesByStudentID {
 
     protected List run(final Person person) throws BDException {
         final List candidaciesInfo = new LinkedList();

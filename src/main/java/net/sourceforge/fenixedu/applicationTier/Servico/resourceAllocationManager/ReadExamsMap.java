@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -16,9 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExamsMap extends FenixService {
+public class ReadExamsMap {
 
     @Service
     public static InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
@@ -67,7 +67,7 @@ public class ReadExamsMap extends FenixService {
 
         if (degreeCurricularPlan != null) {
             ExecutionSemester executionSemester =
-                    rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
             // Obtain execution courses and associated information
             // of the given execution degree for each curricular year
             // persistentSupportecified

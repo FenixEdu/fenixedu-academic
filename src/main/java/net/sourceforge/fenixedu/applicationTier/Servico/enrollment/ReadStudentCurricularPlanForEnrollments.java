@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentCurricularPlanForEnrollments extends FenixService {
+public class ReadStudentCurricularPlanForEnrollments {
 
     protected StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
         return findStudentCurricularPlan(registration);

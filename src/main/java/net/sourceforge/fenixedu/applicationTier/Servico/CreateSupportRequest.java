@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateSupportRequest extends FenixService {
+public class CreateSupportRequest {
 
     @Service
     public static void run(Person person, SupportRequestBean bean) {

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
@@ -19,20 +18,21 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGroupin
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
-public class ReadExecutionCourseProjects extends FenixService {
+public class ReadExecutionCourseProjects {
 
     @Service
     public static ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
         final List<Grouping> executionCourseProjects = executionCourse.getGroupings();
 

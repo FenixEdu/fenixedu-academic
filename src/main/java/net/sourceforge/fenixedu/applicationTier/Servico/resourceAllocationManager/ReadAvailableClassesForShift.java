@@ -10,12 +10,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -27,13 +27,13 @@ import pt.ist.fenixWebFramework.services.Service;
  *         30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
-public class ReadAvailableClassesForShift extends FenixService {
+public class ReadAvailableClassesForShift {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static List run(Integer shiftOID) {
 
-        final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
         final ExecutionYear executionYear = executionSemester.getExecutionYear();

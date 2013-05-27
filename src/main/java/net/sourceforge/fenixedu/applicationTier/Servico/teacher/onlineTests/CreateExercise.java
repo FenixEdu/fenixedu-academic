@@ -9,12 +9,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Susana Fernandes
  */
-public class CreateExercise extends FenixService {
+public class CreateExercise {
 
     protected Boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
@@ -34,7 +34,7 @@ public class CreateExercise extends FenixService {
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
             Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -44,7 +44,7 @@ public class CreateExercise extends FenixService {
                     new Metadata(executionCourse, author, description, questionDifficultyType.getTypeString(), learningTime,
                             mainSubject, secondarySubject, level);
         } else {
-            metadata = rootDomainObject.readMetadataByOID(metadataId);
+            metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }

@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.prizes;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.EditPrizeFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RemovePartyFromPrize extends FenixService {
+public class RemovePartyFromPrize {
 
     protected void run(Party party, Prize prize) {
         prize.getParties().remove(party);

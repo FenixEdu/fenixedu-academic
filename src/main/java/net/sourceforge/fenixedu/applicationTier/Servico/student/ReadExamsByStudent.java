@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.utils.ExamsNotEnrolledPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -32,7 +31,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadExamsByStudent extends FenixService {
+public class ReadExamsByStudent {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
@@ -19,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Susana Fernandes
  */
-public class ReadDistributedTests extends FenixService {
+public class ReadDistributedTests {
 
     public List<InfoDistributedTest> run(Integer executionCourseId) {
         final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);

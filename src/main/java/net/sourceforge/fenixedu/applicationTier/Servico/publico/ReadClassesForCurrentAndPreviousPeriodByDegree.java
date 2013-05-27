@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -15,16 +15,16 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author Luis Cruz
  */
-public class ReadClassesForCurrentAndPreviousPeriodByDegree extends FenixService {
+public class ReadClassesForCurrentAndPreviousPeriodByDegree {
 
     @Service
     public static Object run(Integer degreeOID) {
         ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         ExecutionSemester previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
-        Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeOID);
 
-        List classes = rootDomainObject.getSchoolClasss();
+        List classes = RootDomainObject.getInstance().getSchoolClasss();
 
         return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }

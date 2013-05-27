@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
@@ -13,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SetEmail extends FenixService {
+public class SetEmail {
 
     public static class NotAuthorizedException extends FenixServiceException {
     }

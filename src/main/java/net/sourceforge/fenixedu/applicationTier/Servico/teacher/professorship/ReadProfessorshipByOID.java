@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
 
@@ -23,7 +24,7 @@ public class ReadProfessorshipByOID extends ReadDomainObjectService {
 
     @Override
     protected DomainObject readDomainObject(final Integer idInternal) {
-        return rootDomainObject.readProfessorshipByOID(idInternal);
+        return RootDomainObject.getInstance().readProfessorshipByOID(idInternal);
     }
 
     // Service Invokers migrated from Berserk

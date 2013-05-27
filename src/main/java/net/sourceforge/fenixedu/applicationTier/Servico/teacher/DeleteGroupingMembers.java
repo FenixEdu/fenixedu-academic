@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -27,12 +27,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class DeleteGroupingMembers extends FenixService {
+public class DeleteGroupingMembers {
 
     protected Boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
             throws FenixServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }

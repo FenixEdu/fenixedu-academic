@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.StudentGroupAttendacyInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
@@ -23,14 +23,14 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 10/Set/2003, 20:47:24
  * 
  */
-public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends FenixService {
+public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername {
 
     @Service
     public static StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
 
         Registration registration = Registration.readByUsername(username);
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
         Attends attendacy = registration.readAttendByExecutionCourse(executionCourse);
         if (attendacy == null) {

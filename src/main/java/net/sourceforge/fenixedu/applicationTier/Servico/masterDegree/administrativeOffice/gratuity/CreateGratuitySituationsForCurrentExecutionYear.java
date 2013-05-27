@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -23,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class CreateGratuitySituationsForCurrentExecutionYear extends FenixService {
+public class CreateGratuitySituationsForCurrentExecutionYear {
 
     private Boolean firstYear;
 

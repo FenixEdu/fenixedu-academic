@@ -9,10 +9,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author jpvl
  */
-public class UpdateProfessorshipsHours extends FenixService {
+public class UpdateProfessorshipsHours {
 
     @Checked("RolePredicates.CREDITS_MANAGER_PREDICATE")
     @Service
@@ -36,8 +36,8 @@ public class UpdateProfessorshipsHours extends FenixService {
             if (value != null) {
                 try {
                     Double ecHours = Double.valueOf(value);
-                    Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-                    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+                    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
+                    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
                     Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
                     professorship.setHours(ecHours);
                 } catch (NumberFormatException e1) {

@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author jpvl
  */
-public class ReadDetailedTeacherProfessorshipsAbstractService extends FenixService {
+public class ReadDetailedTeacherProfessorshipsAbstractService {
 
     private final class Professorships2DetailProfessorship implements Transformer {
         private Professorships2DetailProfessorship() {
@@ -80,7 +80,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends FenixServi
     }
 
     protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher {
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();
         }

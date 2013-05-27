@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends FenixService {
+public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
 
     /**
      * Constructor
@@ -31,9 +31,9 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Fenix
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
 
-        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
 
         if ((executionYear == null) || (registration == null)) {
             return null;

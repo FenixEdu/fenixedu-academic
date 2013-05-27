@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
@@ -27,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Susana Fernandes
  */
-public class GiveUpQuestion extends FenixService {
+public class GiveUpQuestion {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

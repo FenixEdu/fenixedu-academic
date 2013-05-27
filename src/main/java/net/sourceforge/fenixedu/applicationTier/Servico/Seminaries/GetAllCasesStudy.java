@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
@@ -24,7 +23,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 3/Set/2003, 14:22:08
  * 
  */
-public class GetAllCasesStudy extends FenixService {
+public class GetAllCasesStudy {
 
     protected List run() throws BDException {
         List infoCases = new LinkedList();

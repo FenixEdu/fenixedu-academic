@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationSimpleCreationBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
@@ -11,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateEventProjectAssociation extends FenixService {
+public class CreateEventProjectAssociation {
 
     /**
      * Service responsible for creating an association between a project and an
@@ -33,7 +34,7 @@ public class CreateEventProjectAssociation extends FenixService {
     public static ProjectEventAssociation run(EventProjectAssociationSimpleCreationBean bean, Integer eventId)
             throws FenixServiceException {
         ProjectEventAssociation association = null;
-        final EventEdition event = rootDomainObject.readEventEditionByOID(eventId);
+        final EventEdition event = RootDomainObject.getInstance().readEventEditionByOID(eventId);
         if (event == null) {
             throw new FenixServiceException();
         }
@@ -66,7 +67,7 @@ public class CreateEventProjectAssociation extends FenixService {
             throws FenixServiceException {
         final ProjectEventAssociation association;
 
-        final EventEdition event = rootDomainObject.readEventEditionByOID(eventId);
+        final EventEdition event = RootDomainObject.getInstance().readEventEditionByOID(eventId);
         if (event == null) {
             throw new FenixServiceException();
         }

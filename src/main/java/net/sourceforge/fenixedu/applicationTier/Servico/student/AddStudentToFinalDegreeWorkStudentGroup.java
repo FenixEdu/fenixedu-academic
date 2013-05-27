@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
@@ -35,12 +35,12 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz
  */
-public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
+public class AddStudentToFinalDegreeWorkStudentGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(Integer groupOID, String username) throws FenixServiceException {
-        FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
+        FinalDegreeWorkGroup group = RootDomainObject.getInstance().readFinalDegreeWorkGroupByOID(groupOID);
         Registration registration = findSomeRegistration(username);
         if (group == null
                 || registration == null

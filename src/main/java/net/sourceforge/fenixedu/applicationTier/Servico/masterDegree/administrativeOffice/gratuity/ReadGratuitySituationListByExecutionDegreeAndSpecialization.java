@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DirectiveCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends FenixService {
+public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
 
     /**
      * Constructor
@@ -68,7 +68,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
             if (executionDegreeId != null) {
 
-                ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+                ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {

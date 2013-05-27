@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa & rmalo
  * 
  */
-public class NewProjectProposal extends FenixService {
+public class NewProjectProposal {
 
     protected Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
             String senderPersonUsername) throws FenixServiceException {
@@ -41,9 +41,9 @@ public class NewProjectProposal extends FenixService {
             return result;
         }
 
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
-        ExecutionCourse goalExecutionCourse = rootDomainObject.readExecutionCourseByOID(goalExecutionCourseId);
-        ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        ExecutionCourse goalExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(goalExecutionCourseId);
+        ExecutionCourse startExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
         Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {

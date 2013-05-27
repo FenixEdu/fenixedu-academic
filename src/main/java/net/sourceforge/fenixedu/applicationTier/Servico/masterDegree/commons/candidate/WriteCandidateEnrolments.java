@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.WriteCandidateEnrolmentsAuhorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -21,12 +21,12 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class WriteCandidateEnrolments extends FenixService {
+public class WriteCandidateEnrolments {
 
     protected void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
@@ -82,7 +82,7 @@ public class WriteCandidateEnrolments extends FenixService {
         while (iterCurricularCourseIds.hasNext()) {
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
+                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();

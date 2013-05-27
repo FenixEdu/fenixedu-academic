@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -22,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiriesTeachersResByTeacherNumber extends FenixService {
+public class ReadOldInquiriesTeachersResByTeacherNumber {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service

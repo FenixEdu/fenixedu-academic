@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ImportCustomizationOptions extends FenixService {
+public class ImportCustomizationOptions {
 
     protected void run(Integer executionCourseID, ExecutionCourseSite siteTo, ExecutionCourseSite siteFrom) {
         if (siteTo != null && siteFrom != null) {

@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author lmac1 modified by Fernanda Quiterio
  */
-public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService {
+public class DeleteCurricularCoursesOfDegreeCurricularPlan {
 
     // delete a set of curricularCourses
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
@@ -35,7 +35,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService 
 
         while (iter.hasNext()) {
             Integer curricularCourseId = (Integer) iter.next();
-            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+            CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
             if (curricularCourse != null) {
                 // delete curriculum
                 Curriculum curriculum = curricularCourse.findLatestCurriculum();

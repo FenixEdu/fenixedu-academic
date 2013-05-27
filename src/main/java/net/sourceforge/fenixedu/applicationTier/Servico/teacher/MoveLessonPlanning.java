@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class MoveLessonPlanning extends FenixService {
+public class MoveLessonPlanning {
 
     protected void run(Integer executionCourseID, LessonPlanning lessonPlanning, Integer order) {
         lessonPlanning.moveTo(order);

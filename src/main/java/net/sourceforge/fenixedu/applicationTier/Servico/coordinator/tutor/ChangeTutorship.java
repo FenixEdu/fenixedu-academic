@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutor
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -24,7 +25,7 @@ public class ChangeTutorship extends TutorshipManagement {
 
     public List<TutorshipErrorBean> run(Integer executionDegreeID, List<ChangeTutorshipBean> beans) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();

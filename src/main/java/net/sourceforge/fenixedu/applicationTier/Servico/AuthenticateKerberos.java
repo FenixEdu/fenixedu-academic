@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
@@ -30,7 +31,7 @@ public class AuthenticateKerberos extends Authenticate {
 
         @Override
         public void doIt() {
-            final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+            final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
             doIt(person);
         }
 

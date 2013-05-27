@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
@@ -11,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -19,7 +19,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadGratuityValuesByExecutionDegree extends FenixService {
+public class ReadGratuityValuesByExecutionDegree {
 
     @Service
     public static Object run(Integer executionDegreeID) throws FenixServiceException {
@@ -29,7 +29,7 @@ public class ReadGratuityValuesByExecutionDegree extends FenixService {
 
         List infoPaymentPhases = null;
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
         InfoGratuityValues infoGratuityValues = null;

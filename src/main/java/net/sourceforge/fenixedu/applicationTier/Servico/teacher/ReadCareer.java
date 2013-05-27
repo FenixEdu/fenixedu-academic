@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
@@ -30,7 +31,7 @@ public class ReadCareer extends ReadDomainObjectService {
 
     @Override
     protected DomainObject readDomainObject(final Integer idInternal) {
-        return rootDomainObject.readCareerByOID(idInternal);
+        return RootDomainObject.getInstance().readCareerByOID(idInternal);
     }
 
     // Service Invokers migrated from Berserk

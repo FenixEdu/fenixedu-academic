@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -25,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 4/Set/2003, 13:55:41
  * 
  */
-public class ReadDegreeCurricularPlans extends FenixService {
+public class ReadDegreeCurricularPlans {
 
     /**
      * Executes the service. Returns the current InfoDegreeCurricularPlan.

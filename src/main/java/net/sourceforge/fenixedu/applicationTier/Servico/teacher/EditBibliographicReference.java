@@ -1,24 +1,25 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class EditBibliographicReference extends FenixService {
+public class EditBibliographicReference {
 
     protected Boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference,
             String newYear, Boolean optional) throws FenixServiceException {
 
         final BibliographicReference bibliographicReference =
-                rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
+                RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }

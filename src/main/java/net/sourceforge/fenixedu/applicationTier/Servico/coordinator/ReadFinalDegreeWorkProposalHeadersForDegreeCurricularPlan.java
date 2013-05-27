@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -12,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends FenixService {
+public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
 
     protected List run(final ExecutionDegree executionDegree) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();

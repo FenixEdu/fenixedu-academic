@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class WriteStudentAreas extends FenixService {
+public class WriteStudentAreas {
 
     // some of these arguments may be null. they are only needed for filter
     protected void run(Integer executionDegreeId, Registration registration, Integer specializationAreaID, Integer secundaryAreaID)
@@ -25,8 +26,8 @@ public class WriteStudentAreas extends FenixService {
             throw new NonExistingServiceException("error.no.studentCurricularPlan");
         }
 
-        final Branch specializationArea = rootDomainObject.readBranchByOID(specializationAreaID);
-        final Branch secundaryArea = (secundaryAreaID != null) ? rootDomainObject.readBranchByOID(secundaryAreaID) : null;
+        final Branch specializationArea = RootDomainObject.getInstance().readBranchByOID(specializationAreaID);
+        final Branch secundaryArea = (secundaryAreaID != null) ? RootDomainObject.getInstance().readBranchByOID(secundaryAreaID) : null;
 
         studentCurricularPlan.setStudentAreas(specializationArea, secundaryArea);
     }

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -34,7 +34,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class UnEnrollStudentInGroup extends FenixService {
+public class UnEnrollStudentInGroup {
 
     public static String mailServer() {
         final String server = PropertiesManager.getProperty("mail.smtp.host");
@@ -49,7 +49,7 @@ public class UnEnrollStudentInGroup extends FenixService {
 
         ServiceMonitoring.logService(UnEnrollStudentInGroup.class, userName, studentGroupCode);
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidSituationServiceException();
         }
@@ -100,7 +100,7 @@ public class UnEnrollStudentInGroup extends FenixService {
                 messages.getMessage("message.body.grouping.change.unenrolment", registration.getNumber().toString(), studentGroup
                         .getGroupNumber().toString(), attend.getExecutionCourse().getNome());
 
-        SystemSender systemSender = rootDomainObject.getSystemSender();
+        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
                 messages.getMessage("message.subject.grouping.change"), message, "");
 

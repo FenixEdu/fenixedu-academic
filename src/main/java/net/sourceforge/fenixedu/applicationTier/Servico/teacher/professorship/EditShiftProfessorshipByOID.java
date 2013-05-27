@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import pt.ist.fenixframework.DomainObject;
@@ -18,10 +19,10 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
 
         Professorship professorship =
-                rootDomainObject.readProfessorshipByOID(infoShiftProfessorship.getInfoProfessorship().getIdInternal());
+                RootDomainObject.getInstance().readProfessorshipByOID(infoShiftProfessorship.getInfoProfessorship().getIdInternal());
         shiftProfessorship.setProfessorship(professorship);
 
-        Shift shift = rootDomainObject.readShiftByOID(infoShiftProfessorship.getInfoShift().getIdInternal());
+        Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShiftProfessorship.getInfoShift().getIdInternal());
         shiftProfessorship.setShift(shift);
     }
 
@@ -32,7 +33,7 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
     protected DomainObject readDomainObject(Integer idInternal) {
-        return rootDomainObject.readShiftProfessorshipByOID(idInternal);
+        return RootDomainObject.getInstance().readShiftProfessorshipByOID(idInternal);
     }
 
 }

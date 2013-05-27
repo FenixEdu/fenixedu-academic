@@ -7,12 +7,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.joda.time.DateTime;
@@ -26,13 +26,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * 
  */
-public class RoomSiteComponentServiceByExecutionPeriodID extends FenixService {
+public class RoomSiteComponentServiceByExecutionPeriodID {
 
     @Service
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
             throws Exception {
         final Calendar day = findMonday(someDay);
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
         return (executionSemester != null) ? runService(bodyComponent, roomKey, day, executionSemester) : RoomSiteComponentService
                 .run(bodyComponent, roomKey, day);
     }

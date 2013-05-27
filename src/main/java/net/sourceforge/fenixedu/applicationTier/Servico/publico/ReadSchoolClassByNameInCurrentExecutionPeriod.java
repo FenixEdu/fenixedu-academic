@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.dto.SchoolClassDTO;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Mota
  * 
  */
-public class ReadSchoolClassByNameInCurrentExecutionPeriod extends FenixService {
+public class ReadSchoolClassByNameInCurrentExecutionPeriod {
 
     @Service
     public static SchoolClassDTO run(final String schoolClassName) throws FenixServiceException {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
@@ -10,7 +10,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class PayResidenceEvent extends FenixService {
+public class PayResidenceEvent {
 
     @Service
     public static void run(User user, ResidenceEvent event, YearMonthDay date) {

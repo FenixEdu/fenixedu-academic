@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -8,12 +8,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionCourseByID extends FenixService {
+public class ReadExecutionCourseByID {
 
     protected InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(idInternal);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
         }

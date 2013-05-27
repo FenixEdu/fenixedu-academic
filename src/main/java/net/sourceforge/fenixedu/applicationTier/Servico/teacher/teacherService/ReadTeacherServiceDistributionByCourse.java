@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -38,11 +38,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author jpmsit, amak
  */
-public class ReadTeacherServiceDistributionByCourse extends FenixService {
+public class ReadTeacherServiceDistributionByCourse {
 
     protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException {
 
-        Department department = rootDomainObject.readDepartmentByOID(departmentId);
+        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
 
         // List<CompetenceCourse> competenceCourseList =
         // department.getCompetenceCourses();
@@ -50,7 +50,7 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(rootDomainObject.readExecutionSemesterByOID(executionPeriodID));
+            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID));
         }
 
         DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();

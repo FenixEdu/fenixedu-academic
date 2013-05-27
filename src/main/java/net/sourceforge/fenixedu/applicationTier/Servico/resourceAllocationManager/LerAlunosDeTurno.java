@@ -9,23 +9,23 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class LerAlunosDeTurno extends FenixService {
+public class LerAlunosDeTurno {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static List<InfoStudent> run(ShiftKey keyTurno) {
 
         final ExecutionCourse executionCourse =
-                rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
         final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
         List<Registration> alunos = shift.getStudents();

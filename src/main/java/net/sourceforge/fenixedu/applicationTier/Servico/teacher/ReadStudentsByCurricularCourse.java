@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -27,19 +27,19 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentsByCurricularCourse extends FenixService {
+public class ReadStudentsByCurricularCourse {
 
     protected Object run(Integer executionCourseCode, Integer courseCode) throws FenixServiceException {
 
         CurricularCourse curricularCourse = null;
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
         final List<InfoStudent> infoStudentList;
         if (executionCourse != null) {
             infoStudentList = getAllAttendingStudents(executionCourse.getSite());
         } else {
-            curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(courseCode);
+            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(courseCode);
             infoStudentList = getCurricularCourseStudents(curricularCourse);
         }
         return createSiteView(infoStudentList, executionCourse.getSite(), curricularCourse);

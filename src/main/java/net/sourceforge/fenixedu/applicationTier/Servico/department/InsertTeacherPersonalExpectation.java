@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.department;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExp
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertTeacherPersonalExpectation extends FenixService {
+public class InsertTeacherPersonalExpectation {
 
     protected TeacherPersonalExpectation run(TeacherPersonalExpectationBean bean) {
         if (bean != null) {

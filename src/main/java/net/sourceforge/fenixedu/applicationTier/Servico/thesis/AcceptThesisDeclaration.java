@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.StudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AcceptThesisDeclaration extends FenixService {
+public class AcceptThesisDeclaration {
 
     protected void run(Thesis thesis, ThesisVisibilityType visibility, DateTime availableAfter) {
         thesis.acceptDeclaration(visibility, availableAfter);

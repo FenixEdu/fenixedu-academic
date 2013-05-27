@@ -8,13 +8,13 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
@@ -26,13 +26,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
-public class CreateInsuranceTransaction extends FenixService {
+public class CreateInsuranceTransaction {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(Integer guideEntryID, IUserView userView) throws ExistingServiceException {
 
-        GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
+        GuideEntry guideEntry = RootDomainObject.getInstance().readGuideEntryByOID(guideEntryID);
         Guide guide = guideEntry.getGuide();
 
         Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);

@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteTest extends FenixService {
+public class DeleteTest {
 
     protected void run(final Integer executionCourseId, final Integer testId) throws InvalidArgumentsServiceException {
-        Test test = rootDomainObject.readTestByOID(testId);
+        Test test = RootDomainObject.getInstance().readTestByOID(testId);
         test.delete();
     }
 

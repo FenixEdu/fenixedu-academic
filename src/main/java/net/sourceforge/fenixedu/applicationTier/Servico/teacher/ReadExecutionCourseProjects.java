@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -31,14 +31,14 @@ import pt.ist.fenixWebFramework.services.Service;
 // this service reads ALL the execution course's projects
 // to read the projects which has opened enrollments use the same service in
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
-public class ReadExecutionCourseProjects extends FenixService {
+public class ReadExecutionCourseProjects {
 
     @Service
     public static ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
         List executionCourseProjects = new ArrayList();
         List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();

@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,11 +15,11 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author naat
  */
-public class ReadFinalDegreeWorksByTeacherIDAndExecutionYearID extends FenixService {
+public class ReadFinalDegreeWorksByTeacherIDAndExecutionYearID {
 
     public List<Proposal> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
-        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
 
         ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
 

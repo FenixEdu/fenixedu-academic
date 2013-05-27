@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class SearchPerson extends FenixService implements Serializable {
+public class SearchPerson implements Serializable {
 
     public static class SearchParameters implements Serializable {
 
@@ -96,7 +96,7 @@ public class SearchPerson extends FenixService implements Serializable {
             }
 
             if (degreeId != null) {
-                degree = rootDomainObject.readDegreeByOID(degreeId);
+                degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -104,7 +104,7 @@ public class SearchPerson extends FenixService implements Serializable {
             }
 
             if (departmentId != null) {
-                department = rootDomainObject.readDepartmentByOID(departmentId);
+                department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
             }
         }
 

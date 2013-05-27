@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -28,7 +27,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         3/Ago/2003, 21:37:27
  * 
  */
-public class ReadCurricularCoursesByUsername extends FenixService {
+public class ReadCurricularCoursesByUsername {
 
     protected List run(String username) throws BDException, NonExistingServiceException {
         List curricularCourses = new LinkedList();

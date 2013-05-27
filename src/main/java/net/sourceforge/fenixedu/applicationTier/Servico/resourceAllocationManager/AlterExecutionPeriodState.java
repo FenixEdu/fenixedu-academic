@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-public class AlterExecutionPeriodState extends FenixService {
+public class AlterExecutionPeriodState {
 
     public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState) throws FenixServiceException {
 

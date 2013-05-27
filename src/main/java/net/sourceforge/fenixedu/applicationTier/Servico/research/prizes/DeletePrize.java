@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.prizes;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.DeletePrizeFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeletePrize extends FenixService {
+public class DeletePrize {
 
     protected void run(Prize prize) {
         prize.delete();

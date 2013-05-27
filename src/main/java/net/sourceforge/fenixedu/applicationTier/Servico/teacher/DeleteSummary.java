@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeacherAuthorizationFilter;
@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
  * 
  */
-public class DeleteSummary extends FenixService {
+public class DeleteSummary {
 
     protected Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
             throws FenixServiceException {

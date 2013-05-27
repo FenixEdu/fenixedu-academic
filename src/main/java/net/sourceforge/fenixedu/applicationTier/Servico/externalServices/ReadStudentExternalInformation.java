@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -72,7 +71,7 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
  * 
  *         Created at 2:40:27 PM, Mar 11, 2005
  */
-public class ReadStudentExternalInformation extends FenixService {
+public class ReadStudentExternalInformation {
 
     @Service
     public static Collection run(String username) throws FenixServiceException {

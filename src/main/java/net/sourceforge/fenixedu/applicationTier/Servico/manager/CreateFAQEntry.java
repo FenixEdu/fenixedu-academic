@@ -4,8 +4,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -14,14 +15,14 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz
  */
-public class CreateFAQEntry extends FenixService {
+public class CreateFAQEntry {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(InfoFAQEntry infoFAQEntry) {
         FAQSection parentFAQSection = null;
         if (infoFAQEntry.getParentSection() != null && infoFAQEntry.getParentSection().getIdInternal() != null) {
-            parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQEntry.getParentSection().getIdInternal());
+            parentFAQSection = RootDomainObject.getInstance().readFAQSectionByOID(infoFAQEntry.getParentSection().getIdInternal());
         }
 
         FAQEntry faqEntry = new FAQEntry();

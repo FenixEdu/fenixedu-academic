@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantUnitCreationBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
@@ -14,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateProjectParticipant extends FenixService {
+public class CreateProjectParticipant {
 
     /**
      * Service responsible for creating a project participation
@@ -35,7 +36,7 @@ public class CreateProjectParticipant extends FenixService {
     public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId)
             throws FenixServiceException {
         ProjectParticipation participation = null;
-        final Project project = rootDomainObject.readProjectByOID(projectId);
+        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -68,7 +69,7 @@ public class CreateProjectParticipant extends FenixService {
         final ProjectParticipation participation;
         final ExternalContract externalPerson;
 
-        final Project project = rootDomainObject.readProjectByOID(projectId);
+        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -102,7 +103,7 @@ public class CreateProjectParticipant extends FenixService {
         final ProjectParticipation participation;
         final Unit unit;
 
-        final Project project = rootDomainObject.readProjectByOID(projectId);
+        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }

@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndResp;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -17,14 +17,14 @@ import pt.ist.fenixWebFramework.services.Service;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends FenixService {
+public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
 
         StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
         List masterDegreeThesisDataVersions = studentCurricularPlan.readNotActiveMasterDegreeThesisDataVersions();
 

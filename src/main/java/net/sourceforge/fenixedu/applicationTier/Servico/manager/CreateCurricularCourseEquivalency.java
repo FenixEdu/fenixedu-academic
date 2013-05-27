@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateCurricularCourseEquivalency extends FenixService {
+public class CreateCurricularCourseEquivalency {
 
     /*
      * ACCESSCONTROL
@@ -22,10 +22,10 @@ public class CreateCurricularCourseEquivalency extends FenixService {
     @Service
     public static void run(final Integer degreeCurricularPlanID, final Integer curricularCourseID,
             final Integer oldCurricularCourseID) {
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
         final CurricularCourse oldCurricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(oldCurricularCourseID);
+                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(oldCurricularCourseID);
 
         new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
     }

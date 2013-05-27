@@ -4,14 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Pedro Santos e Rita Carvalho
  */
-public class ReadDegreeIdInternalByDegreeCode extends FenixService {
+public class ReadDegreeIdInternalByDegreeCode {
 
     @Service
     public static Integer run(String degreeCode) {

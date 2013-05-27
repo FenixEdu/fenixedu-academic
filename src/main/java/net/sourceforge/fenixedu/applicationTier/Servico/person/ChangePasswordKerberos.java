@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.kerberos.Script;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ChangePasswordKerberos extends FenixService {
+public class ChangePasswordKerberos {
 
     @Service
     @Checked("RolePredicates.PERSON_PREDICATE")

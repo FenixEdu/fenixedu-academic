@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.Job;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateProfessionalInformation extends FenixService {
+public class CreateProfessionalInformation {
 
     @Service
     public static Job run(final AlumniJobBean bean) {

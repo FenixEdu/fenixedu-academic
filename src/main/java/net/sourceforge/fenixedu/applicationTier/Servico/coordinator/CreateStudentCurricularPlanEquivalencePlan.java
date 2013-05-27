@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateStudentCurricularPlanEquivalencePlan extends FenixService {
+public class CreateStudentCurricularPlanEquivalencePlan {
 
     @Service
     public static StudentCurricularPlanEquivalencePlan run(final Student student) {

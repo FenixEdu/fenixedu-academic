@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionCourseSite extends FenixService {
+public class ReadExecutionCourseSite {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service
@@ -17,7 +18,7 @@ public class ReadExecutionCourseSite extends FenixService {
 
         InfoSite infoSite = null;
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         final ExecutionCourseSite site = executionCourse.getSite();
 
         if (site != null) {

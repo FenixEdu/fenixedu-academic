@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author Luis Cruz
  */
-public class ReadClassesForCurrentAndNextPeriodByDegree extends FenixService {
+public class ReadClassesForCurrentAndNextPeriodByDegree {
 
     @Service
     public static Object run(final Integer degreeOID) {
@@ -24,7 +24,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree extends FenixService {
         final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         final ExecutionSemester nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
 
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
+        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeOID);
 
         final int numClassesCurrentPeriod = currentExecutionPeriod.getSchoolClasses().size();
         final int numClassesNextPeriod = nextExecutionPeriod.getSchoolClasses().size();

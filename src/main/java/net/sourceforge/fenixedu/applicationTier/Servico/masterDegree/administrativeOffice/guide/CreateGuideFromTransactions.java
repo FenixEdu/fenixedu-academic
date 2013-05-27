@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class CreateGuideFromTransactions extends FenixService {
+public class CreateGuideFromTransactions {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -81,7 +81,7 @@ public class CreateGuideFromTransactions extends FenixService {
 
         // Get the Execution Degree
         ExecutionDegree executionDegree =
-                rootDomainObject.readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
 
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
@@ -101,7 +101,7 @@ public class CreateGuideFromTransactions extends FenixService {
 
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
-            transaction = (PaymentTransaction) rootDomainObject.readTransactionByOID(transactionId);
+            transaction = (PaymentTransaction) RootDomainObject.getInstance().readTransactionByOID(transactionId);
             if (transaction == null) {
                 throw new ExcepcaoInexistente();
             }

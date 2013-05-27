@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
@@ -25,7 +26,7 @@ public class ReadSupportLessonByOID extends ReadDomainObjectService {
 
     @Override
     protected DomainObject readDomainObject(Integer idInternal) {
-        return rootDomainObject.readSupportLessonByOID(idInternal);
+        return RootDomainObject.getInstance().readSupportLessonByOID(idInternal);
     }
 
     // Service Invokers migrated from Berserk

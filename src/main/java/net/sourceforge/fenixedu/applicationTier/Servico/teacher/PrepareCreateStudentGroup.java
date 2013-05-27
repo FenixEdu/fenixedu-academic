@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -29,11 +29,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author ansr and scpo
  * 
  */
-public class PrepareCreateStudentGroup extends FenixService {
+public class PrepareCreateStudentGroup {
 
     protected ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode) throws ExistingServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();

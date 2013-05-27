@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -21,11 +20,12 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.Season;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends FenixService {
+public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
@@ -33,7 +33,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod exten
             InfoExecutionPeriod infoExecutionPeriod) {
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
         List<Exam> associatedExams = new ArrayList();

@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -19,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Susana Fernandes
  */
-public class ReadExecutionCoursesByStudentTests extends FenixService {
+public class ReadExecutionCoursesByStudentTests {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

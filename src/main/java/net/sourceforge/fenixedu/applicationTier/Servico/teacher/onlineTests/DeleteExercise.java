@@ -5,10 +5,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -19,11 +19,11 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteExercise extends FenixService {
+public class DeleteExercise {
 
     protected void run(Integer executionCourseId, Integer metadataId) throws InvalidArgumentsServiceException,
             ExcepcaoPersistencia {
-        Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
+        Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -3,18 +3,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurricularCourses;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateEditCompetenceCourse extends FenixService {
+public class CreateEditCompetenceCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -22,7 +22,7 @@ public class CreateEditCompetenceCourse extends FenixService {
             throws NonExistingServiceException, InvalidArgumentsServiceException {
         List<Department> departments = new ArrayList<Department>();
         for (Integer departmentID : departmentIDs) {
-            Department department = rootDomainObject.readDepartmentByOID(departmentID);
+            Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
             if (department == null) {
                 throw new NonExistingServiceException("error.manager.noDepartment");
             }
@@ -34,7 +34,7 @@ public class CreateEditCompetenceCourse extends FenixService {
             if (competenceCourseID == null) {
                 competenceCourse = new CompetenceCourse(code, name, departments);
             } else {
-                competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
+                competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseID);
                 if (competenceCourse == null) {
                     throw new NonExistingServiceException("error.manager.noCompetenceCourse");
                 }

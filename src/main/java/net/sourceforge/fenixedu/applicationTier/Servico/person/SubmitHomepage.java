@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class SubmitHomepage extends FenixService {
+public class SubmitHomepage {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
     @Service

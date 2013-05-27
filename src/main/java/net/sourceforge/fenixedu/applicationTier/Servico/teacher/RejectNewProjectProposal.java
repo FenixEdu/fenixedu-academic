@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa & rmalo
  * 
  */
-public class RejectNewProjectProposal extends FenixService {
+public class RejectNewProjectProposal {
 
     protected Boolean run(Integer executionCourseId, Integer groupPropertiesId, String rejectorUserName)
             throws FenixServiceException {
@@ -36,12 +36,12 @@ public class RejectNewProjectProposal extends FenixService {
             return Boolean.FALSE;
         }
 
-        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
+        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
         if (groupProperties == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(groupProperties);
         if (groupPropertiesExecutionCourse == null) {
             throw new ExistingServiceException();

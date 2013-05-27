@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEq
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -27,12 +27,12 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SelectCandidaciesService extends FenixService {
+public class SelectCandidaciesService {
 
     protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID) throws FenixServiceException {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
-        List<Seminary> seminaries = rootDomainObject.getSeminarys();
+        List<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
         List infoSeminaries = getSeminaries(inEnrollmentPeriod, seminaries);
         result.setSeminaries(infoSeminaries);
 

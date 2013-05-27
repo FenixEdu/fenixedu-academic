@@ -4,7 +4,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.StudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentByUsername extends FenixService {
+public class ReadStudentByUsername {
 
     protected InfoStudent run(String username) {
         final Registration registration = Registration.readByUsername(username);

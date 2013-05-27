@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -21,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadNonAffiliatedTeachersByName extends FenixService {
+public class ReadNonAffiliatedTeachersByName {
 
     protected List run(String nameToSearch) {
         String names[] = nameToSearch.split(" ");

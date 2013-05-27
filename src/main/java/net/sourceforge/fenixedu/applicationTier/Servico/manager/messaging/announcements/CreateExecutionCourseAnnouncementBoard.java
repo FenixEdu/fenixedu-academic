@@ -4,10 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -23,7 +24,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  *         Created on Jun 30, 2006,5:19:09 PM
  * 
  */
-public class CreateExecutionCourseAnnouncementBoard extends FenixService {
+public class CreateExecutionCourseAnnouncementBoard {
     public static class ExecutionCourseBoardAnnouncementBoardParameters {
         public Integer executionCourseId;
 
@@ -40,7 +41,7 @@ public class CreateExecutionCourseAnnouncementBoard extends FenixService {
 
     public void run(ExecutionCourseBoardAnnouncementBoardParameters parameters) throws FenixServiceException {
         ExecutionCourseAnnouncementBoard board = new ExecutionCourseAnnouncementBoard();
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(parameters.executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(parameters.executionCourseId);
 
         board.setExecutionCourse(executionCourse);
         board.setExecutionCoursePermittedManagementGroupType(parameters.readersGroupType);

@@ -3,8 +3,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -12,11 +13,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadDomainExecutionPeriodByOID extends FenixService {
+public class ReadDomainExecutionPeriodByOID {
 
     @Service
     public static ExecutionSemester run(final Integer executionPeriodID) {
-        return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        return RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
     }
 
 }

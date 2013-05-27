@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author asnr and scpo
  * 
  */
-public class ReadStudentsWithoutGroup extends FenixService {
+public class ReadStudentsWithoutGroup {
 
     public class NewStudentGroupAlreadyExists extends FenixServiceException {
     }
@@ -40,7 +40,7 @@ public class ReadStudentsWithoutGroup extends FenixService {
     public static ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
 
         final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }

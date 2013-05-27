@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import jvstm.TransactionalCommand;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
@@ -40,18 +40,18 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
 
-public class InsertDistributedTest extends FenixService {
+public class InsertDistributedTest {
 
     protected void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
             CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
             String contextPath) throws FenixServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Test test = rootDomainObject.readTestByOID(testId);
+        Test test = RootDomainObject.getInstance().readTestByOID(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -139,8 +139,8 @@ public class InsertDistributedTest extends FenixService {
 
         @Override
         public void doIt() {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-            final Test test = rootDomainObject.readTestByOID(testId);
+            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            final Test test = RootDomainObject.getInstance().readTestByOID(testId);
 
             DistributedTest distributedTest = new DistributedTest();
             distributedTest.setTitle(test.getTitle());
@@ -199,11 +199,11 @@ public class InsertDistributedTest extends FenixService {
         }
 
         public TestQuestion getTestQuestion() {
-            return rootDomainObject.readTestQuestionByOID(testQuestionId);
+            return RootDomainObject.getInstance().readTestQuestionByOID(testQuestionId);
         }
 
         public Question getQuestion() {
-            return rootDomainObject.readQuestionByOID(questionId);
+            return RootDomainObject.getInstance().readQuestionByOID(questionId);
         }
     }
 
@@ -275,7 +275,7 @@ public class InsertDistributedTest extends FenixService {
 
         @Override
         public void doIt() {
-            Test test = rootDomainObject.readTestByOID(testId);
+            Test test = RootDomainObject.getInstance().readTestByOID(testId);
 
             List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
@@ -330,8 +330,8 @@ public class InsertDistributedTest extends FenixService {
 
         @Override
         public void doIt() {
-            final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-            final Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+            final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getIdInternal());
 
             for (final QuestionPair questionPair : questionList) {
                 final TestQuestion testQuestion = questionPair.getTestQuestion();

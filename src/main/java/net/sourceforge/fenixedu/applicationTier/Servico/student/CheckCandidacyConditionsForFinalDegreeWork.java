@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -33,7 +32,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz
  */
-public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
+public class CheckCandidacyConditionsForFinalDegreeWork {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

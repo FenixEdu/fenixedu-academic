@@ -7,14 +7,15 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentCurricularPlan extends FenixService {
+public class ReadStudentCurricularPlan {
 
     @Service
     public static InfoStudentCurricularPlan run(final Integer studentCurricularPlanID) throws FenixServiceException {
@@ -23,7 +24,7 @@ public class ReadStudentCurricularPlan extends FenixService {
         }
 
         final StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+                RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();
         }

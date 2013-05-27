@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -13,17 +13,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
-public class ReadGuide extends FenixService {
+public class ReadGuide {
 
     protected InfoGuide run(Integer guideId) throws FenixServiceException {
         Guide guide;
         InfoGuide infoGuide = null;
-        guide = rootDomainObject.readGuideByOID(guideId);
+        guide = RootDomainObject.getInstance().readGuideByOID(guideId);
         if (guide == null) {
             throw new InvalidArgumentsServiceException();
         }

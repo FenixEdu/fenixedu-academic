@@ -3,29 +3,29 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateTSDVirtualGroup extends FenixService {
+public class CreateTSDVirtualGroup {
     protected TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
             String[] degreeCurricularPlansIdArray) {
 
-        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(periodId);
+        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(periodId);
 
         List<DegreeCurricularPlan> degreeCurricularPlansList = new ArrayList<DegreeCurricularPlan>();
         for (String planId : degreeCurricularPlansIdArray) {
-            degreeCurricularPlansList.add(rootDomainObject.readDegreeCurricularPlanByOID(Integer.parseInt(planId)));
+            degreeCurricularPlansList.add(RootDomainObject.getInstance().readDegreeCurricularPlanByOID(Integer.parseInt(planId)));
         }
 
         List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();

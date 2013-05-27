@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManageUnitPersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -11,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreatePersistentGroup extends FenixService {
+public class CreatePersistentGroup {
 
     protected void run(Unit unit, String name, List<Person> people, PersistentGroupMembersType type) {
 

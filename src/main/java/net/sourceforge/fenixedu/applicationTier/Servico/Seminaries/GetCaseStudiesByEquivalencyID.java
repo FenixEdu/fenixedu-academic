@@ -9,10 +9,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
@@ -26,12 +26,12 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 25/Ago/2003, 18:18:02
  * 
  */
-public class GetCaseStudiesByEquivalencyID extends FenixService {
+public class GetCaseStudiesByEquivalencyID {
 
     protected List run(Integer equivalencyID) throws BDException {
         List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
-        CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
+        CourseEquivalency equivalency = RootDomainObject.getInstance().readCourseEquivalencyByOID(equivalencyID);
         List<CaseStudy> cases = new LinkedList<CaseStudy>();
         List themes = equivalency.getThemes();
 

@@ -5,11 +5,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.EditExternalActivityTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import pt.ist.fenixWebFramework.services.Service;
@@ -18,13 +19,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class EditExternalActivity extends FenixService {
+public class EditExternalActivity {
 
     protected void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException {
-        ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
+        ExternalActivity externalActivity = RootDomainObject.getInstance().readExternalActivityByOID(externalActivityId);
         // If it doesn't exist in the database, a new one has to be created
         if (externalActivity == null) {
-            Teacher teacher = rootDomainObject.readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());
+            Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());
             externalActivity = new ExternalActivity(teacher, infoExternalActivity);
 
         } else {

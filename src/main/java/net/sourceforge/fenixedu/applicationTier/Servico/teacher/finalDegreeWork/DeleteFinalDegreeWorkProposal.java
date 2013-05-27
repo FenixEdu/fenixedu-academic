@@ -4,16 +4,17 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
  * @author Luis Cruz
  */
-public class DeleteFinalDegreeWorkProposal extends FenixService {
+public class DeleteFinalDegreeWorkProposal {
 
     public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
-        rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID).delete();
+        RootDomainObject.getInstance().readProposalByOID(finalDegreeWorkProposalOID).delete();
     }
 
 }

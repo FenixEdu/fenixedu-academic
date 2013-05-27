@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.CurrentDegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -12,13 +11,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003
  * 
  */
-public class EditCurriculumForCurricularCourse extends FenixService {
+public class EditCurriculumForCurricularCourse {
 
     protected Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
             InfoCurriculum newInfoCurriculum, String username, String language) throws FenixServiceException {
@@ -37,7 +37,7 @@ public class EditCurriculumForCurricularCourse extends FenixService {
             throw new FenixServiceException("nullUsername");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
@@ -47,7 +47,7 @@ public class EditCurriculumForCurricularCourse extends FenixService {
             throw new NonExistingServiceException("noPerson");
         }
 
-        Curriculum oldCurriculum = rootDomainObject.readCurriculumByOID(oldCurriculumId);
+        Curriculum oldCurriculum = RootDomainObject.getInstance().readCurriculumByOID(oldCurriculumId);
         if (oldCurriculum == null) {
             oldCurriculum = new Curriculum();
 

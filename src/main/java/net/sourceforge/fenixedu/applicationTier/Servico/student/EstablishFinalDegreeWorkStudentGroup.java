@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
+public class EstablishFinalDegreeWorkStudentGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

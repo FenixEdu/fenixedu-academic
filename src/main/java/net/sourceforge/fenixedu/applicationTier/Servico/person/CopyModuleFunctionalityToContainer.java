@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CopyModuleFunctionalityToContainer extends FenixService {
+public class CopyModuleFunctionalityToContainer {
 
     @Service
     public static void run(Module module, Container container) {

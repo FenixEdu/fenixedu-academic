@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerOrSeminariesCoordinatorFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -11,13 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
  */
-public class ReadCurricularCourse extends FenixService {
+public class ReadCurricularCourse {
 
     /**
      * Executes the service. Returns the current InfoCurricularCourse.
@@ -26,7 +27,7 @@ public class ReadCurricularCourse extends FenixService {
      */
     protected InfoCurricularCourse run(Integer idInternal) throws FenixServiceException {
         CurricularCourse curricularCourse;
-        curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(idInternal);
+        curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(idInternal);
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

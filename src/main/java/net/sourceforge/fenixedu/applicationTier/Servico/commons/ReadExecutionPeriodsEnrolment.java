@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionPeriodsEnrolment extends FenixService {
+public class ReadExecutionPeriodsEnrolment {
 
     private static final ExecutionSemester since;
     static {
@@ -25,7 +25,7 @@ public class ReadExecutionPeriodsEnrolment extends FenixService {
 
     protected List<InfoExecutionPeriod> run(DegreeType degreeType) {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriods()) {
             result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
         }
 

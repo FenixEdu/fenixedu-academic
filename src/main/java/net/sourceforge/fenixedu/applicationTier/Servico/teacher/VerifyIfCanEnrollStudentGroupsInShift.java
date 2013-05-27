@@ -7,12 +7,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
@@ -21,17 +21,17 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa & rmalo
  * 
  */
-public class VerifyIfCanEnrollStudentGroupsInShift extends FenixService {
+public class VerifyIfCanEnrollStudentGroupsInShift {
 
     protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
             throws FenixServiceException {
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final Shift shift = rootDomainObject.readShiftByOID(shiftCode);
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
 
         if (!shift.containsType(grouping.getShiftType())) {
             return false;

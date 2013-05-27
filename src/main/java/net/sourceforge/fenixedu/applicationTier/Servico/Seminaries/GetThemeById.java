@@ -5,10 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -19,12 +20,12 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 26/Ago/2003, 9:14:57
  * 
  */
-public class GetThemeById extends FenixService {
+public class GetThemeById {
 
     protected InfoTheme run(Integer themeID) {
         InfoTheme infoTheme = null;
         if (themeID != null) {
-            Theme theme = rootDomainObject.readThemeByOID(themeID);
+            Theme theme = RootDomainObject.getInstance().readThemeByOID(themeID);
             infoTheme = InfoTheme.newInfoFromDomain(theme);
 
         }

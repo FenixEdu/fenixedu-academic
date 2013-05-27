@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHisto
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicCurriculumsViewAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -31,11 +31,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author nmgo
  * @author lmre
  */
-public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear extends FenixService {
+public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear {
 
     public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, AcademicInterval academicInterval)
             throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));
@@ -56,8 +56,8 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     @Deprecated
     public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executioYearID);
+        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executioYearID);
 
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));

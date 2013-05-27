@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithFirstTimeEnrolment;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -23,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ListMasterDegreeStudents extends FenixService {
+public class ListMasterDegreeStudents {
 
     @Service
     public static Collection run(String executionYearName) {

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -27,15 +27,15 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class DeleteProjectProposal extends FenixService {
+public class DeleteProjectProposal {
 
     protected Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException {
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse startExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");

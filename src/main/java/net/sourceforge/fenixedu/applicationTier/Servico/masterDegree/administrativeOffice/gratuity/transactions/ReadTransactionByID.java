@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -13,12 +14,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadTransactionByID extends FenixService {
+public class ReadTransactionByID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static InfoTransaction run(Integer transactionId) throws FenixServiceException {
-        Transaction transaction = rootDomainObject.readTransactionByOID(transactionId);
+        Transaction transaction = RootDomainObject.getInstance().readTransactionByOID(transactionId);
         if (transaction == null) {
             throw new ExcepcaoInexistente();
         }

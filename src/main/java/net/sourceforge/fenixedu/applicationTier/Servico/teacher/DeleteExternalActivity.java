@@ -5,9 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ExternalActivityTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -15,10 +16,10 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class DeleteExternalActivity extends FenixService {
+public class DeleteExternalActivity {
 
     protected void run(Integer externalActivityId) {
-        ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
+        ExternalActivity externalActivity = RootDomainObject.getInstance().readExternalActivityByOID(externalActivityId);
         externalActivity.delete();
     }
 

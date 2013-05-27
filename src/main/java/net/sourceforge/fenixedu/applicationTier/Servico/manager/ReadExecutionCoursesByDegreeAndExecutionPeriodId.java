@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
  * 
  */
-public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixService {
+public class ReadExecutionCoursesByDegreeAndExecutionPeriodId {
 
     @Service
     public static List run(Integer degreeId, AcademicInterval academicInterval) throws FenixServiceException {
@@ -33,7 +33,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixServi
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
         if (degree == null) {
             throw new InvalidArgumentsServiceException();
         }

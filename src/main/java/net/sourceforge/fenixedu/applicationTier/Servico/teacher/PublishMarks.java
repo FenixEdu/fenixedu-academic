@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -19,7 +20,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 /**
  * @author Fernanda Quitério
  */
-public class PublishMarks extends FenixService {
+public class PublishMarks {
 
     private final static int MOBILE_NUMBER_LENGHT = 9;
 
@@ -32,9 +33,9 @@ public class PublishMarks extends FenixService {
     protected Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage, Boolean sendSMS,
             String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
-        final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
+        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
             evaluation.setPublishmentMessage(" ");

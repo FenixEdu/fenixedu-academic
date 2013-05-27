@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteLessonPlanning extends FenixService {
+public class DeleteLessonPlanning {
 
     protected void run(Integer executionCourseID, LessonPlanning lessonPlanning, ExecutionCourse executionCourse,
             ShiftType shiftType) {

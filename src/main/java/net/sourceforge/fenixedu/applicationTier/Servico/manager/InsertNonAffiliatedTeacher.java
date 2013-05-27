@@ -4,12 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,13 +20,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class InsertNonAffiliatedTeacher extends FenixService {
+public class InsertNonAffiliatedTeacher {
 
     @Checked("RolePredicates.GEP_PREDICATE")
     @Service
     public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID)
             throws NotExistingServiceException {
-        final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
+        final Unit institution = (Unit) RootDomainObject.getInstance().readPartyByOID(institutionID);
         if (institution == null) {
             throw new NotExistingServiceException("no.institution");
         }

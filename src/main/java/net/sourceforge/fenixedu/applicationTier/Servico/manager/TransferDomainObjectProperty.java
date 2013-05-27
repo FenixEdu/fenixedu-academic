@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -20,7 +19,7 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class TransferDomainObjectProperty extends FenixService {
+public class TransferDomainObjectProperty {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service

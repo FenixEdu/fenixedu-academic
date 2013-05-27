@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -22,10 +23,10 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Sergio Montelobo
  * 
  */
-public class ReadCourseInformation extends FenixService {
+public class ReadCourseInformation {
 
     protected TeacherAdministrationSiteView run(final Integer executionCourseOID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
         final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
 
         final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();

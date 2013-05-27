@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ReadTeacherInformationCoordinatorAuthorizationFilter;
@@ -52,7 +51,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadTeacherInformation extends FenixService {
+public class ReadTeacherInformation {
 
     public SiteView run(String user, String argExecutionYear) {
 

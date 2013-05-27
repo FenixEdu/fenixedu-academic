@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadPersonsByName extends FenixService {
+public class ReadPersonsByName {
 
     @Service
     public static List<InfoPerson> run(String stringtoSearch) {

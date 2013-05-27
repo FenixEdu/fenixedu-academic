@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -20,14 +20,14 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadReimbursementGuidesByGuide extends FenixService {
+public class ReadReimbursementGuidesByGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static List run(Integer guideId) {
         List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();
 
-        Guide guide = rootDomainObject.readGuideByOID(guideId);
+        Guide guide = RootDomainObject.getInstance().readGuideByOID(guideId);
         for (ReimbursementGuide reimbursementGuide : guide.getReimbursementGuides()) {
             result.add(InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide));
         }

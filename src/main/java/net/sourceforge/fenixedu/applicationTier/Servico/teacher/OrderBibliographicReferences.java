@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -14,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author cfgi
  */
-public class OrderBibliographicReferences extends FenixService {
+public class OrderBibliographicReferences {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service

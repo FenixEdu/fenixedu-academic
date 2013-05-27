@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -25,12 +25,12 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Susana Fernandes
  */
-public class ReadQuestionImage extends FenixService {
+public class ReadQuestionImage {
 
     @Service
     public static String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer feedbackId, Integer itemIndex,
             String path) throws FenixServiceException {
-        Question question = rootDomainObject.readQuestionByOID(exerciseId);
+        Question question = RootDomainObject.getInstance().readQuestionByOID(exerciseId);
         if (question != null) {
             if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
                 ParseSubQuestion parse = new ParseSubQuestion();
@@ -53,7 +53,7 @@ public class ReadQuestionImage extends FenixService {
             Integer feedbackId, String path) throws FenixServiceException {
 
         Question question = null;
-        Test test = rootDomainObject.readTestByOID(distributedTestId);
+        Test test = RootDomainObject.getInstance().readTestByOID(distributedTestId);
         for (TestQuestion testQuestion : test.getTestQuestions()) {
             if (testQuestion.getQuestion().getIdInternal().equals(questionId)) {
                 question = testQuestion.getQuestion();

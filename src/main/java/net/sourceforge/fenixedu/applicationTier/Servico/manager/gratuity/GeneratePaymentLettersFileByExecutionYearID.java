@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPayme
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
+public class GeneratePaymentLettersFileByExecutionYearID {
 
     private static class GratuityLetterFileEntry {
 
@@ -170,7 +170,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");

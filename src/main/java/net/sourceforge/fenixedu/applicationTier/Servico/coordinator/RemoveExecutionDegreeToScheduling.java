@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RemoveExecutionDegreeToScheduling extends FenixService {
+public class RemoveExecutionDegreeToScheduling {
 
     private class SchedulingContainsProposalsException extends FenixServiceException {
     }

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateDegreeOfficialPublication extends FenixService {
+public class CreateDegreeOfficialPublication {
 
     /**
      * Must ensure "REQUIRED" slots are filled

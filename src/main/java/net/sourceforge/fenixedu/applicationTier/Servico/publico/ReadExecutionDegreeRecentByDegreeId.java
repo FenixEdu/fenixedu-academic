@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -21,13 +21,13 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Pedro Santos & Rita Carvalho
  */
-public class ReadExecutionDegreeRecentByDegreeId extends FenixService {
+public class ReadExecutionDegreeRecentByDegreeId {
 
     @Service
     public static InfoExecutionDegree run(final Integer degreeId) {
         List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
 
-        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
         for (DegreeCurricularPlan curricularPlan : degree.getDegreeCurricularPlans()) {
             listExecutionDegrees.addAll(curricularPlan.getExecutionDegrees());
         }

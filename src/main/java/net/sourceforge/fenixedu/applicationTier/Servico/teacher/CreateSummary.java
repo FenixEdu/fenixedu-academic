@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.Summary;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateSummary extends FenixService {
+public class CreateSummary {
 
     protected void run(SummariesManagementBean bean) {
 
