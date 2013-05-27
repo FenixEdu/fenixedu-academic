@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_Base {
 
@@ -86,11 +89,16 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
         if (postingRule == null) {
             throw new DomainException(
-                    "error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date");
+                    "error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
+                    when.toLocalDate().toString("dd-MM-yyyy"), getEnumerationResourcesString(eventType.getQualifiedName()));
         }
 
         return postingRule;
 
+    }
+
+    public String getEnumerationResourcesString(String name) {
+        return ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(name);
     }
 
     public PostingRule findPostingRuleBy(EventType eventType, DateTime startDate, DateTime endDate) {
