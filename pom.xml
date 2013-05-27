@@ -278,11 +278,6 @@
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
-			<artifactId>berserk</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>pt.ist</groupId>
 			<artifactId>fenix-web-framework</artifactId>
 			<version>1.0.3</version>
 		</dependency>
